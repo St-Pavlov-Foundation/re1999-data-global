@@ -46,4 +46,12 @@ function var_0_0.getAllSeasonViewList(arg_4_0)
 	return var_4_0
 end
 
+function var_0_0.getIconUrl(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_2 = arg_5_2 or Activity104Model.instance:getCurSeasonId()
+
+	local var_5_0 = Activity104Enum.SeasonIconFolder[arg_5_2]
+
+	return string.format(arg_5_0, var_5_0, arg_5_1)
+end
+
 return var_0_0

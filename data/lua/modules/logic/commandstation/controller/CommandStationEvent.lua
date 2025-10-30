@@ -1,0 +1,30 @@
+﻿module("modules.logic.commandstation.controller.CommandStationEvent", package.seeall)
+
+local var_0_0 = _M
+local var_0_1 = GameUtil.getUniqueTb()
+
+var_0_0.MoveTimeline = var_0_1()
+var_0_0.SelectTimePoint = var_0_1()
+var_0_0.ChangeEventCategory = var_0_1()
+var_0_0.MapLoadFinish = var_0_1()
+var_0_0.HideVersionSelectView = var_0_1()
+var_0_0.ChangeVersionId = var_0_1()
+var_0_0.ClickDispatch = var_0_1()
+var_0_0.DispatchHeroListChange = var_0_1()
+var_0_0.DispatchStart = var_0_1()
+var_0_0.DispatchFinish = var_0_1()
+var_0_0.DispatchChangeTab = var_0_1()
+var_0_0.TimelineAnimDone = var_0_1()
+var_0_0.SceneFocusPos = var_0_1()
+var_0_0.FocusEvent = var_0_1()
+var_0_0.SelectedEvent = var_0_1()
+var_0_0.CancelSelectedEvent = var_0_1()
+var_0_0.EventCreateFinish = var_0_1()
+var_0_0.MoveScene = var_0_1()
+var_0_0.RTGoHide = var_0_1()
+var_0_0.OneClickClaimReward = var_0_1()
+var_0_0.OnTaskUpdate = var_0_1()
+var_0_0.OnPaperUpdate = var_0_1()
+var_0_0.OnBonusUpdate = var_0_1()
+
+return var_0_0

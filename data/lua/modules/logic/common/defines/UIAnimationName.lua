@@ -20,5 +20,6 @@ return {
 	SwitchClose = "switch_close",
 	Right = "right",
 	In = "in",
+	Back = "back",
 	SwitchOpen = "switch_open"
 }

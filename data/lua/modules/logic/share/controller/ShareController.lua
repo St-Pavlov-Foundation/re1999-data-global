@@ -32,7 +32,9 @@ function var_0_0.CaptureScreenshot(arg_7_0)
 end
 
 function var_0_0._onReadScene(arg_8_0, arg_8_1)
-	arg_8_0:openShareTipView(arg_8_1)
+	if not StoryModel.instance:isStoryPvPause() then
+		arg_8_0:openShareTipView(arg_8_1)
+	end
 end
 
 function var_0_0._onSocialShare(arg_9_0, arg_9_1, arg_9_2)

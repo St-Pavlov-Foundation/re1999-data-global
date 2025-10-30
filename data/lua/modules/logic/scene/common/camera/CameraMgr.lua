@@ -251,6 +251,7 @@ function var_0_0.setSceneCameraActive(arg_18_0, arg_18_1, arg_18_2)
 	end
 
 	gohelper.setActive(arg_18_0._unitCameraGO, var_18_0)
+	PostProcessingMgr.instance:dispatchEvent(PostProcessingEvent.onUnitCameraVisibleChange, var_18_0)
 end
 
 function var_0_0.setOrthCameraActive(arg_19_0, arg_19_1)

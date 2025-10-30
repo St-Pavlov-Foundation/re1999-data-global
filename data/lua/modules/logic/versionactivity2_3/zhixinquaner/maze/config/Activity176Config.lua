@@ -9,7 +9,8 @@ end
 function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity176_bubble",
-		"activity176_episode"
+		"activity176_episode",
+		"activity176_dogtag"
 	}
 end
 
@@ -65,6 +66,16 @@ function var_0_0.getEpisodeCoByElementId(arg_7_0, arg_7_1, arg_7_2)
 			return iter_7_1
 		end
 	end
+end
+
+function var_0_0.getDogTagCfg(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = lua_activity176_dogtag.configDict[arg_8_1]
+
+	if var_8_0 and var_8_0[arg_8_2] then
+		return var_8_0[arg_8_2]
+	end
+
+	logError(string.format("不存活动ID%s ID%s 的狗牌配置表", arg_8_1, arg_8_2))
 end
 
 var_0_0.instance = var_0_0.New()

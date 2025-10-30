@@ -520,7 +520,8 @@ function var_0_0.getCurrentOpenedView(arg_26_0, arg_26_1)
 			[SeasonViewHelper.getViewName(Activity104Model.instance:getCurSeasonId(), Activity104Enum.ViewName.HeroGroupFightView)] = true,
 			[Season123Controller.instance:getHeroGroupFightViewName()] = true,
 			[Season123Controller.instance:getHeroGroupEditViewName()] = true,
-			[ViewName.TowerHeroGroupFightView] = true
+			[ViewName.TowerHeroGroupFightView] = true,
+			[ViewName.CommandStationDispatchEventMainView] = true
 		}
 	end
 

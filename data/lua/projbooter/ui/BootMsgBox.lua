@@ -147,6 +147,14 @@ function var_0_0.disable(arg_9_0)
 	arg_9_0._isDisable = true
 end
 
+function var_0_0.setContentText(arg_10_0, arg_10_1)
+	if arg_10_0._isDisable then
+		return
+	end
+
+	arg_10_0._txtContent.text = arg_10_1
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

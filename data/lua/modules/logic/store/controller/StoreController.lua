@@ -139,15 +139,13 @@ end
 
 function var_0_0.openDecorateStoreGoodsView(arg_16_0, arg_16_1)
 	local var_16_0 = string.splitToNumber(arg_16_1.config.product, "#")
-	local var_16_1 = ItemModel.instance:getItemConfig(var_16_0[1], var_16_0[2])
-	local var_16_2 = DecorateStoreEnum.SpecialGoodsId
 
-	if var_16_1.subType == ItemEnum.SubType.PlayerBg and var_16_1.id == var_16_2 then
-		local var_16_3 = {
+	if ItemModel.instance:getItemConfig(var_16_0[1], var_16_0[2]).subType == ItemEnum.SubType.PlayerBg then
+		local var_16_1 = {
 			goodsMo = arg_16_1
 		}
 
-		ViewMgr.instance:openView(ViewName.DecorateStoreGoodsBuyView, var_16_3)
+		ViewMgr.instance:openView(ViewName.DecorateStoreGoodsBuyView, var_16_1)
 	else
 		ViewMgr.instance:openView(ViewName.DecorateStoreGoodsView, arg_16_1)
 	end

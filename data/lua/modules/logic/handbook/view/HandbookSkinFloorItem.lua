@@ -15,6 +15,8 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._txtUnSelectedCurSuitIdx = gohelper.findChildText(arg_1_0._goUnSelectedState, "#num")
 	arg_1_0._txtSelectedCurFloorIdx = gohelper.findChildText(arg_1_0._goSelectedState, "#xulie")
 	arg_1_0._txtUnSelectedCurFloorIdx = gohelper.findChildText(arg_1_0._goUnSelectedState, "#xulie")
+	arg_1_0._selectTabRedDot = gohelper.findChild(arg_1_0.viewGO, "#unclick/#goRedDot")
+	arg_1_0._unSelectTabRedDot = gohelper.findChild(arg_1_0.viewGO, "#select/#goRedDot")
 	arg_1_0._click = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "#unclick/btn_click")
 
 	if arg_1_0._editableInitView then
@@ -32,12 +34,13 @@ end
 
 function var_0_0.onClick(arg_4_0)
 	if arg_4_0._onClickAction then
-		arg_4_0:_onClickAction()
+		arg_4_0._onClickAction(arg_4_0._clickActionObj, arg_4_0)
 	end
 end
 
-function var_0_0.setClickAction(arg_5_0, arg_5_1)
+function var_0_0.setClickAction(arg_5_0, arg_5_1, arg_5_2)
 	arg_5_0._onClickAction = arg_5_1
+	arg_5_0._clickActionObj = arg_5_2
 end
 
 function var_0_0._editableInitView(arg_6_0)
@@ -105,6 +108,13 @@ function var_0_0.refreshSelectState(arg_12_0, arg_12_1)
 	arg_12_0._isSelected = arg_12_1
 
 	if arg_12_0._isSelected then
+		if arg_12_0._showRedDot then
+			local var_12_0 = arg_12_0._suitGroupCfg.id
+
+			HandbookController.instance:markHandbookSkinRedDotShow(var_12_0)
+			arg_12_0:refreshRedDot()
+		end
+
 		gohelper.setActive(arg_12_0._goSelectedState, true)
 		gohelper.setActive(arg_12_0._goUnSelectedState, false)
 	else
@@ -113,7 +123,27 @@ function var_0_0.refreshSelectState(arg_12_0, arg_12_1)
 	end
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function var_0_0.refreshRedDot(arg_13_0)
+	local var_13_0 = arg_13_0._suitGroupCfg.id
+
+	if not HandbookEnum.HandbookSkinShowRedDotMap[var_13_0] then
+		gohelper.setActive(arg_13_0._selectTabRedDot, false)
+		gohelper.setActive(arg_13_0._unSelectTabRedDot, false)
+
+		return
+	end
+
+	arg_13_0._showRedDot = HandbookController.instance:isHandbookSkinRedDotShow(var_13_0)
+
+	gohelper.setActive(arg_13_0._selectTabRedDot, arg_13_0._showRedDot)
+	gohelper.setActive(arg_13_0._unSelectTabRedDot, arg_13_0._showRedDot)
+end
+
+function var_0_0.hasRedDot(arg_14_0)
+	return arg_14_0._showRedDot
+end
+
+function var_0_0.onDestroyView(arg_15_0)
 	return
 end
 

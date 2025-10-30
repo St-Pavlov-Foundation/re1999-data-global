@@ -95,7 +95,11 @@ local var_0_1 = {
 }
 
 local function var_0_2(arg_7_0, arg_7_1)
-	FightDataUtil.doFindDiff(arg_7_0, arg_7_1, nil, var_0_1)
+	local var_7_0 = {
+		_last_clone_mo = true
+	}
+
+	FightDataUtil.doFindDiff(arg_7_0, arg_7_1, var_7_0, var_0_1)
 end
 
 function var_0_0.compareBuffDic(arg_8_0, arg_8_1)

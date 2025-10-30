@@ -108,6 +108,7 @@ function var_0_0._loadRes(arg_5_0)
 		[StoryEnum.BgTransType.MovieChangeStart] = arg_5_0._movieChangeStartTrans,
 		[StoryEnum.BgTransType.MovieChangeSwitch] = arg_5_0._movieChangeSwitchTrans,
 		[StoryEnum.BgTransType.TurnPage3] = arg_5_0._turnPageTrans,
+		[StoryEnum.BgTransType.ShakeCamera] = arg_5_0._shakeCameraTrans,
 		[StoryEnum.BgTransType.Bloom1] = arg_5_0._bloom1Trans,
 		[StoryEnum.BgTransType.Bloom2] = arg_5_0._bloom2Trans
 	}
@@ -1048,400 +1049,416 @@ function var_0_0._onTurnPageFinished(arg_66_0)
 	arg_66_0._imgAnim:GetComponent(gohelper.Type_RectMask2D).padding = Vector4(0, 0, 0, 0)
 end
 
-function var_0_0._dissolveTrans(arg_67_0)
-	if arg_67_0._bgCo.bgType == StoryEnum.BgType.Picture then
-		arg_67_0:_showBgBottom(true)
-		gohelper.setActive(arg_67_0._bottombgSpine, false)
+function var_0_0._shakeCameraTrans(arg_67_0)
+	arg_67_0._curTransType = StoryEnum.BgTransType.ShakeCamera
+	arg_67_0._bgTrans = StoryBgTransCameraShake.New()
 
-		if arg_67_0._bgCo.bgImg ~= "" then
-			arg_67_0:_advanceLoadBgOld()
+	arg_67_0._bgTrans:init()
+	arg_67_0._bgTrans:start(arg_67_0._onShakeCameraFinished, arg_67_0)
+end
+
+function var_0_0._onShakeCameraFinished(arg_68_0)
+	if arg_68_0._bgTrans then
+		arg_68_0._bgTrans:destroy()
+
+		arg_68_0._bgTrans = nil
+	end
+end
+
+function var_0_0._dissolveTrans(arg_69_0)
+	if arg_69_0._bgCo.bgType == StoryEnum.BgType.Picture then
+		arg_69_0:_showBgBottom(true)
+		gohelper.setActive(arg_69_0._bottombgSpine, false)
+
+		if arg_69_0._bgCo.bgImg ~= "" then
+			arg_69_0:_advanceLoadBgOld()
 		end
 	else
-		arg_67_0:_showBgBottom(false)
-		gohelper.setActive(arg_67_0._bottombgSpine, true)
+		arg_69_0:_showBgBottom(false)
+		gohelper.setActive(arg_69_0._bottombgSpine, true)
 
-		if string.split(arg_67_0._bgCo.bgImg, ".")[1] ~= "" then
-			arg_67_0._effectLoader = PrefabInstantiate.Create(arg_67_0._bottombgSpine)
+		if string.split(arg_69_0._bgCo.bgImg, ".")[1] ~= "" then
+			arg_69_0._effectLoader = PrefabInstantiate.Create(arg_69_0._bottombgSpine)
 
-			arg_67_0._effectLoader:startLoad(arg_67_0._bgCo.bgImg)
+			arg_69_0._effectLoader:startLoad(arg_69_0._bgCo.bgImg)
 		end
 	end
 
-	arg_67_0._imagebg:SetNativeSize()
+	arg_69_0._imagebg:SetNativeSize()
 
-	arg_67_0._imagebg.material = arg_67_0._dissolveMat
-	arg_67_0._imagebgtop.material = arg_67_0._dissolveMat
+	arg_69_0._imagebg.material = arg_69_0._dissolveMat
+	arg_69_0._imagebgtop.material = arg_69_0._dissolveMat
 
-	arg_67_0:_dissolveChange(0)
+	arg_69_0:_dissolveChange(0)
 
-	arg_67_0._dissolveId = ZProj.TweenHelper.DOTweenFloat(0, -1.2, 2, arg_67_0._dissolveChange, arg_67_0._dissolveFinished, arg_67_0, nil, EaseType.Linear)
+	arg_69_0._dissolveId = ZProj.TweenHelper.DOTweenFloat(0, -1.2, 2, arg_69_0._dissolveChange, arg_69_0._dissolveFinished, arg_69_0, nil, EaseType.Linear)
 end
 
-function var_0_0._dissolveChange(arg_68_0, arg_68_1)
-	arg_68_0._imagebg.material:SetFloat(ShaderPropertyId.DissolveFactor, arg_68_1)
-	arg_68_0._imagebgtop.material:SetFloat(ShaderPropertyId.DissolveFactor, arg_68_1)
+function var_0_0._dissolveChange(arg_70_0, arg_70_1)
+	arg_70_0._imagebg.material:SetFloat(ShaderPropertyId.DissolveFactor, arg_70_1)
+	arg_70_0._imagebgtop.material:SetFloat(ShaderPropertyId.DissolveFactor, arg_70_1)
 end
 
-function var_0_0._dissolveFinished(arg_69_0)
-	arg_69_0:_refreshBg()
-	arg_69_0:_resetBgState()
+function var_0_0._dissolveFinished(arg_71_0)
+	arg_71_0:_refreshBg()
+	arg_71_0:_resetBgState()
 
-	arg_69_0._imagebg.material = nil
-	arg_69_0._imagebgtop.material = nil
+	arg_71_0._imagebg.material = nil
+	arg_71_0._imagebgtop.material = nil
 end
 
-function var_0_0._bloom1Trans(arg_70_0)
-	arg_70_0:_bloomTrans(StoryEnum.BgTransType.Bloom1)
+function var_0_0._bloom1Trans(arg_72_0)
+	arg_72_0:_bloomTrans(StoryEnum.BgTransType.Bloom1)
 end
 
-function var_0_0._bloom2Trans(arg_71_0)
-	arg_71_0:_bloomTrans(StoryEnum.BgTransType.Bloom2)
+function var_0_0._bloom2Trans(arg_73_0)
+	arg_73_0:_bloomTrans(StoryEnum.BgTransType.Bloom2)
 end
 
-function var_0_0._bloomTrans(arg_72_0, arg_72_1)
-	arg_72_0._curTransType = arg_72_1
+function var_0_0._bloomTrans(arg_74_0, arg_74_1)
+	arg_74_0._curTransType = arg_74_1
 
-	if arg_72_0._bgTrans then
-		arg_72_0._bgTrans:destroy()
+	if arg_74_0._bgTrans then
+		arg_74_0._bgTrans:destroy()
 
-		arg_72_0._bgTrans = nil
+		arg_74_0._bgTrans = nil
 	end
 
-	arg_72_0._bgTrans = StoryBgTransBloom.New()
+	arg_74_0._bgTrans = StoryBgTransBloom.New()
 
-	arg_72_0._bgTrans:init()
-	arg_72_0._bgTrans:setBgTransType(arg_72_1)
-	arg_72_0._bgTrans:start(arg_72_0._bloomFinished, arg_72_0)
+	arg_74_0._bgTrans:init()
+	arg_74_0._bgTrans:setBgTransType(arg_74_1)
+	arg_74_0._bgTrans:start(arg_74_0._bloomFinished, arg_74_0)
 end
 
-function var_0_0._bloomFinished(arg_73_0)
-	if arg_73_0._bgTrans then
-		arg_73_0._bgTrans:destroy()
+function var_0_0._bloomFinished(arg_75_0)
+	if arg_75_0._bgTrans then
+		arg_75_0._bgTrans:destroy()
 
-		arg_73_0._bgTrans = nil
+		arg_75_0._bgTrans = nil
 	end
 end
 
-function var_0_0._actBgEffBlur(arg_74_0)
+function var_0_0._actBgEffBlur(arg_76_0)
 	StoryTool.enablePostProcess(true)
 	PostProcessingMgr.instance:setUIBlurActive(0)
 	PostProcessingMgr.instance:setFreezeVisble(false)
 
-	arg_74_0._imagebg.material = arg_74_0._blurMat
-	arg_74_0._imagebgtop.material = arg_74_0._blurZoneMat
-	arg_74_0._bgBlur.enabled = true
+	arg_76_0._imagebg.material = arg_76_0._blurMat
+	arg_76_0._imagebgtop.material = arg_76_0._blurZoneMat
+	arg_76_0._bgBlur.enabled = true
 
-	local var_74_0 = {
+	local var_76_0 = {
 		0,
 		0.8,
 		0.9,
 		1
 	}
 
-	arg_74_0._bgBlur.blurFactor = 0
+	arg_76_0._bgBlur.blurFactor = 0
 
-	local var_74_1 = arg_74_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	local var_76_1 = arg_76_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
 
-	if var_74_1 > 0.1 then
-		arg_74_0._blurId = ZProj.TweenHelper.DOTweenFloat(arg_74_0._bgBlur.blurWeight, var_74_0[arg_74_0._bgCo.effDegree + 1], var_74_1, arg_74_0._blurChange, arg_74_0._blurFinished, arg_74_0, nil, EaseType.Linear)
+	if var_76_1 > 0.1 then
+		arg_76_0._blurId = ZProj.TweenHelper.DOTweenFloat(arg_76_0._bgBlur.blurWeight, var_76_0[arg_76_0._bgCo.effDegree + 1], var_76_1, arg_76_0._blurChange, arg_76_0._blurFinished, arg_76_0, nil, EaseType.Linear)
 	else
-		arg_74_0:_blurChange(var_74_0[arg_74_0._bgCo.effDegree + 1])
+		arg_76_0:_blurChange(var_76_0[arg_76_0._bgCo.effDegree + 1])
 	end
 end
 
-function var_0_0._blurChange(arg_75_0, arg_75_1)
-	arg_75_0._bgBlur.blurWeight = arg_75_1
+function var_0_0._blurChange(arg_77_0, arg_77_1)
+	arg_77_0._bgBlur.blurWeight = arg_77_1
 end
 
-function var_0_0._blurFinished(arg_76_0)
-	if arg_76_0._blurId then
-		ZProj.TweenHelper.KillById(arg_76_0._blurId)
+function var_0_0._blurFinished(arg_78_0)
+	if arg_78_0._blurId then
+		ZProj.TweenHelper.KillById(arg_78_0._blurId)
 
-		arg_76_0._blurId = nil
+		arg_78_0._blurId = nil
 	end
 end
 
-function var_0_0._actBgEffBlurFade(arg_77_0)
-	local var_77_0 = arg_77_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+function var_0_0._actBgEffBlurFade(arg_79_0)
+	local var_79_0 = arg_79_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
 
-	if arg_77_0._bgCo.effType == StoryEnum.BgEffectType.BgBlur and var_77_0 > 0.1 then
+	if arg_79_0._bgCo.effType == StoryEnum.BgEffectType.BgBlur and var_79_0 > 0.1 then
 		return
 	end
 
 	PostProcessingMgr.instance:setUIBlurActive(0)
 	PostProcessingMgr.instance:setFreezeVisble(false)
 
-	local var_77_1 = arg_77_0._bgBlur.blurWeight
+	local var_79_1 = arg_79_0._bgBlur.blurWeight
 
-	arg_77_0._blurId = ZProj.TweenHelper.DOTweenFloat(var_77_1, 0, 1.5, arg_77_0._blurChange, arg_77_0._blurFinished, arg_77_0, nil, EaseType.Linear)
+	arg_79_0._blurId = ZProj.TweenHelper.DOTweenFloat(var_79_1, 0, 1.5, arg_79_0._blurChange, arg_79_0._blurFinished, arg_79_0, nil, EaseType.Linear)
 end
 
-function var_0_0._actBgEffFishEye(arg_78_0)
-	arg_78_0._imagebg.material = arg_78_0._fisheyeMat
-	arg_78_0._imagebgtop.material = arg_78_0._fisheyeMat
+function var_0_0._actBgEffFishEye(arg_80_0)
+	arg_80_0._imagebg.material = arg_80_0._fisheyeMat
+	arg_80_0._imagebgtop.material = arg_80_0._fisheyeMat
 end
 
-function var_0_0._actBgEffShake(arg_79_0)
-	if arg_79_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+function var_0_0._actBgEffShake(arg_81_0)
+	if arg_81_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
 		return
 	end
 
-	if arg_79_0._bgCo.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		arg_79_0:_startShake()
+	if arg_81_0._bgCo.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		arg_81_0:_startShake()
 	else
-		TaskDispatcher.runDelay(arg_79_0._startShake, arg_79_0, arg_79_0._bgCo.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+		TaskDispatcher.runDelay(arg_81_0._startShake, arg_81_0, arg_81_0._bgCo.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 	end
 end
 
-function var_0_0._startShake(arg_80_0)
-	arg_80_0._bgAnimator.enabled = true
+function var_0_0._startShake(arg_82_0)
+	arg_82_0._bgAnimator.enabled = true
 
-	arg_80_0._bgAnimator:SetBool("stoploop", false)
+	arg_82_0._bgAnimator:SetBool("stoploop", false)
 
-	local var_80_0 = {
+	local var_82_0 = {
 		"idle",
 		"low",
 		"middle",
 		"high"
 	}
 
-	arg_80_0._bgAnimator:Play(var_80_0[arg_80_0._bgCo.effDegree + 1])
+	arg_82_0._bgAnimator:Play(var_82_0[arg_82_0._bgCo.effDegree + 1])
 
-	arg_80_0._bgAnimator.speed = arg_80_0._bgCo.effRate
+	arg_82_0._bgAnimator.speed = arg_82_0._bgCo.effRate
 
-	TaskDispatcher.runDelay(arg_80_0._shakeStop, arg_80_0, arg_80_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+	TaskDispatcher.runDelay(arg_82_0._shakeStop, arg_82_0, arg_82_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 end
 
-function var_0_0._shakeStop(arg_81_0)
-	if arg_81_0._bgAnimator then
-		arg_81_0._bgAnimator:SetBool("stoploop", true)
+function var_0_0._shakeStop(arg_83_0)
+	if arg_83_0._bgAnimator then
+		arg_83_0._bgAnimator:SetBool("stoploop", true)
 	end
 end
 
-function var_0_0._actBgEffFullBlur(arg_82_0)
+function var_0_0._actBgEffFullBlur(arg_84_0)
 	PostProcessingMgr.instance:setUIBlurActive(3)
 	PostProcessingMgr.instance:setFreezeVisble(true)
-	StoryController.instance:dispatchEvent(StoryEvent.PlayFullBlurIn, arg_82_0._bgCo.effDegree, arg_82_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+	StoryController.instance:dispatchEvent(StoryEvent.PlayFullBlurIn, arg_84_0._bgCo.effDegree, arg_84_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 end
 
-function var_0_0._actBgEffGray(arg_83_0)
-	if arg_83_0._bgGrayId then
-		ZProj.TweenHelper.KillById(arg_83_0._bgGrayId)
+function var_0_0._actBgEffGray(arg_85_0)
+	if arg_85_0._bgGrayId then
+		ZProj.TweenHelper.KillById(arg_85_0._bgGrayId)
 
-		arg_83_0._bgGrayId = nil
+		arg_85_0._bgGrayId = nil
 	end
 
-	arg_83_0:_actBgEffFullGrayUpdate(0.5)
+	arg_85_0:_actBgEffFullGrayUpdate(0.5)
 
-	if arg_83_0._bgCo.effDegree == 0 then
-		arg_83_0._prefabPath = ResUrl.getStoryBgEffect("v1a9_saturation")
+	if arg_85_0._bgCo.effDegree == 0 then
+		arg_85_0._prefabPath = ResUrl.getStoryBgEffect("v1a9_saturation")
 
-		arg_83_0:loadRes({
-			arg_83_0._prefabPath
-		}, arg_83_0._actBgEffGrayLoaded, arg_83_0)
+		arg_85_0:loadRes({
+			arg_85_0._prefabPath
+		}, arg_85_0._actBgEffGrayLoaded, arg_85_0)
 	else
-		if not arg_83_0._prefabPath or not arg_83_0._bgSubGo then
+		if not arg_85_0._prefabPath or not arg_85_0._bgSubGo then
 			return
 		end
 
-		local var_83_0 = arg_83_0._bgSubGo:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+		local var_85_0 = arg_85_0._bgSubGo:GetComponent(typeof(ZProj.MaterialPropsCtrl))
 
-		if not var_83_0 then
+		if not var_85_0 then
 			return
 		end
 
 		StoryTool.enablePostProcess(true)
 
-		if arg_83_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-			arg_83_0:_actBgEffGrayUpdate(0)
+		if arg_85_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+			arg_85_0:_actBgEffGrayUpdate(0)
 		else
-			local var_83_1 = var_83_0.float_01
+			local var_85_1 = var_85_0.float_01
 
-			arg_83_0._bgGrayId = ZProj.TweenHelper.DOTweenFloat(var_83_1, 0, arg_83_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_83_0._actBgEffGrayUpdate, arg_83_0._actBgEffGrayFinished, arg_83_0)
+			arg_85_0._bgGrayId = ZProj.TweenHelper.DOTweenFloat(var_85_1, 0, arg_85_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_85_0._actBgEffGrayUpdate, arg_85_0._actBgEffGrayFinished, arg_85_0)
 		end
 	end
 end
 
-function var_0_0._actBgEffGrayLoaded(arg_84_0)
-	if arg_84_0._bgSubGo and arg_84_0._lastBgCo.effType == StoryEnum.BgEffectType.BgGray then
-		if not arg_84_0._lastBgSubGo then
-			arg_84_0._lastBgSubGo = gohelper.clone(arg_84_0._bgSubGo, arg_84_0._imagebgold.gameObject)
+function var_0_0._actBgEffGrayLoaded(arg_86_0)
+	if arg_86_0._bgSubGo and arg_86_0._lastBgCo.effType == StoryEnum.BgEffectType.BgGray then
+		if not arg_86_0._lastBgSubGo then
+			arg_86_0._lastBgSubGo = gohelper.clone(arg_86_0._bgSubGo, arg_86_0._imagebgold.gameObject)
 		end
 
-		local var_84_0 = arg_84_0._lastBgSubGo:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+		local var_86_0 = arg_86_0._lastBgSubGo:GetComponent(typeof(ZProj.MaterialPropsCtrl))
 
-		arg_84_0._imagebgold.material = var_84_0.mas[0]
-		arg_84_0._imagebgoldtop.material = var_84_0.mas[0]
+		arg_86_0._imagebgold.material = var_86_0.mas[0]
+		arg_86_0._imagebgoldtop.material = var_86_0.mas[0]
 	end
 
-	if arg_84_0._prefabPath then
-		if arg_84_0._bgSubGo and arg_84_0._lastBgCo.effType == StoryEnum.BgEffectType.BgGray then
-			gohelper.destroy(arg_84_0._bgSubGo)
+	if arg_86_0._prefabPath then
+		if arg_86_0._bgSubGo and arg_86_0._lastBgCo.effType == StoryEnum.BgEffectType.BgGray then
+			gohelper.destroy(arg_86_0._bgSubGo)
 		end
 
-		local var_84_1 = arg_84_0._loader:getAssetItem(arg_84_0._prefabPath)
+		local var_86_1 = arg_86_0._loader:getAssetItem(arg_86_0._prefabPath)
 
-		arg_84_0._bgSubGo = gohelper.clone(var_84_1:GetResource(), arg_84_0._imagebg.gameObject)
+		arg_86_0._bgSubGo = gohelper.clone(var_86_1:GetResource(), arg_86_0._imagebg.gameObject)
 
-		local var_84_2 = arg_84_0._bgSubGo:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+		local var_86_2 = arg_86_0._bgSubGo:GetComponent(typeof(ZProj.MaterialPropsCtrl))
 
-		arg_84_0._imagebg.material = var_84_2.mas[0]
-		arg_84_0._imagebgtop.material = var_84_2.mas[0]
+		arg_86_0._imagebg.material = var_86_2.mas[0]
+		arg_86_0._imagebgtop.material = var_86_2.mas[0]
 
 		StoryTool.enablePostProcess(true)
 
-		if arg_84_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-			arg_84_0:_actBgEffGrayUpdate(1)
+		if arg_86_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+			arg_86_0:_actBgEffGrayUpdate(1)
 		else
-			arg_84_0._bgGrayId = ZProj.TweenHelper.DOTweenFloat(0, 1, arg_84_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_84_0._actBgEffGrayUpdate, arg_84_0._actGrayFinished, arg_84_0)
+			arg_86_0._bgGrayId = ZProj.TweenHelper.DOTweenFloat(0, 1, arg_86_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_86_0._actBgEffGrayUpdate, arg_86_0._actGrayFinished, arg_86_0)
 		end
 	end
 end
 
-function var_0_0._actBgEffGrayUpdate(arg_85_0, arg_85_1)
-	if not arg_85_0._bgSubGo then
+function var_0_0._actBgEffGrayUpdate(arg_87_0, arg_87_1)
+	if not arg_87_0._bgSubGo then
 		return
 	end
 
-	local var_85_0 = arg_85_0._bgSubGo:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	local var_87_0 = arg_87_0._bgSubGo:GetComponent(typeof(ZProj.MaterialPropsCtrl))
 
-	if not var_85_0 then
+	if not var_87_0 then
 		return
 	end
 
-	var_85_0.float_01 = arg_85_1
+	var_87_0.float_01 = arg_87_1
 end
 
-function var_0_0._actGrayFinished(arg_86_0)
-	if arg_86_0._bgGrayId then
-		ZProj.TweenHelper.KillById(arg_86_0._bgGrayId)
+function var_0_0._actGrayFinished(arg_88_0)
+	if arg_88_0._bgGrayId then
+		ZProj.TweenHelper.KillById(arg_88_0._bgGrayId)
 
-		arg_86_0._bgGrayId = nil
+		arg_88_0._bgGrayId = nil
 	end
 end
 
-function var_0_0._actBgEffFullGray(arg_87_0)
-	arg_87_0:_actBgEffGrayUpdate(0)
+function var_0_0._actBgEffFullGray(arg_89_0)
+	arg_89_0:_actBgEffGrayUpdate(0)
 
-	if arg_87_0._bgGrayId then
-		ZProj.TweenHelper.KillById(arg_87_0._bgGrayId)
+	if arg_89_0._bgGrayId then
+		ZProj.TweenHelper.KillById(arg_89_0._bgGrayId)
 
-		arg_87_0._bgGrayId = nil
+		arg_89_0._bgGrayId = nil
 	end
 
-	if arg_87_0._bgCo.effDegree == 0 then
+	if arg_89_0._bgCo.effDegree == 0 then
 		StoryTool.enablePostProcess(true)
 
-		if arg_87_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-			arg_87_0:_actBgEffFullGrayUpdate(1)
+		if arg_89_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+			arg_89_0:_actBgEffFullGrayUpdate(1)
 		else
-			arg_87_0._bgGrayId = ZProj.TweenHelper.DOTweenFloat(0.5, 1, arg_87_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_87_0._actBgEffFullGrayUpdate, arg_87_0._actGrayFinished, arg_87_0)
+			arg_89_0._bgGrayId = ZProj.TweenHelper.DOTweenFloat(0.5, 1, arg_89_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_89_0._actBgEffFullGrayUpdate, arg_89_0._actGrayFinished, arg_89_0)
 		end
-	elseif arg_87_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		arg_87_0:_actBgEffFullGrayUpdate(0.5)
+	elseif arg_89_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		arg_89_0:_actBgEffFullGrayUpdate(0.5)
 	else
-		local var_87_0 = PostProcessingMgr.instance:getUIPPValue("Saturation")
+		local var_89_0 = PostProcessingMgr.instance:getUIPPValue("Saturation")
 
-		arg_87_0._bgGrayId = ZProj.TweenHelper.DOTweenFloat(var_87_0, 0.5, arg_87_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_87_0._actBgEffFullGrayUpdate, arg_87_0._actGrayFinished, arg_87_0)
+		arg_89_0._bgGrayId = ZProj.TweenHelper.DOTweenFloat(var_89_0, 0.5, arg_89_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_89_0._actBgEffFullGrayUpdate, arg_89_0._actGrayFinished, arg_89_0)
 	end
 end
 
-function var_0_0._actBgEffFullGrayUpdate(arg_88_0, arg_88_1)
-	PostProcessingMgr.instance:setUIPPValue("saturation", arg_88_1)
-	PostProcessingMgr.instance:setUIPPValue("Saturation", arg_88_1)
+function var_0_0._actBgEffFullGrayUpdate(arg_90_0, arg_90_1)
+	PostProcessingMgr.instance:setUIPPValue("saturation", arg_90_1)
+	PostProcessingMgr.instance:setUIPPValue("Saturation", arg_90_1)
 end
 
-function var_0_0._resetBgEffInterfere(arg_89_0)
-	if arg_89_0._bgCo.effType == StoryEnum.BgEffectType.Interfere then
+function var_0_0._resetBgEffInterfere(arg_91_0)
+	if arg_91_0._bgCo.effType == StoryEnum.BgEffectType.Interfere then
 		return
 	end
 
-	if arg_89_0._interfereGo then
-		gohelper.destroy(arg_89_0._interfereGo)
+	if arg_91_0._interfereGo then
+		gohelper.destroy(arg_91_0._interfereGo)
 
-		arg_89_0._interfereGo = nil
+		arg_91_0._interfereGo = nil
 	end
 
 	StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UISecond)
 	StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UIThird)
-	gohelper.setLayer(arg_89_0._gobliteff, UnityLayer.UI, true)
+	gohelper.setLayer(arg_91_0._gobliteff, UnityLayer.UI, true)
 end
 
-function var_0_0._actBgEffInterfere(arg_90_0)
-	if arg_90_0._interfereGo then
-		arg_90_0:_setInterfere()
+function var_0_0._actBgEffInterfere(arg_92_0)
+	if arg_92_0._interfereGo then
+		arg_92_0:_setInterfere()
 	else
-		arg_90_0._interfereEffPrefPath = ResUrl.getStoryBgEffect("glitch_common")
+		arg_92_0._interfereEffPrefPath = ResUrl.getStoryBgEffect("glitch_common")
 
-		local var_90_0 = {}
+		local var_92_0 = {}
 
-		table.insert(var_90_0, arg_90_0._interfereEffPrefPath)
-		arg_90_0:loadRes(var_90_0, arg_90_0._onInterfereResLoaded, arg_90_0)
+		table.insert(var_92_0, arg_92_0._interfereEffPrefPath)
+		arg_92_0:loadRes(var_92_0, arg_92_0._onInterfereResLoaded, arg_92_0)
 	end
 end
 
-function var_0_0._onInterfereResLoaded(arg_91_0)
-	if arg_91_0._interfereEffPrefPath then
-		local var_91_0 = arg_91_0._loader:getAssetItem(arg_91_0._interfereEffPrefPath)
-		local var_91_1 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
+function var_0_0._onInterfereResLoaded(arg_93_0)
+	if arg_93_0._interfereEffPrefPath then
+		local var_93_0 = arg_93_0._loader:getAssetItem(arg_93_0._interfereEffPrefPath)
+		local var_93_1 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
 
-		arg_91_0._interfereGo = gohelper.clone(var_91_0:GetResource(), var_91_1)
+		arg_93_0._interfereGo = gohelper.clone(var_93_0:GetResource(), var_93_1)
 
-		arg_91_0:_setInterfere()
+		arg_93_0:_setInterfere()
 	end
 end
 
-function var_0_0._setInterfere(arg_92_0)
+function var_0_0._setInterfere(arg_94_0)
 	StoryTool.enablePostProcess(true)
-	gohelper.setAsFirstSibling(arg_92_0._interfereGo)
-	arg_92_0._interfereGo:GetComponent(typeof(UnityEngine.UI.Image)).material:SetTexture("_MainTex", arg_92_0._blitEff.capturedTexture)
+	gohelper.setAsFirstSibling(arg_94_0._interfereGo)
+	arg_94_0._interfereGo:GetComponent(typeof(UnityEngine.UI.Image)).material:SetTexture("_MainTex", arg_94_0._blitEff.capturedTexture)
 	StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UITop)
 	StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UITop)
-	gohelper.setLayer(arg_92_0._gobliteff, UnityLayer.UISecond, true)
+	gohelper.setLayer(arg_94_0._gobliteff, UnityLayer.UISecond, true)
 end
 
-function var_0_0._resetBgEffSketch(arg_93_0)
-	if arg_93_0._bgCo.effType == StoryEnum.BgEffectType.Sketch then
+function var_0_0._resetBgEffSketch(arg_95_0)
+	if arg_95_0._bgCo.effType == StoryEnum.BgEffectType.Sketch then
 		return
 	end
 
-	if arg_93_0._bgSketchId then
-		ZProj.TweenHelper.KillById(arg_93_0._bgSketchId)
+	if arg_95_0._bgSketchId then
+		ZProj.TweenHelper.KillById(arg_95_0._bgSketchId)
 
-		arg_93_0._bgSketchId = nil
+		arg_95_0._bgSketchId = nil
 	end
 
-	if arg_93_0._sketchGo then
-		gohelper.destroy(arg_93_0._sketchGo)
+	if arg_95_0._sketchGo then
+		gohelper.destroy(arg_95_0._sketchGo)
 
-		arg_93_0._sketchGo = nil
+		arg_95_0._sketchGo = nil
 	end
 
 	StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UISecond)
 	StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UIThird)
-	gohelper.setLayer(arg_93_0._gobliteff, UnityLayer.UI, true)
+	gohelper.setLayer(arg_95_0._gobliteff, UnityLayer.UI, true)
 end
 
-function var_0_0._actBgEffSketch(arg_94_0)
-	if arg_94_0._bgSketchId then
-		ZProj.TweenHelper.KillById(arg_94_0._bgSketchId)
+function var_0_0._actBgEffSketch(arg_96_0)
+	if arg_96_0._bgSketchId then
+		ZProj.TweenHelper.KillById(arg_96_0._bgSketchId)
 
-		arg_94_0._bgSketchId = nil
+		arg_96_0._bgSketchId = nil
 	end
 
-	if arg_94_0._bgCo.effDegree == 0 and not arg_94_0._sketchGo then
+	if arg_96_0._bgCo.effDegree == 0 and not arg_96_0._sketchGo then
 		return
 	end
 
-	if arg_94_0._sketchGo then
-		arg_94_0:_setSketch()
+	if arg_96_0._sketchGo then
+		arg_96_0:_setSketch()
 	else
-		arg_94_0._sketchEffPrefPath = ResUrl.getStoryBgEffect("storybg_sketch")
+		arg_96_0._sketchEffPrefPath = ResUrl.getStoryBgEffect("storybg_sketch")
 
-		local var_94_0 = {}
+		local var_96_0 = {}
 
-		table.insert(var_94_0, arg_94_0._sketchEffPrefPath)
-		arg_94_0:loadRes(var_94_0, arg_94_0._onSketchResLoaded, arg_94_0)
+		table.insert(var_96_0, arg_96_0._sketchEffPrefPath)
+		arg_96_0:loadRes(var_96_0, arg_96_0._onSketchResLoaded, arg_96_0)
 	end
 end
 
@@ -1452,103 +1469,103 @@ local var_0_1 = {
 	0
 }
 
-function var_0_0._onSketchResLoaded(arg_95_0)
-	if arg_95_0._sketchEffPrefPath then
-		local var_95_0 = arg_95_0._loader:getAssetItem(arg_95_0._sketchEffPrefPath)
-		local var_95_1 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
+function var_0_0._onSketchResLoaded(arg_97_0)
+	if arg_97_0._sketchEffPrefPath then
+		local var_97_0 = arg_97_0._loader:getAssetItem(arg_97_0._sketchEffPrefPath)
+		local var_97_1 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
 
-		arg_95_0._sketchGo = gohelper.clone(var_95_0:GetResource(), var_95_1)
+		arg_97_0._sketchGo = gohelper.clone(var_97_0:GetResource(), var_97_1)
 
-		arg_95_0:_setSketch()
+		arg_97_0:_setSketch()
 	end
 end
 
-function var_0_0._setSketch(arg_96_0)
+function var_0_0._setSketch(arg_98_0)
 	StoryTool.enablePostProcess(true)
-	gohelper.setAsFirstSibling(arg_96_0._sketchGo)
+	gohelper.setAsFirstSibling(arg_98_0._sketchGo)
 
-	arg_96_0._imgSketch = arg_96_0._sketchGo:GetComponent(typeof(UnityEngine.UI.Image))
+	arg_98_0._imgSketch = arg_98_0._sketchGo:GetComponent(typeof(UnityEngine.UI.Image))
 
-	arg_96_0._imgSketch.material:SetTexture("_MainTex", arg_96_0._blitEff.capturedTexture)
+	arg_98_0._imgSketch.material:SetTexture("_MainTex", arg_98_0._blitEff.capturedTexture)
 
-	if arg_96_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		arg_96_0:_sketchUpdate(var_0_1[arg_96_0._bgCo.effDegree + 1])
+	if arg_98_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		arg_98_0:_sketchUpdate(var_0_1[arg_98_0._bgCo.effDegree + 1])
 	else
-		local var_96_0 = arg_96_0._bgCo.effDegree > 0 and 1 or arg_96_0._imgSketch.material:GetFloat("_SourceColLerp")
+		local var_98_0 = arg_98_0._bgCo.effDegree > 0 and 1 or arg_98_0._imgSketch.material:GetFloat("_SourceColLerp")
 
-		arg_96_0._bgSketchId = ZProj.TweenHelper.DOTweenFloat(var_96_0, var_0_1[arg_96_0._bgCo.effDegree + 1], arg_96_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_96_0._sketchUpdate, arg_96_0._sketchFinished, arg_96_0)
+		arg_98_0._bgSketchId = ZProj.TweenHelper.DOTweenFloat(var_98_0, var_0_1[arg_98_0._bgCo.effDegree + 1], arg_98_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_98_0._sketchUpdate, arg_98_0._sketchFinished, arg_98_0)
 	end
 
 	StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UITop)
 	StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UITop)
-	gohelper.setLayer(arg_96_0._gobliteff, UnityLayer.UISecond, true)
+	gohelper.setLayer(arg_98_0._gobliteff, UnityLayer.UISecond, true)
 end
 
-function var_0_0._sketchUpdate(arg_97_0, arg_97_1)
-	arg_97_0._imgSketch.material:SetFloat("_SourceColLerp", arg_97_1)
+function var_0_0._sketchUpdate(arg_99_0, arg_99_1)
+	arg_99_0._imgSketch.material:SetFloat("_SourceColLerp", arg_99_1)
 end
 
-function var_0_0._sketchFinished(arg_98_0)
-	if arg_98_0._bgSketchId then
-		ZProj.TweenHelper.KillById(arg_98_0._bgSketchId)
+function var_0_0._sketchFinished(arg_100_0)
+	if arg_100_0._bgSketchId then
+		ZProj.TweenHelper.KillById(arg_100_0._bgSketchId)
 
-		arg_98_0._bgSketchId = nil
+		arg_100_0._bgSketchId = nil
 	end
 end
 
-function var_0_0._resetBgEffBlindFilter(arg_99_0)
-	if arg_99_0._bgCo.effType == StoryEnum.BgEffectType.BlindFilter then
+function var_0_0._resetBgEffBlindFilter(arg_101_0)
+	if arg_101_0._bgCo.effType == StoryEnum.BgEffectType.BlindFilter then
 		return
 	end
 
-	if arg_99_0._bgFilterId then
-		ZProj.TweenHelper.KillById(arg_99_0._bgFilterId)
+	if arg_101_0._bgFilterId then
+		ZProj.TweenHelper.KillById(arg_101_0._bgFilterId)
 
-		arg_99_0._bgFilterId = nil
+		arg_101_0._bgFilterId = nil
 	end
 
-	if arg_99_0._filterGo then
-		gohelper.destroy(arg_99_0._filterGo)
+	if arg_101_0._filterGo then
+		gohelper.destroy(arg_101_0._filterGo)
 
-		arg_99_0._filterGo = nil
+		arg_101_0._filterGo = nil
 	end
 
 	StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UISecond)
 	StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UIThird)
-	gohelper.setLayer(arg_99_0._gobliteff, UnityLayer.UI, true)
+	gohelper.setLayer(arg_101_0._gobliteff, UnityLayer.UI, true)
 end
 
-function var_0_0._actBgEffBlindFilter(arg_100_0)
-	if arg_100_0._bgFilterId then
-		ZProj.TweenHelper.KillById(arg_100_0._bgFilterId)
+function var_0_0._actBgEffBlindFilter(arg_102_0)
+	if arg_102_0._bgFilterId then
+		ZProj.TweenHelper.KillById(arg_102_0._bgFilterId)
 
-		arg_100_0._bgFilterId = nil
+		arg_102_0._bgFilterId = nil
 	end
 
-	if arg_100_0._bgCo.effDegree == 0 and not arg_100_0._filterGo then
+	if arg_102_0._bgCo.effDegree == 0 and not arg_102_0._filterGo then
 		return
 	end
 
-	if arg_100_0._filterGo then
-		arg_100_0:_setBlindFilter()
+	if arg_102_0._filterGo then
+		arg_102_0:_setBlindFilter()
 	else
-		arg_100_0._filterEffPrefPath = ResUrl.getStoryBgEffect("storybg_blinder")
+		arg_102_0._filterEffPrefPath = ResUrl.getStoryBgEffect("storybg_blinder")
 
-		local var_100_0 = {}
+		local var_102_0 = {}
 
-		table.insert(var_100_0, arg_100_0._filterEffPrefPath)
-		arg_100_0:loadRes(var_100_0, arg_100_0._onFilterResLoaded, arg_100_0)
+		table.insert(var_102_0, arg_102_0._filterEffPrefPath)
+		arg_102_0:loadRes(var_102_0, arg_102_0._onFilterResLoaded, arg_102_0)
 	end
 end
 
-function var_0_0._onFilterResLoaded(arg_101_0)
-	if arg_101_0._filterEffPrefPath then
-		local var_101_0 = arg_101_0._loader:getAssetItem(arg_101_0._filterEffPrefPath)
-		local var_101_1 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
+function var_0_0._onFilterResLoaded(arg_103_0)
+	if arg_103_0._filterEffPrefPath then
+		local var_103_0 = arg_103_0._loader:getAssetItem(arg_103_0._filterEffPrefPath)
+		local var_103_1 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
 
-		arg_101_0._filterGo = gohelper.clone(var_101_0:GetResource(), var_101_1)
+		arg_103_0._filterGo = gohelper.clone(var_103_0:GetResource(), var_103_1)
 
-		arg_101_0:_setBlindFilter()
+		arg_103_0:_setBlindFilter()
 	end
 end
 
@@ -1559,94 +1576,94 @@ local var_0_2 = {
 	0
 }
 
-function var_0_0._setBlindFilter(arg_102_0)
+function var_0_0._setBlindFilter(arg_104_0)
 	StoryTool.enablePostProcess(true)
-	gohelper.setAsFirstSibling(arg_102_0._filterGo)
+	gohelper.setAsFirstSibling(arg_104_0._filterGo)
 
-	arg_102_0._imgFilter = arg_102_0._filterGo:GetComponent(typeof(UnityEngine.UI.Image))
+	arg_104_0._imgFilter = arg_104_0._filterGo:GetComponent(typeof(UnityEngine.UI.Image))
 
-	arg_102_0._imgFilter.material:SetTexture("_MainTex", arg_102_0._blitEff.capturedTexture)
+	arg_104_0._imgFilter.material:SetTexture("_MainTex", arg_104_0._blitEff.capturedTexture)
 
-	if arg_102_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		arg_102_0:_filterUpdate(var_0_2[arg_102_0._bgCo.effDegree + 1])
+	if arg_104_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		arg_104_0:_filterUpdate(var_0_2[arg_104_0._bgCo.effDegree + 1])
 	else
-		local var_102_0 = arg_102_0._bgCo.effDegree > 0 and 1 or arg_102_0._imgFilter.material:GetFloat("_SourceColLerp")
+		local var_104_0 = arg_104_0._bgCo.effDegree > 0 and 1 or arg_104_0._imgFilter.material:GetFloat("_SourceColLerp")
 
-		arg_102_0._bgFilterId = ZProj.TweenHelper.DOTweenFloat(var_102_0, var_0_2[arg_102_0._bgCo.effDegree + 1], arg_102_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_102_0._filterUpdate, arg_102_0._filterFinished, arg_102_0)
+		arg_104_0._bgFilterId = ZProj.TweenHelper.DOTweenFloat(var_104_0, var_0_2[arg_104_0._bgCo.effDegree + 1], arg_104_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_104_0._filterUpdate, arg_104_0._filterFinished, arg_104_0)
 	end
 
 	StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UITop)
 	StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UITop)
-	gohelper.setLayer(arg_102_0._gobliteff, UnityLayer.UISecond, true)
+	gohelper.setLayer(arg_104_0._gobliteff, UnityLayer.UISecond, true)
 end
 
-function var_0_0._filterUpdate(arg_103_0, arg_103_1)
-	arg_103_0._imgFilter.material:SetFloat("_SourceColLerp", arg_103_1)
+function var_0_0._filterUpdate(arg_105_0, arg_105_1)
+	arg_105_0._imgFilter.material:SetFloat("_SourceColLerp", arg_105_1)
 end
 
-function var_0_0._filterFinished(arg_104_0)
-	if arg_104_0._bgFilterId then
-		ZProj.TweenHelper.KillById(arg_104_0._bgFilterId)
+function var_0_0._filterFinished(arg_106_0)
+	if arg_106_0._bgFilterId then
+		ZProj.TweenHelper.KillById(arg_106_0._bgFilterId)
 
-		arg_104_0._bgFilterId = nil
+		arg_106_0._bgFilterId = nil
 	end
 end
 
-function var_0_0._resetOpposition(arg_105_0)
-	if arg_105_0._bgOppositionId then
-		ZProj.TweenHelper.KillById(arg_105_0._bgOppositionId)
+function var_0_0._resetOpposition(arg_107_0)
+	if arg_107_0._bgOppositionId then
+		ZProj.TweenHelper.KillById(arg_107_0._bgOppositionId)
 
-		arg_105_0._bgOppositionId = nil
+		arg_107_0._bgOppositionId = nil
 	end
 
-	if arg_105_0._oppositionGo then
-		gohelper.destroy(arg_105_0._oppositionGo)
+	if arg_107_0._oppositionGo then
+		gohelper.destroy(arg_107_0._oppositionGo)
 
-		arg_105_0._oppositionGo = nil
+		arg_107_0._oppositionGo = nil
 	end
 
-	local var_105_0 = ViewMgr.instance:getContainer(ViewName.StoryView).viewGO
+	local var_107_0 = ViewMgr.instance:getContainer(ViewName.StoryView).viewGO
 
-	gohelper.setLayer(var_105_0, UnityLayer.UISecond, true)
+	gohelper.setLayer(var_107_0, UnityLayer.UISecond, true)
 
-	local var_105_1 = ViewMgr.instance:getContainer(ViewName.StoryLeadRoleSpineView).viewGO
-	local var_105_2 = gohelper.findChild(var_105_1, "#go_spineroot")
+	local var_107_1 = ViewMgr.instance:getContainer(ViewName.StoryLeadRoleSpineView).viewGO
+	local var_107_2 = gohelper.findChild(var_107_1, "#go_spineroot")
 
-	gohelper.setLayer(var_105_2, UnityLayer.UIThird, true)
-	gohelper.setLayer(arg_105_0._gobliteff, UnityLayer.UI, true)
+	gohelper.setLayer(var_107_2, UnityLayer.UIThird, true)
+	gohelper.setLayer(arg_107_0._gobliteff, UnityLayer.UI, true)
 end
 
-function var_0_0._actBgEffOpposition(arg_106_0)
-	if arg_106_0._bgOppositionId then
-		ZProj.TweenHelper.KillById(arg_106_0._bgOppositionId)
+function var_0_0._actBgEffOpposition(arg_108_0)
+	if arg_108_0._bgOppositionId then
+		ZProj.TweenHelper.KillById(arg_108_0._bgOppositionId)
 
-		arg_106_0._bgOppositionId = nil
+		arg_108_0._bgOppositionId = nil
 	end
 
-	if arg_106_0._bgCo.effDegree == 0 and not arg_106_0._oppositionGo then
+	if arg_108_0._bgCo.effDegree == 0 and not arg_108_0._oppositionGo then
 		return
 	end
 
-	if arg_106_0._oppositionGo then
-		arg_106_0:_setOpposition()
+	if arg_108_0._oppositionGo then
+		arg_108_0:_setOpposition()
 	else
-		arg_106_0._oppositonPrefPath = ResUrl.getStoryBgEffect("storybg_colorinverse")
+		arg_108_0._oppositonPrefPath = ResUrl.getStoryBgEffect("storybg_colorinverse")
 
-		local var_106_0 = {}
+		local var_108_0 = {}
 
-		table.insert(var_106_0, arg_106_0._oppositonPrefPath)
-		arg_106_0:loadRes(var_106_0, arg_106_0._onOppositionResLoaded, arg_106_0)
+		table.insert(var_108_0, arg_108_0._oppositonPrefPath)
+		arg_108_0:loadRes(var_108_0, arg_108_0._onOppositionResLoaded, arg_108_0)
 	end
 end
 
-function var_0_0._onOppositionResLoaded(arg_107_0)
-	if arg_107_0._oppositonPrefPath then
-		local var_107_0 = arg_107_0._loader:getAssetItem(arg_107_0._oppositonPrefPath)
-		local var_107_1 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
+function var_0_0._onOppositionResLoaded(arg_109_0)
+	if arg_109_0._oppositonPrefPath then
+		local var_109_0 = arg_109_0._loader:getAssetItem(arg_109_0._oppositonPrefPath)
+		local var_109_1 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
 
-		arg_107_0._oppositionGo = gohelper.clone(var_107_0:GetResource(), var_107_1)
+		arg_109_0._oppositionGo = gohelper.clone(var_109_0:GetResource(), var_109_1)
 
-		arg_107_0:_setOpposition()
+		arg_109_0:_setOpposition()
 	end
 end
 
@@ -1657,161 +1674,128 @@ local var_0_3 = {
 	0
 }
 
-function var_0_0._setOpposition(arg_108_0)
+function var_0_0._setOpposition(arg_110_0)
 	StoryTool.enablePostProcess(true)
-	gohelper.setAsFirstSibling(arg_108_0._oppositionGo)
+	gohelper.setAsFirstSibling(arg_110_0._oppositionGo)
 
-	arg_108_0._imgOpposition = arg_108_0._oppositionGo:GetComponent(typeof(UnityEngine.UI.Image))
+	arg_110_0._imgOpposition = arg_110_0._oppositionGo:GetComponent(typeof(UnityEngine.UI.Image))
 
-	arg_108_0._imgOpposition.material:SetTexture("_MainTex", arg_108_0._blitEff.capturedTexture)
+	arg_110_0._imgOpposition.material:SetTexture("_MainTex", arg_110_0._blitEff.capturedTexture)
 
-	if arg_108_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		arg_108_0:_oppositionUpdate(var_0_3[arg_108_0._bgCo.effDegree + 1])
+	if arg_110_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		arg_110_0:_oppositionUpdate(var_0_3[arg_110_0._bgCo.effDegree + 1])
 	else
-		local var_108_0 = arg_108_0._bgCo.effDegree > 0 and 1 or arg_108_0._imgOpposition.material:GetFloat("_ColorInverseFactor")
+		local var_110_0 = arg_110_0._bgCo.effDegree > 0 and 1 or arg_110_0._imgOpposition.material:GetFloat("_ColorInverseFactor")
 
-		arg_108_0._bgOppositionId = ZProj.TweenHelper.DOTweenFloat(var_108_0, var_0_3[arg_108_0._bgCo.effDegree + 1], arg_108_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_108_0._oppositionUpdate, arg_108_0._oppositionFinished, arg_108_0)
+		arg_110_0._bgOppositionId = ZProj.TweenHelper.DOTweenFloat(var_110_0, var_0_3[arg_110_0._bgCo.effDegree + 1], arg_110_0._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_110_0._oppositionUpdate, arg_110_0._oppositionFinished, arg_110_0)
 	end
 
-	local var_108_1 = ViewMgr.instance:getContainer(ViewName.StoryView).viewGO
+	local var_110_1 = ViewMgr.instance:getContainer(ViewName.StoryView).viewGO
 
-	gohelper.setLayer(var_108_1, UnityLayer.UITop, true)
+	gohelper.setLayer(var_110_1, UnityLayer.UITop, true)
 
-	local var_108_2 = ViewMgr.instance:getContainer(ViewName.StoryLeadRoleSpineView).viewGO
-	local var_108_3 = gohelper.findChild(var_108_2, "#go_spineroot")
+	local var_110_2 = ViewMgr.instance:getContainer(ViewName.StoryLeadRoleSpineView).viewGO
+	local var_110_3 = gohelper.findChild(var_110_2, "#go_spineroot")
 
-	gohelper.setLayer(var_108_3, UnityLayer.UITop, true)
-	gohelper.setLayer(arg_108_0._gobliteff, UnityLayer.UISecond, true)
+	gohelper.setLayer(var_110_3, UnityLayer.UITop, true)
+	gohelper.setLayer(arg_110_0._gobliteff, UnityLayer.UISecond, true)
 end
 
-function var_0_0._oppositionUpdate(arg_109_0, arg_109_1)
-	arg_109_0._imgOpposition.material:SetFloat("_ColorInverseFactor", arg_109_1)
+function var_0_0._oppositionUpdate(arg_111_0, arg_111_1)
+	arg_111_0._imgOpposition.material:SetFloat("_ColorInverseFactor", arg_111_1)
 end
 
-function var_0_0._oppositionFinished(arg_110_0)
-	if arg_110_0._bgOppositionId then
-		ZProj.TweenHelper.KillById(arg_110_0._bgOppositionId)
+function var_0_0._oppositionFinished(arg_112_0)
+	if arg_112_0._bgOppositionId then
+		ZProj.TweenHelper.KillById(arg_112_0._bgOppositionId)
 
-		arg_110_0._bgOppositionId = nil
-	end
-end
-
-function var_0_0._resetRgbSplit(arg_111_0)
-	if arg_111_0._rbgSplitGo then
-		gohelper.destroy(arg_111_0._rbgSplitGo)
-
-		arg_111_0._rbgSplitGo = nil
-	end
-
-	gohelper.setLayer(arg_111_0._gobliteff, UnityLayer.UI, true)
-end
-
-function var_0_0._actBgEffRgbSplit(arg_112_0)
-	if arg_112_0._bgCo.effDegree == StoryEnum.BgRgbSplitType.Trans then
-		arg_112_0:_showTransRgbSplit()
-	elseif arg_112_0._bgCo.effDegree == StoryEnum.BgRgbSplitType.Once then
-		arg_112_0:_showOnceRgbSplit()
-	elseif arg_112_0._bgCo.effDegree == StoryEnum.BgRgbSplitType.LoopWeak then
-		arg_112_0:_showLoopWeakRgbSplit()
-	elseif arg_112_0._bgCo.effDegree == StoryEnum.BgRgbSplitType.LoopStrong then
-		arg_112_0:_showLoopStrongRgbSplit()
+		arg_112_0._bgOppositionId = nil
 	end
 end
 
-function var_0_0._showTransRgbSplit(arg_113_0)
+function var_0_0._resetRgbSplit(arg_113_0)
 	if arg_113_0._rbgSplitGo then
 		gohelper.destroy(arg_113_0._rbgSplitGo)
 
 		arg_113_0._rbgSplitGo = nil
 	end
 
-	arg_113_0._transRgbSplitPrefPath = ResUrl.getStoryBgEffect("storybg_rgbsplit_changebg_doublerole")
-
-	local var_113_0 = {}
-
-	table.insert(var_113_0, arg_113_0._transRgbSplitPrefPath)
-	arg_113_0:loadRes(var_113_0, arg_113_0._onTransRgbSplitResLoaded, arg_113_0)
+	gohelper.setLayer(arg_113_0._gobliteff, UnityLayer.UI, true)
 end
 
-function var_0_0._onTransRgbSplitResLoaded(arg_114_0)
-	if arg_114_0._transRgbSplitPrefPath then
-		local var_114_0 = arg_114_0._loader:getAssetItem(arg_114_0._transRgbSplitPrefPath)
-		local var_114_1 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
-
-		arg_114_0._rbgSplitGo = gohelper.clone(var_114_0:GetResource(), var_114_1)
-
-		arg_114_0:_setTransRgbSplit()
+function var_0_0._actBgEffRgbSplit(arg_114_0)
+	if arg_114_0._bgCo.effDegree == StoryEnum.BgRgbSplitType.Trans then
+		arg_114_0:_showTransRgbSplit()
+	elseif arg_114_0._bgCo.effDegree == StoryEnum.BgRgbSplitType.Once then
+		arg_114_0:_showOnceRgbSplit()
+	elseif arg_114_0._bgCo.effDegree == StoryEnum.BgRgbSplitType.LoopWeak then
+		arg_114_0:_showLoopWeakRgbSplit()
+	elseif arg_114_0._bgCo.effDegree == StoryEnum.BgRgbSplitType.LoopStrong then
+		arg_114_0:_showLoopStrongRgbSplit()
 	end
 end
 
-function var_0_0._setTransRgbSplit(arg_115_0)
+function var_0_0._showTransRgbSplit(arg_115_0)
+	if arg_115_0._rbgSplitGo then
+		gohelper.destroy(arg_115_0._rbgSplitGo)
+
+		arg_115_0._rbgSplitGo = nil
+	end
+
+	arg_115_0._transRgbSplitPrefPath = ResUrl.getStoryBgEffect("storybg_rgbsplit_changebg_doublerole")
+
+	local var_115_0 = {}
+
+	table.insert(var_115_0, arg_115_0._transRgbSplitPrefPath)
+	arg_115_0:loadRes(var_115_0, arg_115_0._onTransRgbSplitResLoaded, arg_115_0)
+end
+
+function var_0_0._onTransRgbSplitResLoaded(arg_116_0)
+	if arg_116_0._transRgbSplitPrefPath then
+		local var_116_0 = arg_116_0._loader:getAssetItem(arg_116_0._transRgbSplitPrefPath)
+		local var_116_1 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
+
+		arg_116_0._rbgSplitGo = gohelper.clone(var_116_0:GetResource(), var_116_1)
+
+		arg_116_0:_setTransRgbSplit()
+	end
+end
+
+function var_0_0._setTransRgbSplit(arg_117_0)
 	StoryTool.enablePostProcess(true)
-	gohelper.setAsFirstSibling(arg_115_0._rbgSplitGo)
+	gohelper.setAsFirstSibling(arg_117_0._rbgSplitGo)
 
-	arg_115_0._imgOld = gohelper.findChildImage(arg_115_0._rbgSplitGo, "image_old")
-	arg_115_0._imgNew = gohelper.findChildImage(arg_115_0._rbgSplitGo, "image_new")
-	arg_115_0._goAnim = gohelper.findChild(arg_115_0._rbgSplitGo, "anim")
+	arg_117_0._imgOld = gohelper.findChildImage(arg_117_0._rbgSplitGo, "image_old")
+	arg_117_0._imgNew = gohelper.findChildImage(arg_117_0._rbgSplitGo, "image_new")
+	arg_117_0._goAnim = gohelper.findChild(arg_117_0._rbgSplitGo, "anim")
 
-	gohelper.setActive(arg_115_0._imgOld.gameObject, true)
-	gohelper.setActive(arg_115_0._imgNew.gameObject, true)
-	gohelper.setActive(arg_115_0._goAnim, true)
-	gohelper.setLayer(arg_115_0._gobliteff, UnityLayer.UISecond, true)
-	arg_115_0._imgOld.material:SetTexture("_MainTex", arg_115_0._lastCaptureTexture)
-	arg_115_0._imgNew.material:SetTexture("_MainTex", arg_115_0._blitEffSecond.capturedTexture)
-	TaskDispatcher.runDelay(arg_115_0._resetRgbSplit, arg_115_0, 1.2)
+	gohelper.setActive(arg_117_0._imgOld.gameObject, true)
+	gohelper.setActive(arg_117_0._imgNew.gameObject, true)
+	gohelper.setActive(arg_117_0._goAnim, true)
+	gohelper.setLayer(arg_117_0._gobliteff, UnityLayer.UISecond, true)
+	arg_117_0._imgOld.material:SetTexture("_MainTex", arg_117_0._lastCaptureTexture)
+	arg_117_0._imgNew.material:SetTexture("_MainTex", arg_117_0._blitEffSecond.capturedTexture)
+	TaskDispatcher.runDelay(arg_117_0._resetRgbSplit, arg_117_0, 1.2)
 end
 
-function var_0_0._showOnceRgbSplit(arg_116_0)
-	if arg_116_0._rbgSplitGo then
-		gohelper.destroy(arg_116_0._rbgSplitGo)
-
-		arg_116_0._rbgSplitGo = nil
-	end
-
-	arg_116_0._onceRgbSplitPrefPath = ResUrl.getStoryBgEffect("storybg_rgbsplit_once")
-
-	local var_116_0 = {}
-
-	table.insert(var_116_0, arg_116_0._onceRgbSplitPrefPath)
-	arg_116_0:loadRes(var_116_0, arg_116_0._onOnceRgbSplitResLoaded, arg_116_0)
-end
-
-function var_0_0._onOnceRgbSplitResLoaded(arg_117_0)
-	if arg_117_0._onceRgbSplitPrefPath then
-		local var_117_0 = arg_117_0._loader:getAssetItem(arg_117_0._onceRgbSplitPrefPath)
-		local var_117_1 = ViewMgr.instance:getContainer(ViewName.StoryHeroView).viewGO
-
-		arg_117_0._rbgSplitGo = gohelper.clone(var_117_0:GetResource(), var_117_1)
-
-		StoryTool.enablePostProcess(true)
-		gohelper.setAsFirstSibling(arg_117_0._rbgSplitGo)
-
-		arg_117_0._img = arg_117_0._rbgSplitGo:GetComponent(typeof(UnityEngine.UI.Image))
-
-		gohelper.setActive(arg_117_0._img.gameObject, true)
-		arg_117_0._img.material:SetTexture("_MainTex", arg_117_0._blitEff.capturedTexture)
-		TaskDispatcher.runDelay(arg_117_0._resetRgbSplit, arg_117_0, 0.267)
-	end
-end
-
-function var_0_0._showLoopWeakRgbSplit(arg_118_0)
+function var_0_0._showOnceRgbSplit(arg_118_0)
 	if arg_118_0._rbgSplitGo then
 		gohelper.destroy(arg_118_0._rbgSplitGo)
 
 		arg_118_0._rbgSplitGo = nil
 	end
 
-	arg_118_0._loopWeakRgbSplitPrefPath = ResUrl.getStoryBgEffect("storybg_rgbsplit_loop")
+	arg_118_0._onceRgbSplitPrefPath = ResUrl.getStoryBgEffect("storybg_rgbsplit_once")
 
 	local var_118_0 = {}
 
-	table.insert(var_118_0, arg_118_0._loopWeakRgbSplitPrefPath)
-	arg_118_0:loadRes(var_118_0, arg_118_0._onLoopWeakRgbSplitResLoaded, arg_118_0)
+	table.insert(var_118_0, arg_118_0._onceRgbSplitPrefPath)
+	arg_118_0:loadRes(var_118_0, arg_118_0._onOnceRgbSplitResLoaded, arg_118_0)
 end
 
-function var_0_0._onLoopWeakRgbSplitResLoaded(arg_119_0)
-	if arg_119_0._loopWeakRgbSplitPrefPath then
-		local var_119_0 = arg_119_0._loader:getAssetItem(arg_119_0._loopWeakRgbSplitPrefPath)
+function var_0_0._onOnceRgbSplitResLoaded(arg_119_0)
+	if arg_119_0._onceRgbSplitPrefPath then
+		local var_119_0 = arg_119_0._loader:getAssetItem(arg_119_0._onceRgbSplitPrefPath)
 		local var_119_1 = ViewMgr.instance:getContainer(ViewName.StoryHeroView).viewGO
 
 		arg_119_0._rbgSplitGo = gohelper.clone(var_119_0:GetResource(), var_119_1)
@@ -1823,27 +1807,28 @@ function var_0_0._onLoopWeakRgbSplitResLoaded(arg_119_0)
 
 		gohelper.setActive(arg_119_0._img.gameObject, true)
 		arg_119_0._img.material:SetTexture("_MainTex", arg_119_0._blitEff.capturedTexture)
+		TaskDispatcher.runDelay(arg_119_0._resetRgbSplit, arg_119_0, 0.267)
 	end
 end
 
-function var_0_0._showLoopStrongRgbSplit(arg_120_0)
+function var_0_0._showLoopWeakRgbSplit(arg_120_0)
 	if arg_120_0._rbgSplitGo then
 		gohelper.destroy(arg_120_0._rbgSplitGo)
 
 		arg_120_0._rbgSplitGo = nil
 	end
 
-	arg_120_0._loopStrongRgbSplitPrefPath = ResUrl.getStoryBgEffect("storybg_rgbsplit_loop_strong")
+	arg_120_0._loopWeakRgbSplitPrefPath = ResUrl.getStoryBgEffect("storybg_rgbsplit_loop")
 
 	local var_120_0 = {}
 
-	table.insert(var_120_0, arg_120_0._loopStrongRgbSplitPrefPath)
-	arg_120_0:loadRes(var_120_0, arg_120_0._onLoopStrongRgbSplitResLoaded, arg_120_0)
+	table.insert(var_120_0, arg_120_0._loopWeakRgbSplitPrefPath)
+	arg_120_0:loadRes(var_120_0, arg_120_0._onLoopWeakRgbSplitResLoaded, arg_120_0)
 end
 
-function var_0_0._onLoopStrongRgbSplitResLoaded(arg_121_0)
-	if arg_121_0._loopStrongRgbSplitPrefPath then
-		local var_121_0 = arg_121_0._loader:getAssetItem(arg_121_0._loopStrongRgbSplitPrefPath)
+function var_0_0._onLoopWeakRgbSplitResLoaded(arg_121_0)
+	if arg_121_0._loopWeakRgbSplitPrefPath then
+		local var_121_0 = arg_121_0._loader:getAssetItem(arg_121_0._loopWeakRgbSplitPrefPath)
 		local var_121_1 = ViewMgr.instance:getContainer(ViewName.StoryHeroView).viewGO
 
 		arg_121_0._rbgSplitGo = gohelper.clone(var_121_0:GetResource(), var_121_1)
@@ -1858,171 +1843,203 @@ function var_0_0._onLoopStrongRgbSplitResLoaded(arg_121_0)
 	end
 end
 
-function var_0_0._actBgEffEagleEye(arg_122_0)
-	arg_122_0._bgEffEagleEye = StoryBgEffsEagleEye.New()
+function var_0_0._showLoopStrongRgbSplit(arg_122_0)
+	if arg_122_0._rbgSplitGo then
+		gohelper.destroy(arg_122_0._rbgSplitGo)
 
-	arg_122_0._bgEffEagleEye:init(arg_122_0._bgCo)
-	arg_122_0._bgEffEagleEye:start(arg_122_0._onEagleEyeFinished, arg_122_0)
+		arg_122_0._rbgSplitGo = nil
+	end
+
+	arg_122_0._loopStrongRgbSplitPrefPath = ResUrl.getStoryBgEffect("storybg_rgbsplit_loop_strong")
+
+	local var_122_0 = {}
+
+	table.insert(var_122_0, arg_122_0._loopStrongRgbSplitPrefPath)
+	arg_122_0:loadRes(var_122_0, arg_122_0._onLoopStrongRgbSplitResLoaded, arg_122_0)
 end
 
-function var_0_0._onEagleEyeFinished(arg_123_0)
-	if arg_123_0._bgEffEagleEye then
-		arg_123_0._bgEffEagleEye:destroy()
+function var_0_0._onLoopStrongRgbSplitResLoaded(arg_123_0)
+	if arg_123_0._loopStrongRgbSplitPrefPath then
+		local var_123_0 = arg_123_0._loader:getAssetItem(arg_123_0._loopStrongRgbSplitPrefPath)
+		local var_123_1 = ViewMgr.instance:getContainer(ViewName.StoryHeroView).viewGO
 
-		arg_123_0._bgEffEagleEye = nil
+		arg_123_0._rbgSplitGo = gohelper.clone(var_123_0:GetResource(), var_123_1)
+
+		StoryTool.enablePostProcess(true)
+		gohelper.setAsFirstSibling(arg_123_0._rbgSplitGo)
+
+		arg_123_0._img = arg_123_0._rbgSplitGo:GetComponent(typeof(UnityEngine.UI.Image))
+
+		gohelper.setActive(arg_123_0._img.gameObject, true)
+		arg_123_0._img.material:SetTexture("_MainTex", arg_123_0._blitEff.capturedTexture)
 	end
 end
 
-function var_0_0.loadRes(arg_124_0, arg_124_1, arg_124_2, arg_124_3)
-	if arg_124_0._loader then
-		arg_124_0._loader:dispose()
+function var_0_0._actBgEffEagleEye(arg_124_0)
+	arg_124_0._bgEffEagleEye = StoryBgEffsEagleEye.New()
 
-		arg_124_0._loader = nil
-	end
+	arg_124_0._bgEffEagleEye:init(arg_124_0._bgCo)
+	arg_124_0._bgEffEagleEye:start(arg_124_0._onEagleEyeFinished, arg_124_0)
+end
 
-	if arg_124_1 and #arg_124_1 > 0 then
-		arg_124_0._loader = MultiAbLoader.New()
+function var_0_0._onEagleEyeFinished(arg_125_0)
+	if arg_125_0._bgEffEagleEye then
+		arg_125_0._bgEffEagleEye:destroy()
 
-		arg_124_0._loader:setPathList(arg_124_1)
-		arg_124_0._loader:startLoad(arg_124_2, arg_124_3)
-	elseif arg_124_2 then
-		arg_124_2(arg_124_3)
+		arg_125_0._bgEffEagleEye = nil
 	end
 end
 
-function var_0_0.onClose(arg_125_0)
-	arg_125_0:_clearBg()
+function var_0_0.loadRes(arg_126_0, arg_126_1, arg_126_2, arg_126_3)
+	if arg_126_0._loader then
+		arg_126_0._loader:dispose()
 
-	if arg_125_0._bgFadeId then
-		ZProj.TweenHelper.KillById(arg_125_0._bgFadeId)
+		arg_126_0._loader = nil
 	end
 
-	gohelper.setActive(arg_125_0.viewGO, false)
+	if arg_126_1 and #arg_126_1 > 0 then
+		arg_126_0._loader = MultiAbLoader.New()
+
+		arg_126_0._loader:setPathList(arg_126_1)
+		arg_126_0._loader:startLoad(arg_126_2, arg_126_3)
+	elseif arg_126_2 then
+		arg_126_2(arg_126_3)
+	end
+end
+
+function var_0_0.onClose(arg_127_0)
+	arg_127_0:_clearBg()
+
+	if arg_127_0._bgFadeId then
+		ZProj.TweenHelper.KillById(arg_127_0._bgFadeId)
+	end
+
+	gohelper.setActive(arg_127_0.viewGO, false)
 	ViewMgr.instance:closeView(ViewName.StoryHeroView)
-	arg_125_0:_removeEvents()
+	arg_127_0:_removeEvents()
 end
 
-function var_0_0._clearBg(arg_126_0)
-	if arg_126_0._blurId then
-		ZProj.TweenHelper.KillById(arg_126_0._blurId)
+function var_0_0._clearBg(arg_128_0)
+	if arg_128_0._blurId then
+		ZProj.TweenHelper.KillById(arg_128_0._blurId)
 
-		arg_126_0._blurId = nil
+		arg_128_0._blurId = nil
 	end
 
-	if arg_126_0._bgScaleId then
-		ZProj.TweenHelper.KillById(arg_126_0._bgScaleId)
+	if arg_128_0._bgScaleId then
+		ZProj.TweenHelper.KillById(arg_128_0._bgScaleId)
 
-		arg_126_0._bgScaleId = nil
+		arg_128_0._bgScaleId = nil
 	end
 
-	if arg_126_0._bgPosId then
-		ZProj.TweenHelper.KillById(arg_126_0._bgPosId)
+	if arg_128_0._bgPosId then
+		ZProj.TweenHelper.KillById(arg_128_0._bgPosId)
 
-		arg_126_0._bgPosId = nil
+		arg_128_0._bgPosId = nil
 	end
 
-	if arg_126_0._bgRotateId then
-		ZProj.TweenHelper.KillById(arg_126_0._bgRotateId)
+	if arg_128_0._bgRotateId then
+		ZProj.TweenHelper.KillById(arg_128_0._bgRotateId)
 
-		arg_126_0._bgRotateId = nil
+		arg_128_0._bgRotateId = nil
 	end
 
-	if arg_126_0._bgGrayId then
-		ZProj.TweenHelper.KillById(arg_126_0._bgGrayId)
+	if arg_128_0._bgGrayId then
+		ZProj.TweenHelper.KillById(arg_128_0._bgGrayId)
 
-		arg_126_0._bgGrayId = nil
+		arg_128_0._bgGrayId = nil
 	end
 
-	if arg_126_0._bgSketchId then
-		ZProj.TweenHelper.KillById(arg_126_0._bgSketchId)
+	if arg_128_0._bgSketchId then
+		ZProj.TweenHelper.KillById(arg_128_0._bgSketchId)
 
-		arg_126_0._bgSketchId = nil
+		arg_128_0._bgSketchId = nil
 	end
 
-	if arg_126_0._bgFilterId then
-		ZProj.TweenHelper.KillById(arg_126_0._bgFilterId)
+	if arg_128_0._bgFilterId then
+		ZProj.TweenHelper.KillById(arg_128_0._bgFilterId)
 
-		arg_126_0._bgFilterId = nil
+		arg_128_0._bgFilterId = nil
 	end
 
-	if arg_126_0._bgOppositionId then
-		ZProj.TweenHelper.KillById(arg_126_0._bgOppositionId)
+	if arg_128_0._bgOppositionId then
+		ZProj.TweenHelper.KillById(arg_128_0._bgOppositionId)
 
-		arg_126_0._bgOppositionId = nil
+		arg_128_0._bgOppositionId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_126_0._resetRgbSplit, arg_126_0)
-	TaskDispatcher.cancelTask(arg_126_0._onTurnPageFinished, arg_126_0)
-	TaskDispatcher.cancelTask(arg_126_0._changeRightDark, arg_126_0)
-	TaskDispatcher.cancelTask(arg_126_0._enterChange, arg_126_0)
-	TaskDispatcher.cancelTask(arg_126_0._startShake, arg_126_0)
-	TaskDispatcher.cancelTask(arg_126_0._shakeStop, arg_126_0)
-	TaskDispatcher.cancelTask(arg_126_0._distortEnd, arg_126_0)
-	TaskDispatcher.cancelTask(arg_126_0._leftDarkTransFinished, arg_126_0)
-	TaskDispatcher.cancelTask(arg_126_0._commonTransFinished, arg_126_0)
-	arg_126_0:_onEagleEyeFinished()
+	TaskDispatcher.cancelTask(arg_128_0._resetRgbSplit, arg_128_0)
+	TaskDispatcher.cancelTask(arg_128_0._onTurnPageFinished, arg_128_0)
+	TaskDispatcher.cancelTask(arg_128_0._changeRightDark, arg_128_0)
+	TaskDispatcher.cancelTask(arg_128_0._enterChange, arg_128_0)
+	TaskDispatcher.cancelTask(arg_128_0._startShake, arg_128_0)
+	TaskDispatcher.cancelTask(arg_128_0._shakeStop, arg_128_0)
+	TaskDispatcher.cancelTask(arg_128_0._distortEnd, arg_128_0)
+	TaskDispatcher.cancelTask(arg_128_0._leftDarkTransFinished, arg_128_0)
+	TaskDispatcher.cancelTask(arg_128_0._commonTransFinished, arg_128_0)
+	arg_128_0:_onEagleEyeFinished()
 
-	if arg_126_0._bgTrans then
-		arg_126_0._bgTrans:destroy()
+	if arg_128_0._bgTrans then
+		arg_128_0._bgTrans:destroy()
 
-		arg_126_0._bgTrans = nil
+		arg_128_0._bgTrans = nil
 	end
 
-	if arg_126_0._simagebgimg then
-		arg_126_0._simagebgimg:UnLoadImage()
+	if arg_128_0._simagebgimg then
+		arg_128_0._simagebgimg:UnLoadImage()
 
-		arg_126_0._simagebgimg = nil
+		arg_128_0._simagebgimg = nil
 	end
 
-	if arg_126_0._simagebgimgtop then
-		arg_126_0._simagebgimgtop:UnLoadImage()
+	if arg_128_0._simagebgimgtop then
+		arg_128_0._simagebgimgtop:UnLoadImage()
 
-		arg_126_0._simagebgimgtop = nil
+		arg_128_0._simagebgimgtop = nil
 	end
 
-	if arg_126_0._simagebgold then
-		arg_126_0._simagebgold:UnLoadImage()
+	if arg_128_0._simagebgold then
+		arg_128_0._simagebgold:UnLoadImage()
 
-		arg_126_0._simagebgold = nil
+		arg_128_0._simagebgold = nil
 	end
 
-	if arg_126_0._simagebgoldtop then
-		arg_126_0._simagebgoldtop:UnLoadImage()
+	if arg_128_0._simagebgoldtop then
+		arg_128_0._simagebgoldtop:UnLoadImage()
 
-		arg_126_0._simagebgoldtop = nil
+		arg_128_0._simagebgoldtop = nil
 	end
 end
 
-function var_0_0._removeEvents(arg_127_0)
-	arg_127_0:removeEventCb(StoryController.instance, StoryEvent.RefreshStep, arg_127_0._onUpdateUI, arg_127_0)
-	arg_127_0:removeEventCb(StoryController.instance, StoryEvent.RefreshBackground, arg_127_0._colorFadeBgRefresh, arg_127_0)
-	arg_127_0:removeEventCb(StoryController.instance, StoryEvent.ShowBackground, arg_127_0._showBg, arg_127_0)
+function var_0_0._removeEvents(arg_129_0)
+	arg_129_0:removeEventCb(StoryController.instance, StoryEvent.RefreshStep, arg_129_0._onUpdateUI, arg_129_0)
+	arg_129_0:removeEventCb(StoryController.instance, StoryEvent.RefreshBackground, arg_129_0._colorFadeBgRefresh, arg_129_0)
+	arg_129_0:removeEventCb(StoryController.instance, StoryEvent.ShowBackground, arg_129_0._showBg, arg_129_0)
 end
 
-function var_0_0.onDestroyView(arg_128_0)
-	if arg_128_0._lastCaptureTexture then
-		UnityEngine.RenderTexture.ReleaseTemporary(arg_128_0._lastCaptureTexture)
+function var_0_0.onDestroyView(arg_130_0)
+	if arg_130_0._lastCaptureTexture then
+		UnityEngine.RenderTexture.ReleaseTemporary(arg_130_0._lastCaptureTexture)
 
-		arg_128_0._lastCaptureTexture = nil
+		arg_130_0._lastCaptureTexture = nil
 	end
 
-	arg_128_0:_clearBg()
-	arg_128_0:_actBgEffFullGrayUpdate(0.5)
+	arg_130_0:_clearBg()
+	arg_130_0:_actBgEffFullGrayUpdate(0.5)
 
-	if arg_128_0._borderFadeId then
-		ZProj.TweenHelper.KillById(arg_128_0._borderFadeId)
+	if arg_130_0._borderFadeId then
+		ZProj.TweenHelper.KillById(arg_130_0._borderFadeId)
 	end
 
-	if arg_128_0._loader then
-		arg_128_0._loader:dispose()
+	if arg_130_0._loader then
+		arg_130_0._loader:dispose()
 
-		arg_128_0._loader = nil
+		arg_130_0._loader = nil
 	end
 
-	if arg_128_0._matLoader then
-		arg_128_0._matLoader:dispose()
+	if arg_130_0._matLoader then
+		arg_130_0._matLoader:dispose()
 
-		arg_128_0._matLoader = nil
+		arg_130_0._matLoader = nil
 	end
 end
 

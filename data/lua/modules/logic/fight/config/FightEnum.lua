@@ -361,6 +361,7 @@ var_0_0.EffectType = {
 	BFSGSKILLEND = 158,
 	SPCARDADD = 78,
 	CANTSELECTEX = 105,
+	REALDAMAGEKILL = 351,
 	CARDEFFECTCHANGE = 85,
 	SIMPLEPOLARIZATIONADDLIMIT = 296,
 	ACT174MONSTERAICARD = 273,
@@ -440,6 +441,7 @@ var_0_0.EffectType = {
 	PLAYAROUNDDOWNRANK = 219,
 	NUODIKARANDOMATTACKNUM = 349,
 	DUDUBONECONTINUECHANNEL = 257,
+	BUFFDELREASON = 352,
 	ADDTOBUFFENTITY = 147,
 	CURRENTHPCHANGE = 109,
 	ADDBUFFROUNDBYTYPEID = 82,
@@ -805,6 +807,7 @@ var_0_0.BuffType_SpecialCountCastChannel = "SpecialCountCastChannel"
 var_0_0.BuffType_SpecialCountContinueChannelBuff = "SpecialCountContinueChannelBuff"
 var_0_0.BuffType_LockHpMax = "LockHpMax"
 var_0_0.BuffType_NoUseCardEnergyRecordByRound = "NoUseCardEnergyRecordByRound"
+var_0_0.BuffType_RealDamageKill = "RealDamageKill"
 var_0_0.BuffType_SpecialCountCastBuff = "SpecialCountCastBuff"
 var_0_0.BuffType_SpecialCountCastChannel = "SpecialCountCastChannel"
 var_0_0.BuffTypeId_CoverPerson = 8398
@@ -821,6 +824,7 @@ var_0_0.BuffFeature = {
 	EzioBigSkill = "EzioBigSkill",
 	SpecialCountCastBuff = "SpecialCountCastBuff",
 	InjuryBank = "InjuryBank",
+	ConsumeBuffAddBuffContinueChannel = "ConsumeBuffAddBuffContinueChannel",
 	StorageDamage = "StorageDamage",
 	NuoDiKaCastChannel = "NuoDiKaCastChannel",
 	Dream = "Dream",
@@ -1000,9 +1004,11 @@ var_0_0.CardInfoStatus = {
 }
 var_0_0.BuffActId = {
 	ExSkillNoConsumption = 514,
+	RealDamageKill = 1028,
+	LockHpMax = 1013,
 	NoUseCardEnergyRecordByRound = 1016,
 	ExPointCantAdd = 603,
-	LockHpMax = 1013
+	ConsumeBuffAddBuffContinueChannel = 1031
 }
 var_0_0.ExPointState = {
 	Server = 2,
@@ -1102,6 +1108,16 @@ var_0_0.Status = {
 var_0_0.StressThreshold = {
 	[var_0_0.Status.Positive] = 24,
 	[var_0_0.Status.Negative] = 50
+}
+var_0_0.MonsterId2StressThresholdDict = {
+	[900042101] = {
+		[var_0_0.Status.Positive] = 39,
+		[var_0_0.Status.Negative] = 60
+	},
+	[900042102] = {
+		[var_0_0.Status.Positive] = 39,
+		[var_0_0.Status.Negative] = 60
+	}
 }
 var_0_0.BuffType = {
 	LayerMasterHalo = 1,
@@ -1223,6 +1239,9 @@ var_0_0.ExPointTypeFeature = {
 		combineAddExpoint = false,
 		playAddExpoint = false
 	}
+}
+var_0_0.BuffDeleteReason = {
+	Overflow = 1
 }
 
 return var_0_0

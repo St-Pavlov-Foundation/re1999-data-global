@@ -60,7 +60,8 @@ function var_0_0._onClick(arg_6_0)
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 		[StatEnum.EventProperties.RecommendPageId] = "712",
-		[StatEnum.EventProperties.RecommendPageName] = "新人邀约"
+		[StatEnum.EventProperties.RecommendPageName] = "新人邀约",
+		[StatEnum.EventProperties.RecommendPageRank] = arg_6_0:getTabIndex()
 	})
 	GameFacade.jumpByAdditionParam("10170#610002")
 	AudioMgr.instance:trigger(2000001)

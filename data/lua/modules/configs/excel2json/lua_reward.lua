@@ -10,7 +10,9 @@ local var_0_1 = {
 	rewardGroup4 = 7,
 	dailyGainWarning = 3,
 	rewardGroup5 = 8,
-	rewardGroup6 = 9
+	rewardGroup6 = 9,
+	rewardGroup7 = 10,
+	rewardGroup8 = 11
 }
 local var_0_2 = {
 	"reward_id"

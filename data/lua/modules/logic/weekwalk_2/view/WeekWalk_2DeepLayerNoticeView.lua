@@ -195,6 +195,7 @@ function var_0_0.onOpen(arg_14_0)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_ui_artificial_installation_open)
+	NavigateMgr.instance:addEscape(arg_14_0.viewName, arg_14_0.closeThis, arg_14_0)
 end
 
 function var_0_0._setRuleDescItem(arg_15_0, arg_15_1, arg_15_2)

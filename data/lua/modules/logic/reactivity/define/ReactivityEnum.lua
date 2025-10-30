@@ -3,9 +3,9 @@
 local var_0_0 = _M
 
 var_0_0.ActivityDefine = {
-	[VersionActivity2_9Enum.ActivityId.Reactivity] = {
-		storeCurrency = CurrencyEnum.CurrencyType.V2a3Dungeon,
-		storeActId = VersionActivity2_9Enum.ActivityId.ReactivityStore
+	[VersionActivity3_0Enum.ActivityId.Reactivity] = {
+		storeCurrency = CurrencyEnum.CurrencyType.V2a1Dungeon,
+		storeActId = VersionActivity3_0Enum.ActivityId.ReactivityStore
 	}
 }
 
@@ -22,6 +22,13 @@ if SettingsModel.instance:isOverseas() then
 			[VersionActivity3_0Enum.ActivityId.Reactivity] = {
 				storeCurrency = CurrencyEnum.CurrencyType.V2a1Dungeon,
 				storeActId = VersionActivity3_0Enum.ActivityId.ReactivityStore
+			}
+		}
+	elseif GameBranchMgr.instance:isOnVer(3, 0) then
+		var_0_0.ActivityDefine = {
+			[VersionActivity2_9Enum.ActivityId.Reactivity] = {
+				storeCurrency = CurrencyEnum.CurrencyType.V2a3Dungeon,
+				storeActId = VersionActivity2_9Enum.ActivityId.ReactivityStore
 			}
 		}
 	end

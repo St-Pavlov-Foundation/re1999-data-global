@@ -193,6 +193,7 @@ var_0_0.BonusTab = {
 	[VersionActivity1_4Enum.ActivityId.BossRush] = {
 		{
 			ResIndex = 1,
+			TabTitle = "p_v1a4_bossrushleveldetail_txt_Score",
 			ViewPath = var_0_0.ResPath.v1a6_bossrush_achievementview,
 			Reddot = RedDotEnum.DotNode.BossRushBossAchievement,
 			TaskListenerType = var_0_0.TaskListenerType.highestPoint,
@@ -202,16 +203,18 @@ var_0_0.BonusTab = {
 		},
 		{
 			ResIndex = 2,
+			TabTitle = "p_v1a4_bossrush_resultpanel_txt_total",
 			ViewPath = var_0_0.ResPath.v1a6_bossrush_scheduleview,
 			Reddot = RedDotEnum.DotNode.BossRushBossSchedule,
 			CellClass = V1a6_BossRush_ScheduleItem,
 			ListModel = V1a4_BossRush_ScheduleViewListModel.instance,
-			ViewClass = V2a1_BossRush_SpecialScheduleView
+			ViewClass = V1a6_BossRush_ScheduleView
 		}
 	},
 	[VersionActivity2_1Enum.ActivityId.BossRush] = {
 		{
 			ResIndex = 4,
+			TabTitle = "p_v1a4_bossrushleveldetail_txt_Score",
 			ViewPath = var_0_0.ResPath.v1a6_bossrush_achievementview,
 			Reddot = RedDotEnum.DotNode.BossRushBossAchievement,
 			TaskListenerType = var_0_0.TaskListenerType.layer4Reward,
@@ -221,6 +224,7 @@ var_0_0.BonusTab = {
 		},
 		{
 			ResIndex = 1,
+			TabTitle = "p_v1a4_bossrushleveldetail_txt_Score",
 			ViewPath = var_0_0.ResPath.v1a6_bossrush_achievementview,
 			Reddot = RedDotEnum.DotNode.BossRushBossAchievement,
 			TaskListenerType = var_0_0.TaskListenerType.highestPoint,
@@ -230,6 +234,7 @@ var_0_0.BonusTab = {
 		},
 		{
 			ResIndex = 2,
+			TabTitle = "p_v1a4_bossrush_resultpanel_txt_total",
 			ViewPath = var_0_0.ResPath.v1a6_bossrush_scheduleview,
 			Reddot = RedDotEnum.DotNode.BossRushBossSchedule,
 			CellClass = V1a6_BossRush_ScheduleItem,
@@ -239,8 +244,9 @@ var_0_0.BonusTab = {
 	},
 	[VersionActivity2_9Enum.ActivityId.BossRush] = {
 		{
-			ScoreDesc = "p_v2a9_bossrushleveldetail_txt_ScoreDesc1",
+			TabTitle = "p_v1a4_bossrushleveldetail_txt_Score",
 			ResIndex = 1,
+			ScoreDesc = "p_v2a9_bossrushleveldetail_txt_ScoreDesc1",
 			ViewPath = var_0_0.ResPath.v1a6_bossrush_achievementview,
 			Reddot = RedDotEnum.DotNode.BossRushBossAchievement,
 			TaskListenerType = var_0_0.TaskListenerType.SpHighestPoint,
@@ -251,6 +257,7 @@ var_0_0.BonusTab = {
 		},
 		{
 			ResIndex = 1,
+			TabTitle = "p_v1a4_bossrushleveldetail_txt_Score",
 			ScoreDesc = "p_v2a9_bossrushleveldetail_txt_ScoreDesc2",
 			ViewPath = var_0_0.ResPath.v1a6_bossrush_achievementview,
 			Reddot = RedDotEnum.DotNode.BossRushBossAchievement,
@@ -261,6 +268,7 @@ var_0_0.BonusTab = {
 		},
 		{
 			ResIndex = 2,
+			TabTitle = "p_v2a9_bossrush_achievement_txt_title3",
 			ViewPath = var_0_0.ResPath.v1a6_bossrush_scheduleview,
 			Reddot = RedDotEnum.DotNode.BossRushBossSchedule,
 			CellClass = V1a6_BossRush_ScheduleItem,

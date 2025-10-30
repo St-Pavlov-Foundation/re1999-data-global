@@ -277,12 +277,8 @@ end
 function var_0_0._resetNuodiKaReplaceSkill(arg_22_0)
 	local var_22_0 = 3120
 
-	PlayerModel.instance:setPropKeyValue(PlayerEnum.SimpleProperty.NuoDiKaNewSkill, var_22_0, 0)
-
-	local var_22_1 = PlayerModel.instance:getPropKeyValueString(PlayerEnum.SimpleProperty.NuoDiKaNewSkill)
-
-	PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.NuoDiKaNewSkill, var_22_1)
-	GameUtil.playerPrefsSetNumberByUserId(CharacterModel.AnimKey_ReplaceSkillPlay .. var_22_0, 0)
+	CharacterModel.instance:setPropKeyValueNuodikaReddot(var_22_0, 0)
+	GameUtil.playerPrefsGetNumberByUserId(CharacterModel.AnimKey_ReplaceSkillPlay .. var_22_0, 0)
 end
 
 function var_0_0.onDestroyView(arg_23_0)

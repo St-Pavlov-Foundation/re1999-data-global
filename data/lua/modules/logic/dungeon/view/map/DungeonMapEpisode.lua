@@ -487,7 +487,14 @@ function var_0_0.onUpdateParam(arg_34_0)
 end
 
 function var_0_0.onOpen(arg_35_0)
+	arg_35_0._chapterId = arg_35_0.viewParam and arg_35_0.viewParam.chapterId
 	arg_35_0._jumpEpisodeId = arg_35_0.viewParam and arg_35_0.viewParam.episodeId
+
+	if not arg_35_0._jumpEpisodeId and CommandStationController.instance:chapterInCommandStation(arg_35_0._chapterId) then
+		arg_35_0._jumpEpisodeId = CommandStationController.instance:getRecordEpisodeId()
+
+		CommandStationController.instance:setRecordEpisodeId(nil)
+	end
 
 	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeFocusEpisodeItem, arg_35_0._onChangeFocusEpisodeItem, arg_35_0)
 	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeChapter, arg_35_0._onChangeChapter, arg_35_0)
@@ -574,7 +581,12 @@ end
 
 function var_0_0._onUpdateDungeonInfo(arg_47_0, arg_47_1)
 	if arg_47_0._chapterLayout then
+		if CommandStationController.instance:chapterInCommandStation(arg_47_0._chapterId) then
+			arg_47_0._chapterLayout:skipFocusItem(true)
+		end
+
 		arg_47_0._chapterLayout:onRefresh()
+		arg_47_0._chapterLayout:skipFocusItem(false)
 	end
 
 	arg_47_0:refreshRoleStoryBg()

@@ -86,7 +86,7 @@ function var_0_0.initFramework(arg_10_0)
 end
 
 function var_0_0.initModuleLogic(arg_11_0)
-	GameBranchMgr.instance:init(2, 8)
+	GameBranchMgr.instance:init(3, 0)
 
 	local var_11_0 = addGlobalModule("modules.setting.module_mvc", "module_mvc")
 
@@ -119,127 +119,118 @@ function var_0_0._onLangConfigLoaded(arg_14_0)
 		return
 	end
 
-	LangSettings.instance:init()
-	LangSettings.instance:loadLangConfig(arg_14_0._onLangConfigLoaded, arg_14_0)
+	local var_14_0 = GameResMgr.IsFromEditorDir and "direct" or "bundle"
+	local var_14_1 = ConfigMgr.instance._isAllToOne and "allToOne" or "oneToOne"
+
+	logNormal(var_14_0 .. " " .. var_14_1 .. " load configs cost time: " .. SLFramework.TimeWatch.Instance:Watch() .. " s")
+	SLFramework.LanguageMgr.Instance:Init(arg_14_0._onLangSettingsInit, arg_14_0)
 end
 
-function var_0_0._onLangConfigLoaded(arg_15_0)
-	if BootLoadingView.instance.hasClickFix then
-		return
-	end
-
-	local var_15_0 = GameResMgr.IsFromEditorDir and "direct" or "bundle"
-	local var_15_1 = ConfigMgr.instance._isAllToOne and "allToOne" or "oneToOne"
-
-	logNormal(var_15_0 .. " " .. var_15_1 .. " load configs cost time: " .. SLFramework.TimeWatch.Instance:Watch() .. " s")
-	SLFramework.LanguageMgr.Instance:Init(arg_15_0._onLangSettingsInit, arg_15_0)
-end
-
-function var_0_0._onLangSettingsInit(arg_16_0)
+function var_0_0._onLangSettingsInit(arg_15_0)
 	if BootLoadingView.instance.hasClickFix then
 		return
 	end
 
 	logNormal("_onLangSettingsInit, 多语言资源列表加载完成！")
-	ConstResLoader.instance:startLoad(arg_16_0._onConstResLoaded, arg_16_0)
+	ConstResLoader.instance:startLoad(arg_15_0._onConstResLoaded, arg_15_0)
 end
 
-function var_0_0._onConstResLoaded(arg_17_0)
+function var_0_0._onConstResLoaded(arg_16_0)
 	if BootLoadingView.instance.hasClickFix then
 		return
 	end
 
 	logNormal("OnConstResLoaded, 常驻内存的资源加载完毕了！")
-	SLFramework.LanguageMgr.Instance:RegisterLangImageSetter(arg_17_0._loadLangImage, arg_17_0)
-	SLFramework.LanguageMgr.Instance:RegisterLangSpriteSetImageSetter(arg_17_0._loadLangSpriteSetImage, arg_17_0)
-	SLFramework.LanguageMgr.Instance:RegisterLangTxtSetter(arg_17_0._loadLangTxt, arg_17_0)
-	SLFramework.LanguageMgr.Instance:RegisterLangCaptionsSetter(arg_17_0._loadLangCaptions, arg_17_0)
-	AudioMgr.instance:init(arg_17_0._onAudioInited, arg_17_0)
+	SLFramework.LanguageMgr.Instance:RegisterLangImageSetter(arg_16_0._loadLangImage, arg_16_0)
+	SLFramework.LanguageMgr.Instance:RegisterLangSpriteSetImageSetter(arg_16_0._loadLangSpriteSetImage, arg_16_0)
+	SLFramework.LanguageMgr.Instance:RegisterLangTxtSetter(arg_16_0._loadLangTxt, arg_16_0)
+	SLFramework.LanguageMgr.Instance:RegisterLangCaptionsSetter(arg_16_0._loadLangCaptions, arg_16_0)
+	AudioMgr.instance:init(arg_16_0._onAudioInited, arg_16_0)
 end
 
-function var_0_0._onAudioInited(arg_18_0, arg_18_1)
+function var_0_0._onAudioInited(arg_17_0, arg_17_1)
 	if BootLoadingView.instance.hasClickFix then
 		return
 	end
 
-	if not arg_18_1 then
-		logError("ProjModuleStart._onAudioInited ret = " .. tostring(arg_18_1))
+	if not arg_17_1 then
+		logError("ProjModuleStart._onAudioInited ret = " .. tostring(arg_17_1))
 	end
 
 	AudioMgr.instance:initSoundVolume()
 	AudioMgr.instance:changeEarMode()
 	BootLoadingView.instance:show(0.99, booterLang("loading_res"))
-	CameraMgr.instance:initCamera(arg_18_0._onCameraInit, arg_18_0)
+	CameraMgr.instance:initCamera(arg_17_0._onCameraInit, arg_17_0)
 end
 
-function var_0_0._onCameraInit(arg_19_0)
+function var_0_0._onCameraInit(arg_18_0)
 	if BootLoadingView.instance.hasClickFix then
 		return
 	end
 
 	GameGlobalMgr.instance:initLangFont()
-	VoiceChooseMgr.instance:start(arg_19_0._onVoiceChoose, arg_19_0)
+	VoiceChooseMgr.instance:start(arg_18_0._onVoiceChoose, arg_18_0)
 end
 
-function var_0_0._onVoiceChoose(arg_20_0)
+function var_0_0._onVoiceChoose(arg_19_0)
 	if BootLoadingView.instance.hasClickFix then
 		return
 	end
 
 	logNormal("_onVoiceChoose！")
-	arg_20_0:startLogic()
+	arg_19_0:startLogic()
 end
 
-function var_0_0._loadLangImage(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_1:LoadImage(arg_21_2)
+function var_0_0._loadLangImage(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_1:LoadImage(arg_20_2)
 end
 
-function var_0_0._loadLangSpriteSetImage(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	arg_22_1:LoadImage(arg_22_2, arg_22_3)
+function var_0_0._loadLangSpriteSetImage(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	arg_21_1:LoadImage(arg_21_2, arg_21_3)
 end
 
-function var_0_0._loadLangTxt(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_1 then
-		local var_23_0 = gohelper.getDynamicSizeText and gohelper.getDynamicSizeText(arg_23_1.gameObject) or nil
+function var_0_0._loadLangTxt(arg_22_0, arg_22_1, arg_22_2)
+	if arg_22_1 then
+		local var_22_0 = gohelper.getDynamicSizeText and gohelper.getDynamicSizeText(arg_22_1.gameObject) or nil
 
-		if var_23_0 then
-			var_23_0.text = luaLang(arg_23_2)
-		elseif arg_23_1.text then
-			arg_23_1.text = luaLang(arg_23_2)
+		if var_22_0 then
+			var_22_0.text = luaLang(arg_22_2)
+		elseif arg_22_1.text then
+			arg_22_1.text = luaLang(arg_22_2)
 		end
 	end
 end
 
-function var_0_0._loadLangCaptions(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	if arg_24_3 then
-		local var_24_0 = LangSettings.instance:getCurLang()
-		local var_24_1 = false
+function var_0_0._loadLangCaptions(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	if arg_23_3 then
+		local var_23_0 = LangSettings.instance:getCurLang()
+		local var_23_1 = false
 
-		for iter_24_0 = 1, arg_24_3.Length do
-			if arg_24_3[iter_24_0 - 1] == var_24_0 then
-				var_24_1 = true
+		for iter_23_0 = 1, arg_23_3.Length do
+			if arg_23_3[iter_23_0 - 1] == var_23_0 then
+				var_23_1 = true
 
-				gohelper.setActive(arg_24_1.gameObject, true)
+				gohelper.setActive(arg_23_1.gameObject, true)
 
 				return
 			end
 		end
 
-		gohelper.setActive(arg_24_1.gameObject, var_24_1)
+		gohelper.setActive(arg_23_1.gameObject, var_23_1)
 	else
-		gohelper.setActive(arg_24_1.gameObject, LangSettings.instance:langCaptionsActive())
+		gohelper.setActive(arg_23_1.gameObject, LangSettings.instance:langCaptionsActive())
 	end
 end
 
-function var_0_0.startLogic(arg_25_0)
+function var_0_0.startLogic(arg_24_0)
 	if BootLoadingView.instance.hasClickFix then
 		return
 	end
 
-	local var_25_0 = addGlobalModule("modules.setting.module_cmd", "module_cmd")
+	local var_24_0 = addGlobalModule("modules.setting.module_cmd", "module_cmd")
 
 	ServerTime.init()
-	LuaSocketMgr.instance:init(system_cmd, var_25_0)
+	LuaSocketMgr.instance:init(system_cmd, var_24_0)
 	PreReciveLogicMsg.instance:init()
 	GameSceneMgr.instance:init()
 	GameGlobalMgr.instance:init()
@@ -260,9 +251,9 @@ function var_0_0.startLogic(arg_25_0)
 	BootLoadingView.instance:playClose()
 
 	if VersionValidator.instance:isInReviewing() and BootNativeUtil.isIOS() and GameChannelConfig.isGpGlobal() then
-		local var_25_1 = GameConfig:GetCurLangType()
+		local var_24_1 = GameConfig:GetCurLangType()
 
-		if var_25_1 ~= BootLangEnum.en and var_25_1 ~= BootLangEnum.zh then
+		if var_24_1 ~= BootLangEnum.en and var_24_1 ~= BootLangEnum.zh then
 			LangSettings.instance:SetCurLangType(GameConfig:GetDefaultLangShortcut(), function()
 				LoginController.instance:login()
 			end)

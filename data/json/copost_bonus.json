@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1,
+    "bonus": "1#110503#6",
+    "pointNum": 1,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 2,
+    "bonus": "2#3#100000",
+    "pointNum": 2,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 3,
+    "bonus": "1#110203#6",
+    "pointNum": 3,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 4,
+    "bonus": "1#120013#3|2#5#50000",
+    "pointNum": 4,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 5,
+    "bonus": "2#3#100000",
+    "pointNum": 5,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 6,
+    "bonus": "1#120012#6",
+    "pointNum": 6,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 7,
+    "bonus": "2#5#100000",
+    "pointNum": 7,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 8,
+    "bonus": "1#620104#1|1#501012#1",
+    "pointNum": 8,
+    "versionId": 300,
+    "isBig": 1
+  },
+  {
+    "id": 9,
+    "bonus": "1#180002#3",
+    "pointNum": 9,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 10,
+    "bonus": "2#3#100000",
+    "pointNum": 10,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 11,
+    "bonus": "1#110603#6",
+    "pointNum": 11,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 12,
+    "bonus": "1#111005#1|2#5#50000",
+    "pointNum": 12,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 13,
+    "bonus": "2#3#100000",
+    "pointNum": 13,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 14,
+    "bonus": "1#110803#6",
+    "pointNum": 14,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 15,
+    "bonus": "2#5#100000",
+    "pointNum": 15,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 16,
+    "bonus": "1#110903#6",
+    "pointNum": 16,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 17,
+    "bonus": "2#3#100000",
+    "pointNum": 17,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 18,
+    "bonus": "1#111008#1|2#5#50000",
+    "pointNum": 18,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 19,
+    "bonus": "1#110303#6",
+    "pointNum": 19,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 20,
+    "bonus": "2#3#100000",
+    "pointNum": 20,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 21,
+    "bonus": "1#110703#6",
+    "pointNum": 21,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 22,
+    "bonus": "2#5#100000",
+    "pointNum": 22,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 23,
+    "bonus": "1#110403#6",
+    "pointNum": 23,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 24,
+    "bonus": "1#120013#3|2#3#50000",
+    "pointNum": 24,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 25,
+    "bonus": "2#5#100000",
+    "pointNum": 25,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 26,
+    "bonus": "1#120012#6",
+    "pointNum": 26,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 27,
+    "bonus": "2#3#100000",
+    "pointNum": 27,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 28,
+    "bonus": "9#1555#1|1#501017#1",
+    "pointNum": 28,
+    "versionId": 300,
+    "isBig": 1
+  },
+  {
+    "id": 29,
+    "bonus": "1#180002#3",
+    "pointNum": 29,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 30,
+    "bonus": "2#5#100000",
+    "pointNum": 30,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 31,
+    "bonus": "1#110103#6",
+    "pointNum": 31,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 32,
+    "bonus": "1#111004#1|2#3#50000",
+    "pointNum": 32,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 33,
+    "bonus": "2#5#100000",
+    "pointNum": 33,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 34,
+    "bonus": "1#110803#6",
+    "pointNum": 34,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 35,
+    "bonus": "2#3#100000",
+    "pointNum": 35,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 36,
+    "bonus": "1#110303#6",
+    "pointNum": 36,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 37,
+    "bonus": "2#5#100000",
+    "pointNum": 37,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 38,
+    "bonus": "1#111006#1|2#3#50000",
+    "pointNum": 38,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 39,
+    "bonus": "1#111012#6",
+    "pointNum": 39,
+    "versionId": 300,
+    "isBig": 0
+  },
+  {
+    "id": 40,
+    "bonus": "2#5#100000",
+    "pointNum": 40,
+    "versionId": 300,
+    "isBig": 0
+  }
+]

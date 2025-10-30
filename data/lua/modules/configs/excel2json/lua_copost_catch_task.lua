@@ -1,0 +1,27 @@
+﻿module("modules.configs.excel2json.lua_copost_catch_task", package.seeall)
+
+local var_0_0 = {}
+local var_0_1 = {
+	jumpId = 10,
+	isOnline = 3,
+	listenerType = 5,
+	desc = 8,
+	finishNum = 2,
+	taskType = 4,
+	listenerParam = 6,
+	id = 1,
+	maxProgress = 7,
+	bonus = 9
+}
+local var_0_2 = {
+	"id"
+}
+local var_0_3 = {
+	desc = 1
+}
+
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

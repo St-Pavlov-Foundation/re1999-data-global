@@ -1656,6 +1656,42 @@
     "actionId": 805091112
   },
   {
+    "battleId": 1030101,
+    "monsterId": 10301011,
+    "monsterSpeed": 50,
+    "actionId": 10301111
+  },
+  {
+    "battleId": 1030102,
+    "monsterId": 10301021,
+    "monsterSpeed": 50,
+    "actionId": 10301112
+  },
+  {
+    "battleId": 1030111,
+    "monsterId": 10301111,
+    "monsterSpeed": 50,
+    "actionId": 10301111
+  },
+  {
+    "battleId": 1030111,
+    "monsterId": 10301121,
+    "monsterSpeed": 50,
+    "actionId": 10301112
+  },
+  {
+    "battleId": 1030111,
+    "monsterId": 10301131,
+    "monsterSpeed": 50,
+    "actionId": 10301113
+  },
+  {
+    "battleId": 1030111,
+    "monsterId": 10301141,
+    "monsterSpeed": 50,
+    "actionId": 10301114
+  },
+  {
     "battleId": 1029211,
     "monsterId": 10292111,
     "monsterSpeed": 1,

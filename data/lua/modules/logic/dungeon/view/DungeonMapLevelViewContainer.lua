@@ -47,7 +47,7 @@ function var_0_0.onContainerOpenFinish(arg_3_0)
 end
 
 function var_0_0._overrideClose(arg_4_0)
-	if ViewMgr.instance:isOpen(ViewName.DungeonView) or ViewMgr.instance:isOpen(ViewName.RoleStoryDispatchMainView) then
+	if ViewMgr.instance:isOpen(ViewName.DungeonView) or ViewMgr.instance:isOpen(ViewName.RoleStoryDispatchMainView) or ViewMgr.instance:isOpen(ViewName.CommandStationEnterView) then
 		ViewMgr.instance:closeView(ViewName.DungeonMapView, false, true)
 		ViewMgr.instance:closeView(ViewName.DungeonMapLevelView, false, true)
 

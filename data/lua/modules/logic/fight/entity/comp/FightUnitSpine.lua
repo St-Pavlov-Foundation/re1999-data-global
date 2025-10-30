@@ -96,34 +96,41 @@ function var_0_0.play(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
 end
 
 function var_0_0.replaceAnimState(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0.unitSpawn:getMO()
+	local var_5_0 = arg_5_0.unitSpawn.skinCustomComp
+	local var_5_1 = var_5_0 and var_5_0:getCustomComp()
 
-	if not var_5_0 then
-		return arg_5_1
+	if var_5_1 then
+		arg_5_1 = var_5_1:replaceAnimState(arg_5_1)
 	end
 
-	if not var_5_0:isMonster() then
-		return arg_5_1
-	end
-
-	local var_5_1 = var_5_0:getSpineSkinCO()
-
-	if not var_5_1 then
-		return arg_5_1
-	end
-
-	local var_5_2 = lua_fight_monster_skin_idle_map.configDict[var_5_1.id]
+	local var_5_2 = arg_5_0.unitSpawn:getMO()
 
 	if not var_5_2 then
 		return arg_5_1
 	end
 
-	local var_5_3 = var_5_2[arg_5_1 .. "AnimName"]
+	if not var_5_2:isMonster() then
+		return arg_5_1
+	end
 
-	if string.nilorempty(var_5_3) then
+	local var_5_3 = var_5_2:getSpineSkinCO()
+
+	if not var_5_3 then
+		return arg_5_1
+	end
+
+	local var_5_4 = lua_fight_monster_skin_idle_map.configDict[var_5_3.id]
+
+	if not var_5_4 then
+		return arg_5_1
+	end
+
+	local var_5_5 = var_5_4[arg_5_1 .. "AnimName"]
+
+	if string.nilorempty(var_5_5) then
 		return arg_5_1
 	else
-		return var_5_3
+		return var_5_5
 	end
 end
 
@@ -183,6 +190,13 @@ function var_0_0._cannotPlay(arg_8_0, arg_8_1)
 
 	if arg_8_0.unitSpawn.buff and arg_8_0.unitSpawn.buff:haveBuffId(2112031) and arg_8_1 ~= "innate3" then
 		return true
+	end
+
+	local var_8_1 = arg_8_0.unitSpawn.skinCustomComp
+	local var_8_2 = var_8_1 and var_8_1:getCustomComp()
+
+	if var_8_2 then
+		return not var_8_2:canPlayAnimState(arg_8_1)
 	end
 end
 

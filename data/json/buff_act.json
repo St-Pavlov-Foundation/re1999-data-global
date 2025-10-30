@@ -3096,6 +3096,141 @@
     "audioId": 0
   },
   {
+    "id": 1022,
+    "type": "AttrOnlyCalDamageHpReplaceAttackCalSkillDamage",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1023,
+    "type": "LostHpAddExtraBloodPoolValue",
+    "effectTime": 103,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1024,
+    "type": "MonitorContinueChannel",
+    "effectTime": 307,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1025,
+    "type": "LifeAttackFixRate",
+    "effectTime": 202,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1026,
+    "type": "CreateMaxHpAdditionalDamageAndRemove",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1027,
+    "type": "AddBuffByChargingTimes",
+    "effectTime": 307,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1028,
+    "type": "RealDamageKill",
+    "effectTime": 211,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1029,
+    "type": "AddAttrByOtherBuffLayer",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1030,
+    "type": "CritRateAlterByOtherBuff",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1031,
+    "type": "ConsumeBuffAddBuffContinueChannel",
+    "effectTime": 302,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1032,
+    "type": "FixElectricUpgrade",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1033,
+    "type": "TransferEnergyBuff",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1034,
+    "type": "AddBuffToEnterEnemy",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1035,
+    "type": "Seed",
+    "effectTime": 302,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1036,
+    "type": "AddAttrByOtherBuffLayer",
+    "effectTime": 204,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
     "id": 10000,
     "type": "EzioBigSkill",
     "effectTime": 0,

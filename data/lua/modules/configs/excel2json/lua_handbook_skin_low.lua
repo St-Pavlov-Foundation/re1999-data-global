@@ -7,6 +7,7 @@ local var_0_1 = {
 	des = 6,
 	show = 5,
 	spineParams = 9,
+	tarotCardPath = 10,
 	skinContain = 7,
 	highId = 4,
 	id = 1,

@@ -20,4 +20,8 @@ function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
 	arg_2_0._txtNum.text = luaLang("multiple") .. tostring(var_2_2)
 end
 
+function var_0_0.onDestroy(arg_3_0)
+	arg_3_0._simageproduceitem:UnLoadImage()
+end
+
 return var_0_0

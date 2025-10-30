@@ -9,6 +9,8 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._txtnameCn = gohelper.findChildText(arg_1_0.viewGO, "window/right/#txt_nameCn")
 	arg_1_0._gousing = gohelper.findChild(arg_1_0.viewGO, "window/right/useState/#go_using")
 	arg_1_0._simageheadIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/right/#simage_headIcon")
+	arg_1_0._gomainsignature = gohelper.findChild(arg_1_0.viewGO, "window/right/signname")
+	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/right/signname2")
 	arg_1_0._goframenode = gohelper.findChild(arg_1_0.viewGO, "window/right/#simage_headIcon/#go_framenode")
 	arg_1_0._btncloseBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "window/top/#btn_closeBtn")
 	arg_1_0._btnSwitchLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "window/right/Btn_SwitchLeft")
@@ -178,16 +180,29 @@ function var_0_0._setHeadIcon(arg_10_0, arg_10_1)
 
 	arg_10_0._liveHeadIcon:setLiveHead(arg_10_1.id)
 
-	local var_10_0 = string.split(arg_10_1.effect, "#")
+	local var_10_0 = "qianming"
 
-	if #var_10_0 > 1 then
-		if arg_10_1.id == tonumber(var_10_0[#var_10_0]) then
+	if arg_10_1.headIconSign and not string.nilorempty(arg_10_1.headIconSign) then
+		local var_10_1 = arg_10_1.headIconSign
+
+		gohelper.setActive(arg_10_0._gomainsignature, false)
+		gohelper.setActive(arg_10_0._simagesignature.gameObject, true)
+		arg_10_0._simagesignature:LoadImage(ResUrl.getSignature(var_10_1, "rolehead"), arg_10_0._onSignatureImageLoad, arg_10_0)
+	else
+		gohelper.setActive(arg_10_0._gomainsignature, true)
+		gohelper.setActive(arg_10_0._simagesignature.gameObject, false)
+	end
+
+	local var_10_2 = string.split(arg_10_1.effect, "#")
+
+	if #var_10_2 > 1 then
+		if arg_10_1.id == tonumber(var_10_2[#var_10_2]) then
 			gohelper.setActive(arg_10_0._goframenode, true)
 
 			if not arg_10_0.frame then
-				local var_10_1 = "ui/viewres/common/effect/frame.prefab"
+				local var_10_3 = "ui/viewres/common/effect/frame.prefab"
 
-				arg_10_0._loader:addPath(var_10_1)
+				arg_10_0._loader:addPath(var_10_3)
 				arg_10_0._loader:startLoad(arg_10_0._onLoadCallback, arg_10_0)
 			end
 		end
@@ -196,48 +211,52 @@ function var_0_0._setHeadIcon(arg_10_0, arg_10_1)
 	end
 end
 
-function var_0_0._refreshSwitchBtnState(arg_11_0, arg_11_1)
-	arg_11_0._curSwitchIndex = arg_11_1
-
-	local var_11_0 = arg_11_0._switchHeadIdList[arg_11_1]
-
-	gohelper.setActive(arg_11_0._btnSwitchLeft.gameObject, arg_11_1 > 1)
-	gohelper.setActive(arg_11_0._btnSwitchRight.gameObject, arg_11_1 < arg_11_0._switchHeadIdCount)
-	gohelper.setActive(arg_11_0._btnconfirm, var_11_0 ~= arg_11_0._usedIcon)
+function var_0_0._onSignatureImageLoad(arg_11_0)
+	ZProj.UGUIHelper.SetImageSize(arg_11_0._simagesignature.gameObject)
 end
 
-function var_0_0._onLoadCallback(arg_12_0)
-	local var_12_0 = arg_12_0._loader:getFirstAssetItem():GetResource()
+function var_0_0._refreshSwitchBtnState(arg_12_0, arg_12_1)
+	arg_12_0._curSwitchIndex = arg_12_1
 
-	gohelper.clone(var_12_0, arg_12_0._goframenode, "frame")
+	local var_12_0 = arg_12_0._switchHeadIdList[arg_12_1]
 
-	arg_12_0.frame = gohelper.findChild(arg_12_0._goframenode, "frame")
-	arg_12_0.frame:GetComponent(gohelper.Type_Image).enabled = false
-
-	local var_12_1 = 1.41 * (recthelper.getWidth(arg_12_0._simageheadIcon.transform) / recthelper.getWidth(arg_12_0.frame.transform))
-
-	transformhelper.setLocalScale(arg_12_0.frame.transform, var_12_1, var_12_1, 1)
+	gohelper.setActive(arg_12_0._btnSwitchLeft.gameObject, arg_12_1 > 1)
+	gohelper.setActive(arg_12_0._btnSwitchRight.gameObject, arg_12_1 < arg_12_0._switchHeadIdCount)
+	gohelper.setActive(arg_12_0._btnconfirm, var_12_0 ~= arg_12_0._usedIcon)
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0:addEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, arg_13_0._refreshUI, arg_13_0)
-	arg_13_0:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_13_0._refreshUI, arg_13_0)
-	arg_13_0:_refreshUI()
+function var_0_0._onLoadCallback(arg_13_0)
+	local var_13_0 = arg_13_0._loader:getFirstAssetItem():GetResource()
+
+	gohelper.clone(var_13_0, arg_13_0._goframenode, "frame")
+
+	arg_13_0.frame = gohelper.findChild(arg_13_0._goframenode, "frame")
+	arg_13_0.frame:GetComponent(gohelper.Type_Image).enabled = false
+
+	local var_13_1 = 1.41 * (recthelper.getWidth(arg_13_0._simageheadIcon.transform) / recthelper.getWidth(arg_13_0.frame.transform))
+
+	transformhelper.setLocalScale(arg_13_0.frame.transform, var_13_1, var_13_1, 1)
 end
 
-function var_0_0.onClose(arg_14_0)
-	arg_14_0:removeEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, arg_14_0._refreshUI, arg_14_0)
-	arg_14_0:removeEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_14_0._refreshUI, arg_14_0)
+function var_0_0.onOpen(arg_14_0)
+	arg_14_0:addEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, arg_14_0._refreshUI, arg_14_0)
+	arg_14_0:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_14_0._refreshUI, arg_14_0)
+	arg_14_0:_refreshUI()
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	arg_15_0._simageheadIcon:UnLoadImage()
-	arg_15_0._buttonbg:RemoveClickListener()
+function var_0_0.onClose(arg_15_0)
+	arg_15_0:removeEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, arg_15_0._refreshUI, arg_15_0)
+	arg_15_0:removeEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_15_0._refreshUI, arg_15_0)
+end
 
-	if arg_15_0._loader then
-		arg_15_0._loader:dispose()
+function var_0_0.onDestroyView(arg_16_0)
+	arg_16_0._simageheadIcon:UnLoadImage()
+	arg_16_0._buttonbg:RemoveClickListener()
 
-		arg_15_0._loader = nil
+	if arg_16_0._loader then
+		arg_16_0._loader:dispose()
+
+		arg_16_0._loader = nil
 	end
 end
 

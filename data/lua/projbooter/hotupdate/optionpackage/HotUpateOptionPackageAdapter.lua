@@ -39,11 +39,14 @@ function var_0_0._fixSizeMB(arg_7_0, arg_7_1)
 end
 
 function var_0_0.onDownloadStart(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	return
+	arg_8_0._nowPackSize = arg_8_3
 end
 
 function var_0_0.onDownloadProgressRefresh(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
 	logNormal("HotUpateOptionPackageAdapter:onDownloadProgressRefresh, packName = " .. arg_9_1 .. " curSize = " .. arg_9_2 .. " allSize = " .. arg_9_3)
+
+	arg_9_2 = tonumber(tostring(arg_9_2))
+	arg_9_3 = tonumber(tostring(arg_9_3))
 
 	local var_9_0 = arg_9_0._downloader:getDownloadSize()
 	local var_9_1 = arg_9_0._downloader:getTotalSize()
@@ -62,7 +65,7 @@ function var_0_0.onDownloadProgressRefresh(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
 		var_9_5 = string.format(booterLang("download_info"), var_9_3, var_9_4)
 	end
 
-	BootLoadingView.instance:show(var_9_2, var_9_5)
+	HotUpdateProgress.instance:setProgressDownloadOptionPackage(arg_9_2, arg_9_0._downloader:getDownloadSuccSize(), var_9_5)
 end
 
 function var_0_0.onDownloadPackSuccess(arg_10_0, arg_10_1)
@@ -118,7 +121,7 @@ function var_0_0.onUnzipProgress(arg_13_0, arg_13_1)
 		var_13_3 = string.format(booterLang("unziping_progress"), tostring(var_13_2), var_13_0, var_13_1)
 	end
 
-	BootLoadingView.instance:setProgressMsg(var_13_3)
+	HotUpdateProgress.instance:setProgressUnzipOptionPackage(arg_13_1, arg_13_0._nowPackSize, arg_13_0._downloader:getDownloadSuccSize(), var_13_3)
 end
 
 function var_0_0.onPackUnZipFail(arg_14_0, arg_14_1, arg_14_2)

@@ -1,0 +1,20 @@
+[
+  {
+    "skinId": 630305,
+    "buffId": 900045121,
+    "action": 1,
+    "actionName": "unique",
+    "audioId": 463030521,
+    "duration": 3.0,
+    "nextActionName": "idle"
+  },
+  {
+    "skinId": 630305,
+    "buffId": 900045121,
+    "action": 2,
+    "actionName": "born",
+    "audioId": 463030521,
+    "duration": 0.0,
+    "nextActionName": "idle2"
+  }
+]

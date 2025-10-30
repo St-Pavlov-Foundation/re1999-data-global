@@ -8,6 +8,7 @@ function var_0_0.initClass(arg_1_0)
 	arg_1_0._buffId2Config = {}
 	arg_1_0._oldLayer = {}
 	arg_1_0._buffType = {}
+	arg_1_0.hideEffectWhenPlaying = {}
 
 	arg_1_0:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, arg_1_0._onSetBuffEffectVisible, arg_1_0)
 	arg_1_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_1_0._onBuffUpdate, arg_1_0)
@@ -48,16 +49,28 @@ end
 function var_0_0._onSkillPlayStart(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
 	local var_5_0 = arg_5_1:getMO()
 
-	if var_5_0 and var_5_0.id == arg_5_0._entity.id and FightCardDataHelper.isBigSkill(arg_5_2) then
-		arg_5_0:_onSetBuffEffectVisible(var_5_0.id, false, "FightEntitySpecialEffectBuffLayer_onSkillPlayStart")
+	if var_5_0 and var_5_0.id == arg_5_0._entity.id then
+		if FightCardDataHelper.isBigSkill(arg_5_2) then
+			arg_5_0:_onSetBuffEffectVisible(var_5_0.id, false, "FightEntitySpecialEffectBuffLayer_onSkillPlayStart")
+		end
+
+		for iter_5_0, iter_5_1 in pairs(arg_5_0.hideEffectWhenPlaying) do
+			iter_5_1:setActive(false, "FightEntitySpecialEffectBuffLayerHideWhenPlaying")
+		end
 	end
 end
 
 function var_0_0._onSkillPlayFinish(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 	local var_6_0 = arg_6_1:getMO()
 
-	if var_6_0 and var_6_0.id == arg_6_0._entity.id and FightCardDataHelper.isBigSkill(arg_6_2) then
-		arg_6_0:_onSetBuffEffectVisible(var_6_0.id, true, "FightEntitySpecialEffectBuffLayer_onSkillPlayStart")
+	if var_6_0 and var_6_0.id == arg_6_0._entity.id then
+		if FightCardDataHelper.isBigSkill(arg_6_2) then
+			arg_6_0:_onSetBuffEffectVisible(var_6_0.id, true, "FightEntitySpecialEffectBuffLayer_onSkillPlayStart")
+		end
+
+		for iter_6_0, iter_6_1 in pairs(arg_6_0.hideEffectWhenPlaying) do
+			iter_6_1:setActive(true, "FightEntitySpecialEffectBuffLayerHideWhenPlaying")
+		end
 	end
 end
 
@@ -190,6 +203,10 @@ function var_0_0._refreshEffect(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 		arg_9_0._effectWraps[arg_9_1][var_9_5] = var_9_8
 
 		var_9_8:setActive(false)
+
+		if var_9_4.hideEffectWhenPlaying == 1 then
+			arg_9_0.hideEffectWhenPlaying[var_9_8.uniqueId] = var_9_8
+		end
 	end
 
 	if var_9_7 then
@@ -304,6 +321,8 @@ end
 function var_0_0._releaseEffect(arg_15_0, arg_15_1)
 	arg_15_0._entity.effect:removeEffect(arg_15_1)
 	FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_15_0._entity.id, arg_15_1)
+
+	arg_15_0.hideEffectWhenPlaying[arg_15_1.uniqueId] = nil
 end
 
 function var_0_0._onBeforeDeadEffect(arg_16_0, arg_16_1)

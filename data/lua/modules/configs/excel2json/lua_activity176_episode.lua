@@ -2,9 +2,10 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	id = 2,
 	elementId = 3,
 	activityId = 1,
+	uiTemplate = 5,
+	id = 2,
 	target = 4
 }
 local var_0_2 = {

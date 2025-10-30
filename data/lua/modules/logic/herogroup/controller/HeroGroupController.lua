@@ -117,6 +117,10 @@ function var_0_0._getGroupFightViewName(arg_8_0, arg_8_1)
 		}
 	end
 
+	if DungeonController.checkEpisodeFiveHero(arg_8_1) then
+		return ViewName.HeroGroupFightFiveHeroView
+	end
+
 	local var_8_0 = DungeonConfig.instance:getEpisodeCO(arg_8_1)
 
 	if var_8_0.type == DungeonEnum.EpisodeType.BossRush then

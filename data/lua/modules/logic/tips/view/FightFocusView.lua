@@ -628,8 +628,19 @@ function var_0_0._refreshInfo(arg_26_0, arg_26_1)
 	arg_26_0:_refreshAttrList(arg_26_0:_getMontBaseAttr(arg_26_1))
 	arg_26_0:_refreshResistance()
 	arg_26_0:refreshStress(arg_26_0._entityMO)
+	arg_26_0:refreshKillLine(arg_26_0._entityMO)
 	gohelper.setActive(arg_26_0._goplayerequipinfo, false)
 	arg_26_0:refreshHealth(arg_26_0._entityMO)
+end
+
+function var_0_0.refreshKillLine(arg_27_0, arg_27_1)
+	if not arg_27_0.killLineComp then
+		arg_27_0.killLineComp = FightFocusHpKillLineComp.New(FightHpKillLineComp.KillLineType.FocusHp)
+
+		arg_27_0.killLineComp:init(arg_27_0._sliderhp.gameObject)
+	end
+
+	arg_27_0.killLineComp:refreshByEntityMo(arg_27_1)
 end
 
 var_0_0.StressUiType2Cls = {
@@ -637,56 +648,56 @@ var_0_0.StressUiType2Cls = {
 	[FightNameUIStressMgr.UiType.Act183] = FightFocusAct183StressComp
 }
 
-function var_0_0.refreshStress(arg_27_0, arg_27_1)
-	if not arg_27_1 or not arg_27_1:hasStress() then
-		arg_27_0:removeStressComp()
+function var_0_0.refreshStress(arg_28_0, arg_28_1)
+	if not arg_28_1 or not arg_28_1:hasStress() then
+		arg_28_0:removeStressComp()
 
 		return
 	end
 
-	local var_27_0 = FightStressHelper.getStressUiType(arg_27_1.id)
+	local var_28_0 = FightStressHelper.getStressUiType(arg_28_1.id)
 
-	if not arg_27_0.stressComp then
-		arg_27_0:createStressComp(var_27_0)
-		arg_27_0.stressComp:refreshStress(arg_27_1)
-
-		return
-	end
-
-	if arg_27_0.stressComp:getUiType() == var_27_0 then
-		arg_27_0.stressComp:refreshStress(arg_27_1)
+	if not arg_28_0.stressComp then
+		arg_28_0:createStressComp(var_28_0)
+		arg_28_0.stressComp:refreshStress(arg_28_1)
 
 		return
 	end
 
-	arg_27_0:removeStressComp()
-	arg_27_0:createStressComp(var_27_0)
-	arg_27_0.stressComp:refreshStress(arg_27_1)
+	if arg_28_0.stressComp:getUiType() == var_28_0 then
+		arg_28_0.stressComp:refreshStress(arg_28_1)
+
+		return
+	end
+
+	arg_28_0:removeStressComp()
+	arg_28_0:createStressComp(var_28_0)
+	arg_28_0.stressComp:refreshStress(arg_28_1)
 end
 
-function var_0_0.createStressComp(arg_28_0, arg_28_1)
-	arg_28_0.stressComp = (var_0_0.StressUiType2Cls[arg_28_1] or FightFocusStressCompBase).New()
+function var_0_0.createStressComp(arg_29_0, arg_29_1)
+	arg_29_0.stressComp = (var_0_0.StressUiType2Cls[arg_29_1] or FightFocusStressCompBase).New()
 
-	arg_28_0.stressComp:init(arg_28_0._gostress)
+	arg_29_0.stressComp:init(arg_29_0._gostress)
 end
 
-function var_0_0._refreshResistance(arg_29_0)
-	if arg_29_0.isCharacter then
-		arg_29_0.resistanceComp:refresh(nil)
+function var_0_0._refreshResistance(arg_30_0)
+	if arg_30_0.isCharacter then
+		arg_30_0.resistanceComp:refresh(nil)
 
 		return
 	end
 
-	local var_29_0 = arg_29_0._entityMO:getResistanceDict()
+	local var_30_0 = arg_30_0._entityMO:getResistanceDict()
 
-	arg_29_0.resistanceComp:refresh(var_29_0)
+	arg_30_0.resistanceComp:refresh(var_30_0)
 end
 
-function var_0_0._getBossId(arg_30_0)
-	local var_30_0 = FightModel.instance:getCurMonsterGroupId()
-	local var_30_1 = var_30_0 and lua_monster_group.configDict[var_30_0]
+function var_0_0._getBossId(arg_31_0)
+	local var_31_0 = FightModel.instance:getCurMonsterGroupId()
+	local var_31_1 = var_31_0 and lua_monster_group.configDict[var_31_0]
 
-	return var_30_1 and not string.nilorempty(var_30_1.bossId) and var_30_1.bossId or nil
+	return var_31_1 and not string.nilorempty(var_31_1.bossId) and var_31_1.bossId or nil
 end
 
 local var_0_1 = {
@@ -696,1329 +707,1320 @@ local var_0_1 = {
 	"mdefense"
 }
 
-function var_0_0._onMonsterAttrItemShow(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	local var_31_0 = arg_31_1.transform
-	local var_31_1 = var_31_0:Find("icon"):GetComponent(gohelper.Type_Image)
-	local var_31_2 = var_31_0:Find("name"):GetComponent(gohelper.Type_TextMesh)
-	local var_31_3 = HeroConfig.instance:getHeroAttributeCO(arg_31_2.id)
+function var_0_0._onMonsterAttrItemShow(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	local var_32_0 = arg_32_1.transform
+	local var_32_1 = var_32_0:Find("icon"):GetComponent(gohelper.Type_Image)
+	local var_32_2 = var_32_0:Find("name"):GetComponent(gohelper.Type_TextMesh)
+	local var_32_3 = HeroConfig.instance:getHeroAttributeCO(arg_32_2.id)
 
-	if SLFramework.UGUI.GuiHelper.GetPreferredWidth(var_31_2, var_31_3.name) > recthelper.getWidth(var_31_2.transform) then
-		var_31_2.overflowMode = TMPro.TextOverflowModes.Ellipsis
-		arg_31_0._canClickAttribute = true
+	if SLFramework.UGUI.GuiHelper.GetPreferredWidth(var_32_2, var_32_3.name) > recthelper.getWidth(var_32_2.transform) then
+		var_32_2.overflowMode = TMPro.TextOverflowModes.Ellipsis
+		arg_32_0._canClickAttribute = true
 	end
 
-	var_31_2.text = var_31_3.name
+	var_32_2.text = var_32_3.name
 
-	UISpriteSetMgr.instance:setCommonSprite(var_31_1, "icon_att_" .. var_31_3.id)
+	UISpriteSetMgr.instance:setCommonSprite(var_32_1, "icon_att_" .. var_32_3.id)
 
-	local var_31_4 = var_31_0:Find("num"):GetComponent(gohelper.Type_TextMesh)
-	local var_31_5 = var_31_0:Find("rate"):GetComponent(gohelper.Type_Image)
+	local var_32_4 = var_32_0:Find("num"):GetComponent(gohelper.Type_TextMesh)
+	local var_32_5 = var_32_0:Find("rate"):GetComponent(gohelper.Type_Image)
 
-	if arg_31_0.isCharacter then
-		gohelper.setActive(var_31_4.gameObject, true)
-		gohelper.setActive(var_31_5.gameObject, false)
+	if arg_32_0.isCharacter then
+		gohelper.setActive(var_32_4.gameObject, true)
+		gohelper.setActive(var_32_5.gameObject, false)
 
-		var_31_4.text = arg_31_0._curAttrMO[var_0_1[arg_31_3]]
+		var_32_4.text = arg_32_0._curAttrMO[var_0_1[arg_32_3]]
 	else
-		gohelper.setActive(var_31_4.gameObject, false)
-		gohelper.setActive(var_31_5.gameObject, true)
-		UISpriteSetMgr.instance:setCommonSprite(var_31_5, "sx_" .. arg_31_2.value, true)
+		gohelper.setActive(var_32_4.gameObject, false)
+		gohelper.setActive(var_32_5.gameObject, true)
+		UISpriteSetMgr.instance:setCommonSprite(var_32_5, "sx_" .. arg_32_2.value, true)
 	end
 end
 
-function var_0_0._refreshCharacterInfo(arg_32_0, arg_32_1)
-	local var_32_0 = arg_32_1:getTrialAttrCo()
+function var_0_0._refreshCharacterInfo(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_1:getTrialAttrCo()
 
-	gohelper.setActive(arg_32_0._scrollplotenemypassive.gameObject, false)
+	gohelper.setActive(arg_33_0._scrollplotenemypassive.gameObject, false)
 
-	local var_32_1 = arg_32_1:getCO()
+	local var_33_1 = arg_33_1:getCO()
 
-	arg_32_0:_refreshHeroEquipInfo(arg_32_1)
-	UISpriteSetMgr.instance:setCommonSprite(arg_32_0._imagecareer, "lssx_" .. tostring(var_32_1.career))
+	arg_33_0:_refreshHeroEquipInfo(arg_33_1)
+	UISpriteSetMgr.instance:setCommonSprite(arg_33_0._imagecareer, "lssx_" .. tostring(var_33_1.career))
 
-	arg_32_0._txtlevel.text = HeroConfig.instance:getLevelDisplayVariant(arg_32_1.level)
-	arg_32_0._txtname.text = var_32_1.name
+	arg_33_0._txtlevel.text = HeroConfig.instance:getLevelDisplayVariant(arg_33_1.level)
+	arg_33_0._txtname.text = var_33_1.name
 
-	if var_32_0 then
-		arg_32_0._txtname.text = var_32_0.name
+	if var_33_0 then
+		arg_33_0._txtname.text = var_33_0.name
 	end
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_32_0._imagedmgtype, "dmgtype" .. tostring(var_32_1.dmgType))
-	arg_32_0:_refreshCharacterPassiveSkill(arg_32_1)
-	gohelper.setActive(arg_32_0._goenemypassive, false)
-	gohelper.setActive(arg_32_0._noskill, false)
-	gohelper.setActive(arg_32_0._skill, true)
+	UISpriteSetMgr.instance:setCommonSprite(arg_33_0._imagedmgtype, "dmgtype" .. tostring(var_33_1.dmgType))
+	arg_33_0:_refreshCharacterPassiveSkill(arg_33_1)
+	gohelper.setActive(arg_33_0._goenemypassive, false)
+	gohelper.setActive(arg_33_0._noskill, false)
+	gohelper.setActive(arg_33_0._skill, true)
 
-	local var_32_2
-	local var_32_3 = not PlayerModel.instance:isPlayerSelf(arg_32_1.userId)
+	local var_33_2
+	local var_33_3 = not PlayerModel.instance:isPlayerSelf(arg_33_1.userId)
 
-	if tonumber(arg_32_1.uid) < 0 or var_32_3 then
-		var_32_2 = arg_32_1.exSkillLevel
+	if tonumber(arg_33_1.uid) < 0 or var_33_3 then
+		var_33_2 = arg_33_1.exSkillLevel
 	end
 
-	local var_32_4 = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(var_32_1.id, nil, nil, var_32_2)
+	local var_33_4 = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(var_33_1.id, nil, nil, var_33_2)
 
-	if var_32_0 then
-		var_32_4 = SkillConfig.instance:getHeroAllSkillIdDictByStr(var_32_0.activeSkill, var_32_0.uniqueSkill)
+	if var_33_0 then
+		var_33_4 = SkillConfig.instance:getHeroAllSkillIdDictByStr(var_33_0.activeSkill, var_33_0.uniqueSkill)
 	end
 
-	local var_32_5 = var_32_4[3][1]
+	local var_33_5 = var_33_4[3][1]
 
-	var_32_4[3] = nil
+	var_33_4[3] = nil
 
-	if arg_32_1.exSkill and arg_32_1.exSkill > 0 then
-		var_32_5 = arg_32_1.exSkill
+	if arg_33_1.exSkill and arg_33_1.exSkill > 0 then
+		var_33_5 = arg_33_1.exSkill
 	end
 
-	if #arg_32_1.skillGroup1 > 0 then
-		var_32_4[1] = LuaUtil.deepCopySimple(arg_32_1.skillGroup1)
+	if #arg_33_1.skillGroup1 > 0 then
+		var_33_4[1] = LuaUtil.deepCopySimple(arg_33_1.skillGroup1)
 	end
 
-	if #arg_32_1.skillGroup2 > 0 then
-		var_32_4[2] = LuaUtil.deepCopySimple(arg_32_1.skillGroup2)
+	if #arg_33_1.skillGroup2 > 0 then
+		var_33_4[2] = LuaUtil.deepCopySimple(arg_33_1.skillGroup2)
 	end
 
-	arg_32_0:_refreshSuper({
-		var_32_5
+	arg_33_0:_refreshSuper({
+		var_33_5
 	})
-	arg_32_0:_refreshSkill(var_32_4)
-	arg_32_0:_refreshAttrList(arg_32_0:_getHeroBaseAttr(var_32_1))
-	arg_32_0:refreshStress(arg_32_0._entityMO)
-	arg_32_0:refreshHealth(arg_32_0._entityMO)
+	arg_33_0:_refreshSkill(var_33_4)
+	arg_33_0:_refreshAttrList(arg_33_0:_getHeroBaseAttr(var_33_1))
+	arg_33_0:refreshStress(arg_33_0._entityMO)
+	arg_33_0:refreshKillLine(arg_33_0._entityMO)
+	arg_33_0:refreshHealth(arg_33_0._entityMO)
 end
 
-function var_0_0._refreshHeroEquipInfo(arg_33_0, arg_33_1)
-	local var_33_0
-	local var_33_1
+function var_0_0._refreshHeroEquipInfo(arg_34_0, arg_34_1)
+	local var_34_0
+	local var_34_1
 
-	if arg_33_1.equipRecord then
-		var_33_0 = arg_33_1:getEquipMo()
-	elseif tonumber(arg_33_1.uid) < 0 then
-		if tonumber(arg_33_1.equipUid) > 0 then
-			var_33_0 = EquipModel.instance:getEquip(arg_33_1.equipUid)
-		elseif tonumber(arg_33_1.equipUid) < 0 then
-			local var_33_2 = lua_equip_trial.configDict[-tonumber(arg_33_1.equipUid)]
+	if arg_34_1.equipRecord then
+		var_34_0 = arg_34_1:getEquipMo()
+	elseif tonumber(arg_34_1.uid) < 0 then
+		if tonumber(arg_34_1.equipUid) > 0 then
+			var_34_0 = EquipModel.instance:getEquip(arg_34_1.equipUid)
+		elseif tonumber(arg_34_1.equipUid) < 0 then
+			local var_34_2 = lua_equip_trial.configDict[-tonumber(arg_34_1.equipUid)]
 
-			if var_33_2 then
-				var_33_0 = EquipMO.New()
+			if var_34_2 then
+				var_34_0 = EquipMO.New()
 
-				var_33_0:initByTrialEquipCO(var_33_2)
+				var_34_0:initByTrialEquipCO(var_34_2)
 			end
-		elseif arg_33_1.trialEquip and arg_33_1.trialEquip.equipId > 0 then
-			var_33_0 = EquipMO.New()
+		elseif arg_34_1.trialEquip and arg_34_1.trialEquip.equipId > 0 then
+			var_34_0 = EquipMO.New()
 
-			local var_33_3 = {
-				equipId = arg_33_1.trialEquip.equipId,
-				equipLv = arg_33_1.trialEquip.equipLv,
-				equipRefine = arg_33_1.trialEquip.refineLv
+			local var_34_3 = {
+				equipId = arg_34_1.trialEquip.equipId,
+				equipLv = arg_34_1.trialEquip.equipLv,
+				equipRefine = arg_34_1.trialEquip.refineLv
 			}
 
-			var_33_0:initByTrialCO(var_33_3)
+			var_34_0:initByTrialCO(var_34_3)
 		end
 	else
-		local var_33_4
+		local var_34_4
 
-		if not PlayerModel.instance:isPlayerSelf(arg_33_1.userId) then
-			var_33_4 = arg_33_1.uid
+		if not PlayerModel.instance:isPlayerSelf(arg_34_1.userId) then
+			var_34_4 = arg_34_1.uid
 		else
-			local var_33_5 = arg_33_1:getCO()
-			local var_33_6 = HeroModel.instance:getByHeroId(var_33_5.id)
+			local var_34_5 = arg_34_1:getCO()
+			local var_34_6 = HeroModel.instance:getByHeroId(var_34_5.id)
 
-			var_33_4 = var_33_6 and var_33_6.id
+			var_34_4 = var_34_6 and var_34_6.id
 		end
 
-		local var_33_7
+		local var_34_7
 
-		if arg_33_0._group then
-			for iter_33_0, iter_33_1 in pairs(arg_33_0._group.heroList) do
-				if var_33_4 and iter_33_1 == var_33_4 then
-					var_33_7 = arg_33_0._group.equips[iter_33_0 - 1].equipUid[1]
-					var_33_1 = iter_33_0
+		if arg_34_0._group then
+			for iter_34_0, iter_34_1 in pairs(arg_34_0._group.heroList) do
+				if var_34_4 and iter_34_1 == var_34_4 then
+					var_34_7 = arg_34_0._group.equips[iter_34_0 - 1].equipUid[1]
+					var_34_1 = iter_34_0
 				end
 			end
 		end
 
-		if tonumber(var_33_7) and tonumber(var_33_7) < 0 then
-			local var_33_8 = lua_equip_trial.configDict[-tonumber(var_33_7)]
+		if tonumber(var_34_7) and tonumber(var_34_7) < 0 then
+			local var_34_8 = lua_equip_trial.configDict[-tonumber(var_34_7)]
 
-			if var_33_8 then
-				var_33_0 = EquipMO.New()
+			if var_34_8 then
+				var_34_0 = EquipMO.New()
 
-				var_33_0:initByTrialEquipCO(var_33_8)
+				var_34_0:initByTrialEquipCO(var_34_8)
 			end
 		else
-			var_33_0 = EquipModel.instance:getEquip(var_33_7)
+			var_34_0 = EquipModel.instance:getEquip(var_34_7)
 		end
 	end
 
-	if var_33_0 and arg_33_0._balanceHelper.getIsBalanceMode() then
-		local var_33_9, var_33_10, var_33_11 = arg_33_0._balanceHelper.getBalanceLv()
+	if var_34_0 and arg_34_0._balanceHelper.getIsBalanceMode() then
+		local var_34_9, var_34_10, var_34_11 = arg_34_0._balanceHelper.getBalanceLv()
 
-		if var_33_11 > var_33_0.level then
-			local var_33_12 = EquipMO.New()
+		if var_34_11 > var_34_0.level then
+			local var_34_12 = EquipMO.New()
 
-			var_33_12:initByConfig(nil, var_33_0.equipId, var_33_11, var_33_0.refineLv)
+			var_34_12:initByConfig(nil, var_34_0.equipId, var_34_11, var_34_0.refineLv)
 
-			var_33_0 = var_33_12
+			var_34_0 = var_34_12
 		end
 	end
 
-	if var_33_0 and var_33_1 and arg_33_0._setEquipInfo then
-		local var_33_13 = arg_33_0._setEquipInfo[1]
-		local var_33_14 = arg_33_0._setEquipInfo[2]
+	if var_34_0 and var_34_1 and arg_34_0._setEquipInfo then
+		local var_34_13 = arg_34_0._setEquipInfo[1]
+		local var_34_14 = arg_34_0._setEquipInfo[2]
 
-		var_33_0 = var_33_13(var_33_14, {
-			posIndex = var_33_1,
-			equipMO = var_33_0
+		var_34_0 = var_34_13(var_34_14, {
+			posIndex = var_34_1,
+			equipMO = var_34_0
 		})
 	end
 
-	arg_33_0.equipMO = var_33_0
+	arg_34_0.equipMO = var_34_0
 
-	if arg_33_0.equipMO then
-		arg_33_0._simageequipicon:LoadImage(ResUrl.getHeroDefaultEquipIcon(arg_33_0.equipMO.config.icon), arg_33_0._equipIconLoaded, arg_33_0)
+	if arg_34_0.equipMO then
+		arg_34_0._simageequipicon:LoadImage(ResUrl.getHeroDefaultEquipIcon(arg_34_0.equipMO.config.icon), arg_34_0._equipIconLoaded, arg_34_0)
 
-		arg_33_0._txtequiplv.text = string.format("Lv.%s", arg_33_0.equipMO.level)
-		arg_33_0.equipClick = gohelper.getClick(arg_33_0._simageequipicon.gameObject)
+		arg_34_0._txtequiplv.text = string.format("Lv.%s", arg_34_0.equipMO.level)
+		arg_34_0.equipClick = gohelper.getClick(arg_34_0._simageequipicon.gameObject)
 
-		arg_33_0.equipClick:AddClickListener(arg_33_0.onEquipClick, arg_33_0)
+		arg_34_0.equipClick:AddClickListener(arg_34_0.onEquipClick, arg_34_0)
 	end
 
-	gohelper.setActive(arg_33_0._goequip, arg_33_0.equipMO)
-	gohelper.setActive(arg_33_0._goplayerequipinfo, arg_33_0.equipMO)
+	gohelper.setActive(arg_34_0._goequip, arg_34_0.equipMO)
+	gohelper.setActive(arg_34_0._goplayerequipinfo, arg_34_0.equipMO)
 end
 
-function var_0_0._equipIconLoaded(arg_34_0)
-	arg_34_0._equipIconImage.enabled = true
+function var_0_0._equipIconLoaded(arg_35_0)
+	arg_35_0._equipIconImage.enabled = true
 end
 
-function var_0_0.onEquipClick(arg_35_0)
-	if arg_35_0.openEquipInfoTipView then
+function var_0_0.onEquipClick(arg_36_0)
+	if arg_36_0.openEquipInfoTipView then
 		return
 	end
 
-	arg_35_0:closeAllTips()
-	gohelper.setActive(arg_35_0._godetailView, false)
+	arg_36_0:closeAllTips()
+	gohelper.setActive(arg_36_0._godetailView, false)
 
-	arg_35_0.openEquipInfoTipView = true
+	arg_36_0.openEquipInfoTipView = true
 
 	ViewMgr.instance:openView(ViewName.EquipInfoTipsView, {
 		notShowLockIcon = true,
-		equipMo = arg_35_0.equipMO,
-		heroCo = arg_35_0._entityMO:getCO()
+		equipMo = arg_36_0.equipMO,
+		heroCo = arg_36_0._entityMO:getCO()
 	})
 end
 
-function var_0_0._refreshAttrList(arg_36_0, arg_36_1)
+function var_0_0._refreshAttrList(arg_37_0, arg_37_1)
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 		return
 	end
 
-	arg_36_0._attrDataList = arg_36_1
-	arg_36_0._curAttrMO = arg_36_0._attrEntityDic[arg_36_0._entityMO.id]
-
-	if arg_36_0._curAttrMO then
-		gohelper.CreateObjList(arg_36_0, arg_36_0._onMonsterAttrItemShow, arg_36_0._attrDataList, arg_36_0._goattributeroot)
-		gohelper.setActive(arg_36_0._btnattribute.gameObject, true)
-	else
-		FightRpc.instance:sendEntityInfoRequest(arg_36_0._entityMO.id)
-	end
-end
-
-function var_0_0._onReceiveEntityInfoReply(arg_37_0, arg_37_1)
-	arg_37_0._attrEntityDic[arg_37_1.entityInfo.uid] = arg_37_1.entityInfo.attr
+	arg_37_0._attrDataList = arg_37_1
 	arg_37_0._curAttrMO = arg_37_0._attrEntityDic[arg_37_0._entityMO.id]
 
 	if arg_37_0._curAttrMO then
 		gohelper.CreateObjList(arg_37_0, arg_37_0._onMonsterAttrItemShow, arg_37_0._attrDataList, arg_37_0._goattributeroot)
 		gohelper.setActive(arg_37_0._btnattribute.gameObject, true)
+	else
+		FightRpc.instance:sendEntityInfoRequest(arg_37_0._entityMO.id)
 	end
 end
 
-function var_0_0._getHeroBaseAttr(arg_38_0, arg_38_1)
-	local var_38_0 = {
+function var_0_0._onReceiveEntityInfoReply(arg_38_0, arg_38_1)
+	arg_38_0._attrEntityDic[arg_38_1.entityInfo.uid] = arg_38_1.entityInfo.attr
+	arg_38_0._curAttrMO = arg_38_0._attrEntityDic[arg_38_0._entityMO.id]
+
+	if arg_38_0._curAttrMO then
+		gohelper.CreateObjList(arg_38_0, arg_38_0._onMonsterAttrItemShow, arg_38_0._attrDataList, arg_38_0._goattributeroot)
+		gohelper.setActive(arg_38_0._btnattribute.gameObject, true)
+	end
+end
+
+function var_0_0._getHeroBaseAttr(arg_39_0, arg_39_1)
+	local var_39_0 = {
 		"atk",
 		"technic",
 		"def",
 		"mdef"
 	}
-	local var_38_1 = {}
+	local var_39_1 = {}
 
-	for iter_38_0, iter_38_1 in ipairs(var_38_0) do
-		table.insert(var_38_1, {
-			id = HeroConfig.instance:getIDByAttrType(var_38_0[iter_38_0]),
-			value = HeroConfig.instance:getHeroAttrRate(arg_38_1.id, iter_38_1)
+	for iter_39_0, iter_39_1 in ipairs(var_39_0) do
+		table.insert(var_39_1, {
+			id = HeroConfig.instance:getIDByAttrType(var_39_0[iter_39_0]),
+			value = HeroConfig.instance:getHeroAttrRate(arg_39_1.id, iter_39_1)
 		})
 	end
 
-	return var_38_1
+	return var_39_1
 end
 
-function var_0_0._getMontBaseAttr(arg_39_0, arg_39_1)
-	local var_39_0 = lua_monster_skill_template.configDict[arg_39_1.skillTemplate]
-	local var_39_1 = CharacterDataConfig.instance:getMonsterAttributeScoreList(arg_39_1.id)
+function var_0_0._getMontBaseAttr(arg_40_0, arg_40_1)
+	local var_40_0 = lua_monster_skill_template.configDict[arg_40_1.skillTemplate]
+	local var_40_1 = CharacterDataConfig.instance:getMonsterAttributeScoreList(arg_40_1.id)
 
-	table.insert(var_39_1, 2, table.remove(var_39_1, 4))
+	table.insert(var_40_1, 2, table.remove(var_40_1, 4))
 
-	local var_39_2 = {
+	local var_40_2 = {
 		"atk",
 		"technic",
 		"def",
 		"mdef"
 	}
-	local var_39_3 = {}
+	local var_40_3 = {}
 
-	for iter_39_0, iter_39_1 in ipairs(var_39_1) do
-		table.insert(var_39_3, {
-			id = HeroConfig.instance:getIDByAttrType(var_39_2[iter_39_0]),
-			value = iter_39_1
+	for iter_40_0, iter_40_1 in ipairs(var_40_1) do
+		table.insert(var_40_3, {
+			id = HeroConfig.instance:getIDByAttrType(var_40_2[iter_40_0]),
+			value = iter_40_1
 		})
 	end
 
-	return var_39_3
+	return var_40_3
 end
 
-function var_0_0._onAttributeClick(arg_40_0)
-	arg_40_0:_onAttributeClick_overseas()
+function var_0_0._onAttributeClick(arg_41_0)
+	arg_41_0:_onAttributeClick_overseas()
 end
 
-function var_0_0._refreshPassiveSkill(arg_41_0, arg_41_1, arg_41_2)
-	arg_41_0:_releasePassiveSkillGOs()
+function var_0_0._refreshPassiveSkill(arg_42_0, arg_42_1, arg_42_2)
+	arg_42_0:_releasePassiveSkillGOs()
 
-	for iter_41_0 = 1, #arg_41_1 do
-		local var_41_0 = arg_41_0._passiveSkillGOs[iter_41_0]
+	for iter_42_0 = 1, #arg_42_1 do
+		local var_42_0 = arg_42_0._passiveSkillGOs[iter_42_0]
 
-		if not var_41_0 then
-			local var_41_1 = gohelper.cloneInPlace(arg_41_2, "item" .. iter_41_0)
+		if not var_42_0 then
+			local var_42_1 = gohelper.cloneInPlace(arg_42_2, "item" .. iter_42_0)
 
-			var_41_0 = arg_41_0:getUserDataTb_()
-			var_41_0.go = var_41_1
-			var_41_0.name = gohelper.findChildTextMesh(var_41_1, "tmp_talent")
-			var_41_0.btn = gohelper.findChildButton(var_41_1, "#btn_enemypassive")
+			var_42_0 = arg_42_0:getUserDataTb_()
+			var_42_0.go = var_42_1
+			var_42_0.name = gohelper.findChildTextMesh(var_42_1, "tmp_talent")
+			var_42_0.btn = gohelper.findChildButton(var_42_1, "#btn_enemypassive")
 
-			table.insert(arg_41_0._passiveSkillGOs, var_41_0)
+			table.insert(arg_42_0._passiveSkillGOs, var_42_0)
 		end
 
-		local var_41_2 = tonumber(arg_41_1[iter_41_0])
-		local var_41_3 = lua_skill.configDict[var_41_2]
+		local var_42_2 = tonumber(arg_42_1[iter_42_0])
+		local var_42_3 = lua_skill.configDict[var_42_2]
 
-		var_41_0.btn:AddClickListener(arg_41_0._btnenemypassiveOnClick, arg_41_0)
+		var_42_0.btn:AddClickListener(arg_42_0._btnenemypassiveOnClick, arg_42_0)
 
-		var_41_0.name.text = var_41_3.name
+		var_42_0.name.text = var_42_3.name
 
-		gohelper.setActive(var_41_0.go, true)
+		gohelper.setActive(var_42_0.go, true)
 	end
 
-	for iter_41_1 = #arg_41_1 + 1, #arg_41_0._passiveSkillGOs do
-		gohelper.setActive(arg_41_0._passiveSkillGOs[iter_41_1].go, false)
+	for iter_42_1 = #arg_42_1 + 1, #arg_42_0._passiveSkillGOs do
+		gohelper.setActive(arg_42_0._passiveSkillGOs[iter_42_1].go, false)
 	end
 
-	gohelper.setActive(arg_41_0._goenemypassive, #arg_41_1 > 0)
+	gohelper.setActive(arg_42_0._goenemypassive, #arg_42_1 > 0)
 
-	arg_41_0._passiveSkillIds = arg_41_1
+	arg_42_0._passiveSkillIds = arg_42_1
 
-	local var_41_4 = arg_41_0._scrollenemypassive.gameObject:GetComponent(typeof(UnityEngine.UI.LayoutElement))
-	local var_41_5 = 80
-	local var_41_6 = math.ceil(#arg_41_1 / 3)
-	local var_41_7 = 200
+	local var_42_4 = arg_42_0._scrollenemypassive.gameObject:GetComponent(typeof(UnityEngine.UI.LayoutElement))
+	local var_42_5 = 80
+	local var_42_6 = math.ceil(#arg_42_1 / 3)
+	local var_42_7 = 200
 
-	if var_41_6 <= 2 then
-		var_41_7 = var_41_5 * var_41_6
+	if var_42_6 <= 2 then
+		var_42_7 = var_42_5 * var_42_6
 	end
 
-	var_41_4.minHeight = var_41_7
+	var_42_4.minHeight = var_42_7
 end
 
-function var_0_0._refreshCharacterPassiveSkill(arg_42_0, arg_42_1)
-	local var_42_0 = arg_42_1:getCO()
-	local var_42_1, var_42_2 = SkillConfig.instance:getHeroExSkillLevelByLevel(var_42_0.id, arg_42_1.level)
-	local var_42_3 = {}
-	local var_42_4 = arg_42_0:getPassiveSkillList(arg_42_1)
+function var_0_0._refreshCharacterPassiveSkill(arg_43_0, arg_43_1)
+	local var_43_0 = arg_43_1:getCO()
+	local var_43_1, var_43_2 = SkillConfig.instance:getHeroExSkillLevelByLevel(var_43_0.id, arg_43_1.level)
+	local var_43_3 = {}
+	local var_43_4 = arg_43_0:getPassiveSkillList(arg_43_1)
 
-	HeroDestinyStoneMO.replaceSkillList(var_42_4, arg_42_1.destinyStone, arg_42_1.destinyRank)
+	HeroDestinyStoneMO.replaceSkillList(var_43_4, arg_43_1.destinyStone, arg_43_1.destinyRank)
 
-	local var_42_5 = var_42_4 and var_42_4[0]
+	local var_43_5 = var_43_4 and var_43_4[0]
 
-	if var_42_4 and #var_42_4 > 0 then
-		gohelper.setActive(arg_42_0._goplayerpassive, true)
+	if var_43_4 and #var_43_4 > 0 then
+		gohelper.setActive(arg_43_0._goplayerpassive, true)
 
-		local var_42_6 = var_42_4[1]
+		local var_43_6 = var_43_4[1]
 
-		arg_42_0._txttalent.text = lua_skill.configDict[var_42_6].name
+		arg_43_0._txttalent.text = lua_skill.configDict[var_43_6].name
 
-		for iter_42_0, iter_42_1 in pairs(var_42_4) do
-			local var_42_7 = iter_42_0 <= var_42_1
+		for iter_43_0, iter_43_1 in pairs(var_43_4) do
+			local var_43_7 = iter_43_0 <= var_43_1
 
-			gohelper.setActive(arg_42_0._playerpassiveGOList[iter_42_0], var_42_7)
+			gohelper.setActive(arg_43_0._playerpassiveGOList[iter_43_0], var_43_7)
 
-			if var_42_7 then
-				var_42_3[iter_42_0] = FightHelper.getPassiveSkill(arg_42_1.id, iter_42_1)
+			if var_43_7 then
+				var_43_3[iter_43_0] = FightHelper.getPassiveSkill(arg_43_1.id, iter_43_1)
 			end
 		end
 
-		for iter_42_2 = #var_42_4 + 1, #arg_42_0._playerpassiveGOList do
-			gohelper.setActive(arg_42_0._playerpassiveGOList[iter_42_2], false)
+		for iter_43_2 = #var_43_4 + 1, #arg_43_0._playerpassiveGOList do
+			gohelper.setActive(arg_43_0._playerpassiveGOList[iter_43_2], false)
 		end
 	end
 
-	if var_42_5 then
-		gohelper.setActive(arg_42_0._playerpassiveGOList[0], true)
+	if var_43_5 then
+		gohelper.setActive(arg_43_0._playerpassiveGOList[0], true)
 	else
-		gohelper.setActive(arg_42_0._playerpassiveGOList[0], false)
+		gohelper.setActive(arg_43_0._playerpassiveGOList[0], false)
 	end
 
-	gohelper.setActive(arg_42_0._goplayerpassive, #var_42_3 > 0 or var_42_5)
+	gohelper.setActive(arg_43_0._goplayerpassive, #var_43_3 > 0 or var_43_5)
 
-	arg_42_0._passiveSkillIds = var_42_3
+	arg_43_0._passiveSkillIds = var_43_3
 end
 
-function var_0_0.getPassiveSkillList(arg_43_0, arg_43_1)
-	local var_43_0 = {}
-	local var_43_1
-	local var_43_2 = arg_43_1:getTrialAttrCo()
+function var_0_0.getPassiveSkillList(arg_44_0, arg_44_1)
+	local var_44_0 = {}
+	local var_44_1
+	local var_44_2 = arg_44_1:getTrialAttrCo()
 
-	if var_43_2 then
-		var_43_1 = arg_43_1.modelId
+	if var_44_2 then
+		var_44_1 = arg_44_1.modelId
 
-		local var_43_3 = string.splitToNumber(var_43_2.passiveSkill, "|")
+		local var_44_3 = string.splitToNumber(var_44_2.passiveSkill, "|")
 
-		for iter_43_0, iter_43_1 in ipairs(var_43_3) do
-			table.insert(var_43_0, iter_43_1)
+		for iter_44_0, iter_44_1 in ipairs(var_44_3) do
+			table.insert(var_44_0, iter_44_1)
 		end
 	else
-		var_43_1 = arg_43_1:getCO().id
+		var_44_1 = arg_44_1:getCO().id
 
-		local var_43_4 = arg_43_1.exSkillLevel
-		local var_43_5 = SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(var_43_1, var_43_4)
+		local var_44_4 = arg_44_1.exSkillLevel
+		local var_44_5 = SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(var_44_1, var_44_4)
 
-		if var_43_5[0] then
-			var_43_0[0] = var_43_5[0].skillPassive
+		if var_44_5[0] then
+			var_44_0[0] = var_44_5[0].skillPassive
 		end
 
-		for iter_43_2, iter_43_3 in ipairs(var_43_5) do
-			table.insert(var_43_0, iter_43_3.skillPassive)
-		end
-	end
-
-	local var_43_6 = FightModel.instance:getFightParam()
-	local var_43_7 = var_43_6 and var_43_6:getCurEpisodeConfig()
-
-	if var_43_7 and var_43_7.type == DungeonEnum.EpisodeType.BossRush then
-		local var_43_8 = BossRushConfig.instance:getEpisodeCoByEpisodeId(var_43_7.id)
-
-		if var_43_8 and var_43_8.enhanceRole == 1 then
-			var_43_0 = arg_43_0:exchangeHeroPassiveSkill(var_43_0, var_43_1)
+		for iter_44_2, iter_44_3 in ipairs(var_44_5) do
+			table.insert(var_44_0, iter_44_3.skillPassive)
 		end
 	end
 
-	return var_43_0
+	local var_44_6 = FightModel.instance:getFightParam()
+	local var_44_7 = var_44_6 and var_44_6:getCurEpisodeConfig()
+
+	if var_44_7 and var_44_7.type == DungeonEnum.EpisodeType.BossRush then
+		local var_44_8 = BossRushConfig.instance:getEpisodeCoByEpisodeId(var_44_7.id)
+
+		if var_44_8 and var_44_8.enhanceRole == 1 then
+			var_44_0 = arg_44_0:exchangeHeroPassiveSkill(var_44_0, var_44_1)
+		end
+	end
+
+	return var_44_0
 end
 
-function var_0_0.exchangeHeroPassiveSkill(arg_44_0, arg_44_1, arg_44_2)
-	if not arg_44_1 then
-		return arg_44_1
+function var_0_0.exchangeHeroPassiveSkill(arg_45_0, arg_45_1, arg_45_2)
+	if not arg_45_1 then
+		return arg_45_1
 	end
 
-	if not arg_44_2 then
-		return arg_44_1
+	if not arg_45_2 then
+		return arg_45_1
 	end
 
-	for iter_44_0, iter_44_1 in ipairs(lua_activity128_enhance.configList) do
-		if iter_44_1.characterId == arg_44_2 then
-			local var_44_0 = FightStrUtil.splitString2(iter_44_1.exchangeSkills, true)
+	for iter_45_0, iter_45_1 in ipairs(lua_activity128_enhance.configList) do
+		if iter_45_1.characterId == arg_45_2 then
+			local var_45_0 = FightStrUtil.splitString2(iter_45_1.exchangeSkills, true)
 
-			if var_44_0 then
-				for iter_44_2, iter_44_3 in ipairs(arg_44_1) do
-					for iter_44_4, iter_44_5 in ipairs(var_44_0) do
-						if iter_44_5[1] == iter_44_3 then
-							arg_44_1[iter_44_2] = iter_44_5[2]
+			if var_45_0 then
+				for iter_45_2, iter_45_3 in ipairs(arg_45_1) do
+					for iter_45_4, iter_45_5 in ipairs(var_45_0) do
+						if iter_45_5[1] == iter_45_3 then
+							arg_45_1[iter_45_2] = iter_45_5[2]
 						end
 					end
 				end
 			end
 
-			return arg_44_1
+			return arg_45_1
 		end
 	end
 
-	return arg_44_1
+	return arg_45_1
 end
 
-function var_0_0._refreshSkill(arg_45_0, arg_45_1)
-	local var_45_0
-	local var_45_1
-	local var_45_2
+function var_0_0._refreshSkill(arg_46_0, arg_46_1)
+	local var_46_0
+	local var_46_1
+	local var_46_2
 
-	for iter_45_0 = 1, #arg_45_1 do
-		if iter_45_0 > #arg_45_0._skillGOs then
+	for iter_46_0 = 1, #arg_46_1 do
+		if iter_46_0 > #arg_46_0._skillGOs then
 			logError("技能超过支持显示数量")
 
 			break
 		end
 
-		local var_45_3 = arg_45_0._skillGOs[iter_45_0]
-		local var_45_4 = arg_45_1[iter_45_0][1]
-		local var_45_5 = lua_skill.configDict[var_45_4]
+		local var_46_3 = arg_46_0._skillGOs[iter_46_0]
+		local var_46_4 = arg_46_1[iter_46_0][1]
+		local var_46_5 = lua_skill.configDict[var_46_4]
 
-		if not var_45_5 then
-			logError("技能表找不到id:" .. var_45_4)
+		if not var_46_5 then
+			logError("技能表找不到id:" .. var_46_4)
 
 			return
 		end
 
-		var_45_3.icon:LoadImage(ResUrl.getSkillIcon(var_45_5.icon))
-		var_45_3.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_45_5.showTag))
+		var_46_3.icon:LoadImage(ResUrl.getSkillIcon(var_46_5.icon))
+		var_46_3.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_46_5.showTag))
 
-		local var_45_6 = {}
+		local var_46_6 = {}
 
-		var_45_6.super = false
-		var_45_6.skillIdList = arg_45_1[iter_45_0]
-		var_45_6.skillIndex = iter_45_0
-		var_45_3.info = var_45_6
+		var_46_6.super = false
+		var_46_6.skillIdList = arg_46_1[iter_46_0]
+		var_46_6.skillIndex = iter_46_0
+		var_46_3.info = var_46_6
 
-		gohelper.setActive(var_45_3.go, true)
+		gohelper.setActive(var_46_3.go, true)
 	end
 
-	for iter_45_1 = #arg_45_1 + 1, #arg_45_0._skillGOs do
-		gohelper.setActive(arg_45_0._skillGOs[iter_45_1].go, false)
+	for iter_46_1 = #arg_46_1 + 1, #arg_46_0._skillGOs do
+		gohelper.setActive(arg_46_0._skillGOs[iter_46_1].go, false)
 	end
 end
 
-function var_0_0._refreshSuper(arg_46_0, arg_46_1)
-	if arg_46_1 and #arg_46_1 > 0 then
-		local var_46_0
-		local var_46_1
-		local var_46_2
+function var_0_0._refreshSuper(arg_47_0, arg_47_1)
+	if arg_47_1 and #arg_47_1 > 0 then
+		local var_47_0
+		local var_47_1
+		local var_47_2
 
-		for iter_46_0 = 1, #arg_46_1 do
-			local var_46_3 = arg_46_0._superItemList[iter_46_0]
+		for iter_47_0 = 1, #arg_47_1 do
+			local var_47_3 = arg_47_0._superItemList[iter_47_0]
 
-			if not var_46_3 then
-				logError("技能超过支持显示数量 : " .. table.concat(arg_46_1, "|"))
+			if not var_47_3 then
+				logError("技能超过支持显示数量 : " .. table.concat(arg_47_1, "|"))
 
 				return
 			end
 
-			local var_46_4 = arg_46_1[iter_46_0]
+			local var_47_4 = arg_47_1[iter_47_0]
 
-			if var_46_4 ~= 0 then
-				local var_46_5 = lua_skill.configDict[var_46_4]
+			if var_47_4 ~= 0 then
+				local var_47_5 = lua_skill.configDict[var_47_4]
 
-				var_46_3.icon:LoadImage(ResUrl.getSkillIcon(var_46_5.icon))
+				var_47_3.icon:LoadImage(ResUrl.getSkillIcon(var_47_5.icon))
 
-				local var_46_6 = {}
+				local var_47_6 = {}
 
-				var_46_6.super = true
-				var_46_6.skillIdList = {
-					var_46_4
+				var_47_6.super = true
+				var_47_6.skillIdList = {
+					var_47_4
 				}
-				var_46_6.skillIndex = CharacterEnum.skillIndex.SkillEx
-				var_46_3.info = var_46_6
+				var_47_6.skillIndex = CharacterEnum.skillIndex.SkillEx
+				var_47_3.info = var_47_6
 			end
 
-			gohelper.setActive(var_46_3.go, var_46_4 ~= 0)
+			gohelper.setActive(var_47_3.go, var_47_4 ~= 0)
 		end
 	end
 
-	for iter_46_1 = #arg_46_1 + 1, #arg_46_0._superItemList do
-		gohelper.setActive(arg_46_0._superItemList[iter_46_1].go, false)
+	for iter_47_1 = #arg_47_1 + 1, #arg_47_0._superItemList do
+		gohelper.setActive(arg_47_0._superItemList[iter_47_1].go, false)
 	end
 end
 
-function var_0_0._refreshMO(arg_47_0, arg_47_1)
-	arg_47_0:_refreshHp(arg_47_1)
-	arg_47_0:_refreshBuff(arg_47_1)
+function var_0_0._refreshMO(arg_48_0, arg_48_1)
+	arg_48_0:_refreshHp(arg_48_1)
+	arg_48_0:_refreshBuff(arg_48_1)
 
-	if arg_47_1:isMonster() then
-		local var_47_0 = arg_47_1:getCO()
+	if arg_48_1:isMonster() then
+		local var_48_0 = arg_48_1:getCO()
 
-		if FightHelper.isBossId(arg_47_0:_getBossId(), var_47_0.id) then
-			arg_47_0:_refreshEnemyPassiveSkill(var_47_0)
+		if FightHelper.isBossId(arg_48_0:_getBossId(), var_48_0.id) then
+			arg_48_0:_refreshEnemyPassiveSkill(var_48_0)
 		else
-			gohelper.setActive(arg_47_0._goenemypassiveSkill, false)
+			gohelper.setActive(arg_48_0._goenemypassiveSkill, false)
 		end
 	end
 end
 
-function var_0_0._refreshEnemyPassiveSkill(arg_48_0, arg_48_1)
-	arg_48_0._bossSkillInfos = {}
+function var_0_0._refreshEnemyPassiveSkill(arg_49_0, arg_49_1)
+	arg_49_0._bossSkillInfos = {}
 
-	local var_48_0 = FightConfig.instance:getPassiveSkillsAfterUIFilter(arg_48_1.id)
-	local var_48_1 = FightConfig.instance:_filterSpeicalSkillIds(var_48_0, true)
+	local var_49_0 = FightConfig.instance:getPassiveSkillsAfterUIFilter(arg_49_1.id)
+	local var_49_1 = FightConfig.instance:_filterSpeicalSkillIds(var_49_0, true)
 
-	for iter_48_0 = 1, #var_48_1 do
-		local var_48_2 = var_48_1[iter_48_0]
-		local var_48_3 = lua_skill_specialbuff.configDict[var_48_2]
+	for iter_49_0 = 1, #var_49_1 do
+		local var_49_2 = var_49_1[iter_49_0]
+		local var_49_3 = lua_skill_specialbuff.configDict[var_49_2]
 
-		if var_48_3 then
-			local var_48_4 = arg_48_0._enemypassiveiconGOs[iter_48_0]
+		if var_49_3 then
+			local var_49_4 = arg_49_0._enemypassiveiconGOs[iter_49_0]
 
-			if not var_48_4 then
-				var_48_4 = arg_48_0:getUserDataTb_()
-				var_48_4.go = gohelper.cloneInPlace(arg_48_0._enemypassiveSkillPrefab, "item" .. iter_48_0)
-				var_48_4._gotag = gohelper.findChild(var_48_4.go, "tag")
-				var_48_4._txttag = gohelper.findChildText(var_48_4.go, "tag/#txt_tag")
+			if not var_49_4 then
+				var_49_4 = arg_49_0:getUserDataTb_()
+				var_49_4.go = gohelper.cloneInPlace(arg_49_0._enemypassiveSkillPrefab, "item" .. iter_49_0)
+				var_49_4._gotag = gohelper.findChild(var_49_4.go, "tag")
+				var_49_4._txttag = gohelper.findChildText(var_49_4.go, "tag/#txt_tag")
 
-				table.insert(arg_48_0._enemypassiveiconGOs, var_48_4)
+				table.insert(arg_49_0._enemypassiveiconGOs, var_49_4)
 
-				local var_48_5 = gohelper.findChildImage(var_48_4.go, "icon")
+				local var_49_5 = gohelper.findChildImage(var_49_4.go, "icon")
 
-				table.insert(arg_48_0._passiveiconImgs, var_48_5)
-				gohelper.setActive(var_48_4.go, true)
+				table.insert(arg_49_0._passiveiconImgs, var_49_5)
+				gohelper.setActive(var_49_4.go, true)
 			else
-				gohelper.setActive(var_48_4.go, true)
+				gohelper.setActive(var_49_4.go, true)
 			end
 
-			if arg_48_0._bossSkillInfos[iter_48_0] == nil then
-				arg_48_0._bossSkillInfos[iter_48_0] = {
-					skillId = var_48_2,
-					icon = var_48_3.icon
+			if arg_49_0._bossSkillInfos[iter_49_0] == nil then
+				arg_49_0._bossSkillInfos[iter_49_0] = {
+					skillId = var_49_2,
+					icon = var_49_3.icon
 				}
 			end
 
-			if not string.nilorempty(var_48_3.lv) then
-				gohelper.setActive(var_48_4._gotag, true)
+			if not string.nilorempty(var_49_3.lv) then
+				gohelper.setActive(var_49_4._gotag, true)
 
-				var_48_4._txttag.text = var_48_3.lv
+				var_49_4._txttag.text = var_49_3.lv
 			else
-				gohelper.setActive(var_48_4._gotag, false)
+				gohelper.setActive(var_49_4._gotag, false)
 			end
 
-			if string.nilorempty(var_48_3.icon) then
-				logError("boss抗性表的icon字段没有配置,技能ID:" .. var_48_3.id)
+			if string.nilorempty(var_49_3.icon) then
+				logError("boss抗性表的icon字段没有配置,技能ID:" .. var_49_3.id)
 			end
 
-			UISpriteSetMgr.instance:setFightPassiveSprite(arg_48_0._passiveiconImgs[iter_48_0], var_48_3.icon)
+			UISpriteSetMgr.instance:setFightPassiveSprite(arg_49_0._passiveiconImgs[iter_49_0], var_49_3.icon)
 		end
 	end
 
-	if #var_48_1 < #arg_48_0._enemypassiveiconGOs then
-		for iter_48_1 = #var_48_1 + 1, #arg_48_0._enemypassiveiconGOs do
-			gohelper.setActive(arg_48_0._enemypassiveiconGOs[iter_48_1].go, false)
+	if #var_49_1 < #arg_49_0._enemypassiveiconGOs then
+		for iter_49_1 = #var_49_1 + 1, #arg_49_0._enemypassiveiconGOs do
+			gohelper.setActive(arg_49_0._enemypassiveiconGOs[iter_49_1].go, false)
 		end
 	end
 
-	if #arg_48_0._bossSkillInfos > 0 then
-		gohelper.setActive(arg_48_0._goenemypassiveSkill, true)
+	if #arg_49_0._bossSkillInfos > 0 then
+		gohelper.setActive(arg_49_0._goenemypassiveSkill, true)
 	else
-		gohelper.setActive(arg_48_0._goenemypassiveSkill, false)
+		gohelper.setActive(arg_49_0._goenemypassiveSkill, false)
 	end
 
-	gohelper.setAsLastSibling(arg_48_0._btnenemypassiveSkill.gameObject)
-	arg_48_0._btnenemypassiveSkill:AddClickListener(arg_48_0._onBuffPassiveSkillClick, arg_48_0)
+	gohelper.setAsLastSibling(arg_49_0._btnenemypassiveSkill.gameObject)
+	arg_49_0._btnenemypassiveSkill:AddClickListener(arg_49_0._onBuffPassiveSkillClick, arg_49_0)
 end
 
-function var_0_0._onBuffPassiveSkillClick(arg_49_0)
-	if arg_49_0._isbuffviewopen then
+function var_0_0._onBuffPassiveSkillClick(arg_50_0)
+	if arg_50_0._isbuffviewopen then
 		return
 	end
 
-	arg_49_0:closeAllTips()
-	arg_49_0:_hideDetail()
+	arg_50_0:closeAllTips()
+	arg_50_0:_hideDetail()
 
-	local var_49_0
+	local var_50_0
 
-	if arg_49_0._bossSkillInfos then
-		for iter_49_0, iter_49_1 in pairs(arg_49_0._bossSkillInfos) do
-			local var_49_1 = iter_49_1.skillId
-			local var_49_2 = arg_49_0._enemybuffpassiveGOs[iter_49_0]
+	if arg_50_0._bossSkillInfos then
+		for iter_50_0, iter_50_1 in pairs(arg_50_0._bossSkillInfos) do
+			local var_50_1 = iter_50_1.skillId
+			local var_50_2 = arg_50_0._enemybuffpassiveGOs[iter_50_0]
 
-			if not var_49_2 then
-				var_49_2 = arg_49_0:getUserDataTb_()
-				var_49_2.go = gohelper.cloneInPlace(arg_49_0._gobuffpassiveitem, "item" .. iter_49_0)
+			if not var_50_2 then
+				var_50_2 = arg_50_0:getUserDataTb_()
+				var_50_2.go = gohelper.cloneInPlace(arg_50_0._gobuffpassiveitem, "item" .. iter_50_0)
 
-				table.insert(arg_49_0._enemybuffpassiveGOs, var_49_2)
+				table.insert(arg_50_0._enemybuffpassiveGOs, var_50_2)
 
-				local var_49_3 = gohelper.findChildImage(var_49_2.go, "title/simage_icon")
+				local var_50_3 = gohelper.findChildImage(var_50_2.go, "title/simage_icon")
 
-				table.insert(arg_49_0._passiveSkillImgs, var_49_3)
-				gohelper.setActive(var_49_2.go, true)
+				table.insert(arg_50_0._passiveSkillImgs, var_50_3)
+				gohelper.setActive(var_50_2.go, true)
 			else
-				gohelper.setActive(var_49_2.go, true)
+				gohelper.setActive(var_50_2.go, true)
 			end
 
-			local var_49_4 = gohelper.findChild(var_49_2.go, "txt_desc/image_line")
+			local var_50_4 = gohelper.findChild(var_50_2.go, "txt_desc/image_line")
 
-			gohelper.setActive(var_49_4, true)
-			arg_49_0:_setPassiveSkillTip(var_49_2.go, iter_49_1)
-			UISpriteSetMgr.instance:setFightPassiveSprite(arg_49_0._passiveSkillImgs[iter_49_0], iter_49_1.icon)
+			gohelper.setActive(var_50_4, true)
+			arg_50_0:_setPassiveSkillTip(var_50_2.go, iter_50_1)
+			UISpriteSetMgr.instance:setFightPassiveSprite(arg_50_0._passiveSkillImgs[iter_50_0], iter_50_1.icon)
 		end
 
-		if #arg_49_0._bossSkillInfos < #arg_49_0._enemybuffpassiveGOs then
-			for iter_49_2 = #arg_49_0._bossSkillInfos + 1, #arg_49_0._enemybuffpassiveGOs do
-				gohelper.setActive(arg_49_0._enemybuffpassiveGOs[iter_49_2], false)
+		if #arg_50_0._bossSkillInfos < #arg_50_0._enemybuffpassiveGOs then
+			for iter_50_2 = #arg_50_0._bossSkillInfos + 1, #arg_50_0._enemybuffpassiveGOs do
+				gohelper.setActive(arg_50_0._enemybuffpassiveGOs[iter_50_2], false)
 			end
 		end
 
-		local var_49_5 = gohelper.findChild(arg_49_0._enemybuffpassiveGOs[#arg_49_0._bossSkillInfos].go, "txt_desc/image_line")
+		local var_50_5 = gohelper.findChild(arg_50_0._enemybuffpassiveGOs[#arg_50_0._bossSkillInfos].go, "txt_desc/image_line")
 
-		gohelper.setActive(var_49_5, false)
-		gohelper.setActive(arg_49_0._gobuffpassiveview, true)
+		gohelper.setActive(var_50_5, false)
+		gohelper.setActive(arg_50_0._gobuffpassiveview, true)
 
-		arg_49_0._isbuffviewopen = true
+		arg_50_0._isbuffviewopen = true
 	end
 end
 
-function var_0_0._setPassiveSkillTip(arg_50_0, arg_50_1, arg_50_2)
-	local var_50_0 = gohelper.findChildText(arg_50_1, "title/txt_name")
-	local var_50_1 = gohelper.findChildText(arg_50_1, "txt_desc")
+function var_0_0._setPassiveSkillTip(arg_51_0, arg_51_1, arg_51_2)
+	local var_51_0 = gohelper.findChildText(arg_51_1, "title/txt_name")
+	local var_51_1 = gohelper.findChildText(arg_51_1, "txt_desc")
 
-	SkillHelper.addHyperLinkClick(var_50_1, arg_50_0.onClickHyperLink, arg_50_0)
+	SkillHelper.addHyperLinkClick(var_51_1, arg_51_0.onClickHyperLink, arg_51_0)
 
-	local var_50_2 = lua_skill.configDict[arg_50_2.skillId]
+	local var_51_2 = lua_skill.configDict[arg_51_2.skillId]
 
-	var_50_0.text = var_50_2.name
-	var_50_1.text = SkillHelper.getEntityDescBySkillCo(arg_50_0._curSelectId, var_50_2, "#CC492F", "#485E92")
+	var_51_0.text = var_51_2.name
+	var_51_1.text = SkillHelper.getEntityDescBySkillCo(arg_51_0._curSelectId, var_51_2, "#CC492F", "#485E92")
 end
 
-function var_0_0.onClickPassiveHyperLink(arg_51_0, arg_51_1, arg_51_2)
-	arg_51_0.commonBuffTipAnchorPos = arg_51_0.commonBuffTipAnchorPos or Vector2(-387.28, 168.6)
+function var_0_0.onClickPassiveHyperLink(arg_52_0, arg_52_1, arg_52_2)
+	arg_52_0.commonBuffTipAnchorPos = arg_52_0.commonBuffTipAnchorPos or Vector2(-387.28, 168.6)
 
-	local var_51_0 = FightConfig.instance:getEntityName(arg_51_0._curSelectId)
+	local var_52_0 = FightConfig.instance:getEntityName(arg_52_0._curSelectId)
 
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(arg_51_1, arg_51_0.commonBuffTipAnchorPos, CommonBuffTipEnum.Pivot.Right, var_51_0)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(arg_52_1, arg_52_0.commonBuffTipAnchorPos, CommonBuffTipEnum.Pivot.Right, var_52_0)
 end
 
-function var_0_0._refreshHp(arg_52_0, arg_52_1)
-	local var_52_0 = arg_52_1:getLockMaxHpRate()
-	local var_52_1 = math.max(arg_52_1.currentHp, 0)
-	local var_52_2 = (arg_52_1.attrMO and math.max(arg_52_1.attrMO.hp, 0)) * var_52_0
+function var_0_0._refreshHp(arg_53_0, arg_53_1)
+	local var_53_0 = arg_53_1:getLockMaxHpRate()
+	local var_53_1 = math.max(arg_53_1.currentHp, 0)
+	local var_53_2 = (arg_53_1.attrMO and math.max(arg_53_1.attrMO.hp, 0)) * var_53_0
 
-	arg_52_0._txthp.text = string.format("%d/%d", var_52_1, var_52_2)
+	arg_53_0._txthp.text = string.format("%d/%d", var_53_1, var_53_2)
 
-	local var_52_3 = var_52_1 / var_52_2 * var_52_0
+	local var_53_3 = var_53_1 / var_53_2 * var_53_0
 
-	arg_52_0._sliderhp:SetValue(var_52_3)
+	arg_53_0._sliderhp:SetValue(var_53_3)
 
-	local var_52_4 = var_52_0 < 1
+	local var_53_4 = var_53_0 < 1
 
-	gohelper.setActive(arg_52_0.reduceHpGo, var_52_4)
+	gohelper.setActive(arg_53_0.reduceHpGo, var_53_4)
 
-	if var_52_4 then
-		arg_52_0.reduceHpImage.fillAmount = Mathf.Clamp01(1 - var_52_0)
+	if var_53_4 then
+		arg_53_0.reduceHpImage.fillAmount = Mathf.Clamp01(1 - var_53_0)
 	end
 end
 
-function var_0_0._refreshBuff(arg_53_0, arg_53_1)
-	local var_53_0 = arg_53_1:getBuffList()
-	local var_53_1 = FightBuffHelper.filterBuffType(var_53_0, FightBuffTipsView.filterTypeKey)
+function var_0_0._refreshBuff(arg_54_0, arg_54_1)
+	local var_54_0 = arg_54_1:getBuffList()
+	local var_54_1 = FightBuffHelper.filterBuffType(var_54_0, FightBuffTipsView.filterTypeKey)
 
-	FightSkillBuffMgr.instance:dealStackerBuff(var_53_1)
-	table.sort(var_53_1, function(arg_54_0, arg_54_1)
-		if arg_54_0.time ~= arg_54_1.time then
-			return arg_54_0.time < arg_54_1.time
+	FightSkillBuffMgr.instance:dealStackerBuff(var_54_1)
+	table.sort(var_54_1, function(arg_55_0, arg_55_1)
+		if arg_55_0.time ~= arg_55_1.time then
+			return arg_55_0.time < arg_55_1.time
 		end
 
-		return arg_54_0.id < arg_54_1.id
+		return arg_55_0.id < arg_55_1.id
 	end)
 
-	local var_53_2 = var_53_1 and #var_53_1 or 0
-	local var_53_3 = 0
-	local var_53_4 = 0
+	local var_54_2 = var_54_1 and #var_54_1 or 0
+	local var_54_3 = 0
+	local var_54_4 = 0
 
-	for iter_53_0 = 1, var_53_2 do
-		local var_53_5 = var_53_1[iter_53_0]
-		local var_53_6 = lua_skill_buff.configDict[var_53_5.buffId]
+	for iter_54_0 = 1, var_54_2 do
+		local var_54_5 = var_54_1[iter_54_0]
+		local var_54_6 = lua_skill_buff.configDict[var_54_5.buffId]
 
-		if var_53_6 and var_53_6.isNoShow == 0 then
-			var_53_3 = var_53_3 + 1
+		if var_54_6 and var_54_6.isNoShow == 0 then
+			var_54_3 = var_54_3 + 1
 
-			local var_53_7 = arg_53_0._buffTables[var_53_3]
+			local var_54_7 = arg_54_0._buffTables[var_54_3]
 
-			if not var_53_7 then
-				local var_53_8 = gohelper.cloneInPlace(arg_53_0._gobuffitem, "item" .. var_53_3)
+			if not var_54_7 then
+				local var_54_8 = gohelper.cloneInPlace(arg_54_0._gobuffitem, "item" .. var_54_3)
 
-				var_53_7 = MonoHelper.addNoUpdateLuaComOnceToGo(var_53_8, FightBuffItem)
-				arg_53_0._buffTables[var_53_3] = var_53_7
+				var_54_7 = MonoHelper.addNoUpdateLuaComOnceToGo(var_54_8, FightBuffItem)
+				arg_54_0._buffTables[var_54_3] = var_54_7
 			end
 
-			var_53_7:updateBuffMO(var_53_5)
-			var_53_7:setClickCallback(arg_53_0._onClickBuff, arg_53_0)
-			gohelper.setActive(arg_53_0._buffTables[var_53_3].go, var_53_3 <= 6)
+			var_54_7:updateBuffMO(var_54_5)
+			var_54_7:setClickCallback(arg_54_0._onClickBuff, arg_54_0)
+			gohelper.setActive(arg_54_0._buffTables[var_54_3].go, var_54_3 <= 6)
 		end
 	end
 
-	for iter_53_1 = var_53_3 + 1, #arg_53_0._buffTables do
-		gohelper.setActive(arg_53_0._buffTables[iter_53_1].go, false)
+	for iter_54_1 = var_54_3 + 1, #arg_54_0._buffTables do
+		gohelper.setActive(arg_54_0._buffTables[iter_54_1].go, false)
 	end
 
-	gohelper.setActive(arg_53_0._scrollbuff.gameObject, var_53_3 > 0)
-	gohelper.setActive(arg_53_0._btnBuffMore, var_53_3 > 6)
+	gohelper.setActive(arg_54_0._scrollbuff.gameObject, var_54_3 > 0)
+	gohelper.setActive(arg_54_0._btnBuffMore, var_54_3 > 6)
 end
 
-function var_0_0._onClickBuff(arg_55_0, arg_55_1)
+function var_0_0._onClickBuff(arg_56_0, arg_56_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
 
-	arg_55_1 = arg_55_1 or arg_55_0._entityMO.id
+	arg_56_1 = arg_56_1 or arg_56_0._entityMO.id
 
-	arg_55_0:closeAllTips()
+	arg_56_0:closeAllTips()
 	ViewMgr.instance:openView(ViewName.FightBuffTipsView, {
-		entityId = arg_55_1,
-		viewname = arg_55_0.viewName
+		entityId = arg_56_1,
+		viewname = arg_56_0.viewName
 	})
 
-	if arg_55_0._hadPopUp then
-		arg_55_0:_hideDetail()
+	if arg_56_0._hadPopUp then
+		arg_56_0:_hideDetail()
 
-		arg_55_0._hadPopUp = false
+		arg_56_0._hadPopUp = false
 	end
 end
 
-function var_0_0._showPassiveDetail(arg_56_0)
-	arg_56_0:closeAllTips()
+function var_0_0._showPassiveDetail(arg_57_0)
+	arg_57_0:closeAllTips()
 
-	if not arg_56_0._passiveSkillIds then
+	if not arg_57_0._passiveSkillIds then
 		return
 	end
 
-	local var_56_0 = arg_56_0._passiveSkillIds[0]
+	local var_57_0 = arg_57_0._passiveSkillIds[0]
 
-	if #arg_56_0._passiveSkillIds > 0 or var_56_0 then
-		gohelper.setActive(arg_56_0._godetailView, true)
-		arg_56_0:_refreshPassiveDetail()
+	if #arg_57_0._passiveSkillIds > 0 or var_57_0 then
+		gohelper.setActive(arg_57_0._godetailView, true)
+		arg_57_0:_refreshPassiveDetail()
 
-		arg_56_0._hadPopUp = true
+		arg_57_0._hadPopUp = true
 	end
 end
 
-function var_0_0.refreshScrollEnemy(arg_57_0)
-	arg_57_0:_releaseHeadItemList()
+function var_0_0.refreshScrollEnemy(arg_58_0)
+	arg_58_0:_releaseHeadItemList()
 
-	arg_57_0.enemyItemList = {}
+	arg_58_0.enemyItemList = {}
 
-	gohelper.setActive(arg_57_0.goScrollEnemy, true)
+	gohelper.setActive(arg_58_0.goScrollEnemy, true)
 
-	local var_57_0
+	local var_58_0
 
-	for iter_57_0, iter_57_1 in ipairs(arg_57_0._entityList) do
-		local var_57_1 = arg_57_0.enemyItemList[iter_57_0] or arg_57_0:createEnemyItem()
+	for iter_58_0, iter_58_1 in ipairs(arg_58_0._entityList) do
+		local var_58_1 = arg_58_0.enemyItemList[iter_58_0] or arg_58_0:createEnemyItem()
 
-		gohelper.setActive(var_57_1.go, true)
+		gohelper.setActive(var_58_1.go, true)
 
-		var_57_1.entityMo = iter_57_1
+		var_58_1.entityMo = iter_58_1
 
-		local var_57_2 = iter_57_1:getCO()
-		local var_57_3 = iter_57_1:getSpineSkinCO()
+		local var_58_2 = iter_58_1:getCO()
+		local var_58_3 = iter_58_1:getSpineSkinCO()
 
-		if var_57_2 then
-			UISpriteSetMgr.instance:setEnemyInfoSprite(var_57_1.imageCareer, "sxy_" .. tostring(var_57_2.career))
+		if var_58_2 then
+			UISpriteSetMgr.instance:setEnemyInfoSprite(var_58_1.imageCareer, "sxy_" .. tostring(var_58_2.career))
 		end
 
-		gohelper.getSingleImage(var_57_1.imageIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_57_3.headIcon))
+		gohelper.getSingleImage(var_58_1.imageIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_58_3.headIcon))
 
-		if var_57_2 and var_57_2.heartVariantId and var_57_2.heartVariantId ~= 0 then
-			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(var_57_2.heartVariantId), var_57_1.imageIcon)
+		if var_58_2 and var_58_2.heartVariantId and var_58_2.heartVariantId ~= 0 then
+			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(var_58_2.heartVariantId), var_58_1.imageIcon)
 		end
 
-		gohelper.setActive(var_57_1.goBossTag, arg_57_0.bossIdDict[var_57_2.id])
+		gohelper.setActive(var_58_1.goBossTag, arg_58_0.bossIdDict[var_58_2.id])
 
-		if iter_57_1.side ~= FightEnum.EntitySide.MySide then
-			transformhelper.setLocalRotation(var_57_1.imageIcon.transform, 0, 180, 0)
+		if iter_58_1.side ~= FightEnum.EntitySide.MySide then
+			transformhelper.setLocalRotation(var_58_1.imageIcon.transform, 0, 180, 0)
 		else
-			transformhelper.setLocalRotation(var_57_1.imageIcon.transform, 0, 0, 0)
+			transformhelper.setLocalRotation(var_58_1.imageIcon.transform, 0, 0, 0)
 		end
 
-		local var_57_4 = FightHelper.getSurvivalEntityHealth(iter_57_1.id)
+		local var_58_4 = FightHelper.getSurvivalEntityHealth(iter_58_1.id)
 
-		gohelper.setActive(var_57_1.healthGo, var_57_4 ~= nil)
+		gohelper.setActive(var_58_1.healthGo, var_58_4 ~= nil)
 
-		if var_57_4 then
-			local var_57_5 = FightNameUIHealthComp.getHealthIcon(var_57_4)
+		if var_58_4 then
+			local var_58_5 = FightNameUIHealthComp.getHealthIcon(var_58_4)
 
-			UISpriteSetMgr.instance:setFightSprite(var_57_1.healthTag, var_57_5, true)
+			UISpriteSetMgr.instance:setFightSprite(var_58_1.healthTag, var_58_5, true)
 		end
 	end
 
-	for iter_57_2 = #arg_57_0._entityList + 1, #arg_57_0.enemyItemList do
-		gohelper.setActive(arg_57_0.enemyItemList[iter_57_2].go, false)
+	for iter_58_2 = #arg_58_0._entityList + 1, #arg_58_0.enemyItemList do
+		gohelper.setActive(arg_58_0.enemyItemList[iter_58_2].go, false)
 	end
 end
 
-function var_0_0.refreshScrollEnemySelectStatus(arg_58_0)
-	if arg_58_0.enemyItemList then
-		for iter_58_0, iter_58_1 in ipairs(arg_58_0.enemyItemList) do
-			local var_58_0 = arg_58_0._entityMO.uid == iter_58_1.entityMo.uid
+function var_0_0.refreshScrollEnemySelectStatus(arg_59_0)
+	if arg_59_0.enemyItemList then
+		for iter_59_0, iter_59_1 in ipairs(arg_59_0.enemyItemList) do
+			local var_59_0 = arg_59_0._entityMO.uid == iter_59_1.entityMo.uid
 
-			gohelper.setActive(iter_58_1.goSelectFrame, var_58_0)
+			gohelper.setActive(iter_59_1.goSelectFrame, var_59_0)
 
-			local var_58_1 = arg_58_0._entityMO.uid == iter_58_1.entityMo.uid and "#ffffff" or "#8C8C8C"
-			local var_58_2 = arg_58_0._entityMO.uid == iter_58_1.entityMo.uid and "#ffffff" or "#828282"
+			local var_59_1 = arg_59_0._entityMO.uid == iter_59_1.entityMo.uid and "#ffffff" or "#8C8C8C"
+			local var_59_2 = arg_59_0._entityMO.uid == iter_59_1.entityMo.uid and "#ffffff" or "#828282"
 
-			SLFramework.UGUI.GuiHelper.SetColor(iter_58_1.imageIcon, var_58_1)
-			SLFramework.UGUI.GuiHelper.SetColor(iter_58_1.imageCareer, var_58_2)
+			SLFramework.UGUI.GuiHelper.SetColor(iter_59_1.imageIcon, var_59_1)
+			SLFramework.UGUI.GuiHelper.SetColor(iter_59_1.imageCareer, var_59_2)
 
-			if var_58_0 then
-				local var_58_3 = -106 - 193 * (iter_58_0 - 1) + recthelper.getAnchorY(arg_58_0.goScrollEnemyContent.transform) + arg_58_0._entityScrollHeight / 2
-				local var_58_4 = recthelper.getHeight(iter_58_1.go.transform)
-				local var_58_5 = var_58_3 - var_58_4
-				local var_58_6 = var_58_3 + var_58_4
-				local var_58_7 = arg_58_0._entityScrollHeight / 2
+			if var_59_0 then
+				local var_59_3 = -106 - 193 * (iter_59_0 - 1) + recthelper.getAnchorY(arg_59_0.goScrollEnemyContent.transform) + arg_59_0._entityScrollHeight / 2
+				local var_59_4 = recthelper.getHeight(iter_59_1.go.transform)
+				local var_59_5 = var_59_3 - var_59_4
+				local var_59_6 = var_59_3 + var_59_4
+				local var_59_7 = arg_59_0._entityScrollHeight / 2
 
-				if var_58_5 < -var_58_7 then
-					local var_58_8 = var_58_5 + var_58_7
+				if var_59_5 < -var_59_7 then
+					local var_59_8 = var_59_5 + var_59_7
 
-					recthelper.setAnchorY(arg_58_0.goScrollEnemyContent.transform, recthelper.getAnchorY(arg_58_0.goScrollEnemyContent.transform) - var_58_8 - 54)
+					recthelper.setAnchorY(arg_59_0.goScrollEnemyContent.transform, recthelper.getAnchorY(arg_59_0.goScrollEnemyContent.transform) - var_59_8 - 54)
 				end
 
-				if var_58_7 < var_58_6 then
-					local var_58_9 = var_58_6 - var_58_7
+				if var_59_7 < var_59_6 then
+					local var_59_9 = var_59_6 - var_59_7
 
-					recthelper.setAnchorY(arg_58_0.goScrollEnemyContent.transform, recthelper.getAnchorY(arg_58_0.goScrollEnemyContent.transform) - var_58_9 + 54)
+					recthelper.setAnchorY(arg_59_0.goScrollEnemyContent.transform, recthelper.getAnchorY(arg_59_0.goScrollEnemyContent.transform) - var_59_9 + 54)
 				end
 			end
 
-			gohelper.setActive(iter_58_1.subTag, FightDataHelper.entityMgr:isSub(iter_58_1.entityMo.uid))
+			gohelper.setActive(iter_59_1.subTag, FightDataHelper.entityMgr:isSub(iter_59_1.entityMo.uid))
 		end
 	end
 end
 
-function var_0_0.createEnemyItem(arg_59_0)
-	local var_59_0 = arg_59_0:getUserDataTb_()
+function var_0_0.createEnemyItem(arg_60_0)
+	local var_60_0 = arg_60_0:getUserDataTb_()
 
-	var_59_0.go = gohelper.cloneInPlace(arg_59_0.contentEnemyItem)
-	var_59_0.imageIcon = gohelper.findChildImage(var_59_0.go, "item/icon")
-	var_59_0.goBossTag = gohelper.findChild(var_59_0.go, "item/bosstag")
-	var_59_0.imageCareer = gohelper.findChildImage(var_59_0.go, "item/career")
-	var_59_0.healthTag = gohelper.findChildImage(var_59_0.go, "item/healthTag")
-	var_59_0.healthGo = var_59_0.healthTag.gameObject
-	var_59_0.goSelectFrame = gohelper.findChild(var_59_0.go, "item/go_selectframe")
-	var_59_0.subTag = gohelper.findChild(var_59_0.go, "item/#go_SubTag")
-	var_59_0.btnClick = gohelper.findChildButtonWithAudio(var_59_0.go, "item/btn_click")
+	var_60_0.go = gohelper.cloneInPlace(arg_60_0.contentEnemyItem)
+	var_60_0.imageIcon = gohelper.findChildImage(var_60_0.go, "item/icon")
+	var_60_0.goBossTag = gohelper.findChild(var_60_0.go, "item/bosstag")
+	var_60_0.imageCareer = gohelper.findChildImage(var_60_0.go, "item/career")
+	var_60_0.healthTag = gohelper.findChildImage(var_60_0.go, "item/healthTag")
+	var_60_0.healthGo = var_60_0.healthTag.gameObject
+	var_60_0.goSelectFrame = gohelper.findChild(var_60_0.go, "item/go_selectframe")
+	var_60_0.subTag = gohelper.findChild(var_60_0.go, "item/#go_SubTag")
+	var_60_0.btnClick = gohelper.findChildButtonWithAudio(var_60_0.go, "item/btn_click")
 
-	var_59_0.btnClick:AddClickListener(arg_59_0.onClickEnemyItem, arg_59_0, var_59_0)
-	gohelper.setActive(var_59_0.healthGo, false)
-	table.insert(arg_59_0.enemyItemList, var_59_0)
+	var_60_0.btnClick:AddClickListener(arg_60_0.onClickEnemyItem, arg_60_0, var_60_0)
+	gohelper.setActive(var_60_0.healthGo, false)
+	table.insert(arg_60_0.enemyItemList, var_60_0)
 
-	return var_59_0
+	return var_60_0
 end
 
-function var_0_0.onClickEnemyItem(arg_60_0, arg_60_1)
-	if arg_60_1.entityMo.uid == arg_60_0._entityMO.uid then
+function var_0_0.onClickEnemyItem(arg_61_0, arg_61_1)
+	if arg_61_1.entityMo.uid == arg_61_0._entityMO.uid then
 		return
 	end
 
-	arg_60_0._curSelectId = arg_60_1.entityMo.id
+	arg_61_0._curSelectId = arg_61_1.entityMo.id
 
-	arg_60_0:closeAllTips()
-	arg_60_0:_refreshUI()
-	arg_60_0._ani:Play("switch", nil, nil)
+	arg_61_0:closeAllTips()
+	arg_61_0:_refreshUI()
+	arg_61_0._ani:Play("switch", nil, nil)
 end
 
-function var_0_0.closeAllTips(arg_61_0)
-	arg_61_0.viewContainer:hideSkillTipView()
-	gohelper.setActive(arg_61_0._godetailView, false)
-	gohelper.setActive(arg_61_0._gobuffpassiveview, false)
+function var_0_0.closeAllTips(arg_62_0)
+	arg_62_0.viewContainer:hideSkillTipView()
+	gohelper.setActive(arg_62_0._godetailView, false)
+	gohelper.setActive(arg_62_0._gobuffpassiveview, false)
 
-	arg_61_0._isbuffviewopen = false
+	arg_62_0._isbuffviewopen = false
 
 	ViewMgr.instance:closeView(ViewName.EquipInfoTipsView)
 	ViewMgr.instance:closeView(ViewName.FightAttributeTipView)
 
-	arg_61_0.openEquipInfoTipView = false
-	arg_61_0.openFightAttributeTipView = false
+	arg_62_0.openEquipInfoTipView = false
+	arg_62_0.openFightAttributeTipView = false
 end
 
-function var_0_0._showSkillDetail(arg_62_0, arg_62_1)
-	arg_62_0:closeAllTips()
-	arg_62_0.viewContainer:showSkillTipView(arg_62_1, arg_62_0.isCharacter, arg_62_0._curSelectId)
+function var_0_0._showSkillDetail(arg_63_0, arg_63_1)
+	arg_63_0:closeAllTips()
+	arg_63_0.viewContainer:showSkillTipView(arg_63_1, arg_63_0.isCharacter, arg_63_0._curSelectId)
 
-	arg_62_0._hadPopUp = true
+	arg_63_0._hadPopUp = true
 end
 
-function var_0_0._hideDetail(arg_63_0)
-	arg_63_0.viewContainer:hideSkillTipView()
-	gohelper.setActive(arg_63_0._godetailView, false)
-	gohelper.setActive(arg_63_0._gobuffpassiveview, false)
+function var_0_0._hideDetail(arg_64_0)
+	arg_64_0.viewContainer:hideSkillTipView()
+	gohelper.setActive(arg_64_0._godetailView, false)
+	gohelper.setActive(arg_64_0._gobuffpassiveview, false)
 
-	arg_63_0._isbuffviewopen = false
+	arg_64_0._isbuffviewopen = false
 end
 
-function var_0_0._refreshPassiveDetail(arg_64_0)
-	local var_64_0 = {}
+function var_0_0._refreshPassiveDetail(arg_65_0)
+	local var_65_0 = {}
 
-	if arg_64_0._passiveSkillIds[0] then
-		table.insert(var_64_0, arg_64_0._passiveSkillIds[0])
+	if arg_65_0._passiveSkillIds[0] then
+		table.insert(var_65_0, arg_65_0._passiveSkillIds[0])
 	end
 
-	for iter_64_0 = 1, #arg_64_0._passiveSkillIds do
-		table.insert(var_64_0, arg_64_0._passiveSkillIds[iter_64_0])
+	for iter_65_0 = 1, #arg_65_0._passiveSkillIds do
+		table.insert(var_65_0, arg_65_0._passiveSkillIds[iter_65_0])
 	end
 
-	local var_64_1 = #var_64_0
-	local var_64_2 = arg_64_0:_checkReplaceSkill(var_64_0)
+	local var_65_1 = #var_65_0
+	local var_65_2 = arg_65_0:_checkReplaceSkill(var_65_0)
 
-	for iter_64_1 = 1, var_64_1 do
-		local var_64_3 = tonumber(var_64_2[iter_64_1])
-		local var_64_4 = lua_skill.configDict[var_64_3]
+	for iter_65_1 = 1, var_65_1 do
+		local var_65_3 = tonumber(var_65_2[iter_65_1])
+		local var_65_4 = lua_skill.configDict[var_65_3]
 
-		if var_64_4 then
-			local var_64_5 = arg_64_0._detailPassiveTables[iter_64_1]
+		if var_65_4 then
+			local var_65_5 = arg_65_0._detailPassiveTables[iter_65_1]
 
-			if not var_64_5 then
-				local var_64_6 = gohelper.cloneInPlace(arg_64_0._godetailpassiveitem, "item" .. iter_64_1)
+			if not var_65_5 then
+				local var_65_6 = gohelper.cloneInPlace(arg_65_0._godetailpassiveitem, "item" .. iter_65_1)
 
-				var_64_5 = arg_64_0:getUserDataTb_()
-				var_64_5.go = var_64_6
-				var_64_5.name = gohelper.findChildText(var_64_6, "title/txt_name")
-				var_64_5.icon = gohelper.findChildSingleImage(var_64_6, "title/simage_icon")
-				var_64_5.desc = gohelper.findChildText(var_64_6, "txt_desc")
+				var_65_5 = arg_65_0:getUserDataTb_()
+				var_65_5.go = var_65_6
+				var_65_5.name = gohelper.findChildText(var_65_6, "title/txt_name")
+				var_65_5.icon = gohelper.findChildSingleImage(var_65_6, "title/simage_icon")
+				var_65_5.desc = gohelper.findChildText(var_65_6, "txt_desc")
 
-				SkillHelper.addHyperLinkClick(var_64_5.desc, arg_64_0.onClickHyperLink, arg_64_0)
+				SkillHelper.addHyperLinkClick(var_65_5.desc, arg_65_0.onClickHyperLink, arg_65_0)
 
-				var_64_5.line = gohelper.findChild(var_64_6, "txt_desc/image_line")
+				var_65_5.line = gohelper.findChild(var_65_6, "txt_desc/image_line")
 
-				table.insert(arg_64_0._detailPassiveTables, var_64_5)
+				table.insert(arg_65_0._detailPassiveTables, var_65_5)
 			end
 
-			var_64_5.name.text = var_64_4.name
+			var_65_5.name.text = var_65_4.name
 
-			local var_64_7 = SkillHelper.getEntityDescBySkillCo(arg_64_0._curSelectId, var_64_4, "#CC492F", "#485E92")
+			local var_65_7 = SkillHelper.getEntityDescBySkillCo(arg_65_0._curSelectId, var_65_4, "#CC492F", "#485E92")
 
-			var_64_5.desc.text = var_64_7
+			var_65_5.desc.text = var_65_7
 
-			var_64_5.desc:GetPreferredValues()
-			gohelper.setActive(var_64_5.go, true)
-			gohelper.setActive(var_64_5.line, iter_64_1 < var_64_1)
+			var_65_5.desc:GetPreferredValues()
+			gohelper.setActive(var_65_5.go, true)
+			gohelper.setActive(var_65_5.line, iter_65_1 < var_65_1)
 		else
-			logError(string.format("被动技能配置没找到, id: %d", var_64_3))
+			logError(string.format("被动技能配置没找到, id: %d", var_65_3))
 		end
 	end
 
-	for iter_64_2 = var_64_1 + 1, #arg_64_0._detailPassiveTables do
-		gohelper.setActive(arg_64_0._detailPassiveTables[iter_64_2].go, false)
+	for iter_65_2 = var_65_1 + 1, #arg_65_0._detailPassiveTables do
+		gohelper.setActive(arg_65_0._detailPassiveTables[iter_65_2].go, false)
 	end
 end
 
-function var_0_0._checkReplaceSkill(arg_65_0, arg_65_1)
-	if arg_65_1 and arg_65_0._entityMO then
-		arg_65_1 = arg_65_0._entityMO:checkReplaceSkill(arg_65_1)
+function var_0_0._checkReplaceSkill(arg_66_0, arg_66_1)
+	if arg_66_1 and arg_66_0._entityMO then
+		arg_66_1 = arg_66_0._entityMO:checkReplaceSkill(arg_66_1)
 	end
 
-	return arg_65_1
+	return arg_66_1
 end
 
-function var_0_0.onClickHyperLink(arg_66_0, arg_66_1, arg_66_2)
-	arg_66_0.commonBuffTipAnchorPos = arg_66_0.commonBuffTipAnchorPos or Vector2(-389.14, 168.4)
+function var_0_0.onClickHyperLink(arg_67_0, arg_67_1, arg_67_2)
+	arg_67_0.commonBuffTipAnchorPos = arg_67_0.commonBuffTipAnchorPos or Vector2(-389.14, 168.4)
 
-	local var_66_0 = FightConfig.instance:getEntityName(arg_66_0._curSelectId)
+	local var_67_0 = FightConfig.instance:getEntityName(arg_67_0._curSelectId)
 
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(arg_66_1, arg_66_0.commonBuffTipAnchorPos, CommonBuffTipEnum.Pivot.Right, var_66_0)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(arg_67_1, arg_67_0.commonBuffTipAnchorPos, CommonBuffTipEnum.Pivot.Right, var_67_0)
 end
 
-function var_0_0._detectBossMultiHp(arg_67_0, arg_67_1)
-	local var_67_0 = BossRushModel.instance:getBossEntityMO()
+function var_0_0._detectBossMultiHp(arg_68_0, arg_68_1)
+	local var_68_0 = BossRushModel.instance:getBossEntityMO()
 
-	arg_67_0._isBossRush = BossRushController.instance:isInBossRushInfiniteFight(true) and var_67_0 and var_67_0.id == arg_67_1.id
+	arg_68_0._isBossRush = BossRushController.instance:isInBossRushInfiniteFight(true) and var_68_0 and var_68_0.id == arg_68_1.id
 
-	local var_67_1 = arg_67_1.attrMO.multiHpNum
-
-	if arg_67_0._isBossRush then
-		var_67_1 = BossRushModel.instance:getMultiHpInfo().multiHpNum
-	end
-
-	gohelper.setActive(arg_67_0._multiHpRoot, var_67_1 > 1)
-
-	if var_67_1 > 1 then
-		arg_67_0:com_createObjList(arg_67_0._onMultiHpItemShow, var_67_1, arg_67_0._multiHpRoot, arg_67_0._multiHpItem)
-	end
-end
-
-function var_0_0._onMultiHpItemShow(arg_68_0, arg_68_1, arg_68_2, arg_68_3)
-	local var_68_0 = arg_68_0._entityMO.attrMO.multiHpNum
-	local var_68_1 = arg_68_0._entityMO.attrMO:getCurMultiHpIndex()
+	local var_68_1 = arg_68_1.attrMO.multiHpNum
 
 	if arg_68_0._isBossRush then
-		local var_68_2 = BossRushModel.instance:getMultiHpInfo()
-
-		var_68_0 = var_68_2.multiHpNum
-		var_68_1 = var_68_2.multiHpIdx
+		var_68_1 = BossRushModel.instance:getMultiHpInfo().multiHpNum
 	end
 
-	local var_68_3 = gohelper.findChild(arg_68_1, "hp")
+	gohelper.setActive(arg_68_0._multiHpRoot, var_68_1 > 1)
 
-	gohelper.setActive(var_68_3, arg_68_3 <= var_68_0 - var_68_1)
-
-	if arg_68_3 == 1 and arg_68_0._isBossRush then
-		gohelper.setActive(var_68_3, true)
+	if var_68_1 > 1 then
+		arg_68_0:com_createObjList(arg_68_0._onMultiHpItemShow, var_68_1, arg_68_0._multiHpRoot, arg_68_0._multiHpItem)
 	end
 end
 
-function var_0_0._onCloseView(arg_69_0, arg_69_1)
-	if arg_69_1 == ViewName.EquipInfoTipsView then
-		arg_69_0.openEquipInfoTipView = false
+function var_0_0._onMultiHpItemShow(arg_69_0, arg_69_1, arg_69_2, arg_69_3)
+	local var_69_0 = arg_69_0._entityMO.attrMO.multiHpNum
+	local var_69_1 = arg_69_0._entityMO.attrMO:getCurMultiHpIndex()
+
+	if arg_69_0._isBossRush then
+		local var_69_2 = BossRushModel.instance:getMultiHpInfo()
+
+		var_69_0 = var_69_2.multiHpNum
+		var_69_1 = var_69_2.multiHpIdx
 	end
 
-	if arg_69_1 == ViewName.FightAttributeTipView then
-		arg_69_0.openFightAttributeTipView = false
+	local var_69_3 = gohelper.findChild(arg_69_1, "hp")
+
+	gohelper.setActive(var_69_3, arg_69_3 <= var_69_0 - var_69_1)
+
+	if arg_69_3 == 1 and arg_69_0._isBossRush then
+		gohelper.setActive(var_69_3, true)
 	end
 end
 
-function var_0_0.onClose(arg_70_0)
-	gohelper.setActive(arg_70_0.odysseySuitRoot, false)
-	TaskDispatcher.cancelTask(arg_70_0._refreshUI, arg_70_0)
-	arg_70_0:_releaseTween()
-
-	if arg_70_0._focusFlow then
-		arg_70_0._focusFlow:stop()
-
-		arg_70_0._focusFlow = nil
+function var_0_0._onCloseView(arg_70_0, arg_70_1)
+	if arg_70_1 == ViewName.EquipInfoTipsView then
+		arg_70_0.openEquipInfoTipView = false
 	end
 
-	if arg_70_0.subEntityList then
-		for iter_70_0, iter_70_1 in ipairs(arg_70_0.subEntityList) do
-			GameSceneMgr.instance:getCurScene().entityMgr:removeUnit(iter_70_1:getTag(), iter_70_1.id)
+	if arg_70_1 == ViewName.FightAttributeTipView then
+		arg_70_0.openFightAttributeTipView = false
+	end
+end
+
+function var_0_0.onClose(arg_71_0)
+	gohelper.setActive(arg_71_0.odysseySuitRoot, false)
+	TaskDispatcher.cancelTask(arg_71_0._refreshUI, arg_71_0)
+	arg_71_0:_releaseTween()
+
+	if arg_71_0._focusFlow then
+		arg_71_0._focusFlow:stop()
+
+		arg_71_0._focusFlow = nil
+	end
+
+	if arg_71_0.subEntityList then
+		for iter_71_0, iter_71_1 in ipairs(arg_71_0.subEntityList) do
+			GameSceneMgr.instance:getCurScene().entityMgr:removeUnit(iter_71_1:getTag(), iter_71_1.id)
 		end
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.OnHideSkillEditorUIEvent, 1)
 	FightController.instance:dispatchEvent(FightEvent.SetSkillEditorViewVisible, true)
-	arg_70_0:setAssistBossStatus(false, true)
+	arg_71_0:setAssistBossStatus(false, true)
 end
 
-function var_0_0.onDestroyView(arg_71_0)
+function var_0_0.onDestroyView(arg_72_0)
 	FightWorkFocusMonster.setVirtualCameDamping(1, 1, 1)
-	arg_71_0._simagebg:UnLoadImage()
+	arg_72_0._simagebg:UnLoadImage()
 
-	for iter_71_0 = 1, #arg_71_0._skillGOs do
-		local var_71_0 = arg_71_0._skillGOs[iter_71_0]
+	for iter_72_0 = 1, #arg_72_0._skillGOs do
+		local var_72_0 = arg_72_0._skillGOs[iter_72_0]
 
-		var_71_0.icon:UnLoadImage()
-		var_71_0.btn:RemoveClickListener()
+		var_72_0.icon:UnLoadImage()
+		var_72_0.btn:RemoveClickListener()
 	end
 
-	for iter_71_1, iter_71_2 in ipairs(arg_71_0._superItemList) do
-		iter_71_2.icon:UnLoadImage()
-		iter_71_2.btn:RemoveClickListener()
+	for iter_72_1, iter_72_2 in ipairs(arg_72_0._superItemList) do
+		iter_72_2.icon:UnLoadImage()
+		iter_72_2.btn:RemoveClickListener()
 	end
 
-	arg_71_0._superItemList = nil
+	arg_72_0._superItemList = nil
 
-	arg_71_0._simageequipicon:UnLoadImage()
+	arg_72_0._simageequipicon:UnLoadImage()
 
-	if arg_71_0.equipClick then
-		arg_71_0.equipClick:RemoveClickListener()
+	if arg_72_0.equipClick then
+		arg_72_0.equipClick:RemoveClickListener()
 	end
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_71_0._onCloseView, arg_71_0)
-	arg_71_0:_releaseHeadItemList()
-	arg_71_0.resistanceComp:destroy()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_72_0._onCloseView, arg_72_0)
+	arg_72_0:_releaseHeadItemList()
+	arg_72_0.resistanceComp:destroy()
 
-	arg_71_0.resistanceComp = nil
+	arg_72_0.resistanceComp = nil
 
-	arg_71_0:removeStressComp()
+	arg_72_0:removeStressComp()
 
-	if arg_71_0._assistBossView then
-		arg_71_0._assistBossView:destory()
+	if arg_72_0.killLineComp then
+		arg_72_0.killLineComp:destroy()
 
-		arg_71_0._assistBossView = nil
+		arg_72_0.killLineComp = nil
 	end
-end
 
-function var_0_0.removeStressComp(arg_72_0)
-	if arg_72_0.stressComp then
-		arg_72_0.stressComp:destroy()
+	if arg_72_0._assistBossView then
+		arg_72_0._assistBossView:destory()
 
-		arg_72_0.stressComp = nil
+		arg_72_0._assistBossView = nil
 	end
 end
 
-function var_0_0._releaseHeadItemList(arg_73_0)
-	if arg_73_0.enemyItemList then
-		for iter_73_0, iter_73_1 in ipairs(arg_73_0.enemyItemList) do
-			iter_73_1.btnClick:RemoveClickListener()
-			gohelper.destroy(iter_73_1.go)
+function var_0_0.removeStressComp(arg_73_0)
+	if arg_73_0.stressComp then
+		arg_73_0.stressComp:destroy()
+
+		arg_73_0.stressComp = nil
+	end
+end
+
+function var_0_0._releaseHeadItemList(arg_74_0)
+	if arg_74_0.enemyItemList then
+		for iter_74_0, iter_74_1 in ipairs(arg_74_0.enemyItemList) do
+			iter_74_1.btnClick:RemoveClickListener()
+			gohelper.destroy(iter_74_1.go)
 		end
 
-		arg_73_0.enemyItemList = nil
+		arg_74_0.enemyItemList = nil
 	end
 end
 
-function var_0_0._setVirtualCameDamping(arg_74_0)
+function var_0_0._setVirtualCameDamping(arg_75_0)
 	FightWorkFocusMonster.setVirtualCameDamping(0, 0, 0)
 end
 
-function var_0_0._setEntityPosAndActive(arg_75_0, arg_75_1)
-	local var_75_0 = arg_75_1.id
-	local var_75_1 = false
-	local var_75_2 = FightHelper.getEntity(var_75_0)
+function var_0_0._setEntityPosAndActive(arg_76_0, arg_76_1)
+	local var_76_0 = arg_76_1.id
+	local var_76_1 = false
+	local var_76_2 = FightHelper.getEntity(var_76_0)
 
-	if var_75_2 then
-		local var_75_3 = var_75_2:getMO()
+	if var_76_2 then
+		local var_76_3 = var_76_2:getMO()
 
-		if var_75_3 then
-			local var_75_4 = FightConfig.instance:getSkinCO(var_75_3.skin)
+		if var_76_3 then
+			local var_76_4 = FightConfig.instance:getSkinCO(var_76_3.skin)
 
-			if var_75_4 and var_75_4.canHide == 1 then
-				var_75_1 = true
+			if var_76_4 and var_76_4.canHide == 1 then
+				var_76_1 = true
 			end
 		end
 	end
 
-	local var_75_5 = FightHelper.getAllEntitys()
+	local var_76_5 = FightHelper.getAllEntitys()
 
-	for iter_75_0, iter_75_1 in ipairs(var_75_5) do
-		if not FightHelper.isAssembledMonster(iter_75_1) then
-			iter_75_1:setVisibleByPos(var_75_1 or var_75_0 == iter_75_1.id)
-		elseif arg_75_1.side ~= iter_75_1:getSide() then
-			iter_75_1:setVisibleByPos(var_75_1 or var_75_0 == iter_75_1.id)
+	for iter_76_0, iter_76_1 in ipairs(var_76_5) do
+		if not FightHelper.isAssembledMonster(iter_76_1) then
+			iter_76_1:setVisibleByPos(var_76_1 or var_76_0 == iter_76_1.id)
+		elseif arg_76_1.side ~= iter_76_1:getSide() then
+			iter_76_1:setVisibleByPos(var_76_1 or var_76_0 == iter_76_1.id)
 		else
-			iter_75_1:setVisibleByPos(true)
+			iter_76_1:setVisibleByPos(true)
 		end
 
-		if iter_75_1.buff then
-			if var_75_0 ~= iter_75_1.id then
-				iter_75_1.buff:hideBuffEffects()
+		if iter_76_1.buff then
+			if var_76_0 ~= iter_76_1.id then
+				iter_76_1.buff:hideBuffEffects()
 			else
-				iter_75_1.buff:showBuffEffects()
+				iter_76_1.buff:showBuffEffects()
 			end
 		end
 
-		if iter_75_1.nameUI then
-			iter_75_1.nameUI:setActive(var_75_0 == iter_75_1.id)
+		if iter_76_1.nameUI then
+			iter_76_1.nameUI:setActive(var_76_0 == iter_76_1.id)
 		end
 	end
 
 	GameSceneMgr.instance:getScene(SceneType.Fight).level:setFrontVisible(false)
 
-	local var_75_6
+	local var_76_6
 
-	if arg_75_1.side == FightEnum.EntitySide.MySide then
-		local var_75_7 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
-		local var_75_8 = FightHelper.getEntityStanceId(arg_75_1, FightModel.instance:getCurWaveId())
-		local var_75_9 = lua_stance.configDict[var_75_8].pos1
+	if arg_76_1.side == FightEnum.EntitySide.MySide then
+		local var_76_7 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
+		local var_76_8 = FightHelper.getEntityStanceId(arg_76_1, FightModel.instance:getCurWaveId())
+		local var_76_9 = lua_stance.configDict[var_76_8].pos1
 
-		var_75_6 = var_75_9
+		var_76_6 = var_76_9
 
-		for iter_75_2, iter_75_3 in ipairs(var_75_7) do
-			if iter_75_3.id == arg_75_1.id then
-				transformhelper.setLocalPos(iter_75_3.go.transform, var_75_9[1], var_75_9[2], var_75_9[3])
+		for iter_76_2, iter_76_3 in ipairs(var_76_7) do
+			if iter_76_3.id == arg_76_1.id then
+				transformhelper.setLocalPos(iter_76_3.go.transform, var_76_9[1], var_76_9[2], var_76_9[3])
 
-				if iter_75_3.buff then
-					iter_75_3.buff:hideBuffEffects()
-					iter_75_3.buff:showBuffEffects()
+				if iter_76_3.buff then
+					iter_76_3.buff:hideBuffEffects()
+					iter_76_3.buff:showBuffEffects()
 				end
 			else
-				iter_75_3:setVisibleByPos(false)
+				iter_76_3:setVisibleByPos(false)
 			end
 		end
 
-		for iter_75_4, iter_75_5 in ipairs(arg_75_0.subEntityList) do
-			transformhelper.setLocalPos(iter_75_5.go.transform, 20000, 20000, 20000)
+		for iter_76_4, iter_76_5 in ipairs(arg_76_0.subEntityList) do
+			transformhelper.setLocalPos(iter_76_5.go.transform, 20000, 20000, 20000)
 		end
 	end
 
-	local var_75_10 = FightHelper.getEntity(var_75_0)
-	local var_75_11 = FightDataHelper.entityMgr:isSub(var_75_0)
+	local var_76_10 = FightHelper.getEntity(var_76_0)
+	local var_76_11 = FightDataHelper.entityMgr:isSub(var_76_0)
 
-	if var_75_11 then
-		var_75_10 = nil
+	if var_76_11 then
+		var_76_10 = nil
 
-		for iter_75_6, iter_75_7 in ipairs(arg_75_0.subEntityList) do
-			if iter_75_7.id == var_75_0 .. "focusSub" then
-				local var_75_12 = FightHelper.getEntity(var_75_0)
+		for iter_76_6, iter_76_7 in ipairs(arg_76_0.subEntityList) do
+			if iter_76_7.id == var_76_0 .. "focusSub" then
+				local var_76_12 = FightHelper.getEntity(var_76_0)
 
-				if var_75_12 then
-					var_75_12:setVisibleByPos(false)
+				if var_76_12 then
+					var_76_12:setVisibleByPos(false)
 				end
 
-				var_75_10 = iter_75_7
+				var_76_10 = iter_76_7
 
-				transformhelper.setLocalPos(iter_75_7.go.transform, var_75_6[1], var_75_6[2], var_75_6[3])
+				transformhelper.setLocalPos(iter_76_7.go.transform, var_76_6[1], var_76_6[2], var_76_6[3])
 			end
 		end
 	end
 
-	if var_75_10 then
-		local var_75_13 = var_75_10:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle)
-		local var_75_14, var_75_15, var_75_16 = transformhelper.getPos(var_75_13.transform)
-		local var_75_17 = var_75_14 + 2.7
-		local var_75_18 = var_75_15 - 2
-		local var_75_19 = var_75_16 + 5.4
-		local var_75_20
+	if var_76_10 then
+		local var_76_13 = var_76_10:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle)
+		local var_76_14, var_76_15, var_76_16 = transformhelper.getPos(var_76_13.transform)
+		local var_76_17 = var_76_14 + 2.7
+		local var_76_18 = var_76_15 - 2
+		local var_76_19 = var_76_16 + 5.4
+		local var_76_20
 
-		if var_75_11 then
-			var_75_20 = FightConfig.instance:getSkinCO(FightDataHelper.entityMgr:getById(var_75_0).skin)
+		if var_76_11 then
+			var_76_20 = FightConfig.instance:getSkinCO(FightDataHelper.entityMgr:getById(var_76_0).skin)
 		else
-			var_75_20 = FightConfig.instance:getSkinCO(var_75_10:getMO().skin)
+			var_76_20 = FightConfig.instance:getSkinCO(var_76_10:getMO().skin)
 		end
 
-		local var_75_21 = var_75_20.focusOffset
+		local var_76_21 = var_76_20.focusOffset
 
-		if #var_75_21 == 3 then
-			var_75_17 = var_75_17 + var_75_21[1]
-			var_75_18 = var_75_18 + var_75_21[2]
-			var_75_19 = var_75_19 + var_75_21[3]
+		if #var_76_21 == 3 then
+			var_76_17 = var_76_17 + var_76_21[1]
+			var_76_18 = var_76_18 + var_76_21[2]
+			var_76_19 = var_76_19 + var_76_21[3]
 		end
 
-		arg_75_0:_releaseTween()
+		arg_76_0:_releaseTween()
 
-		local var_75_22 = CameraMgr.instance:getVirtualCameraTrs()
+		local var_76_22 = CameraMgr.instance:getVirtualCameraTrs()
 
-		transformhelper.setPos(var_75_22, var_75_17 + 0.2, var_75_18, var_75_19)
+		transformhelper.setPos(var_76_22, var_76_17 + 0.2, var_76_18, var_76_19)
 	end
 end
 
-function var_0_0._releaseTween(arg_76_0)
-	if arg_76_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_76_0._tweenId)
+function var_0_0._releaseTween(arg_77_0)
+	if arg_77_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_77_0._tweenId)
 	end
 end
 
-function var_0_0._playCameraTween(arg_77_0)
-	local var_77_0 = CameraMgr.instance:getVirtualCameraTrs()
-	local var_77_1, var_77_2, var_77_3 = transformhelper.getPos(var_77_0)
+function var_0_0._playCameraTween(arg_78_0)
+	local var_78_0 = CameraMgr.instance:getVirtualCameraTrs()
+	local var_78_1, var_78_2, var_78_3 = transformhelper.getPos(var_78_0)
 
-	arg_77_0._tweenId = ZProj.TweenHelper.DOMove(var_77_0, var_77_1 - 0.6, var_77_2, var_77_3, 0.5)
+	arg_78_0._tweenId = ZProj.TweenHelper.DOMove(var_78_0, var_78_1 - 0.6, var_78_2, var_78_3, 0.5)
 end
 
-function var_0_0._focusEntity(arg_78_0, arg_78_1)
-	if arg_78_0._focusFlow then
-		arg_78_0._focusFlow:stop()
+function var_0_0._focusEntity(arg_79_0, arg_79_1)
+	if arg_79_0._focusFlow then
+		arg_79_0._focusFlow:stop()
 
-		arg_78_0._focusFlow = nil
+		arg_79_0._focusFlow = nil
 	end
 
-	arg_78_0._focusFlow = FlowSequence.New()
+	arg_79_0._focusFlow = FlowSequence.New()
 
-	arg_78_0._focusFlow:addWork(FunctionWork.New(arg_78_0._setVirtualCameDamping, arg_78_0))
-	arg_78_0._focusFlow:addWork(WorkWaitSeconds.New(0.01))
-	arg_78_0._focusFlow:addWork(FightWorkFocusSubEntity.New(arg_78_1))
-	arg_78_0._focusFlow:addWork(FunctionWork.New(arg_78_0._setEntityPosAndActive, arg_78_0, arg_78_1))
-	arg_78_0._focusFlow:addWork(WorkWaitSeconds.New(0.01))
-	arg_78_0._focusFlow:addWork(FunctionWork.New(arg_78_0._playCameraTween, arg_78_0))
-	arg_78_0._focusFlow:addWork(WorkWaitSeconds.New(0.5))
+	arg_79_0._focusFlow:addWork(FunctionWork.New(arg_79_0._setVirtualCameDamping, arg_79_0))
+	arg_79_0._focusFlow:addWork(WorkWaitSeconds.New(0.01))
+	arg_79_0._focusFlow:addWork(FightWorkFocusSubEntity.New(arg_79_1))
+	arg_79_0._focusFlow:addWork(FunctionWork.New(arg_79_0._setEntityPosAndActive, arg_79_0, arg_79_1))
+	arg_79_0._focusFlow:addWork(WorkWaitSeconds.New(0.01))
+	arg_79_0._focusFlow:addWork(FunctionWork.New(arg_79_0._playCameraTween, arg_79_0))
+	arg_79_0._focusFlow:addWork(WorkWaitSeconds.New(0.5))
 
-	local var_78_0 = {
-		subEntityList = arg_78_0.subEntityList
+	local var_79_0 = {
+		subEntityList = arg_79_0.subEntityList
 	}
 
-	arg_78_0._focusFlow:start(var_78_0)
+	arg_79_0._focusFlow:start(var_79_0)
 end
 
-function var_0_0._onBtnBuffMore(arg_79_0)
+function var_0_0._onBtnBuffMore(arg_80_0)
 	ViewMgr.instance:openView(ViewName.FightBuffTipsView, {
-		entityId = arg_79_0._curSelectId,
-		viewname = arg_79_0.viewName
+		entityId = arg_80_0._curSelectId,
+		viewname = arg_80_0.viewName
 	})
 end
 
-function var_0_0.refreshDouQuQuFetter(arg_80_0)
-	local var_80_0 = FightDataHelper.fieldMgr.customData
-
-	if not var_80_0 then
-		return
-	end
-
-	if var_80_0[FightCustomData.CustomDataType.Act191] then
-		if arg_80_0.douQuQuFetterView then
-			arg_80_0.douQuQuFetterView:refreshEntityMO(arg_80_0._entityMO)
-		else
-			arg_80_0.douQuQuFetterView = arg_80_0:com_openSubView(FightDouQuQuFetterView, "ui/viewres/fight/fight_act191fetterview.prefab", arg_80_0.go_fetter, arg_80_0._entityMO)
-		end
-	end
-end
-
-function var_0_0.refreshDouQuQuStar(arg_81_0)
+function var_0_0.refreshDouQuQuFetter(arg_81_0)
 	local var_81_0 = FightDataHelper.fieldMgr.customData
 
 	if not var_81_0 then
@@ -2026,11 +2028,15 @@ function var_0_0.refreshDouQuQuStar(arg_81_0)
 	end
 
 	if var_81_0[FightCustomData.CustomDataType.Act191] then
-		gohelper.setActive(arg_81_0.levelRoot, false)
+		if arg_81_0.douQuQuFetterView then
+			arg_81_0.douQuQuFetterView:refreshEntityMO(arg_81_0._entityMO)
+		else
+			arg_81_0.douQuQuFetterView = arg_81_0:com_openSubView(FightDouQuQuFetterView, "ui/viewres/fight/fight_act191fetterview.prefab", arg_81_0.go_fetter, arg_81_0._entityMO)
+		end
 	end
 end
 
-function var_0_0.refreshDouQuQuCollection(arg_82_0)
+function var_0_0.refreshDouQuQuStar(arg_82_0)
 	local var_82_0 = FightDataHelper.fieldMgr.customData
 
 	if not var_82_0 then
@@ -2038,77 +2044,69 @@ function var_0_0.refreshDouQuQuCollection(arg_82_0)
 	end
 
 	if var_82_0[FightCustomData.CustomDataType.Act191] then
-		gohelper.setActive(arg_82_0.go_collection, true)
+		gohelper.setActive(arg_82_0.levelRoot, false)
+	end
+end
 
-		if arg_82_0.douQuQuCollectionView then
-			arg_82_0.douQuQuCollectionView:refreshEntityMO(arg_82_0._entityMO)
+function var_0_0.refreshDouQuQuCollection(arg_83_0)
+	local var_83_0 = FightDataHelper.fieldMgr.customData
+
+	if not var_83_0 then
+		return
+	end
+
+	if var_83_0[FightCustomData.CustomDataType.Act191] then
+		gohelper.setActive(arg_83_0.go_collection, true)
+
+		if arg_83_0.douQuQuCollectionView then
+			arg_83_0.douQuQuCollectionView:refreshEntityMO(arg_83_0._entityMO)
 		else
-			arg_82_0.douQuQuCollectionView = arg_82_0:com_openSubView(FightDouQuQuCollectionView, "ui/viewres/fight/fight_act191collectionview.prefab", arg_82_0.go_collection, arg_82_0._entityMO)
+			arg_83_0.douQuQuCollectionView = arg_83_0:com_openSubView(FightDouQuQuCollectionView, "ui/viewres/fight/fight_act191collectionview.prefab", arg_83_0.go_collection, arg_83_0._entityMO)
 		end
 	end
 end
 
 var_0_0.HealthInterval = -50
 
-function var_0_0.onClickHealth(arg_83_0)
-	local var_83_0 = arg_83_0._entityMO and FightHelper.getSurvivalEntityHealth(arg_83_0._entityMO.id)
-
-	if not var_83_0 then
-		return
-	end
-
-	local var_83_1 = FightNameUIHealthComp.getCurHealthStatus(var_83_0)
-	local var_83_2 = FightNameUIHealthComp.getHealthTitle(var_83_1)
-	local var_83_3 = FightNameUIHealthComp.getHealthDesc(var_83_1)
-	local var_83_4 = recthelper.getWidth(arg_83_0.rectSurvivalHealth)
-	local var_83_5 = recthelper.getHeight(arg_83_0.rectSurvivalHealth)
-	local var_83_6 = recthelper.uiPosToScreenPos(arg_83_0.rectSurvivalHealth)
-
-	var_83_6.x = var_83_6.x + var_83_4 / 2 + var_0_0.HealthInterval
-	var_83_6.y = var_83_6.y + var_83_5 / 2
-
-	FightCommonTipController.instance:openCommonView(var_83_2, var_83_3, var_83_6)
-end
-
-function var_0_0.refreshHealth(arg_84_0, arg_84_1)
-	local var_84_0 = arg_84_1 and FightHelper.getSurvivalEntityHealth(arg_84_1.id)
+function var_0_0.onClickHealth(arg_84_0)
+	local var_84_0 = arg_84_0._entityMO and FightHelper.getSurvivalEntityHealth(arg_84_0._entityMO.id)
 
 	if not var_84_0 then
-		gohelper.setActive(arg_84_0.goSurvivalHealth, false)
-
 		return
 	end
 
-	gohelper.setActive(arg_84_0.goSurvivalHealth, true)
+	local var_84_1 = FightNameUIHealthComp.getCurHealthStatus(var_84_0)
+	local var_84_2 = FightNameUIHealthComp.getHealthTitle(var_84_1)
+	local var_84_3 = FightNameUIHealthComp.getHealthDesc(var_84_1)
+	local var_84_4 = recthelper.getWidth(arg_84_0.rectSurvivalHealth)
+	local var_84_5 = recthelper.getHeight(arg_84_0.rectSurvivalHealth)
+	local var_84_6 = recthelper.uiPosToScreenPos(arg_84_0.rectSurvivalHealth)
 
-	arg_84_0.txtHealth.text = string.format("%d/%d", var_84_0, FightHelper.getSurvivalMaxHealth() or 120)
+	var_84_6.x = var_84_6.x + var_84_4 / 2 + var_0_0.HealthInterval
+	var_84_6.y = var_84_6.y + var_84_5 / 2
 
-	local var_84_1 = FightNameUIHealthComp.getHealthIcon(var_84_0)
-
-	UISpriteSetMgr.instance:setFightSprite(arg_84_0.imageHealth, var_84_1, true)
+	FightCommonTipController.instance:openCommonView(var_84_2, var_84_3, var_84_6)
 end
 
-function var_0_0.showOdysseyEquip(arg_85_0)
-	local var_85_0 = FightDataHelper.fieldMgr.customData
+function var_0_0.refreshHealth(arg_85_0, arg_85_1)
+	local var_85_0 = arg_85_1 and FightHelper.getSurvivalEntityHealth(arg_85_1.id)
 
 	if not var_85_0 then
+		gohelper.setActive(arg_85_0.goSurvivalHealth, false)
+
 		return
 	end
 
-	var_85_0 = var_85_0[FightCustomData.CustomDataType.Odyssey] or var_85_0[FightCustomData.CustomDataType.Act128Sp]
+	gohelper.setActive(arg_85_0.goSurvivalHealth, true)
 
-	if var_85_0 then
-		gohelper.setActive(arg_85_0.go_collection, true)
+	arg_85_0.txtHealth.text = string.format("%d/%d", var_85_0, FightHelper.getSurvivalMaxHealth() or 120)
 
-		if arg_85_0.odysseyEquipView then
-			arg_85_0.odysseyEquipView:refreshEntityMO(arg_85_0._entityMO)
-		else
-			arg_85_0.odysseyEquipView = arg_85_0:com_openSubView(FightFocusOdysseyEquipView, "ui/viewres/fight/fight_odysseycollectionview.prefab", arg_85_0.go_collection, arg_85_0._entityMO)
-		end
-	end
+	local var_85_1 = FightNameUIHealthComp.getHealthIcon(var_85_0)
+
+	UISpriteSetMgr.instance:setFightSprite(arg_85_0.imageHealth, var_85_1, true)
 end
 
-function var_0_0.showOdysseyEquipSuit(arg_86_0)
+function var_0_0.showOdysseyEquip(arg_86_0)
 	local var_86_0 = FightDataHelper.fieldMgr.customData
 
 	if not var_86_0 then
@@ -2120,44 +2118,64 @@ function var_0_0.showOdysseyEquipSuit(arg_86_0)
 	if var_86_0 then
 		gohelper.setActive(arg_86_0.go_collection, true)
 
-		if arg_86_0.odysseyEquipSuitView then
-			arg_86_0.odysseyEquipSuitView:refreshEntityMO(arg_86_0._entityMO)
+		if arg_86_0.odysseyEquipView then
+			arg_86_0.odysseyEquipView:refreshEntityMO(arg_86_0._entityMO)
 		else
-			arg_86_0.odysseyEquipSuitView = arg_86_0:com_openSubView(FightFocusOdysseyEquipSuitView, "ui/viewres/fight/fight_odysseysuitview.prefab", arg_86_0.odysseySuitRoot, arg_86_0._entityMO)
+			arg_86_0.odysseyEquipView = arg_86_0:com_openSubView(FightFocusOdysseyEquipView, "ui/viewres/fight/fight_odysseycollectionview.prefab", arg_86_0.go_collection, arg_86_0._entityMO)
 		end
 	end
 end
 
-function var_0_0.showAiJiAoExPointSlider(arg_87_0)
-	if arg_87_0._entityMO.exPointType == FightEnum.ExPointType.Synchronization then
-		gohelper.setActive(arg_87_0.aiJiAoSliderRoot, true)
+function var_0_0.showOdysseyEquipSuit(arg_87_0)
+	local var_87_0 = FightDataHelper.fieldMgr.customData
 
-		if arg_87_0.aiJiAoExPointSliderView then
-			arg_87_0.aiJiAoExPointSliderView:refreshEntityMO(arg_87_0._entityMO)
+	if not var_87_0 then
+		return
+	end
+
+	var_87_0 = var_87_0[FightCustomData.CustomDataType.Odyssey] or var_87_0[FightCustomData.CustomDataType.Act128Sp]
+
+	if var_87_0 then
+		gohelper.setActive(arg_87_0.go_collection, true)
+
+		if arg_87_0.odysseyEquipSuitView then
+			arg_87_0.odysseyEquipSuitView:refreshEntityMO(arg_87_0._entityMO)
 		else
-			arg_87_0.aiJiAoExPointSliderView = arg_87_0:com_openSubView(FightFocusAiJiAoExPointSliderView, "ui/viewres/fight/fightaijiaoenergysliderview.prefab", arg_87_0.aiJiAoSliderRoot, arg_87_0._entityMO)
+			arg_87_0.odysseyEquipSuitView = arg_87_0:com_openSubView(FightFocusOdysseyEquipSuitView, "ui/viewres/fight/fight_odysseysuitview.prefab", arg_87_0.odysseySuitRoot, arg_87_0._entityMO)
+		end
+	end
+end
+
+function var_0_0.showAiJiAoExPointSlider(arg_88_0)
+	if arg_88_0._entityMO.exPointType == FightEnum.ExPointType.Synchronization then
+		gohelper.setActive(arg_88_0.aiJiAoSliderRoot, true)
+
+		if arg_88_0.aiJiAoExPointSliderView then
+			arg_88_0.aiJiAoExPointSliderView:refreshEntityMO(arg_88_0._entityMO)
+		else
+			arg_88_0.aiJiAoExPointSliderView = arg_88_0:com_openSubView(FightFocusAiJiAoExPointSliderView, "ui/viewres/fight/fightaijiaoenergysliderview.prefab", arg_88_0.aiJiAoSliderRoot, arg_88_0._entityMO)
 		end
 	else
-		gohelper.setActive(arg_87_0.aiJiAoSliderRoot, false)
+		gohelper.setActive(arg_88_0.aiJiAoSliderRoot, false)
 	end
 end
 
-function var_0_0.showAlert(arg_88_0)
-	gohelper.setActive(arg_88_0.alertRoot, false)
+function var_0_0.showAlert(arg_89_0)
+	gohelper.setActive(arg_89_0.alertRoot, false)
 
-	local var_88_0 = arg_88_0._entityMO._powerInfos
+	local var_89_0 = arg_89_0._entityMO._powerInfos
 
-	if var_88_0 then
-		for iter_88_0, iter_88_1 in pairs(var_88_0) do
-			if iter_88_0 == FightEnum.PowerType.Alert then
-				gohelper.setActive(arg_88_0.alertRoot, true)
+	if var_89_0 then
+		for iter_89_0, iter_89_1 in pairs(var_89_0) do
+			if iter_89_0 == FightEnum.PowerType.Alert then
+				gohelper.setActive(arg_89_0.alertRoot, true)
 
-				if arg_88_0.alertView then
-					arg_88_0.alertView:refreshData(arg_88_0._entityMO.id, iter_88_1)
+				if arg_89_0.alertView then
+					arg_89_0.alertView:refreshData(arg_89_0._entityMO.id, iter_89_1)
 				else
-					local var_88_1 = "ui/viewres/fight/fightalertview.prefab"
+					local var_89_1 = "ui/viewres/fight/fightalertview.prefab"
 
-					arg_88_0.alertView = arg_88_0:com_openSubView(FightNamePowerInfoView6, var_88_1, arg_88_0.alertRoot, arg_88_0._entityMO.id, iter_88_1, true)
+					arg_89_0.alertView = arg_89_0:com_openSubView(FightNamePowerInfoView6, var_89_1, arg_89_0.alertRoot, arg_89_0._entityMO.id, iter_89_1, true)
 				end
 			end
 		end

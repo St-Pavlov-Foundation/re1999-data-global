@@ -15,14 +15,14 @@ function var_0_0.onConstructor(arg_2_0, arg_2_1)
 end
 
 function var_0_0.onOpen(arg_3_0)
-	arg_3_0:_refreshData()
+	arg_3_0:_refreshData(true)
 	arg_3_0:com_registMsg(FightMsgId.FightProgressValueChange, arg_3_0._refreshData)
 	arg_3_0:com_registMsg(FightMsgId.FightMaxProgressValueChange, arg_3_0._refreshData)
 	arg_3_0:com_registFightEvent(FightEvent.OnBuffUpdate, arg_3_0._onBuffUpdate)
 	arg_3_0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, arg_3_0._refreshData)
 end
 
-function var_0_0._refreshData(arg_4_0)
+function var_0_0._refreshData(arg_4_0, arg_4_1)
 	local var_4_0 = FightDataHelper.fieldMgr.progress
 	local var_4_1 = FightDataHelper.fieldMgr.progressMax
 	local var_4_2 = var_4_1 <= var_4_0
@@ -36,7 +36,13 @@ function var_0_0._refreshData(arg_4_0)
 	arg_4_0._sliderText.text = Mathf.Clamp(var_4_3 * 100, 0, 100) .. "%"
 
 	ZProj.TweenHelper.KillByObj(arg_4_0._slider)
-	ZProj.TweenHelper.DOFillAmount(arg_4_0._slider, var_4_3, 0.2 / FightModel.instance:getUISpeed())
+
+	if arg_4_1 then
+		arg_4_0._slider.fillAmount = var_4_3
+	else
+		ZProj.TweenHelper.DOFillAmount(arg_4_0._slider, var_4_3, 0.2 / FightModel.instance:getUISpeed())
+	end
+
 	gohelper.setActive(arg_4_0.sliderBg, true)
 	gohelper.setActive(arg_4_0.effective, false)
 

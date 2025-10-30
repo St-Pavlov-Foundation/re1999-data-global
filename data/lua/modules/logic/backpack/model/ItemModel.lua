@@ -437,10 +437,14 @@ function var_0_0.getItemIsEnoughText(arg_42_0, arg_42_1)
 		else
 			return tostring(GameUtil.numberDisplay(var_42_0)) .. "/" .. tostring(GameUtil.numberDisplay(arg_42_1.quantity))
 		end
-	elseif arg_42_1.materilType == MaterialEnum.MaterialType.Currency then
-		return "<color=#cd5353>" .. tostring(GameUtil.numberDisplay(arg_42_1.quantity)) .. "</color>"
 	else
-		return "<color=#cd5353>" .. tostring(GameUtil.numberDisplay(var_42_0)) .. "</color>" .. "/" .. tostring(GameUtil.numberDisplay(arg_42_1.quantity))
+		local var_42_1 = arg_42_1.quantity - var_42_0
+
+		if arg_42_1.materilType == MaterialEnum.MaterialType.Currency then
+			return "<color=#cd5353>" .. tostring(GameUtil.numberDisplay(arg_42_1.quantity)) .. "</color>", var_42_1
+		else
+			return "<color=#cd5353>" .. tostring(GameUtil.numberDisplay(var_42_0)) .. "</color>" .. "/" .. tostring(GameUtil.numberDisplay(arg_42_1.quantity)), var_42_1
+		end
 	end
 end
 

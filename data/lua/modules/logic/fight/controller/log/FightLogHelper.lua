@@ -869,6 +869,8 @@ var_0_0.EffectTypeNameDict = {
 	[FightEnum.EffectType.NOUSECARDENERGYRECORDBYROUND] = "记录回合未使用卡牌最高灵能值",
 	[FightEnum.EffectType.NUODIKARANDOMATTACKNUM] = "诺谛卡仪式群体攻击次数同步",
 	[FightEnum.EffectType.BUFFACTINFOUPDATE] = "buffActInfo更新",
+	[FightEnum.EffectType.REALDAMAGEKILL] = "斩杀伤害",
+	[FightEnum.EffectType.BUFFDELREASON] = "buff删除原因",
 	[FightEnum.EffectType.TRIGGER] = "触发器"
 }
 

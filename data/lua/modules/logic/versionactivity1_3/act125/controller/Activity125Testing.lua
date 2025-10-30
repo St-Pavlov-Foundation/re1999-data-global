@@ -389,19 +389,31 @@ end
 function var_0_9._offline_test(arg_34_0)
 	local var_34_0 = lua_activity125.configList or {}
 	local var_34_1 = var_34_0[#var_34_0]
-	local var_34_2 = var_34_1 and var_34_1.activityId or nil
 
-	logError(var_34_2)
+	for iter_34_0 = #var_34_0, math.max(1, #var_34_0 - 5), -1 do
+		local var_34_2 = var_34_0[iter_34_0]
+		local var_34_3 = var_34_2.activityId
 
-	if not var_34_2 then
+		if lua_activity125_link.configDict[var_34_3] then
+			var_34_1 = var_34_2
+
+			break
+		end
+	end
+
+	local var_34_4 = var_34_1 and var_34_1.activityId or nil
+
+	logError(var_34_4)
+
+	if not var_34_4 then
 		logError("Activity125Testing offline test error: can not found actid")
 
 		return
 	end
 
-	local var_34_3 = os.time() * 1000
-	local var_34_4 = var_34_3 + 259200
-	local var_34_5 = {
+	local var_34_5 = os.time() * 1000
+	local var_34_6 = var_34_5 + 259200
+	local var_34_7 = {
 		activityInfos = {
 			{
 				currentStage = 0,
@@ -409,17 +421,17 @@ function var_0_9._offline_test(arg_34_0)
 				online = true,
 				isReceiveAllBonus = false,
 				isNewStage = false,
-				id = var_34_2,
-				startTime = var_34_3,
-				endTime = var_34_4
+				id = var_34_4,
+				startTime = var_34_5,
+				endTime = var_34_6
 			}
 		}
 	}
 
-	ActivityModel.instance:setActivityInfo(var_34_5)
+	ActivityModel.instance:setActivityInfo(var_34_7)
 	var_0_9.instance:_test()
-	Activity125Model.instance:setSelectEpisodeId(var_34_2, 1)
-	ActivityModel.instance:setTargetActivityCategoryId(var_34_2)
+	Activity125Model.instance:setSelectEpisodeId(var_34_4, 1)
+	ActivityModel.instance:setTargetActivityCategoryId(var_34_4)
 	ViewMgr.instance:openView(ViewName.ActivityBeginnerView)
 end
 

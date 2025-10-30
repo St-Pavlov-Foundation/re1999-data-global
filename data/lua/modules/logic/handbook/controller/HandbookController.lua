@@ -123,46 +123,78 @@ function var_0_0.isFirstHandbook(arg_13_0)
 end
 
 function var_0_0.markNotFirstHandbookSkin(arg_14_0)
-	return
+	local var_14_0 = PlayerModel.instance:getMyUserId()
+	local var_14_1 = PlayerPrefsKey.FirstSkinHandbook3_0 .. tostring(var_14_0)
+
+	PlayerPrefsHelper.setNumber(var_14_1, 1)
+	arg_14_0:dispatchEvent(HandbookEvent.EnterHandbookSkin)
 end
 
 function var_0_0.isFirstHandbookSkin(arg_15_0)
+	local var_15_0 = PlayerModel.instance:getMyUserId()
+	local var_15_1 = PlayerPrefsKey.FirstSkinHandbook3_0 .. tostring(var_15_0)
+
+	return PlayerPrefsHelper.getNumber(var_15_1, 0) <= 0
+end
+
+function var_0_0.hasAnyHandBookSkinGroupRedDot(arg_16_0)
+	for iter_16_0, iter_16_1 in pairs(HandbookEnum.HandbookSkinShowRedDotMap) do
+		if arg_16_0:isHandbookSkinRedDotShow(iter_16_0) then
+			return true
+		end
+	end
+
 	return false
 end
 
-function var_0_0.openHandbookWeekWalkMapView(arg_16_0, arg_16_1)
-	arg_16_0._openViewParam = arg_16_1
+function var_0_0.markHandbookSkinRedDotShow(arg_17_0, arg_17_1)
+	local var_17_0 = PlayerModel.instance:getMyUserId()
+	local var_17_1 = PlayerPrefsKey.FirstSkinHandbookSuit .. tostring(arg_17_1) .. tostring(var_17_0)
 
-	WeekwalkRpc.instance:sendGetWeekwalkEndRequest(arg_16_0._getWeekWalkEndReply, arg_16_0)
+	PlayerPrefsHelper.setNumber(var_17_1, 1)
+	arg_17_0:dispatchEvent(HandbookEvent.MarkHandbookSkinSuitRedDot)
 end
 
-function var_0_0._getWeekWalkEndReply(arg_17_0)
-	ViewMgr.instance:openView(ViewName.HandbookWeekWalkMapView, arg_17_0._openViewParam)
+function var_0_0.isHandbookSkinRedDotShow(arg_18_0, arg_18_1)
+	local var_18_0 = PlayerModel.instance:getMyUserId()
+	local var_18_1 = PlayerPrefsKey.FirstSkinHandbookSuit .. tostring(arg_18_1) .. tostring(var_18_0)
 
-	arg_17_0._openViewParam = nil
+	return PlayerPrefsHelper.getNumber(var_18_1, 0) <= 0
 end
 
-function var_0_0.openHandbookSkinView(arg_18_0, arg_18_1)
-	ViewMgr.instance:openView(ViewName.HandbookSkinView, arg_18_1)
+function var_0_0.openHandbookWeekWalkMapView(arg_19_0, arg_19_1)
+	arg_19_0._openViewParam = arg_19_1
+
+	WeekwalkRpc.instance:sendGetWeekwalkEndRequest(arg_19_0._getWeekWalkEndReply, arg_19_0)
 end
 
-function var_0_0.statSkinTab(arg_19_0, arg_19_1)
+function var_0_0._getWeekWalkEndReply(arg_20_0)
+	ViewMgr.instance:openView(ViewName.HandbookWeekWalkMapView, arg_20_0._openViewParam)
+
+	arg_20_0._openViewParam = nil
+end
+
+function var_0_0.openHandbookSkinView(arg_21_0, arg_21_1)
+	ViewMgr.instance:openView(ViewName.HandbookSkinView, arg_21_1)
+end
+
+function var_0_0.statSkinTab(arg_22_0, arg_22_1)
 	StatController.instance:track(StatEnum.EventName.SkinCollectionTab, {
-		[StatEnum.EventProperties.Skin_TabId] = arg_19_1
+		[StatEnum.EventProperties.Skin_TabId] = arg_22_1
 	})
 end
 
-function var_0_0.statSkinSuiteId(arg_20_0, arg_20_1)
+function var_0_0.statSkinSuiteId(arg_23_0, arg_23_1)
 	StatController.instance:track(StatEnum.EventName.SkinCollectionTab, {
-		[StatEnum.EventProperties.Skin_SuiteId] = arg_20_1
+		[StatEnum.EventProperties.Skin_SuiteId] = arg_23_1
 	})
 end
 
-function var_0_0.statSkinSuitDetail(arg_21_0, arg_21_1)
-	local var_21_0 = HandbookConfig.instance:getSkinSuitCfg(arg_21_1)
+function var_0_0.statSkinSuitDetail(arg_24_0, arg_24_1)
+	local var_24_0 = HandbookConfig.instance:getSkinSuitCfg(arg_24_1)
 
-	if var_21_0 then
-		StatViewController.instance:track(string.format("%s-%s", StatViewNameEnum.OtherViewName.HandbookSkinSuitDetailView, var_21_0.name or arg_21_1), StatViewNameEnum.OtherViewName.HandbookSkinView)
+	if var_24_0 then
+		StatViewController.instance:track(string.format("%s-%s", StatViewNameEnum.OtherViewName.HandbookSkinSuitDetailView, var_24_0.name or arg_24_1), StatViewNameEnum.OtherViewName.HandbookSkinView)
 	end
 end
 

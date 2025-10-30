@@ -31,7 +31,7 @@ function var_0_0._detectPlayBuffAnimation(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 	if FightBuffHelper.isDormantBuff(arg_4_2.buffId) then
 		if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 			-- block empty
-		elseif not FightWorkStepBuff.canPlayDormantBuffAni then
+		elseif not FightWorkStepBuff.updateWaitTime then
 			return
 		end
 

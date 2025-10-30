@@ -18,7 +18,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 30950111,
@@ -39,7 +40,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 30950112,
@@ -60,7 +62,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 30950112,
@@ -81,7 +84,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 30950113,
@@ -102,7 +106,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 30950113,
@@ -123,7 +128,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 6240522,
@@ -144,7 +150,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170006,
@@ -165,7 +172,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170006,
@@ -186,7 +194,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170006,
@@ -207,7 +216,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170012,
@@ -228,7 +238,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170012,
@@ -249,7 +260,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170012,
@@ -270,7 +282,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170035,
@@ -291,7 +304,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170035,
@@ -312,7 +326,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170035,
@@ -333,7 +348,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090111,
@@ -354,7 +370,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090112,
@@ -375,7 +392,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090113,
@@ -396,7 +414,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090114,
@@ -417,7 +436,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090115,
@@ -438,7 +458,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090116,
@@ -459,7 +480,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090117,
@@ -480,7 +502,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090118,
@@ -501,7 +524,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090111,
@@ -522,7 +546,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090112,
@@ -543,7 +568,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090113,
@@ -564,7 +590,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090114,
@@ -585,7 +612,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090115,
@@ -606,7 +634,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090116,
@@ -627,7 +656,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090117,
@@ -648,7 +678,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090118,
@@ -669,7 +700,8 @@
     "destroyEffect": "v2a4_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090111,
@@ -690,7 +722,8 @@
     "destroyEffect": "v2a7_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090112,
@@ -711,7 +744,8 @@
     "destroyEffect": "v2a7_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090113,
@@ -732,7 +766,8 @@
     "destroyEffect": "v2a7_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090114,
@@ -753,7 +788,8 @@
     "destroyEffect": "v2a7_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090115,
@@ -774,7 +810,8 @@
     "destroyEffect": "v2a7_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090116,
@@ -795,7 +832,8 @@
     "destroyEffect": "v2a7_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090117,
@@ -816,7 +854,8 @@
     "destroyEffect": "v2a7_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31090118,
@@ -837,7 +876,8 @@
     "destroyEffect": "v2a7_ttsz/ttsz_innate_2",
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
-    "releaseDestroyEffectTime": 1500
+    "releaseDestroyEffectTime": 1500,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31150111,
@@ -858,7 +898,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31150111,
@@ -879,7 +920,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170006,
@@ -900,7 +942,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170006,
@@ -921,7 +964,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170006,
@@ -942,7 +986,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170012,
@@ -963,7 +1008,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170012,
@@ -984,7 +1030,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170012,
@@ -1005,7 +1052,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170035,
@@ -1026,7 +1074,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170035,
@@ -1047,7 +1096,8 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
   },
   {
     "id": 31170035,
@@ -1068,6 +1118,73 @@
     "destroyEffect": "",
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
-    "releaseDestroyEffectTime": 0
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0
+  },
+  {
+    "id": 31260121,
+    "skin": 0,
+    "layer": 1,
+    "loopEffect": "v3a0_mlan/mlan_innate_1_01",
+    "loopEffectRoot": "mountbody",
+    "loopEffectAudio": 0,
+    "addLayerAudio": 431260141,
+    "addLayerEffect": "",
+    "addLayerEffectRoot": "",
+    "releaseAddLayerEffectTime": 0,
+    "createEffect": "",
+    "createEffectRoot": "",
+    "createAudio": 0,
+    "releaseCreateEffectTime": 0,
+    "delayTimeBeforeLoop": 0,
+    "destroyEffect": "",
+    "destroyEffectRoot": "",
+    "destroyEffectAudio": 0,
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 1
+  },
+  {
+    "id": 31260121,
+    "skin": 0,
+    "layer": 5,
+    "loopEffect": "v3a0_mlan/mlan_innate_1_02",
+    "loopEffectRoot": "mountbody",
+    "loopEffectAudio": 0,
+    "addLayerAudio": 431260141,
+    "addLayerEffect": "",
+    "addLayerEffectRoot": "",
+    "releaseAddLayerEffectTime": 0,
+    "createEffect": "",
+    "createEffectRoot": "",
+    "createAudio": 0,
+    "releaseCreateEffectTime": 0,
+    "delayTimeBeforeLoop": 0,
+    "destroyEffect": "",
+    "destroyEffectRoot": "",
+    "destroyEffectAudio": 0,
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 1
+  },
+  {
+    "id": 31260121,
+    "skin": 0,
+    "layer": 10,
+    "loopEffect": "v3a0_mlan/mlan_innate_1_03",
+    "loopEffectRoot": "mountbody",
+    "loopEffectAudio": 0,
+    "addLayerAudio": 431260141,
+    "addLayerEffect": "",
+    "addLayerEffectRoot": "",
+    "releaseAddLayerEffectTime": 0,
+    "createEffect": "",
+    "createEffectRoot": "",
+    "createAudio": 0,
+    "releaseCreateEffectTime": 0,
+    "delayTimeBeforeLoop": 0,
+    "destroyEffect": "",
+    "destroyEffectRoot": "",
+    "destroyEffectAudio": 0,
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 1
   }
 ]

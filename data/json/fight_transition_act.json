@@ -1044,6 +1044,84 @@
     "transitionAct": "-1"
   },
   {
+    "id": 310503,
+    "fromAct": "idle",
+    "endAct": "channel_idle",
+    "transitionAct": "change4"
+  },
+  {
+    "id": 310503,
+    "fromAct": "channel_idle",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310503,
+    "fromAct": "skill1_1",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310503,
+    "fromAct": "skill2_1",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310503,
+    "fromAct": "skill3_1",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310503,
+    "fromAct": "channel_idle",
+    "endAct": "sleep",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310503,
+    "fromAct": "freeze",
+    "endAct": "freeze_channel",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 310503,
+    "fromAct": "freeze_channel",
+    "endAct": "hit_channel",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 310503,
+    "fromAct": "freeze_channel",
+    "endAct": "hit",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 310503,
+    "fromAct": "hit",
+    "endAct": "freeze",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 310503,
+    "fromAct": "channel_idle",
+    "endAct": "posture",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 309403,
+    "fromAct": "posture",
+    "endAct": "posture_trans",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 309403,
+    "fromAct": "posture_trans",
+    "endAct": "posture",
+    "transitionAct": "change4"
+  },
+  {
     "id": 308704,
     "fromAct": "idle_trans",
     "endAct": "idle",

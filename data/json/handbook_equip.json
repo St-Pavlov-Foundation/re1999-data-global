@@ -666,6 +666,24 @@
     "desc": ""
   },
   {
+    "id": 5051,
+    "order": 0,
+    "equipId": 1553,
+    "desc": "language_10088983"
+  },
+  {
+    "id": 4042,
+    "order": 0,
+    "equipId": 1442,
+    "desc": "language_10005822"
+  },
+  {
+    "id": 5052,
+    "order": 0,
+    "equipId": 1554,
+    "desc": "language_10088986"
+  },
+  {
     "id": 5053,
     "order": 0,
     "equipId": 1551,
@@ -676,5 +694,11 @@
     "order": 0,
     "equipId": 1552,
     "desc": "language_10075645"
+  },
+  {
+    "id": 5055,
+    "order": 0,
+    "equipId": 1555,
+    "desc": "language_10008268"
   }
 ]

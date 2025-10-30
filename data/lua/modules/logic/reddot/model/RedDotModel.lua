@@ -48,6 +48,7 @@ function var_0_0.setRedDotInfo(arg_4_0, arg_4_1)
 		arg_4_0._dotInfos[tonumber(iter_4_1.defineId)] = var_4_1
 	end
 
+	RedDotController.instance:dispatchEvent(RedDotEvent.PreSetRedDot, arg_4_0._dotInfos)
 	arg_4_0:_recountLastestExpireTime()
 end
 

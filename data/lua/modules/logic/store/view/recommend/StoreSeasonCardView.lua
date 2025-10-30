@@ -52,7 +52,8 @@ function var_0_0._btnbuyOnClick(arg_4_0)
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 		[StatEnum.EventProperties.RecommendPageId] = tostring(arg_4_0.config and arg_4_0.config.id or ""),
-		[StatEnum.EventProperties.RecommendPageName] = arg_4_0.config and arg_4_0.config.name or "StoreSeasonCardView"
+		[StatEnum.EventProperties.RecommendPageName] = arg_4_0.config and arg_4_0.config.name or "StoreSeasonCardView",
+		[StatEnum.EventProperties.RecommendPageRank] = arg_4_0:getTabIndex()
 	})
 	GameFacade.jumpByAdditionParam(arg_4_0.config.systemJumpCode)
 end
@@ -68,25 +69,23 @@ function var_0_0._editableInitView(arg_6_0)
 	arg_6_0._wenhaoClick = gohelper.getClick(gohelper.findChild(arg_6_0.viewGO, "view/decorateicon"))
 	arg_6_0._bgClick = gohelper.getClick(arg_6_0._simagebg.gameObject)
 
-	if PayModel.getProductOriginPriceSymbol then
-		local var_6_0 = PayModel.instance:getProductOriginPriceSymbol(var_0_2)
-		local var_6_1, var_6_2 = PayModel.instance:getProductOriginPriceNum(var_0_2)
+	local var_6_0 = PayModel.instance:getProductOriginPriceSymbol(var_0_2)
+	local var_6_1, var_6_2 = PayModel.instance:getProductOriginPriceNum(var_0_2)
 
-		arg_6_0._txtcost.text = var_6_1
+	arg_6_0._txtcost.text = var_6_1
 
-		local var_6_3 = ""
+	local var_6_3 = ""
 
-		if string.nilorempty(var_6_0) then
-			local var_6_4 = string.reverse(var_6_2)
-			local var_6_5 = string.find(var_6_4, "%d")
-			local var_6_6 = string.len(var_6_4) - var_6_5 + 1
-			local var_6_7 = string.sub(var_6_2, var_6_6 + 1, string.len(var_6_2))
+	if string.nilorempty(var_6_0) then
+		local var_6_4 = string.reverse(var_6_2)
+		local var_6_5 = string.find(var_6_4, "%d")
+		local var_6_6 = string.len(var_6_4) - var_6_5 + 1
+		local var_6_7 = string.sub(var_6_2, var_6_6 + 1, string.len(var_6_2))
 
-			var_6_2 = string.sub(var_6_2, 1, var_6_6)
-			arg_6_0._txtcosthw.text = string.format("%s<size=30>%s</size>", var_6_2, var_6_7)
-		else
-			arg_6_0._txtcosthw.text = string.format("<size=30>%s</size>%s", var_6_0, var_6_2)
-		end
+		var_6_2 = string.sub(var_6_2, 1, var_6_6)
+		arg_6_0._txtcosthw.text = string.format("%s<size=30>%s</size>", var_6_2, var_6_7)
+	else
+		arg_6_0._txtcosthw.text = string.format("<size=30>%s</size>%s", var_6_0, var_6_2)
 
 		local var_6_8 = StoreConfig.instance:getChargeGoodsConfig(var_0_2)
 		local var_6_9 = PayModel.instance:getProductPrice(var_6_8.originalCostGoodsId)

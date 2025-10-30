@@ -6309,11 +6309,11 @@
   },
   {
     "id": "p_vahelpcontentitem_season3_2",
-    "lang": "language_10031319"
+    "lang": "language_10089049"
   },
   {
     "id": "p_vahelpcontentitem_season3_3",
-    "lang": "language_10031320"
+    "lang": "language_10089050"
   },
   {
     "id": "p_vahelpcontentitem_season3_4",
@@ -6365,7 +6365,7 @@
   },
   {
     "id": "p_vahelpcontentitem_season6_3",
-    "lang": "language_10031333"
+    "lang": "language_10089051"
   },
   {
     "id": "p_vahelpcontentitem_season6_4",
@@ -6461,7 +6461,7 @@
   },
   {
     "id": "p_seasonretailview_rule2",
-    "lang": "language_10031355"
+    "lang": "language_10089052"
   },
   {
     "id": "p_seasonretailview_search",
@@ -13961,7 +13961,7 @@
   },
   {
     "id": "p_mainsceneswitchview_title_2",
-    "lang": "language_10077663"
+    "lang": "language_10055717"
   },
   {
     "id": "p_v2a2_dungeonmapview_task",
@@ -15121,7 +15121,7 @@
   },
   {
     "id": "p_mainsceneskinmaterialtipview_txt_tagname",
-    "lang": "language_10077663"
+    "lang": "language_10022460"
   },
   {
     "id": "p_v2a2_eliminate_resultview_txt_Click_Reward",
@@ -18929,7 +18929,7 @@
   },
   {
     "id": "p_v2a7_tower_help_8_txt_1",
-    "lang": "language_10060867"
+    "lang": "language_10089053"
   },
   {
     "id": "p_v2a7_tower_help_8_txt_2",
@@ -18945,7 +18945,7 @@
   },
   {
     "id": "p_v2a7_tower_help_8_txt_5",
-    "lang": "language_10074711"
+    "lang": "language_10089054"
   },
   {
     "id": "p_v2a7_tower_help_9_txt_1",
@@ -18977,11 +18977,11 @@
   },
   {
     "id": "p_v2a7_tower_help_10_txt_3",
-    "lang": "language_10061280"
+    "lang": "language_10089055"
   },
   {
     "id": "p_v2a7_tower_help_10_txt_4",
-    "lang": "language_10074715"
+    "lang": "language_10089056"
   },
   {
     "id": "p_v2a7_tower_help_11_txt_1",
@@ -19109,7 +19109,7 @@
   },
   {
     "id": "p_v2a7_tower_help_17_txt_1",
-    "lang": "language_10074731"
+    "lang": "language_10061263"
   },
   {
     "id": "p_v2a7_tower_help_17_txt_2",
@@ -19133,7 +19133,7 @@
   },
   {
     "id": "p_v2a7_tower_help_17_txt_7",
-    "lang": "language_10074733"
+    "lang": "language_10089057"
   },
   {
     "id": "p_v2a7_tower_help_18_txt_1",
@@ -19169,7 +19169,7 @@
   },
   {
     "id": "p_v2a7_tower_help_19_txt_4",
-    "lang": "language_10074738"
+    "lang": "language_10089058"
   },
   {
     "id": "p_v2a7_tower_help_20_txt_1",
@@ -19817,7 +19817,7 @@
   },
   {
     "id": "p_normalstoreview_txt_sort",
-    "lang": "language_10082756"
+    "lang": "language_10089059"
   },
   {
     "id": "p_survivalpartnermanageinfoview_txt_build",
@@ -20646,6 +20646,410 @@
   {
     "id": "p_v2a8_warmup_txt_tips",
     "lang": "language_10082913"
+  },
+  {
+    "id": "p_commandstation_dungeonmapenteritem_txt_map",
+    "lang": "language_10089060"
+  },
+  {
+    "id": "p_commandstation_dispatcheventnormalview_txt_Dispatch",
+    "lang": "language_10089061"
+  },
+  {
+    "id": "p_commandstation_dispatcheventnormalview_txt_HaveDispatch",
+    "lang": "language_10089062"
+  },
+  {
+    "id": "p_commandstation_taskview_txt_tips1",
+    "lang": "language_10089063"
+  },
+  {
+    "id": "p_commandstation_taskview_txt_tips2",
+    "lang": "language_10089064"
+  },
+  {
+    "id": "p_commandstation_taskview_txt_normalTask",
+    "lang": "language_10089065"
+  },
+  {
+    "id": "p_commandstation_taskview_txt_catchTask",
+    "lang": "language_10089066"
+  },
+  {
+    "id": "p_v3a0_malianna_levelview_txt_Endless",
+    "lang": "language_10089067"
+  },
+  {
+    "id": "p_v3a0_malianna_noticeview_txt_Descr",
+    "lang": "language_10089068"
+  },
+  {
+    "id": "p_v3a0_malianna_noticeview_txt_Close",
+    "lang": "language_10032028"
+  },
+  {
+    "id": "p_v3a0_malianna_noticeview_txt_Start",
+    "lang": "language_10041876"
+  },
+  {
+    "id": "p_v3a0_karong_roletagview_txt_Name",
+    "lang": "language_10089069"
+  },
+  {
+    "id": "p_v3a0_karong_roletagview_txt_Num",
+    "lang": "language_10089070"
+  },
+  {
+    "id": "p_v3a0_karong_roletagview_txt_Date",
+    "lang": "language_10089071"
+  },
+  {
+    "id": "p_v3a0_karong_roletagview_txt_Blood",
+    "lang": "language_10089072"
+  },
+  {
+    "id": "p_v3a0_karong_roletagview_txt_Descr",
+    "lang": "language_10089073"
+  },
+  {
+    "id": "p_v3a0_puzzlemazedrawview_txt_Target",
+    "lang": "language_10061161"
+  },
+  {
+    "id": "p_v3a0_puzzlemazedrawview_txt_Tips",
+    "lang": "language_10089074"
+  },
+  {
+    "id": "p_v3a0_puzzlemazedrawview_txt_Skill",
+    "lang": "language_10089075"
+  },
+  {
+    "id": "p_v3a0_dungeonenterview_txt_Board",
+    "lang": "language_10089076"
+  },
+  {
+    "id": "p_commandstation_paperview_txt_task",
+    "lang": "language_10089077"
+  },
+  {
+    "id": "p_commandstation_paperview_txt_Schedule",
+    "lang": "language_10029447"
+  },
+  {
+    "id": "p_commandstation_paperview_txt_Compose",
+    "lang": "language_10089078"
+  },
+  {
+    "id": "p_commandstation_paperview_txt_Done",
+    "lang": "language_10089079"
+  },
+  {
+    "id": "p_commandstation_charactereventview_txt_TimeLine",
+    "lang": "language_10089080"
+  },
+  {
+    "id": "p_commandstation_getdiskview_txt_Get",
+    "lang": "language_10089081"
+  },
+  {
+    "id": "p_commandstation_timedetailpanel_txt_Role",
+    "lang": "language_10089082"
+  },
+  {
+    "id": "p_commandstation_timedetailpanel_txt_Title",
+    "lang": "language_10089083"
+  },
+  {
+    "id": "p_common_txt_oncecombine",
+    "lang": "language_10089084"
+  },
+  {
+    "id": "p_mainview_txt_copost",
+    "lang": "language_10089085"
+  },
+  {
+    "id": "p_commandstation_enterview_txt_map",
+    "lang": "language_10089060"
+  },
+  {
+    "id": "p_commandstation_enterview_txt_task",
+    "lang": "language_10089076"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview_txt_shopnamecn1",
+    "lang": "language_10075464"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview_txt_shopnamecn2",
+    "lang": "language_10075465"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview_txt_shopnamecn3",
+    "lang": "language_10075466"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview2_txt_shopnamecn1",
+    "lang": "language_10075467"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview2_txt_shopnamecn2",
+    "lang": "language_10075468"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview2_txt_shopnamecn3",
+    "lang": "language_10075464"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview3_txt_shopnamecn1",
+    "lang": "language_10075463"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview3_txt_shopnamecn2",
+    "lang": "language_10036746"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview3_txt_shopnamecn3",
+    "lang": "language_10036747"
+  },
+  {
+    "id": "p_v3a0_malianna_dungeonresultview_txt_fail",
+    "lang": "language_10089086"
+  },
+  {
+    "id": "p_v3a0_malianna_dungeonresultview_txt_success",
+    "lang": "language_10041964"
+  },
+  {
+    "id": "p_v3a0_malianna_gameview_txt_Self",
+    "lang": "language_10089087"
+  },
+  {
+    "id": "p_v3a0_malianna_gameview_txt_Enemy",
+    "lang": "language_10089088"
+  },
+  {
+    "id": "p_commandstation_enterview_txt_name",
+    "lang": "language_10005357"
+  },
+  {
+    "id": "p_v3a0_warmup_txt_goto",
+    "lang": "language_10075488"
+  },
+  {
+    "id": "p_v3a0_warmup_txt_Reward",
+    "lang": "language_10075489"
+  },
+  {
+    "id": "p_v3a0_warmup_txt_WrongChannel",
+    "lang": "language_10075490"
+  },
+  {
+    "id": "p_v3a0_warmup_txt_tips",
+    "lang": "language_10075491"
+  },
+  {
+    "id": "p_v3a0_season_enterview_txt_Title",
+    "lang": "language_10087229"
+  },
+  {
+    "id": "p_v3a0_season_enterview_txt_dec1",
+    "lang": "language_10089089"
+  },
+  {
+    "id": "p_v3a0_season_enterview_txt_dec2",
+    "lang": "language_10089090"
+  },
+  {
+    "id": "p_v3a0_season_enterview_txt_dec3",
+    "lang": "language_10089091"
+  },
+  {
+    "id": "p_normalstoreview_txt_tips",
+    "lang": "language_10089092"
+  },
+  {
+    "id": "p_v3a0_season_help_1_txt_1",
+    "lang": "language_10031313"
+  },
+  {
+    "id": "p_v3a0_season_help_1_txt_2",
+    "lang": "language_10089093"
+  },
+  {
+    "id": "p_v3a0_season_help_1_txt_3",
+    "lang": "language_10089094"
+  },
+  {
+    "id": "p_v3a0_season_help_1_txt_4",
+    "lang": "language_10089095"
+  },
+  {
+    "id": "p_season123mainview_txt_storybtn",
+    "lang": "language_10089096"
+  },
+  {
+    "id": "p_v3a0_storeblockpackageview_dec",
+    "lang": "language_10089097"
+  },
+  {
+    "id": "p_v3a0_storeblockpackageview_name",
+    "lang": "language_10089098"
+  },
+  {
+    "id": "p_v2a7_tower_help_24_txt_1",
+    "lang": "language_10089099"
+  },
+  {
+    "id": "p_v2a7_tower_help_24_txt_2",
+    "lang": "language_10089100"
+  },
+  {
+    "id": "p_v2a7_tower_help_24_txt_3",
+    "lang": "language_10089101"
+  },
+  {
+    "id": "p_v2a7_tower_help_24_txt_4",
+    "lang": "language_10089102"
+  },
+  {
+    "id": "p_v2a7_tower_help_24_txt_5",
+    "lang": "language_10089103"
+  },
+  {
+    "id": "p_v2a7_tower_help_25_txt_1",
+    "lang": "language_10087628"
+  },
+  {
+    "id": "p_v2a7_tower_help_25_txt_2",
+    "lang": "language_10089104"
+  },
+  {
+    "id": "p_v2a7_tower_help_25_txt_3",
+    "lang": "language_10087629"
+  },
+  {
+    "id": "p_v2a7_tower_help_25_txt_4",
+    "lang": "language_10087801"
+  },
+  {
+    "id": "p_v2a7_tower_help_25_txt_5",
+    "lang": "language_10089105"
+  },
+  {
+    "id": "p_v2a7_tower_help_25_txt_6",
+    "lang": "language_10089106"
+  },
+  {
+    "id": "p_v2a7_tower_help_26_txt_1",
+    "lang": "language_10089107"
+  },
+  {
+    "id": "p_v2a7_tower_help_26_txt_2",
+    "lang": "language_10089108"
+  },
+  {
+    "id": "p_v2a7_tower_help_26_txt_3",
+    "lang": "language_10089109"
+  },
+  {
+    "id": "p_v2a7_tower_help_26_txt_4",
+    "lang": "language_10089110"
+  },
+  {
+    "id": "p_v2a7_tower_help_27_txt_1",
+    "lang": "language_10087802"
+  },
+  {
+    "id": "p_v2a7_tower_help_27_txt_2",
+    "lang": "language_10089111"
+  },
+  {
+    "id": "p_v2a7_tower_help_27_txt_3",
+    "lang": "language_10089112"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_1_txt_1",
+    "lang": "language_10089113"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_1_txt_2",
+    "lang": "language_10089114"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_2_txt_1",
+    "lang": "language_10089115"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_2_txt_2",
+    "lang": "language_10090124"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_3_txt_1",
+    "lang": "language_10089117"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_3_txt_2",
+    "lang": "language_10089118"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_3_txt_3",
+    "lang": "language_10089119"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_4_txt_1",
+    "lang": "language_10089120"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_4_txt_2",
+    "lang": "language_10089121"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_4_txt_3",
+    "lang": "language_10089122"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_4_txt_4",
+    "lang": "language_10089123"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_4_txt_5",
+    "lang": "language_10089124"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_4_txt_6",
+    "lang": "language_10089125"
+  },
+  {
+    "id": "p_v3a0_commandstation_help_4_txt_7",
+    "lang": "language_10089126"
+  },
+  {
+    "id": "p_v3a0_malianna_gameview_txt_pauseTips",
+    "lang": "language_10089127"
+  },
+  {
+    "id": "p_v3a0_malianna_slotitem_txt_name_my",
+    "lang": "language_10089128"
+  },
+  {
+    "id": "p_v3a0_malianna_slotitem_txt_name_enemy",
+    "lang": "language_10089129"
+  },
+  {
+    "id": "p_v3a0_storeroleskinview_roletxt1",
+    "lang": "language_10089130"
+  },
+  {
+    "id": "p_v3a0_storeroleskinview_roletxt2",
+    "lang": "language_10089131"
+  },
+  {
+    "id": "p_v3a0_storeroleskinview_rolename1",
+    "lang": "language_10058333"
+  },
+  {
+    "id": "p_v3a0_storeroleskinview_rolename2",
+    "lang": "language_10045609"
   },
   {
     "id": "p_v2a9_storeview_txt_title1",
@@ -21957,7 +22361,7 @@
   },
   {
     "id": "p_commandstation_taskitem_txt_Expire",
-    "lang": "language_10077906"
+    "lang": "language_10019781"
   },
   {
     "id": "p_assassinlibrarydetailview_txt_Dialogue",
@@ -21966,6 +22370,30 @@
   {
     "id": "p_odysseydungeoninteractview_txt_suitSelectTipTitle",
     "lang": ""
+  },
+  {
+    "id": "p_v2a9_warmup_txt_goto",
+    "lang": "language_10090086"
+  },
+  {
+    "id": "p_v2a9_warmup_txt_Reward",
+    "lang": "language_10089133"
+  },
+  {
+    "id": "p_v2a9_warmup_txt_WrongChannel",
+    "lang": "language_10089134"
+  },
+  {
+    "id": "p_v2a9_warmup_txt_tips",
+    "lang": "language_10089135"
+  },
+  {
+    "id": "p_v2a3_fuke_task_title",
+    "lang": "language_10090094"
+  },
+  {
+    "id": "p_commandstation_taskitem_txt_Catch",
+    "lang": "language_10090098"
   },
   {
     "id": "p_v3a1_giftrecommendview_txt_shopnamecn1",
@@ -22044,60 +22472,8 @@
     "lang": "language_10079809"
   },
   {
-    "id": "p_v3a0_giftrecommendview_txt_shopnamecn1",
-    "lang": "language_10075464"
-  },
-  {
-    "id": "p_v3a0_giftrecommendview_txt_shopnamecn2",
-    "lang": "language_10075465"
-  },
-  {
-    "id": "p_v3a0_giftrecommendview_txt_shopnamecn3",
-    "lang": "language_10075466"
-  },
-  {
-    "id": "p_v3a0_giftrecommendview2_txt_shopnamecn1",
-    "lang": "language_10075467"
-  },
-  {
-    "id": "p_v3a0_giftrecommendview2_txt_shopnamecn2",
-    "lang": "language_10075468"
-  },
-  {
-    "id": "p_v3a0_giftrecommendview2_txt_shopnamecn3",
-    "lang": "language_10075464"
-  },
-  {
-    "id": "p_v3a0_giftrecommendview3_txt_shopnamecn1",
-    "lang": "language_10075463"
-  },
-  {
-    "id": "p_v3a0_giftrecommendview3_txt_shopnamecn2",
-    "lang": "language_10036746"
-  },
-  {
-    "id": "p_v3a0_giftrecommendview3_txt_shopnamecn3",
-    "lang": "language_10036747"
-  },
-  {
     "id": "p_seasonheroview_dress_overseas",
     "lang": "language_10031256"
-  },
-  {
-    "id": "p_v3a0_warmup_txt_goto",
-    "lang": "language_10075488"
-  },
-  {
-    "id": "p_v3a0_warmup_txt_Reward",
-    "lang": "language_10075489"
-  },
-  {
-    "id": "p_v3a0_warmup_txt_WrongChannel",
-    "lang": "language_10075490"
-  },
-  {
-    "id": "p_v3a0_warmup_txt_tips",
-    "lang": "language_10075491"
   },
   {
     "id": "p_turnback_fullview_txt_smallreward",

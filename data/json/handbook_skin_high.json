@@ -3,12 +3,12 @@
     "id": 10001,
     "name": "language_10086195",
     "nameEn": "From the Uniform Locker",
-    "show": false,
+    "show": true,
     "order": 1,
-    "des": "language_10086196",
-    "scenePath": "",
-    "nameRes": "",
-    "iconRes": ""
+    "des": "language_10089255",
+    "scenePath": "scenes/v2a8_m_s17_pftj/prefab/sence_10001.prefab",
+    "nameRes": "skinhandbook_titletxt_07",
+    "iconRes": "skinhandbook_titleicon_07"
   },
   {
     "id": 10002,
@@ -100,12 +100,12 @@
   },
   {
     "id": 11001,
-    "name": "language_10086104",
+    "name": "language_10090123",
     "nameEn": "Card #0 to #21",
-    "show": false,
+    "show": true,
     "order": 10,
     "des": "language_10086212",
-    "scenePath": "",
+    "scenePath": "scenes/v3a0_m_s17_pftj/prefab/sence_10010.prefab",
     "nameRes": "",
     "iconRes": ""
   },

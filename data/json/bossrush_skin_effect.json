@@ -208,5 +208,26 @@
     "effects": "buff/buff_rush_rank4",
     "hangpoints": "mountweapon#special1",
     "scales": "0.3,0.5,0.4"
+  },
+  {
+    "id": 6704052,
+    "stage": 2,
+    "effects": "buff/buff_rush_rank2",
+    "hangpoints": "mountbody",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 6704052,
+    "stage": 3,
+    "effects": "buff/buff_rush_rank3",
+    "hangpoints": "mountbody",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 6704052,
+    "stage": 4,
+    "effects": "buff/buff_rush_rank4",
+    "hangpoints": "mountbody",
+    "scales": "1,1,1"
   }
 ]

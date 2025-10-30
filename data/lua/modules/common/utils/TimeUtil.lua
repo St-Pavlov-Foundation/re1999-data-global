@@ -8,6 +8,7 @@ local var_0_0 = {
 	}
 }
 
+var_0_0.OneWeekSecond = 604800
 var_0_0.OneDaySecond = 86400
 var_0_0.OneHourSecond = 3600
 var_0_0.OneMinuteSecond = 60

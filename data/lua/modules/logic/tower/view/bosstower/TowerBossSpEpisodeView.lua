@@ -89,10 +89,7 @@ function var_0_0.refreshParam(arg_9_0)
 	arg_9_0.towerMo = TowerModel.instance:getTowerInfoById(arg_9_0.towerType, arg_9_0.towerId)
 	arg_9_0.bossConfig = TowerConfig.instance:getAssistBossConfig(arg_9_0.towerConfig.bossId)
 	arg_9_0.bossInfo = TowerAssistBossModel.instance:getById(arg_9_0.towerConfig.bossId)
-
-	if arg_9_0.selectLayerId == nil then
-		arg_9_0.selectLayerId = arg_9_0.episodeConfig.layerId
-	end
+	arg_9_0.selectLayerId = arg_9_0.episodeConfig.layerId
 
 	if arg_9_0.viewParam.isTeach then
 		arg_9_0:_onBtnTeachClick()

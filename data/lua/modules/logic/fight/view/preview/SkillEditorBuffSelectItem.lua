@@ -118,16 +118,18 @@ function var_0_0._onClickThis(arg_7_0)
 		if SkillEditorBuffSelectView._show_frame then
 			FightController.instance:dispatchEvent(FightEvent.OnEditorPlayBuffStart)
 		end
+
+		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_7_0.id, FightEnum.EffectType.BUFFADD, var_7_1.id, var_7_3.uid)
 	else
 		var_7_0:getMO():delBuff(var_7_2.uid)
 		var_7_0.buff:delBuff(var_7_2.uid)
+		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_7_0.id, FightEnum.EffectType.BUFFDEL, var_7_1.id, var_7_2.uid)
 	end
 
 	if var_7_1.typeId == 5001 then
 		var_7_0.nameUI:setShield(math.floor(var_7_0.nameUI:getHp() * 0.1 + 0.5))
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate)
 	FightController.instance:dispatchEvent(FightEvent.SkillEditorRefreshBuff, var_7_1.id)
 	arg_7_0:onUpdateMO(arg_7_0._mo)
 end

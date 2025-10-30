@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "value": 0,
+    "value2": "111",
+    "value3": ""
+  },
+  {
+    "id": 2,
+    "value": 13006,
+    "value2": "VersionActivity3_0EnterController",
+    "value3": "singlebg_lang/txt_commandstation_singlebg/commandstation_task_title1.png"
+  },
+  {
+    "id": 3,
+    "value": 0,
+    "value2": "2025-12-11  5:00:00",
+    "value3": ""
+  },
+  {
+    "id": 4,
+    "value": 0,
+    "value2": "",
+    "value3": "CommandStationEnterView_showMap_txtmapname"
+  },
+  {
+    "id": 300,
+    "value": 300,
+    "value2": "",
+    "value3": ""
+  },
+  {
+    "id": 299,
+    "value": 300000,
+    "value2": "",
+    "value3": ""
+  },
+  {
+    "id": 6,
+    "value": 0,
+    "value2": "2025-10-30  5:00:00",
+    "value3": ""
+  },
+  {
+    "id": 5,
+    "value": 0,
+    "value2": "",
+    "value3": ""
+  }
+]

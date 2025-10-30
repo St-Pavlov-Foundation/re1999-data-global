@@ -237,7 +237,7 @@ function var_0_0.showPreviewChapterFlag(arg_19_0, arg_19_1)
 		return false
 	end
 
-	if var_19_0.preChapter > 0 and arg_19_0:_bothPreChaptersFinished(arg_19_1) then
+	if var_19_0.preChapter > 0 and arg_19_0:_bothPreChaptersFinished(var_19_0.preChapter) then
 		return false
 	end
 
@@ -245,19 +245,21 @@ function var_0_0.showPreviewChapterFlag(arg_19_0, arg_19_1)
 end
 
 function var_0_0._bothPreChaptersFinished(arg_20_0, arg_20_1)
-	local var_20_0 = DungeonConfig.instance:getPreviewChapterList(arg_20_1)
-
-	if var_20_0 then
-		for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-			if iter_20_1.preChapter > 0 and not DungeonModel.instance:chapterLastEpisodeIsFinished(iter_20_1.preChapter) then
-				return false
-			end
-		end
-	else
-		return false
+	if arg_20_1 <= 0 then
+		return true
 	end
 
-	return true
+	local var_20_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_20_1)
+
+	if var_20_0 then
+		local var_20_1 = var_20_0[#var_20_0]
+
+		if var_20_1 and (DungeonModel.instance:hasPassLevelAndStory(var_20_1.id) or DungeonModel.instance:hasPassLevelAndStory(var_20_1.chainEpisode)) then
+			return true
+		end
+	end
+
+	return false
 end
 
 function var_0_0.hasPreviewChapterHistory(arg_21_0, arg_21_1)
@@ -268,7 +270,7 @@ function var_0_0.hasPreviewChapterHistory(arg_21_0, arg_21_1)
 	local var_21_0 = DungeonConfig.instance:getChapterCO(arg_21_1)
 
 	if var_21_0 and var_21_0.eaActivityId ~= 0 then
-		if arg_21_0:_bothPreChaptersFinished(arg_21_1) then
+		if arg_21_0:_bothPreChaptersFinished(var_21_0.preChapter) then
 			return true
 		end
 

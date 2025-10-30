@@ -67,7 +67,12 @@ var_0_0.HeroGroupSnapshotType = {
 	Season123Retail = 7,
 	Act183Boss = 13,
 	Survival = 15,
+	FiveHero = 16,
 	Shelter = 14
+}
+var_0_0.FiveHeroEnum = {
+	MaxHeroNum = 5,
+	FifthIndex = 5
 }
 var_0_0.HeroGroupServerType = {
 	Activity = 100,

@@ -88,5 +88,23 @@
     "planId": 502,
     "name": "language_10074747",
     "desc": "language_10074808"
+  },
+  {
+    "towerId": 6,
+    "teachId": 601,
+    "episodeId": 90300601,
+    "firstBonus": "1#110403#1|2#3#10000",
+    "planId": 601,
+    "name": "language_10089100",
+    "desc": "language_10089175"
+  },
+  {
+    "towerId": 6,
+    "teachId": 602,
+    "episodeId": 90300602,
+    "firstBonus": "1#110603#1|2#5#10000",
+    "planId": 602,
+    "name": "language_10089107",
+    "desc": "language_10089176"
   }
 ]

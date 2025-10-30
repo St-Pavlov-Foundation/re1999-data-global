@@ -1,0 +1,79 @@
+[
+  {
+    "gameId": 1301101,
+    "battlePic": "singlebg/v2a8_nuodika_singlebg/v2a8_nuodika_enter_fullbg.png",
+    "battleGroup": 1301101,
+    "gameTarget": "1#12001#1",
+    "loseTarget": "1#11001#2",
+    "skill": "",
+    "battleTime": 9999,
+    "battledesc": "",
+    "targetDesc": "language_10090053"
+  },
+  {
+    "gameId": 1301102,
+    "battlePic": "singlebg/v2a8_nuodika_singlebg/v2a8_nuodika_enter_fullbg.png",
+    "battleGroup": 1301102,
+    "gameTarget": "1#22001#1",
+    "loseTarget": "2#11001",
+    "skill": "1002",
+    "battleTime": 9999,
+    "battledesc": "",
+    "targetDesc": "language_10090054"
+  },
+  {
+    "gameId": 1301103,
+    "battlePic": "singlebg/v2a8_nuodika_singlebg/v2a8_nuodika_enter_fullbg.png",
+    "battleGroup": 1301103,
+    "gameTarget": "1#32001#1",
+    "loseTarget": "1#31001#2",
+    "skill": "1001#1004",
+    "battleTime": 9999,
+    "battledesc": "",
+    "targetDesc": "language_10090055"
+  },
+  {
+    "gameId": 1301104,
+    "battlePic": "singlebg/v2a8_nuodika_singlebg/v2a8_nuodika_enter_fullbg.png",
+    "battleGroup": 1301104,
+    "gameTarget": "1#42001#1",
+    "loseTarget": "1#41001#2",
+    "skill": "1002#1003",
+    "battleTime": 9999,
+    "battledesc": "",
+    "targetDesc": "language_10090056"
+  },
+  {
+    "gameId": 1301105,
+    "battlePic": "singlebg/v2a8_nuodika_singlebg/v2a8_nuodika_enter_fullbg.png",
+    "battleGroup": 1301105,
+    "gameTarget": "1#52001#1",
+    "loseTarget": "2#11001",
+    "skill": "1005",
+    "battleTime": 9999,
+    "battledesc": "",
+    "targetDesc": "language_10090057"
+  },
+  {
+    "gameId": 1301106,
+    "battlePic": "singlebg/v2a8_nuodika_singlebg/v2a8_nuodika_enter_fullbg.png",
+    "battleGroup": 1301106,
+    "gameTarget": "1#62001#1",
+    "loseTarget": "1#61001#2",
+    "skill": "1006",
+    "battleTime": 9999,
+    "battledesc": "",
+    "targetDesc": "language_10090056"
+  },
+  {
+    "gameId": 1301107,
+    "battlePic": "singlebg/v2a8_nuodika_singlebg/v2a8_nuodika_enter_fullbg.png",
+    "battleGroup": 1301107,
+    "gameTarget": "1#72001#1|1#72012#1",
+    "loseTarget": "1#71001#2",
+    "skill": "1001#1002",
+    "battleTime": 9999,
+    "battledesc": "",
+    "targetDesc": "language_10090053"
+  }
+]

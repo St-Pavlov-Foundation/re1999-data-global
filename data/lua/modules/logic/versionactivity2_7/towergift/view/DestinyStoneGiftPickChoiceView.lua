@@ -60,7 +60,7 @@ function var_0_0.onStoneUpFinish(arg_7_0)
 end
 
 function var_0_0._editableInitView(arg_8_0)
-	DestinyStoneGiftPickChoiceListModel.instance:initList()
+	return
 end
 
 function var_0_0.onUpdateParam(arg_9_0)
@@ -70,6 +70,9 @@ end
 function var_0_0.onOpen(arg_10_0)
 	arg_10_0._materialId = arg_10_0.viewParam and arg_10_0.viewParam.materialId
 
+	local var_10_0 = arg_10_0.viewParam.ignoreIds
+
+	DestinyStoneGiftPickChoiceListModel.instance:initList(var_10_0)
 	arg_10_0:refreshUI()
 end
 

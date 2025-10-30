@@ -10,5 +10,6 @@ var_0_0.OnSdkLoginReturn = 5
 var_0_0.SystemLoginFail = 6
 var_0_0.OnBeginLogout = 7
 var_0_0.OnLoginBgLoaded = 8
+var_0_0.OnLoginVideoSwitch = 10001
 
 return var_0_0

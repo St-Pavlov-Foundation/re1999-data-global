@@ -58,6 +58,8 @@ function var_0_0.initViewContent(arg_4_0)
 	arg_4_0:addButton(arg_4_0:getLineGroup(), "修改棋子死亡步骤时间", arg_4_0.changeDieSpeed, arg_4_0)
 	arg_4_0:addLineIndex()
 	arg_4_0:addButton(arg_4_0:getLineGroup(), "测试随机棋子【100】", arg_4_0.testRound, arg_4_0)
+	arg_4_0:addLineIndex()
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "完成玛丽安娜玩法", arg_4_0.finishMaLiAnNa, arg_4_0)
 end
 
 function var_0_0.initEliminate(arg_5_0)
@@ -270,6 +272,20 @@ function var_0_0.changeDieSpeed(arg_20_0)
 	local var_20_1 = tonumber(var_20_0)
 
 	EliminateEnum_2_7.DieStepTime = var_20_1
+end
+
+function var_0_0.beginMaLiAnNa(arg_21_0)
+	local var_21_0 = arg_21_0._txtMaliAnNa:GetText()
+
+	Activity201MaLiAnNaGameController.instance:enterGame(tonumber(var_21_0))
+end
+
+function var_0_0.stopMaLiAnNa(arg_22_0)
+	Activity201MaLiAnNaGameController.instance:exitGame()
+end
+
+function var_0_0.finishMaLiAnNa(arg_23_0)
+	Activity201MaLiAnNaGameController.instance:finishGame()
 end
 
 return var_0_0

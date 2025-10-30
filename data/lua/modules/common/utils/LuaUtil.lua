@@ -506,4 +506,22 @@ function var_0_0.full2HalfWidth(arg_40_0)
 	return table.concat(var_40_0)
 end
 
+function var_0_0.class(arg_41_0, arg_41_1, arg_41_2, arg_41_3)
+	if isDebugBuild and arg_41_1 then
+		if arg_41_3 then
+			assert(_G.isTypeOf(arg_41_3, arg_41_1), arg_41_3.__cname .. " is not type of " .. arg_41_1.__cname)
+		end
+
+		if arg_41_2 then
+			assert(_G.isTypeOf(arg_41_2, arg_41_1), arg_41_2.__cname .. " is not type of " .. arg_41_1.__cname)
+		end
+	end
+
+	if SettingsModel.instance:isOverseas() then
+		return _G.class(arg_41_0, arg_41_2 or arg_41_1)
+	else
+		return _G.class(arg_41_0, arg_41_3 or arg_41_1)
+	end
+end
+
 return var_0_0

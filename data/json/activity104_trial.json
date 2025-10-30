@@ -118,5 +118,55 @@
     "name": "language_10004319",
     "nameEn": "UTTU",
     "equipId": 161006
+  },
+  {
+    "activityId": 13000,
+    "layer": 1,
+    "episodeId": 3001131,
+    "unlockLayer": 3,
+    "firstPassEquipIds": "300001",
+    "name": "language_10087436",
+    "nameEn": "UTTU",
+    "equipId": 300001
+  },
+  {
+    "activityId": 13000,
+    "layer": 2,
+    "episodeId": 3001132,
+    "unlockLayer": 4,
+    "firstPassEquipIds": "300024",
+    "name": "language_10087437",
+    "nameEn": "UTTU",
+    "equipId": 300024
+  },
+  {
+    "activityId": 13000,
+    "layer": 3,
+    "episodeId": 3001133,
+    "unlockLayer": 5,
+    "firstPassEquipIds": "300047",
+    "name": "language_10087438",
+    "nameEn": "UTTU",
+    "equipId": 300047
+  },
+  {
+    "activityId": 13000,
+    "layer": 4,
+    "episodeId": 3001134,
+    "unlockLayer": 6,
+    "firstPassEquipIds": "300070",
+    "name": "language_10025494",
+    "nameEn": "UTTU",
+    "equipId": 300070
+  },
+  {
+    "activityId": 13000,
+    "layer": 5,
+    "episodeId": 3001135,
+    "unlockLayer": 7,
+    "firstPassEquipIds": "300095",
+    "name": "language_10087439",
+    "nameEn": "UTTU",
+    "equipId": 300095
   }
 ]

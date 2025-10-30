@@ -24,7 +24,8 @@ local var_0_3 = {
 local var_0_4 = {
 	[FightEnum.BuffTypeId_CoverPerson] = FightBuffCoverPerson,
 	[31070111] = FightBuffSpecialCountCastBuff,
-	[31070121] = FightBuffSpecialCountCastBuff
+	[31070121] = FightBuffSpecialCountCastBuff,
+	[900045418] = FightBuffWELXStarComp
 }
 
 function var_0_0.ctor(arg_1_0, arg_1_1)

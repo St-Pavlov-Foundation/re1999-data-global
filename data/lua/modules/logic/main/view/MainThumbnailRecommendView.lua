@@ -135,7 +135,8 @@ function var_0_0._onClickView(arg_12_0)
 		StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 			[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Main,
 			[StatEnum.EventProperties.RecommendPageId] = tostring(var_12_0.id),
-			[StatEnum.EventProperties.RecommendPageName] = var_12_0.name
+			[StatEnum.EventProperties.RecommendPageName] = var_12_0.name,
+			[StatEnum.EventProperties.RecommendPageRank] = arg_12_0:getTargetPageIndex()
 		})
 		GameFacade.jumpByAdditionParam(var_12_0.systemJumpCode)
 	end
@@ -201,7 +202,6 @@ end
 
 function var_0_0._initPages(arg_18_0, arg_18_1)
 	recthelper.setAnchorX(arg_18_0._gocontent.transform, 0)
-	arg_18_0:setTargetPageIndex(1)
 
 	local var_18_0 = {}
 
@@ -247,6 +247,9 @@ function var_0_0._initPages(arg_18_0, arg_18_1)
 		end
 	end
 
+	local var_18_8 = arg_18_0:_getEnterPageIndex()
+
+	arg_18_0:setTargetPageIndex(var_18_8)
 	arg_18_0:setSelectItem()
 	arg_18_0:setContentItem()
 	arg_18_0:_startAutoSwitch()
@@ -463,38 +466,62 @@ function var_0_0._tweenPosFinish(arg_33_0)
 	return
 end
 
-function var_0_0.onClose(arg_34_0)
-	arg_34_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_34_0._initPages, arg_34_0)
+function var_0_0._getEnterPageIndex(arg_34_0)
+	local var_34_0 = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.MainThumbnailRecommendViewIndex, "")
+
+	if string.nilorempty(var_34_0) then
+		return 1
+	else
+		local var_34_1 = string.split(var_34_0, "#")
+		local var_34_2 = var_34_1[1]
+		local var_34_3 = tonumber(var_34_1[2])
+
+		if var_34_2 ~= GameBranchMgr.instance:VHyphenA() then
+			return 1
+		elseif var_34_3 >= #arg_34_0._pagesCo then
+			return 1
+		else
+			return var_34_3 + 1
+		end
+	end
 end
 
-function var_0_0._clearPages(arg_35_0)
-	if arg_35_0._selectItems then
-		for iter_35_0, iter_35_1 in pairs(arg_35_0._selectItems) do
-			iter_35_1:destroy()
-		end
+function var_0_0.onClose(arg_35_0)
+	arg_35_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_35_0._initPages, arg_35_0)
 
-		arg_35_0._selectItems = {}
-	end
+	local var_35_0 = GameBranchMgr.instance:VHyphenA() .. "#" .. arg_35_0._targetPageIndex
 
-	if arg_35_0._helpItems then
-		for iter_35_2, iter_35_3 in pairs(arg_35_0._helpItems) do
-			iter_35_3:destroy()
-		end
-
-		arg_35_0._helpItems = {}
-	end
-
-	gohelper.destroyAllChildren(arg_35_0._goslider)
-	gohelper.destroyAllChildren(arg_35_0._gocontent)
+	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.MainThumbnailRecommendViewIndex, var_35_0)
 end
 
-function var_0_0.onDestroyView(arg_36_0)
-	arg_36_0:_clearPages()
-	arg_36_0._scroll:RemoveDragBeginListener()
-	arg_36_0._scroll:RemoveDragEndListener()
-	arg_36_0._viewClick:RemoveClickListener()
-	TaskDispatcher.cancelTask(arg_36_0._onSwitch, arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0._checkExpire, arg_36_0)
+function var_0_0._clearPages(arg_36_0)
+	if arg_36_0._selectItems then
+		for iter_36_0, iter_36_1 in pairs(arg_36_0._selectItems) do
+			iter_36_1:destroy()
+		end
+
+		arg_36_0._selectItems = {}
+	end
+
+	if arg_36_0._helpItems then
+		for iter_36_2, iter_36_3 in pairs(arg_36_0._helpItems) do
+			iter_36_3:destroy()
+		end
+
+		arg_36_0._helpItems = {}
+	end
+
+	gohelper.destroyAllChildren(arg_36_0._goslider)
+	gohelper.destroyAllChildren(arg_36_0._gocontent)
+end
+
+function var_0_0.onDestroyView(arg_37_0)
+	arg_37_0:_clearPages()
+	arg_37_0._scroll:RemoveDragBeginListener()
+	arg_37_0._scroll:RemoveDragEndListener()
+	arg_37_0._viewClick:RemoveClickListener()
+	TaskDispatcher.cancelTask(arg_37_0._onSwitch, arg_37_0)
+	TaskDispatcher.cancelTask(arg_37_0._checkExpire, arg_37_0)
 end
 
 return var_0_0

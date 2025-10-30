@@ -367,7 +367,8 @@ function var_0_0._loadSceneFinish(arg_28_0)
 	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnLoadSceneFinish, {
 		arg_28_0._mapCfg,
 		arg_28_0._sceneGo,
-		arg_28_0
+		arg_28_0,
+		episodeConfig = arg_28_0._episodeConfig
 	})
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnShowMap)
 	TaskDispatcher.runDelay(arg_28_0._addAllAudio, arg_28_0, 0.2)
@@ -422,6 +423,10 @@ end
 function var_0_0.getInteractiveItemPath(arg_32_0)
 	if arg_32_0 == DungeonEnum.ChapterId.Main1_10 then
 		return "ui/viewres/dungeon/chaptermap/dungeonmapinteractiveitem_110.prefab"
+	end
+
+	if arg_32_0 == DungeonEnum.ChapterId.Main1_11 then
+		return "ui/viewres/dungeon/chaptermap/dungeonmapinteractiveitem_111.prefab"
 	end
 
 	return "ui/viewres/dungeon/chaptermap/dungeonmapinteractiveitem.prefab"
@@ -624,27 +629,35 @@ function var_0_0.showInteractiveItem(arg_44_0)
 end
 
 function var_0_0._initScene(arg_45_0)
-	arg_45_0._mapSize = gohelper.findChild(arg_45_0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider)).size
+	local var_45_0 = gohelper.findChild(arg_45_0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider))
 
-	local var_45_0
-	local var_45_1 = GameUtil.getAdapterScale()
-
-	if var_45_1 ~= 1 then
-		var_45_0 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	if var_45_0 then
+		arg_45_0._mapSize = var_45_0.size
 	else
-		var_45_0 = ViewMgr.instance:getUIRoot()
+		arg_45_0._mapSize = Vector2()
+
+		logError(string.format("DungeonMapScene _initScene scene:%s 的root/size 缺少 BoxCollider,请联系地编处理", arg_45_0._mapCfg.res))
 	end
 
-	local var_45_2 = var_45_0.transform:GetWorldCorners()
-	local var_45_3 = var_45_2[1] * var_45_1
-	local var_45_4 = var_45_2[3] * var_45_1
+	local var_45_1
+	local var_45_2 = GameUtil.getAdapterScale()
 
-	arg_45_0._viewWidth = math.abs(var_45_4.x - var_45_3.x)
-	arg_45_0._viewHeight = math.abs(var_45_4.y - var_45_3.y)
-	arg_45_0._mapMinX = var_45_3.x - (arg_45_0._mapSize.x - arg_45_0._viewWidth)
-	arg_45_0._mapMaxX = var_45_3.x
-	arg_45_0._mapMinY = var_45_3.y
-	arg_45_0._mapMaxY = var_45_3.y + (arg_45_0._mapSize.y - arg_45_0._viewHeight)
+	if var_45_2 ~= 1 then
+		var_45_1 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	else
+		var_45_1 = ViewMgr.instance:getUIRoot()
+	end
+
+	local var_45_3 = var_45_1.transform:GetWorldCorners()
+	local var_45_4 = var_45_3[1] * var_45_2
+	local var_45_5 = var_45_3[3] * var_45_2
+
+	arg_45_0._viewWidth = math.abs(var_45_5.x - var_45_4.x)
+	arg_45_0._viewHeight = math.abs(var_45_5.y - var_45_4.y)
+	arg_45_0._mapMinX = var_45_4.x - (arg_45_0._mapSize.x - arg_45_0._viewWidth)
+	arg_45_0._mapMaxX = var_45_4.x
+	arg_45_0._mapMinY = var_45_4.y
+	arg_45_0._mapMaxY = var_45_4.y + (arg_45_0._mapSize.y - arg_45_0._viewHeight)
 
 	if arg_45_0._oldScenePos then
 		arg_45_0._sceneTrans.localPosition = arg_45_0._oldScenePos

@@ -6,6 +6,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._txtrank = gohelper.findChildText(arg_1_1, "#go_info/rankhead/#txt_rank")
 	arg_1_0._txtnum = gohelper.findChildText(arg_1_1, "#go_info/#txt_num")
 	arg_1_0._txtherogrouprate = gohelper.findChildText(arg_1_1, "#go_info/#txt_herogrouprate")
+	arg_1_0._goherogrouplist = gohelper.findChild(arg_1_1, "#go_info/herogrouplist")
 	arg_1_0._goheroitem = gohelper.findChild(arg_1_1, "#go_info/herogrouplist/#go_heroitem")
 	arg_1_0._simagecloth = gohelper.findChildSingleImage(arg_1_1, "#go_info/#simage_cloth")
 	arg_1_0._btnuse = gohelper.findChildButtonWithAudio(arg_1_1, "#go_info/#btn_use")
@@ -174,6 +175,13 @@ function var_0_0._editableInitView(arg_6_0)
 	arg_6_0._simagebg:LoadImage(ResUrl.getHeroGroupBg("biandui_youdi"))
 
 	arg_6_0._imagebg = arg_6_0._simagebg:GetComponent(gohelper.Type_Image)
+	arg_6_0._isFiveHeroEpisode = DungeonController.checkEpisodeFiveHero(HeroGroupModel.instance.episodeId)
+
+	if arg_6_0._isFiveHeroEpisode then
+		recthelper.setAnchorX(arg_6_0._goherogrouplist.transform, -97.5)
+
+		arg_6_0._goherogrouplist:GetComponent(gohelper.Type_HorizontalLayoutGroup).spacing = -40
+	end
 end
 
 function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
@@ -207,58 +215,59 @@ end
 
 function var_0_0._refreshHeroItem(arg_8_0)
 	local var_8_0 = arg_8_0._mo.heroDataList
+	local var_8_1 = arg_8_0._isFiveHeroEpisode and ModuleEnum.FiveHeroEnum.MaxHeroNum or ModuleEnum.MaxHeroCountInGroup
 
-	for iter_8_0 = 1, ModuleEnum.MaxHeroCountInGroup do
-		local var_8_1 = var_8_0[iter_8_0]
-		local var_8_2 = arg_8_0._heroItemList[iter_8_0]
+	for iter_8_0 = 1, var_8_1 do
+		local var_8_2 = var_8_0[iter_8_0]
+		local var_8_3 = arg_8_0._heroItemList[iter_8_0]
 
-		if not var_8_2 then
-			var_8_2 = arg_8_0:getUserDataTb_()
-			var_8_2.go = gohelper.cloneInPlace(arg_8_0._goheroitem, "item" .. iter_8_0)
-			var_8_2.gocontainer = gohelper.findChild(var_8_2.go, "go_container")
-			var_8_2.simageheroicon = gohelper.findChildSingleImage(var_8_2.go, "go_container/simage_heroicon")
-			var_8_2.imagecareer = gohelper.findChildImage(var_8_2.go, "go_container/image_career")
-			var_8_2.goaidtag = gohelper.findChild(var_8_2.go, "go_container/go_aidtag")
-			var_8_2.gostorytag = gohelper.findChild(var_8_2.go, "go_container/go_storytag")
-			var_8_2.imageinsight = gohelper.findChildImage(var_8_2.go, "go_container/level/layout/image_insight")
-			var_8_2.txtlevel = gohelper.findChildText(var_8_2.go, "go_container/level/layout/txt_level")
-			var_8_2.goempty = gohelper.findChild(var_8_2.go, "go_empty")
+		if not var_8_3 then
+			var_8_3 = arg_8_0:getUserDataTb_()
+			var_8_3.go = gohelper.cloneInPlace(arg_8_0._goheroitem, "item" .. iter_8_0)
+			var_8_3.gocontainer = gohelper.findChild(var_8_3.go, "go_container")
+			var_8_3.simageheroicon = gohelper.findChildSingleImage(var_8_3.go, "go_container/simage_heroicon")
+			var_8_3.imagecareer = gohelper.findChildImage(var_8_3.go, "go_container/image_career")
+			var_8_3.goaidtag = gohelper.findChild(var_8_3.go, "go_container/go_aidtag")
+			var_8_3.gostorytag = gohelper.findChild(var_8_3.go, "go_container/go_storytag")
+			var_8_3.imageinsight = gohelper.findChildImage(var_8_3.go, "go_container/level/layout/image_insight")
+			var_8_3.txtlevel = gohelper.findChildText(var_8_3.go, "go_container/level/layout/txt_level")
+			var_8_3.goempty = gohelper.findChild(var_8_3.go, "go_empty")
 
-			table.insert(arg_8_0._heroItemList, var_8_2)
+			table.insert(arg_8_0._heroItemList, var_8_3)
 		end
 
-		gohelper.setActive(var_8_2.gocontainer, var_8_1)
-		gohelper.setActive(var_8_2.goempty, not var_8_1)
+		gohelper.setActive(var_8_3.gocontainer, var_8_2)
+		gohelper.setActive(var_8_3.goempty, not var_8_2)
 
-		if var_8_1 then
-			gohelper.setActive(var_8_2.gostorytag, false)
-			gohelper.setActive(var_8_2.goaidtag, false)
+		if var_8_2 then
+			gohelper.setActive(var_8_3.gostorytag, false)
+			gohelper.setActive(var_8_3.goaidtag, false)
 
-			local var_8_3 = var_8_1.heroId
-			local var_8_4, var_8_5 = HeroConfig.instance:getShowLevel(var_8_0[iter_8_0].level)
+			local var_8_4 = var_8_2.heroId
+			local var_8_5, var_8_6 = HeroConfig.instance:getShowLevel(var_8_0[iter_8_0].level)
 
-			var_8_2.txtlevel.text = arg_8_0:getShowLevelText(var_8_4)
+			var_8_3.txtlevel.text = arg_8_0:getShowLevelText(var_8_5)
 
-			if var_8_5 > 1 then
-				UISpriteSetMgr.instance:setHeroGroupSprite(var_8_2.imageinsight, "biandui_dongxi_" .. tostring(var_8_5 - 1))
-				gohelper.setActive(var_8_2.imageinsight.gameObject, true)
+			if var_8_6 > 1 then
+				UISpriteSetMgr.instance:setHeroGroupSprite(var_8_3.imageinsight, "biandui_dongxi_" .. tostring(var_8_6 - 1))
+				gohelper.setActive(var_8_3.imageinsight.gameObject, true)
 			else
-				gohelper.setActive(var_8_2.imageinsight.gameObject, false)
+				gohelper.setActive(var_8_3.imageinsight.gameObject, false)
 			end
 
-			local var_8_6 = HeroConfig.instance:getHeroCO(var_8_3)
-			local var_8_7 = SkinConfig.instance:getSkinCo(var_8_6.skinId)
+			local var_8_7 = HeroConfig.instance:getHeroCO(var_8_4)
+			local var_8_8 = SkinConfig.instance:getSkinCo(var_8_7.skinId)
 
-			var_8_2.simageheroicon:LoadImage(ResUrl.getHeadIconSmall(var_8_7.headIcon))
-			UISpriteSetMgr.instance:setCommonSprite(var_8_2.imagecareer, "lssx_" .. tostring(var_8_6.career))
+			var_8_3.simageheroicon:LoadImage(ResUrl.getHeadIconSmall(var_8_8.headIcon))
+			UISpriteSetMgr.instance:setCommonSprite(var_8_3.imagecareer, "lssx_" .. tostring(var_8_7.career))
 
-			local var_8_8 = HeroModel.instance:getByHeroId(var_8_3)
+			local var_8_9 = HeroModel.instance:getByHeroId(var_8_4)
 
-			ZProj.UGUIHelper.SetGrayscale(var_8_2.simageheroicon.gameObject, not var_8_8)
-			ZProj.UGUIHelper.SetGrayscale(var_8_2.imagecareer.gameObject, not var_8_8)
+			ZProj.UGUIHelper.SetGrayscale(var_8_3.simageheroicon.gameObject, not var_8_9)
+			ZProj.UGUIHelper.SetGrayscale(var_8_3.imagecareer.gameObject, not var_8_9)
 		end
 
-		gohelper.setActive(var_8_2.go, true)
+		gohelper.setActive(var_8_3.go, true)
 	end
 end
 

@@ -70,10 +70,14 @@ function var_0_0.eventCalEnd(arg_10_0)
 end
 
 function var_0_0.profilerCalOut(arg_11_0)
+	ZProj.ProfilerMan.Instance.IsProfiler = false
+
 	ZProj.ProfilerMan.Instance:outCsv()
 end
 
 function var_0_0.clearRecord(arg_12_0)
+	ZProj.ProfilerMan.Instance.IsProfiler = true
+
 	ZProj.ProfilerMan.Instance:BeginRecord()
 end
 

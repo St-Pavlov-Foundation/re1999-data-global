@@ -228,6 +228,18 @@
     "sourcesType": ""
   },
   {
+    "id": 3001,
+    "name": "language_10089211",
+    "nameEn": "The Pointless Trudge",
+    "desc": "language_10089286",
+    "rewardIcon": "1702000",
+    "building": "13001|13002|13003",
+    "packages": "3001|3002|3003|3004",
+    "collectionBonus": "11#13003#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
+  },
+  {
     "id": 30501,
     "name": "language_10077963",
     "nameEn": "Memories of Florence",

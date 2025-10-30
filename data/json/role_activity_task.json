@@ -1294,5 +1294,113 @@
     "maxProgress": 1,
     "bonus": "2#2#40|1#110703#1|2#5#10000",
     "jumpid": 10012312
+  },
+  {
+    "activityId": 13015,
+    "id": 302319,
+    "minType": "language_10088966",
+    "name": "language_10087357",
+    "taskDesc": "language_10088967",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "3060101",
+    "maxProgress": 1,
+    "bonus": "2#2#20|9#1003#4|2#3#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 302320,
+    "minType": "language_10088966",
+    "name": "language_10087357",
+    "taskDesc": "language_10088968",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "3060102",
+    "maxProgress": 1,
+    "bonus": "2#2#20|9#1003#4|2#5#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 302321,
+    "minType": "language_10088966",
+    "name": "language_10087357",
+    "taskDesc": "language_10088969",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "3060103",
+    "maxProgress": 1,
+    "bonus": "2#2#30|1#110903#2|2#3#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 302322,
+    "minType": "language_10088966",
+    "name": "language_10087357",
+    "taskDesc": "language_10088970",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "3060104",
+    "maxProgress": 1,
+    "bonus": "2#2#30|1#110603#2|2#5#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 302323,
+    "minType": "language_10088966",
+    "name": "language_10087357",
+    "taskDesc": "language_10088971",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "3060105",
+    "maxProgress": 1,
+    "bonus": "2#2#30|1#110903#2|2#3#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 302324,
+    "minType": "language_10088966",
+    "name": "language_10087357",
+    "taskDesc": "language_10088972",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "3060106",
+    "maxProgress": 1,
+    "bonus": "2#2#30|1#110603#2|2#5#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 302325,
+    "minType": "language_10088966",
+    "name": "language_10087357",
+    "taskDesc": "language_10088973",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "3060107",
+    "maxProgress": 1,
+    "bonus": "2#2#20|9#1003#4|2#3#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 302326,
+    "minType": "language_10088966",
+    "name": "language_10087357",
+    "taskDesc": "language_10088974",
+    "listenerType": "EpisodeFinish",
+    "listenerParam": "3060108",
+    "maxProgress": 1,
+    "bonus": "2#2#20|9#1003#4|2#5#5000",
+    "jumpid": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 302327,
+    "minType": "language_10088966",
+    "name": "language_10087357",
+    "taskDesc": "language_10088975",
+    "listenerType": "EpisodePassIncr",
+    "listenerParam": "309101",
+    "maxProgress": 1,
+    "bonus": "2#2#40|1#110703#1|2#5#10000",
+    "jumpid": 10013095
   }
 ]

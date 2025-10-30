@@ -228,8 +228,8 @@ function var_0_0.addEventListeners(arg_5_0)
 	arg_5_0:addEventCb(FightController.instance, FightEvent.UpdateBuffActInfo, arg_5_0.onUpdateBuffActInfo, arg_5_0)
 end
 
-function var_0_0.onUpdateBuffActInfo(arg_6_0, arg_6_1)
-	if arg_6_1.actId ~= FightEnum.BuffActId.NoUseCardEnergyRecordByRound then
+function var_0_0.onUpdateBuffActInfo(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if arg_6_3.actId ~= FightEnum.BuffActId.NoUseCardEnergyRecordByRound then
 		return
 	end
 
@@ -709,10 +709,10 @@ function var_0_0._onEnchantEffectLoaded(arg_32_0, arg_32_1, arg_32_2)
 	return
 end
 
-function var_0_0._onEnchantEffectsLoaded(arg_33_0)
+function var_0_0._onEnchantEffectsLoaded(arg_33_0, arg_33_1)
 	for iter_33_0, iter_33_1 in pairs(var_0_1) do
 		if not arg_33_0._enchantsEffect[iter_33_0] then
-			local var_33_0 = arg_33_0._loader:getAssetItem(iter_33_1)
+			local var_33_0 = arg_33_1:getAssetItem(iter_33_1)
 
 			if var_33_0 then
 				local var_33_1 = var_33_0:GetResource()

@@ -157,7 +157,7 @@ end
 function var_0_0._canShowEffect(arg_14_0)
 	local var_14_0 = ViewMgr.instance:getOpenViewNameList()
 
-	if var_14_0[#var_14_0] == ViewName.DungeonView and DungeonModel.instance:getDungeonStoryState() or var_14_0[#var_14_0] == ViewName.FightView and FightModel.instance:getClickEnemyState() then
+	if var_14_0[#var_14_0] == ViewName.DungeonView and DungeonModel.instance:getDungeonStoryState() or var_14_0[#var_14_0] == ViewName.FightView and FightModel.instance:getClickEnemyState() or var_14_0[#var_14_0] == ViewName.StoryFrontView and StoryModel.instance:isVersionActivityPV() then
 		return false
 	end
 

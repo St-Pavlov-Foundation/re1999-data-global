@@ -132,6 +132,7 @@ function var_0_0._editableInitView(arg_12_0)
 	TaskDispatcher.runRepeat(arg_12_0._everyMinuteCall, arg_12_0, TimeUtil.OneMinuteSecond)
 	RedDotController.instance:addRedDot(arg_12_0._goTaskReddot, RedDotEnum.DotNode.V2a3DungeonTask)
 	arg_12_0:_act165RedDot()
+	gohelper.setActive(arg_12_0._btnrestaurant.gameObject, false)
 end
 
 function var_0_0._everyMinuteCall(arg_13_0)
@@ -235,7 +236,7 @@ end
 function var_0_0.refreshRestaurantBtn(arg_25_0)
 	local var_25_0 = VersionActivity2_3DungeonModel.instance:isUnlockAct165Btn()
 
-	gohelper.setActive(arg_25_0._btnrestaurant.gameObject, var_25_0)
+	gohelper.setActive(arg_25_0._btnrestaurant.gameObject, false)
 end
 
 function var_0_0.playOpenAnimaDone(arg_26_0)

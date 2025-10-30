@@ -102,6 +102,7 @@ function var_0_0.ctor(arg_1_0)
 	arg_1_0._rouge5 = arg_1_0:newSpriteSetUnit("ui/spriteassets/rouge5.asset")
 	arg_1_0._fairyland = arg_1_0:newSpriteSetUnit("ui/spriteassets/fairyland_spriteset.asset")
 	arg_1_0._bgmswitch = arg_1_0:newSpriteSetUnit("ui/spriteassets/bgmtoggle.asset")
+	arg_1_0._commandstation = arg_1_0:newSpriteSetUnit("ui/spriteassets/sp_commandstation.asset")
 	arg_1_0._v2a0_main_activity = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a0_mainactivity_spriteset.asset")
 	arg_1_0._v2a0_dungeon_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a0_dungeon.asset")
 	arg_1_0._v2a0_paint_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a0_paint_spriteset.asset")
@@ -143,6 +144,7 @@ function var_0_0.ctor(arg_1_0)
 	arg_1_0._v2a6_xugouji = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a6_xugouji_spriteset.asset")
 	arg_1_0._v2a6_main_activity = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a6_mainactivity_spriteset.asset")
 	arg_1_0._v2a8_main_activity = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a8_mainactivity_spriteset.asset")
+	arg_1_0._v3a0_main_activity = arg_1_0:newSpriteSetUnit("ui/spriteassets/v3a0_mainactivity_spriteset.asset")
 	arg_1_0._v2a7_main_activity = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a7_mainactivity_spriteset.asset")
 	arg_1_0._v2a7_dungeon_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a7_dungeon.asset")
 	arg_1_0._v2a7_coopergarland_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a7_coopergarland_spriteset.asset")
@@ -577,286 +579,302 @@ function var_0_0.setBgmSwitchToggleSprite(arg_101_0, arg_101_1, arg_101_2, arg_1
 	arg_101_0._bgmswitch:setSprite(arg_101_1, arg_101_2, arg_101_3)
 end
 
-function var_0_0.setV2a0MainActivitySprite(arg_102_0, arg_102_1, arg_102_2, arg_102_3)
-	arg_102_0._v2a0_main_activity:setSprite(arg_102_1, arg_102_2, arg_102_3)
+function var_0_0.setCommandStationSprite(arg_102_0, arg_102_1, arg_102_2, arg_102_3)
+	arg_102_0._commandstation:setSprite(arg_102_1, arg_102_2, arg_102_3)
 end
 
-function var_0_0.setV2a0DungeonSprite(arg_103_0, arg_103_1, arg_103_2, arg_103_3)
-	arg_103_0._v2a0_dungeon_sprite:setSprite(arg_103_1, arg_103_2, arg_103_3)
+function var_0_0.setV2a0MainActivitySprite(arg_103_0, arg_103_1, arg_103_2, arg_103_3)
+	arg_103_0._v2a0_main_activity:setSprite(arg_103_1, arg_103_2, arg_103_3)
 end
 
-function var_0_0.setV2a0PaintSprite(arg_104_0, arg_104_1, arg_104_2, arg_104_3)
-	arg_104_0._v2a0_paint_sprite:setSprite(arg_104_1, arg_104_2, arg_104_3)
+function var_0_0.setV2a0DungeonSprite(arg_104_0, arg_104_1, arg_104_2, arg_104_3)
+	arg_104_0._v2a0_dungeon_sprite:setSprite(arg_104_1, arg_104_2, arg_104_3)
 end
 
-function var_0_0.setPlayerInfoSprite(arg_105_0, arg_105_1, arg_105_2, arg_105_3)
-	arg_105_0._playerinfo:setSprite(arg_105_1, arg_105_2, arg_105_3)
+function var_0_0.setV2a0PaintSprite(arg_105_0, arg_105_1, arg_105_2, arg_105_3)
+	arg_105_0._v2a0_paint_sprite:setSprite(arg_105_1, arg_105_2, arg_105_3)
 end
 
-function var_0_0.setOptionalGiftSprite(arg_106_0, arg_106_1, arg_106_2, arg_106_3)
-	arg_106_0._optionalgift:setSprite(arg_106_1, arg_106_2, arg_106_3)
+function var_0_0.setPlayerInfoSprite(arg_106_0, arg_106_1, arg_106_2, arg_106_3)
+	arg_106_0._playerinfo:setSprite(arg_106_1, arg_106_2, arg_106_3)
 end
 
-function var_0_0.setV2a2MainActivitySprite(arg_107_0, arg_107_1, arg_107_2, arg_107_3)
-	arg_107_0._v2a2_main_activity:setSprite(arg_107_1, arg_107_2, arg_107_3)
+function var_0_0.setOptionalGiftSprite(arg_107_0, arg_107_1, arg_107_2, arg_107_3)
+	arg_107_0._optionalgift:setSprite(arg_107_1, arg_107_2, arg_107_3)
 end
 
-function var_0_0.setV2a1AergusiSprite(arg_108_0, arg_108_1, arg_108_2, arg_108_3)
-	arg_108_0._v2a1_aergusi:setSprite(arg_108_1, arg_108_2, arg_108_3)
+function var_0_0.setV2a2MainActivitySprite(arg_108_0, arg_108_1, arg_108_2, arg_108_3)
+	arg_108_0._v2a2_main_activity:setSprite(arg_108_1, arg_108_2, arg_108_3)
 end
 
-function var_0_0.setV2a1Act165Sprite(arg_109_0, arg_109_1, arg_109_2, arg_109_3)
-	arg_109_0._v2a1_act165:setSprite(arg_109_1, arg_109_2, arg_109_3)
+function var_0_0.setV2a1AergusiSprite(arg_109_0, arg_109_1, arg_109_2, arg_109_3)
+	arg_109_0._v2a1_aergusi:setSprite(arg_109_1, arg_109_2, arg_109_3)
 end
 
-function var_0_0.setV2a1Act165_2Sprite(arg_110_0, arg_110_1, arg_110_2, arg_110_3)
-	arg_110_0._v2a1_act165_2:setSprite(arg_110_1, arg_110_2, arg_110_3)
+function var_0_0.setV2a1Act165Sprite(arg_110_0, arg_110_1, arg_110_2, arg_110_3)
+	arg_110_0._v2a1_act165:setSprite(arg_110_1, arg_110_2, arg_110_3)
 end
 
-function var_0_0.setV2a1MainActivitySprite(arg_111_0, arg_111_1, arg_111_2, arg_111_3)
-	arg_111_0._v2a1_main_activity:setSprite(arg_111_1, arg_111_2, arg_111_3)
+function var_0_0.setV2a1Act165_2Sprite(arg_111_0, arg_111_1, arg_111_2, arg_111_3)
+	arg_111_0._v2a1_act165_2:setSprite(arg_111_1, arg_111_2, arg_111_3)
 end
 
-function var_0_0.setV2a1DungeonSprite(arg_112_0, arg_112_1, arg_112_2, arg_112_3)
-	arg_112_0._v2a1_dungeon_sprite:setSprite(arg_112_1, arg_112_2, arg_112_3)
+function var_0_0.setV2a1MainActivitySprite(arg_112_0, arg_112_1, arg_112_2, arg_112_3)
+	arg_112_0._v2a1_main_activity:setSprite(arg_112_1, arg_112_2, arg_112_3)
 end
 
-function var_0_0.setV2a2EliminateSprite(arg_113_0, arg_113_1, arg_113_2, arg_113_3)
-	arg_113_0._v2a2_eliminate:setSprite(arg_113_1, arg_113_2, arg_113_3)
+function var_0_0.setV2a1DungeonSprite(arg_113_0, arg_113_1, arg_113_2, arg_113_3)
+	arg_113_0._v2a1_dungeon_sprite:setSprite(arg_113_1, arg_113_2, arg_113_3)
 end
 
-function var_0_0.setV2a1WarmupSprite(arg_114_0, arg_114_1, arg_114_2, arg_114_3)
-	arg_114_0._v2a1_warmup:setSprite(arg_114_1, arg_114_2, arg_114_3)
+function var_0_0.setV2a2EliminateSprite(arg_114_0, arg_114_1, arg_114_2, arg_114_3)
+	arg_114_0._v2a2_eliminate:setSprite(arg_114_1, arg_114_2, arg_114_3)
 end
 
-function var_0_0.setAntiqueSprite(arg_115_0, arg_115_1, arg_115_2, arg_115_3)
-	arg_115_0._antique:setSprite(arg_115_1, arg_115_2, arg_115_3)
+function var_0_0.setV2a1WarmupSprite(arg_115_0, arg_115_1, arg_115_2, arg_115_3)
+	arg_115_0._v2a1_warmup:setSprite(arg_115_1, arg_115_2, arg_115_3)
 end
 
-function var_0_0.setV2a2ChessSprite(arg_116_0, arg_116_1, arg_116_2, arg_116_3)
-	arg_116_0._v2a2_chess:setSprite(arg_116_1, arg_116_2, arg_116_3)
+function var_0_0.setAntiqueSprite(arg_116_0, arg_116_1, arg_116_2, arg_116_3)
+	arg_116_0._antique:setSprite(arg_116_1, arg_116_2, arg_116_3)
 end
 
-function var_0_0.setV2a2eliminatePointSprite(arg_117_0, arg_117_1, arg_117_2, arg_117_3)
-	arg_117_0._v2a2_eliminate_point:setSprite(arg_117_1, arg_117_2, arg_117_3)
+function var_0_0.setV2a2ChessSprite(arg_117_0, arg_117_1, arg_117_2, arg_117_3)
+	arg_117_0._v2a2_chess:setSprite(arg_117_1, arg_117_2, arg_117_3)
 end
 
-function var_0_0.setSeason166Sprite(arg_118_0, arg_118_1, arg_118_2, arg_118_3)
-	arg_118_0._season166:setSprite(arg_118_1, arg_118_2, arg_118_3)
+function var_0_0.setV2a2eliminatePointSprite(arg_118_0, arg_118_1, arg_118_2, arg_118_3)
+	arg_118_0._v2a2_eliminate_point:setSprite(arg_118_1, arg_118_2, arg_118_3)
 end
 
-function var_0_0.setSeason166InfoSprite(arg_119_0, arg_119_1, arg_119_2, arg_119_3)
-	arg_119_0._season166_info:setSprite(arg_119_1, arg_119_2, arg_119_3)
+function var_0_0.setSeason166Sprite(arg_119_0, arg_119_1, arg_119_2, arg_119_3)
+	arg_119_0._season166:setSprite(arg_119_1, arg_119_2, arg_119_3)
 end
 
-function var_0_0.setLoperaItemSprite(arg_120_0, arg_120_1, arg_120_2, arg_120_3)
-	arg_120_0._v2a2_lopera:setSprite(arg_120_1, arg_120_2, arg_120_3)
+function var_0_0.setSeason166InfoSprite(arg_120_0, arg_120_1, arg_120_2, arg_120_3)
+	arg_120_0._season166_info:setSprite(arg_120_1, arg_120_2, arg_120_3)
 end
 
-function var_0_0.setV2a3MainActivitySprite(arg_121_0, arg_121_1, arg_121_2, arg_121_3)
-	arg_121_0._v2a3_main_activity:setSprite(arg_121_1, arg_121_2, arg_121_3)
+function var_0_0.setLoperaItemSprite(arg_121_0, arg_121_1, arg_121_2, arg_121_3)
+	arg_121_0._v2a2_lopera:setSprite(arg_121_1, arg_121_2, arg_121_3)
 end
 
-function var_0_0.setV2a3DungeonSprite(arg_122_0, arg_122_1, arg_122_2, arg_122_3)
-	arg_122_0._v2a3_dungeon_sprite:setSprite(arg_122_1, arg_122_2, arg_122_3)
+function var_0_0.setV2a3MainActivitySprite(arg_122_0, arg_122_1, arg_122_2, arg_122_3)
+	arg_122_0._v2a3_main_activity:setSprite(arg_122_1, arg_122_2, arg_122_3)
 end
 
-function var_0_0.setMusicSprite(arg_123_0, arg_123_1, arg_123_2, arg_123_3)
-	arg_123_0._v2a4_bakaluoer_spriteset:setSprite(arg_123_1, arg_123_2, arg_123_3)
+function var_0_0.setV2a3DungeonSprite(arg_123_0, arg_123_1, arg_123_2, arg_123_3)
+	arg_123_0._v2a3_dungeon_sprite:setSprite(arg_123_1, arg_123_2, arg_123_3)
 end
 
-function var_0_0.setTowerSprite(arg_124_0, arg_124_1, arg_124_2, arg_124_3)
-	arg_124_0._tower:setSprite(arg_124_1, arg_124_2, arg_124_3)
+function var_0_0.setMusicSprite(arg_124_0, arg_124_1, arg_124_2, arg_124_3)
+	arg_124_0._v2a4_bakaluoer_spriteset:setSprite(arg_124_1, arg_124_2, arg_124_3)
 end
 
-function var_0_0.setTowerPermanentSprite(arg_125_0, arg_125_1, arg_125_2, arg_125_3)
-	arg_125_0._tower_permanent:setSprite(arg_125_1, arg_125_2, arg_125_3)
+function var_0_0.setTowerSprite(arg_125_0, arg_125_1, arg_125_2, arg_125_3)
+	arg_125_0._tower:setSprite(arg_125_1, arg_125_2, arg_125_3)
 end
 
-function var_0_0.setAct174Sprite(arg_126_0, arg_126_1, arg_126_2, arg_126_3)
-	arg_126_0._act174:setSprite(arg_126_1, arg_126_2, arg_126_3)
+function var_0_0.setTowerPermanentSprite(arg_126_0, arg_126_1, arg_126_2, arg_126_3)
+	arg_126_0._tower_permanent:setSprite(arg_126_1, arg_126_2, arg_126_3)
 end
 
-function var_0_0.setAct178Sprite(arg_127_0, arg_127_1, arg_127_2, arg_127_3, arg_127_4)
-	arg_127_0._act178:setSprite(arg_127_1, arg_127_2, arg_127_3, arg_127_4)
+function var_0_0.setAct174Sprite(arg_127_0, arg_127_1, arg_127_2, arg_127_3)
+	arg_127_0._act174:setSprite(arg_127_1, arg_127_2, arg_127_3)
 end
 
-function var_0_0.setV2a3ZhiXinQuanErSprite(arg_128_0, arg_128_1, arg_128_2, arg_128_3)
-	arg_128_0._v2a3_zhixinquaner:setSprite(arg_128_1, arg_128_2, arg_128_3)
+function var_0_0.setAct178Sprite(arg_128_0, arg_128_1, arg_128_2, arg_128_3, arg_128_4)
+	arg_128_0._act178:setSprite(arg_128_1, arg_128_2, arg_128_3, arg_128_4)
 end
 
-function var_0_0.setV2a4DungeonSprite(arg_129_0, arg_129_1, arg_129_2, arg_129_3)
-	arg_129_0._v2a4_dungeon_sprite:setSprite(arg_129_1, arg_129_2, arg_129_3)
+function var_0_0.setV2a3ZhiXinQuanErSprite(arg_129_0, arg_129_1, arg_129_2, arg_129_3)
+	arg_129_0._v2a3_zhixinquaner:setSprite(arg_129_1, arg_129_2, arg_129_3)
 end
 
-function var_0_0.setV2a4MainActivitySprite(arg_130_0, arg_130_1, arg_130_2, arg_130_3)
-	arg_130_0._v2a4_main_activity:setSprite(arg_130_1, arg_130_2, arg_130_3)
+function var_0_0.setV2a4DungeonSprite(arg_130_0, arg_130_1, arg_130_2, arg_130_3)
+	arg_130_0._v2a4_dungeon_sprite:setSprite(arg_130_1, arg_130_2, arg_130_3)
 end
 
-function var_0_0.setV2a4WuErLiXiSprite(arg_131_0, arg_131_1, arg_131_2, arg_131_3)
-	arg_131_0._v2a4_wuerlixi_sprite:setSprite(arg_131_1, arg_131_2, arg_131_3)
+function var_0_0.setV2a4MainActivitySprite(arg_131_0, arg_131_1, arg_131_2, arg_131_3)
+	arg_131_0._v2a4_main_activity:setSprite(arg_131_1, arg_131_2, arg_131_3)
 end
 
-function var_0_0.setPlayerCardSprite(arg_132_0, arg_132_1, arg_132_2, arg_132_3)
-	arg_132_0._playercard:setSprite(arg_132_1, arg_132_2, arg_132_3)
+function var_0_0.setV2a4WuErLiXiSprite(arg_132_0, arg_132_1, arg_132_2, arg_132_3)
+	arg_132_0._v2a4_wuerlixi_sprite:setSprite(arg_132_1, arg_132_2, arg_132_3)
 end
 
-function var_0_0.setV2a5MainActivitySprite(arg_133_0, arg_133_1, arg_133_2, arg_133_3)
-	arg_133_0._v2a5_main_activity:setSprite(arg_133_1, arg_133_2, arg_133_3)
+function var_0_0.setPlayerCardSprite(arg_133_0, arg_133_1, arg_133_2, arg_133_3)
+	arg_133_0._playercard:setSprite(arg_133_1, arg_133_2, arg_133_3)
 end
 
-function var_0_0.setV2a5DungeonSprite(arg_134_0, arg_134_1, arg_134_2, arg_134_3)
-	arg_134_0._v2a5_dungeon_sprite:setSprite(arg_134_1, arg_134_2, arg_134_3)
+function var_0_0.setV2a5MainActivitySprite(arg_134_0, arg_134_1, arg_134_2, arg_134_3)
+	arg_134_0._v2a5_main_activity:setSprite(arg_134_1, arg_134_2, arg_134_3)
 end
 
-function var_0_0.setAutoChessSprite(arg_135_0, arg_135_1, arg_135_2, arg_135_3)
-	arg_135_0._v2a5_autochess_sprite:setSprite(arg_135_1, arg_135_2, arg_135_3)
+function var_0_0.setV2a5DungeonSprite(arg_135_0, arg_135_1, arg_135_2, arg_135_3)
+	arg_135_0._v2a5_dungeon_sprite:setSprite(arg_135_1, arg_135_2, arg_135_3)
 end
 
-function var_0_0.setChallengeSprite(arg_136_0, arg_136_1, arg_136_2, arg_136_3)
-	arg_136_0._v2a5_challenge_sprite:setSprite(arg_136_1, arg_136_2, arg_136_3)
+function var_0_0.setAutoChessSprite(arg_136_0, arg_136_1, arg_136_2, arg_136_3)
+	arg_136_0._v2a5_autochess_sprite:setSprite(arg_136_1, arg_136_2, arg_136_3)
 end
 
-function var_0_0.setV2a5LiangYueSprite(arg_137_0, arg_137_1, arg_137_2, arg_137_3)
-	arg_137_0._v2a5_liangyue_sprite:setSprite(arg_137_1, arg_137_2, arg_137_3)
+function var_0_0.setChallengeSprite(arg_137_0, arg_137_1, arg_137_2, arg_137_3)
+	arg_137_0._v2a5_challenge_sprite:setSprite(arg_137_1, arg_137_2, arg_137_3)
 end
 
-function var_0_0.setV2a6MainActivitySprite(arg_138_0, arg_138_1, arg_138_2, arg_138_3)
-	arg_138_0._v2a6_main_activity:setSprite(arg_138_1, arg_138_2, arg_138_3)
+function var_0_0.setV2a5LiangYueSprite(arg_138_0, arg_138_1, arg_138_2, arg_138_3)
+	arg_138_0._v2a5_liangyue_sprite:setSprite(arg_138_1, arg_138_2, arg_138_3)
 end
 
-function var_0_0.setV2a8MainActivitySprite(arg_139_0, arg_139_1, arg_139_2, arg_139_3)
-	arg_139_0._v2a8_main_activity:setSprite(arg_139_1, arg_139_2, arg_139_3)
+function var_0_0.setV2a6MainActivitySprite(arg_139_0, arg_139_1, arg_139_2, arg_139_3)
+	arg_139_0._v2a6_main_activity:setSprite(arg_139_1, arg_139_2, arg_139_3)
 end
 
-function var_0_0.setV2a7MainActivitySprite(arg_140_0, arg_140_1, arg_140_2, arg_140_3)
-	arg_140_0._v2a7_main_activity:setSprite(arg_140_1, arg_140_2, arg_140_3)
+function var_0_0.setV2a8MainActivitySprite(arg_140_0, arg_140_1, arg_140_2, arg_140_3)
+	arg_140_0._v2a8_main_activity:setSprite(arg_140_1, arg_140_2, arg_140_3)
 end
 
-function var_0_0.setV2a7DungeonSprite(arg_141_0, arg_141_1, arg_141_2, arg_141_3)
-	arg_141_0._v2a7_dungeon_sprite:setSprite(arg_141_1, arg_141_2, arg_141_3)
+function var_0_0.setV3a0MainActivitySprite(arg_141_0, arg_141_1, arg_141_2, arg_141_3)
+	arg_141_0._v3a0_main_activity:setSprite(arg_141_1, arg_141_2, arg_141_3)
 end
 
-function var_0_0.setV2a7CooperGarlandSprite(arg_142_0, arg_142_1, arg_142_2, arg_142_3)
-	arg_142_0._v2a7_coopergarland_sprite:setSprite(arg_142_1, arg_142_2, arg_142_3)
+function var_0_0.setV2a7MainActivitySprite(arg_142_0, arg_142_1, arg_142_2, arg_142_3)
+	arg_142_0._v2a7_main_activity:setSprite(arg_142_1, arg_142_2, arg_142_3)
 end
 
-function var_0_0.setSocialSkinSprite(arg_143_0, arg_143_1, arg_143_2, arg_143_3)
-	arg_143_0._socialskin:setSprite(arg_143_1, arg_143_2, arg_143_3)
+function var_0_0.setV2a7DungeonSprite(arg_143_0, arg_143_1, arg_143_2, arg_143_3)
+	arg_143_0._v2a7_dungeon_sprite:setSprite(arg_143_1, arg_143_2, arg_143_3)
 end
 
-function var_0_0.setDiceHeroSprite(arg_144_0, arg_144_1, arg_144_2, arg_144_3)
-	arg_144_0._v2a6dicehero:setSprite(arg_144_1, arg_144_2, arg_144_3)
+function var_0_0.setV2a7CooperGarlandSprite(arg_144_0, arg_144_1, arg_144_2, arg_144_3)
+	arg_144_0._v2a7_coopergarland_sprite:setSprite(arg_144_1, arg_144_2, arg_144_3)
 end
 
-function var_0_0.setXugoujiSprite(arg_145_0, arg_145_1, arg_145_2, arg_145_3)
-	arg_145_0._v2a6_xugouji:setSprite(arg_145_1, arg_145_2, arg_145_3)
+function var_0_0.setSocialSkinSprite(arg_145_0, arg_145_1, arg_145_2, arg_145_3)
+	arg_145_0._socialskin:setSprite(arg_145_1, arg_145_2, arg_145_3)
 end
 
-function var_0_0.setHisSaBethSprite(arg_146_0, arg_146_1, arg_146_2, arg_146_3)
-	arg_146_0._v2a7_hissabeth_sprite:setSprite(arg_146_1, arg_146_2, arg_146_3)
+function var_0_0.setDiceHeroSprite(arg_146_0, arg_146_1, arg_146_2, arg_146_3)
+	arg_146_0._v2a6dicehero:setSprite(arg_146_1, arg_146_2, arg_146_3)
 end
 
-function var_0_0.setSurvivalSprite(arg_147_0, arg_147_1, arg_147_2, arg_147_3)
-	arg_147_0._survival:setSprite(arg_147_1, arg_147_2, arg_147_3)
+function var_0_0.setXugoujiSprite(arg_147_0, arg_147_1, arg_147_2, arg_147_3)
+	arg_147_0._v2a6_xugouji:setSprite(arg_147_1, arg_147_2, arg_147_3)
 end
 
-function var_0_0.setMoLiDeErSprite(arg_148_0, arg_148_1, arg_148_2, arg_148_3)
-	arg_148_0._v2a8_molideer_sprite:setSprite(arg_148_1, arg_148_2, arg_148_3)
+function var_0_0.setHisSaBethSprite(arg_148_0, arg_148_1, arg_148_2, arg_148_3)
+	arg_148_0._v2a7_hissabeth_sprite:setSprite(arg_148_1, arg_148_2, arg_148_3)
 end
 
-function var_0_0.setSkinHandbook(arg_149_0, arg_149_1, arg_149_2, arg_149_3)
-	arg_149_0._skinhandbook_sprite:setSprite(arg_149_1, arg_149_2, arg_149_3)
+function var_0_0.setSurvivalSprite(arg_149_0, arg_149_1, arg_149_2, arg_149_3)
+	arg_149_0._survival:setSprite(arg_149_1, arg_149_2, arg_149_3)
 end
 
-function var_0_0.setV2a9MainActivitySprite(arg_150_0, arg_150_1, arg_150_2, arg_150_3)
-	arg_150_0._v2a9_main_activity:setSprite(arg_150_1, arg_150_2, arg_150_3)
+function var_0_0.setMoLiDeErSprite(arg_150_0, arg_150_1, arg_150_2, arg_150_3)
+	arg_150_0._v2a8_molideer_sprite:setSprite(arg_150_1, arg_150_2, arg_150_3)
 end
 
-function var_0_0.setV2a9DungeonSprite(arg_151_0, arg_151_1, arg_151_2, arg_151_3)
-	arg_151_0._v2a9_dungeon_sprite:setSprite(arg_151_1, arg_151_2, arg_151_3)
+function var_0_0.setSkinHandbook(arg_151_0, arg_151_1, arg_151_2, arg_151_3)
+	arg_151_0._skinhandbook_sprite:setSprite(arg_151_1, arg_151_2, arg_151_3)
 end
 
-function var_0_0.setSp01OdysseyDungeonSprite(arg_152_0, arg_152_1, arg_152_2, arg_152_3)
-	arg_152_0._sp01_odysseydungeon:setSprite(arg_152_1, arg_152_2, arg_152_3)
+function var_0_0.setMaliAnNaSprite(arg_152_0, arg_152_1, arg_152_2, arg_152_3)
+	arg_152_0._v3a0_malianna:setSprite(arg_152_1, arg_152_2, arg_152_3)
 end
 
-function var_0_0.setSp01OdysseyDungeonElementSprite(arg_153_0, arg_153_1, arg_153_2, arg_153_3)
-	arg_153_0._sp01_odysseydungeonelement:setSprite(arg_153_1, arg_153_2, arg_153_3)
+function var_0_0.setV3a0KaRongSprite(arg_153_0, arg_153_1, arg_153_2, arg_153_3)
+	arg_153_0._v3a0_karong:setSprite(arg_153_1, arg_153_2, arg_153_3)
 end
 
-function var_0_0.setSp01OdysseyTalentSprite(arg_154_0, arg_154_1, arg_154_2, arg_154_3)
-	arg_154_0._sp01_odysseytalent:setSprite(arg_154_1, arg_154_2, arg_154_3)
+function var_0_0.setV2a9MainActivitySprite(arg_154_0, arg_154_1, arg_154_2, arg_154_3)
+	arg_154_0._v2a9_main_activity:setSprite(arg_154_1, arg_154_2, arg_154_3)
 end
 
-function var_0_0.setSp01AssassinSprite(arg_155_0, arg_155_1, arg_155_2, arg_155_3)
-	arg_155_0._sp01_assassin:setSprite(arg_155_1, arg_155_2, arg_155_3)
+function var_0_0.setV2a9DungeonSprite(arg_155_0, arg_155_1, arg_155_2, arg_155_3)
+	arg_155_0._v2a9_dungeon_sprite:setSprite(arg_155_1, arg_155_2, arg_155_3)
 end
 
-function var_0_0.setSp01TalentIconSprite(arg_156_0, arg_156_1, arg_156_2, arg_156_3)
-	arg_156_0._sp01_talenticon:setSprite(arg_156_1, arg_156_2, arg_156_3)
+function var_0_0.setSp01OdysseyDungeonSprite(arg_156_0, arg_156_1, arg_156_2, arg_156_3)
+	arg_156_0._sp01_odysseydungeon:setSprite(arg_156_1, arg_156_2, arg_156_3)
 end
 
-function var_0_0.setSp01Act205Sprite(arg_157_0, arg_157_1, arg_157_2, arg_157_3)
-	arg_157_0._sp01_act205:setSprite(arg_157_1, arg_157_2, arg_157_3)
+function var_0_0.setSp01OdysseyDungeonElementSprite(arg_157_0, arg_157_1, arg_157_2, arg_157_3)
+	arg_157_0._sp01_odysseydungeonelement:setSprite(arg_157_1, arg_157_2, arg_157_3)
 end
 
-function var_0_0.setSurvivalSprite(arg_158_0, arg_158_1, arg_158_2, arg_158_3)
-	arg_158_0._survival:setSprite(arg_158_1, arg_158_2, arg_158_3)
+function var_0_0.setSp01OdysseyTalentSprite(arg_158_0, arg_158_1, arg_158_2, arg_158_3)
+	arg_158_0._sp01_odysseytalent:setSprite(arg_158_1, arg_158_2, arg_158_3)
 end
 
-function var_0_0.setSurvivalSprite2(arg_159_0, arg_159_1, arg_159_2, arg_159_3)
-	arg_159_0._survival2:setSprite(arg_159_1, arg_159_2, arg_159_3)
+function var_0_0.setSp01AssassinSprite(arg_159_0, arg_159_1, arg_159_2, arg_159_3)
+	arg_159_0._sp01_assassin:setSprite(arg_159_1, arg_159_2, arg_159_3)
 end
 
-function var_0_0.setMoLiDeErSprite(arg_160_0, arg_160_1, arg_160_2, arg_160_3)
-	arg_160_0._v2a8_molideer_sprite:setSprite(arg_160_1, arg_160_2, arg_160_3)
+function var_0_0.setSp01TalentIconSprite(arg_160_0, arg_160_1, arg_160_2, arg_160_3)
+	arg_160_0._sp01_talenticon:setSprite(arg_160_1, arg_160_2, arg_160_3)
 end
 
-function var_0_0.setSkinHandbook(arg_161_0, arg_161_1, arg_161_2, arg_161_3)
-	arg_161_0._skinhandbook_sprite:setSprite(arg_161_1, arg_161_2, arg_161_3)
+function var_0_0.setSp01Act205Sprite(arg_161_0, arg_161_1, arg_161_2, arg_161_3)
+	arg_161_0._sp01_act205:setSprite(arg_161_1, arg_161_2, arg_161_3)
 end
 
-function var_0_0.setMaliAnNaSprite(arg_162_0, arg_162_1, arg_162_2, arg_162_3)
-	arg_162_0._v3a0_malianna:setSprite(arg_162_1, arg_162_2, arg_162_3)
+function var_0_0.setSurvivalSprite(arg_162_0, arg_162_1, arg_162_2, arg_162_3)
+	arg_162_0._survival:setSprite(arg_162_1, arg_162_2, arg_162_3)
 end
 
-function var_0_0.setV3a0KaRongSprite(arg_163_0, arg_163_1, arg_163_2, arg_163_3)
-	arg_163_0._v3a0_karong:setSprite(arg_163_1, arg_163_2, arg_163_3)
+function var_0_0.setSurvivalSprite2(arg_163_0, arg_163_1, arg_163_2, arg_163_3)
+	arg_163_0._survival2:setSprite(arg_163_1, arg_163_2, arg_163_3)
 end
 
-function var_0_0.setV3a1MainActivitySprite(arg_164_0, arg_164_1, arg_164_2, arg_164_3)
-	arg_164_0._v3a1_main_activity:setSprite(arg_164_1, arg_164_2, arg_164_3)
+function var_0_0.setMoLiDeErSprite(arg_164_0, arg_164_1, arg_164_2, arg_164_3)
+	arg_164_0._v2a8_molideer_sprite:setSprite(arg_164_1, arg_164_2, arg_164_3)
 end
 
-function var_0_0.setV3a1DungeonSprite(arg_165_0, arg_165_1, arg_165_2, arg_165_3)
-	arg_165_0._v3a1_dungeon_sprite:setSprite(arg_165_1, arg_165_2, arg_165_3)
+function var_0_0.setSkinHandbook(arg_165_0, arg_165_1, arg_165_2, arg_165_3)
+	arg_165_0._skinhandbook_sprite:setSprite(arg_165_1, arg_165_2, arg_165_3)
 end
 
-function var_0_0.setRoleStorySprite(arg_166_0, arg_166_1, arg_166_2, arg_166_3)
-	arg_166_0._rolestory_sprite:setSprite(arg_166_1, arg_166_2, arg_166_3)
+function var_0_0.setMaliAnNaSprite(arg_166_0, arg_166_1, arg_166_2, arg_166_3)
+	arg_166_0._v3a0_malianna:setSprite(arg_166_1, arg_166_2, arg_166_3)
 end
 
-function var_0_0.setFightTowerSprite(arg_167_0, arg_167_1, arg_167_2, arg_167_3)
-	arg_167_0._fight_tower_sprite:setSprite(arg_167_1, arg_167_2, arg_167_3)
+function var_0_0.setV3a0KaRongSprite(arg_167_0, arg_167_1, arg_167_2, arg_167_3)
+	arg_167_0._v3a0_karong:setSprite(arg_167_1, arg_167_2, arg_167_3)
 end
 
-function var_0_0.setV3a1GaoSiNiaoSprite(arg_168_0, arg_168_1, arg_168_2, arg_168_3)
-	arg_168_0._v3a1_gaosiniao_spriteset:setSprite(arg_168_1, arg_168_2, arg_168_3)
+function var_0_0.setV3a1MainActivitySprite(arg_168_0, arg_168_1, arg_168_2, arg_168_3)
+	arg_168_0._v3a1_main_activity:setSprite(arg_168_1, arg_168_2, arg_168_3)
 end
 
-function var_0_0.setNationalGiftSprite(arg_169_0, arg_169_1, arg_169_2, arg_169_3)
-	arg_169_0._nationalgift:setSprite(arg_169_1, arg_169_2, arg_169_3)
+function var_0_0.setV3a1DungeonSprite(arg_169_0, arg_169_1, arg_169_2, arg_169_3)
+	arg_169_0._v3a1_dungeon_sprite:setSprite(arg_169_1, arg_169_2, arg_169_3)
 end
 
-function var_0_0.tryDispose(arg_170_0)
-	for iter_170_0, iter_170_1 in ipairs(arg_170_0._spriteSetList) do
-		iter_170_1:tryDispose()
+function var_0_0.setRoleStorySprite(arg_170_0, arg_170_1, arg_170_2, arg_170_3)
+	arg_170_0._rolestory_sprite:setSprite(arg_170_1, arg_170_2, arg_170_3)
+end
+
+function var_0_0.setFightTowerSprite(arg_171_0, arg_171_1, arg_171_2, arg_171_3)
+	arg_171_0._fight_tower_sprite:setSprite(arg_171_1, arg_171_2, arg_171_3)
+end
+
+function var_0_0.setV3a1GaoSiNiaoSprite(arg_172_0, arg_172_1, arg_172_2, arg_172_3)
+	arg_172_0._v3a1_gaosiniao_spriteset:setSprite(arg_172_1, arg_172_2, arg_172_3)
+end
+
+function var_0_0.setNationalGiftSprite(arg_173_0, arg_173_1, arg_173_2, arg_173_3)
+	arg_173_0._nationalgift:setSprite(arg_173_1, arg_173_2, arg_173_3)
+end
+
+function var_0_0.tryDispose(arg_174_0)
+	for iter_174_0, iter_174_1 in ipairs(arg_174_0._spriteSetList) do
+		iter_174_1:tryDispose()
 	end
 end
 
-function var_0_0.setActivityPuzzle(arg_171_0, arg_171_1, arg_171_2, arg_171_3)
-	arg_171_0._activitypuzzle:setSprite(arg_171_1, arg_171_2, arg_171_3)
+function var_0_0.setActivityPuzzle(arg_175_0, arg_175_1, arg_175_2, arg_175_3)
+	arg_175_0._activitypuzzle:setSprite(arg_175_1, arg_175_2, arg_175_3)
 end
 
 var_0_0.instance = var_0_0.New()

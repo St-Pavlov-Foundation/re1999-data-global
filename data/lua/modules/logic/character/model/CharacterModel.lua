@@ -1380,6 +1380,13 @@ function var_0_0.getSpecialEffectDesc(arg_75_0, arg_75_1, arg_75_2)
 	return var_75_1
 end
 
+local var_0_1 = {
+	Card = 1,
+	New = 0,
+	All = 3,
+	Spine = 2
+}
+
 function var_0_0.isNeedShowNewSkillReddot(arg_76_0, arg_76_1)
 	if not arg_76_1 or not arg_76_1:isOwnHero() then
 		return
@@ -1393,9 +1400,10 @@ function var_0_0.isNeedShowNewSkillReddot(arg_76_0, arg_76_1)
 		if tonumber(var_76_1[1]) == 1 then
 			local var_76_2 = var_76_1[2] and tonumber(var_76_1[2]) or 3
 			local var_76_3 = arg_76_1.rank > var_76_2 - 1
-			local var_76_4 = PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.NuoDiKaNewSkill, arg_76_1.heroId, 0) == 0
+			local var_76_4 = arg_76_0:_getNuodikaReddotValue(arg_76_1.heroId)
+			local var_76_5 = var_76_4 ~= var_0_1.Card and var_76_4 ~= var_0_1.All
 
-			return var_76_3, var_76_4, var_76_0
+			return var_76_3, var_76_5, var_76_0
 		end
 	end
 end
@@ -1407,45 +1415,79 @@ function var_0_0.isCanPlayReplaceSkillAnim(arg_77_0, arg_77_1)
 
 	if var_77_0 then
 		local var_77_3 = var_0_0.AnimKey_ReplaceSkillPlay .. arg_77_1.heroId
+		local var_77_4 = arg_77_0:_getNuodikaReddotValue(arg_77_1.heroId)
 
-		return GameUtil.playerPrefsGetNumberByUserId(var_77_3, 0) == 0, var_77_1, var_77_2
+		return not (var_77_4 == var_0_1.Spine or var_77_4 == var_0_1.All) and GameUtil.playerPrefsGetNumberByUserId(var_77_3, 0) == 0, var_77_1, var_77_2
 	end
 end
 
-function var_0_0.setPlayReplaceSkillAnim(arg_78_0, arg_78_1)
+function var_0_0.cencelPlayReplaceSkillAnim(arg_78_0, arg_78_1)
 	GameUtil.playerPrefsSetNumberByUserId(var_0_0.AnimKey_ReplaceSkillPlay .. arg_78_1.heroId, 1)
+
+	local var_78_0 = arg_78_0:_getNuodikaReddotValue(arg_78_1.heroId)
+
+	if var_78_0 == var_0_1.New then
+		arg_78_0:setPropKeyValueNuodikaReddot(arg_78_1.heroId, var_0_1.Spine)
+	elseif var_78_0 == var_0_1.Card then
+		arg_78_0:setPropKeyValueNuodikaReddot(arg_78_1.heroId, var_0_1.All)
+	end
 end
 
-function var_0_0.getReplaceSkillRank(arg_79_0, arg_79_1)
-	if not arg_79_1 then
+function var_0_0.cencelCardReddot(arg_79_0, arg_79_1)
+	local var_79_0 = arg_79_0:_getNuodikaReddotValue(arg_79_1)
+
+	if var_79_0 == var_0_1.New then
+		arg_79_0:setPropKeyValueNuodikaReddot(arg_79_1, var_0_1.Card)
+	elseif var_79_0 == var_0_1.Spine then
+		arg_79_0:setPropKeyValueNuodikaReddot(arg_79_1, var_0_1.All)
+	end
+end
+
+function var_0_0._getNuodikaReddotValue(arg_80_0, arg_80_1)
+	return PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.NuoDiKaNewSkill, arg_80_1, var_0_1.New)
+end
+
+function var_0_0.setPropKeyValueNuodikaReddot(arg_81_0, arg_81_1, arg_81_2)
+	local var_81_0 = PlayerEnum.SimpleProperty.NuoDiKaNewSkill
+
+	PlayerModel.instance:setPropKeyValue(var_81_0, arg_81_1, arg_81_2)
+
+	local var_81_1 = PlayerModel.instance:getPropKeyValueString(var_81_0)
+
+	PlayerRpc.instance:sendSetSimplePropertyRequest(var_81_0, var_81_1)
+	GameUtil.playerPrefsSetNumberByUserId(var_0_0.AnimKey_ReplaceSkillPlay .. arg_81_1, arg_81_2)
+end
+
+function var_0_0.getReplaceSkillRank(arg_82_0, arg_82_1)
+	if not arg_82_1 then
 		return 0
 	end
 
-	return arg_79_0:getReplaceSkillRankBySkinId(arg_79_1.skin)
+	return arg_82_0:getReplaceSkillRankBySkinId(arg_82_1.skin)
 end
 
-function var_0_0.getReplaceSkillRankBySkinId(arg_80_0, arg_80_1)
-	if not arg_80_1 then
+function var_0_0.getReplaceSkillRankBySkinId(arg_83_0, arg_83_1)
+	if not arg_83_1 then
 		return 0
 	end
 
-	local var_80_0 = arg_80_1
+	local var_83_0 = arg_83_1
 
-	if not arg_80_0._heroReplaceSkillRankDict then
-		arg_80_0._heroReplaceSkillRankDict = {}
+	if not arg_83_0._heroReplaceSkillRankDict then
+		arg_83_0._heroReplaceSkillRankDict = {}
 	end
 
-	if not arg_80_0._heroReplaceSkillRankDict[var_80_0] then
-		local var_80_1 = lua_character_limited.configDict[var_80_0]
+	if not arg_83_0._heroReplaceSkillRankDict[var_83_0] then
+		local var_83_1 = lua_character_limited.configDict[var_83_0]
 
-		if var_80_1 then
-			local var_80_2 = string.split(var_80_1.specialInsightDesc, "#")
+		if var_83_1 then
+			local var_83_2 = string.split(var_83_1.specialInsightDesc, "#")
 
-			arg_80_0._heroReplaceSkillRankDict[var_80_0] = tonumber(var_80_2[1])
+			arg_83_0._heroReplaceSkillRankDict[var_83_0] = tonumber(var_83_2[1])
 		end
 	end
 
-	return arg_80_0._heroReplaceSkillRankDict[var_80_0] or 1
+	return arg_83_0._heroReplaceSkillRankDict[var_83_0] or 1
 end
 
 var_0_0.instance = var_0_0.New()

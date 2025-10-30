@@ -3,9 +3,10 @@
 local var_0_0 = class("GMSummonView", BaseView)
 
 var_0_0._Type2Name = {
-	AllSummon = 3,
+	AllSummon = 4,
 	DiffRarity = 1,
-	UpSummon = 2
+	DiffRarityCount = 2,
+	UpSummon = 3
 }
 
 function var_0_0.onInitView(arg_1_0)
@@ -53,24 +54,30 @@ function var_0_0._createParagraphUI(arg_6_0, arg_6_1, arg_6_2)
 		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
 			arg_6_0:createParaItem(arg_6_2.go).text = iter_6_1.star .. "星：" .. iter_6_1.per * 100 .. "% (" .. iter_6_1.num .. "/" .. arg_6_0._totalCount .. ")"
 		end
+	elseif arg_6_1 == var_0_0._Type2Name.DiffRarityCount then
+		local var_6_1 = GMSummonModel.instance:getDiffRaritySummonShowInfo()
+
+		for iter_6_2, iter_6_3 in ipairs(var_6_1) do
+			arg_6_0:createParaItem(arg_6_2.go).text = iter_6_3.star .. "星：" .. iter_6_3.num
+		end
 	elseif arg_6_1 == var_0_0._Type2Name.UpSummon then
-		local var_6_1, var_6_2 = GMSummonModel.instance:getUpHeroInfo()
+		local var_6_2, var_6_3 = GMSummonModel.instance:getUpHeroInfo()
 
 		arg_6_0:createParaItem(arg_6_2.go).text = "UP角色"
 
-		arg_6_0:createUPParaItem(arg_6_2.go, var_6_1)
+		arg_6_0:createUPParaItem(arg_6_2.go, var_6_2)
 
 		arg_6_0:createParaItem(arg_6_2.go).text = "\n非UP角色"
 
-		arg_6_0:createUPParaItem(arg_6_2.go, var_6_2)
+		arg_6_0:createUPParaItem(arg_6_2.go, var_6_3)
 	elseif arg_6_1 == var_0_0._Type2Name.AllSummon then
-		local var_6_3 = GMSummonModel.instance:getAllSummonHeroInfo()
+		local var_6_4 = GMSummonModel.instance:getAllSummonHeroInfo()
 
-		for iter_6_2, iter_6_3 in ipairs(var_6_3) do
-			local var_6_4 = arg_6_0:createParaItem(arg_6_2.go)
-			local var_6_5 = GMSummonModel.instance:getTargetName(iter_6_3.id)
+		for iter_6_4, iter_6_5 in ipairs(var_6_4) do
+			local var_6_5 = arg_6_0:createParaItem(arg_6_2.go)
+			local var_6_6 = GMSummonModel.instance:getTargetName(iter_6_5.id)
 
-			var_6_4.text = "(" .. iter_6_3.star .. "星)" .. var_6_5 .. "：" .. iter_6_3.per * 100 .. "% (" .. iter_6_3.num .. "/" .. arg_6_0._totalCount .. ")"
+			var_6_5.text = "(" .. iter_6_5.star .. "星)" .. var_6_6 .. "：" .. iter_6_5.per * 100 .. "% (" .. iter_6_5.num .. "/" .. arg_6_0._totalCount .. ")"
 		end
 	end
 end

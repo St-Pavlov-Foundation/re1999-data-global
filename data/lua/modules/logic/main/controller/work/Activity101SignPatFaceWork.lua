@@ -74,6 +74,20 @@ function var_0_0._refreshNorSignActivity(arg_8_0)
 		actId = var_8_0
 	}
 
+	if string.nilorempty(var_8_1) then
+		logError(string.format("Error: excel:P拍脸表.xlsx - sheet:export_拍脸 id: %s, patFaceActivityId: %s\n没配 'patFaceViewName' !!", arg_8_0._patFaceId, var_8_0))
+		arg_8_0:patComplete()
+
+		return
+	end
+
+	if not _G.ViewName[var_8_1] then
+		logError(string.format("Error: excel:P拍脸表.xlsx - sheet:export_拍脸 id: %s, patFaceActivityId: %s, patFaceViewName: %s\nerror: modules_views.%s 不存在", arg_8_0._patFaceId, var_8_0, var_8_1, var_8_1))
+		arg_8_0:patComplete()
+
+		return
+	end
+
 	ViewMgr.instance:openView(var_8_1, var_8_2)
 end
 

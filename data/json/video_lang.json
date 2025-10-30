@@ -571,5 +571,23 @@
       "jp",
       "kr"
     ]
+  },
+  {
+    "name": "3_0_pv",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
+  },
+  {
+    "name": "3_0_huigu",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
   }
 ]

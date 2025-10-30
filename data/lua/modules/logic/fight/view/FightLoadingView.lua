@@ -118,7 +118,7 @@ function var_0_0._getFitTips(arg_14_0)
 	local var_14_1 = PlayerModel.instance:getPlayerLevel()
 	local var_14_2 = {}
 
-	for iter_14_0, iter_14_1 in pairs(lua_loading_text.configList) do
+	for iter_14_0, iter_14_1 in pairs(SceneConfig.instance:getLoadingTexts()) do
 		local var_14_3 = FightStrUtil.instance:getSplitToNumberCache(iter_14_1.scenes, "#")
 
 		for iter_14_2, iter_14_3 in pairs(var_14_3) do

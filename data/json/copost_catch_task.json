@@ -1,0 +1,50 @@
+[
+  {
+    "id": 620001,
+    "finishNum": 0,
+    "isOnline": 0,
+    "taskType": 0,
+    "listenerType": "CurrencyDec",
+    "listenerParam": "4",
+    "maxProgress": 1200,
+    "desc": "language_10089797",
+    "bonus": "1#300000#1",
+    "jumpId": 0
+  },
+  {
+    "id": 620002,
+    "finishNum": 0,
+    "isOnline": 0,
+    "taskType": 0,
+    "listenerType": "CurrencyDec",
+    "listenerParam": "4",
+    "maxProgress": 1600,
+    "desc": "language_10089798",
+    "bonus": "1#300000#1",
+    "jumpId": 0
+  },
+  {
+    "id": 620003,
+    "finishNum": 0,
+    "isOnline": 0,
+    "taskType": 0,
+    "listenerType": "CurrencyDec",
+    "listenerParam": "4",
+    "maxProgress": 2000,
+    "desc": "language_10089799",
+    "bonus": "1#300000#1",
+    "jumpId": 0
+  },
+  {
+    "id": 620004,
+    "finishNum": 0,
+    "isOnline": 0,
+    "taskType": 0,
+    "listenerType": "CurrencyDec",
+    "listenerParam": "4",
+    "maxProgress": 2400,
+    "desc": "language_10089800",
+    "bonus": "1#300000#1",
+    "jumpId": 0
+  }
+]

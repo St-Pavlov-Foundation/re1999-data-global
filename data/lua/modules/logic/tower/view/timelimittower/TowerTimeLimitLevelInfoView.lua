@@ -70,7 +70,11 @@ function var_0_0._btndetailOnClick(arg_4_0)
 end
 
 function var_0_0._btnadditionRuleclickOnClick(arg_5_0)
-	gohelper.setActive(arg_5_0._goruleWindow, true)
+	if arg_5_0._ruleDataList and #arg_5_0._ruleDataList > 0 then
+		ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
+			ruleList = arg_5_0._ruleDataList
+		})
+	end
 end
 
 function var_0_0._btnswitchleftOnClick(arg_6_0)
@@ -236,6 +240,8 @@ function var_0_0.refreshAdditionRule(arg_20_0)
 	local var_20_1 = var_20_0 and var_20_0.additionRule or ""
 	local var_20_2 = FightStrUtil.instance:getSplitString2Cache(var_20_1, true, "|", "#")
 
+	arg_20_0._ruleDataList = var_20_2
+
 	if not var_20_2 or #var_20_2 == 0 then
 		gohelper.setActive(arg_20_0._goadditionRule, false)
 
@@ -244,7 +250,6 @@ function var_0_0.refreshAdditionRule(arg_20_0)
 
 	gohelper.setActive(arg_20_0._goadditionRule, true)
 	gohelper.CreateObjList(arg_20_0, arg_20_0.ruleItemShow, var_20_2, arg_20_0._gorules, arg_20_0._goruletemp)
-	gohelper.CreateObjList(arg_20_0, arg_20_0.ruleDescWindowShow, var_20_2, arg_20_0._goruleDescList, arg_20_0._goruleItem)
 end
 
 function var_0_0.ruleItemShow(arg_21_0, arg_21_1, arg_21_2, arg_21_3)

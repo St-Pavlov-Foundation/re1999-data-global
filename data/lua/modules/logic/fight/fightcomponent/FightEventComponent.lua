@@ -34,42 +34,14 @@ function var_0_0.cancelEvent(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
 	end
 end
 
-function var_0_0.lockEvent(arg_4_0)
-	if arg_4_0.LOCK then
-		return
-	end
-
-	arg_4_0.LOCK = true
-
+function var_0_0.onDestructor(arg_4_0)
 	for iter_4_0 = #arg_4_0._eventItems, 1, -1 do
 		local var_4_0 = arg_4_0._eventItems[iter_4_0]
 
 		var_4_0[1]:unregisterCallback(var_4_0[2], var_4_0[3], var_4_0[4])
 	end
-end
 
-function var_0_0.unlockEvent(arg_5_0)
-	if not arg_5_0.LOCK then
-		return
-	end
-
-	arg_5_0.LOCK = nil
-
-	for iter_5_0 = 1, #arg_5_0._eventItems do
-		local var_5_0 = arg_5_0._eventItems[iter_5_0]
-
-		var_5_0[1]:registerCallback(var_5_0[2], var_5_0[3], var_5_0[4], var_5_0[5])
-	end
-end
-
-function var_0_0.onDestructor(arg_6_0)
-	for iter_6_0 = #arg_6_0._eventItems, 1, -1 do
-		local var_6_0 = arg_6_0._eventItems[iter_6_0]
-
-		var_6_0[1]:unregisterCallback(var_6_0[2], var_6_0[3], var_6_0[4])
-	end
-
-	arg_6_0._eventItems = nil
+	arg_4_0._eventItems = nil
 end
 
 return var_0_0

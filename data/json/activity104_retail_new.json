@@ -1,0 +1,37 @@
+[
+  {
+    "activityId": 13000,
+    "retailEpisodeId": 3002101,
+    "desc": "language_10087436",
+    "level": 120,
+    "equipRareWeight": "2#10|3#12|4#8"
+  },
+  {
+    "activityId": 13000,
+    "retailEpisodeId": 3002102,
+    "desc": "language_10087437",
+    "level": 120,
+    "equipRareWeight": "2#10|3#12|4#8"
+  },
+  {
+    "activityId": 13000,
+    "retailEpisodeId": 3002103,
+    "desc": "language_10087438",
+    "level": 120,
+    "equipRareWeight": "2#10|3#12|4#8"
+  },
+  {
+    "activityId": 13000,
+    "retailEpisodeId": 3002104,
+    "desc": "language_10025494",
+    "level": 120,
+    "equipRareWeight": "2#10|3#12|4#8"
+  },
+  {
+    "activityId": 13000,
+    "retailEpisodeId": 3002105,
+    "desc": "language_10087439",
+    "level": 120,
+    "equipRareWeight": "2#10|3#12|4#8"
+  }
+]

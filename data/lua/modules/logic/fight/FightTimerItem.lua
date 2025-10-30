@@ -1,6 +1,8 @@
 ﻿module("modules.logic.fight.FightTimerItem", package.seeall)
 
 local var_0_0 = class("FightTimerItem")
+local var_0_1 = xpcall
+local var_0_2 = __G__TRACKBACK__
 
 function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
 	arg_1_0.time = arg_1_1
@@ -34,7 +36,7 @@ function var_0_0.update(arg_3_0, arg_3_1)
 			arg_3_0.repeatCount = arg_3_0.repeatCount - 1
 		end
 
-		xpcall(arg_3_0.callback, __G__TRACKBACK__, arg_3_0.handle, arg_3_0.param)
+		var_0_1(arg_3_0.callback, var_0_2, arg_3_0.handle, arg_3_0.param)
 
 		if arg_3_0.repeatCount == 0 then
 			arg_3_0.isDone = true

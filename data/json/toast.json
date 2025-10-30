@@ -4169,7 +4169,7 @@
   },
   {
     "id": 10407,
-    "tips": "language_10020180",
+    "tips": "language_10089197",
     "icon": 11,
     "audioId": 1,
     "notMerge": 0,
@@ -9386,6 +9386,46 @@
   {
     "id": 289001,
     "tips": "language_10083103",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 300001,
+    "tips": "language_10089198",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 300002,
+    "tips": "language_10089199",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 300003,
+    "tips": "language_10089200",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 300004,
+    "tips": "language_10089201",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 300005,
+    "tips": "language_10089202",
     "icon": 11,
     "audioId": 1,
     "notMerge": 0,

@@ -1,0 +1,490 @@
+[
+  {
+    "id": 100,
+    "fightId": 11101,
+    "eventId": [
+      10000,
+      40000
+    ],
+    "chaEventId": [
+      1000,
+      1047
+    ],
+    "coordinatesId": [],
+    "allTextId": 60000
+  },
+  {
+    "id": 101,
+    "fightId": 1102,
+    "eventId": [
+      10001,
+      40003
+    ],
+    "chaEventId": [
+      1003,
+      1011,
+      1021,
+      1052
+    ],
+    "coordinatesId": [
+      25,
+      44
+    ],
+    "allTextId": 60002
+  },
+  {
+    "id": 102,
+    "fightId": 11103,
+    "eventId": [
+      10002,
+      20000
+    ],
+    "chaEventId": [
+      1001,
+      1012,
+      1027,
+      1045
+    ],
+    "coordinatesId": [],
+    "allTextId": 60003
+  },
+  {
+    "id": 103,
+    "fightId": 1104,
+    "eventId": [
+      10003,
+      40004
+    ],
+    "chaEventId": [
+      1022,
+      1048,
+      1053
+    ],
+    "coordinatesId": [
+      26
+    ],
+    "allTextId": 60004
+  },
+  {
+    "id": 104,
+    "fightId": 1105,
+    "eventId": [
+      10004,
+      40007
+    ],
+    "chaEventId": [
+      1004,
+      1018,
+      1059
+    ],
+    "coordinatesId": [
+      5,
+      19,
+      28
+    ],
+    "allTextId": 60006
+  },
+  {
+    "id": 105,
+    "fightId": 11106,
+    "eventId": [
+      10005,
+      40008,
+      20001
+    ],
+    "chaEventId": [
+      1023,
+      1028,
+      1035
+    ],
+    "coordinatesId": [
+      39
+    ],
+    "allTextId": 60007
+  },
+  {
+    "id": 106,
+    "fightId": 11107,
+    "eventId": [
+      10006,
+      40009,
+      30002
+    ],
+    "chaEventId": [
+      1013,
+      1019
+    ],
+    "coordinatesId": [
+      45
+    ],
+    "allTextId": 60008
+  },
+  {
+    "id": 107,
+    "fightId": 11108,
+    "eventId": [
+      10007,
+      40010,
+      20002
+    ],
+    "chaEventId": [
+      1016,
+      1029,
+      1049
+    ],
+    "coordinatesId": [],
+    "allTextId": 60009
+  },
+  {
+    "id": 108,
+    "fightId": 1109,
+    "eventId": [
+      10008,
+      40011
+    ],
+    "chaEventId": [
+      1005,
+      1030,
+      1036,
+      1054
+    ],
+    "coordinatesId": [
+      7,
+      16
+    ],
+    "allTextId": 60010
+  },
+  {
+    "id": 109,
+    "fightId": 11110,
+    "eventId": [
+      10009,
+      40012,
+      30003
+    ],
+    "chaEventId": [
+      1024,
+      1055
+    ],
+    "coordinatesId": [
+      29,
+      37
+    ],
+    "allTextId": 60011
+  },
+  {
+    "id": 110,
+    "fightId": 1111,
+    "eventId": [
+      10010,
+      40013,
+      20003
+    ],
+    "chaEventId": [
+      1025
+    ],
+    "coordinatesId": [],
+    "allTextId": 60012
+  },
+  {
+    "id": 111,
+    "fightId": 11112,
+    "eventId": [
+      10011,
+      40014,
+      20004
+    ],
+    "chaEventId": [
+      1006,
+      1050
+    ],
+    "coordinatesId": [
+      1
+    ],
+    "allTextId": 60013
+  },
+  {
+    "id": 112,
+    "fightId": 11113,
+    "eventId": [
+      10012,
+      40015,
+      30004
+    ],
+    "chaEventId": [
+      1042,
+      1051
+    ],
+    "coordinatesId": [
+      30,
+      38
+    ],
+    "allTextId": 60014
+  },
+  {
+    "id": 113,
+    "fightId": 11114,
+    "eventId": [
+      10013,
+      40018
+    ],
+    "chaEventId": [
+      1037,
+      1043,
+      1061
+    ],
+    "coordinatesId": [
+      14,
+      21,
+      46
+    ],
+    "allTextId": 60016
+  },
+  {
+    "id": 114,
+    "fightId": 11115,
+    "eventId": [
+      10014,
+      20006,
+      40019
+    ],
+    "chaEventId": [
+      1017,
+      1020
+    ],
+    "coordinatesId": [],
+    "allTextId": 60017
+  },
+  {
+    "id": 115,
+    "fightId": 11116,
+    "eventId": [
+      10015,
+      40020,
+      30005
+    ],
+    "chaEventId": [
+      1007
+    ],
+    "coordinatesId": [],
+    "allTextId": 60018
+  },
+  {
+    "id": 116,
+    "fightId": 11117,
+    "eventId": [
+      10016,
+      40021
+    ],
+    "chaEventId": [
+      1026
+    ],
+    "coordinatesId": [
+      6,
+      32
+    ],
+    "allTextId": 60019
+  },
+  {
+    "id": 117,
+    "fightId": 1118,
+    "eventId": [
+      10017,
+      40022,
+      20007
+    ],
+    "chaEventId": [
+      1031,
+      1038,
+      1057
+    ],
+    "coordinatesId": [
+      8,
+      40
+    ],
+    "allTextId": 60020
+  },
+  {
+    "id": 118,
+    "fightId": 1119,
+    "eventId": [
+      10018,
+      40023
+    ],
+    "chaEventId": [
+      1032,
+      1062
+    ],
+    "coordinatesId": [
+      9,
+      22
+    ],
+    "allTextId": 60021
+  },
+  {
+    "id": 119,
+    "fightId": 1120,
+    "eventId": [
+      10019,
+      40024,
+      20008
+    ],
+    "chaEventId": [
+      1008,
+      1014,
+      1039
+    ],
+    "coordinatesId": [
+      33
+    ],
+    "allTextId": 60022
+  },
+  {
+    "id": 120,
+    "fightId": 1121,
+    "eventId": [
+      10020,
+      40025
+    ],
+    "chaEventId": [
+      1033,
+      1040,
+      1058,
+      1063
+    ],
+    "coordinatesId": [
+      12,
+      18,
+      34,
+      43
+    ],
+    "allTextId": 60023
+  },
+  {
+    "id": 121,
+    "fightId": 1122,
+    "eventId": [
+      10021,
+      40026
+    ],
+    "chaEventId": [
+      1009,
+      1034,
+      1064
+    ],
+    "coordinatesId": [
+      2,
+      10,
+      24,
+      35
+    ],
+    "allTextId": 60024
+  },
+  {
+    "id": 122,
+    "fightId": 11123,
+    "eventId": [
+      10022,
+      20009
+    ],
+    "chaEventId": [
+      1010
+    ],
+    "coordinatesId": [
+      3,
+      41
+    ],
+    "allTextId": 60025
+  },
+  {
+    "id": 123,
+    "fightId": 11124,
+    "eventId": [
+      10023
+    ],
+    "chaEventId": [
+      1002,
+      1015,
+      1041,
+      1044,
+      1046
+    ],
+    "coordinatesId": [
+      4
+    ],
+    "allTextId": 60026
+  },
+  {
+    "id": 10000,
+    "fightId": 11101,
+    "eventId": [
+      40001,
+      40002,
+      30000
+    ],
+    "chaEventId": [],
+    "coordinatesId": [
+      36
+    ],
+    "allTextId": 60001
+  },
+  {
+    "id": 10001,
+    "fightId": 1104,
+    "eventId": [
+      40005,
+      40006,
+      30001
+    ],
+    "chaEventId": [],
+    "coordinatesId": [
+      27
+    ],
+    "allTextId": 60005
+  },
+  {
+    "id": 10002,
+    "fightId": 11113,
+    "eventId": [
+      40016,
+      40017,
+      20005
+    ],
+    "chaEventId": [
+      1056,
+      1060
+    ],
+    "coordinatesId": [
+      17,
+      20,
+      31
+    ],
+    "allTextId": 60015
+  },
+  {
+    "id": 10003,
+    "fightId": 11124,
+    "eventId": [
+      40028,
+      20010,
+      30006
+    ],
+    "chaEventId": [],
+    "coordinatesId": [
+      42
+    ],
+    "allTextId": 60027
+  },
+  {
+    "id": 10004,
+    "fightId": 11124,
+    "eventId": [
+      40029,
+      20011,
+      20012
+    ],
+    "chaEventId": [],
+    "coordinatesId": [],
+    "allTextId": 60028
+  }
+]

@@ -7,7 +7,8 @@
     "nameen": "Special Offer Week",
     "icon": "06",
     "level": 120,
-    "desc": ""
+    "desc": "",
+    "openDay": 0
   },
   {
     "activityId": 11100,
@@ -17,7 +18,8 @@
     "nameen": "Special Offer Week",
     "icon": "06",
     "level": 120,
-    "desc": ""
+    "desc": "",
+    "openDay": 0
   },
   {
     "activityId": 11100,
@@ -27,7 +29,8 @@
     "nameen": "Special Offer Week",
     "icon": "06",
     "level": 120,
-    "desc": ""
+    "desc": "",
+    "openDay": 0
   },
   {
     "activityId": 11100,
@@ -37,7 +40,8 @@
     "nameen": "Special Offer Week",
     "icon": "06",
     "level": 120,
-    "desc": ""
+    "desc": "",
+    "openDay": 0
   },
   {
     "activityId": 11100,
@@ -47,7 +51,8 @@
     "nameen": "Special Offer Week",
     "icon": "06",
     "level": 120,
-    "desc": ""
+    "desc": "",
+    "openDay": 0
   },
   {
     "activityId": 11200,
@@ -57,7 +62,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 121,
-    "desc": "language_10025005"
+    "desc": "language_10025005",
+    "openDay": 0
   },
   {
     "activityId": 11200,
@@ -67,7 +73,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 130,
-    "desc": "language_10025008"
+    "desc": "language_10025008",
+    "openDay": 0
   },
   {
     "activityId": 11200,
@@ -77,7 +84,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 140,
-    "desc": "language_10025011"
+    "desc": "language_10025011",
+    "openDay": 0
   },
   {
     "activityId": 11200,
@@ -87,7 +95,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025014"
+    "desc": "language_10025014",
+    "openDay": 0
   },
   {
     "activityId": 11200,
@@ -97,7 +106,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025017"
+    "desc": "language_10025017",
+    "openDay": 0
   },
   {
     "activityId": 11300,
@@ -107,7 +117,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 121,
-    "desc": "language_10025035"
+    "desc": "language_10025035",
+    "openDay": 0
   },
   {
     "activityId": 11300,
@@ -117,7 +128,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 130,
-    "desc": "language_10025038"
+    "desc": "language_10025038",
+    "openDay": 0
   },
   {
     "activityId": 11300,
@@ -127,7 +139,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 140,
-    "desc": "language_10025041"
+    "desc": "language_10025041",
+    "openDay": 0
   },
   {
     "activityId": 11300,
@@ -137,7 +150,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025044"
+    "desc": "language_10025044",
+    "openDay": 0
   },
   {
     "activityId": 11300,
@@ -147,7 +161,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025047"
+    "desc": "language_10025047",
+    "openDay": 0
   },
   {
     "activityId": 11400,
@@ -157,7 +172,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 121,
-    "desc": "language_10025058"
+    "desc": "language_10025058",
+    "openDay": 0
   },
   {
     "activityId": 11400,
@@ -167,7 +183,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 130,
-    "desc": "language_10025061"
+    "desc": "language_10025061",
+    "openDay": 0
   },
   {
     "activityId": 11400,
@@ -177,7 +194,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 140,
-    "desc": "language_10025064"
+    "desc": "language_10025064",
+    "openDay": 0
   },
   {
     "activityId": 11400,
@@ -187,7 +205,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025067"
+    "desc": "language_10025067",
+    "openDay": 0
   },
   {
     "activityId": 11400,
@@ -197,7 +216,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025070"
+    "desc": "language_10025070",
+    "openDay": 0
   },
   {
     "activityId": 11500,
@@ -207,7 +227,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 121,
-    "desc": "language_10025088"
+    "desc": "language_10025088",
+    "openDay": 0
   },
   {
     "activityId": 11500,
@@ -217,7 +238,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 130,
-    "desc": "language_10025091"
+    "desc": "language_10025091",
+    "openDay": 0
   },
   {
     "activityId": 11500,
@@ -227,7 +249,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 140,
-    "desc": "language_10025094"
+    "desc": "language_10025094",
+    "openDay": 0
   },
   {
     "activityId": 11500,
@@ -237,7 +260,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025163"
+    "desc": "language_10025163",
+    "openDay": 0
   },
   {
     "activityId": 11500,
@@ -247,7 +271,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025100"
+    "desc": "language_10025100",
+    "openDay": 0
   },
   {
     "activityId": 11600,
@@ -257,7 +282,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 121,
-    "desc": "language_10025118"
+    "desc": "language_10025118",
+    "openDay": 0
   },
   {
     "activityId": 11600,
@@ -267,7 +293,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 130,
-    "desc": "language_10025121"
+    "desc": "language_10025121",
+    "openDay": 0
   },
   {
     "activityId": 11600,
@@ -277,7 +304,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 140,
-    "desc": "language_10025124"
+    "desc": "language_10025124",
+    "openDay": 0
   },
   {
     "activityId": 11600,
@@ -287,7 +315,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025127"
+    "desc": "language_10025127",
+    "openDay": 0
   },
   {
     "activityId": 11600,
@@ -297,7 +326,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025130"
+    "desc": "language_10025130",
+    "openDay": 0
   },
   {
     "activityId": 11600,
@@ -307,7 +337,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025131"
+    "desc": "language_10025131",
+    "openDay": 0
   },
   {
     "activityId": 11600,
@@ -317,7 +348,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025132"
+    "desc": "language_10025132",
+    "openDay": 0
   },
   {
     "activityId": 11600,
@@ -327,7 +359,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025133"
+    "desc": "language_10025133",
+    "openDay": 0
   },
   {
     "activityId": 11600,
@@ -337,7 +370,8 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025134"
+    "desc": "language_10025134",
+    "openDay": 0
   },
   {
     "activityId": 11600,
@@ -347,6 +381,117 @@
     "nameen": "Special Offer Week",
     "icon": "05",
     "level": 150,
-    "desc": "language_10025135"
+    "desc": "language_10025135",
+    "openDay": 0
+  },
+  {
+    "activityId": 13000,
+    "layer": 1,
+    "episodeId": 3001121,
+    "name": "language_10003731",
+    "nameen": "Special Offer Week",
+    "icon": "05",
+    "level": 150,
+    "desc": "language_10089832",
+    "openDay": 1
+  },
+  {
+    "activityId": 13000,
+    "layer": 2,
+    "episodeId": 3001122,
+    "name": "language_10003731",
+    "nameen": "Special Offer Week",
+    "icon": "05",
+    "level": 150,
+    "desc": "language_10089833",
+    "openDay": 1
+  },
+  {
+    "activityId": 13000,
+    "layer": 3,
+    "episodeId": 3001123,
+    "name": "language_10003731",
+    "nameen": "Special Offer Week",
+    "icon": "05",
+    "level": 150,
+    "desc": "language_10089835",
+    "openDay": 1
+  },
+  {
+    "activityId": 13000,
+    "layer": 4,
+    "episodeId": 3001124,
+    "name": "language_10003731",
+    "nameen": "Special Offer Week",
+    "icon": "05",
+    "level": 150,
+    "desc": "language_10089836",
+    "openDay": 1
+  },
+  {
+    "activityId": 13000,
+    "layer": 5,
+    "episodeId": 3001125,
+    "name": "language_10003731",
+    "nameen": "Special Offer Week",
+    "icon": "05",
+    "level": 150,
+    "desc": "language_10089839",
+    "openDay": 1
+  },
+  {
+    "activityId": 13000,
+    "layer": 6,
+    "episodeId": 3001126,
+    "name": "language_10003731",
+    "nameen": "Special Offer Week",
+    "icon": "05",
+    "level": 180,
+    "desc": "language_10089840",
+    "openDay": 8
+  },
+  {
+    "activityId": 13000,
+    "layer": 7,
+    "episodeId": 3001127,
+    "name": "language_10003731",
+    "nameen": "Special Offer Week",
+    "icon": "05",
+    "level": 180,
+    "desc": "language_10089844",
+    "openDay": 8
+  },
+  {
+    "activityId": 13000,
+    "layer": 8,
+    "episodeId": 3001128,
+    "name": "language_10003731",
+    "nameen": "Special Offer Week",
+    "icon": "05",
+    "level": 180,
+    "desc": "language_10089845",
+    "openDay": 8
+  },
+  {
+    "activityId": 13000,
+    "layer": 9,
+    "episodeId": 3001129,
+    "name": "language_10003731",
+    "nameen": "Special Offer Week",
+    "icon": "05",
+    "level": 180,
+    "desc": "language_10089849",
+    "openDay": 8
+  },
+  {
+    "activityId": 13000,
+    "layer": 10,
+    "episodeId": 3001130,
+    "name": "language_10003731",
+    "nameen": "Special Offer Week",
+    "icon": "05",
+    "level": 180,
+    "desc": "language_10089850",
+    "openDay": 8
   }
 ]

@@ -1,0 +1,56 @@
+[
+  {
+    "skillId": 1001,
+    "target": 101,
+    "name": "language_10090074",
+    "description": "language_10090075",
+    "icon": "v3a0_malianna_skillicon_1",
+    "effect": "1#15",
+    "coolDown": 10000
+  },
+  {
+    "skillId": 1002,
+    "target": 201,
+    "name": "language_10062721",
+    "description": "language_10090076",
+    "icon": "v3a0_malianna_skillicon_2",
+    "effect": "2#15",
+    "coolDown": 10000
+  },
+  {
+    "skillId": 1003,
+    "target": 201,
+    "name": "language_10090077",
+    "description": "language_10090078",
+    "icon": "v3a0_malianna_skillicon_3",
+    "effect": "3#20",
+    "coolDown": 20000
+  },
+  {
+    "skillId": 1004,
+    "target": 101,
+    "name": "language_10090079",
+    "description": "language_10090080",
+    "icon": "v3a0_malianna_skillicon_4",
+    "effect": "4#30",
+    "coolDown": 10000
+  },
+  {
+    "skillId": 1005,
+    "target": 201,
+    "name": "language_10090077",
+    "description": "language_10090078",
+    "icon": "v3a0_malianna_skillicon_3",
+    "effect": "3#20",
+    "coolDown": 10000
+  },
+  {
+    "skillId": 1006,
+    "target": 201,
+    "name": "language_10062721",
+    "description": "language_10090076",
+    "icon": "v3a0_malianna_skillicon_2",
+    "effect": "2#15",
+    "coolDown": 6000
+  }
+]

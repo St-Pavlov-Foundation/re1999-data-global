@@ -658,6 +658,27 @@
     "mdef": 140
   },
   {
+    "strengthType": 1553,
+    "hp": 3800,
+    "atk": 360,
+    "def": 140,
+    "mdef": 140
+  },
+  {
+    "strengthType": 1554,
+    "hp": 2600,
+    "atk": 380,
+    "def": 160,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1442,
+    "hp": 2600,
+    "atk": 260,
+    "def": 140,
+    "mdef": 140
+  },
+  {
     "strengthType": 1551,
     "hp": 2600,
     "atk": 380,
@@ -670,5 +691,12 @@
     "atk": 380,
     "def": 160,
     "mdef": 160
+  },
+  {
+    "strengthType": 1555,
+    "hp": 3800,
+    "atk": 360,
+    "def": 140,
+    "mdef": 140
   }
 ]

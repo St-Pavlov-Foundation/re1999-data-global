@@ -55,8 +55,21 @@ function var_0_0.getTowerPermanentSnapShot(arg_5_0)
 	return var_5_0, var_5_1
 end
 
-function var_0_0.getAct183SnapShot(arg_6_0)
-	return Act183Helper.getEpisodeSnapShotType(arg_6_0), {
+function var_0_0.getFiveHeroSnapShot(arg_6_0)
+	local var_6_0 = ModuleEnum.HeroGroupSnapshotType.FiveHero
+	local var_6_1 = {
+		1,
+		2,
+		3,
+		4,
+		5
+	}
+
+	return var_6_0, var_6_1
+end
+
+function var_0_0.getAct183SnapShot(arg_7_0)
+	return Act183Helper.getEpisodeSnapShotType(arg_7_0), {
 		1
 	}
 end
@@ -84,20 +97,24 @@ var_0_0.getSnapShotHandleFunc = {
 	[DungeonEnum.EpisodeType.Survival] = var_0_0.getSurvivalSnapShot
 }
 
-function var_0_0.getSnapShot(arg_9_0)
-	local var_9_0 = DungeonConfig.instance:getEpisodeCO(arg_9_0).type
-	local var_9_1 = var_0_0.getSnapShotHandleFunc[var_9_0]
+function var_0_0.getSnapShot(arg_10_0)
+	local var_10_0 = DungeonConfig.instance:getEpisodeCO(arg_10_0).type
+	local var_10_1 = var_0_0.getSnapShotHandleFunc[var_10_0]
 
-	if var_9_1 then
-		return var_9_1(arg_9_0)
+	if var_10_1 then
+		return var_10_1(arg_10_0)
+	end
+
+	if DungeonController.checkEpisodeFiveHero(arg_10_0) then
+		return var_0_0.getFiveHeroSnapShot(arg_10_0)
 	end
 end
 
-function var_0_0.getTowerTrialHeros(arg_10_0)
-	local var_10_0 = TowerModel.instance:getTrialHeroSeason()
-	local var_10_1 = TowerConfig.instance:getHeroTrialConfig(var_10_0)
+function var_0_0.getTowerTrialHeros(arg_11_0)
+	local var_11_0 = TowerModel.instance:getTrialHeroSeason()
+	local var_11_1 = TowerConfig.instance:getHeroTrialConfig(var_11_0)
 
-	return var_10_1 and var_10_1.heroIds
+	return var_11_1 and var_11_1.heroIds
 end
 
 var_0_0.getTrialHerosHandleFunc = {
@@ -106,57 +123,57 @@ var_0_0.getTrialHerosHandleFunc = {
 	[DungeonEnum.EpisodeType.TowerLimited] = var_0_0.getTowerTrialHeros
 }
 
-function var_0_0.getTrialHeros(arg_11_0)
-	local var_11_0 = DungeonConfig.instance:getEpisodeCO(arg_11_0)
+function var_0_0.getTrialHeros(arg_12_0)
+	local var_12_0 = DungeonConfig.instance:getEpisodeCO(arg_12_0)
 
-	if not var_11_0 then
+	if not var_12_0 then
 		return ""
 	end
 
-	local var_11_1 = var_11_0.type
-	local var_11_2 = var_0_0.getTrialHerosHandleFunc[var_11_1]
+	local var_12_1 = var_12_0.type
+	local var_12_2 = var_0_0.getTrialHerosHandleFunc[var_12_1]
 
-	if var_11_2 then
-		return var_11_2(arg_11_0)
+	if var_12_2 then
+		return var_12_2(arg_12_0)
 	else
-		local var_11_3 = HeroGroupModel.instance.battleId
+		local var_12_3 = HeroGroupModel.instance.battleId
 
-		return (var_11_3 and lua_battle.configDict[var_11_3]).trialHeros
+		return (var_12_3 and lua_battle.configDict[var_12_3]).trialHeros
 	end
 end
 
-function var_0_0.setTowerHeroListData(arg_12_0)
-	local var_12_0 = HeroGroupSnapshotModel.instance:getCurGroup()
+function var_0_0.setTowerHeroListData(arg_13_0)
+	local var_13_0 = HeroGroupSnapshotModel.instance:getCurGroup()
 
-	if var_12_0 then
-		for iter_12_0, iter_12_1 in ipairs(var_12_0.heroList) do
-			if tonumber(iter_12_1) < 0 then
-				local var_12_1 = -tonumber(iter_12_1)
-				local var_12_2 = HeroGroupTrialModel.instance:getById(iter_12_1)
+	if var_13_0 then
+		for iter_13_0, iter_13_1 in ipairs(var_13_0.heroList) do
+			if tonumber(iter_13_1) < 0 then
+				local var_13_1 = -tonumber(iter_13_1)
+				local var_13_2 = HeroGroupTrialModel.instance:getById(iter_13_1)
 
-				if var_12_2 then
-					var_12_1 = var_12_2.trialCo.id
+				if var_13_2 then
+					var_13_1 = var_13_2.trialCo.id
 				end
 
-				local var_12_3 = TowerModel.instance:getTrialHeroSeason() > 0
-				local var_12_4 = TowerConfig.instance:getHeroTrialConfig(TowerModel.instance:getTrialHeroSeason())
-				local var_12_5 = var_12_3 and string.splitToNumber(var_12_4.heroIds, "|") or {}
-				local var_12_6 = var_12_3 and tabletool.indexOf(var_12_5, var_12_1) and tonumber(var_12_1) > 0
-				local var_12_7 = var_12_6 and lua_hero_trial.configDict[var_12_1][0] or {}
-				local var_12_8 = var_12_6 and tostring(tonumber(var_12_7.id .. "." .. var_12_7.trialTemplate) - 1099511627776) or "0"
+				local var_13_3 = TowerModel.instance:getTrialHeroSeason() > 0
+				local var_13_4 = TowerConfig.instance:getHeroTrialConfig(TowerModel.instance:getTrialHeroSeason())
+				local var_13_5 = var_13_3 and string.splitToNumber(var_13_4.heroIds, "|") or {}
+				local var_13_6 = var_13_3 and tabletool.indexOf(var_13_5, var_13_1) and tonumber(var_13_1) > 0
+				local var_13_7 = var_13_6 and lua_hero_trial.configDict[var_13_1][0] or {}
+				local var_13_8 = var_13_6 and tostring(tonumber(var_13_7.id .. "." .. var_13_7.trialTemplate) - 1099511627776) or "0"
 
-				var_12_0.heroList[iter_12_0] = var_12_8
+				var_13_0.heroList[iter_13_0] = var_13_8
 
-				if var_12_6 then
-					if not var_12_0.trialDict then
-						var_12_0.trialDict = {}
+				if var_13_6 then
+					if not var_13_0.trialDict then
+						var_13_0.trialDict = {}
 					end
 
-					if not var_12_0.trialDict[iter_12_0] then
-						var_12_0.trialDict[iter_12_0] = {}
+					if not var_13_0.trialDict[iter_13_0] then
+						var_13_0.trialDict[iter_13_0] = {}
 					end
 
-					var_12_0.trialDict[iter_12_0][1] = var_12_7.id
+					var_13_0.trialDict[iter_13_0][1] = var_13_7.id
 				end
 			end
 		end
@@ -169,16 +186,16 @@ var_0_0.getHeroListDataHandlerFunc = {
 	[DungeonEnum.EpisodeType.TowerLimited] = var_0_0.setTowerHeroListData
 }
 
-function var_0_0.hanldeHeroListData(arg_13_0)
-	if not arg_13_0 then
+function var_0_0.hanldeHeroListData(arg_14_0)
+	if not arg_14_0 then
 		return
 	end
 
-	local var_13_0 = DungeonConfig.instance:getEpisodeCO(arg_13_0).type
-	local var_13_1 = var_0_0.getHeroListDataHandlerFunc[var_13_0]
+	local var_14_0 = DungeonConfig.instance:getEpisodeCO(arg_14_0).type
+	local var_14_1 = var_0_0.getHeroListDataHandlerFunc[var_14_0]
 
-	if var_13_1 then
-		return var_13_1(arg_13_0)
+	if var_14_1 then
+		return var_14_1(arg_14_0)
 	end
 end
 

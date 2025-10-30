@@ -168,5 +168,141 @@
       0.33,
       -1
     ]
+  },
+  {
+    "id": 10004,
+    "skinId": 308804,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a0_shuzhen_xueyu",
+    "closeEffect": "",
+    "closeTime": 0,
+    "closeAniName": "",
+    "closeAudio": 0,
+    "posArr": [
+      6.07,
+      0.33,
+      -1
+    ]
+  },
+  {
+    "id": 10005,
+    "skinId": 308804,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a0_shuzhen_xueyu",
+    "closeEffect": "",
+    "closeTime": 0,
+    "closeAniName": "",
+    "closeAudio": 0,
+    "posArr": [
+      6.07,
+      0.33,
+      -1
+    ]
+  },
+  {
+    "id": 100041,
+    "skinId": 308804,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a0_shuzhen_xueyu",
+    "closeEffect": "",
+    "closeTime": 0,
+    "closeAniName": "",
+    "closeAudio": 0,
+    "posArr": [
+      6.07,
+      0.33,
+      -1
+    ]
+  },
+  {
+    "id": 100051,
+    "skinId": 308804,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a0_shuzhen_xueyu",
+    "closeEffect": "",
+    "closeTime": 0,
+    "closeAniName": "",
+    "closeAudio": 0,
+    "posArr": [
+      6.07,
+      0.33,
+      -1
+    ]
+  },
+  {
+    "id": 100021,
+    "skinId": 308404,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/shuzhen_getian_rajj",
+    "closeEffect": "",
+    "closeTime": 0,
+    "closeAniName": "",
+    "closeAudio": 0,
+    "posArr": [
+      5.2,
+      0,
+      -1
+    ]
+  },
+  {
+    "id": 100022,
+    "skinId": 308404,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/shuzhen_getian_rajj",
+    "closeEffect": "",
+    "closeTime": 0,
+    "closeAniName": "",
+    "closeAudio": 0,
+    "posArr": [
+      5.2,
+      0,
+      -1
+    ]
+  },
+  {
+    "id": 100031,
+    "skinId": 308404,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/shuzhen_getian_rajj",
+    "closeEffect": "",
+    "closeTime": 0,
+    "closeAniName": "",
+    "closeAudio": 0,
+    "posArr": [
+      5.2,
+      0,
+      -1
+    ]
+  },
+  {
+    "id": 100032,
+    "skinId": 308404,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/shuzhen_getian_rajj",
+    "closeEffect": "",
+    "closeTime": 0,
+    "closeAniName": "",
+    "closeAudio": 0,
+    "posArr": [
+      5.2,
+      0,
+      -1
+    ]
   }
 ]

@@ -9,6 +9,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnstory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_story")
 	arg_1_0._btnweekWalk = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_weekWalk")
 	arg_1_0._goSkin = gohelper.findChild(arg_1_0.viewGO, "skin")
+	arg_1_0._goSkinRedDot = gohelper.findChild(arg_1_0.viewGO, "skin/#goRedDot")
 	arg_1_0._btnskin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_skin")
 
 	if arg_1_0._editableInitView then
@@ -22,6 +23,7 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnstory:AddClickListener(arg_2_0._btnstoryOnClick, arg_2_0)
 	arg_2_0._btnweekWalk:AddClickListener(arg_2_0._btnweekWalkOnClick, arg_2_0)
 	arg_2_0._btnskin:AddClickListener(arg_2_0._btnskinOnClick, arg_2_0)
+	arg_2_0:addEventCb(HandbookController.instance, HandbookEvent.MarkHandbookSkinSuitRedDot, arg_2_0.refreshRedDot, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
@@ -62,20 +64,26 @@ function var_0_0.onOpen(arg_10_0)
 	gohelper.addUIClickAudio(arg_10_0._btnstory.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
 	gohelper.addUIClickAudio(arg_10_0._btnequip.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
 	gohelper.addUIClickAudio(arg_10_0._btnskin.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
-	HandbookController.instance:markNotFirstHandbookSkin()
 
 	local var_10_0 = VersionValidator.instance:isInReviewing()
 
 	gohelper.setActive(arg_10_0._goSkin, not var_10_0)
 	gohelper.setActive(arg_10_0._btnskin.gameObject, not var_10_0)
+	arg_10_0:refreshRedDot()
 end
 
-function var_0_0.onClose(arg_11_0)
+function var_0_0.refreshRedDot(arg_11_0)
+	local var_11_0 = HandbookController.instance:hasAnyHandBookSkinGroupRedDot()
+
+	gohelper.setActive(arg_11_0._goSkinRedDot, var_11_0)
+end
+
+function var_0_0.onClose(arg_12_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_13_0)
+	arg_13_0._simagebg:UnLoadImage()
 end
 
 return var_0_0

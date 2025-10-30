@@ -185,52 +185,36 @@ function var_0_0.com_cancelEvent(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
 	arg_28_0:getComponent(FightEventComponent):cancelEvent(arg_28_1, arg_28_2, arg_28_3, arg_28_0)
 end
 
-function var_0_0.com_lockEvent(arg_29_0)
-	arg_29_0:getComponent(FightEventComponent):lockEvent()
+function var_0_0.com_sendFightEvent(arg_29_0, arg_29_1, ...)
+	FightController.instance:dispatchEvent(arg_29_1, ...)
 end
 
-function var_0_0.com_unlockEvent(arg_30_0)
-	arg_30_0:getComponent(FightEventComponent):unlockEvent()
+function var_0_0.com_sendEvent(arg_30_0, arg_30_1, arg_30_2, ...)
+	arg_30_1:dispatchEvent(arg_30_2, ...)
 end
 
-function var_0_0.com_sendFightEvent(arg_31_0, arg_31_1, ...)
-	FightController.instance:dispatchEvent(arg_31_1, ...)
+function var_0_0.com_registMsg(arg_31_0, arg_31_1, arg_31_2)
+	return arg_31_0:getComponent(FightMsgComponent):registMsg(arg_31_1, arg_31_2, arg_31_0)
 end
 
-function var_0_0.com_sendEvent(arg_32_0, arg_32_1, arg_32_2, ...)
-	arg_32_1:dispatchEvent(arg_32_2, ...)
+function var_0_0.com_removeMsg(arg_32_0, arg_32_1)
+	return arg_32_0:getComponent(FightMsgComponent):removeMsg(arg_32_1)
 end
 
-function var_0_0.com_registMsg(arg_33_0, arg_33_1, arg_33_2)
-	return arg_33_0:getComponent(FightMsgComponent):registMsg(arg_33_1, arg_33_2, arg_33_0)
+function var_0_0.com_sendMsg(arg_33_0, arg_33_1, ...)
+	return FightMsgMgr.sendMsg(arg_33_1, ...)
 end
 
-function var_0_0.com_removeMsg(arg_34_0, arg_34_1)
-	return arg_34_0:getComponent(FightMsgComponent):removeMsg(arg_34_1)
+function var_0_0.com_replyMsg(arg_34_0, arg_34_1, arg_34_2)
+	return FightMsgMgr.replyMsg(arg_34_1, arg_34_2)
 end
 
-function var_0_0.com_sendMsg(arg_35_0, arg_35_1, ...)
-	return FightMsgMgr.sendMsg(arg_35_1, ...)
+function var_0_0.com_registUpdate(arg_35_0, arg_35_1, arg_35_2)
+	return arg_35_0:getComponent(FightUpdateComponent):registUpdate(arg_35_1, arg_35_0, arg_35_2)
 end
 
-function var_0_0.com_replyMsg(arg_36_0, arg_36_1, arg_36_2)
-	return FightMsgMgr.replyMsg(arg_36_1, arg_36_2)
-end
-
-function var_0_0.com_lockMsg(arg_37_0)
-	return arg_37_0:getComponent(FightMsgComponent):lockMsg()
-end
-
-function var_0_0.com_unlockMsg(arg_38_0)
-	return arg_38_0:getComponent(FightMsgComponent):unlockMsg()
-end
-
-function var_0_0.com_registUpdate(arg_39_0, arg_39_1, arg_39_2)
-	return arg_39_0:getComponent(FightUpdateComponent):registUpdate(arg_39_1, arg_39_0, arg_39_2)
-end
-
-function var_0_0.com_cancelUpdate(arg_40_0, arg_40_1)
-	return arg_40_0:getComponent(FightUpdateComponent):cancelUpdate(arg_40_1)
+function var_0_0.com_cancelUpdate(arg_36_0, arg_36_1)
+	return arg_36_0:getComponent(FightUpdateComponent):cancelUpdate(arg_36_1)
 end
 
 return var_0_0

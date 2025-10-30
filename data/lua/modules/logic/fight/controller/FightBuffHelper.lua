@@ -67,7 +67,7 @@ function var_0_0.canPlayDormantBuffAni(arg_6_0, arg_6_1)
 	end
 
 	if var_6_4 ~= var_6_2 then
-		return true
+		return 2
 	end
 end
 

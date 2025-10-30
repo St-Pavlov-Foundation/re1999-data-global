@@ -455,6 +455,34 @@
     "patFaceOrder": 2090
   },
   {
+    "id": 30000,
+    "patFaceActivityId": 13012,
+    "patFaceViewName": "V3a0_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2001
+  },
+  {
+    "id": 30001,
+    "patFaceActivityId": 13013,
+    "patFaceViewName": "V3a0_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2002
+  },
+  {
+    "id": 30002,
+    "patFaceActivityId": 13014,
+    "patFaceViewName": "V3a0_SummerSign_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2000
+  },
+  {
+    "id": 30003,
+    "patFaceActivityId": 13005,
+    "patFaceViewName": "VersionActivity2_3NewCultivationGiftFullView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2089
+  },
+  {
     "id": 300501,
     "patFaceActivityId": 130513,
     "patFaceViewName": "V2a9_FreeMonthCard_PanelView",
@@ -504,24 +532,17 @@
     "patFaceOrder": 20906
   },
   {
-    "id": 30104,
-    "patFaceActivityId": 13110,
-    "patFaceViewName": "V3a1_AutumnSign_PanelView",
-    "patFaceStoryId": 0,
-    "patFaceOrder": 30104
-  },
-  {
-    "id": 30002,
-    "patFaceActivityId": 13014,
-    "patFaceViewName": "V3a0_SummerSign_PanelView",
-    "patFaceStoryId": 0,
-    "patFaceOrder": 2000
-  },
-  {
     "id": 20206,
     "patFaceActivityId": 12244,
     "patFaceViewName": "V2a2_SpringFestival_PanelView",
     "patFaceStoryId": 0,
     "patFaceOrder": 20299
+  },
+  {
+    "id": 30104,
+    "patFaceActivityId": 13110,
+    "patFaceViewName": "V3a1_AutumnSign_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 30104
   }
 ]

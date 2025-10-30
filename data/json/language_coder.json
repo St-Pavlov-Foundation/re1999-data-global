@@ -2477,7 +2477,7 @@
   },
   {
     "id": "season_compose_hint1",
-    "lang": "language_10029840"
+    "lang": "language_10090096"
   },
   {
     "id": "season_compose_hint2",
@@ -6652,6 +6652,54 @@
     "lang": "language_10082674"
   },
   {
+    "id": "season104_compose_filter_txt",
+    "lang": "language_10089039"
+  },
+  {
+    "id": "comma_sep",
+    "lang": "language_10055712"
+  },
+  {
+    "id": "multiple_2",
+    "lang": "language_10035525"
+  },
+  {
+    "id": "karongdrawview_remaintimes",
+    "lang": "language_10089040"
+  },
+  {
+    "id": "maliannagame_tip_player",
+    "lang": "language_10089041"
+  },
+  {
+    "id": "maliannagame_tip_enemy",
+    "lang": "language_10089042"
+  },
+  {
+    "id": "commandstation_itemname_and",
+    "lang": "language_10089043"
+  },
+  {
+    "id": "commandstation_paper_canget",
+    "lang": "language_10089044"
+  },
+  {
+    "id": "commandstation_map_character",
+    "lang": "language_10089045"
+  },
+  {
+    "id": "commandstation_map_event",
+    "lang": "language_10089046"
+  },
+  {
+    "id": "commandstation_dispatch_event_forecast_time",
+    "lang": "language_10089047"
+  },
+  {
+    "id": "roomformula_combine_and_up",
+    "lang": "language_10089048"
+  },
+  {
     "id": "assassin_quest_fight_pick_hero",
     "lang": "language_10022458"
   },
@@ -7098,6 +7146,22 @@
   {
     "id": "odyssey_lvcancel",
     "lang": "language_10029702"
+  },
+  {
+    "id": "Season3_0FightRuleView_txtEffectDesc",
+    "lang": "language_10090095"
+  },
+  {
+    "id": "skinhandbook_lock_suit",
+    "lang": "language_10090101"
+  },
+  {
+    "id": "CommandStationEnterView_showMap_txtmapname",
+    "lang": "language_10089085"
+  },
+  {
+    "id": "FightFailView_refreshConditionsContainer_txt_extratips",
+    "lang": "language_10090122"
   },
   {
     "id": "AutoChessMainView_refreshDoubleRankTip_allCnt",

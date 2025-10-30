@@ -3823,6 +3823,78 @@
     ]
   },
   {
+    "id": 11608,
+    "name": "language_10087224",
+    "nameen": "Forest, Montpaix",
+    "levels": [
+      11608
+    ]
+  },
+  {
+    "id": 304,
+    "name": "language_10087225",
+    "nameen": "\"Hell\"",
+    "levels": [
+      30401
+    ]
+  },
+  {
+    "id": 306,
+    "name": "language_10087226",
+    "nameen": "Foundation Safe Zone",
+    "levels": [
+      30601
+    ]
+  },
+  {
+    "id": 307,
+    "name": "language_10087227",
+    "nameen": "Old Battleground",
+    "levels": [
+      30701
+    ]
+  },
+  {
+    "id": 308,
+    "name": "language_10087228",
+    "nameen": "Abandoned Village",
+    "levels": [
+      30801
+    ]
+  },
+  {
+    "id": 309,
+    "name": "language_10087225",
+    "nameen": "No Man's Land",
+    "levels": [
+      30901
+    ]
+  },
+  {
+    "id": 310,
+    "name": "language_10087229",
+    "nameen": "Ruins and Renewal",
+    "levels": [
+      31001
+    ]
+  },
+  {
+    "id": 30602,
+    "name": "language_10087226",
+    "nameen": "Foundation Safe Zone",
+    "levels": [
+      30602
+    ]
+  },
+  {
+    "id": 30902,
+    "name": "language_10087225",
+    "nameen": "No Man's Land",
+    "levels": [
+      30902
+    ]
+  },
+  {
     "id": 31101,
     "name": "language_10075523",
     "nameen": "Rooftop, Florence Cathedral",

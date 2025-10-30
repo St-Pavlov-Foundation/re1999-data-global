@@ -336,7 +336,7 @@ function var_0_0._showEntrance(arg_25_0)
 				end
 			end
 
-			gohelper.findChildText(arg_25_0["_gospecialtips" .. iter_25_1.position], "tips").text = string.format(luaLang("season_retail_specialtips"), var_25_4)
+			gohelper.findChildText(arg_25_0["_gospecialtips" .. iter_25_1.position], "bg/tips").text = string.format(luaLang("season_retail_specialtips"), var_25_4)
 		end
 
 		local var_25_6 = gohelper.findChild(arg_25_0["_scrollcelebritycard" .. iter_25_1.position].gameObject, "scrollcontent_seasoncelebritycarditem")

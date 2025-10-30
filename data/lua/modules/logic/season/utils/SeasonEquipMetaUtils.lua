@@ -139,7 +139,7 @@ function var_0_0.getSkillEffectStrList(arg_3_0)
 			local var_3_6 = FightConfig.instance:getSkillEffectCO(iter_3_3)
 
 			if var_3_6 then
-				table.insert(var_3_1, var_3_6.desc)
+				table.insert(var_3_1, FightConfig.instance:getSkillEffectDesc(nil, var_3_6))
 			else
 				logError(string.format("can't find skill config ID = [%s]", iter_3_3))
 			end
@@ -257,6 +257,12 @@ end
 
 function var_0_0.isBanActivity(arg_10_0, arg_10_1)
 	return arg_10_0.activityId ~= arg_10_1
+end
+
+function var_0_0.isContainTag(arg_11_0, arg_11_1)
+	local var_11_0 = string.splitToNumber(arg_11_0.tag, "#")
+
+	return tabletool.indexOf(var_11_0, arg_11_1) ~= nil
 end
 
 return var_0_0

@@ -555,6 +555,8 @@ end
 
 function var_0_0.initProfilerCmdFileCheck(arg_37_0)
 	if arg_37_0._initProfiler then
+		logNormal("profiler is inited")
+
 		return
 	end
 
@@ -567,10 +569,13 @@ function var_0_0.initProfilerCmdFileCheck(arg_37_0)
 	arg_37_0._profilerCmdFilePath = System.IO.Path.Combine(var_37_1, var_37_2)
 
 	arg_37_0:_checkProfilerCmdFile()
+	logNormal("begin checkProfilerCmdFile")
 	TaskDispatcher.runRepeat(arg_37_0._checkProfilerCmdFile, arg_37_0, var_37_0)
 end
 
 function var_0_0._checkProfilerCmdFile(arg_38_0)
+	logNormal("Checking Profiler Cmd File")
+
 	if SLFramework.FileHelper.IsFileExists(arg_38_0._profilerCmdFilePath) then
 		local var_38_0 = SLFramework.FileHelper.ReadText(arg_38_0._profilerCmdFilePath)
 

@@ -3,7 +3,8 @@
 local var_0_0 = class("FightSkinCustomComp", LuaCompBase)
 
 var_0_0.SkinId2CustomComp = {
-	[308603] = FightSkinLuXi_308603CustomComp
+	[308603] = FightSkinLuXi_308603CustomComp,
+	[630305] = FightSkinSM_630305CustomComp
 }
 
 function var_0_0.ctor(arg_1_0, arg_1_1)

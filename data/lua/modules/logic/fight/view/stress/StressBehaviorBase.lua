@@ -8,6 +8,7 @@ function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0.instanceGo = arg_1_1
 	arg_1_0.entity = arg_1_2
 	arg_1_0.entityId = arg_1_0.entity.id
+	arg_1_0.monsterId = arg_1_0.entity:getMO().modelId
 
 	arg_1_0:initUI()
 	arg_1_0:refreshUI()

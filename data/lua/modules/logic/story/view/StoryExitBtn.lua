@@ -114,8 +114,8 @@ function var_0_0.setActive(arg_9_0, arg_9_1)
 end
 
 function var_0_0.checkBtnCanShow(arg_10_0)
-	local var_10_0 = StoryController.instance:isReplay()
-	local var_10_1 = StoryController.instance:isVersionActivityPV()
+	local var_10_0 = StoryModel.instance:isReplay()
+	local var_10_1 = StoryModel.instance:isVersionActivityPV()
 
 	return var_10_0 and not var_10_1
 end

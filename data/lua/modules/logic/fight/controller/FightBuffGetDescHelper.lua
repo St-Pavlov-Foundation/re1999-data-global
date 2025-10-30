@@ -17,22 +17,31 @@ function var_0_0.getBuffDesc(arg_1_0)
 		return var_0_0.getKSDLBuffDesc(arg_1_0, var_1_0)
 	end
 
-	if string.nilorempty(arg_1_0.actCommonParams) then
-		return var_0_0.buildDesc(var_1_0.desc)
+	if not string.nilorempty(arg_1_0.actCommonParams) then
+		local var_1_1 = string.split(arg_1_0.actCommonParams, "|")
+
+		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+			local var_1_2 = string.split(iter_1_1, "#")
+			local var_1_3 = tonumber(var_1_2[1])
+			local var_1_4 = lua_buff_act.configDict[var_1_3]
+			local var_1_5 = var_1_4 and var_0_0.getBuffFeatureHandle(var_1_4.type)
+
+			if var_1_5 then
+				local var_1_6 = var_1_5(arg_1_0, var_1_0, var_1_4, var_1_2)
+
+				return var_0_0.buildDesc(var_1_6)
+			end
+		end
 	end
 
-	local var_1_1 = string.split(arg_1_0.actCommonParams, "|")
+	for iter_1_2, iter_1_3 in ipairs(arg_1_0.actInfo) do
+		local var_1_7 = lua_buff_act.configDict[iter_1_3.actId]
+		local var_1_8 = var_1_7 and var_0_0.getBuffFeatureHandle(var_1_7.type)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		local var_1_2 = string.split(iter_1_1, "#")
-		local var_1_3 = tonumber(var_1_2[1])
-		local var_1_4 = lua_buff_act.configDict[var_1_3]
-		local var_1_5 = var_1_4 and var_0_0.getBuffFeatureHandle(var_1_4.type)
+		if var_1_8 then
+			local var_1_9 = var_1_8(arg_1_0, var_1_0, var_1_7, nil, iter_1_3)
 
-		if var_1_5 then
-			local var_1_6 = var_1_5(arg_1_0, var_1_0, var_1_4, var_1_2)
-
-			return var_0_0.buildDesc(var_1_6)
+			return var_0_0.buildDesc(var_1_9)
 		end
 	end
 
@@ -54,7 +63,8 @@ function var_0_0.getBuffFeatureHandle(arg_3_0)
 			[FightEnum.BuffFeature.FixAttrTeamEnergy] = var_0_0.getFixAttrTeamEnergyDesc,
 			[FightEnum.BuffFeature.SpecialCountContinueChannelBuff] = var_0_0.getSpecialCountCastBuffDesc,
 			[FightEnum.BuffFeature.AddAttrBySpecialCount] = var_0_0.getAddAttrBySpecialCountDesc,
-			[FightEnum.BuffFeature.SpecialCountCastChannel] = var_0_0.getSpecialCountCastChannelDesc
+			[FightEnum.BuffFeature.SpecialCountCastChannel] = var_0_0.getSpecialCountCastChannelDesc,
+			[FightEnum.BuffFeature.ConsumeBuffAddBuffContinueChannel] = var_0_0.getConsumeBuffAddBuffContinueChannelDesc
 		}
 	end
 
@@ -142,24 +152,28 @@ function var_0_0.getSpecialCountCastChannelDesc(arg_13_0, arg_13_1, arg_13_2, ar
 	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_13_1.desc, arg_13_3[2])
 end
 
-function var_0_0.getKSDLBuffDesc(arg_14_0, arg_14_1)
-	local var_14_0 = FightBuffHelper.getKSDLSpecialBuffList(arg_14_0)
+function var_0_0.getConsumeBuffAddBuffContinueChannelDesc(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_14_1.desc, arg_14_4.strParam)
+end
 
-	if #var_14_0 < 1 then
-		return var_0_0.buildDesc(arg_14_1.desc)
+function var_0_0.getKSDLBuffDesc(arg_15_0, arg_15_1)
+	local var_15_0 = FightBuffHelper.getKSDLSpecialBuffList(arg_15_0)
+
+	if #var_15_0 < 1 then
+		return var_0_0.buildDesc(arg_15_1.desc)
 	end
 
-	local var_14_1 = ""
+	local var_15_1 = ""
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		local var_14_2 = lua_skill_buff.configDict[iter_14_1.buffId]
+	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+		local var_15_2 = lua_skill_buff.configDict[iter_15_1.buffId]
 
-		if var_14_2 then
-			var_14_1 = var_14_1 .. var_0_0.buildDesc(var_14_2.desc)
+		if var_15_2 then
+			var_15_1 = var_15_1 .. var_0_0.buildDesc(var_15_2.desc)
 		end
 	end
 
-	return var_14_1
+	return var_15_1
 end
 
 return var_0_0

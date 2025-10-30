@@ -17,6 +17,7 @@ local var_0_1 = {
 	createEffect = 11,
 	loopEffectRoot = 5,
 	layer = 3,
+	hideEffectWhenPlaying = 20,
 	loopEffect = 4,
 	id = 1,
 	createAudio = 13,

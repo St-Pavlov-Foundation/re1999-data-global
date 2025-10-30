@@ -304,7 +304,7 @@ function var_0_0.refreshConditionsContainer(arg_12_0, arg_12_1)
 			local var_12_5 = var_12_2.desc
 			local var_12_6 = SkillHelper.buildDesc(var_12_5, "#FFFFFF", "#FFFFFF")
 
-			var_12_4.text = string.format("[%s] %s", luaLang("dungeon_add_rule_target_" .. var_12_0), var_12_6)
+			var_12_4.text = string.format(luaLang("FightFailView_refreshConditionsContainer_txt_extratips"), luaLang("dungeon_add_rule_target_" .. var_12_0), var_12_6)
 
 			gohelper.setActive(var_12_3, true)
 		end

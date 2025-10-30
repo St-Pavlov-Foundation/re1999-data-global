@@ -8,6 +8,7 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 	arg_1_0.createUid = arg_1_1.createUid
 	arg_1_0.electricLevel = arg_1_1.electricLevel
 	arg_1_0.electricProgress = arg_1_1.electricProgress
+	arg_1_0.maxElectricProgress = arg_1_1.maxElectricProgress
 end
 
 return var_0_0

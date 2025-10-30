@@ -1597,32 +1597,44 @@ function var_0_0.getV2a8WarmUpSingleBg(arg_370_0)
 	return string.format("singlebg/v2a8_warmup_singlebg/%s.png", arg_370_0)
 end
 
-function var_0_0.getSp01AssassinSingleBg(arg_371_0)
-	return string.format("singlebg/assassin2_singlebg/%s.png", arg_371_0)
+function var_0_0.getCommandStationPaperIcon(arg_371_0)
+	return string.format("singlebg/commandstation/paper/%s.png", arg_371_0)
 end
 
-function var_0_0.getSp01OdysseySingleBg(arg_372_0)
-	return string.format("singlebg/odyssey_singlebg/%s.png", arg_372_0)
+function var_0_0.getV3a0WarmUpSingleBg(arg_372_0)
+	return string.format("singlebg/v3a0_warmup_singlebg/%s.png", arg_372_0)
 end
 
-function var_0_0.getSp01OdysseyItemSingleBg(arg_373_0)
-	return string.format("singlebg/odyssey_singlebg/equip/%s.png", arg_373_0)
+function var_0_0.getSp01AssassinSingleBg(arg_373_0)
+	return string.format("singlebg/assassin2_singlebg/%s.png", arg_373_0)
 end
 
-function var_0_0.getV2a9VersionSummonSingleBg(arg_374_0)
-	return string.format("singlebg/v2a9_versionsummon_singlebg/%s.png", arg_374_0)
+function var_0_0.getSp01OdysseySingleBg(arg_374_0)
+	return string.format("singlebg/odyssey_singlebg/%s.png", arg_374_0)
 end
 
-function var_0_0.getV2a9VersionSummonSingleBgLang(arg_375_0)
-	return string.format("singlebg_lang/txt_v2a9_versionsummon_singlebg/%s.png", arg_375_0)
+function var_0_0.getSp01OdysseyItemSingleBg(arg_375_0)
+	return string.format("singlebg/odyssey_singlebg/equip/%s.png", arg_375_0)
 end
 
-function var_0_0.getV2a9ActSingleBg(arg_376_0)
-	return string.format("singlebg/v2a9_act_singlebg/%s.png", arg_376_0)
+function var_0_0.getV2a9VersionSummonSingleBg(arg_376_0)
+	return string.format("singlebg/v2a9_versionsummon_singlebg/%s.png", arg_376_0)
 end
 
-function var_0_0.getV2a9ActOceanSingleBg(arg_377_0)
-	return string.format("singlebg/v2a9_act_singlebg/ocean/%s.png", arg_377_0)
+function var_0_0.getV2a9VersionSummonSingleBgLang(arg_377_0)
+	return string.format("singlebg_lang/txt_v2a9_versionsummon_singlebg/%s.png", arg_377_0)
+end
+
+function var_0_0.getV2a9ActSingleBg(arg_378_0)
+	return string.format("singlebg/v2a9_act_singlebg/%s.png", arg_378_0)
+end
+
+function var_0_0.getV2a9ActOceanSingleBg(arg_379_0)
+	return string.format("singlebg/v2a9_act_singlebg/ocean/%s.png", arg_379_0)
+end
+
+function var_0_0.getV2a9WarmUpSingleBg(arg_380_0)
+	return string.format("singlebg/v2a9_warmup_singlebg/%s.png", arg_380_0)
 end
 
 return var_0_0

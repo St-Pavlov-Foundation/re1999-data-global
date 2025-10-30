@@ -7198,5 +7198,1445 @@
     "cri": 0,
     "criDmg": 1300,
     "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 1,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 2,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 3,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 4,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 5,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 6,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 7,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 8,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 9,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 10,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 11,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 12,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 13,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 14,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 15,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 16,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 17,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 18,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 19,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 20,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 21,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 22,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 23,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 24,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 25,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 26,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 27,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 28,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 29,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 30,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 31,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 32,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 33,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 34,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 35,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 36,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 37,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 38,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 39,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 40,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 41,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 42,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 43,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 44,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 45,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 46,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 47,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 48,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 49,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 50,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 51,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 52,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 53,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 54,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 55,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 56,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 57,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 58,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 59,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 60,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 61,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 62,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 63,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 64,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 65,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 66,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 67,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 68,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 69,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 70,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 71,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 72,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 73,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 74,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 75,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 76,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 77,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 78,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 79,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 80,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 81,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 82,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 83,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 84,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 85,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 86,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 87,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 88,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 89,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 90,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 91,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 92,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 93,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 94,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 95,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 96,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 97,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 98,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 99,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 100,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 101,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 102,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 103,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 104,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 105,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 106,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 107,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 108,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 109,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 110,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 111,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 112,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 113,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 114,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 115,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 116,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 117,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 118,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 119,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 120,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 121,
+    "attack": 1232,
+    "cri": 229,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 122,
+    "attack": 1237,
+    "cri": 230,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 123,
+    "attack": 1242,
+    "cri": 231,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 124,
+    "attack": 1247,
+    "cri": 232,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 125,
+    "attack": 1251,
+    "cri": 233,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 126,
+    "attack": 1256,
+    "cri": 234,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 127,
+    "attack": 1261,
+    "cri": 235,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 128,
+    "attack": 1265,
+    "cri": 236,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 129,
+    "attack": 1270,
+    "cri": 237,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 130,
+    "attack": 1275,
+    "cri": 238,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 131,
+    "attack": 1280,
+    "cri": 239,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 132,
+    "attack": 1285,
+    "cri": 240,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 133,
+    "attack": 1289,
+    "cri": 241,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 134,
+    "attack": 1294,
+    "cri": 242,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 135,
+    "attack": 1299,
+    "cri": 243,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 136,
+    "attack": 1303,
+    "cri": 244,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 137,
+    "attack": 1308,
+    "cri": 245,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 138,
+    "attack": 1312,
+    "cri": 246,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 139,
+    "attack": 1317,
+    "cri": 247,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 140,
+    "attack": 1322,
+    "cri": 248,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 141,
+    "attack": 1327,
+    "cri": 249,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 142,
+    "attack": 1332,
+    "cri": 250,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 143,
+    "attack": 1337,
+    "cri": 251,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 144,
+    "attack": 1341,
+    "cri": 252,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 145,
+    "attack": 1346,
+    "cri": 253,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 146,
+    "attack": 1350,
+    "cri": 254,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 147,
+    "attack": 1355,
+    "cri": 255,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 148,
+    "attack": 1360,
+    "cri": 256,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 149,
+    "attack": 1365,
+    "cri": 257,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 150,
+    "attack": 1370,
+    "cri": 259,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 151,
+    "attack": 1374,
+    "cri": 260,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 152,
+    "attack": 1379,
+    "cri": 261,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 153,
+    "attack": 1384,
+    "cri": 262,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 154,
+    "attack": 1388,
+    "cri": 263,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 155,
+    "attack": 1393,
+    "cri": 264,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 156,
+    "attack": 1398,
+    "cri": 265,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 157,
+    "attack": 1402,
+    "cri": 266,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 158,
+    "attack": 1407,
+    "cri": 267,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 159,
+    "attack": 1412,
+    "cri": 268,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 160,
+    "attack": 1417,
+    "cri": 269,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 161,
+    "attack": 1422,
+    "cri": 270,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 162,
+    "attack": 1426,
+    "cri": 271,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 163,
+    "attack": 1431,
+    "cri": 272,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 164,
+    "attack": 1435,
+    "cri": 273,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 165,
+    "attack": 1440,
+    "cri": 274,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 166,
+    "attack": 1445,
+    "cri": 275,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 167,
+    "attack": 1450,
+    "cri": 276,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 168,
+    "attack": 1455,
+    "cri": 277,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 169,
+    "attack": 1460,
+    "cri": 278,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 170,
+    "attack": 1464,
+    "cri": 279,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 171,
+    "attack": 1469,
+    "cri": 280,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 172,
+    "attack": 1473,
+    "cri": 281,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 173,
+    "attack": 1478,
+    "cri": 282,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 174,
+    "attack": 1483,
+    "cri": 283,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 175,
+    "attack": 1487,
+    "cri": 284,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 176,
+    "attack": 1492,
+    "cri": 285,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 177,
+    "attack": 1497,
+    "cri": 286,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 178,
+    "attack": 1502,
+    "cri": 287,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 179,
+    "attack": 1507,
+    "cri": 288,
+    "criDmg": 1300,
+    "hp": 999999
+  },
+  {
+    "bossId": 6,
+    "teamLevel": 180,
+    "attack": 1511,
+    "cri": 289,
+    "criDmg": 1300,
+    "hp": 999999
   }
 ]

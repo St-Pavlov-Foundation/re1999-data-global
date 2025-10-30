@@ -87,7 +87,8 @@ function var_0_0._btnenterOnClick(arg_6_0)
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 		[StatEnum.EventProperties.RecommendPageId] = "714",
-		[StatEnum.EventProperties.RecommendPageName] = "吼吼点唱机"
+		[StatEnum.EventProperties.RecommendPageName] = "吼吼点唱机",
+		[StatEnum.EventProperties.RecommendPageRank] = arg_6_0:getTabIndex(714)
 	})
 	BpController.instance:openBattlePassView()
 end

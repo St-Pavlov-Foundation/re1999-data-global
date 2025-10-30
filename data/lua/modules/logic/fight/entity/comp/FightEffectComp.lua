@@ -4,6 +4,7 @@ local var_0_0 = class("FightEffectComp", LuaCompBase)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
 	arg_1_0.entity = arg_1_1
+	arg_1_0.entityId = arg_1_1.id
 	arg_1_0._playingEffectDict = {}
 	arg_1_0.cache_effect = {}
 	arg_1_0._release_by_time = {}
@@ -20,6 +21,7 @@ function var_0_0.init(arg_2_0, arg_2_1)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_2_0._onSkillPlayStart, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.ChangeRound, arg_2_0._onChangeRound, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_2_0._onBuffUpdate, arg_2_0)
 	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_2_0._onSpineLoaded, arg_2_0)
 
 	arg_2_0.go = arg_2_1
@@ -469,6 +471,49 @@ function var_0_0._registSkinEffect(arg_37_0)
 
 	if var_37_1 then
 		arg_37_0:_registSpecialClass(var_37_1)
+	end
+end
+
+function var_0_0._onBuffUpdate(arg_38_0, arg_38_1, arg_38_2, arg_38_3, arg_38_4, arg_38_5, arg_38_6)
+	arg_38_0:handleCommonBuffEffect(arg_38_1, arg_38_2, arg_38_3, arg_38_4, arg_38_5, arg_38_6)
+end
+
+function var_0_0.handleCommonBuffEffect(arg_39_0, arg_39_1, arg_39_2, arg_39_3, arg_39_4, arg_39_5, arg_39_6)
+	if arg_39_1 ~= arg_39_0.entityId then
+		return
+	end
+
+	if arg_39_2 ~= FightEnum.EffectType.BUFFADD then
+		return
+	end
+
+	local var_39_0 = fight_common_buff_effect_2_skin.configDict[arg_39_3]
+
+	if not var_39_0 then
+		return
+	end
+
+	var_39_0 = var_39_0[arg_39_0.entity:getMO().originSkin] or var_39_0[0]
+
+	if not var_39_0 then
+		return
+	end
+
+	local var_39_1 = var_39_0.duration
+
+	if var_39_1 <= 0 then
+		var_39_1 = 2
+	end
+
+	local var_39_2 = arg_39_0:addHangEffect(var_39_0.effectPath, var_39_0.effectHang, nil, var_39_1 / FightModel.instance:getSpeed())
+
+	FightRenderOrderMgr.instance:onAddEffectWrap(arg_39_0.entityId, var_39_2)
+	var_39_2:setLocalPos(0, 0, 0)
+
+	local var_39_3 = var_39_0.audio
+
+	if var_39_3 ~= 0 then
+		AudioMgr.instance:trigger(var_39_3)
 	end
 end
 

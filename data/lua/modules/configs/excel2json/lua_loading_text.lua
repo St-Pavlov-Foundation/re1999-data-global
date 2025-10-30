@@ -3,8 +3,9 @@
 local var_0_0 = {}
 local var_0_1 = {
 	unlocklevel = 2,
-	titleen = 5,
+	isOnline = 8,
 	content = 6,
+	titleen = 5,
 	id = 1,
 	title = 4,
 	weight = 3,

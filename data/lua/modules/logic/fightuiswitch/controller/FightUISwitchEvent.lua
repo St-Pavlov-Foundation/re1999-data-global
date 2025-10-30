@@ -6,5 +6,6 @@ var_0_0.UseFightUIStyle = 1
 var_0_0.SelectFightUIStyle = 2
 var_0_0.SelectFightUIEffect = 3
 var_0_0.LoadFinish = 4
+var_0_0.cancelClassifyReddot = 5
 
 return var_0_0

@@ -4156,5 +4156,38 @@
     "isNoShow": 0,
     "desc": "language_10073649",
     "uiType": 1
+  },
+  {
+    "id": 930045401,
+    "name": "language_10074479",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "language_10088979",
+    "uiType": 1
+  },
+  {
+    "id": 900042101,
+    "name": "language_10088980",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "",
+    "uiType": 0
+  },
+  {
+    "id": 900042102,
+    "name": "language_10088981",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "",
+    "param": "",
+    "isNoShow": 0,
+    "desc": "",
+    "uiType": 0
   }
 ]

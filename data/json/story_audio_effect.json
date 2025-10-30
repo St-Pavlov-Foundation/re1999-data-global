@@ -7300,6 +7300,851 @@
     "bankName": "activitystorysfx_wenming2_6yishi_fuyong"
   },
   {
+    "id": 30500001,
+    "eventName": "play_activitystorysfx_lushang_hat_depress",
+    "bankName": "activitystory_lushang3_0_yishi_tannante_sfx"
+  },
+  {
+    "id": 30500002,
+    "eventName": "play_activitystorysfx_lushang_jewelcase_take",
+    "bankName": "activitystory_lushang3_0_yishi_tannante_sfx"
+  },
+  {
+    "id": 30500003,
+    "eventName": "play_activitystorysfx_lushang_jewelcase_open",
+    "bankName": "activitystory_lushang3_0_yishi_tannante_sfx"
+  },
+  {
+    "id": 30500004,
+    "eventName": "play_activitystorysfx_lushang_safe_open",
+    "bankName": "activitystory_lushang3_0_yishi_tannante_sfx"
+  },
+  {
+    "id": 30500005,
+    "eventName": "play_activitystorysfx_lushang_crate_smash",
+    "bankName": "activitystory_lushang3_0_yishi_tannante_sfx"
+  },
+  {
+    "id": 30500006,
+    "eventName": "play_activitystorysfx_lushang_bulletnest_popup",
+    "bankName": "activitystory_lushang3_0_yishi_tannante_sfx"
+  },
+  {
+    "id": 30500007,
+    "eventName": "play_activitystorysfx_lushang_bulletnest_turn",
+    "bankName": "activitystory_lushang3_0_yishi_tannante_sfx"
+  },
+  {
+    "id": 30500008,
+    "eventName": "play_activitystorysfx_lushang_glass_scratch",
+    "bankName": "activitystory_lushang3_0_yishi_tannante_sfx"
+  },
+  {
+    "id": 30500009,
+    "eventName": "play_activitystorysfx_lushang_pen_underlined",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500010,
+    "eventName": "play_activitystorysfx_lushang_boots_approach",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500011,
+    "eventName": "play_activitystorysfx_lushang_boots_leave",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500012,
+    "eventName": "play_activitystorysfx_lushang_advancing_loop",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500013,
+    "eventName": "play_activitystorysfx_lushang_mud_tripped",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500014,
+    "eventName": "play_activitystorysfx_lushang_boots_crowd",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500015,
+    "eventName": "play_activitystorysfx_lushang_fist_hit",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500016,
+    "eventName": "play_activitystorysfx_lushang_fist_hithard",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500017,
+    "eventName": "play_activitystorysfx_lushang_gun_neat",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500018,
+    "eventName": "play_activitystorysfx_lushang_chambered_neat",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500019,
+    "eventName": "play_activitystorysfx_lushang_bullet_shooting",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500020,
+    "eventName": "play_activitystorysfx_lushang_musket_trigger",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500021,
+    "eventName": "play_activitystorysfx_lushang_shooting_one",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500022,
+    "eventName": "play_activitystorysfx_lushang_shooting_many",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500023,
+    "eventName": "play_activitystorysfx_lushang_musket_drew",
+    "bankName": "activitystory_lushang3_0_malianna_sfx"
+  },
+  {
+    "id": 30500024,
+    "eventName": "play_chap11_monitors_loop",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500025,
+    "eventName": "play_chap11_screen_switch",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500026,
+    "eventName": "play_chap11_bunker_loop",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500027,
+    "eventName": "play_chap11_wurenqu_loop",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500028,
+    "eventName": "play_chap11_charge",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500029,
+    "eventName": "play_chap11_trench_truce_loop",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500030,
+    "eventName": "play_chap11_trench_warring_loop",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500031,
+    "eventName": "play_chap11_trench_walk_loop",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500032,
+    "eventName": "play_chap11_trench_stride_loop",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500033,
+    "eventName": "play_chap11_trench_crowd_loop",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500034,
+    "eventName": "play_chap11_guns_friction",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500035,
+    "eventName": "play_chap11_trench_attention",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500036,
+    "eventName": "play_chap11_trench_fell",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500037,
+    "eventName": "play_chap11_trench_mobilize",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500038,
+    "eventName": "play_chap11_person_carry",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500039,
+    "eventName": "play_chap11_corpse_down",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500040,
+    "eventName": "play_chap11_boots_off",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500041,
+    "eventName": "play_chap11_trench_disband",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500042,
+    "eventName": "play_chap11_bombing_avoid",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500043,
+    "eventName": "play_chap11_stand_barely",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500044,
+    "eventName": "play_chap11_helmet_flap",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500045,
+    "eventName": "play_chap11_smoke_trample",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500046,
+    "eventName": "play_chap11_howitzer_fire",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500047,
+    "eventName": "play_chap11_gunfire_fall",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500048,
+    "eventName": "play_chap11_gunfire_fall_left",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500049,
+    "eventName": "play_chap11_gunfire_fall_right",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500050,
+    "eventName": "play_chap11_gunfire_cover",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500051,
+    "eventName": "play_chap11_gunfire_loop",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500052,
+    "eventName": "play_chap11_barrel_turn",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500053,
+    "eventName": "play_chap11_armour_fire",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500054,
+    "eventName": "play_chap11_busy_transition",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500055,
+    "eventName": "play_chap11_corpse_grope",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500056,
+    "eventName": "play_chap11_corpse_bury",
+    "bankName": "prologuechapter_11_part01"
+  },
+  {
+    "id": 30500057,
+    "eventName": "play_chap11_convertible_sit",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500058,
+    "eventName": "play_chap11_battlefield_loop",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500059,
+    "eventName": "play_chap11_assassinate_mess",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500060,
+    "eventName": "play_chap11_collar_pull",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500061,
+    "eventName": "play_chap11_shrub_through",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500062,
+    "eventName": "play_chap11_armor_friction",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500063,
+    "eventName": "play_chap11_pistol_kill",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500064,
+    "eventName": "play_chap11_cloak_loop",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500065,
+    "eventName": "play_chap11_mask_broken",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500066,
+    "eventName": "play_chap11_shixianggui_flying",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500067,
+    "eventName": "play_chap11_shixianggui_disarm",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500068,
+    "eventName": "play_chap11_shixianggui_fossil",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500069,
+    "eventName": "play_chap11_bullet_knock",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500070,
+    "eventName": "play_chap11_communicator_quarrel",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500071,
+    "eventName": "play_chap11_bag_passed",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500072,
+    "eventName": "play_chap11_briefcase_buckle",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500073,
+    "eventName": "play_chap11_sand_throw",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500074,
+    "eventName": "play_chap11_bandaged",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500075,
+    "eventName": "play_chap11_bunker_open",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500076,
+    "eventName": "play_chap11_corpse_drag",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500077,
+    "eventName": "play_chap11_blastwave",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500078,
+    "eventName": "play_chap11_goupai_break",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500079,
+    "eventName": "play_chap11_leg_hitch",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500080,
+    "eventName": "play_chap11_boots_flap",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500081,
+    "eventName": "play_chap11_kalashnikov_strafing",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500082,
+    "eventName": "play_chap11_chess_fall",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500083,
+    "eventName": "play_chap11_graves_loop",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500084,
+    "eventName": "play_chap11_banche_loop",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500085,
+    "eventName": "play_chap11_ploughing",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500086,
+    "eventName": "play_chap11_dine",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500087,
+    "eventName": "play_chap11_breathe_male",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500088,
+    "eventName": "play_chap11_stomp",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500089,
+    "eventName": "play_chap11_stomp_hard",
+    "bankName": "prologuechapter_11_part02"
+  },
+  {
+    "id": 30500090,
+    "eventName": "play_chap11_collar_pinch",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500091,
+    "eventName": "play_chap11_mask_fractured",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500092,
+    "eventName": "play_chap11_uncanny_loop",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500093,
+    "eventName": "play_chap11_partner_pull",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500094,
+    "eventName": "play_chap11_sigh_male",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500095,
+    "eventName": "play_chap11_musket_take",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500096,
+    "eventName": "play_chap11_bullet_grabbed",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500097,
+    "eventName": "play_chap11_sand_steps_loop",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500098,
+    "eventName": "play_chap11_struggle_tough",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500099,
+    "eventName": "play_chap11_armour_damage",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500100,
+    "eventName": "play_chap11_ceiling_lift",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500101,
+    "eventName": "play_chap11_hit_one",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500102,
+    "eventName": "play_chap11_hit_three",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500103,
+    "eventName": "play_chap11_grass_run_loop",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500104,
+    "eventName": "play_chap11_grass_walk_loop",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500105,
+    "eventName": "play_chap11_grass_stagger",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500106,
+    "eventName": "play_chap11_bayonet_1",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500107,
+    "eventName": "play_chap11_bayonet_2",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500108,
+    "eventName": "play_chap11_bayonet_3",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500109,
+    "eventName": "play_chap11_bayonet_4",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500110,
+    "eventName": "play_chap11_glove_off",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500111,
+    "eventName": "play_chap11_reload",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500112,
+    "eventName": "play_chap11_fall_height",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500113,
+    "eventName": "play_chap11_shoot_coiled",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500114,
+    "eventName": "play_chap11_handwriting_spread",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500115,
+    "eventName": "play_chap11_tengdi",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500116,
+    "eventName": "play_chap11_evidence_row",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500117,
+    "eventName": "play_chap11_malian_male",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500118,
+    "eventName": "play_chap11_cake_swallow",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500119,
+    "eventName": "play_chap11_cheers_scattered",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500120,
+    "eventName": "play_chap11_chorus_soldier",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500121,
+    "eventName": "play_chap11_horse_rub",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500122,
+    "eventName": "play_chap11_riding_soldier",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500123,
+    "eventName": "play_chap11_evacuate",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500124,
+    "eventName": "play_chap11_tank_engine_loop",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500125,
+    "eventName": "play_chap11_petrifaction",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500126,
+    "eventName": "play_chap11_grenade_dust",
+    "bankName": "prologuechapter_11_part03"
+  },
+  {
+    "id": 30500127,
+    "eventName": "play_activitystorysfx_lushang_photo",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500128,
+    "eventName": "play_activitystorysfx_lushang_watu_lp",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500129,
+    "eventName": "play_activitystorysfx_lushang_binsi",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500130,
+    "eventName": "play_activitystorysfx_lushang_wept1",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500131,
+    "eventName": "play_activitystorysfx_lushang_wept2_lp",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500132,
+    "eventName": "play_activitystorysfx_lushang_wept3",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500133,
+    "eventName": "play_activitystorysfx_lushang_bullet1",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500134,
+    "eventName": "play_activitystorysfx_lushang_bullet2",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500135,
+    "eventName": "play_activitystorysfx_lushang_bullet3",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500136,
+    "eventName": "play_activitystorysfx_lushang_pistol1",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500137,
+    "eventName": "play_activitystorysfx_lushang_pistol2",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500138,
+    "eventName": "play_activitystorysfx_lushang_war_lp",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500139,
+    "eventName": "play_activitystorysfx_lushang_tinnitu_lp",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500140,
+    "eventName": "play_activitystorysfx_lushang_pistol3",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500141,
+    "eventName": "play_activitystorysfx_lushang_fire",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500142,
+    "eventName": "play_activitystorysfx_lushang_kache",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500143,
+    "eventName": "play_activitystorysfx_lushang_crow1",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500144,
+    "eventName": "play_activitystorysfx_lushang_crow_lp",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500145,
+    "eventName": "play_activitystorysfx_lushang_koushao",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500146,
+    "eventName": "play_chap11_sniping",
+    "bankName": "prologuechapter_11_part04"
+  },
+  {
+    "id": 30500147,
+    "eventName": "play_chap11_shadow",
+    "bankName": "prologuechapter_11_part04"
+  },
+  {
+    "id": 30500148,
+    "eventName": "play_chap11_gunsmoke_loop",
+    "bankName": "prologuechapter_11_part04"
+  },
+  {
+    "id": 30500149,
+    "eventName": "play_chap11_maming_far",
+    "bankName": "prologuechapter_11_part04"
+  },
+  {
+    "id": 30500150,
+    "eventName": "play_chap11_maming_short",
+    "bankName": "prologuechapter_11_part04"
+  },
+  {
+    "id": 30500151,
+    "eventName": "play_chap11_maming_long",
+    "bankName": "prologuechapter_11_part04"
+  },
+  {
+    "id": 30500152,
+    "eventName": "play_chap11_horseback_loop",
+    "bankName": "prologuechapter_11_part04"
+  },
+  {
+    "id": 30500153,
+    "eventName": "play_chap11_armour_strafing",
+    "bankName": "prologuechapter_11_part04"
+  },
+  {
+    "id": 30500154,
+    "eventName": "play_chap11_horse_tap",
+    "bankName": "prologuechapter_11_part04"
+  },
+  {
+    "id": 30500155,
+    "eventName": "play_chap11_yuzhou_town1_lp",
+    "bankName": "prologuechapter_11_fuyong"
+  },
+  {
+    "id": 30500156,
+    "eventName": "play_chap11_yuzhou_sitdown",
+    "bankName": "prologuechapter_11_fuyong"
+  },
+  {
+    "id": 30500157,
+    "eventName": "play_chap11_yuzhou_town2_lp",
+    "bankName": "prologuechapter_11_fuyong"
+  },
+  {
+    "id": 30500158,
+    "eventName": "play_chap11_yuzhou_pack01",
+    "bankName": "prologuechapter_11_fuyong"
+  },
+  {
+    "id": 30500159,
+    "eventName": "play_chap11_yuzhou_recording_run",
+    "bankName": "prologuechapter_11_fuyong"
+  },
+  {
+    "id": 30500160,
+    "eventName": "play_chap11_yuzhou_firing_button",
+    "bankName": "prologuechapter_11_fuyong"
+  },
+  {
+    "id": 30500161,
+    "eventName": "play_chap11_shenghuo_whistle",
+    "bankName": "prologuechapter_11_fuyong"
+  },
+  {
+    "id": 30500162,
+    "eventName": "play_chap11_shenghuo_door",
+    "bankName": "prologuechapter_11_fuyong"
+  },
+  {
+    "id": 30500163,
+    "eventName": "play_chap11_shenghuo_bang",
+    "bankName": "prologuechapter_11_fuyong"
+  },
+  {
+    "id": 30500164,
+    "eventName": "play_chap11_shenghuo_fog2",
+    "bankName": "prologuechapter_11_fuyong"
+  },
+  {
+    "id": 30500165,
+    "eventName": "play_chap11_shenghuo_cough1",
+    "bankName": "prologuechapter_11_fuyong"
+  },
+  {
+    "id": 30500166,
+    "eventName": "play_chap11_shenghuo_wuya",
+    "bankName": "prologuechapter_11_fuyong"
+  },
+  {
+    "id": 30500167,
+    "eventName": "play_activitystorysfx_lushang_sai",
+    "bankName": "activitystory_lushang3_0_malianna_fuyong"
+  },
+  {
+    "id": 30500168,
+    "eventName": "play_activitystorysfx_lushang_cough1",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
+    "id": 30500169,
+    "eventName": "play_activitystorysfx_lushang_yiyuan",
+    "bankName": "activitystory_lushang3_0_karong_sfx"
+  },
+  {
     "id": 530053,
     "eventName": "play_activitymusic_thememusic_full_2_0",
     "bankName": "activity2_0_music"
@@ -7523,6 +8368,26 @@
     "id": 28530011,
     "eventName": "play_activitymusic_aroep_2_8",
     "bankName": "plot_music_aroep_2_8"
+  },
+  {
+    "id": 30530001,
+    "eventName": "play_activitymusic_theme_3_0",
+    "bankName": "activity3_0_music"
+  },
+  {
+    "id": 30530002,
+    "eventName": "play_activitymusic_church_3_0",
+    "bankName": "activity3_0_music"
+  },
+  {
+    "id": 30530003,
+    "eventName": "play_activitymusic_huishi_3_0",
+    "bankName": "activity3_0_music"
+  },
+  {
+    "id": 30530004,
+    "eventName": "play_activitymusic_seasonmain_3_0",
+    "bankName": "activity3_0_music"
   },
   {
     "id": 520105,
@@ -7893,5 +8758,95 @@
     "id": 28520009,
     "eventName": "play_plotpvsfx_nuodika_chap10",
     "bankName": "prologuechapter_10_cutscene"
+  },
+  {
+    "id": 30520001,
+    "eventName": "play_ui_checkpoint_3_0lushang_open",
+    "bankName": "ui_checkpoint_3_0lushang_open"
+  },
+  {
+    "id": 30520002,
+    "eventName": "play_plotpvsfx_worldwar_one_chap11",
+    "bankName": "prologuechapter_11_cutscene"
+  },
+  {
+    "id": 30520003,
+    "eventName": "play_plotpvsfx_karong_threat_chap11",
+    "bankName": "prologuechapter_11_cutscene"
+  },
+  {
+    "id": 30520004,
+    "eventName": "play_plotpvsfx_fanerdeng_chap11",
+    "bankName": "prologuechapter_11_cutscene"
+  },
+  {
+    "id": 30520005,
+    "eventName": "play_plotpvsfx_retreat_chap11",
+    "bankName": "prologuechapter_11_cutscene"
+  },
+  {
+    "id": 30520006,
+    "eventName": "play_lushang3_0_pv_sfx_vo_music",
+    "bankName": "lushang3_0_cutscene_sfx_vo"
+  },
+  {
+    "id": 30520007,
+    "eventName": "play_plotpvsfx_2_0_plot_editing_chap11",
+    "bankName": "prologuechapter_11_cutscene"
+  },
+  {
+    "id": 20530011,
+    "eventName": "play_battle_leimi_1_1_normalfight",
+    "bankName": "activtiy_leimi_combataudio"
+  },
+  {
+    "id": 20530012,
+    "eventName": "play_battle_lvhu_1_2_normalfight",
+    "bankName": "activtiy_lvhu_combataudio"
+  },
+  {
+    "id": 20530015,
+    "eventName": "play_battle_wulu_1_5_normalfight",
+    "bankName": "activtiy_wulu_combataudio"
+  },
+  {
+    "id": 20530017,
+    "eventName": "play_battle_jinye_1_7_normalfight",
+    "bankName": "activtiy_jinye_combataudio"
+  },
+  {
+    "id": 20530019,
+    "eventName": "play_battle_gudu_1_9_normalfight",
+    "bankName": "activtiy_gudu_combataudio"
+  },
+  {
+    "id": 20530020,
+    "eventName": "play_battle_feichi_2_0_normalfight",
+    "bankName": "activtiy_feichi_combataudio"
+  },
+  {
+    "id": 20530021,
+    "eventName": "play_battle_wangshi_2_1_normalfight",
+    "bankName": "activtiy_wangshi_combataudio"
+  },
+  {
+    "id": 20530023,
+    "eventName": "play_battle_shenghuo_2_3_normalfight",
+    "bankName": "activtiy_shenghuo_combataudio"
+  },
+  {
+    "id": 20530024,
+    "eventName": "play_battle_diqiu_2_4_normalfight",
+    "bankName": "activtiy_diqiu_combataudio"
+  },
+  {
+    "id": 20530026,
+    "eventName": "play_battle_wenming_2_6_normalfight",
+    "bankName": "activtiy_wenming_combataudio"
+  },
+  {
+    "id": 20530030,
+    "eventName": "play_battle_lushang_3_0_normalfight",
+    "bankName": "activtiy_lushang_combataudio"
   }
 ]

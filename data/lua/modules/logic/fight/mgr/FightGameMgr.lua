@@ -26,6 +26,7 @@ function var_0_0.registGamePlayMgr(arg_4_0)
 	arg_4_0.checkCrashMgr = arg_4_0:newClass(FightCheckCrashMgr)
 	arg_4_0.entrustEntityMgr = arg_4_0:newClass(FightEntrustEntityMgr)
 	arg_4_0.entrustDeadEntityMgr = arg_4_0:newClass(FightEntrustDeadEntityMgr)
+	arg_4_0.wadingEffect = arg_4_0:newClass(FightWadingEffectMgr)
 end
 
 function var_0_0.defineMgrRef(arg_5_0, arg_5_1)

@@ -1138,18 +1138,17 @@ function var_0_0._delayScroll(arg_84_0)
 	end
 
 	local var_84_3 = gohelper.cloneInPlace(arg_84_0._goscroll)
-	local var_84_4 = gohelper.findChild(var_84_3, "view/content")
 
 	for iter_84_0, iter_84_1 in ipairs(arg_84_0._dialogItemList) do
-		local var_84_5 = iter_84_1.transform.position
+		local var_84_4 = iter_84_1.transform.position
 
-		gohelper.addChild(var_84_4, iter_84_1)
+		gohelper.addChild(var_84_3, iter_84_1)
 
-		iter_84_1.transform.position = var_84_5
+		iter_84_1.transform.position = var_84_4
 
-		local var_84_6, var_84_7, var_84_8 = transformhelper.getLocalPos(iter_84_1.transform)
+		local var_84_5, var_84_6, var_84_7 = transformhelper.getLocalPos(iter_84_1.transform)
 
-		transformhelper.setLocalPos(iter_84_1.transform, var_84_6, var_84_7, 0)
+		transformhelper.setLocalPos(iter_84_1.transform, var_84_5, var_84_6, 0)
 	end
 
 	gohelper.setActive(var_84_3, true)
@@ -1158,10 +1157,10 @@ function var_0_0._delayScroll(arg_84_0)
 
 	if var_84_3 then
 		if arg_84_0._dissolveInfo then
-			local var_84_9 = arg_84_0._dissolveInfo[2]
-			local var_84_10 = arg_84_0._dissolveInfo[3]
+			local var_84_8 = arg_84_0._dissolveInfo[2]
+			local var_84_9 = arg_84_0._dissolveInfo[3]
 
-			var_84_9.text = ""
+			var_84_8.text = ""
 		end
 
 		transformhelper.setLocalPosXY(var_84_3.transform, 0, -229)

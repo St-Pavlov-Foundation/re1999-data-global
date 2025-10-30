@@ -137,7 +137,7 @@ function var_0_0.onOpen(arg_16_0)
 	arg_16_0._effectItems = arg_16_0:getUserDataTb_()
 
 	for iter_16_0 = 1, CharacterDestinyEnum.EffectItemCount do
-		local var_16_0 = gohelper.findChild(arg_16_0._goeffect, iter_16_0)
+		local var_16_0 = gohelper.findChild(arg_16_0._goeffect, "scroll_desc" .. iter_16_0 .. "/viewport/content")
 		local var_16_1 = arg_16_0:getUserDataTb_()
 
 		var_16_1.go = var_16_0

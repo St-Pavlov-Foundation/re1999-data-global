@@ -311,17 +311,21 @@ function var_0_0._refreshCost(arg_23_0)
 	end
 end
 
-function var_0_0.onClose(arg_24_0)
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0._payItemTbList) do
-		iter_24_1._btnpay:RemoveClickListener()
+function var_0_0.onClickModalMask(arg_24_0)
+	arg_24_0:closeThis()
+end
+
+function var_0_0.onClose(arg_25_0)
+	for iter_25_0, iter_25_1 in ipairs(arg_25_0._payItemTbList) do
+		iter_25_1._btnpay:RemoveClickListener()
 	end
 end
 
-function var_0_0.onDestroyView(arg_25_0)
-	arg_25_0._simagebg1:UnLoadImage()
-	arg_25_0._simagebg2:UnLoadImage()
-	arg_25_0._simagetheme:UnLoadImage()
-	arg_25_0._simageinfobg:UnLoadImage()
+function var_0_0.onDestroyView(arg_26_0)
+	arg_26_0._simagebg1:UnLoadImage()
+	arg_26_0._simagebg2:UnLoadImage()
+	arg_26_0._simagetheme:UnLoadImage()
+	arg_26_0._simageinfobg:UnLoadImage()
 end
 
 return var_0_0

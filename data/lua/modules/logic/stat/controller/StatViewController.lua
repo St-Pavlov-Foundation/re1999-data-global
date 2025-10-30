@@ -94,148 +94,164 @@ function var_0_0.defaultViewHandle(arg_8_0, arg_8_1, arg_8_2)
 end
 
 function var_0_0.defaultTabViewHandle(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = string.format("%s-%s", StatViewNameEnum.ChineseViewName[arg_9_1] or arg_9_1, StatViewNameEnum.TabViewName[arg_9_2.__cname] or StatViewNameEnum.TabViewName[arg_9_2.class] or arg_9_2.__cname)
+	local var_9_0 = StatViewNameEnum.TabViewName[arg_9_2.__cname] or StatViewNameEnum.TabViewName[arg_9_2.class]
 
-	arg_9_0:track(var_9_0, StatViewNameEnum.ChineseViewName[arg_9_0.startView] or arg_9_0.startView, arg_9_0.materialName)
+	var_9_0 = var_9_0 or arg_9_0:_findTabViewChildCnName(arg_9_2)
+
+	local var_9_1 = string.format("%s-%s", StatViewNameEnum.ChineseViewName[arg_9_1] or arg_9_1, var_9_0 or arg_9_2.__cname)
+
+	arg_9_0:track(var_9_1, StatViewNameEnum.ChineseViewName[arg_9_0.startView] or arg_9_0.startView, arg_9_0.materialName)
 end
 
-function var_0_0.handleVersionActivityEnterView(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = ViewMgr.instance:getContainer(arg_10_1)
+function var_0_0._findTabViewChildCnName(arg_10_0, arg_10_1)
+	if arg_10_1 and arg_10_1._views and #arg_10_1._views > 0 then
+		for iter_10_0, iter_10_1 in ipairs(arg_10_1._views) do
+			if StatViewNameEnum.TabViewName[iter_10_1.__cname] then
+				return StatViewNameEnum.TabViewName[iter_10_1.__cname]
+			end
+		end
+	end
 
-	if not var_10_0 then
-		logError("not open " .. tostring(arg_10_1))
+	return nil
+end
+
+function var_0_0.handleVersionActivityEnterView(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = ViewMgr.instance:getContainer(arg_11_1)
+
+	if not var_11_0 then
+		logError("not open " .. tostring(arg_11_1))
 
 		return
 	end
 
-	local var_10_1 = var_10_0.activityId
-	local var_10_2 = ActivityConfig.instance:getActivityCo(var_10_1)
-	local var_10_3 = string.format("%s-%s", StatViewNameEnum.ChineseViewName[arg_10_1] or arg_10_1, var_10_2 and var_10_2.name or arg_10_2.__cname)
+	local var_11_1 = var_11_0.activityId
+	local var_11_2 = ActivityConfig.instance:getActivityCo(var_11_1)
+	local var_11_3 = string.format("%s-%s", StatViewNameEnum.ChineseViewName[arg_11_1] or arg_11_1, var_11_2 and var_11_2.name or arg_11_2.__cname)
 
-	arg_10_0:track(var_10_3, StatViewNameEnum.ChineseViewName[arg_10_0.startView] or arg_10_0.startView, arg_10_0.materialName)
+	arg_11_0:track(var_11_3, StatViewNameEnum.ChineseViewName[arg_11_0.startView] or arg_11_0.startView, arg_11_0.materialName)
 end
 
-function var_0_0.handleStoreTabView(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = ViewMgr.instance:getContainer(arg_11_1)
+function var_0_0.handleStoreTabView(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = ViewMgr.instance:getContainer(arg_12_1)
 
-	if not var_11_0 then
+	if not var_12_0 then
 		logError("not open store view ?")
 
 		return
 	end
 
-	local var_11_1 = var_11_0:getSelectFirstTabId()
+	local var_12_1 = var_12_0:getSelectFirstTabId()
 
-	if string.nilorempty(var_11_1) then
+	if string.nilorempty(var_12_1) then
 		return
 	end
 
-	local var_11_2 = StoreConfig.instance:getTabConfig(var_11_1)
+	local var_12_2 = StoreConfig.instance:getTabConfig(var_12_1)
 
-	arg_11_0:track(var_11_2.name, StatViewNameEnum.ChineseViewName[arg_11_0.startView] or arg_11_0.startView, arg_11_0.materialName)
+	arg_12_0:track(var_12_2.name, StatViewNameEnum.ChineseViewName[arg_12_0.startView] or arg_12_0.startView, arg_12_0.materialName)
 end
 
-function var_0_0.handleSummonTabView(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = SummonMainModel.instance:getCurPool()
-	local var_12_1 = string.format("%s-%s", StatViewNameEnum.ChineseViewName[arg_12_1] or arg_12_1, var_12_0.nameCn)
+function var_0_0.handleSummonTabView(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = SummonMainModel.instance:getCurPool()
+	local var_13_1 = string.format("%s-%s", StatViewNameEnum.ChineseViewName[arg_13_1] or arg_13_1, var_13_0.nameCn)
 
-	arg_12_0:track(var_12_1, StatViewNameEnum.ChineseViewName[arg_12_0.startView] or arg_12_0.startView, arg_12_0.materialName)
+	arg_13_0:track(var_13_1, StatViewNameEnum.ChineseViewName[arg_13_0.startView] or arg_13_0.startView, arg_13_0.materialName)
 end
 
-function var_0_0.handleDungeonView(arg_13_0, arg_13_1)
-	arg_13_0:_handleDungeonView(DungeonModel.instance.curChapterType)
+function var_0_0.handleDungeonView(arg_14_0, arg_14_1)
+	arg_14_0:_handleDungeonView(DungeonModel.instance.curChapterType)
 end
 
-function var_0_0._handleDungeonView(arg_14_0, arg_14_1)
-	local var_14_0 = StatViewNameEnum.ChineseViewName[ViewName.DungeonView] .. "-"
+function var_0_0._handleDungeonView(arg_15_0, arg_15_1)
+	local var_15_0 = StatViewNameEnum.ChineseViewName[ViewName.DungeonView] .. "-"
 
-	if DungeonModel.instance:chapterListIsNormalType(arg_14_1) then
-		arg_14_0:track(var_14_0 .. StatViewNameEnum.DungeonViewName.Story, StatViewNameEnum.ChineseViewName[arg_14_0.startView] or arg_14_0.startView, arg_14_0.materialName)
-
-		return
-	end
-
-	if DungeonModel.instance:chapterListIsRoleStory(arg_14_1) then
-		arg_14_0:track(var_14_0 .. StatViewNameEnum.DungeonViewName.RoleStory, StatViewNameEnum.ChineseViewName[arg_14_0.startView] or arg_14_0.startView, arg_14_0.materialName)
+	if DungeonModel.instance:chapterListIsNormalType(arg_15_1) then
+		arg_15_0:track(var_15_0 .. StatViewNameEnum.DungeonViewName.Story, StatViewNameEnum.ChineseViewName[arg_15_0.startView] or arg_15_0.startView, arg_15_0.materialName)
 
 		return
 	end
 
-	if DungeonModel.instance:chapterListIsResType(arg_14_1) then
-		arg_14_0:track(var_14_0 .. StatViewNameEnum.DungeonViewName.Res, StatViewNameEnum.ChineseViewName[arg_14_0.startView] or arg_14_0.startView, arg_14_0.materialName)
+	if DungeonModel.instance:chapterListIsRoleStory(arg_15_1) then
+		arg_15_0:track(var_15_0 .. StatViewNameEnum.DungeonViewName.RoleStory, StatViewNameEnum.ChineseViewName[arg_15_0.startView] or arg_15_0.startView, arg_15_0.materialName)
 
 		return
 	end
 
-	if DungeonModel.instance:chapterListIsBreakType(arg_14_1) then
-		arg_14_0:track(var_14_0 .. StatViewNameEnum.DungeonViewName.Break, StatViewNameEnum.ChineseViewName[arg_14_0.startView] or arg_14_0.startView, arg_14_0.materialName)
+	if DungeonModel.instance:chapterListIsResType(arg_15_1) then
+		arg_15_0:track(var_15_0 .. StatViewNameEnum.DungeonViewName.Res, StatViewNameEnum.ChineseViewName[arg_15_0.startView] or arg_15_0.startView, arg_15_0.materialName)
 
 		return
 	end
 
-	if DungeonModel.instance:chapterListIsWeekWalkType(arg_14_1) then
-		arg_14_0:track(var_14_0 .. StatViewNameEnum.DungeonViewName.WeekWalkName, StatViewNameEnum.ChineseViewName[arg_14_0.startView] or arg_14_0.startView, arg_14_0.materialName)
+	if DungeonModel.instance:chapterListIsBreakType(arg_15_1) then
+		arg_15_0:track(var_15_0 .. StatViewNameEnum.DungeonViewName.Break, StatViewNameEnum.ChineseViewName[arg_15_0.startView] or arg_15_0.startView, arg_15_0.materialName)
 
 		return
 	end
 
-	if DungeonModel.instance:chapterListIsPermanent(arg_14_1) then
-		arg_14_0:track(var_14_0 .. StatViewNameEnum.DungeonViewName.Permanent, StatViewNameEnum.ChineseViewName[arg_14_0.startView] or arg_14_0.startView, arg_14_0.materialName)
+	if DungeonModel.instance:chapterListIsWeekWalkType(arg_15_1) then
+		arg_15_0:track(var_15_0 .. StatViewNameEnum.DungeonViewName.WeekWalkName, StatViewNameEnum.ChineseViewName[arg_15_0.startView] or arg_15_0.startView, arg_15_0.materialName)
+
+		return
+	end
+
+	if DungeonModel.instance:chapterListIsPermanent(arg_15_1) then
+		arg_15_0:track(var_15_0 .. StatViewNameEnum.DungeonViewName.Permanent, StatViewNameEnum.ChineseViewName[arg_15_0.startView] or arg_15_0.startView, arg_15_0.materialName)
 
 		return
 	end
 end
 
-function var_0_0.onExploreChapterClick(arg_15_0, arg_15_1)
-	local var_15_0 = DungeonConfig.instance:getExploreChapterList()[arg_15_1]
+function var_0_0.onExploreChapterClick(arg_16_0, arg_16_1)
+	local var_16_0 = DungeonConfig.instance:getExploreChapterList()[arg_16_1]
 
-	arg_15_0:track(string.format("%s-%s-%s", StatViewNameEnum.ChineseViewName[ViewName.DungeonView], StatViewNameEnum.DungeonViewName.ExploreName, var_15_0.name), StatViewNameEnum.ChineseViewName[arg_15_0.startView] or arg_15_0.startView, arg_15_0.materialName)
+	arg_16_0:track(string.format("%s-%s-%s", StatViewNameEnum.ChineseViewName[ViewName.DungeonView], StatViewNameEnum.DungeonViewName.ExploreName, var_16_0.name), StatViewNameEnum.ChineseViewName[arg_16_0.startView] or arg_16_0.startView, arg_16_0.materialName)
 end
 
-function var_0_0.handleDungeonMapView(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_2.chapterId
-	local var_16_1 = DungeonConfig.instance:getChapterCO(var_16_0)
+function var_0_0.handleDungeonMapView(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_2.chapterId
+	local var_17_1 = DungeonConfig.instance:getChapterCO(var_17_0)
 
-	arg_16_0:track(string.format("%s-%s", StatViewNameEnum.ChineseViewName[arg_16_1], var_16_1.name), StatViewNameEnum.ChineseViewName[arg_16_0.startView] or arg_16_0.startView, arg_16_0.materialName)
+	arg_17_0:track(string.format("%s-%s", StatViewNameEnum.ChineseViewName[arg_17_1], var_17_1.name), StatViewNameEnum.ChineseViewName[arg_17_0.startView] or arg_17_0.startView, arg_17_0.materialName)
 end
 
-function var_0_0.handleV1a4_BossRushLevelDetail(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_2.stageCO
-	local var_17_1 = (StatViewNameEnum.ChineseViewName[arg_17_1] or arg_17_1) .. " - " .. var_17_0.name
-
-	arg_17_0:track(var_17_1, StatViewNameEnum.ChineseViewName[arg_17_0.startView] or arg_17_0.startView, arg_17_0.materialName)
-end
-
-function var_0_0.handleOptionalChargeView(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_2 and arg_18_2.config
-	local var_18_1 = var_18_0 and var_18_0.name
+function var_0_0.handleV1a4_BossRushLevelDetail(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_2.stageCO
+	local var_18_1 = (StatViewNameEnum.ChineseViewName[arg_18_1] or arg_18_1) .. " - " .. var_18_0.name
 
 	arg_18_0:track(var_18_1, StatViewNameEnum.ChineseViewName[arg_18_0.startView] or arg_18_0.startView, arg_18_0.materialName)
 end
 
-function var_0_0.onSwitchSkin(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_0:track((StatViewNameEnum.ChineseViewName[arg_19_2] or arg_19_2) .. "-" .. (arg_19_1 and arg_19_1.name or ""), StatViewNameEnum.ChineseViewName[arg_19_0.startView] or arg_19_0.startView, arg_19_0.materialName)
+function var_0_0.handleOptionalChargeView(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_2 and arg_19_2.config
+	local var_19_1 = var_19_0 and var_19_0.name
+
+	arg_19_0:track(var_19_1, StatViewNameEnum.ChineseViewName[arg_19_0.startView] or arg_19_0.startView, arg_19_0.materialName)
 end
 
-function var_0_0.isIgnoreView(arg_20_0, arg_20_1)
-	return tabletool.indexOf(StatViewNameEnum.IgnoreViewList, arg_20_1) ~= nil
+function var_0_0.onSwitchSkin(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_0:track((StatViewNameEnum.ChineseViewName[arg_20_2] or arg_20_2) .. "-" .. (arg_20_1 and arg_20_1.name or ""), StatViewNameEnum.ChineseViewName[arg_20_0.startView] or arg_20_0.startView, arg_20_0.materialName)
 end
 
-function var_0_0.isTipView(arg_21_0, arg_21_1)
-	return arg_21_1 == StatViewNameEnum.MaterialTipView
+function var_0_0.isIgnoreView(arg_21_0, arg_21_1)
+	return tabletool.indexOf(StatViewNameEnum.IgnoreViewList, arg_21_1) ~= nil
 end
 
-function var_0_0.getMaterialName(arg_22_0)
-	local var_22_0 = ViewMgr.instance:getContainer(StatViewNameEnum.MaterialTipView).viewParam
-
-	return ItemConfig.instance:getItemConfig(var_22_0.type, var_22_0.id).name
+function var_0_0.isTipView(arg_22_0, arg_22_1)
+	return arg_22_1 == StatViewNameEnum.MaterialTipView
 end
 
-function var_0_0.track(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+function var_0_0.getMaterialName(arg_23_0)
+	local var_23_0 = ViewMgr.instance:getContainer(StatViewNameEnum.MaterialTipView).viewParam
+
+	return ItemConfig.instance:getItemConfig(var_23_0.type, var_23_0.id).name
+end
+
+function var_0_0.track(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
 	StatController.instance:track(StatEnum.EventName.EnterView, {
-		[StatEnum.EventProperties.ViewName] = arg_23_1,
-		[StatEnum.EventProperties.StartViewName] = arg_23_2,
-		[StatEnum.EventProperties.MaterialViewName] = arg_23_3 or ""
+		[StatEnum.EventProperties.ViewName] = arg_24_1,
+		[StatEnum.EventProperties.StartViewName] = arg_24_2,
+		[StatEnum.EventProperties.MaterialViewName] = arg_24_3 or ""
 	})
 end
 

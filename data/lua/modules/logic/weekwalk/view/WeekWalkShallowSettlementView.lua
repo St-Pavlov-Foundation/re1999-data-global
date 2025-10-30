@@ -160,6 +160,7 @@ end
 function var_0_0.onOpen(arg_14_0)
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_ui_artificial_settlement_open)
 	arg_14_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, arg_14_0._onWeekwalkTaskUpdate, arg_14_0)
+	NavigateMgr.instance:addEscape(arg_14_0.viewName, arg_14_0.closeThis, arg_14_0)
 end
 
 function var_0_0.onClose(arg_15_0)

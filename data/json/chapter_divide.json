@@ -29,6 +29,17 @@
       109,
       110
     ],
+    "storyId": 200000
+  },
+  {
+    "sectionId": 3,
+    "name": "language_10087619",
+    "nameEn": "THE ROOTS OF THE TALE",
+    "resPage": "singlebg/dungeon/pic_section_3.png",
+    "resPageClosed": "",
+    "chapterId": [
+      111
+    ],
     "storyId": 0
   }
 ]

@@ -1423,7 +1423,16 @@ function var_0_0.getPredeductionExpoint(arg_62_0)
 
 			for iter_62_0, iter_62_1 in ipairs(var_62_3) do
 				if arg_62_0 == iter_62_1.belongToEntityId and iter_62_1:isPlayCard() and FightCardDataHelper.isBigSkill(iter_62_1.skillId) and not FightCardDataHelper.isSkill3(iter_62_1.cardInfoMO) then
-					var_62_0 = var_62_0 + var_62_2:getUniqueSkillPoint()
+					local var_62_4 = true
+					local var_62_5 = lua_skill.configDict[iter_62_1.skillId]
+
+					if var_62_5 and var_62_5.needExPoint == 1 then
+						var_62_4 = false
+					end
+
+					if var_62_4 then
+						var_62_0 = var_62_0 + var_62_2:getUniqueSkillPoint()
+					end
 				end
 			end
 		end
@@ -1807,27 +1816,32 @@ function var_0_0.processBuffEffectPath(arg_88_0, arg_88_1, arg_88_2, arg_88_3, a
 	local var_88_0 = lua_fight_effect_buff_skin.configDict[arg_88_2]
 
 	if var_88_0 then
-		local var_88_1 = arg_88_1:getSide()
+		local var_88_1 = {
+			delEffect = "delAudio",
+			effectPath = "audio",
+			triggerEffect = "triggerAudio"
+		}
+		local var_88_2 = arg_88_1:getSide()
 
 		if var_88_0[1] then
-			var_88_1 = FightEnum.EntitySide.MySide == var_88_1 and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
+			var_88_2 = FightEnum.EntitySide.MySide == var_88_2 and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
 			var_88_0 = var_88_0[1]
 		else
 			var_88_0 = var_88_0[2]
 		end
 
-		local var_88_2 = var_0_0.getSideEntitys(var_88_1, true)
+		local var_88_3 = var_0_0.getSideEntitys(var_88_2, true)
 
-		for iter_88_0, iter_88_1 in ipairs(var_88_2) do
-			local var_88_3 = iter_88_1:getMO()
+		for iter_88_0, iter_88_1 in ipairs(var_88_3) do
+			local var_88_4 = iter_88_1:getMO()
 
-			if var_88_3 then
-				local var_88_4 = var_88_3.skin
+			if var_88_4 then
+				local var_88_5 = var_88_4.skin
 
-				if var_88_0[var_88_4] and not string.nilorempty(var_88_0[var_88_4][arg_88_3]) then
-					local var_88_5 = var_88_0[var_88_4].audio
+				if var_88_0[var_88_5] and not string.nilorempty(var_88_0[var_88_5][arg_88_3]) then
+					local var_88_6 = var_88_0[var_88_5][var_88_1[arg_88_3]]
 
-					return var_88_0[var_88_4][arg_88_3], var_88_5 ~= 0 and var_88_5 or arg_88_4, var_88_0[var_88_4]
+					return var_88_0[var_88_5][arg_88_3], var_88_6 ~= 0 and var_88_6 or arg_88_4, var_88_0[var_88_5]
 				end
 			end
 		end
@@ -3015,6 +3029,7 @@ function var_0_0.getEmptyFightEntityMO(arg_127_0, arg_127_1, arg_127_2, arg_127_
 	var_127_1.shieldValue = 0
 	var_127_1.level = arg_127_2 or 1
 	var_127_1.skin = arg_127_3 or var_127_0.skinId
+	var_127_1.originSkin = arg_127_3 or var_127_0.skinId
 
 	if not string.nilorempty(var_127_0.powerMax) then
 		local var_127_2 = FightStrUtil.instance:getSplitToNumberCache(var_127_0.powerMax, "#")
@@ -3093,6 +3108,7 @@ function var_0_0.buildHeroEntityMOList(arg_128_0, arg_128_1, arg_128_2, arg_128_
 
 				var_128_7.position = iter_128_0
 				var_128_7.skin = var_128_6
+				var_128_7.originSkin = var_128_6
 
 				table.insert(var_128_1, var_128_7)
 			else
@@ -3112,6 +3128,7 @@ function var_0_0.buildHeroEntityMOList(arg_128_0, arg_128_1, arg_128_2, arg_128_
 
 				var_128_10.position = -1
 				var_128_10.skin = arg_128_4 and arg_128_4[iter_128_1] or var_128_9.skinId
+				var_128_10.originSkin = arg_128_4 and arg_128_4[iter_128_1] or var_128_9.skinId
 
 				table.insert(var_128_2, var_128_10)
 			else
@@ -3155,6 +3172,7 @@ function var_0_0.buildMonsterEntityMOList(arg_131_0, arg_131_1, arg_131_2)
 				var_131_4.entityType = 2
 				var_131_4.exPoint = 0
 				var_131_4.skin = var_131_3.skinId
+				var_131_4.originSkin = var_131_3.skinId
 				var_131_4.side = arg_131_0
 				var_131_4.currentHp = var_0_0.SkillEditorHp
 				var_131_4.attrMO = var_0_0._buildAttr(var_131_3)
@@ -3188,6 +3206,7 @@ function var_0_0.buildMonsterEntityMOList(arg_131_0, arg_131_1, arg_131_2)
 				var_131_7.entityType = 2
 				var_131_7.exPoint = 0
 				var_131_7.skin = var_131_6.skinId
+				var_131_7.originSkin = var_131_6.skinId
 				var_131_7.side = arg_131_0
 				var_131_7.currentHp = var_0_0.SkillEditorHp
 				var_131_7.attrMO = var_0_0._buildAttr(var_131_6)
@@ -3485,7 +3504,9 @@ function var_0_0.buildSceneAndLevel(arg_143_0, arg_143_1)
 	return var_143_1(arg_143_0, arg_143_1)
 end
 
-function var_0_0.getStressStatus(arg_144_0)
+function var_0_0.getStressStatus(arg_144_0, arg_144_1)
+	arg_144_1 = arg_144_1 or FightEnum.StressThreshold
+
 	if not arg_144_0 then
 		logError("stress is nil")
 
@@ -3493,7 +3514,7 @@ function var_0_0.getStressStatus(arg_144_0)
 	end
 
 	for iter_144_0 = 1, 2 do
-		if arg_144_0 <= FightEnum.StressThreshold[iter_144_0] then
+		if arg_144_0 <= arg_144_1[iter_144_0] then
 			return iter_144_0
 		end
 	end

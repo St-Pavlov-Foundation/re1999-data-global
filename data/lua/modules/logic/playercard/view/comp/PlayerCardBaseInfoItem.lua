@@ -12,9 +12,11 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_others/layout/#txt_num")
 	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_others/layout/#txt_dec")
 	arg_1_0._txtorder = gohelper.findChildText(arg_1_0.viewGO, "select/#txt_order")
-	arg_1_0._goselecteffect = gohelper.findChild(arg_1_0.viewGO, "select/#go_click")
+	arg_1_0._goselectclick = gohelper.findChild(arg_1_0.viewGO, "select/#go_click")
+	arg_1_0._goselecteffect = gohelper.findChild(arg_1_0.viewGO, "select/#go_click/ani")
 	arg_1_0._btnclick = gohelper.findChildButton(arg_1_0.viewGO, "#btn_click")
 	arg_1_0._typeItemList = {}
+	arg_1_0._hasShowEffect = false
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -55,10 +57,13 @@ function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
 	arg_7_0._txtorder.text = tostring(var_7_0)
 
 	if var_7_0 then
+		gohelper.setActive(arg_7_0._goselecteffect, not arg_7_0._hasShowEffect)
 		gohelper.setActive(arg_7_0._goselect, true)
+
+		arg_7_0._hasShowEffect = true
 	else
 		gohelper.setActive(arg_7_0._goselect, false)
-		gohelper.setActive(arg_7_0._goselecteffect, false)
+		gohelper.setActive(arg_7_0._goselectclick, false)
 	end
 end
 
@@ -109,6 +114,7 @@ function var_0_0._btnclickOnClick(arg_9_0)
 	end
 
 	PlayerCardBaseInfoModel.instance:clickItem(arg_9_0.index)
+	gohelper.setActive(arg_9_0._goselectclick, true)
 	gohelper.setActive(arg_9_0._goselecteffect, true)
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_carddisappear)
 end

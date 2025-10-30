@@ -116,7 +116,9 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"buff_mat_variant",
 		"character_rank_replace",
 		"fight_skin_scale_by_z",
-		"fight_luxi_upgrade_effect"
+		"fight_luxi_upgrade_effect",
+		"fight_kill",
+		"fight_common_buff_effect_2_skin"
 	}
 
 	if SLFramework.FrameworkSettings.IsEditor then

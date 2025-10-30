@@ -231,6 +231,7 @@ function var_0_0.onClickCloseBottomView(arg_20_0)
 
 		gohelper.setActive(arg_20_0._goBottom, arg_20_0._openswitchskin)
 	else
+		gohelper.setActive(arg_20_0._goswitchskinreddot, arg_20_0:_isShowRedDot())
 		TaskDispatcher.runDelay(arg_20_0.afterAnim, arg_20_0, 0.2)
 	end
 

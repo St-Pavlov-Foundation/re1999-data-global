@@ -4,9 +4,9 @@ local var_0_0 = class("HeroGroupFightRuleDescView", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btncloserule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closerule")
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "bg")
-	arg_1_0._goruleitem = gohelper.findChild(arg_1_0.viewGO, "bg/#go_ruleitem")
-	arg_1_0._goruleDescList = gohelper.findChild(arg_1_0.viewGO, "bg/#go_ruleDescList")
+	arg_1_0._gorule = gohelper.findChild(arg_1_0.viewGO, "#go_rule")
+	arg_1_0._goruleDescList = gohelper.findChild(arg_1_0.viewGO, "#go_rule/#scroll_rule/Viewport/#go_ruleDescList")
+	arg_1_0._goruleitem = gohelper.findChild(arg_1_0.viewGO, "#go_rule/#scroll_rule/Viewport/#go_ruleDescList/#go_ruleitem")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -44,11 +44,11 @@ function var_0_0._refreshUI(arg_7_0)
 	local var_7_0 = arg_7_0.viewParam.ruleList
 
 	if arg_7_0.viewParam.offSet then
-		recthelper.setAnchor(arg_7_0._gobg.transform, arg_7_0.viewParam.offSet[1], arg_7_0.viewParam.offSet[2])
+		recthelper.setAnchor(arg_7_0._gorule.transform, arg_7_0.viewParam.offSet[1], arg_7_0.viewParam.offSet[2])
 	end
 
 	if arg_7_0.viewParam.pivot then
-		arg_7_0._gobg.transform.pivot = arg_7_0.viewParam.pivot
+		arg_7_0._gorule.transform.pivot = arg_7_0.viewParam.pivot
 	end
 
 	for iter_7_0, iter_7_1 in ipairs(var_7_0) do

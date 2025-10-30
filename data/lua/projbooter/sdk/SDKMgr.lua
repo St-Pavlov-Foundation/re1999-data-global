@@ -587,88 +587,74 @@ function var_0_0.restartGame(arg_89_0)
 	arg_89_0.csharpInst:CallVoidFunc("restartGame")
 end
 
-function var_0_0.isIgnoreFileMissing(arg_90_0)
-	return arg_90_0.csharpInst:IsIgnoreFileMissing()
+function var_0_0.getSystemMediaVolume(arg_90_0)
+	return arg_90_0.csharpInst:GetSystemMediaVolume()
 end
 
-function var_0_0.isUnsupportChangeVolume(arg_91_0)
-	return arg_91_0.csharpInst:IsUnsupportChangeVolume()
+function var_0_0.setSystemMediaVolume(arg_91_0, arg_91_1)
+	arg_91_0.csharpInst:SetSystemMediaVolume(arg_91_1)
 end
 
-function var_0_0.getUserInfo(arg_92_0)
-	return arg_92_0.csharpInst:CallGetStrFunc("getUserInfo")
-end
-
-function var_0_0.getUserInfoExtraParams(arg_93_0)
-	local var_93_0 = cjson.decode(arg_93_0:getUserInfo() or "{}").extraJson
-
-	if var_93_0 == nil then
-		return nil
-	end
-
-	return cjson.decode(var_93_0)
-end
-
-function var_0_0.restartGame(arg_94_0)
-	arg_94_0.csharpInst:CallVoidFunc("restartGame")
-end
-
-function var_0_0.getSystemMediaVolume(arg_95_0)
-	return arg_95_0.csharpInst:GetSystemMediaVolume()
-end
-
-function var_0_0.setSystemMediaVolume(arg_96_0, arg_96_1)
-	arg_96_0.csharpInst:SetSystemMediaVolume(arg_96_1)
-end
-
-function var_0_0.isIgnoreFileMissing(arg_97_0)
+function var_0_0.isIgnoreFileMissing(arg_92_0)
 	if BootNativeUtil.getPackageName() == "com.shenlan.m.reverse1999.nearme.gamecenter" then
 		return false
 	else
-		return arg_97_0.csharpInst:IsIgnoreFileMissing()
+		return arg_92_0.csharpInst:IsIgnoreFileMissing()
 	end
 end
 
-function var_0_0.isUnsupportChangeVolume(arg_98_0)
-	return arg_98_0.csharpInst:IsUnsupportChangeVolume()
+function var_0_0.isUnsupportChangeVolume(arg_93_0)
+	return arg_93_0.csharpInst:IsUnsupportChangeVolume()
 end
 
-function var_0_0.getDeviceInfo(arg_99_0)
-	if not arg_99_0._deviceInfo then
-		local var_99_0 = arg_99_0.csharpInst:CallGetStrFunc("getDeviceInfo")
+function var_0_0.getDeviceInfo(arg_94_0)
+	if not arg_94_0._deviceInfo then
+		local var_94_0 = arg_94_0.csharpInst:CallGetStrFunc("getDeviceInfo")
 
-		if not string.nilorempty(var_99_0) then
-			arg_99_0._deviceInfo = cjson.decode(var_99_0)
+		if not string.nilorempty(var_94_0) then
+			arg_94_0._deviceInfo = cjson.decode(var_94_0)
 		else
-			arg_99_0._deviceInfo = {}
+			arg_94_0._deviceInfo = {}
 		end
 	end
 
-	return arg_99_0._deviceInfo
+	return arg_94_0._deviceInfo
 end
 
-function var_0_0.getGameSdkConfig(arg_100_0)
-	if not arg_100_0._gameSdkConfig then
-		local var_100_0 = arg_100_0.csharpInst:CallGetStrFunc("getGameSdkConfig")
+function var_0_0.getGameSdkConfig(arg_95_0)
+	if not arg_95_0._gameSdkConfig then
+		local var_95_0 = arg_95_0.csharpInst:CallGetStrFunc("getGameSdkConfig")
 
-		if not string.nilorempty(var_100_0) then
-			arg_100_0._gameSdkConfig = cjson.decode(var_100_0)
+		if not string.nilorempty(var_95_0) then
+			arg_95_0._gameSdkConfig = cjson.decode(var_95_0)
 		else
-			arg_100_0._gameSdkConfig = {}
+			arg_95_0._gameSdkConfig = {}
 		end
 	end
 
-	return arg_100_0._gameSdkConfig
+	return arg_95_0._gameSdkConfig
 end
 
-function var_0_0.getShowNotice(arg_101_0)
-	local var_101_0 = arg_101_0:getGameSdkConfig()
+function var_0_0.getShowNotice(arg_96_0)
+	local var_96_0 = arg_96_0:getGameSdkConfig()
 
-	if var_101_0 and var_101_0.showButtons then
-		return var_101_0.showButtons.Notice
+	if var_96_0 and var_96_0.showButtons then
+		return var_96_0.showButtons.Notice
 	end
 
 	return true
+end
+
+function var_0_0.getIntMetaData(arg_97_0, arg_97_1)
+	return ZProj.SDKManager.Instance:GetIntMetaData(arg_97_1)
+end
+
+function var_0_0.getBoolMetaData(arg_98_0, arg_98_1)
+	return ZProj.SDKManager.Instance:GetBoolMetaData(arg_98_1)
+end
+
+function var_0_0.getStringMetaData(arg_99_0, arg_99_1)
+	return ZProj.SDKManager.Instance:GetStringMetaData(arg_99_1)
 end
 
 var_0_0.instance = var_0_0.New()

@@ -22,7 +22,7 @@ local function var_0_1(arg_1_0, arg_1_1)
 	return arg_1_0.heroId > arg_1_1.heroId
 end
 
-function var_0_0.initList(arg_2_0)
+function var_0_0.initList(arg_2_0, arg_2_1)
 	arg_2_0._moList = {}
 
 	local var_2_0 = HeroModel.instance:getAllHero()
@@ -34,35 +34,39 @@ function var_0_0.initList(arg_2_0)
 
 			if var_2_1:isSlotMaxLevel() then
 				for iter_2_2, iter_2_3 in pairs(var_2_2) do
-					if not iter_2_3.isUnlock then
-						local var_2_3 = {
+					local var_2_3 = LuaUtil.tableContains(arg_2_1, iter_2_3.stoneId)
+
+					if not iter_2_3.isUnlock and not var_2_3 then
+						local var_2_4 = {
 							heroMo = iter_2_1,
 							heroId = iter_2_1.config.id,
 							stoneMo = iter_2_3,
 							stoneId = iter_2_3.stoneId
 						}
 
-						var_2_3.isUnLock = false
+						var_2_4.isUnLock = false
 
-						table.insert(arg_2_0._moList, var_2_3)
+						table.insert(arg_2_0._moList, var_2_4)
 					end
 				end
 			else
 				for iter_2_4, iter_2_5 in pairs(var_2_2) do
-					local var_2_4 = {
-						isUnLock = iter_2_5.isUnlock
-					}
+					if not LuaUtil.tableContains(arg_2_1, iter_2_5.stoneId) then
+						local var_2_5 = {
+							isUnLock = iter_2_5.isUnlock
+						}
 
-					if var_2_4.isUnLock then
-						var_2_4.stonelevel = var_2_1.rank
+						if var_2_5.isUnLock then
+							var_2_5.stonelevel = var_2_1.rank
+						end
+
+						var_2_5.heroMo = iter_2_1
+						var_2_5.heroId = iter_2_1.config.id
+						var_2_5.stoneMo = iter_2_5
+						var_2_5.stoneId = iter_2_5.stoneId
+
+						table.insert(arg_2_0._moList, var_2_5)
 					end
-
-					var_2_4.heroMo = iter_2_1
-					var_2_4.heroId = iter_2_1.config.id
-					var_2_4.stoneMo = iter_2_5
-					var_2_4.stoneId = iter_2_5.stoneId
-
-					table.insert(arg_2_0._moList, var_2_4)
 				end
 			end
 		end

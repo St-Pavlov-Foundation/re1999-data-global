@@ -619,6 +619,7 @@ function var_0_0._checkManufactureUnlock(arg_54_0)
 	local var_54_0 = ManufactureModel.instance:isManufactureUnlock()
 
 	gohelper.setActive(arg_54_0._gobtnexpandManufacture, var_54_0 and arg_54_0._isShowManufactureBtn)
+	arg_54_0:_refreshManufactureExpand()
 
 	local var_54_1 = ManufactureModel.instance:getPlayManufactureUnlock()
 	local var_54_2 = ViewMgr.instance:isOpen(ViewName.RoomInitBuildingView)

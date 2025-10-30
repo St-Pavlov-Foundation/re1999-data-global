@@ -31,6 +31,7 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._tabCanvasGroup = arg_4_0._gotab:GetComponent(typeof(UnityEngine.CanvasGroup))
 	arg_4_0._btnsCanvasGroup = arg_4_0._gobtns:GetComponent(typeof(UnityEngine.CanvasGroup))
 	arg_4_0._gridLayout = gohelper.findChild(arg_4_0.viewGO, "Tab/#scroll_category/categorycontent"):GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
+	arg_4_0._goreddot3 = gohelper.findChild(arg_4_0._gocategoryitem3, "reddot")
 end
 
 function var_0_0.onUpdateParam(arg_5_0)
@@ -61,11 +62,13 @@ function var_0_0.onOpen(arg_6_0)
 		arg_6_0._gridLayout.cellSize = Vector2(780, 90)
 	end
 
+	arg_6_0:checkFightUIReddot()
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchCategoryClick, arg_6_0._itemClick, arg_6_0)
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SceneSwitchUIVisible, arg_6_0._onSceneSwitchUIVisible, arg_6_0)
 	arg_6_0:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, arg_6_0._onSceneSwitchUIVisible, arg_6_0)
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.BeforeStartSwitchScene, arg_6_0._onStartSwitchScene, arg_6_0)
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.CloseSwitchSceneLoading, arg_6_0._onCloseSwitchSceneLoading, arg_6_0)
+	arg_6_0:addEventCb(FightUISwitchController.instance, FightUISwitchEvent.cancelClassifyReddot, arg_6_0.checkFightUIReddot, arg_6_0)
 end
 
 function var_0_0._onStartSwitchScene(arg_7_0)
@@ -92,11 +95,17 @@ function var_0_0._itemClick(arg_10_0, arg_10_1)
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
+function var_0_0.checkFightUIReddot(arg_11_0)
+	local var_11_0 = FightUISwitchModel.instance:isNewUnlockStyle()
+
+	gohelper.setActive(arg_11_0._goreddot3, var_11_0)
+end
+
+function var_0_0.onClose(arg_12_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function var_0_0.onDestroyView(arg_13_0)
 	return
 end
 

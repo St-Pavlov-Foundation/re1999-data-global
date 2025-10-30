@@ -135,6 +135,10 @@ function var_0_0._btnsaveOffsetOnClick(arg_9_0)
 	end
 
 	SkinOffsetAdjustModel.instance:setOffset(arg_9_0._curSkinInfo, arg_9_0._curOffsetKey, var_9_0, var_9_1, var_9_2)
+
+	if arg_9_0._curViewInfo[8] and tonumber(var_9_2) >= 1.2 then
+		MessageBoxController.instance:showMsgBoxByStr("放大倍数过大，可能导致模糊, 请检查图片效果。\n如需使用4096尺寸请联系程序调整。", MsgBoxEnum.BoxType.Yes)
+	end
 end
 
 function var_0_0._btnblockOnClick(arg_10_0)
@@ -395,14 +399,14 @@ function var_0_0._initViewList(arg_33_0)
 	arg_33_0:_addView("个人名片 -> 复用角色界面, 可以特殊设置", ViewName.PlayerCardView, arg_33_0._onPlayerCardViewOpen, arg_33_0._onPlayerCardViewUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewLive2dOffset", "characterViewOffset")
 	arg_33_0:_addView("装饰商店", ViewName.StoreView, arg_33_0._onDecorateStoreViewOpen, arg_33_0._onDecorateStoreViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinl2dOffset")
 	table.insert(arg_33_0._viewNameList, "0#静态立绘")
-	arg_33_0:_addView("角色封面界面静态立绘偏移", ViewName.CharacterDataView, arg_33_0._onCharacterDataViewOpenFromHandbook, arg_33_0._onCharacterStaticSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/#simage_characterstaticskin", "characterTitleViewStaticOffset")
-	arg_33_0:_addView("皮肤界面静态立绘", ViewName.CharacterSkinView, arg_33_0._onCharacterSkinSwitchViewOpen, arg_33_0._onCharacterSkinStaticDrawingViewUpdate1, "UIRoot/POPUP_TOP/CharacterSkinView/characterSpine/#go_skincontainer/#simage_skin", "skinViewImgOffset")
-	arg_33_0:_addView("皮肤获得界面静态立绘", ViewName.CharacterSkinGainView, arg_33_0._onCharacterSkinGainViewOpen, arg_33_0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinGainView/root/bgroot/#go_skincontainer/#simage_icon", "skinGainViewImgOffset")
-	arg_33_0:_addView("角色界面静态立绘", ViewName.CharacterView, arg_33_0._onCharacterViewChangeStaticDrawingOpen, arg_33_0._onCharacterViewSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterView/anim/#go_herocontainer/staticcontainer/#simage_static", "characterViewImgOffset")
-	arg_33_0:_addView("招募界面静态立绘", ViewName.SummonHeroDetailView, arg_33_0._onCharacterGetViewOpen, arg_33_0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/SummonHeroDetailView/charactercontainer/#simage_character", "summonHeroViewOffset")
-	arg_33_0:_addView("个人名片", ViewName.PlayerCardView, arg_33_0._onPlayerCardViewOpen, arg_33_0._onPlayerCardViewStaticDrawingUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewImgOffset", "characterViewImgOffset")
-	arg_33_0:_addView("装饰商店静态立绘", ViewName.StoreView, arg_33_0._onDecorateStoreStaticViewOpen, arg_33_0._onDecorateStoreStaticViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinOffset")
-	arg_33_0:_addView("6选3Up", ViewName.SummonThreeCustomPickView, arg_33_0._onSummonCustomThreePickOpen, arg_33_0._onSummonCustomThreePickDataUpdate, "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s", "summonPickUpImgOffset")
+	arg_33_0:_addView("角色封面界面静态立绘偏移", ViewName.CharacterDataView, arg_33_0._onCharacterDataViewOpenFromHandbook, arg_33_0._onCharacterStaticSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/#simage_characterstaticskin", "characterTitleViewStaticOffset", nil, nil, nil, true)
+	arg_33_0:_addView("皮肤界面静态立绘", ViewName.CharacterSkinView, arg_33_0._onCharacterSkinSwitchViewOpen, arg_33_0._onCharacterSkinStaticDrawingViewUpdate1, "UIRoot/POPUP_TOP/CharacterSkinView/characterSpine/#go_skincontainer/#simage_skin", "skinViewImgOffset", nil, nil, nil, true)
+	arg_33_0:_addView("皮肤获得界面静态立绘", ViewName.CharacterSkinGainView, arg_33_0._onCharacterSkinGainViewOpen, arg_33_0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinGainView/root/bgroot/#go_skincontainer/#simage_icon", "skinGainViewImgOffset", nil, nil, nil, true)
+	arg_33_0:_addView("角色界面静态立绘", ViewName.CharacterView, arg_33_0._onCharacterViewChangeStaticDrawingOpen, arg_33_0._onCharacterViewSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterView/anim/#go_herocontainer/staticcontainer/#simage_static", "characterViewImgOffset", nil, nil, nil, true)
+	arg_33_0:_addView("招募界面静态立绘", ViewName.SummonHeroDetailView, arg_33_0._onCharacterGetViewOpen, arg_33_0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/SummonHeroDetailView/charactercontainer/#simage_character", "summonHeroViewOffset", nil, nil, nil, true)
+	arg_33_0:_addView("个人名片", ViewName.PlayerCardView, arg_33_0._onPlayerCardViewOpen, arg_33_0._onPlayerCardViewStaticDrawingUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewImgOffset", "characterViewImgOffset", nil, nil, true)
+	arg_33_0:_addView("装饰商店静态立绘", ViewName.StoreView, arg_33_0._onDecorateStoreStaticViewOpen, arg_33_0._onDecorateStoreStaticViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinOffset", nil, nil, nil, true)
+	arg_33_0:_addView("6选3Up", ViewName.SummonThreeCustomPickView, arg_33_0._onSummonCustomThreePickOpen, arg_33_0._onSummonCustomThreePickDataUpdate, "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s", "summonPickUpImgOffset", nil, nil, nil, true)
 	arg_33_0:_addHandBookSkinViewOption()
 	table.insert(arg_33_0._viewNameList, "0#spine小人")
 	arg_33_0:_addView("皮肤界面小人Spine", ViewName.CharacterSkinView, arg_33_0._onCharacterSkinSwitchViewOpen, arg_33_0._onCharacterSkinSwitchViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinView/smalldynamiccontainer/#go_smallspine", "skinSpineOffset")
@@ -411,7 +415,7 @@ function var_0_0._initViewList(arg_33_0)
 	arg_33_0:initViewItem()
 end
 
-function var_0_0._addView(arg_34_0, arg_34_1, arg_34_2, arg_34_3, arg_34_4, arg_34_5, arg_34_6, arg_34_7, arg_34_8, arg_34_9)
+function var_0_0._addView(arg_34_0, arg_34_1, arg_34_2, arg_34_3, arg_34_4, arg_34_5, arg_34_6, arg_34_7, arg_34_8, arg_34_9, arg_34_10)
 	local var_34_0 = {
 		viewInfo = {
 			arg_34_1,
@@ -420,7 +424,8 @@ function var_0_0._addView(arg_34_0, arg_34_1, arg_34_2, arg_34_3, arg_34_4, arg_
 			arg_34_4,
 			arg_34_5,
 			arg_34_6,
-			arg_34_7
+			arg_34_7,
+			arg_34_10
 		},
 		beforeOpenView = arg_34_8,
 		beforeCloseView = arg_34_9
@@ -1620,7 +1625,7 @@ function var_0_0.onLive2dCameraLoadedCallback(arg_139_0, arg_139_1)
 end
 
 function var_0_0._addHandBookSkinViewOption(arg_140_0)
-	arg_140_0:_addView("皮肤图鉴", ViewName.HandbookSkinSuitDetailView, arg_140_0._onHandBookSkinViewOpen, arg_140_0._onHandBookSkinViewDrawingUpdate, "UIRoot/POPUP_TOP/HandbookSkinSuitDetailView", "playercardViewImgOffset", "characterViewImgOffset")
+	arg_140_0:_addView("皮肤图鉴", ViewName.HandbookSkinSuitDetailView, arg_140_0._onHandBookSkinViewOpen, arg_140_0._onHandBookSkinViewDrawingUpdate, "UIRoot/POPUP_TOP/HandbookSkinSuitDetailView", "playercardViewImgOffset", "characterViewImgOffset", nil, nil, true)
 end
 
 function var_0_0._onHandBookSkinViewOpen(arg_141_0)

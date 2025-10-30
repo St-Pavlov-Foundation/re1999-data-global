@@ -369,6 +369,7 @@ function var_0_0.isNeedShieldAddBtn(arg_18_0)
 			[ViewName.V1a5BuildingDetailView] = 1,
 			[ViewName.PowerActChangeView] = 1,
 			[ViewName.SummonStoreGoodsView] = 1,
+			[ViewName.RoomFormulaMsgBoxView] = 1,
 			[ViewName.VersionActivity1_6NormalStoreGoodsView] = 1
 		}
 	end

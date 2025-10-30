@@ -3,48 +3,112 @@
     "activityId": 12306,
     "id": 2360101,
     "elementId": 0,
-    "target": ""
+    "target": "",
+    "uiTemplate": 0
   },
   {
     "activityId": 12306,
     "id": 2360102,
     "elementId": 0,
-    "target": ""
+    "target": "",
+    "uiTemplate": 0
   },
   {
     "activityId": 12306,
     "id": 2360103,
     "elementId": 23601011,
-    "target": "language_10062050"
+    "target": "language_10062050",
+    "uiTemplate": 0
   },
   {
     "activityId": 12306,
     "id": 2360104,
     "elementId": 23601012,
-    "target": "language_10062051"
+    "target": "language_10062051",
+    "uiTemplate": 0
   },
   {
     "activityId": 12306,
     "id": 2360105,
     "elementId": 23601013,
-    "target": "language_10062052"
+    "target": "language_10062052",
+    "uiTemplate": 0
   },
   {
     "activityId": 12306,
     "id": 2360106,
     "elementId": 23601014,
-    "target": "language_10062053"
+    "target": "language_10062053",
+    "uiTemplate": 0
   },
   {
     "activityId": 12306,
     "id": 2360107,
     "elementId": 23601015,
-    "target": "language_10062054"
+    "target": "language_10062054",
+    "uiTemplate": 0
   },
   {
     "activityId": 12306,
     "id": 2360108,
     "elementId": 0,
-    "target": ""
+    "target": "",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 3060101,
+    "elementId": 0,
+    "target": "",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 3060102,
+    "elementId": 0,
+    "target": "",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 3060103,
+    "elementId": 30601011,
+    "target": "language_10089999",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 3060104,
+    "elementId": 30601012,
+    "target": "language_10089999",
+    "uiTemplate": 1
+  },
+  {
+    "activityId": 13015,
+    "id": 3060105,
+    "elementId": 30601013,
+    "target": "language_10089999",
+    "uiTemplate": 1
+  },
+  {
+    "activityId": 13015,
+    "id": 3060106,
+    "elementId": 30601014,
+    "target": "language_10089999",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 3060107,
+    "elementId": 0,
+    "target": "",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13015,
+    "id": 3060108,
+    "elementId": 0,
+    "target": "",
+    "uiTemplate": 0
   }
 ]

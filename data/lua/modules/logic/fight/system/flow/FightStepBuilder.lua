@@ -183,7 +183,9 @@ var_0_0.ActEffectWorkCls = {
 	[FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE] = FightWorkEzioBigSkillOriginDamage1001,
 	[FightEnum.EffectType.UPDATEITEMPLAYERSKILL] = FightWorkUpdateItemPlayerSkill1002,
 	[FightEnum.EffectType.EZIOBIGSKILLEXIT] = FightWorkEzioBigSkillExit1003,
-	[FightEnum.EffectType.SURVIVALHEALTHCHANGE] = FightWorkSurvivalHealthChange345
+	[FightEnum.EffectType.SURVIVALHEALTHCHANGE] = FightWorkSurvivalHealthChange345,
+	[FightEnum.EffectType.REALDAMAGEKILL] = FightWorkRealDamageKill351,
+	[FightEnum.EffectType.BUFFDELREASON] = FightWorkBuffDelReason352
 }
 var_0_0.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.ADDSPHANDCARD] = FightWorkAddSpHandCard320Container,

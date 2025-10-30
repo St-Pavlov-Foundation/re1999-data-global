@@ -67,7 +67,7 @@ function var_0_0.buildTabViews(arg_3_0, arg_3_1)
 		local var_3_1 = BossRushModel.instance:getActivityBonus()
 		local var_3_2 = {}
 
-		for iter_3_1, iter_3_2 in pairs(var_3_1) do
+		for iter_3_1, iter_3_2 in ipairs(var_3_1) do
 			local var_3_3 = arg_3_0:_getTabView(iter_3_2)
 
 			arg_3_0._tabView[iter_3_1] = var_3_3

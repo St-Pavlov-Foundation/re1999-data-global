@@ -69,11 +69,14 @@ function var_0_0.refreshStress(arg_5_0, arg_5_1)
 	local var_5_1 = var_5_0 and var_5_0.num or 0
 
 	arg_5_0.stressText.text = var_5_1
-	arg_5_0.status = FightHelper.getStressStatus(var_5_1)
 
-	local var_5_2 = arg_5_0.status and arg_5_0.statusDict[arg_5_0.status]
+	local var_5_2 = FightEnum.MonsterId2StressThresholdDict[arg_5_0.entityMo.modelId]
 
-	gohelper.setActive(var_5_2, true)
+	arg_5_0.status = FightHelper.getStressStatus(var_5_1, var_5_2)
+
+	local var_5_3 = arg_5_0.status and arg_5_0.statusDict[arg_5_0.status]
+
+	gohelper.setActive(var_5_3, true)
 end
 
 function var_0_0.destroy(arg_6_0)

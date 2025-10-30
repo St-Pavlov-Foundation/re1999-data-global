@@ -115,7 +115,7 @@ function var_0_0.loadSeasonCondition(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
 	if arg_7_0 == DungeonEnum.EpisodeType.SeasonRetail then
 		gohelper.setActive(arg_7_1, false)
 
-		local var_7_1 = Activity104Model.instance:getAllRetailMo()
+		local var_7_1 = Activity104Model.instance:getAct104Retails()
 		local var_7_2 = DungeonModel.instance.curSendChapterId
 		local var_7_3 = DungeonConfig.instance:getChapterCO(var_7_2)
 		local var_7_4 = var_7_3 and var_7_3.type == DungeonEnum.ChapterType.Hard

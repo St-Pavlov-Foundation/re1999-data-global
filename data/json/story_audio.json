@@ -12008,15 +12008,15 @@
     "id": 520075,
     "eventName": "play_shuori1_6_cutscene_jiufangyege",
     "bankName": "shuori1_6_cutscene_sfx_vo",
-    "eventName_Overseas": "",
-    "bankName_Overseas": ""
+    "eventName_Overseas": "play_shuori1_6_cutscene_jiufangyege_os",
+    "bankName_Overseas": "shuori1_6_cutscene_sfx_vo"
   },
   {
     "id": 520076,
     "eventName": "play_shuori1_6_cutscene_jiufangyege_vocal",
     "bankName": "shuori1_6_cutscene_sfx_vo",
-    "eventName_Overseas": "",
-    "bankName_Overseas": ""
+    "eventName_Overseas": "play_shuori1_6_cutscene_jiufangyege_vocal_os",
+    "bankName_Overseas": "shuori1_6_cutscene_sfx_vo"
   },
   {
     "id": 520077,

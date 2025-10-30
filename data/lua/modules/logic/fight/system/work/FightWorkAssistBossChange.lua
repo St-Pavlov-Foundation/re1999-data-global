@@ -8,6 +8,8 @@ function var_0_0.beforePlayEffectData(arg_1_0)
 end
 
 function var_0_0.onStart(arg_2_0)
+	arg_2_0:com_sendFightEvent(FightEvent.OnStartSwitchAssistBoss, arg_2_0._entityId)
+
 	arg_2_0._newEntityMO = FightDataHelper.entityMgr:getById(arg_2_0._entityId)
 
 	if not arg_2_0._newEntityMO then

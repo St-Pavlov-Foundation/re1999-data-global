@@ -112,10 +112,10 @@ function var_0_0.afterPlayTimeline(arg_11_0)
 		arg_11_0.entity.buff:showBuffEffects("before_skill_timeline")
 	end
 
-	if arg_11_0._hide_defenders_buff_effect then
-		FightHelper.revertDefenderBuffEffect(arg_11_0._hide_defenders_buff_effect, "before_skill_timeline")
+	if arg_11_0.hide_defenders_buff_effect then
+		FightHelper.revertDefenderBuffEffect(arg_11_0.hide_defenders_buff_effect, "before_skill_timeline")
 
-		arg_11_0._hide_defenders_buff_effect = nil
+		arg_11_0.hide_defenders_buff_effect = nil
 	end
 
 	if not FightSkillMgr.instance:isPlayingAnyTimeline() then

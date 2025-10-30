@@ -1,0 +1,398 @@
+[
+  {
+    "id": 1,
+    "coordinates": [
+      8.9,
+      -6.9,
+      -0.459
+    ],
+    "decorationId": 7
+  },
+  {
+    "id": 2,
+    "coordinates": [
+      8.9,
+      -4.47,
+      -0.836
+    ],
+    "decorationId": 10
+  },
+  {
+    "id": 3,
+    "coordinates": [
+      8.63,
+      -7.1,
+      -0.507
+    ],
+    "decorationId": 8
+  },
+  {
+    "id": 4,
+    "coordinates": [
+      10.7,
+      -7.42,
+      -0.2084
+    ],
+    "decorationId": 1
+  },
+  {
+    "id": 5,
+    "coordinates": [
+      10.37,
+      -7,
+      -0.189
+    ],
+    "decorationId": 2
+  },
+  {
+    "id": 6,
+    "coordinates": [
+      11.85,
+      -5.76,
+      -0.474
+    ],
+    "decorationId": 1
+  },
+  {
+    "id": 7,
+    "coordinates": [
+      12.46,
+      -6.63,
+      -0.094
+    ],
+    "decorationId": 2
+  },
+  {
+    "id": 8,
+    "coordinates": [
+      12.4,
+      -6.76,
+      -0.461
+    ],
+    "decorationId": 8
+  },
+  {
+    "id": 9,
+    "coordinates": [
+      9.67,
+      -6.2,
+      -0.104
+    ],
+    "decorationId": 4
+  },
+  {
+    "id": 43,
+    "coordinates": [
+      9.9,
+      -6.7,
+      -0.218
+    ],
+    "decorationId": 4
+  },
+  {
+    "id": 10,
+    "coordinates": [
+      9.76,
+      -7.15,
+      -0.191
+    ],
+    "decorationId": 8
+  },
+  {
+    "id": 12,
+    "coordinates": [
+      10.634,
+      -6.644,
+      -0.147
+    ],
+    "decorationId": 2
+  },
+  {
+    "id": 13,
+    "coordinates": [
+      10.7,
+      -7.42,
+      -0.2084
+    ],
+    "decorationId": 1
+  },
+  {
+    "id": 14,
+    "coordinates": [
+      9.75,
+      -7.26,
+      -0.358
+    ],
+    "decorationId": 7
+  },
+  {
+    "id": 15,
+    "coordinates": [
+      10.7,
+      -7.42,
+      -0.2084
+    ],
+    "decorationId": 1
+  },
+  {
+    "id": 16,
+    "coordinates": [
+      11.82,
+      -5.72,
+      -0.41
+    ],
+    "decorationId": 10
+  },
+  {
+    "id": 17,
+    "coordinates": [
+      8.9,
+      -4.25,
+      -0.648
+    ],
+    "decorationId": 2
+  },
+  {
+    "id": 18,
+    "coordinates": [
+      9.7,
+      -6.95,
+      -0.297
+    ],
+    "decorationId": 10
+  },
+  {
+    "id": 19,
+    "coordinates": [
+      9.62,
+      -7.14,
+      -0.231
+    ],
+    "decorationId": 4
+  },
+  {
+    "id": 20,
+    "coordinates": [
+      9.67,
+      -6.95,
+      -0.2
+    ],
+    "decorationId": 2
+  },
+  {
+    "id": 21,
+    "coordinates": [
+      10.41,
+      -7.11,
+      -0.284
+    ],
+    "decorationId": 7
+  },
+  {
+    "id": 22,
+    "coordinates": [
+      10.5,
+      -7.03,
+      -0.205
+    ],
+    "decorationId": 4
+  },
+  {
+    "id": 24,
+    "coordinates": [
+      10.4,
+      -6.91,
+      -0.179
+    ],
+    "decorationId": 9
+  },
+  {
+    "id": 44,
+    "coordinates": [
+      13.07,
+      -6.9,
+      -0.254
+    ],
+    "decorationId": 2
+  },
+  {
+    "id": 45,
+    "coordinates": [
+      10.42,
+      -6.89,
+      -0.261
+    ],
+    "decorationId": 2
+  },
+  {
+    "id": 46,
+    "coordinates": [
+      10.48,
+      -6.46,
+      -0.185
+    ],
+    "decorationId": 6
+  },
+  {
+    "id": 25,
+    "coordinates": [
+      12.29,
+      -6.92,
+      -0.263
+    ],
+    "decorationId": 3
+  },
+  {
+    "id": 26,
+    "coordinates": [
+      9.07,
+      -7.1,
+      -0.123
+    ],
+    "decorationId": 7
+  },
+  {
+    "id": 27,
+    "coordinates": [
+      12.41,
+      -6.8,
+      0.004
+    ],
+    "decorationId": 8
+  },
+  {
+    "id": 28,
+    "coordinates": [
+      9.81,
+      -6.35,
+      -0.006
+    ],
+    "decorationId": 4
+  },
+  {
+    "id": 29,
+    "coordinates": [
+      12.03,
+      -4.2,
+      -0.17
+    ],
+    "decorationId": 2
+  },
+  {
+    "id": 30,
+    "coordinates": [
+      12.31,
+      -6.6,
+      -0.273
+    ],
+    "decorationId": 8
+  },
+  {
+    "id": 31,
+    "coordinates": [
+      10.64,
+      -6.73,
+      -0.058
+    ],
+    "decorationId": 3
+  },
+  {
+    "id": 32,
+    "coordinates": [
+      12.62,
+      -5.5,
+      -0.267
+    ],
+    "decorationId": 3
+  },
+  {
+    "id": 33,
+    "coordinates": [
+      7.251,
+      -4.153,
+      -0.217
+    ],
+    "decorationId": 7
+  },
+  {
+    "id": 34,
+    "coordinates": [
+      6.7,
+      -6.559,
+      -0.165
+    ],
+    "decorationId": 7
+  },
+  {
+    "id": 35,
+    "coordinates": [
+      9.8,
+      -6.74,
+      -0.291
+    ],
+    "decorationId": 6
+  },
+  {
+    "id": 36,
+    "coordinates": [
+      10.58,
+      -6.31,
+      -0.081
+    ],
+    "decorationId": 1
+  },
+  {
+    "id": 37,
+    "coordinates": [
+      8.2,
+      -5.1,
+      -0.44
+    ],
+    "decorationId": 2
+  },
+  {
+    "id": 38,
+    "coordinates": [
+      12.55,
+      -5.1,
+      -0.507
+    ],
+    "decorationId": 7
+  },
+  {
+    "id": 39,
+    "coordinates": [
+      10.72,
+      -6.41,
+      -0.414
+    ],
+    "decorationId": 4
+  },
+  {
+    "id": 40,
+    "coordinates": [
+      6.566,
+      -4.335,
+      -0.248
+    ],
+    "decorationId": 9
+  },
+  {
+    "id": 41,
+    "coordinates": [
+      9.1,
+      -6.94,
+      -0.38
+    ],
+    "decorationId": 7
+  },
+  {
+    "id": 42,
+    "coordinates": [
+      10.6,
+      -7.1,
+      -0.308
+    ],
+    "decorationId": 4
+  }
+]

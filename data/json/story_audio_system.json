@@ -2478,5 +2478,625 @@
     "id": 922800168,
     "eventName": "play_battle_chap10_npc524001_34",
     "bankName": "npc524001_level_fuleyuan2_8"
+  },
+  {
+    "id": 922800169,
+    "eventName": "play_guide507801_systemvoc_1318",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800170,
+    "eventName": "play_guide507801_systemvoc_1319",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800171,
+    "eventName": "play_guide507801_systemvoc_1321",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800172,
+    "eventName": "play_guide507801_systemvoc_1322",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800173,
+    "eventName": "play_guide507801_systemvoc_1323",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800174,
+    "eventName": "play_guide507801_systemvoc_1325",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800175,
+    "eventName": "play_guide507801_systemvoc_1326",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800176,
+    "eventName": "play_guide507801_systemvoc_1327",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800177,
+    "eventName": "play_guide507801_systemvoc_1328",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800178,
+    "eventName": "play_guide507801_systemvoc_1329",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800179,
+    "eventName": "play_guide507801_systemvoc_1330",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800180,
+    "eventName": "play_guide507801_systemvoc_1331",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800181,
+    "eventName": "play_guide507801_systemvoc_1332",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800182,
+    "eventName": "play_guide507801_systemvoc_1333",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800183,
+    "eventName": "play_guide507801_systemvoc_1336",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800184,
+    "eventName": "play_guide507801_systemvoc_1337",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800185,
+    "eventName": "play_guide507801_systemvoc_1338",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800186,
+    "eventName": "play_guide507801_systemvoc_1339",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800187,
+    "eventName": "play_guide507801_systemvoc_1340",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800188,
+    "eventName": "play_guide507801_systemvoc_1341",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800189,
+    "eventName": "play_guide507801_systemvoc_1342",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800190,
+    "eventName": "play_guide507801_systemvoc_1344",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800191,
+    "eventName": "play_guide507801_systemvoc_1345",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800192,
+    "eventName": "play_guide507801_systemvoc_1346",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800193,
+    "eventName": "play_guide507801_systemvoc_1348",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800194,
+    "eventName": "play_guide507801_systemvoc_1349",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800195,
+    "eventName": "play_guide507801_systemvoc_1350",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800196,
+    "eventName": "play_guide507801_systemvoc_1351",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800197,
+    "eventName": "play_guide507801_systemvoc_1352",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800198,
+    "eventName": "play_guide507801_systemvoc_1353",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800199,
+    "eventName": "play_guide507801_systemvoc_1354",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800200,
+    "eventName": "play_guide507801_systemvoc_1355",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800201,
+    "eventName": "play_guide507801_systemvoc_1356",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800202,
+    "eventName": "play_guide507801_systemvoc_1357",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800203,
+    "eventName": "play_guide507801_systemvoc_1358",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800204,
+    "eventName": "play_guide507801_systemvoc_1360",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800205,
+    "eventName": "play_guide507801_systemvoc_1361",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800206,
+    "eventName": "play_guide507801_systemvoc_1362",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800207,
+    "eventName": "play_guide507801_systemvoc_1364",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800208,
+    "eventName": "play_guide507801_systemvoc_1365",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800209,
+    "eventName": "play_guide507801_systemvoc_1366",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800210,
+    "eventName": "play_guide507801_systemvoc_1367",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800211,
+    "eventName": "play_guide507801_systemvoc_1368",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800212,
+    "eventName": "play_guide507801_systemvoc_1369",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800213,
+    "eventName": "play_guide507801_systemvoc_1370",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800214,
+    "eventName": "play_guide507801_systemvoc_1371",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800215,
+    "eventName": "play_guide507801_systemvoc_1372",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800216,
+    "eventName": "play_guide507801_systemvoc_1373",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800217,
+    "eventName": "play_guide507801_systemvoc_1374",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800218,
+    "eventName": "play_guide507801_systemvoc_1375",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800219,
+    "eventName": "play_guide507801_systemvoc_1377",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800220,
+    "eventName": "play_guide507801_systemvoc_1378",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800221,
+    "eventName": "play_guide507801_systemvoc_1379",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800222,
+    "eventName": "play_guide507801_systemvoc_1381",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800223,
+    "eventName": "play_guide507801_systemvoc_1382",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800224,
+    "eventName": "play_guide507801_systemvoc_1383",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800225,
+    "eventName": "play_guide507801_systemvoc_1384",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800226,
+    "eventName": "play_guide507801_systemvoc_1385",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800227,
+    "eventName": "play_guide507801_systemvoc_1386",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800228,
+    "eventName": "play_guide507801_systemvoc_1388",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800229,
+    "eventName": "play_guide507801_systemvoc_1389",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800230,
+    "eventName": "play_guide507801_systemvoc_1390",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800231,
+    "eventName": "play_guide507801_systemvoc_1391",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800232,
+    "eventName": "play_guide507801_systemvoc_1392",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800233,
+    "eventName": "play_guide507801_systemvoc_1394",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800234,
+    "eventName": "play_guide507801_systemvoc_1395",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800235,
+    "eventName": "play_guide507801_systemvoc_1396",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 922800236,
+    "eventName": "play_guide507801_systemvoc_1397",
+    "bankName": "guide507801_systemvoc_part27"
+  },
+  {
+    "id": 923000000,
+    "eventName": "play_level_chap11_npc526501_1",
+    "bankName": "npc526501_level_lushang3_0"
+  },
+  {
+    "id": 923000001,
+    "eventName": "play_level_chap11_npc527101a_2",
+    "bankName": "npc527101a_level_lushang3_0"
+  },
+  {
+    "id": 923000002,
+    "eventName": "play_level_chap11_npc527101a_3",
+    "bankName": "npc527101a_level_lushang3_0"
+  },
+  {
+    "id": 923000003,
+    "eventName": "play_level_chap11_npc526501_4",
+    "bankName": "npc526501_level_lushang3_0"
+  },
+  {
+    "id": 923000004,
+    "eventName": "play_level_chap11_npc528301_5",
+    "bankName": "npc528301_level_lushang3_0"
+  },
+  {
+    "id": 923000005,
+    "eventName": "play_level_chap11_npc527101a_6",
+    "bankName": "npc527101a_level_lushang3_0"
+  },
+  {
+    "id": 923000006,
+    "eventName": "play_level_chap11_npc526501_7",
+    "bankName": "npc526501_level_lushang3_0"
+  },
+  {
+    "id": 923000007,
+    "eventName": "play_level_chap11_npc527101a_8",
+    "bankName": "npc527101a_level_lushang3_0"
+  },
+  {
+    "id": 923000008,
+    "eventName": "play_level_chap11_npc527301_9",
+    "bankName": "npc527301_level_lushang3_0"
+  },
+  {
+    "id": 923000009,
+    "eventName": "play_level_chap11_npc527301_10",
+    "bankName": "npc527301_level_lushang3_0"
+  },
+  {
+    "id": 923000010,
+    "eventName": "play_level_chap11_npc526801_11",
+    "bankName": "npc526801_level_lushang3_0"
+  },
+  {
+    "id": 923000011,
+    "eventName": "play_level_chap11_npc527301_12",
+    "bankName": "npc527301_level_lushang3_0"
+  },
+  {
+    "id": 923000012,
+    "eventName": "play_level_chap11_npc527301_13",
+    "bankName": "npc527301_level_lushang3_0"
+  },
+  {
+    "id": 923000013,
+    "eventName": "play_level_chap11_npc527301_14",
+    "bankName": "npc527301_level_lushang3_0"
+  },
+  {
+    "id": 923000014,
+    "eventName": "play_level_chap11_npc526301_15",
+    "bankName": "npc526301_level_lushang3_0"
+  },
+  {
+    "id": 923000015,
+    "eventName": "play_level_chap11_npc526501_16",
+    "bankName": "npc526501_level_lushang3_0"
+  },
+  {
+    "id": 923000016,
+    "eventName": "play_level_chap11_npc526501_17",
+    "bankName": "npc526501_level_lushang3_0"
+  },
+  {
+    "id": 923000017,
+    "eventName": "play_level_chap11_npc526301_19",
+    "bankName": "npc526301_level_lushang3_0"
+  },
+  {
+    "id": 923000018,
+    "eventName": "play_level_chap11_npc526301_20",
+    "bankName": "npc526301_level_lushang3_0"
+  },
+  {
+    "id": 923000019,
+    "eventName": "play_level_chap11_npc526501_21",
+    "bankName": "npc526501_level_lushang3_0"
+  },
+  {
+    "id": 923000020,
+    "eventName": "play_level_chap11_npc526301_22",
+    "bankName": "npc526301_level_lushang3_0"
+  },
+  {
+    "id": 923000021,
+    "eventName": "play_level_chap11_hero3126_23",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000022,
+    "eventName": "play_level_chap11_npc526501_24",
+    "bankName": "npc526501_level_lushang3_0"
+  },
+  {
+    "id": 923000023,
+    "eventName": "play_level_chap11_hero3126_25",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000024,
+    "eventName": "play_level_chap11_hero3126_26",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000025,
+    "eventName": "play_level_chap11_npc526601_27",
+    "bankName": "npc526601_level_lushang3_0"
+  },
+  {
+    "id": 923000026,
+    "eventName": "play_level_chap11_npc526801_28",
+    "bankName": "npc526801_level_lushang3_0"
+  },
+  {
+    "id": 923000027,
+    "eventName": "play_level_chap11_npc526601_29",
+    "bankName": "npc526601_level_lushang3_0"
+  },
+  {
+    "id": 923000028,
+    "eventName": "play_level_chap11_npc526601_30",
+    "bankName": "npc526601_level_lushang3_0"
+  },
+  {
+    "id": 923000029,
+    "eventName": "play_level_chap11_npcnoname211_31",
+    "bankName": "npcnoname211_level_lushang3_0"
+  },
+  {
+    "id": 923000030,
+    "eventName": "play_level_chap11_npc526501_32",
+    "bankName": "npc526501_level_lushang3_0"
+  },
+  {
+    "id": 923000031,
+    "eventName": "play_level_chap11_npc526501_33",
+    "bankName": "npc526501_level_lushang3_0"
+  },
+  {
+    "id": 923000032,
+    "eventName": "play_level_chap11_npc526601_34",
+    "bankName": "npc526601_level_lushang3_0"
+  },
+  {
+    "id": 923000033,
+    "eventName": "play_level_chap11_npc526501_35",
+    "bankName": "npc526501_level_lushang3_0"
+  },
+  {
+    "id": 923000034,
+    "eventName": "play_battle_chap11_npc526201a_1",
+    "bankName": "npc526201a_level_lushang3_0"
+  },
+  {
+    "id": 923000035,
+    "eventName": "play_battle_chap11_npc526201a_2",
+    "bankName": "npc526201a_level_lushang3_0"
+  },
+  {
+    "id": 923000036,
+    "eventName": "play_battle_chap11_hero3126_3",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000037,
+    "eventName": "play_battle_chap11_npc527101a_4",
+    "bankName": "npc527101a_level_lushang3_0"
+  },
+  {
+    "id": 923000038,
+    "eventName": "play_battle_chap11_hero3126_5",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000039,
+    "eventName": "play_battle_chap11_npc526201a_6",
+    "bankName": "npc526201a_level_lushang3_0"
+  },
+  {
+    "id": 923000040,
+    "eventName": "play_battle_chap11_hero3126_7",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000041,
+    "eventName": "play_battle_chap11_npc526201_8",
+    "bankName": "npc526201_level_lushang3_0"
+  },
+  {
+    "id": 923000042,
+    "eventName": "play_battle_chap11_hero3126_9",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000043,
+    "eventName": "play_battle_chap11_npc526201_10",
+    "bankName": "npc526201_level_lushang3_0"
+  },
+  {
+    "id": 923000044,
+    "eventName": "play_battle_chap11_hero3126_11",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000045,
+    "eventName": "play_battle_chap11_npc526201_12",
+    "bankName": "npc526201_level_lushang3_0"
+  },
+  {
+    "id": 923000046,
+    "eventName": "play_battle_chap11_hero3126_13",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000047,
+    "eventName": "play_battle_chap11_npc526201a_14",
+    "bankName": "npc526201a_level_lushang3_0"
+  },
+  {
+    "id": 923000048,
+    "eventName": "play_battle_chap11_hero3126_15",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000049,
+    "eventName": "play_battle_chap11_hero3126_16",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000050,
+    "eventName": "play_battle_chap11_hero3126_17",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000051,
+    "eventName": "play_battle_chap11_npc526201a_18",
+    "bankName": "npc526201a_level_lushang3_0"
+  },
+  {
+    "id": 923000052,
+    "eventName": "play_battle_chap11_hero3126_19",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000053,
+    "eventName": "play_battle_chap11_hero3126_20",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000054,
+    "eventName": "play_battle_chap11_hero3126_21",
+    "bankName": "hero3126_level_lushang3_0"
+  },
+  {
+    "id": 923000055,
+    "eventName": "play_battle_chap11_hero3126_22",
+    "bankName": "hero3126_level_lushang3_0"
   }
 ]

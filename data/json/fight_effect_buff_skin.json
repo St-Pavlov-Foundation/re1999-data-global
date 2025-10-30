@@ -7,6 +7,8 @@
     "effectPath": "buff/buff_v1a4_malilian_innate",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -17,6 +19,8 @@
     "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -27,6 +31,8 @@
     "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -37,6 +43,8 @@
     "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -47,6 +55,8 @@
     "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -57,6 +67,8 @@
     "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -67,6 +79,8 @@
     "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -77,6 +91,8 @@
     "effectPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -87,6 +103,8 @@
     "effectPath": "v1a6_nmds_syzj/nmds_syzj_innate_02",
     "triggerEffect": "",
     "delEffect": "v1a6_nmds_syzj/nmds_syzj_innate_01",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -97,6 +115,8 @@
     "effectPath": "v1a6_nmds_syzj/nmds_syzj_innate_02",
     "triggerEffect": "",
     "delEffect": "v1a6_nmds_syzj/nmds_syzj_innate_01",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -107,6 +127,8 @@
     "effectPath": "buff/pre_v1a7_meilanni_innate3_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -117,6 +139,8 @@
     "effectPath": "v1a7_37_bnr/37_bnr_innate5",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -127,6 +151,8 @@
     "effectPath": "v1a7_37_bnr/37_bnr_innate1",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -137,6 +163,8 @@
     "effectPath": "buff/buff_pkls_innate_1_idle_306303",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -147,6 +175,8 @@
     "effectPath": "buff/pre_xt_innate01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430250401
   },
   {
@@ -157,6 +187,8 @@
     "effectPath": "v2a0_6_hshd/6_hshd_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 4307922
   },
   {
@@ -167,6 +199,8 @@
     "effectPath": "v2a0_6_hshd/6_hshd_skill2_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 4307923
   },
   {
@@ -177,6 +211,8 @@
     "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -187,6 +223,8 @@
     "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -197,6 +235,8 @@
     "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -207,6 +247,8 @@
     "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -217,6 +259,8 @@
     "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -227,6 +271,8 @@
     "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -237,6 +283,8 @@
     "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -247,6 +295,8 @@
     "effectPath": "buff/v2a1_jinmier_innate_01_weapon",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -257,6 +307,8 @@
     "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_01_head",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -267,6 +319,8 @@
     "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_02_head",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -277,6 +331,8 @@
     "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_03_head",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -287,6 +343,8 @@
     "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_02_head",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -297,6 +355,8 @@
     "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_03_head",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -307,6 +367,8 @@
     "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_02_head",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -317,6 +379,8 @@
     "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_03_head",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -327,6 +391,8 @@
     "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_02_head",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -337,6 +403,8 @@
     "effectPath": "v2a1_ysed_jscq/ysed_jscq_idle_03_head",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -347,6 +415,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03_bsq",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -357,6 +427,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03_bsq",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -367,6 +439,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03_bsq",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -377,6 +451,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -387,6 +463,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -397,6 +475,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -407,6 +487,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_05",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870344
   },
   {
@@ -417,6 +499,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_05",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870344
   },
   {
@@ -427,6 +511,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -437,6 +523,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -447,6 +535,8 @@
     "effectPath": "v2a2_makusi/makusi_biaozhu",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -457,6 +547,8 @@
     "effectPath": "v2a2_zongmaoshali/v2a2_zongmaoshali_beidong_01",
     "triggerEffect": "",
     "delEffect": "v2a2_zongmaoshali/v2a2_zongmaoshali_beidong_02",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -467,6 +559,8 @@
     "effectPath": "v2a3_smews/v2a3_smews_xueyong",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -477,6 +571,8 @@
     "effectPath": "v2a3_smews/v2a3_smews_xueyong",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -487,6 +583,8 @@
     "effectPath": "v2a3_smews/v2a3_smews_kuangre",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -497,6 +595,8 @@
     "effectPath": "v2a3_smews/v2a3_smews_kuangre",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -507,6 +607,8 @@
     "effectPath": "buff/pre_yaxian_innate_2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430530441
   },
   {
@@ -517,6 +619,8 @@
     "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -527,6 +631,8 @@
     "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -537,6 +643,8 @@
     "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -547,6 +655,8 @@
     "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -557,6 +667,8 @@
     "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -567,6 +679,8 @@
     "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -577,6 +691,8 @@
     "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -587,6 +703,8 @@
     "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -597,6 +715,8 @@
     "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -607,6 +727,8 @@
     "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -617,6 +739,8 @@
     "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -627,6 +751,8 @@
     "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -637,6 +763,8 @@
     "effectPath": "v2a5_lsp/lsp_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430980343
   },
   {
@@ -647,6 +775,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -657,6 +787,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -667,6 +799,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -677,6 +811,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -687,6 +823,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -697,6 +835,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -707,6 +847,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -717,6 +859,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -727,6 +871,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -737,6 +883,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd3",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -747,6 +895,8 @@
     "effectPath": "v2a5_qn/qn_innate1",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830351
   },
   {
@@ -757,6 +907,8 @@
     "effectPath": "v1a6_nmds_syzj/nmds_syzj_innate_02",
     "triggerEffect": "",
     "delEffect": "v1a6_nmds_syzj/nmds_syzj_innate_01",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -767,6 +919,8 @@
     "effectPath": "v1a6_nmds_syzj/nmds_syzj_innate_02",
     "triggerEffect": "",
     "delEffect": "v1a6_nmds_syzj/nmds_syzj_innate_01",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -777,6 +931,8 @@
     "effectPath": "v2a6_lopera/lopera_skill2_special1_1",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -787,6 +943,8 @@
     "effectPath": "v2a6_lopera/lopera_skill2_special1_1",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -797,6 +955,8 @@
     "effectPath": "v2a6_lopera/lopera_skill2_special1_1",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -807,6 +967,8 @@
     "effectPath": "v2a6_lopera/lopera_skill2_special1_1",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -817,6 +979,8 @@
     "effectPath": "v2a6_ddg/ddg_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 431040351
   },
   {
@@ -827,6 +991,8 @@
     "effectPath": "v2a6_ddg/ddg_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 431040351
   },
   {
@@ -837,6 +1003,8 @@
     "effectPath": "v2a6_ddg/ddg_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 431040351
   },
   {
@@ -847,6 +1015,8 @@
     "effectPath": "v2a6_ddg/ddg_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 431040351
   },
   {
@@ -857,6 +1027,8 @@
     "effectPath": "v2a6_ddg/ddg_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 431040351
   },
   {
@@ -867,6 +1039,8 @@
     "effectPath": "v2a6_ddg/ddg_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 431040351
   },
   {
@@ -877,6 +1051,8 @@
     "effectPath": "v2a6_ddg/ddg_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 431040351
   },
   {
@@ -887,6 +1063,8 @@
     "effectPath": "v2a6_ddg/ddg_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 431040351
   },
   {
@@ -897,6 +1075,8 @@
     "effectPath": "v2a7_6/6_skill2_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430790423
   },
   {
@@ -907,6 +1087,8 @@
     "effectPath": "v2a7_6/6_skill2_04",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430790424
   },
   {
@@ -917,6 +1099,8 @@
     "effectPath": "v2a7_bkle/bkle_yanzou",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 431080342
   },
   {
@@ -927,6 +1111,8 @@
     "effectPath": "v2a7_bkle/bkle_yanzou",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 431080342
   },
   {
@@ -937,6 +1123,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -947,6 +1135,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -957,6 +1147,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -967,6 +1159,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -977,6 +1171,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -987,6 +1183,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -997,6 +1195,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -1007,6 +1207,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -1017,6 +1219,8 @@
     "effectPath": "v2a5_qn/v2a5_qn_bd2",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430830353
   },
   {
@@ -1027,6 +1231,8 @@
     "effectPath": "buff/pre_v2a8_welx_pf_channel_idle",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1037,6 +1243,8 @@
     "effectPath": "buff/pre_v2a8_welx_pf_channel_idle",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1047,6 +1255,8 @@
     "effectPath": "buff/pre_v2a8_welx_pf_channel_idle",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1057,6 +1267,8 @@
     "effectPath": "buff/pre_v2a8_welx_pf_channel_idle",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1067,6 +1279,8 @@
     "effectPath": "v2a8_luxi/luxi_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1077,6 +1291,8 @@
     "effectPath": "v2a8_luxi/luxi_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1087,6 +1303,8 @@
     "effectPath": "v2a8_luxi/luxi_innate_02",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1097,6 +1315,8 @@
     "effectPath": "",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1107,6 +1327,8 @@
     "effectPath": "",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1117,6 +1339,8 @@
     "effectPath": "v2a8_luxi/luxi_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1127,6 +1351,8 @@
     "effectPath": "v2a8_luxi/luxi_innate_04",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1137,6 +1363,8 @@
     "effectPath": "v2a8_luxi/luxi_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1147,6 +1375,8 @@
     "effectPath": "v2a8_luxi/luxi_innate_04",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1157,6 +1387,548 @@
     "effectPath": "v2a8_luxi/luxi_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 430860301
+  },
+  {
+    "buffId": 228107,
+    "orEnemy": 2,
+    "skinId": 302504,
+    "effectHang": "",
+    "effectPath": "buff/pre_xt_innate01",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 430250401
+  },
+  {
+    "buffId": 31050111,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate1",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050351
+  },
+  {
+    "buffId": 31050131,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050353
+  },
+  {
+    "buffId": 31050133,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050353
+  },
+  {
+    "buffId": 31050134,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050353
+  },
+  {
+    "buffId": 31050135,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050353
+  },
+  {
+    "buffId": 31050136,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050353
+  },
+  {
+    "buffId": 31050141,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate3_1",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050352
+  },
+  {
+    "buffId": 31050142,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate3_2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050352
+  },
+  {
+    "buffId": 31050143,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate3_3",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050352
+  },
+  {
+    "buffId": 31050161,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate3_1",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050352
+  },
+  {
+    "buffId": 31050162,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate3_2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050352
+  },
+  {
+    "buffId": 31050163,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate3_3",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050352
+  },
+  {
+    "buffId": 31050171,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate3_2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050352
+  },
+  {
+    "buffId": 31050172,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate3_3",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050352
+  },
+  {
+    "buffId": 31050181,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate3_1",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050352
+  },
+  {
+    "buffId": 31050182,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate3_2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050352
+  },
+  {
+    "buffId": 31050183,
+    "orEnemy": 2,
+    "skinId": 310503,
+    "effectHang": "",
+    "effectPath": "v3a0_zxqe/zxqe_innate3_3",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431050352
+  },
+  {
+    "buffId": 22301621,
+    "orEnemy": 2,
+    "skinId": 308803,
+    "effectHang": "",
+    "effectPath": "v2a3_smews/v2a3_smews_xueyong",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 22301622,
+    "orEnemy": 2,
+    "skinId": 308803,
+    "effectHang": "",
+    "effectPath": "v2a3_smews/v2a3_smews_xueyong",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 308801211,
+    "orEnemy": 2,
+    "skinId": 308803,
+    "effectHang": "",
+    "effectPath": "v2a3_smews/v2a3_smews_xueyong",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 308801311,
+    "orEnemy": 2,
+    "skinId": 308803,
+    "effectHang": "",
+    "effectPath": "v2a3_smews/v2a3_smews_kuangre",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 308801321,
+    "orEnemy": 2,
+    "skinId": 308803,
+    "effectHang": "",
+    "effectPath": "v2a3_smews/v2a3_smews_kuangre",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 30880121,
+    "orEnemy": 2,
+    "skinId": 308804,
+    "effectHang": "",
+    "effectPath": "v3a0_smews/smews_xueyong",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 30880122,
+    "orEnemy": 2,
+    "skinId": 308804,
+    "effectHang": "",
+    "effectPath": "v3a0_smews/smews_xueyong",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 22301621,
+    "orEnemy": 2,
+    "skinId": 308804,
+    "effectHang": "",
+    "effectPath": "v3a0_smews/smews_xueyong",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 22301622,
+    "orEnemy": 2,
+    "skinId": 308804,
+    "effectHang": "",
+    "effectPath": "v3a0_smews/smews_xueyong",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 308801211,
+    "orEnemy": 2,
+    "skinId": 308804,
+    "effectHang": "",
+    "effectPath": "v3a0_smews/smews_xueyong",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 30880131,
+    "orEnemy": 2,
+    "skinId": 308804,
+    "effectHang": "",
+    "effectPath": "v3a0_smews/smews_kuangre",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 30880132,
+    "orEnemy": 2,
+    "skinId": 308804,
+    "effectHang": "",
+    "effectPath": "v3a0_smews/smews_kuangre",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 308801311,
+    "orEnemy": 2,
+    "skinId": 308804,
+    "effectHang": "",
+    "effectPath": "v3a0_smews/smews_kuangre",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 308801321,
+    "orEnemy": 2,
+    "skinId": 308804,
+    "effectHang": "",
+    "effectPath": "v3a0_smews/smews_kuangre",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 30940121,
+    "orEnemy": 2,
+    "skinId": 309403,
+    "effectHang": "",
+    "effectPath": "buff/buff_hudun_joefire_01",
+    "triggerEffect": "",
+    "delEffect": "buff/buff_hudun_joefire_02",
+    "triggerAudio": 0,
+    "delAudio": 430940342,
+    "audio": 430940341
+  },
+  {
+    "buffId": 30940131,
+    "orEnemy": 2,
+    "skinId": 309403,
+    "effectHang": "",
+    "effectPath": "buff/buff_hudun_joefire_01",
+    "triggerEffect": "",
+    "delEffect": "buff/buff_hudun_joefire_02",
+    "triggerAudio": 0,
+    "delAudio": 430940342,
+    "audio": 430940341
+  },
+  {
+    "buffId": 30940141,
+    "orEnemy": 2,
+    "skinId": 309403,
+    "effectHang": "",
+    "effectPath": "buff/buff_hudun_joefire_01",
+    "triggerEffect": "",
+    "delEffect": "buff/buff_hudun_joefire_02",
+    "triggerAudio": 0,
+    "delAudio": 430940342,
+    "audio": 430940341
+  },
+  {
+    "buffId": 30940122,
+    "orEnemy": 2,
+    "skinId": 309403,
+    "effectHang": "",
+    "effectPath": "buff/buff_hudun_joefire_01",
+    "triggerEffect": "",
+    "delEffect": "buff/buff_hudun_joefire_02",
+    "triggerAudio": 0,
+    "delAudio": 430940342,
+    "audio": 430940341
+  },
+  {
+    "buffId": 30940132,
+    "orEnemy": 2,
+    "skinId": 309403,
+    "effectHang": "",
+    "effectPath": "buff/buff_hudun_joefire_01",
+    "triggerEffect": "",
+    "delEffect": "buff/buff_hudun_joefire_02",
+    "triggerAudio": 0,
+    "delAudio": 430940342,
+    "audio": 430940341
+  },
+  {
+    "buffId": 30940142,
+    "orEnemy": 2,
+    "skinId": 309403,
+    "effectHang": "",
+    "effectPath": "buff/buff_hudun_joefire_01",
+    "triggerEffect": "",
+    "delEffect": "buff/buff_hudun_joefire_02",
+    "triggerAudio": 0,
+    "delAudio": 430940342,
+    "audio": 430940341
+  },
+  {
+    "buffId": 421060121,
+    "orEnemy": 2,
+    "skinId": 309403,
+    "effectHang": "",
+    "effectPath": "buff/buff_hudun_joefire_01",
+    "triggerEffect": "",
+    "delEffect": "buff/buff_hudun_joefire_02",
+    "triggerAudio": 0,
+    "delAudio": 430940342,
+    "audio": 430940341
+  },
+  {
+    "buffId": 421060122,
+    "orEnemy": 2,
+    "skinId": 309403,
+    "effectHang": "",
+    "effectPath": "buff/buff_hudun_joefire_01",
+    "triggerEffect": "",
+    "delEffect": "buff/buff_hudun_joefire_02",
+    "triggerAudio": 0,
+    "delAudio": 430940342,
+    "audio": 430940341
+  },
+  {
+    "buffId": 6210736,
+    "orEnemy": 2,
+    "skinId": 309403,
+    "effectHang": "",
+    "effectPath": "buff/buff_hudun_joefire_01",
+    "triggerEffect": "",
+    "delEffect": "buff/buff_hudun_joefire_02",
+    "triggerAudio": 0,
+    "delAudio": 430940342,
+    "audio": 430940341
+  },
+  {
+    "buffId": 230002,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectHang": "",
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 230003,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectHang": "",
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 230004,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectHang": "",
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 230006,
+    "orEnemy": 2,
+    "skinId": 308404,
+    "effectHang": "",
+    "effectPath": "v2a3_getian_rajj/getian_rajj_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1167,17 +1939,9 @@
     "effectPath": "v2a8_luxi/luxi_innate_01",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
-  },
-  {
-    "buffId": 228107,
-    "orEnemy": 2,
-    "skinId": 302504,
-    "effectHang": "",
-    "effectPath": "buff/pre_xt_innate01",
-    "triggerEffect": "",
-    "delEffect": "",
-    "audio": 430250401
   },
   {
     "buffId": 30512,
@@ -1187,6 +1951,8 @@
     "effectPath": "buff/s01_wenni_innate_1_special3",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1197,6 +1963,8 @@
     "effectPath": "buff/s01_wenni_innate_1_special3",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1207,6 +1975,8 @@
     "effectPath": "buff/s01_wenni_innate_2_special3",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1217,6 +1987,8 @@
     "effectPath": "buff/s01_wenni_innate_2_special3",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1227,6 +1999,8 @@
     "effectPath": "buff/s01_wenni_innate_2_special3",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1237,6 +2011,8 @@
     "effectPath": "buff/s01_wenni_innate_2_special3",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1247,6 +2023,8 @@
     "effectPath": "s01_makusi/makusi_biaozhu",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1257,6 +2035,8 @@
     "effectPath": "v2a2_makusi/makusi_biaozhu",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1267,6 +2047,8 @@
     "effectPath": "s01_makusi/makusi_biaozhu",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 0
   },
   {
@@ -1277,6 +2059,8 @@
     "effectPath": "s01_weila/weila_innate_04",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1287,6 +2071,8 @@
     "effectPath": "s01_weila/weila_innate_04",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1297,6 +2083,8 @@
     "effectPath": "s01_weila/weila_innate_04",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1307,6 +2095,8 @@
     "effectPath": "s01_weila/weila_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1317,6 +2107,8 @@
     "effectPath": "s01_weila/weila_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1327,6 +2119,8 @@
     "effectPath": "s01_weila/weila_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1337,6 +2131,8 @@
     "effectPath": "s01_weila/weila_innate_05",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870444
   },
   {
@@ -1347,6 +2143,8 @@
     "effectPath": "s01_weila/weila_innate_05",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870444
   },
   {
@@ -1357,6 +2155,8 @@
     "effectPath": "s01_weila/weila_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1367,6 +2167,8 @@
     "effectPath": "s01_weila/weila_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1377,6 +2179,8 @@
     "effectPath": "s01_weila/weila_innate_05",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870444
   },
   {
@@ -1387,6 +2191,8 @@
     "effectPath": "s01_weila/weila_innate_05",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870444
   },
   {
@@ -1397,6 +2203,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_05",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870344
   },
   {
@@ -1407,6 +2215,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_05",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870344
   },
   {
@@ -1417,6 +2227,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_05",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870344
   },
   {
@@ -1427,6 +2239,8 @@
     "effectPath": "s01_weila/weila_innate_05",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870444
   },
   {
@@ -1437,6 +2251,8 @@
     "effectPath": "s01_weila/weila_innate_04",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1447,6 +2263,8 @@
     "effectPath": "s01_weila/weila_innate_04",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1457,6 +2275,8 @@
     "effectPath": "s01_weila/weila_innate_04",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1467,6 +2287,8 @@
     "effectPath": "s01_weila/weila_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1477,6 +2299,8 @@
     "effectPath": "s01_weila/weila_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1487,6 +2311,8 @@
     "effectPath": "s01_weila/weila_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1497,6 +2323,8 @@
     "effectPath": "s01_weila/weila_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1507,6 +2335,8 @@
     "effectPath": "s01_weila/weila_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870443
   },
   {
@@ -1517,6 +2347,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03_bsq",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -1527,6 +2359,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03_bsq",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -1537,6 +2371,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03_bsq",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -1547,6 +2383,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -1557,6 +2395,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -1567,6 +2407,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -1577,6 +2419,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   },
   {
@@ -1587,6 +2431,8 @@
     "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
     "triggerEffect": "",
     "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
     "audio": 430870343
   }
 ]

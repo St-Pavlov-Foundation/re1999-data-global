@@ -92,8 +92,29 @@ function var_0_0.setSelectTag(arg_11_0, arg_11_1)
 	end
 end
 
-function var_0_0.getFilterModel(arg_12_0)
+function var_0_0.setSelectFilterId(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:getFilterModel2()
+
+	if var_12_0 then
+		var_12_0:selectIndex(arg_12_1)
+		arg_12_0:handleItemChanged()
+	end
+end
+
+function var_0_0.getFilterModel(arg_13_0)
 	return Activity104EquipItemComposeModel.instance.tagModel
+end
+
+function var_0_0.getFilterModel2(arg_14_0)
+	return Activity104EquipItemComposeModel.instance.countModel
+end
+
+function var_0_0.autoSelectEquip(arg_15_0)
+	if not Activity104EquipItemComposeModel.instance:checkAutoSelectEquip() then
+		GameFacade.showToast(ToastEnum.SeasonEquipAutoSelectFail)
+	end
+
+	arg_15_0:notifyUpdateView()
 end
 
 var_0_0.instance = var_0_0.New()

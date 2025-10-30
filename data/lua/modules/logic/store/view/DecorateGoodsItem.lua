@@ -11,6 +11,12 @@ function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0._goItem = gohelper.findChild(arg_1_0._goroot, "#go_Item")
 	arg_1_0._simagebanner = gohelper.findChildSingleImage(arg_1_0._goroot, "#go_Item/#simage_banner")
 	arg_1_0._simagerareicon = gohelper.findChildSingleImage(arg_1_0._goroot, "#go_Item/#simage_icon")
+	arg_1_0._godeadline = gohelper.findChild(arg_1_0._goroot, "#go_Item/#go_deadline")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0._goroot, "#go_Item/#go_deadline/#txt_time")
+	arg_1_0._godeadlineEffect = gohelper.findChild(arg_1_0._goroot, "#go_Item/#go_deadline/#effect")
+	arg_1_0._imagetimebg = gohelper.findChildImage(arg_1_0._goroot, "#go_Item/#go_deadline/timebg")
+	arg_1_0._imagetimeicon = gohelper.findChildImage(arg_1_0._goroot, "#go_Item/#go_deadline/#txt_time/timeicon")
+	arg_1_0._txtformat = gohelper.findChildText(arg_1_0._goroot, "#go_Item/#go_deadline/#txt_time/#txt_format")
 	arg_1_0._gonewtag = gohelper.findChild(arg_1_0._goroot, "#go_Item/#go_newtag")
 	arg_1_0._gotag = gohelper.findChild(arg_1_0._goroot, "#go_Item/#go_tag")
 	arg_1_0._godiscount = gohelper.findChild(arg_1_0._goroot, "#go_Item/#go_tag/#go_discount")
@@ -96,6 +102,7 @@ end
 function var_0_0._refreshUI(arg_7_0)
 	arg_7_0:_refreshDetail()
 	arg_7_0:_refreshCost()
+	arg_7_0:_refreshDeadline()
 	arg_7_0:_refreshReddot()
 end
 
@@ -142,9 +149,10 @@ function var_0_0._refreshDetail(arg_8_0)
 	if arg_8_0._decorateConfig.onlineTag == 0 then
 		gohelper.setActive(arg_8_0._gonewtag, false)
 	else
-		local var_8_2 = DecorateStoreModel.instance:isGoodRead(arg_8_0._mo.goodsId)
+		local var_8_2 = arg_8_0:_isShowReddot()
+		local var_8_3 = DecorateStoreModel.instance:isGoodRead(arg_8_0._mo.goodsId)
 
-		gohelper.setActive(arg_8_0._gonewtag, not var_8_2)
+		gohelper.setActive(arg_8_0._gonewtag, not var_8_3 and not var_8_2)
 	end
 
 	if arg_8_0._mo.config.maxBuyCount > 0 and arg_8_0._mo.buyCount >= arg_8_0._mo.config.maxBuyCount then
@@ -154,15 +162,15 @@ function var_0_0._refreshDetail(arg_8_0)
 		gohelper.setActive(arg_8_0._gosoldout, false)
 	end
 
-	local var_8_3 = DecorateStoreModel.instance:getGoodItemLimitTime(arg_8_0._mo.goodsId) > 0 and DecorateStoreModel.instance:getGoodDiscount(arg_8_0._mo.goodsId) or 100
+	local var_8_4 = DecorateStoreModel.instance:getGoodItemLimitTime(arg_8_0._mo.goodsId) > 0 and DecorateStoreModel.instance:getGoodDiscount(arg_8_0._mo.goodsId) or 100
 
-	var_8_3 = var_8_3 == 0 and 100 or var_8_3
+	var_8_4 = var_8_4 == 0 and 100 or var_8_4
 
-	if var_8_3 > 0 and var_8_3 < 100 then
+	if var_8_4 > 0 and var_8_4 < 100 then
 		gohelper.setActive(arg_8_0._godiscount, false)
 		gohelper.setActive(arg_8_0._godiscount2, true)
 
-		arg_8_0._txtdiscount2.text = string.format("-%s%%", var_8_3)
+		arg_8_0._txtdiscount2.text = string.format("-%s%%", var_8_4)
 	else
 		gohelper.setActive(arg_8_0._godiscount2, false)
 	end
@@ -260,57 +268,99 @@ function var_0_0._refreshCost(arg_10_0)
 	end
 end
 
-function var_0_0.playIn(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_2 or not arg_11_1 then
-		arg_11_0:_startPlayIn(true)
+function var_0_0._isShowReddot(arg_11_0)
+	local var_11_0 = StoreModel.instance:isTabSecondRedDotShow(arg_11_0._mo.belongStoreId)
+	local var_11_1 = string.nilorempty(arg_11_0._mo.config.cost)
+	local var_11_2 = arg_11_0._mo.config.maxBuyCount > 0 and arg_11_0._mo.buyCount >= arg_11_0._mo.config.maxBuyCount
+
+	return var_11_0 and var_11_1 and not var_11_2
+end
+
+function var_0_0._refreshDeadline(arg_12_0)
+	local var_12_0 = arg_12_0:_isShowReddot()
+	local var_12_1 = DecorateStoreModel.instance:isGoodRead(arg_12_0._mo.goodsId)
+
+	if var_12_0 or not var_12_1 then
+		gohelper.setActive(arg_12_0._godeadline, false)
 
 		return
 	end
 
-	arg_11_0._index = arg_11_1
+	local var_12_2 = 0
+	local var_12_3 = false
 
-	if arg_11_0._isFold then
-		arg_11_0:_startPlayIn()
+	if not string.nilorempty(arg_12_0._mo.config.offlineTime) and type(arg_12_0._mo.config.offlineTime) == "string" then
+		local var_12_4 = TimeUtil.stringToTimestamp(arg_12_0._mo.config.offlineTime) - ServerTime.now()
+
+		var_12_2 = var_12_4 > 0 and var_12_4 or 0
+	end
+
+	local var_12_5 = var_12_2 > 0 and var_12_2 < TimeUtil.OneWeekSecond
+
+	if var_12_5 then
+		local var_12_6
+
+		arg_12_0._txttime.text, arg_12_0._txtformat.text, var_12_6 = TimeUtil.secondToRoughTime(math.floor(var_12_2), true)
+
+		SLFramework.UGUI.GuiHelper.SetColor(arg_12_0._txttime, var_12_6 and "#98D687" or "#E99B56")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_12_0._txtformat, var_12_6 and "#98D687" or "#E99B56")
+		gohelper.setActive(arg_12_0._godeadlineEffect, not var_12_6)
+		UISpriteSetMgr.instance:setCommonSprite(arg_12_0._imagetimebg, var_12_6 and "daojishi_01" or "daojishi_02")
+		UISpriteSetMgr.instance:setCommonSprite(arg_12_0._imagetimeicon, var_12_6 and "daojishiicon_01" or "daojishiicon_02")
+	end
+
+	gohelper.setActive(arg_12_0._godeadline, var_12_5)
+end
+
+function var_0_0.playIn(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_2 or not arg_13_1 then
+		arg_13_0:_startPlayIn(true)
 
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_11_0._startPlayIn, arg_11_0, 0.03 * math.ceil(arg_11_0._index / 4))
+	arg_13_0._index = arg_13_1
+
+	if arg_13_0._isFold then
+		arg_13_0:_startPlayIn()
+
+		return
+	end
+
+	TaskDispatcher.runDelay(arg_13_0._startPlayIn, arg_13_0, 0.03 * math.ceil(arg_13_0._index / 4))
 end
 
-function var_0_0.playOut(arg_12_0)
-	arg_12_0._anim:Play("out", 0, 0)
+function var_0_0.playOut(arg_14_0)
+	arg_14_0._anim:Play("out", 0, 0)
 end
 
-function var_0_0._startPlayIn(arg_13_0, arg_13_1)
-	gohelper.setActive(arg_13_0.go, true)
+function var_0_0._startPlayIn(arg_15_0, arg_15_1)
+	gohelper.setActive(arg_15_0.go, true)
 
-	if not arg_13_1 then
-		arg_13_0._anim:Play("in", 0, 0)
+	if not arg_15_1 then
+		arg_15_0._anim:Play("in", 0, 0)
 	end
 end
 
-function var_0_0.setFold(arg_14_0, arg_14_1)
-	arg_14_0._isFold = arg_14_1
+function var_0_0.setFold(arg_16_0, arg_16_1)
+	arg_16_0._isFold = arg_16_1
 
-	arg_14_0:_refreshUI()
+	arg_16_0:_refreshUI()
 end
 
-function var_0_0._refreshReddot(arg_15_0)
-	local var_15_0 = StoreModel.instance:isTabSecondRedDotShow(arg_15_0._mo.belongStoreId)
-	local var_15_1 = string.nilorempty(arg_15_0._mo.config.cost)
-	local var_15_2 = var_15_0 and var_15_1 and not DecorateStoreModel.instance:isDecorateGoodItemHas(arg_15_0._mo.goodsId)
+function var_0_0._refreshReddot(arg_17_0)
+	local var_17_0 = arg_17_0:_isShowReddot()
 
-	gohelper.setActive(arg_15_0._goreddot, var_15_2)
+	gohelper.setActive(arg_17_0._goreddot, var_17_0)
 end
 
-function var_0_0.hide(arg_16_0)
-	gohelper.setActive(arg_16_0.go, false)
+function var_0_0.hide(arg_18_0)
+	gohelper.setActive(arg_18_0.go, false)
 end
 
-function var_0_0.destroy(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0._startPlayIn, arg_17_0)
-	arg_17_0:_removeEvents()
+function var_0_0.destroy(arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0._startPlayIn, arg_19_0)
+	arg_19_0:_removeEvents()
 end
 
 return var_0_0

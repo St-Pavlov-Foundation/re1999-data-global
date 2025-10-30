@@ -18,7 +18,15 @@ function var_0_0.removeEventListeners(arg_4_0)
 	return
 end
 
-function var_0_0.onDestroy(arg_5_0)
+function var_0_0.canPlayAnimState(arg_5_0, arg_5_1)
+	return true
+end
+
+function var_0_0.replaceAnimState(arg_6_0, arg_6_1)
+	return arg_6_1
+end
+
+function var_0_0.onDestroy(arg_7_0)
 	return
 end
 

@@ -161,6 +161,10 @@ function var_0_0.isFormulaUnlock(arg_8_0, arg_8_1)
 	local var_8_3
 	local var_8_4 = RoomConfig.instance:getFormulaConfig(arg_8_0)
 
+	if not var_8_4 then
+		return
+	end
+
 	if RoomModel.instance:getRoomLevel() < var_8_4.needRoomLevel then
 		var_8_0 = false
 		var_8_1 = var_8_4.needRoomLevel
@@ -1132,17 +1136,16 @@ function var_0_0.getTotalCanCombineNum(arg_39_0)
 	return 0
 end
 
-function var_0_0.getEasyCombineFormulaAndCostItemList(arg_40_0, arg_40_1)
+function var_0_0.getEasyCombineFormulaAndCostItemList(arg_40_0, arg_40_1, arg_40_2)
+	if not var_0_0.getFormulaProduceItem(arg_40_0) then
+		return false
+	end
+
 	local var_40_0 = {
 		formulaIdList = {},
 		itemTypeDic = {}
 	}
-
-	if not var_0_0.getFormulaProduceItem(arg_40_0) then
-		return false, var_40_0
-	end
-
-	local var_40_1 = var_0_0._canCombineQuantityTimeFormula(var_40_0, arg_40_0, arg_40_1)
+	local var_40_1 = var_0_0._canCombineQuantityTimeFormula(var_40_0, arg_40_0, arg_40_1, arg_40_2)
 
 	table.insert(var_40_0.formulaIdList, {
 		formulaId = arg_40_0,
@@ -1231,32 +1234,149 @@ function var_0_0._canCombineQuantityTimeFormula(arg_42_0, arg_42_1, arg_42_2, ar
 	return true
 end
 
-function var_0_0.changeStrUID2FormulaIdAndTreeLevel(arg_43_0)
-	local var_43_0 = 0
-	local var_43_1 = RoomFormulaModel.DEFAULT_TREE_LEVEL
-
+function var_0_0.canEasyCombineItems(arg_43_0, arg_43_1)
 	if not arg_43_0 then
-		logError("RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel error, strId nil")
-
-		return var_43_0, var_43_1
+		return false
 	end
 
-	local var_43_2 = string.splitToNumber(arg_43_0, "#")
-
-	if not var_43_2[1] or not var_43_2[2] then
-		logError("RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel format error,id:" .. arg_43_0 .. " must be formulaId#treeLevel")
-
-		return var_43_0, var_43_1
+	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Room) then
+		return false
 	end
 
-	local var_43_3 = var_43_2[1]
-	local var_43_4 = var_43_2[2]
+	if not var_0_0.hasUnlockLine(RoomProductLineEnum.ProductItemType.Change) then
+		return false
+	end
 
-	return var_43_3, var_43_4
+	local var_43_0 = false
+	local var_43_1
+	local var_43_2 = {}
+	local var_43_3 = RoomProductionModel.instance:getLineMO(RoomProductLineEnum.Line.Spring).level
+
+	for iter_43_0, iter_43_1 in ipairs(arg_43_0) do
+		local var_43_4 = RoomConfig.instance:getItemFormulaId(iter_43_1.type, iter_43_1.id)
+
+		if not var_0_0.isFormulaUnlock(var_43_4, var_43_3) then
+			return var_43_0
+		end
+
+		var_43_2[#var_43_2 + 1] = {
+			formulaId = var_43_4,
+			count = iter_43_1.quantity
+		}
+	end
+
+	local var_43_5, var_43_6 = var_0_0.getEasyCombineFormulaListAndCostItemList(var_43_2, arg_43_1)
+	local var_43_7 = var_43_6
+
+	return var_43_5, var_43_7
 end
 
-function var_0_0.formatItemNum(arg_44_0)
-	return arg_44_0 > 99 and "99+" or tostring(arg_44_0)
+function var_0_0.getEasyCombineFormulaListAndCostItemList(arg_44_0, arg_44_1)
+	if not arg_44_0 or #arg_44_0 <= 0 then
+		return false
+	end
+
+	local var_44_0 = true
+	local var_44_1 = {}
+	local var_44_2 = {}
+	local var_44_3 = {}
+
+	arg_44_1 = arg_44_1 or {}
+
+	for iter_44_0, iter_44_1 in ipairs(arg_44_0) do
+		local var_44_4 = iter_44_1.formulaId
+		local var_44_5 = iter_44_1.count
+		local var_44_6, var_44_7 = var_0_0.getEasyCombineFormulaAndCostItemList(var_44_4, var_44_5, arg_44_1)
+
+		if not var_44_6 then
+			var_44_0 = false
+
+			break
+		end
+
+		for iter_44_2, iter_44_3 in ipairs(var_44_7.formulaIdList) do
+			local var_44_8 = iter_44_3.formulaId
+			local var_44_9 = iter_44_3.count
+
+			var_44_1[var_44_8] = (var_44_1[var_44_8] or 0) + (var_44_9 or 0)
+
+			if not var_44_2[var_44_8] or iter_44_2 < var_44_2[var_44_8] then
+				var_44_2[var_44_8] = iter_44_2
+			end
+		end
+
+		for iter_44_4, iter_44_5 in pairs(var_44_7.itemTypeDic) do
+			for iter_44_6, iter_44_7 in pairs(iter_44_5) do
+				var_0_1(var_44_3, iter_44_4, iter_44_6, iter_44_7)
+			end
+		end
+	end
+
+	local var_44_10
+
+	if var_44_0 then
+		local var_44_11 = {}
+
+		for iter_44_8, iter_44_9 in pairs(var_44_1) do
+			var_44_11[#var_44_11 + 1] = {
+				formulaId = iter_44_8,
+				count = iter_44_9
+			}
+		end
+
+		table.sort(var_44_11, function(arg_45_0, arg_45_1)
+			return var_44_2[arg_45_0.formulaId] < var_44_2[arg_45_1.formulaId]
+		end)
+
+		var_44_10 = {
+			formulaIdList = var_44_11,
+			itemTypeDic = var_44_3
+		}
+	end
+
+	return var_44_0, var_44_10
+end
+
+function var_0_0.changeStrUID2FormulaIdAndTreeLevel(arg_46_0)
+	local var_46_0 = 0
+	local var_46_1 = RoomFormulaModel.DEFAULT_TREE_LEVEL
+
+	if not arg_46_0 then
+		logError("RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel error, strId nil")
+
+		return var_46_0, var_46_1
+	end
+
+	local var_46_2 = string.splitToNumber(arg_46_0, "#")
+
+	if not var_46_2[1] or not var_46_2[2] then
+		logError("RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel format error,id:" .. arg_46_0 .. " must be formulaId#treeLevel")
+
+		return var_46_0, var_46_1
+	end
+
+	local var_46_3 = var_46_2[1]
+	local var_46_4 = var_46_2[2]
+
+	return var_46_3, var_46_4
+end
+
+function var_0_0.formatItemNum(arg_47_0)
+	return arg_47_0 > 99 and "99+" or tostring(arg_47_0)
+end
+
+function var_0_0.openRoomFormulaMsgBoxView(arg_48_0, arg_48_1, arg_48_2, arg_48_3, arg_48_4, arg_48_5, arg_48_6)
+	local var_48_0 = {
+		costItemAndFormulaIdList = arg_48_0,
+		produceDataList = arg_48_1,
+		lineId = arg_48_2,
+		callback = arg_48_3,
+		callbackObj = arg_48_4,
+		combineCb = arg_48_5,
+		combineCbObj = arg_48_6
+	}
+
+	ViewMgr.instance:openView(ViewName.RoomFormulaMsgBoxView, var_48_0)
 end
 
 return var_0_0

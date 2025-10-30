@@ -18,5 +18,25 @@
     "passiveSkills": "12310034#12310035",
     "replacePassiveSkills": "12310026#12310036|12310027#12310037|1239005031#1239005032",
     "resMaxVal": 100
+  },
+  {
+    "bossId": 6,
+    "form": 1,
+    "skinId": 670401,
+    "coldTime": 0,
+    "activeSkills": "13010011#4#0#4",
+    "passiveSkills": "13020011#33011000",
+    "replacePassiveSkills": "1303020#13030201",
+    "resMaxVal": 4
+  },
+  {
+    "bossId": 6,
+    "form": 2,
+    "skinId": 670401,
+    "coldTime": 0,
+    "activeSkills": "13010012#5#0#5",
+    "passiveSkills": "13020012#33011000",
+    "replacePassiveSkills": "1303020#13030202",
+    "resMaxVal": 5
   }
 ]

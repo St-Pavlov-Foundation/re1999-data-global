@@ -2,14 +2,16 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	orEnemy = 2,
+	triggerAudio = 8,
 	effectHang = 4,
 	buffId = 1,
 	skinId = 3,
-	delEffect = 7,
-	triggerEffect = 6,
+	orEnemy = 2,
+	delAudio = 9,
 	effectPath = 5,
-	audio = 8
+	audio = 10,
+	triggerEffect = 6,
+	delEffect = 7
 }
 local var_0_2 = {
 	"buffId",

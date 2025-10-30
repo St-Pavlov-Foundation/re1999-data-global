@@ -79,6 +79,7 @@ function var_0_0.initViewContent(arg_5_0)
 
 	arg_5_0.btnLockLifeMySide = arg_5_0:addButton(arg_5_0:getLineGroup(), "我方锁血", arg_5_0.onClickLockLifeMySide, arg_5_0)
 	arg_5_0.btnLockLifeEnemySide = arg_5_0:addButton(arg_5_0:getLineGroup(), "敌方锁血", arg_5_0.onClickLockLifeEnemySide, arg_5_0)
+	arg_5_0.btnLogSkin = arg_5_0:addButton(arg_5_0:getLineGroup(), "打印皮肤id", arg_5_0.onClickLogSkinBtn, arg_5_0)
 
 	arg_5_0:addLineIndex()
 
@@ -163,6 +164,26 @@ function var_0_0.initViewContent(arg_5_0)
 		}
 	})
 	arg_5_0.btnPlayTimeline = arg_5_0:addButton(arg_5_0:getLineGroup(), "播放timeline", arg_5_0.onClickBtnPlayTimeline, arg_5_0)
+
+	arg_5_0:addLineIndex()
+	arg_5_0:addLabel(arg_5_0:getLineGroup(), "播放指定动作：", {
+		fsize = 30,
+		w = 100
+	})
+
+	arg_5_0.actionNameInput = arg_5_0:addInputText(arg_5_0:getLineGroup(), "", "动作名称")
+	arg_5_0.actionEntityDrop = arg_5_0:addDropDown(arg_5_0:getLineGroup(), "动作播放者:", arg_5_0.entityNameList, nil, nil, {
+		total_w = 400,
+		fsize = 25,
+		drop_w = 300,
+		label_w = 100,
+		offsetMax = {
+			-100,
+			0
+		}
+	})
+	arg_5_0.btnPlayAction = arg_5_0:addButton(arg_5_0:getLineGroup(), "播放动作", arg_5_0.onClickBtnPlayAction, arg_5_0)
+	arg_5_0.btnActionReset = arg_5_0:addButton(arg_5_0:getLineGroup(), "动作复原", arg_5_0.onClickBtnActionReset, arg_5_0)
 
 	arg_5_0:addTitleSplitLine("奥术飞弹GM")
 	arg_5_0:addLineIndex()
@@ -566,6 +587,8 @@ function var_0_0.onClickBtnMount(arg_37_0)
 		var_37_6:setLocalPos(0, 0, 0)
 		FightRenderOrderMgr.instance:onAddEffectWrap(var_37_4.id, var_37_6)
 	end
+
+	arg_37_0:closeThis()
 end
 
 function var_0_0.onClickBtnPlayTimeline(arg_38_0)
@@ -640,6 +663,56 @@ function var_0_0.onClickReplaceFloatPrefab(arg_41_0)
 
 	GMController.instance:setFightFloatPath(var_41_1)
 	GMController.instance:replaceGetFloatPathFunc()
+end
+
+function var_0_0.onClickBtnPlayAction(arg_42_0)
+	local var_42_0 = arg_42_0.actionNameInput:GetText()
+
+	if string.nilorempty(var_42_0) then
+		return
+	end
+
+	local var_42_1 = arg_42_0.actionEntityDrop:GetValue() + 1
+	local var_42_2 = arg_42_0.entityList[var_42_1]
+	local var_42_3 = var_42_2 and FightHelper.getEntity(var_42_2.id)
+
+	if not var_42_3 then
+		ToastController.instance:showToastWithString("没有找到对应 entity 实体 ！")
+
+		return
+	end
+
+	var_42_3.spine:play(var_42_0, nil, true)
+	arg_42_0:closeThis()
+end
+
+function var_0_0.onClickBtnActionReset(arg_43_0)
+	local var_43_0 = arg_43_0.actionEntityDrop:GetValue() + 1
+	local var_43_1 = arg_43_0.entityList[var_43_0]
+	local var_43_2 = var_43_1 and FightHelper.getEntity(var_43_1.id)
+
+	if not var_43_2 then
+		ToastController.instance:showToastWithString("没有找到对应 entity 实体 ！")
+
+		return
+	end
+
+	var_43_2:resetAnimState()
+	arg_43_0:closeThis()
+end
+
+function var_0_0.onClickLogSkinBtn(arg_44_0)
+	for iter_44_0, iter_44_1 in ipairs(arg_44_0.entityList) do
+		local var_44_0 = FightHelper.getEntity(iter_44_1.id)
+		local var_44_1 = iter_44_1:getCO()
+		local var_44_2 = var_44_1 and var_44_1.name
+
+		var_44_2 = var_44_2 or iter_44_1.id
+
+		local var_44_3 = string.format("entityId : %s, entityName : %s, skinId : %s, goName : %s", iter_44_1.id, var_44_2, iter_44_1.skin, var_44_0.go.name)
+
+		logError(var_44_3)
+	end
 end
 
 return var_0_0

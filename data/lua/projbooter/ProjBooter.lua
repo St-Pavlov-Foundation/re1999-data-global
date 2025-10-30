@@ -18,6 +18,7 @@ addGlobalModule("projbooter.ui.BootLoadingView", "BootLoadingView")
 addGlobalModule("projbooter.ui.BootNoticeView", "BootNoticeView")
 addGlobalModule("projbooter.ui.BootVoiceView", "BootVoiceView")
 addGlobalModule("projbooter.ui.BootVersionView", "BootVersionView")
+addGlobalModule("projbooter.hotupdate.HotUpdateProgress", "HotUpdateProgress")
 addGlobalModule("projbooter.hotupdate.HotUpdateMgr", "HotUpdateMgr")
 addGlobalModule("projbooter.hotupdate.VersionValidator", "VersionValidator")
 addGlobalModule("projbooter.hotupdate.VoiceHttpGetter", "VoiceHttpGetter")
@@ -28,6 +29,7 @@ addGlobalModule("projbooter.hotupdate.optionpackage.OptionPackageDownloader", "O
 addGlobalModule("projbooter.hotupdate.optionpackage.OptionPackageHttpWorker", "OptionPackageHttpWorker")
 addGlobalModule("projbooter.hotupdate.optionpackage.HotUpateOptionPackageAdapter", "HotUpateOptionPackageAdapter")
 addGlobalModule("projbooter.hotupdate.HotUpdateOptionPackageMgr", "HotUpdateOptionPackageMgr")
+addGlobalModule("projbooter.hotupdate.HotUpdateTipsHttpGetter", "HotUpdateTipsHttpGetter")
 addGlobalModule("projbooter.audio.BootAudioMgr", "BootAudioMgr")
 addGlobalModule("projbooter.sdk.SDKNativeUtil", "SDKNativeUtil")
 addGlobalModule("projbooter.sdk.SDKMgr", "SDKMgr")
@@ -166,13 +168,18 @@ function var_0_0.onCheckVersion(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4
 	local var_11_2 = string.split(arg_11_1, ".")
 
 	if HotUpdateVoiceMgr.EnableEditorDebug or var_11_1[1] == var_11_2[1] then
-		HotUpdateVoiceMgr.instance:showDownload(arg_11_0.startUpdate, arg_11_0)
+		HotUpdateVoiceMgr.instance:showDownload(arg_11_0.getOptionalPackageInfo, arg_11_0)
 	else
 		arg_11_0:startUpdate()
 	end
 end
 
-function var_0_0._onFrame(arg_12_0)
+function var_0_0.getOptionalPackageInfo(arg_12_0)
+	logNormal("ProjBooter:getOptionalPackageInfo")
+	HotUpdateOptionPackageMgr.instance:showDownload(arg_12_0.startUpdate, arg_12_0, HotUpateOptionPackageAdapter.New())
+end
+
+function var_0_0._onFrame(arg_13_0)
 	if UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.Escape) then
 		SDKMgr.instance:exitSdk()
 
@@ -180,104 +187,98 @@ function var_0_0._onFrame(arg_12_0)
 	end
 end
 
-function var_0_0.startUpdate(arg_13_0)
+function var_0_0.startUpdate(arg_14_0)
 	logNormal("ProjBooter:startUpdate")
 
-	arg_13_0._needCopyAb = BootNativeUtil.isAndroid() and GameResMgr:CopyInnerAbToPersistPath(arg_13_0.onCopyAbRes, arg_13_0)
+	arg_14_0._needCopyAb = BootNativeUtil.isAndroid() and GameResMgr:CopyInnerAbToPersistPath(arg_14_0.onCopyAbRes, arg_14_0)
 
-	HotUpdateMgr.instance:start(arg_13_0.onUpdateFinish, arg_13_0, arg_13_0.onUpdateDownloadFinish, arg_13_0)
+	HotUpdateMgr.instance:start(arg_14_0.onUpdateFinish, arg_14_0, arg_14_0.onUpdateDownloadFinish, arg_14_0)
 end
 
-function var_0_0.onCopyAbRes(arg_14_0, arg_14_1)
-	if arg_14_1 == -1 then
+function var_0_0.onCopyAbRes(arg_15_0, arg_15_1)
+	if arg_15_1 == -1 then
 		HotUpdateMgr.instance:stop()
 
-		local var_14_0 = {
+		local var_15_0 = {
 			title = booterLang("copy_ab"),
 			content = booterLang("copy_ab_error"),
 			leftMsg = booterLang("exit"),
-			leftCb = arg_14_0.quitGame,
-			leftCbObj = arg_14_0
+			leftCb = arg_15_0.quitGame,
+			leftCbObj = arg_15_0
 		}
 
-		var_14_0.rightMsg = nil
+		var_15_0.rightMsg = nil
 
-		BootMsgBox.instance:show(var_14_0)
+		BootMsgBox.instance:show(var_15_0)
 		BootMsgBox.instance:disable()
 	else
-		logNormal("ProjBooter:onCopyAbRes progress:" .. tostring(arg_14_1))
+		logNormal("ProjBooter:onCopyAbRes progress:" .. tostring(arg_15_1))
 
-		if arg_14_0._hotupdateDownloadFinished or arg_14_0._hotupdateFinished then
-			if not arg_14_0._copyProgress then
-				arg_14_0._copyProgress = 0
+		if arg_15_0._hotupdateDownloadFinished or arg_15_0._hotupdateFinished then
+			if not arg_15_0._copyProgress then
+				arg_15_0._copyProgress = 0
 			end
 
-			local var_14_1 = (arg_14_1 - arg_14_0._copyProgress) / (1 - arg_14_0._copyProgress)
+			local var_15_1 = (arg_15_1 - arg_15_0._copyProgress) / (1 - arg_15_0._copyProgress)
 
-			BootLoadingView.instance:show(var_14_1, booterLang("unpacking"))
+			BootLoadingView.instance:show(var_15_1, booterLang("unpacking"))
 		else
-			arg_14_0._copyProgress = arg_14_1
+			arg_15_0._copyProgress = arg_15_1
 		end
 
-		if arg_14_1 >= 1 then
-			arg_14_0._abCopyFinished = true
+		if arg_15_1 >= 1 then
+			arg_15_0._abCopyFinished = true
 
-			if arg_14_0._hotupdateFinished then
-				arg_14_0:hotUpdateVoice()
+			if arg_15_0._hotupdateFinished then
+				arg_15_0:hotUpdateVoice()
 			end
 		end
 	end
 end
 
-function var_0_0.onUpdateDownloadFinish(arg_15_0)
-	arg_15_0._hotupdateDownloadFinished = true
+function var_0_0.onUpdateDownloadFinish(arg_16_0)
+	arg_16_0._hotupdateDownloadFinished = true
 
 	logNormal("ProjBooter:onUpdateDownloadFinish()")
 end
 
-function var_0_0.onUpdateFinish(arg_16_0)
+function var_0_0.onUpdateFinish(arg_17_0)
 	logNormal("ProjBooter:onUpdateFinish")
 
-	arg_16_0._hotupdateFinished = true
+	arg_17_0._hotupdateFinished = true
 
-	if arg_16_0._needCopyAb and not arg_16_0._abCopyFinished then
+	if arg_17_0._needCopyAb and not arg_17_0._abCopyFinished then
 		return
 	end
 
-	arg_16_0:hotUpdateVoice()
+	arg_17_0:hotUpdateVoice()
 end
 
-function var_0_0.hotUpdateVoice(arg_17_0)
-	if arg_17_0._skipHotUpdate then
+function var_0_0.hotUpdateVoice(arg_18_0)
+	if arg_18_0._skipHotUpdate then
 		logNormal("ProjBooter:hotUpdateVoice skip")
 
 		if HotUpdateOptionPackageMgr.EnableEditorDebug then
-			arg_17_0:showDownloadOptionalPackage()
+			arg_18_0:startUpdateOptionalPackage()
 
 			return
 		end
 
-		arg_17_0:loadLogicLua()
+		arg_18_0:loadLogicLua()
 	else
 		logNormal("ProjBooter:hotUpdateVoice")
-		HotUpdateVoiceMgr.instance:startDownload(arg_17_0.showDownloadOptionalPackage, arg_17_0)
+		HotUpdateVoiceMgr.instance:startDownload(arg_18_0.startUpdateOptionalPackage, arg_18_0)
 	end
 end
 
-function var_0_0.showDownloadOptionalPackage(arg_18_0)
-	logNormal("ProjBooter:showDownloadOptionalPackage")
-	HotUpdateOptionPackageMgr.instance:showDownload(arg_18_0.hotUpdateOptionalPackage, arg_18_0, HotUpateOptionPackageAdapter.New())
-end
-
-function var_0_0.hotUpdateOptionalPackage(arg_19_0)
-	logNormal("ProjBooter:hotUpdateOptionalPackage")
+function var_0_0.startUpdateOptionalPackage(arg_19_0)
+	logNormal("ProjBooter:startUpdateOptionalPackage")
 	HotUpdateOptionPackageMgr.instance:startDownload(arg_19_0.loadLogicLua, arg_19_0)
 end
 
 function var_0_0.loadLogicLua(arg_20_0)
 	SLFramework.FileHelper.ClearDir(SLFramework.FrameworkSettings.PersistentResTmepDir2)
 	logNormal("ProjBooter:loadLogicLua")
-	BootLoadingView.instance:show(0.1, booterLang("loading_res"))
 	BootLoadingView.instance:showFixBtn()
 
 	if not GameResMgr.NeedLoadLuaBytes then
@@ -291,7 +292,6 @@ end
 
 function var_0_0.OnLogicLuaLoaded(arg_21_0)
 	UpdateBeat:Remove(arg_21_0._onFrame, arg_21_0)
-	BootLoadingView.instance:show(0.2, booterLang("loading_res"))
 	logNormal("ProjBooter:OnLogicLuaLoaded, start game logic!")
 	addGlobalModule("modules.ProjModuleStart", "ProjModuleStart")
 end

@@ -62,13 +62,14 @@ function var_0_0.updateStatus(arg_5_0)
 	arg_5_0:resetGo()
 
 	local var_5_0 = arg_5_0:getCurStress()
+	local var_5_1 = FightEnum.MonsterId2StressThresholdDict[arg_5_0.monsterId]
 
-	arg_5_0.status = FightHelper.getStressStatus(var_5_0)
+	arg_5_0.status = FightHelper.getStressStatus(var_5_0, var_5_1)
 
-	local var_5_1 = arg_5_0.status and arg_5_0.statusDict[arg_5_0.status]
+	local var_5_2 = arg_5_0.status and arg_5_0.statusDict[arg_5_0.status]
 
-	if var_5_1 then
-		gohelper.setActive(var_5_1.go, true)
+	if var_5_2 then
+		gohelper.setActive(var_5_2.go, true)
 	end
 end
 

@@ -1,0 +1,34 @@
+[
+  {
+    "buffId": 90071,
+    "skinId": 0,
+    "effectHang": "mountroot",
+    "effectPath": "v1a9_luxi/luxi_innate_01",
+    "audio": 430860101,
+    "duration": 2.5
+  },
+  {
+    "buffId": 90071,
+    "skinId": 308603,
+    "effectHang": "mountroot",
+    "effectPath": "v2a8_luxi/luxi_innate_01",
+    "audio": 430860301,
+    "duration": 2.5
+  },
+  {
+    "buffId": 90071,
+    "skinId": 312801,
+    "effectHang": "mountroot",
+    "effectPath": "v3a0_kr/kr_innate_03",
+    "audio": 431280153,
+    "duration": 2.5
+  },
+  {
+    "buffId": 90071,
+    "skinId": 312802,
+    "effectHang": "mountroot",
+    "effectPath": "v3a0_kr/kr_innate_03",
+    "audio": 431280153,
+    "duration": 2.5
+  }
+]

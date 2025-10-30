@@ -278,7 +278,7 @@ function var_0_0.onReceiveRoomLevelUpReply(arg_34_0, arg_34_1, arg_34_2)
 	RoomMapModel.instance:setRoomLeveling(false)
 end
 
-function var_0_0.sendStartProductionLineRequest(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+function var_0_0.sendStartProductionLineRequest(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_4, arg_35_5)
 	local var_35_0 = RoomModule_pb.StartProductionLineRequest()
 
 	var_35_0.id = arg_35_1
@@ -304,7 +304,7 @@ function var_0_0.sendStartProductionLineRequest(arg_35_0, arg_35_1, arg_35_2, ar
 		end
 	end
 
-	return arg_35_0:sendMsg(var_35_0)
+	return arg_35_0:sendMsg(var_35_0, arg_35_4, arg_35_5)
 end
 
 function var_0_0.onReceiveStartProductionLineReply(arg_36_0, arg_36_1, arg_36_2)

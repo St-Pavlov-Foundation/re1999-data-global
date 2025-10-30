@@ -168,6 +168,15 @@ function var_0_0._initInfo(arg_1_0)
 		})
 	end
 
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.CommandStation) then
+		table.insert(arg_1_0.GetInfoFuncList, {
+			CommandStationRpc.sendGetCommandPostInfoRequest,
+			CommandStationRpc.instance,
+			"sendGetCommandPostInfoRequest",
+			false
+		})
+	end
+
 	if RougeOutsideController.instance:isOpen() then
 		local var_1_0 = RougeOutsideModel.instance:season()
 

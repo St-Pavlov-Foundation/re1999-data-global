@@ -549,6 +549,105 @@
     "firstReward": "1#620103#1|1#620102#20|1#620101#250|1#111012#2"
   },
   {
+    "towerId": 2,
+    "layerId": 13,
+    "preLayerId": 12,
+    "openRound": 4,
+    "episodeId": 90100213,
+    "bossLevel": 10,
+    "firstReward": "1#620103#1|1#620102#20|1#620101#250|1#110803#2"
+  },
+  {
+    "towerId": 6,
+    "layerId": 1,
+    "preLayerId": 0,
+    "openRound": 0,
+    "episodeId": 90100601,
+    "bossLevel": 1,
+    "firstReward": "1#620102#5|1#620101#80|1#110502#5"
+  },
+  {
+    "towerId": 6,
+    "layerId": 2,
+    "preLayerId": 1,
+    "openRound": 0,
+    "episodeId": 90100602,
+    "bossLevel": 2,
+    "firstReward": "1#620102#5|1#620101#80|1#110602#5"
+  },
+  {
+    "towerId": 6,
+    "layerId": 3,
+    "preLayerId": 2,
+    "openRound": 0,
+    "episodeId": 90100603,
+    "bossLevel": 3,
+    "firstReward": "1#620103#2|1#620102#10|1#620101#100|1#110703#2"
+  },
+  {
+    "towerId": 6,
+    "layerId": 4,
+    "preLayerId": 3,
+    "openRound": 0,
+    "episodeId": 90100604,
+    "bossLevel": 4,
+    "firstReward": "1#620102#5|1#620101#80|1#110702#5"
+  },
+  {
+    "towerId": 6,
+    "layerId": 5,
+    "preLayerId": 4,
+    "openRound": 0,
+    "episodeId": 90100605,
+    "bossLevel": 5,
+    "firstReward": "1#620103#2|1#620102#15|1#620101#150|1#111012#2"
+  },
+  {
+    "towerId": 6,
+    "layerId": 6,
+    "preLayerId": 5,
+    "openRound": 0,
+    "episodeId": 90100606,
+    "bossLevel": 6,
+    "firstReward": "1#620102#5|1#620101#80|1#110802#5"
+  },
+  {
+    "towerId": 6,
+    "layerId": 7,
+    "preLayerId": 6,
+    "openRound": 0,
+    "episodeId": 90100607,
+    "bossLevel": 7,
+    "firstReward": "1#620102#5|1#620101#80|1#110902#5"
+  },
+  {
+    "towerId": 6,
+    "layerId": 8,
+    "preLayerId": 7,
+    "openRound": 0,
+    "episodeId": 90100608,
+    "bossLevel": 8,
+    "firstReward": "1#620103#1|1#620102#15|1#620101#200|1#110803#2"
+  },
+  {
+    "towerId": 6,
+    "layerId": 9,
+    "preLayerId": 8,
+    "openRound": 0,
+    "episodeId": 90100609,
+    "bossLevel": 9,
+    "firstReward": "1#620102#5|1#620101#80|1#110102#5"
+  },
+  {
+    "towerId": 6,
+    "layerId": 10,
+    "preLayerId": 9,
+    "openRound": 0,
+    "episodeId": 90100610,
+    "bossLevel": 10,
+    "firstReward": "1#620103#1|1#620102#20|1#620101#250|1#110903#2"
+  },
+  {
     "towerId": 3,
     "layerId": 13,
     "preLayerId": 12,

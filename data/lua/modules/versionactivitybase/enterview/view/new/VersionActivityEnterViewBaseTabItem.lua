@@ -129,8 +129,16 @@ function var_0_0.getAnchorY(arg_16_0)
 	return recthelper.getAnchorY(arg_16_0.rectTr)
 end
 
-function var_0_0.dispose(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0.refreshTag, arg_17_0)
+function var_0_0.getAnchorX(arg_17_0)
+	return recthelper.getAnchorX(arg_17_0.rectTr)
+end
+
+function var_0_0.getWidth(arg_18_0)
+	return recthelper.getWidth(arg_18_0.rectTr)
+end
+
+function var_0_0.dispose(arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0.refreshTag, arg_19_0)
 end
 
 return var_0_0

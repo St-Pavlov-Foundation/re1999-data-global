@@ -90,7 +90,7 @@ function var_0_0._gameCfgWhiteSplitToNumber(arg_3_0, arg_3_1, arg_3_2)
 end
 
 function var_0_0._gameCfgWhiteToNumber(arg_4_0, arg_4_1)
-	if whiteCfg and arg_4_1 then
+	if arg_4_0 and arg_4_1 then
 		arg_4_0[tonumber(arg_4_1)] = true
 	end
 end

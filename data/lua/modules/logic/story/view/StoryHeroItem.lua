@@ -479,7 +479,7 @@ function var_0_0._waitHeroSpineLoaded(arg_21_0)
 	TaskDispatcher.cancelTask(arg_21_0._waitHeroSpineLoaded, arg_21_0)
 
 	local var_21_3 = arg_21_0._heroCo.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
-	local var_21_4 = not string.match(arg_21_0._heroSpineGo.name, "305301_yaxian") or arg_21_0._heroSpine._curBodyName ~= "b_idle2"
+	local var_21_4 = true
 	local var_21_5 = "flag_skipvoicestop|"
 
 	if string.find(var_21_3, var_21_5) then

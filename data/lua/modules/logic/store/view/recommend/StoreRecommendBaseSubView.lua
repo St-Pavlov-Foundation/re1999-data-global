@@ -50,7 +50,15 @@ function var_0_0.stopAnimator(arg_7_0)
 	end
 end
 
-function var_0_0.onClose(arg_8_0)
+function var_0_0.getTabIndex(arg_8_0, arg_8_1)
+	if arg_8_0.viewContainer and arg_8_0.viewContainer.getRecommendTabIndex and (arg_8_0.config or arg_8_1) then
+		return arg_8_0.viewContainer:getRecommendTabIndex(arg_8_1 or arg_8_0.config.id)
+	end
+
+	return 1
+end
+
+function var_0_0.onClose(arg_9_0)
 	return
 end
 

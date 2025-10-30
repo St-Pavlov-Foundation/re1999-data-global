@@ -177,7 +177,7 @@ function var_0_0._getTabUnlockStates(arg_19_0)
 	for iter_19_0, iter_19_1 in ipairs(arg_19_0._stageLayerInfos) do
 		local var_19_2 = iter_19_1.layer
 
-		var_19_1[iter_19_0] = BossRushRedModel.instance:getIsNewUnlockStageLayer(var_19_0, var_19_2)
+		var_19_1[iter_19_0] = iter_19_1.isOpen and BossRushRedModel.instance:getIsNewUnlockStageLayer(var_19_0, var_19_2) or false
 	end
 
 	return var_19_1

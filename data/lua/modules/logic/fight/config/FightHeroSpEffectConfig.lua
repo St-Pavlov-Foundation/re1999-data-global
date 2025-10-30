@@ -20,7 +20,10 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"fight_sp_effect_wuerlixi",
 		"fight_sp_effect_wuerlixi_timeline",
 		"fight_sp_effect_wuerlixi_float",
+		"fight_sp_wuerlixi_monster_star_effect",
+		"fight_sp_wuerlixi_monster_star_position_offset",
 		"fight_luxi_skin_effect",
+		"fight_sp_sm",
 		"hero3124_buff_talent"
 	}
 end

@@ -112,6 +112,41 @@
     "rules": "1#9280207"
   },
   {
+    "id": 2019,
+    "name": "language_10089205",
+    "icon": "1021",
+    "desc": "language_10087726",
+    "rules": "1#8300101"
+  },
+  {
+    "id": 2020,
+    "name": "language_10089206",
+    "icon": "1020",
+    "desc": "language_10087727",
+    "rules": "1#8300102"
+  },
+  {
+    "id": 2021,
+    "name": "language_10089207",
+    "icon": "1023",
+    "desc": "language_10087728",
+    "rules": "1#8300103"
+  },
+  {
+    "id": 2022,
+    "name": "language_10089208",
+    "icon": "1024",
+    "desc": "language_10087729",
+    "rules": "1#8300104"
+  },
+  {
+    "id": 2023,
+    "name": "language_10089167",
+    "icon": "1022",
+    "desc": "language_10087730",
+    "rules": "1#8300105"
+  },
+  {
     "id": 2024,
     "name": "language_10076296",
     "icon": "1026",

@@ -2,8 +2,10 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	id = 1,
 	weight = 4,
+	isOnline = 6,
+	type = 5,
+	id = 1,
 	pic = 2,
 	scenes = 3
 }

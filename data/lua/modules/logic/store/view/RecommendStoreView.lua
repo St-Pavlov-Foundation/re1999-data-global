@@ -37,7 +37,8 @@ function var_0_0._onClickRecommend(arg_4_0)
 			StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 				[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 				[StatEnum.EventProperties.RecommendPageId] = var_4_1.id,
-				[StatEnum.EventProperties.RecommendPageName] = var_4_1.name
+				[StatEnum.EventProperties.RecommendPageName] = var_4_1.name,
+				[StatEnum.EventProperties.RecommendPageRank] = arg_4_0:getIndexByTabId(var_4_0)
 			})
 			GameFacade.jumpByAdditionParam(var_4_1.systemJumpCode)
 		end
@@ -253,31 +254,36 @@ function var_0_0._refreshTabsItem(arg_18_0)
 		arg_18_0._selectSecondTabId = var_18_0[1].id
 	end
 
+	arg_18_0._tabIdList = {}
+
 	local var_18_3 = {}
 
 	for iter_18_2 = 1, #var_18_0 do
-		arg_18_0:_refreshSecondTabs(iter_18_2, var_18_0[iter_18_2])
+		local var_18_4 = var_18_0[iter_18_2]
+
+		table.insert(arg_18_0._tabIdList, var_18_4.id)
+		arg_18_0:_refreshSecondTabs(iter_18_2, var_18_4)
 		gohelper.setActive(arg_18_0._categoryItemContainer[iter_18_2].go, true)
 		gohelper.setActive(arg_18_0._categoryItemContainer[iter_18_2].sliderGo, true)
 
-		local var_18_4 = arg_18_0._categoryItemContainer[iter_18_2].go.transform.rect.width
+		local var_18_5 = arg_18_0._categoryItemContainer[iter_18_2].go.transform.rect.width
 
-		if var_18_4 > 0 then
-			local var_18_5 = var_18_4
-			local var_18_6 = 0
+		if var_18_5 > 0 then
+			local var_18_6 = var_18_5
+			local var_18_7 = 0
 
 			if iter_18_2 > 1 and arg_18_0._categoryItemContainer[iter_18_2 - 1] and var_18_3[iter_18_2 - 1] and var_18_3[iter_18_2 - 1].totalWidth then
-				var_18_5 = var_18_3[iter_18_2 - 1].totalWidth + var_18_4
+				var_18_6 = var_18_3[iter_18_2 - 1].totalWidth + var_18_5
 
-				local var_18_7 = arg_18_0._categoryscroll.transform.rect.width
+				local var_18_8 = arg_18_0._categoryscroll.transform.rect.width
 
-				var_18_6 = -var_18_5 + var_18_7
+				var_18_7 = -var_18_6 + var_18_8
 			end
 
 			var_18_3[iter_18_2] = {
-				width = var_18_4,
-				totalWidth = var_18_5,
-				pos = Mathf.Min(var_18_6, 0)
+				width = var_18_5,
+				totalWidth = var_18_6,
+				pos = Mathf.Min(var_18_7, 0)
 			}
 		end
 	end
@@ -292,18 +298,18 @@ function var_0_0._refreshTabsItem(arg_18_0)
 	end
 
 	if var_18_3 and var_18_3[arg_18_0._nowIndex] and var_18_3[arg_18_0._nowIndex].pos then
-		local var_18_8 = var_18_3[arg_18_0._nowIndex].pos
+		local var_18_9 = var_18_3[arg_18_0._nowIndex].pos
 
-		recthelper.setAnchorX(arg_18_0._categorycontentTrans, var_18_8)
+		recthelper.setAnchorX(arg_18_0._categorycontentTrans, var_18_9)
 	else
-		local var_18_9 = -300 * (arg_18_0._nowIndex - 5) - 50
-		local var_18_10 = -300 * (arg_18_0._nowIndex - 1)
-		local var_18_11 = recthelper.getAnchorX(arg_18_0._categorycontentTrans)
+		local var_18_10 = -300 * (arg_18_0._nowIndex - 5) - 50
+		local var_18_11 = -300 * (arg_18_0._nowIndex - 1)
+		local var_18_12 = recthelper.getAnchorX(arg_18_0._categorycontentTrans)
 
-		if var_18_11 < var_18_10 then
+		if var_18_12 < var_18_11 then
+			recthelper.setAnchorX(arg_18_0._categorycontentTrans, var_18_11)
+		elseif var_18_10 < var_18_12 then
 			recthelper.setAnchorX(arg_18_0._categorycontentTrans, var_18_10)
-		elseif var_18_9 < var_18_11 then
-			recthelper.setAnchorX(arg_18_0._categorycontentTrans, var_18_9)
 		end
 	end
 
@@ -552,6 +558,10 @@ function var_0_0.onDestroyView(arg_34_0)
 	TaskDispatcher.cancelTask(arg_34_0._toNextTab, arg_34_0)
 	TaskDispatcher.cancelTask(arg_34_0._onSwitchCloseAnimDone, arg_34_0)
 	TaskDispatcher.cancelTask(arg_34_0._resetIgnoreClick, arg_34_0)
+end
+
+function var_0_0.getIndexByTabId(arg_35_0, arg_35_1)
+	return tabletool.indexOf(arg_35_0._tabIdList, arg_35_1) or 1
 end
 
 return var_0_0

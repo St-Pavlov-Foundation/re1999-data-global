@@ -116,11 +116,7 @@ function var_0_0._onSkillCardClick(arg_7_0, arg_7_1)
 		local var_7_2, var_7_3 = CharacterModel.instance:isNeedShowNewSkillReddot(arg_7_0._heroMo)
 
 		if var_7_2 and var_7_3 then
-			PlayerModel.instance:setPropKeyValue(PlayerEnum.SimpleProperty.NuoDiKaNewSkill, arg_7_0._heroId, 1)
-
-			local var_7_4 = PlayerModel.instance:getPropKeyValueString(PlayerEnum.SimpleProperty.NuoDiKaNewSkill)
-
-			PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.NuoDiKaNewSkill, var_7_4)
+			CharacterModel.instance:cencelCardReddot(arg_7_0._heroId)
 		end
 
 		arg_7_0:_showSkillReddot(false)
@@ -128,7 +124,7 @@ function var_0_0._onSkillCardClick(arg_7_0, arg_7_1)
 end
 
 function var_0_0._replaceSkill(arg_8_0)
-	CharacterModel.instance:setPlayReplaceSkillAnim(arg_8_0._heroMo)
+	CharacterModel.instance:cencelPlayReplaceSkillAnim(arg_8_0._heroMo)
 	arg_8_0:_refreshSkillUI()
 end
 

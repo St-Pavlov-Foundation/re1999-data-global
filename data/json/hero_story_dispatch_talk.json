@@ -2926,5 +2926,165 @@
     "color": "C66030",
     "speaker": "language_10082450",
     "heroid": "3084"
+  },
+  {
+    "id": 1025101,
+    "type": 1,
+    "content": "language_10088926",
+    "color": "",
+    "speaker": "language_10088927",
+    "heroid": ""
+  },
+  {
+    "id": 1025102,
+    "type": 1,
+    "content": "language_10088928",
+    "color": "",
+    "speaker": "language_10088929",
+    "heroid": ""
+  },
+  {
+    "id": 1025103,
+    "type": 1,
+    "content": "language_10088930",
+    "color": "",
+    "speaker": "language_10088931",
+    "heroid": ""
+  },
+  {
+    "id": 1025104,
+    "type": 2,
+    "content": "language_10088932",
+    "color": "C66030",
+    "speaker": "language_10088933",
+    "heroid": "3061"
+  },
+  {
+    "id": 1025201,
+    "type": 1,
+    "content": "language_10088934",
+    "color": "",
+    "speaker": "language_10088935",
+    "heroid": ""
+  },
+  {
+    "id": 1025202,
+    "type": 1,
+    "content": "language_10088936",
+    "color": "",
+    "speaker": "language_10088937",
+    "heroid": ""
+  },
+  {
+    "id": 1025203,
+    "type": 1,
+    "content": "language_10088938",
+    "color": "",
+    "speaker": "language_10088939",
+    "heroid": ""
+  },
+  {
+    "id": 1025204,
+    "type": 2,
+    "content": "language_10088940",
+    "color": "C66030",
+    "speaker": "language_10088941",
+    "heroid": "3075"
+  },
+  {
+    "id": 1025301,
+    "type": 1,
+    "content": "language_10088942",
+    "color": "",
+    "speaker": "language_10088943",
+    "heroid": ""
+  },
+  {
+    "id": 1025302,
+    "type": 1,
+    "content": "language_10088944",
+    "color": "",
+    "speaker": "language_10088945",
+    "heroid": ""
+  },
+  {
+    "id": 1025303,
+    "type": 1,
+    "content": "language_10088946",
+    "color": "",
+    "speaker": "language_10088947",
+    "heroid": ""
+  },
+  {
+    "id": 1025304,
+    "type": 2,
+    "content": "language_10088948",
+    "color": "C66030",
+    "speaker": "language_10088949",
+    "heroid": "3009"
+  },
+  {
+    "id": 1025401,
+    "type": 1,
+    "content": "language_10088950",
+    "color": "",
+    "speaker": "language_10088951",
+    "heroid": ""
+  },
+  {
+    "id": 1025402,
+    "type": 1,
+    "content": "language_10088952",
+    "color": "",
+    "speaker": "language_10088953",
+    "heroid": ""
+  },
+  {
+    "id": 1025403,
+    "type": 1,
+    "content": "language_10088954",
+    "color": "",
+    "speaker": "language_10088955",
+    "heroid": ""
+  },
+  {
+    "id": 1025404,
+    "type": 2,
+    "content": "language_10088956",
+    "color": "C66030",
+    "speaker": "language_10088957",
+    "heroid": "3036"
+  },
+  {
+    "id": 1025501,
+    "type": 1,
+    "content": "language_10088958",
+    "color": "",
+    "speaker": "language_10088959",
+    "heroid": ""
+  },
+  {
+    "id": 1025502,
+    "type": 1,
+    "content": "language_10088960",
+    "color": "",
+    "speaker": "language_10088961",
+    "heroid": ""
+  },
+  {
+    "id": 1025503,
+    "type": 1,
+    "content": "language_10088962",
+    "color": "",
+    "speaker": "language_10088963",
+    "heroid": ""
+  },
+  {
+    "id": 1025504,
+    "type": 2,
+    "content": "language_10088964",
+    "color": "C66030",
+    "speaker": "language_10088965",
+    "heroid": "3071"
   }
 ]

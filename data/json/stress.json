@@ -8588,5 +8588,35 @@
     "type": "resolute",
     "pressParam": "1#1",
     "rule": "9270200"
+  },
+  {
+    "id": 930045401,
+    "identity": 930045401,
+    "desc": "",
+    "title": "",
+    "condition": 0,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "930045401"
+  },
+  {
+    "id": 900042101,
+    "identity": 900042101,
+    "desc": "",
+    "title": "",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "900042101"
+  },
+  {
+    "id": 900042102,
+    "identity": 900042102,
+    "desc": "",
+    "title": "",
+    "condition": 0,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "900042102"
   }
 ]

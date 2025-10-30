@@ -1378,6 +1378,32 @@
     "duplicateItem": ""
   },
   {
+    "id": 57148,
+    "name": "language_10089284",
+    "useDesc": "language_10022818",
+    "desc": "language_10022819",
+    "icon": "1303126",
+    "rare": 3,
+    "nameEn": "The Harvest Shed",
+    "sources": "22",
+    "heroId": 3126,
+    "age": 1,
+    "duplicateItem": ""
+  },
+  {
+    "id": 57149,
+    "name": "language_10089285",
+    "useDesc": "language_10022818",
+    "desc": "language_10022819",
+    "icon": "1303128",
+    "rare": 3,
+    "nameEn": "The Harvest Shed",
+    "sources": "22",
+    "heroId": 3128,
+    "age": 1,
+    "duplicateItem": ""
+  },
+  {
     "id": 65128,
     "name": "language_10078023",
     "useDesc": "language_10022818",

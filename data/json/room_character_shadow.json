@@ -260,6 +260,31 @@
     "shadow": 1
   },
   {
+    "skinId": 312601,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 312602,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 312801,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 312802,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 310503,
+    "animName": "idle_room",
+    "shadow": 1
+  },
+  {
     "skinId": 312301,
     "animName": "interact",
     "shadow": 1

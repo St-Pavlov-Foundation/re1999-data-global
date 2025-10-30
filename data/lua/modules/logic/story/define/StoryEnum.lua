@@ -102,10 +102,11 @@ var_0_0.BgRgbSplitType = {
 	Trans = 0
 }
 var_0_0.AudioOrderType = {
-	Continuity = 0,
-	Single = 1,
 	Destroy = 2,
-	Adjust = 3
+	Single = 1,
+	SetSwitch = 4,
+	Adjust = 3,
+	Continuity = 0
 }
 var_0_0.AudioInType = {
 	FadeIn = 1,
@@ -120,7 +121,10 @@ var_0_0.EffectOrderType = {
 	ContinuityUnscale = 3,
 	Single = 1,
 	SingleUnscale = 4,
-	Continuity = 0
+	NoSettingUnScale = 6,
+	NoSetting = 5,
+	Continuity = 0,
+	FollowBg = 7
 }
 var_0_0.EffectInType = {
 	FadeIn = 1,

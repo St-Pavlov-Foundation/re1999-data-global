@@ -68,9 +68,20 @@ function var_0_0._btnbuyOnClick(arg_6_0)
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 		[StatEnum.EventProperties.RecommendPageId] = tostring(arg_6_0.config and arg_6_0.config.id or ""),
-		[StatEnum.EventProperties.RecommendPageName] = arg_6_0.config and arg_6_0.config.name or arg_6_0.__cname
+		[StatEnum.EventProperties.RecommendPageName] = arg_6_0.config and arg_6_0.config.name or arg_6_0.__cname,
+		[StatEnum.EventProperties.RecommendPageRank] = arg_6_0:getTabIndex()
 	})
-	GameFacade.jumpByAdditionParam(arg_6_0.config.systemJumpCode)
+
+	local var_6_0 = string.splitToNumber(arg_6_0.config.systemJumpCode, "#")
+
+	if var_6_0[2] then
+		local var_6_1 = var_6_0[2]
+		local var_6_2 = StoreModel.instance:getGoodsMO(var_6_1)
+
+		StoreController.instance:openPackageStoreGoodsView(var_6_2)
+	else
+		GameFacade.jumpByAdditionParam(arg_6_0.config.systemJumpCode)
+	end
 end
 
 function var_0_0._editableInitView(arg_7_0)

@@ -1,0 +1,18 @@
+[
+  {
+    "skinId": 312801,
+    "effect": "v3a0_kr/kr_innate_01",
+    "effectHangPoint": "mountroot",
+    "audio": 431280151,
+    "duration": 1.3,
+    "waitTime": 0.333
+  },
+  {
+    "skinId": 312802,
+    "effect": "v3a0_kr/kr_innate_01",
+    "effectHangPoint": "mountroot",
+    "audio": 431280151,
+    "duration": 1.3,
+    "waitTime": 0.333
+  }
+]

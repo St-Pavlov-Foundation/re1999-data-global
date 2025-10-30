@@ -71,6 +71,9 @@ end
 
 function var_0_0.onOpen(arg_6_0)
 	StoreRecommendBaseSubView.onOpen(arg_6_0)
+
+	arg_6_0.config = StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.ChargeView)
+
 	StoreController.instance:dispatchEvent(StoreEvent.SetAutoToNextPage, false)
 
 	arg_6_0._curCharIdx = 0
@@ -114,12 +117,23 @@ function var_0_0._toNextChar(arg_9_0)
 end
 
 function var_0_0._onClick(arg_10_0)
-	GameFacade.jumpByAdditionParam(var_0_6 .. "#" .. StoreEnum.NewbiePackId)
+	local var_10_0 = string.splitToNumber(arg_10_0.config.systemJumpCode, "#")
+
+	if var_10_0[2] then
+		local var_10_1 = var_10_0[2]
+		local var_10_2 = StoreModel.instance:getGoodsMO(var_10_1)
+
+		StoreController.instance:openPackageStoreGoodsView(var_10_2)
+	else
+		GameFacade.jumpByAdditionParam(var_0_6 .. "#" .. StoreEnum.NewbiePackId)
+	end
+
 	AudioMgr.instance:trigger(2000001)
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 		[StatEnum.EventProperties.RecommendPageId] = "712",
-		[StatEnum.EventProperties.RecommendPageName] = "新人邀约"
+		[StatEnum.EventProperties.RecommendPageName] = "新人邀约",
+		[StatEnum.EventProperties.RecommendPageRank] = arg_10_0:getTabIndex()
 	})
 end
 

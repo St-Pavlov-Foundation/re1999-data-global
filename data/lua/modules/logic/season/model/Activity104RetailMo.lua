@@ -30,17 +30,29 @@ function var_0_0._buildEquipList(arg_3_0, arg_3_1)
 	end
 
 	table.sort(var_3_0, function(arg_4_0, arg_4_1)
-		local var_4_0 = SeasonConfig.instance:getSeasonEquipCo(arg_4_0)
-		local var_4_1 = SeasonConfig.instance:getSeasonEquipCo(arg_4_1)
-
-		if var_4_0.isOptional ~= var_4_1.isOptional then
-			return var_4_0.isOptional > var_4_1.isOptional
-		else
-			return var_4_0.rare > var_4_1.rare
-		end
+		return var_0_0.sortEquipList(arg_4_0, arg_4_1, arg_3_0.tag)
 	end)
 
 	return var_3_0
+end
+
+function var_0_0.sortEquipList(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = SeasonConfig.instance:getSeasonEquipCo(arg_5_0)
+	local var_5_1 = SeasonConfig.instance:getSeasonEquipCo(arg_5_1)
+
+	if var_5_0.isOptional ~= var_5_1.isOptional then
+		return var_5_0.isOptional > var_5_1.isOptional
+	end
+
+	if var_5_0.rare ~= var_5_1.rare then
+		return var_5_0.rare > var_5_1.rare
+	end
+
+	if SeasonEquipMetaUtils.isContainTag(var_5_0, arg_5_2) then
+		return true
+	end
+
+	return false
 end
 
 return var_0_0

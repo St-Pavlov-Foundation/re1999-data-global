@@ -530,25 +530,6 @@ function var_0_0.refreshCharacterBook(arg_32_0, arg_32_1)
 	end
 end
 
-local var_0_1 = {
-	jp = {
-		transformWidth = 170,
-		transformAnchorX = 55,
-		enableAutoSizing = true,
-		fontSizeMax = 26,
-		fontSizeMin = 20,
-		characterSpacing = -9
-	},
-	en = {
-		transformWidth = 170,
-		transformAnchorX = 55,
-		enableAutoSizing = true,
-		fontSizeMax = 26,
-		fontSizeMin = 20,
-		characterSpacing = 0
-	}
-}
-
 function var_0_0.showBookItem(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4)
 	local var_33_0 = arg_33_0:_isAllHeroType()
 
@@ -581,24 +562,6 @@ function var_0_0.showBookItem(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4)
 
 			for iter_33_0 = 1, 6 do
 				gohelper.setActive(arg_33_1.gostars[iter_33_0], iter_33_0 <= arg_33_2.rare + 1)
-			end
-
-			if arg_33_3 == 5 or arg_33_3 == 7 then
-				local var_33_4 = var_0_1[var_33_3]
-
-				if var_33_4 then
-					local var_33_5 = arg_33_1.txtname:GetComponent(typeof(TMPro.TextMeshProUGUI))
-
-					recthelper.setWidth(arg_33_1.txtname.transform, var_33_4.transformWidth)
-					recthelper.setAnchorX(arg_33_1.txtname.transform, var_33_4.transformAnchorX)
-
-					if var_33_5 then
-						var_33_5.enableAutoSizing = var_33_4.enableAutoSizing
-						var_33_5.fontSizeMin = var_33_4.fontSizeMin
-						var_33_5.fontSizeMax = var_33_4.fontSizeMax
-						arg_33_1.txtname.characterSpacing = var_33_4.characterSpacing
-					end
-				end
 			end
 
 			arg_33_1.txtname.text = arg_33_2.name

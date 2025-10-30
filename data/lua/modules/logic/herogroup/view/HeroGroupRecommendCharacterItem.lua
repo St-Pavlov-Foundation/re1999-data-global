@@ -42,6 +42,10 @@ function var_0_0.onSelect(arg_5_0, arg_5_1)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickRecommendCharacter)
 	end
 
+	if arg_5_0._mo.isEmpty then
+		return
+	end
+
 	gohelper.setActive(arg_5_0._gounselectedbg, not arg_5_0._isSelect)
 	gohelper.setActive(arg_5_0._gobeselectedbg, arg_5_0._isSelect)
 
@@ -111,6 +115,8 @@ function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
 	arg_8_0._txtrank.text = GameUtil.fillZeroInLeft(arg_8_0._index, 2)
 
 	if arg_8_0._mo.isEmpty then
+		SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._txtrank, "#73726F")
+		ZProj.UGUIHelper.SetColorAlpha(arg_8_0._txtrank, 0.15)
 		gohelper.setActive(arg_8_0._gounselectedbg, true)
 		gohelper.setActive(arg_8_0._gobeselectedbg, false)
 

@@ -11,6 +11,7 @@ function var_0_0.initViewContent(arg_2_0)
 		return
 	end
 
+	arg_2_0:addButton("L0", "发送战斗日志到企业微信", arg_2_0.onClickSendFightLogBtn, arg_2_0)
 	arg_2_0:addButton("L1", "打印出角色平均伤害，平均承伤，平均治疗", arg_2_0._onClickShowBattleCharaterParam, arg_2_0)
 	arg_2_0:addButton("L2", "开启战斗录制", arg_2_0._onClickEnableGMFightRecord, arg_2_0)
 	arg_2_0:addButton("L2", "保存战斗录制", arg_2_0._onClickSaveRecord, arg_2_0)
@@ -72,67 +73,45 @@ function var_0_0.initViewContent(arg_2_0)
 	arg_2_0._isInit = true
 end
 
-function var_0_0.onGMAiJiAoQteAutoSequence(arg_3_0, arg_3_1)
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMAiJiAoQteAutoSequence, arg_3_1)
+function var_0_0.onClickSendFightLogBtn(arg_3_0)
+	SendWeWorkFileHelper.sendFightLogFile()
 end
 
-function var_0_0.onClickSetAiJiAoAutoSequence(arg_4_0)
-	local var_4_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.GMAiJiAoQteAutoSequence, "")
-	local var_4_1 = FightDataModel.instance:initAiJiAoAutoSequenceForGM()
+function var_0_0.onGMAiJiAoQteAutoSequence(arg_4_0, arg_4_1)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMAiJiAoQteAutoSequence, arg_4_1)
+end
 
-	var_4_1.autoSequence = {}
-	var_4_1.index = 0
+function var_0_0.onClickSetAiJiAoAutoSequence(arg_5_0)
+	local var_5_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.GMAiJiAoQteAutoSequence, "")
+	local var_5_1 = FightDataModel.instance:initAiJiAoAutoSequenceForGM()
 
-	for iter_4_0 = 1, #var_4_0 do
-		local var_4_2 = string.sub(var_4_0, iter_4_0, iter_4_0)
-		local var_4_3 = tonumber(var_4_2)
+	var_5_1.autoSequence = {}
+	var_5_1.index = 0
 
-		if var_4_3 then
-			table.insert(var_4_1.autoSequence, var_4_3)
+	for iter_5_0 = 1, #var_5_0 do
+		local var_5_2 = string.sub(var_5_0, iter_5_0, iter_5_0)
+		local var_5_3 = tonumber(var_5_2)
+
+		if var_5_3 then
+			table.insert(var_5_1.autoSequence, var_5_3)
 		end
 	end
 end
 
-function var_0_0.onClickRemoveAiJiAoAutoSequence(arg_5_0)
+function var_0_0.onClickRemoveAiJiAoAutoSequence(arg_6_0)
 	FightDataModel.instance.aiJiAoAutoSequenceForGM = nil
 end
 
-function var_0_0.onClickShowRightElements(arg_6_0)
+function var_0_0.onClickShowRightElements(arg_7_0)
 	if not ViewMgr.instance:getContainer(ViewName.FightView) then
 		return
 	end
 
-	local var_6_0 = arg_6_0.rightTopElementsInput:GetText()
-
-	if string.nilorempty(var_6_0) then
-		for iter_6_0, iter_6_1 in pairs(FightRightElementEnum.Elements) do
-			FightController.instance:dispatchEvent(FightEvent.RightElements_HideElement, iter_6_1)
-		end
-
-		return
-	end
-
-	local var_6_1 = string.splitToNumber(var_6_0, ",")
-
-	for iter_6_2, iter_6_3 in pairs(FightRightElementEnum.Elements) do
-		if tabletool.indexOf(var_6_1, iter_6_3) then
-			FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, iter_6_3)
-		else
-			FightController.instance:dispatchEvent(FightEvent.RightElements_HideElement, iter_6_3)
-		end
-	end
-end
-
-function var_0_0.onClickShowRightBottomElements(arg_7_0)
-	if not ViewMgr.instance:getContainer(ViewName.FightView) then
-		return
-	end
-
-	local var_7_0 = arg_7_0.rightBottomElementsInput:GetText()
+	local var_7_0 = arg_7_0.rightTopElementsInput:GetText()
 
 	if string.nilorempty(var_7_0) then
-		for iter_7_0, iter_7_1 in pairs(FightRightBottomElementEnum.Elements) do
-			FightController.instance:dispatchEvent(FightEvent.RightBottomElements_HideElement, iter_7_1)
+		for iter_7_0, iter_7_1 in pairs(FightRightElementEnum.Elements) do
+			FightController.instance:dispatchEvent(FightEvent.RightElements_HideElement, iter_7_1)
 		end
 
 		return
@@ -140,224 +119,250 @@ function var_0_0.onClickShowRightBottomElements(arg_7_0)
 
 	local var_7_1 = string.splitToNumber(var_7_0, ",")
 
-	for iter_7_2, iter_7_3 in pairs(FightRightBottomElementEnum.Elements) do
+	for iter_7_2, iter_7_3 in pairs(FightRightElementEnum.Elements) do
 		if tabletool.indexOf(var_7_1, iter_7_3) then
-			FightController.instance:dispatchEvent(FightEvent.RightBottomElements_ShowElement, iter_7_3)
+			FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, iter_7_3)
 		else
-			FightController.instance:dispatchEvent(FightEvent.RightBottomElements_HideElement, iter_7_3)
+			FightController.instance:dispatchEvent(FightEvent.RightElements_HideElement, iter_7_3)
 		end
 	end
 end
 
-function var_0_0.onClickCopyLatRoundDataForClient(arg_8_0)
-	local var_8_0 = FightDataHelper.roundMgr:getRoundData()
-
-	if not var_8_0 then
+function var_0_0.onClickShowRightBottomElements(arg_8_0)
+	if not ViewMgr.instance:getContainer(ViewName.FightView) then
 		return
 	end
 
-	FightLogFilterHelper.setFilterEffectList(arg_8_0.effectTypeInput:GetText())
+	local var_8_0 = arg_8_0.rightBottomElementsInput:GetText()
 
-	local var_8_1 = FightLogHelper.getFightRoundString(var_8_0)
+	if string.nilorempty(var_8_0) then
+		for iter_8_0, iter_8_1 in pairs(FightRightBottomElementEnum.Elements) do
+			FightController.instance:dispatchEvent(FightEvent.RightBottomElements_HideElement, iter_8_1)
+		end
 
-	ZProj.GameHelper.SetSystemBuffer(var_8_1)
+		return
+	end
+
+	local var_8_1 = string.splitToNumber(var_8_0, ",")
+
+	for iter_8_2, iter_8_3 in pairs(FightRightBottomElementEnum.Elements) do
+		if tabletool.indexOf(var_8_1, iter_8_3) then
+			FightController.instance:dispatchEvent(FightEvent.RightBottomElements_ShowElement, iter_8_3)
+		else
+			FightController.instance:dispatchEvent(FightEvent.RightBottomElements_HideElement, iter_8_3)
+		end
+	end
 end
 
-function var_0_0.onClickCopyLastOriginRoundDataForClient(arg_9_0)
-	local var_9_0 = FightDataHelper.roundMgr:getOriginRoundData()
+function var_0_0.onClickCopyLatRoundDataForClient(arg_9_0)
+	local var_9_0 = FightDataHelper.roundMgr:getRoundData()
 
 	if not var_9_0 then
 		return
 	end
 
-	FightLogFilterHelper.setFilterEffectList()
+	FightLogFilterHelper.setFilterEffectList(arg_9_0.effectTypeInput:GetText())
 
-	local var_9_1 = FightLogProtobufHelper.getFightRoundString(var_9_0)
+	local var_9_1 = FightLogHelper.getFightRoundString(var_9_0)
 
 	ZProj.GameHelper.SetSystemBuffer(var_9_1)
 end
 
-function var_0_0.onClickCopyLastSrcRoundProtoData(arg_10_0)
-	local var_10_0 = FightDataHelper.protoCacheMgr:getLastRoundProto()
+function var_0_0.onClickCopyLastOriginRoundDataForClient(arg_10_0)
+	local var_10_0 = FightDataHelper.roundMgr:getOriginRoundData()
 
 	if not var_10_0 then
+		return
+	end
+
+	FightLogFilterHelper.setFilterEffectList()
+
+	local var_10_1 = FightLogProtobufHelper.getFightRoundString(var_10_0)
+
+	ZProj.GameHelper.SetSystemBuffer(var_10_1)
+end
+
+function var_0_0.onClickCopyLastSrcRoundProtoData(arg_11_0)
+	local var_11_0 = FightDataHelper.protoCacheMgr:getLastRoundProto()
+
+	if not var_11_0 then
 		ZProj.GameHelper.SetSystemBuffer("nil")
 
 		return
 	end
 
-	local var_10_1 = tostring(var_10_0)
+	local var_11_1 = tostring(var_11_0)
 
-	ZProj.GameHelper.SetSystemBuffer(var_10_1)
+	ZProj.GameHelper.SetSystemBuffer(var_11_1)
 end
 
-function var_0_0.onClickCopyLatRoundProtoDataNormal(arg_11_0)
-	local var_11_0 = FightDataHelper.protoCacheMgr:getLastRoundProto()
+function var_0_0.onClickCopyLatRoundProtoDataNormal(arg_12_0)
+	local var_12_0 = FightDataHelper.protoCacheMgr:getLastRoundProto()
 
-	if not var_11_0 then
+	if not var_12_0 then
 		ZProj.UGUIHelper.CopyText("没有数据")
 
 		return
 	end
 
-	local var_11_1 = ""
-	local var_11_2 = FightDataHelper.protoCacheMgr:getLastRoundNum()
+	local var_12_1 = ""
+	local var_12_2 = FightDataHelper.protoCacheMgr:getLastRoundNum()
 
-	if var_11_2 then
-		var_11_1 = var_11_1 .. "回合" .. var_11_2 .. "\n"
+	if var_12_2 then
+		var_12_1 = var_12_1 .. "回合" .. var_12_2 .. "\n"
 	end
 
-	local var_11_3 = var_11_1 .. FightEditorStateLogView.processStr(tostring(var_11_0))
+	local var_12_3 = var_12_1 .. FightEditorStateLogView.processStr(tostring(var_12_0))
 
-	ZProj.UGUIHelper.CopyText(var_11_3)
+	ZProj.UGUIHelper.CopyText(var_12_3)
 end
 
-function var_0_0._onLastBattleIdYiPaiYiDongChange(arg_12_0, arg_12_1)
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMLastBattleIdOfYiPaiYiDong, arg_12_1)
+function var_0_0._onLastBattleIdYiPaiYiDongChange(arg_13_0, arg_13_1)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMLastBattleIdOfYiPaiYiDong, arg_13_1)
 end
 
-function var_0_0._onVersionChange(arg_13_0, arg_13_1)
-	FightModel.GMForceVersion = tonumber(arg_13_1)
+function var_0_0._onVersionChange(arg_14_0, arg_14_1)
+	FightModel.GMForceVersion = tonumber(arg_14_1)
 end
 
-function var_0_0._onClickEnterYiPaiYiDong(arg_14_0)
-	local var_14_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.GMLastBattleIdOfYiPaiYiDong, "")
+function var_0_0._onClickEnterYiPaiYiDong(arg_15_0)
+	local var_15_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.GMLastBattleIdOfYiPaiYiDong, "")
 
-	if string.nilorempty(var_14_0) then
+	if string.nilorempty(var_15_0) then
 		return
 	end
 
-	local var_14_1 = tonumber(var_14_0)
+	local var_15_1 = tonumber(var_15_0)
 
-	if var_14_1 and lua_battle.configDict[var_14_1] then
-		local var_14_2 = FightController.instance:setFightParamByBattleId(var_14_1)
+	if var_15_1 and lua_battle.configDict[var_15_1] then
+		local var_15_2 = FightController.instance:setFightParamByBattleId(var_15_1)
 
-		HeroGroupModel.instance:setParam(var_14_1, nil, nil)
+		HeroGroupModel.instance:setParam(var_15_1, nil, nil)
 
-		local var_14_3 = HeroGroupModel.instance:getCurGroupMO()
+		local var_15_3 = HeroGroupModel.instance:getCurGroupMO()
 
-		if not var_14_3 then
+		if not var_15_3 then
 			logError("current HeroGroupMO is nil")
 			GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupPleaseAdd, MsgBoxEnum.BoxType.Yes)
 
 			return
 		end
 
-		local var_14_4, var_14_5 = var_14_3:getMainList()
-		local var_14_6, var_14_7 = var_14_3:getSubList()
-		local var_14_8 = var_14_3:getAllHeroEquips()
+		local var_15_4, var_15_5 = var_15_3:getMainList()
+		local var_15_6, var_15_7 = var_15_3:getSubList()
+		local var_15_8 = var_15_3:getAllHeroEquips()
 
-		arg_14_0:closeThis()
+		arg_15_0:closeThis()
 
-		for iter_14_0, iter_14_1 in ipairs(lua_episode.configList) do
-			if iter_14_1.battleId == var_14_1 then
-				var_14_2.episodeId = iter_14_1.id
-				FightResultModel.instance.episodeId = iter_14_1.id
+		for iter_15_0, iter_15_1 in ipairs(lua_episode.configList) do
+			if iter_15_1.battleId == var_15_1 then
+				var_15_2.episodeId = iter_15_1.id
+				FightResultModel.instance.episodeId = iter_15_1.id
 
-				DungeonModel.instance:SetSendChapterEpisodeId(iter_14_1.chapterId, iter_14_1.id)
+				DungeonModel.instance:SetSendChapterEpisodeId(iter_15_1.chapterId, iter_15_1.id)
 
 				break
 			end
 		end
 
-		if not var_14_2.episodeId then
-			var_14_2.episodeId = 10101
+		if not var_15_2.episodeId then
+			var_15_2.episodeId = 10101
 		end
 
-		var_14_2:setMySide(var_14_3.clothId, var_14_4, var_14_6, var_14_8)
+		var_15_2:setMySide(var_15_3.clothId, var_15_4, var_15_6, var_15_8)
 
-		var_14_2.fightActType = FightEnum.FightActType.Season2
+		var_15_2.fightActType = FightEnum.FightActType.Season2
 
-		FightController.instance:sendTestFightId(var_14_2)
+		FightController.instance:sendTestFightId(var_15_2)
 	end
 end
 
-function var_0_0._onClickShowBattleCharaterParam(arg_15_0)
-	local var_15_0 = GMBattleModel.instance:getBattleParam()
+function var_0_0._onClickShowBattleCharaterParam(arg_16_0)
+	local var_16_0 = GMBattleModel.instance:getBattleParam()
 
-	if not string.nilorempty(var_15_0) then
-		local var_15_1 = string.gsub(var_15_0, "{", "\n{\n")
-		local var_15_2 = string.gsub(var_15_1, ",", ",\n")
+	if not string.nilorempty(var_16_0) then
+		local var_16_1 = string.gsub(var_16_0, "{", "\n{\n")
+		local var_16_2 = string.gsub(var_16_1, ",", ",\n")
 
-		logError(var_15_2)
+		logError(var_16_2)
 	else
 		logError("数据为空")
 	end
 end
 
-function var_0_0._onClickEnableGMFightRecord(arg_16_0)
+function var_0_0._onClickEnableGMFightRecord(arg_17_0)
 	GMBattleModel.instance:setGMFightRecordEnable()
 	GameFacade.showToast(ToastEnum.IconId, "开启战斗录制，请在结算界面点击保存")
 end
 
-function var_0_0._onClickSaveRecord(arg_17_0)
-	arg_17_0:addEventCb(FightController.instance, FightEvent.OnGMFightWithRecordAllReply, arg_17_0._onGetRecord, arg_17_0)
+function var_0_0._onClickSaveRecord(arg_18_0)
+	arg_18_0:addEventCb(FightController.instance, FightEvent.OnGMFightWithRecordAllReply, arg_18_0._onGetRecord, arg_18_0)
 	FightRpc.instance:sendGetFightRecordAllRequest()
 end
 
-function var_0_0._onGetRecord(arg_18_0)
-	arg_18_0:removeEventCb(FightController.instance, FightEvent.OnGMFightWithRecordAllReply, arg_18_0._onGetRecord, arg_18_0)
+function var_0_0._onGetRecord(arg_19_0)
+	arg_19_0:removeEventCb(FightController.instance, FightEvent.OnGMFightWithRecordAllReply, arg_19_0._onGetRecord, arg_19_0)
 	FightGMRecordView.saveRecord()
 end
 
-function var_0_0._onClickGMFightRecordReplay(arg_19_0)
-	local var_19_0 = WindowsUtil.getSelectFileContent("选取战斗录制文件", "json")
-	local var_19_1 = cjson.decode(var_19_0)
-	local var_19_2 = ProtoTestCaseMO.New()
+function var_0_0._onClickGMFightRecordReplay(arg_20_0)
+	local var_20_0 = WindowsUtil.getSelectFileContent("选取战斗录制文件", "json")
+	local var_20_1 = cjson.decode(var_20_0)
+	local var_20_2 = ProtoTestCaseMO.New()
 
-	var_19_2:deserialize(var_19_1)
+	var_20_2:deserialize(var_20_1)
 
-	local var_19_3 = var_19_2:buildProtoMsg()
-	local var_19_4 = var_19_1.fightParam
+	local var_20_3 = var_20_2:buildProtoMsg()
+	local var_20_4 = var_20_1.fightParam
 
-	FightController.instance:setFightParamByEpisodeId(var_19_4.episodeId, true, 1, var_19_4.battleId).isShowSettlement = false
+	FightController.instance:setFightParamByEpisodeId(var_20_4.episodeId, true, 1, var_20_4.battleId).isShowSettlement = false
 
-	FightRpc.instance:sendFightWithRecordAllRequest(var_19_3)
+	FightRpc.instance:sendFightWithRecordAllRequest(var_20_3)
 end
 
-function var_0_0._onClickGMFightLog(arg_20_0)
+function var_0_0._onClickGMFightLog(arg_21_0)
 	ViewMgr.instance:openView(ViewName.FightEditorStateView)
 	ViewMgr.instance:closeView(ViewName.GMToolView)
 end
 
-function var_0_0.onStatBuffToggleValueChange(arg_21_0)
+function var_0_0.onStatBuffToggleValueChange(arg_22_0)
 	if not GameSceneMgr.instance:isFightScene() then
 		return
 	end
 
-	if not arg_21_0._isInit then
+	if not arg_22_0._isInit then
 		return
 	end
 
-	if arg_21_0.statBuffToggle.isOn then
-		local var_21_0 = arg_21_0.buffTypeInput:GetText()
-		local var_21_1 = tonumber(var_21_0)
+	if arg_22_0.statBuffToggle.isOn then
+		local var_22_0 = arg_22_0.buffTypeInput:GetText()
+		local var_22_1 = tonumber(var_22_0)
 
-		if not (var_21_1 and lua_skill_bufftype.configDict[var_21_1]) then
-			GameFacade.showToastString(string.format("buff类 : %s 不存在", var_21_1))
+		if not (var_22_1 and lua_skill_bufftype.configDict[var_22_1]) then
+			GameFacade.showToastString(string.format("buff类 : %s 不存在", var_22_1))
 
-			arg_21_0.statBuffToggle.isOn = false
+			arg_22_0.statBuffToggle.isOn = false
 
 			return
 		end
 
-		GMFightController.instance:startStatBuffType(var_21_1)
+		GMFightController.instance:startStatBuffType(var_22_1)
 	else
 		GMFightController.instance:stopStatBuffType()
 	end
 end
 
-function var_0_0.onClickUseNewCardScript(arg_22_0)
+function var_0_0.onClickUseNewCardScript(arg_23_0)
 	FightMgr.instance:changeCardScript(true)
 	logError("使用新卡牌逻辑")
 end
 
-function var_0_0.onClickUseOldCardScript(arg_23_0)
+function var_0_0.onClickUseOldCardScript(arg_24_0)
 	FightMgr.instance:changeCardScript(false)
 	logError("使用旧卡牌逻辑")
 end
 
-function var_0_0.onDestroyView(arg_24_0)
+function var_0_0.onDestroyView(arg_25_0)
 	return
 end
 

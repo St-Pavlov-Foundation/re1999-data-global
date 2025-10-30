@@ -216,7 +216,7 @@ function var_0_0.onOpen(arg_9_0)
 				local var_9_28 = luaLang("dungeon_add_rule_target_" .. var_9_25)
 				local var_9_29 = var_9_23[var_9_25]
 
-				arg_9_0._weekwalkTagText.text = string.format("<color=%s>[%s]</color>%s", var_9_29, var_9_28, var_9_27)
+				arg_9_0._weekwalkTagText.text = SkillConfig.instance:fmtTagDescColor(var_9_28, var_9_27, var_9_29)
 
 				UISpriteSetMgr.instance:setDungeonLevelRuleSprite(arg_9_0._weekwalkTagIcon, var_9_24.icon, true)
 			end

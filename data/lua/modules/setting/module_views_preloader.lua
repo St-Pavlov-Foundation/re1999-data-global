@@ -283,116 +283,135 @@ function var_0_0.OptionalChargeView(arg_32_0)
 	var_0_0._startLoad(var_32_0, arg_32_0)
 end
 
-function var_0_0.Season166MainView(arg_33_0)
-	local var_33_0 = Season166Model.instance:getCurSeasonId()
-	local var_33_1 = Season166Config.instance:getSeasonConstStr(var_33_0, Season166Enum.MainSceneUrl)
-
-	if var_33_1 then
-		table.insert(arg_33_0, var_33_1)
-	end
+function var_0_0.CommandStationMapView(arg_33_0)
+	return
 end
 
-function var_0_0.V2a3_WarmUp(arg_34_0)
-	local var_34_0 = ViewMgr.instance:getContainer(ViewName.V2a3_WarmUp)
+function var_0_0.CommandStationMapViewPreload(arg_34_0)
+	CommandStationMapModel.instance:initTimeId()
+
+	local var_34_0 = CommandStationMapModel.instance:getCurTimeIdScene()
 
 	if not var_34_0 then
 		return
 	end
 
-	local var_34_1 = var_34_0:getEpisodeCount()
+	local var_34_1 = var_0_0._getResPathList(ViewName.CommandStationMapView)
 
-	for iter_34_0 = 1, var_34_1 do
-		local var_34_2 = var_34_0:getImgResUrl(iter_34_0)
+	table.insert(var_34_1, var_34_0.scene)
+	var_0_0._startLoad(var_34_1, arg_34_0)
+end
 
-		table.insert(arg_34_0, var_34_2)
+function var_0_0.Season166MainView(arg_35_0)
+	local var_35_0 = Season166Model.instance:getCurSeasonId()
+	local var_35_1 = Season166Config.instance:getSeasonConstStr(var_35_0, Season166Enum.MainSceneUrl)
+
+	if var_35_1 then
+		table.insert(arg_35_0, var_35_1)
 	end
 end
 
-function var_0_0.MainUISwitchInfoBlurMaskView(arg_35_0)
-	local var_35_0 = {}
+function var_0_0.V2a3_WarmUp(arg_36_0)
+	local var_36_0 = ViewMgr.instance:getContainer(ViewName.V2a3_WarmUp)
 
-	table.insert(var_35_0, "ui/viewres/mainsceneswitch/mainuiswitchblurmaskview.prefab")
-	var_0_0._startLoad(var_35_0, arg_35_0)
+	if not var_36_0 then
+		return
+	end
+
+	local var_36_1 = var_36_0:getEpisodeCount()
+
+	for iter_36_0 = 1, var_36_1 do
+		local var_36_2 = var_36_0:getImgResUrl(iter_36_0)
+
+		table.insert(arg_36_0, var_36_2)
+	end
 end
 
-function var_0_0.MainUISwitchInfoView(arg_36_0)
-	local var_36_0 = {}
+function var_0_0.MainUISwitchInfoBlurMaskView(arg_37_0)
+	local var_37_0 = {}
 
-	table.insert(var_36_0, "ui/viewres/mainsceneswitch/mainsuiswitchinfoview.prefab")
-	table.insert(var_36_0, "ui/viewres/mainsceneswitch/mainuiswitchblurmask.prefab")
-	table.insert(var_36_0, "ui/viewres/main/mainview.prefab")
-	var_0_0._startLoad(var_36_0, arg_36_0)
+	table.insert(var_37_0, "ui/viewres/mainsceneswitch/mainuiswitchblurmaskview.prefab")
+	var_0_0._startLoad(var_37_0, arg_37_0)
+end
+
+function var_0_0.MainUISwitchInfoView(arg_38_0)
+	local var_38_0 = {}
+
+	table.insert(var_38_0, "ui/viewres/mainsceneswitch/mainsuiswitchinfoview.prefab")
+	table.insert(var_38_0, "ui/viewres/mainsceneswitch/mainuiswitchblurmask.prefab")
+	table.insert(var_38_0, "ui/viewres/main/mainview.prefab")
+	var_0_0._startLoad(var_38_0, arg_38_0)
 end
 
 local var_0_1 = {}
 
-function var_0_0._startLoad(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0 = MultiAbLoader.New()
+function var_0_0._startLoad(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = MultiAbLoader.New()
 
-	var_0_1[var_37_0] = true
+	var_0_1[var_39_0] = true
 
 	UIBlockMgr.instance:startBlock("ui_preload")
-	var_37_0:setPathList(arg_37_0)
-	var_37_0:startLoad(function()
-		var_0_1[var_37_0] = nil
+	var_39_0:setPathList(arg_39_0)
+	var_39_0:startLoad(function()
+		var_0_1[var_39_0] = nil
 
 		UIBlockMgr.instance:endBlock("ui_preload")
-		var_37_0:dispose()
-		arg_37_1(arg_37_2)
+		var_39_0:dispose()
+		arg_39_1(arg_39_2)
 	end)
 end
 
 function var_0_0.stopPreload()
-	for iter_39_0, iter_39_1 in pairs(var_0_1) do
-		iter_39_0:dispose()
+	for iter_41_0, iter_41_1 in pairs(var_0_1) do
+		iter_41_0:dispose()
 		logNormal("module_views_preloader dispose loader")
 	end
 
 	var_0_1 = {}
 end
 
-function var_0_0._getResPathList(arg_40_0)
-	local var_40_0 = {}
-	local var_40_1 = ViewMgr.instance:getSetting(arg_40_0)
+function var_0_0._getResPathList(arg_42_0)
+	local var_42_0 = {}
+	local var_42_1 = ViewMgr.instance:getSetting(arg_42_0)
 
-	if var_40_1.mainRes then
-		table.insert(var_40_0, var_40_1.mainRes)
+	if var_42_1.mainRes then
+		table.insert(var_42_0, var_42_1.mainRes)
 	end
 
-	if var_40_1.otherRes then
-		for iter_40_0, iter_40_1 in pairs(var_40_1.otherRes) do
-			table.insert(var_40_0, iter_40_1)
+	if var_42_1.otherRes then
+		for iter_42_0, iter_42_1 in pairs(var_42_1.otherRes) do
+			table.insert(var_42_0, iter_42_1)
 		end
 	end
 
-	if var_40_1.tabRes then
-		for iter_40_2, iter_40_3 in pairs(var_40_1.tabRes) do
-			for iter_40_4, iter_40_5 in pairs(iter_40_3) do
-				for iter_40_6, iter_40_7 in pairs(iter_40_5) do
-					table.insert(var_40_0, iter_40_7)
+	if var_42_1.tabRes then
+		for iter_42_2, iter_42_3 in pairs(var_42_1.tabRes) do
+			for iter_42_4, iter_42_5 in pairs(iter_42_3) do
+				for iter_42_6, iter_42_7 in pairs(iter_42_5) do
+					table.insert(var_42_0, iter_42_7)
 				end
 			end
 		end
 	end
 
-	if var_40_1.anim and var_40_1.anim ~= ViewAnim.Default and string.find(var_40_1.anim, ".controller") then
-		table.insert(var_40_0, var_40_1.anim)
+	if var_42_1.anim and var_42_1.anim ~= ViewAnim.Default and string.find(var_42_1.anim, ".controller") then
+		table.insert(var_42_0, var_42_1.anim)
 	end
 
-	return var_40_0
+	return var_42_0
 end
 
-function var_0_0.VersionActivityEnterView(arg_41_0)
-	local var_41_0 = ViewMgr.instance:getContainer(ViewName.VersionActivityEnterView)
+function var_0_0.VersionActivityEnterView(arg_43_0)
+	local var_43_0 = ViewMgr.instance:getContainer(ViewName.VersionActivityEnterView)
 
-	if not var_41_0 then
+	if not var_43_0 then
 		return
 	end
 
-	local var_41_1 = var_41_0:getPreLoaderResPathList()
+	local var_43_1 = var_43_0:getPreLoaderResPathList()
 
-	for iter_41_0, iter_41_1 in ipairs(var_41_1) do
-		table.insert(arg_41_0, iter_41_1)
+	for iter_43_0, iter_43_1 in ipairs(var_43_1) do
+		table.insert(arg_43_0, iter_43_1)
 	end
 end
 

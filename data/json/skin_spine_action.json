@@ -6822,6 +6822,195 @@
     "dieAnim": ""
   },
   {
+    "skinId": 610109,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 461010992,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 610110,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 461011092,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 610111,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 461011192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 610214,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 461021492,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 610411,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 461041192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 630222,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 463022292,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 640146,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 464014692,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 3107031,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431070392,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 310503,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a0_zxqe_born",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431050391,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 310503,
+    "actionName": "die",
+    "effect": "v3a0_zxqe/zxqe_die",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431050392,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 312601,
+    "actionName": "born",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431260191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 312602,
+    "actionName": "born",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431260191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 312601,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431260192,
+    "dieAnim": "v3a0_charactor_stone"
+  },
+  {
+    "skinId": 312602,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431260192,
+    "dieAnim": "v3a0_charactor_stone"
+  },
+  {
+    "skinId": 308804,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a0_smews_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 430880491,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 308804,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 430880192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 309403,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a0_j_born_mountweapon#buff/born/pre_v3a0_j_born",
+    "effectHangPoint": "mountweapon#mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 430940391,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 309403,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 430940392,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 6704052,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 467040592,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 312801,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a0_kr_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431280191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 312801,
+    "actionName": "die",
+    "effect": "v3a0_kr/kr_die",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431280192,
+    "dieAnim": ""
+  },
+  {
     "skinId": 305104,
     "actionName": "born",
     "effect": "buff/born/pre_s01_wenni_born_01#buff/born/pre_s01_wenni_born_01_special3",

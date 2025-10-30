@@ -263,7 +263,7 @@ function var_0_0.playMagicText(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
 	gohelper.setActive(arg_12_0._magicFireGo, arg_12_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic)
 	gohelper.setActive(arg_12_0._reshapeMagicFireGo, arg_12_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
 	gohelper.setActive(arg_12_0._txtcontentmagic.gameObject, arg_12_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic)
-	gohelper.setActive(arg_12_0._txtcontentreshapemagic, arg_12_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
+	gohelper.setActive(arg_12_0._txtcontentreshapemagic.gameObject, arg_12_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
 
 	if arg_12_0._stepCo.conversation.audioDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
 		arg_12_0:_playConAudio()
@@ -769,7 +769,7 @@ function var_0_0._showMagicItem(arg_22_0, arg_22_1)
 	if arg_22_1 then
 		if arg_22_0._magicFireGo then
 			StoryTool.enablePostProcess(true)
-			gohelper.setActive(arg_22_0._reshapeMagicFireGo, arg_22_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
+			gohelper.setActive(arg_22_0._magicFireGo, arg_22_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic)
 		end
 
 		if arg_22_0._reshapeMagicFireGo then

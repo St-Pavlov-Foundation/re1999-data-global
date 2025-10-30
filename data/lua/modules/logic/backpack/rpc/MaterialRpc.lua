@@ -93,6 +93,10 @@ function var_0_0._onReceiveMaterialChangePush(arg_6_0, arg_6_1, arg_6_2, arg_6_3
 		PayController.instance:onReceiveMaterialChangePush(arg_6_2)
 	end
 
+	if PopupCacheModel.instance:isIgnoreGetPropView(var_6_0) then
+		return
+	end
+
 	if PopupCacheController.instance:tryCacheGetPropView(var_6_0, {
 		materialDataMOList = arg_6_2
 	}) then

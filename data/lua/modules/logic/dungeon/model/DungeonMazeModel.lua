@@ -58,18 +58,17 @@ function var_0_0.initData(arg_3_0, arg_3_1)
 
 	for iter_3_2 = 1, var_3_1 do
 		for iter_3_3 = 1, var_3_2 do
-			cellData = arg_3_0._cellDatas[iter_3_2][iter_3_3]
+			local var_3_5 = arg_3_0._cellDatas[iter_3_2][iter_3_3]
+			local var_3_6 = arg_3_0._cellDatas[iter_3_2][iter_3_3 - 1]
+			local var_3_7 = arg_3_0._cellDatas[iter_3_2][iter_3_3 + 1]
+			local var_3_8 = arg_3_0._cellDatas[iter_3_2 - 1] and arg_3_0._cellDatas[iter_3_2 - 1][iter_3_3]
+			local var_3_9 = arg_3_0._cellDatas[iter_3_2 + 1] and arg_3_0._cellDatas[iter_3_2 + 1][iter_3_3]
 
-			local var_3_5 = arg_3_0._cellDatas[iter_3_2][iter_3_3 - 1]
-			local var_3_6 = arg_3_0._cellDatas[iter_3_2][iter_3_3 + 1]
-			local var_3_7 = arg_3_0._cellDatas[iter_3_2 - 1] and arg_3_0._cellDatas[iter_3_2 - 1][iter_3_3]
-			local var_3_8 = arg_3_0._cellDatas[iter_3_2 + 1] and arg_3_0._cellDatas[iter_3_2 + 1][iter_3_3]
-
-			cellData.connectSet = {
-				[DungeonMazeEnum.dir.left] = var_3_5,
-				[DungeonMazeEnum.dir.right] = var_3_6,
-				[DungeonMazeEnum.dir.up] = var_3_7,
-				[DungeonMazeEnum.dir.down] = var_3_8
+			var_3_5.connectSet = {
+				[DungeonMazeEnum.dir.left] = var_3_6,
+				[DungeonMazeEnum.dir.right] = var_3_7,
+				[DungeonMazeEnum.dir.up] = var_3_8,
+				[DungeonMazeEnum.dir.down] = var_3_9
 			}
 		end
 	end

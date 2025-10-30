@@ -55,7 +55,7 @@ function var_0_0._saveHeroGroup(arg_3_0)
 	local var_3_6 = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
 
 	FightParam.initFightGroup(var_3_6.fightGroup, var_3_3.clothId, var_3_4, var_3_5, var_3_3:getAllHeroEquips(), var_3_3:getAllHeroActivity104Equips())
-	HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(ModuleEnum.HeroGroupSnapshotType.Resources, var_3_2.id, var_3_6, callback, callbackObj)
+	HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(ModuleEnum.HeroGroupSnapshotType.Resources, var_3_2.id, var_3_6)
 end
 
 function var_0_0._enterFight(arg_4_0)

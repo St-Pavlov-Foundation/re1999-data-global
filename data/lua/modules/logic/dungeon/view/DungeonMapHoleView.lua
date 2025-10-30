@@ -190,7 +190,7 @@ function var_0_0.loadSceneFinish(arg_13_0, arg_13_1)
 	local var_13_2 = arg_13_0.mapCfg.initPos
 	local var_13_3 = string.splitToNumber(var_13_2, "#")
 
-	arg_13_0.defaultSceneWorldPosX, arg_13_0.defaultSceneWorldPosY = var_13_3[1], var_13_3[2]
+	arg_13_0.defaultSceneWorldPosX, arg_13_0.defaultSceneWorldPosY = var_13_3[1] or 0, var_13_3[2] or 0
 	arg_13_0.mat = var_13_1:GetComponent(typeof(UnityEngine.MeshRenderer)).material
 
 	arg_13_0:initCameraParam()

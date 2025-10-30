@@ -333,9 +333,9 @@ function var_0_0._enterActivity12102(arg_16_0, arg_16_1)
 		}))
 	else
 		var_16_4:addWork(OpenViewWork.New({
-			openFunction = VersionActivity2_1EnterController.directOpenVersionActivityEnterView,
-			openFunctionObj = VersionActivity2_1EnterController.instance,
-			waitOpenViewName = ViewName.VersionActivity2_1EnterView
+			openFunction = var_0_0.open3_0ReactivityEnterView,
+			openFunctionObj = VersionActivityFixedHelper.getVersionActivityEnterController(3, 0).instance,
+			waitOpenViewName = VersionActivityFixedHelper.getVersionActivityEnterViewName()
 		}))
 	end
 
@@ -353,6 +353,10 @@ function var_0_0._enterActivity12102(arg_16_0, arg_16_1)
 	var_16_4:start()
 
 	var_0_0.sequence = var_16_4
+end
+
+function var_0_0.open3_0ReactivityEnterView()
+	VersionActivityFixedHelper.getVersionActivityEnterController(3, 0):directOpenVersionActivityEnterView(VersionActivity3_0Enum.ActivityId.Reactivity)
 end
 
 function var_0_0._openPermanent_EnterView()

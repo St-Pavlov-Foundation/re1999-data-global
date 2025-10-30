@@ -70,7 +70,11 @@ function var_0_0._btnEntranceRole2OnClick(arg_6_0)
 end
 
 function var_0_0._btnPlayOnClick(arg_7_0)
-	StoryController.instance:playStory(arg_7_0.actCfg.storyId)
+	local var_7_0 = {}
+
+	var_7_0.isVersionActivityPV = true
+
+	StoryController.instance:playStory(arg_7_0.actCfg.storyId, var_7_0)
 end
 
 function var_0_0._btnEntranceDungeonOnClick(arg_8_0)

@@ -36,11 +36,11 @@ var_0_0.ActBtnPosY = {
 }
 
 function var_0_0.onClickStore(arg_4_0)
-	VersionActivity2_8DungeonController.instance:openStoreView()
+	VersionActivity3_0DungeonController.instance:openStoreView()
 end
 
 function var_0_0.onClickTask(arg_5_0)
-	VersionActivity2_8DungeonController.instance:openTaskView()
+	VersionActivity3_0DungeonController.instance:openTaskView()
 end
 
 function var_0_0._editableInitView(arg_6_0)
@@ -69,7 +69,7 @@ function var_0_0.onOpen(arg_9_0)
 	arg_9_0.chapterId = arg_9_0.viewParam.chapterId
 	arg_9_0.chapterCo = DungeonConfig.instance:getChapterCO(arg_9_0.chapterId)
 
-	RedDotController.instance:addRedDot(arg_9_0._gotaskreddot, RedDotEnum.DotNode.V2a8DungeonTask)
+	RedDotController.instance:addRedDot(arg_9_0._gotaskreddot, RedDotEnum.DotNode.V3a0DungeonTask)
 	arg_9_0:_showActNode(arg_9_0:checkCanShowAct())
 end
 
@@ -110,14 +110,14 @@ function var_0_0.refreshLayout(arg_12_0)
 end
 
 function var_0_0.refreshStoreCurrency(arg_13_0)
-	local var_13_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V2a8Dungeon)
+	local var_13_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V3a0Dungeon)
 	local var_13_1 = var_13_0 and var_13_0.quantity or 0
 
 	arg_13_0._txtnum.text = GameUtil.numberDisplay(var_13_1)
 end
 
 function var_0_0.refreshRemainTime(arg_14_0)
-	local var_14_0 = ActivityModel.instance:getActivityInfo()[VersionActivity2_8Enum.ActivityId.DungeonStore]
+	local var_14_0 = ActivityModel.instance:getActivityInfo()[VersionActivity3_0Enum.ActivityId.DungeonStore]
 
 	if not var_14_0 then
 		gohelper.setActive(arg_14_0._goStoreTime, false)

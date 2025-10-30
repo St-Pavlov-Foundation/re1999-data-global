@@ -5,6 +5,10 @@ local var_0_0 = _M
 var_0_0.VersionActivity2_9FreeMonthCard = {
 	play_ui_cikeshang_yueka_unfold = 20305020
 }
+var_0_0.WarmUp = {
+	play_ui_cikexia_screen_shine = 20305621,
+	play_ui_cikexia_computer_switch = 20305622
+}
 var_0_0.Enter = {
 	play_ui_unlock = 20305302,
 	play_ui_switch = 20305303

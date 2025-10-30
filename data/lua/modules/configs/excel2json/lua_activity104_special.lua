@@ -2,10 +2,11 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	episodeId = 3,
+	openDay = 9,
 	name = 4,
-	level = 7,
+	episodeId = 3,
 	nameen = 5,
+	level = 7,
 	desc = 8,
 	icon = 6,
 	activityId = 1,

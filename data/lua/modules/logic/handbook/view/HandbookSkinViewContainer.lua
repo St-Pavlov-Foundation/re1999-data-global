@@ -23,6 +23,8 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 			false
 		})
 
+		arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
+
 		return {
 			arg_2_0.navigateView
 		}
@@ -30,8 +32,10 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 end
 
 function var_0_0._overrideCloseFunc(arg_3_0)
-	if arg_3_0._scene then
-		arg_3_0._scene:playCloseAni()
+	if arg_3_0._scene:isInTarotMode() then
+		arg_3_0._scene:exitTarotScene()
+
+		return
 	end
 
 	TaskDispatcher.runDelay(arg_3_0.closeThis, arg_3_0, var_0_1)

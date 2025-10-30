@@ -11,6 +11,11 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0.isShowBuff = arg_1_1.isShowBuff
 	arg_1_0.isShowFinished = arg_1_1.isShowFinished
 	arg_1_0.isShowSelectCd = arg_1_1.isShowSelectCd
+
+	if arg_1_0.id == 9477 then
+		arg_1_0.sceneId = 17
+	end
+
 	arg_1_0.battleIds = {}
 	arg_1_0.battleInfos = {}
 	arg_1_0.battleInfoMap = {}

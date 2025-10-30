@@ -12,6 +12,7 @@ function var_0_0.refreshData(arg_2_0, arg_2_1)
 	arg_2_0.createUid = arg_2_1.createUid
 	arg_2_0.electricLevel = arg_2_1.electricLevel
 	arg_2_0.electricProgress = arg_2_1.electricProgress
+	arg_2_0.maxElectricProgress = arg_2_1.maxElectricProgress
 end
 
 function var_0_0.deleteData(arg_3_0, arg_3_1)
@@ -28,6 +29,7 @@ function var_0_0.clear(arg_4_0)
 	arg_4_0.createUid = nil
 	arg_4_0.electricLevel = nil
 	arg_4_0.electricProgress = nil
+	arg_4_0.maxElectricProgress = nil
 end
 
 return var_0_0

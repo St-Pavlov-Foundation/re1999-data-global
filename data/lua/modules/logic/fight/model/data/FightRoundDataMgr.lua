@@ -42,11 +42,15 @@ function var_0_0.getOriginPreRoundData(arg_7_0)
 	return arg_7_0.originDataList[#arg_7_0.originDataList - 1]
 end
 
-function var_0_0.onCancelOperation(arg_8_0)
+function var_0_0.getAllOriginRoundData(arg_8_0)
+	return arg_8_0.originDataList
+end
+
+function var_0_0.onCancelOperation(arg_9_0)
 	return
 end
 
-function var_0_0.onStageChanged(arg_9_0)
+function var_0_0.onStageChanged(arg_10_0)
 	return
 end
 

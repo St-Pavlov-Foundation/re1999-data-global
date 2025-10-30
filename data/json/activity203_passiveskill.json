@@ -1,0 +1,20 @@
+[
+  {
+    "passive_skillid": 11001,
+    "name": "language_10090081",
+    "description": "language_10090070",
+    "effect": "1001#200"
+  },
+  {
+    "passive_skillid": 11002,
+    "name": "language_10090082",
+    "description": "language_10090083",
+    "effect": "1002#5"
+  },
+  {
+    "passive_skillid": 11003,
+    "name": "language_10090084",
+    "description": "language_10090085",
+    "effect": "1003#3000#500#1#750"
+  }
+]

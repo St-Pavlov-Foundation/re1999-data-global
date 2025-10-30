@@ -17,10 +17,9 @@ end
 
 function var_0_0.pause(arg_2_0, arg_2_1)
 	if arg_2_1 then
-		arg_2_0._playList:setPauseState(true)
+		arg_2_0._playList:setPauseState(arg_2_0._videoName, false)
 	else
-		arg_2_0._playList:setPauseState(false)
-		arg_2_0._playList:setParent(arg_2_0.viewGO)
+		arg_2_0._playList:setPauseState(arg_2_0._videoName, true)
 	end
 end
 

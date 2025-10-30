@@ -35,6 +35,7 @@ var_0_0.BloomCameraSize = {
 	[3107] = 10,
 	[3108] = 10,
 	[3122] = 10,
+	[3128] = 10,
 	[3120] = 10
 }
 var_0_0.NormalTypeCameraSize = 13

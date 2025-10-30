@@ -76,7 +76,10 @@ function var_0_0._refreshItem(arg_10_0)
 	ZProj.TweenHelper.KillByObj(arg_10_0.viewGO)
 	ZProj.TweenHelper.DOFadeCanvasGroup(arg_10_0.viewGO, 0, 1, var_0_1)
 
-	arg_10_0._txtcontentdark.text = tonumber(arg_10_0.viewParam.name) and luaLang(arg_10_0.viewParam.name) or arg_10_0.viewParam.name
+	local var_10_0 = tonumber(arg_10_0.viewParam.name)
+	local var_10_1 = var_10_0 and string.len(arg_10_0.viewParam.name) == string.len(tostring(var_10_0))
+
+	arg_10_0._txtcontentdark.text = var_10_1 and luaLang(arg_10_0.viewParam.name) or arg_10_0.viewParam.name
 end
 
 function var_0_0.destroy(arg_11_0)

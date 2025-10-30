@@ -225,6 +225,7 @@ function var_0_0.onOpen(arg_20_0)
 	arg_20_0:addEventCb(GuideController.instance, GuideEvent.FinishGuide, arg_20_0._onRefreshNoticeRedDot, arg_20_0)
 	arg_20_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, arg_20_0._isShowPlayerCardRedDot, arg_20_0)
 	arg_20_0:addEventCb(HandbookController.instance, HandbookEvent.EnterHandbookSkin, arg_20_0._onRefreshHandbookRedDot, arg_20_0)
+	arg_20_0:addEventCb(HandbookController.instance, HandbookEvent.MarkHandbookSkinSuitRedDot, arg_20_0._onRefreshHandbookRedDot, arg_20_0)
 end
 
 function var_0_0._checkOpen(arg_21_0)
@@ -347,7 +348,7 @@ function var_0_0._refreshRedDot(arg_28_0)
 	RedDotController.instance:addRedDot(arg_28_0._goachievementreddot, RedDotEnum.DotNode.AchievementEntry)
 
 	arg_28_0.noticeRedDot = RedDotController.instance:addNotEventRedDot(arg_28_0._gobelllreddot, NoticeModel.hasNotRedNotice, NoticeModel.instance)
-	arg_28_0.handbookskinRedDot = RedDotController.instance:addNotEventRedDot(arg_28_0._goreddotHandbook, HandbookController.isFirstHandbookSkin, HandbookController.instance)
+	arg_28_0.handbookskinRedDot = RedDotController.instance:addNotEventRedDot(arg_28_0._goreddotHandbook, HandbookController.hasAnyHandBookSkinGroupRedDot, HandbookController.instance)
 end
 
 function var_0_0._checkSignInRed(arg_29_0, arg_29_1)

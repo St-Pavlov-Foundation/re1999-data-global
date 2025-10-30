@@ -55,6 +55,7 @@ function var_0_0.addConstEvents(arg_7_0)
 	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnServerKickedOut, arg_7_0._onServerKickedOut, arg_7_0)
 	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostMessage, arg_7_0._onLostMessage, arg_7_0)
 	GameSceneMgr.instance:registerCallback(SceneEventName.StopLoading, arg_7_0._stopModuleLogin, arg_7_0)
+	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, arg_7_0._onUpdateShowLoginVideoFlag, arg_7_0)
 end
 
 function var_0_0.dispose(arg_8_0)
@@ -64,6 +65,7 @@ function var_0_0.dispose(arg_8_0)
 	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnServerKickedOut, arg_8_0._onServerKickedOut, arg_8_0)
 	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnLostMessage, arg_8_0._onLostMessage, arg_8_0)
 	GameSceneMgr.instance:unregisterCallback(SceneEventName.StopLoading, arg_8_0._stopModuleLogin, arg_8_0)
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, arg_8_0._onUpdateShowLoginVideoFlag, arg_8_0)
 	arg_8_0._moduleLoginFlow:stop()
 	arg_8_0._moduleLogoutFlow:stop()
 end
@@ -387,6 +389,17 @@ end
 
 function var_0_0.isEnteredGame(arg_47_0)
 	return arg_47_0.enteredGame
+end
+
+function var_0_0._onUpdateShowLoginVideoFlag(arg_48_0)
+	local var_48_0 = CommonConfig.instance:getConstNum(ConstEnum.LoginViewVideoShowDungeonId)
+	local var_48_1 = DungeonModel.instance:hasPassLevel(var_48_0)
+
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.LoginViewShowVideoKey, var_48_1 and 1 or 0)
+end
+
+function var_0_0.isShowLoginVideo(arg_49_0)
+	return PlayerPrefsHelper.getNumber(PlayerPrefsKey.LoginViewShowVideoKey, 0) ~= 0
 end
 
 var_0_0.instance = var_0_0.New()

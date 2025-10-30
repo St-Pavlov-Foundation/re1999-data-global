@@ -3882,6 +3882,9 @@ var_0_0.HeroGroupFightWeekwalkView = tabletool.copy(var_0_0.HeroGroupFightView)
 var_0_0.HeroGroupFightWeekwalkView.container = "HeroGroupFightWeekwalkViewContainer"
 var_0_0.VersionActivity2_8HeroGroupBossView = tabletool.copy(var_0_0.HeroGroupFightView)
 var_0_0.VersionActivity2_8HeroGroupBossView.container = "VersionActivity2_8HeroGroupBossViewContainer"
+var_0_0.HeroGroupFightFiveHeroView = tabletool.copy(var_0_0.HeroGroupFightView)
+var_0_0.HeroGroupFightFiveHeroView.container = "HeroGroupFightFiveHeroViewContainer"
+var_0_0.HeroGroupFightFiveHeroView.mainRes = "ui/viewres/herogroup/herogroupfiveheroview.prefab"
 var_0_0.HeroGroupFightWeekwalk_2View = tabletool.copy(var_0_0.HeroGroupFightView)
 var_0_0.HeroGroupFightWeekwalk_2View.otherRes.weekwalkheart_star = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_star.prefab"
 var_0_0.HeroGroupFightWeekwalk_2View.container = "HeroGroupFightWeekwalk_2ViewContainer"
@@ -5346,7 +5349,14 @@ var_0_0.RoomFormulaMsgBoxView = {
 	mainRes = "ui/viewres/room/roomformulaviewmsgboxview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal,
-	anim = ViewAnim.Default
+	anim = ViewAnim.Default,
+	tabRes = {
+		{
+			{
+				CurrencyView.prefabPath
+			}
+		}
+	}
 }
 var_0_0.RoomProductLineLevelUpView = {
 	destroy = 0,
@@ -5800,6 +5810,9 @@ var_0_0.HandbookSkinSuitDetailView1_9 = {
 				NavigateButtonsView.prefabPath
 			}
 		}
+	},
+	otherRes = {
+		[1] = "ui/viewres/skinhandbook/skinsuitdetailviewbtns.prefab"
 	}
 }
 var_0_0.HandbookSkinSuitDetailView2_0 = {
@@ -5815,6 +5828,9 @@ var_0_0.HandbookSkinSuitDetailView2_0 = {
 				NavigateButtonsView.prefabPath
 			}
 		}
+	},
+	otherRes = {
+		[1] = "ui/viewres/skinhandbook/skinsuitdetailviewbtns.prefab"
 	}
 }
 var_0_0.HandbookSkinSuitDetailView2_3 = {
@@ -5830,6 +5846,9 @@ var_0_0.HandbookSkinSuitDetailView2_3 = {
 				NavigateButtonsView.prefabPath
 			}
 		}
+	},
+	otherRes = {
+		[1] = "ui/viewres/skinhandbook/skinsuitdetailviewbtns.prefab"
 	}
 }
 var_0_0.HandbookSkinSuitDetailView2_8 = {
@@ -5845,6 +5864,9 @@ var_0_0.HandbookSkinSuitDetailView2_8 = {
 				NavigateButtonsView.prefabPath
 			}
 		}
+	},
+	otherRes = {
+		[1] = "ui/viewres/skinhandbook/skinsuitdetailviewbtns.prefab"
 	}
 }
 var_0_0.HandbookSkinSuitDetailView2_1 = {
@@ -5862,7 +5884,7 @@ var_0_0.HandbookSkinSuitDetailView2_1 = {
 		}
 	},
 	otherRes = {
-		[1] = "ui/viewres/skinhandbook/handbookskinitem.prefab"
+		[1] = "ui/viewres/skinhandbook/skinsuitdetailviewbtns.prefab"
 	}
 }
 var_0_0.HandbookSkinSuitDetailView2_2 = {
@@ -5878,6 +5900,9 @@ var_0_0.HandbookSkinSuitDetailView2_2 = {
 				NavigateButtonsView.prefabPath
 			}
 		}
+	},
+	otherRes = {
+		[1] = "ui/viewres/skinhandbook/skinsuitdetailviewbtns.prefab"
 	}
 }
 var_0_0.HandbookSkinSuitDetailView2_4 = {
@@ -5893,6 +5918,27 @@ var_0_0.HandbookSkinSuitDetailView2_4 = {
 				NavigateButtonsView.prefabPath
 			}
 		}
+	},
+	otherRes = {
+		[1] = "ui/viewres/skinhandbook/skinsuitdetailviewbtns.prefab"
+	}
+}
+var_0_0.HandbookSkinSuitDetailView3_0 = {
+	destroy = 0,
+	container = "HandbookSkinSuitDetailView3_0Container",
+	mainRes = "ui/viewres/skinhandbook/skinsuitdetailview_3_0.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	anim = ViewAnim.Default,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		[1] = "ui/viewres/skinhandbook/skinsuitdetailviewbtns.prefab"
 	}
 }
 var_0_0.HandbookSkinSuitDetailView3_0 = {
@@ -21753,6 +21799,79 @@ var_0_0.VersionActivity2_8BossStoryLoadingView = {
 		[1] = "ui/viewres/versionactivity_2_8/v2a8_dungeonboss/v2a8_dungeonbossstorysnow.prefab"
 	}
 }
+var_0_0.VersionActivity3_0EnterView = {
+	destroy = 0,
+	container = "VersionActivity3_0EnterViewContainer",
+	mainRes = "ui/viewres/versionactivity_3_0/v3a0_enter/v3a0_enterview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	otherRes = {
+		[1] = "ui/viewres/versionactivity_3_0/v3a0_enter/v3a0_enterdragitem.prefab"
+	},
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		},
+		{
+			{
+				"ui/viewres/versionactivity_3_0/v3a0_enter/v3a0_dungeonenterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_1_4/v1a4_bossrush/v1a6_bossrush_enterview.prefab"
+			},
+			{
+				"ui/viewres/dungeon/rolestory/rolestoryenterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_3_0/v3a0_malianna/v3a0_malianna_enterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_3_0/v3a0_enter/v3a0_karong_enterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_3_0/v3a0_enter/v3a0_season_enterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_3_0/v3a0_reprint/v3a0_v2a3reprint_enterview.prefab"
+			},
+			{
+				"ui/viewres/activity/show/activityweekwalkdeepshowview.prefab"
+			},
+			{
+				"ui/viewres/tower/towermainentryview.prefab"
+			},
+			{
+				"ui/viewres/activity/show/activiyweekwalkheartshowview.prefab"
+			}
+		}
+	}
+}
+var_0_0.V3a0_SummerSign_PanelView = {
+	destroy = 0,
+	container = "V2a0_SummerSign_PanelViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/activity/v3a0_summersign_panelview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	otherRes = {
+		[1] = "ui/viewres/activity/v3a0_summersign_signitem.prefab"
+	}
+}
+var_0_0.V3a0_SummerSign_FullView = {
+	destroy = 0,
+	container = "V2a0_SummerSign_FullViewContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/activity/v3a0_summersign_fullview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	otherRes = {
+		[1] = "ui/viewres/activity/v3a0_summersign_signitem.prefab"
+	}
+}
 var_0_0.VersionActivity2_8EnterView = {
 	destroy = 0,
 	container = "VersionActivity2_8EnterViewContainer",
@@ -22109,6 +22228,8 @@ var_0_0.V2a8_WarmUp = {
 
 SurvivalViewDefine.init(var_0_0)
 DecalogPresentViewDefine.init(var_0_0)
+CommandStationViewDefine.init(var_0_0)
+SeasonViewDefine.init(var_0_0)
 
 var_0_0.TurnBackFullView = {
 	destroy = 0,

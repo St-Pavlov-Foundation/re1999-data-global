@@ -19,5 +19,54 @@
     "posZ": -1,
     "scale": 0.82,
     "posXOffset": -0.2
+  },
+  {
+    "id": 41210100,
+    "priority": 1,
+    "posZ": 999,
+    "scale": 0.5,
+    "posXOffset": 0.0
+  },
+  {
+    "id": 41210101,
+    "priority": 1,
+    "posZ": 999,
+    "scale": 1.0,
+    "posXOffset": 0.0
+  },
+  {
+    "id": 41210102,
+    "priority": 1,
+    "posZ": 999,
+    "scale": 1.5,
+    "posXOffset": 0.0
+  },
+  {
+    "id": 41210103,
+    "priority": 1,
+    "posZ": 999,
+    "scale": 2.0,
+    "posXOffset": 0.0
+  },
+  {
+    "id": 41210104,
+    "priority": 1,
+    "posZ": 999,
+    "scale": 2.5,
+    "posXOffset": 0.0
+  },
+  {
+    "id": 41210105,
+    "priority": 1,
+    "posZ": 999,
+    "scale": 3.0,
+    "posXOffset": 0.0
+  },
+  {
+    "id": 630222,
+    "priority": 1,
+    "posZ": 999,
+    "scale": 1.17,
+    "posXOffset": 0.0
   }
 ]

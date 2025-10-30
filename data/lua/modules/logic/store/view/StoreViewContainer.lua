@@ -131,6 +131,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		arg_2_0._ScrollViewPackageStore = LuaListScrollViewWithAnimator.New(StorePackageGoodsItemListModel.instance, var_2_3, var_2_7)
 		arg_2_0._ScrollViewSkinStore = LuaListScrollViewWithAnimator.New(StoreClothesGoodsItemListModel.instance, var_2_2, var_2_7)
 		arg_2_0._ScrollViewRoomStore = LuaTreeScrollView.New(StoreRoomGoodsItemListModel.instance, var_2_4)
+		arg_2_0._RecommendStoreView = RecommendStoreView.New()
 
 		return {
 			MultiView.New({
@@ -151,7 +152,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 				arg_2_0._ScrollViewPackageStore
 			}),
 			MultiView.New({
-				RecommendStoreView.New()
+				arg_2_0._RecommendStoreView
 			}),
 			MultiView.New({
 				RoomStoreView.New(),
@@ -381,9 +382,17 @@ function var_0_0.sortSkinStoreSiblingIndex(arg_19_0)
 	end
 end
 
-function var_0_0._sortSkinGoodsItem(arg_20_0, arg_20_1)
-	if arg_20_0._index ~= arg_20_1._index then
-		return arg_20_0._index < arg_20_1._index
+function var_0_0.getRecommendTabIndex(arg_20_0, arg_20_1)
+	if arg_20_0._RecommendStoreView then
+		return arg_20_0._RecommendStoreView:getIndexByTabId(arg_20_1)
+	end
+
+	return 1
+end
+
+function var_0_0._sortSkinGoodsItem(arg_21_0, arg_21_1)
+	if arg_21_0._index ~= arg_21_1._index then
+		return arg_21_0._index < arg_21_1._index
 	end
 end
 

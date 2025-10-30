@@ -1,4 +1,42 @@
 ﻿return {
+	KaRong = {
+		model = {
+			"KaRongDrawModel"
+		},
+		controller = {
+			"KaRongDrawController"
+		}
+	},
+	CommandPost = {
+		model = {
+			"CommandStationModel",
+			"CommandStationMapModel"
+		},
+		controller = {
+			"CommandStationController"
+		},
+		rpc = {
+			"CommandStationRpc"
+		},
+		config = {
+			"CommandStationConfig"
+		}
+	},
+	Activity201MaLiAnNa = {
+		model = {
+			"Activity201MaLiAnNaModel"
+		},
+		controller = {
+			"Activity201MaLiAnNaController",
+			"Activity201MaLiAnNaGameController"
+		},
+		rpc = {
+			"Activity203Rpc"
+		},
+		config = {
+			"Activity201MaLiAnNaConfig"
+		}
+	},
 	FightUISwitch = {
 		model = {
 			"FightUISwitchModel",
@@ -12,20 +50,6 @@
 		},
 		config = {
 			"FightUISwitchConfig"
-		}
-	},
-	Activity199 = {
-		model = {
-			"Activity199Model"
-		},
-		controller = {
-			"Activity199Controller"
-		},
-		rpc = {
-			"Activity199Rpc"
-		},
-		config = {
-			"Activity199Config"
 		}
 	},
 	CharacterSkillTalent = {
@@ -2884,6 +2908,20 @@
 		},
 		rpc = {
 			"Activity199Rpc"
+		}
+	},
+	Activity203 = {
+		model = {
+			"Activity201MaLiAnNaModel"
+		},
+		config = {
+			"Activity201MaLiAnNaConfig"
+		},
+		controller = {
+			"Activity201MaLiAnNaController"
+		},
+		rpc = {
+			"Activity203Rpc"
 		}
 	},
 	Odyssey = {

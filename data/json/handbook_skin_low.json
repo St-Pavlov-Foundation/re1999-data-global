@@ -8,7 +8,8 @@
     "des": "language_10086216",
     "skinContain": "301703|303203|302503|302803",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20002,
@@ -19,7 +20,8 @@
     "des": "language_10086216",
     "skinContain": "302003|301003|300903|300603",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20003,
@@ -30,7 +32,8 @@
     "des": "language_10086216",
     "skinContain": "304103|306303|304303|303502",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20004,
@@ -41,7 +44,8 @@
     "des": "language_10086216",
     "skinContain": "301103|300403|306403|303002",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20005,
@@ -52,7 +56,8 @@
     "des": "language_10086216",
     "skinContain": "302203|305303|301503|305002|307003",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20006,
@@ -63,7 +68,8 @@
     "des": "language_10032048",
     "skinContain": "302403|300703|300305|303903|301303",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20007,
@@ -74,7 +80,8 @@
     "des": "language_10086216",
     "skinContain": "303803|306603|306203|304403",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20008,
@@ -85,7 +92,8 @@
     "des": "language_10086216",
     "skinContain": "305103|304703|301603|301803",
     "backImg": "singlebg/act174/act174_ready_fullbg2.png",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20009,
@@ -96,7 +104,8 @@
     "des": "language_10086220",
     "skinContain": "304803|305603|302504|307503|305703",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20010,
@@ -107,7 +116,8 @@
     "des": "language_10086221",
     "skinContain": "305502|307303|307903|307103",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20011,
@@ -118,7 +128,8 @@
     "des": "language_10086222",
     "skinContain": "303303|307403|308103|306003",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20012,
@@ -129,7 +140,8 @@
     "des": "language_10086224",
     "skinContain": "306503|306604|308703|308203|307203|304603",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20013,
@@ -140,7 +152,8 @@
     "des": "language_10086225",
     "skinContain": "304304|300404|308803|303602",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20014,
@@ -151,7 +164,8 @@
     "des": "language_10086226",
     "skinContain": "303703|309503|308003|305203|302603",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20015,
@@ -162,7 +176,8 @@
     "des": "language_10086216",
     "skinContain": "308303|300904|309803|307703|301202",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20016,
@@ -173,7 +188,8 @@
     "des": "language_10086216",
     "skinContain": "310203|310403|305803",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20017,
@@ -184,7 +200,8 @@
     "des": "language_10086216",
     "skinContain": "310803|309703|304203",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 20018,
@@ -195,18 +212,20 @@
     "des": "language_10086227",
     "skinContain": "311703|308603|311403|304002",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 21001,
-    "name": "language_10086104",
+    "name": "language_10090123",
     "nameEn": "",
     "highId": 11001,
-    "show": 0,
-    "des": "language_10086216",
-    "skinContain": "300306|306204|304804",
+    "show": 1,
+    "des": "language_10089256",
+    "skinContain": "306204|300306|305604|304804|308804|310703",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": "card01|card02|card06|card17|card18|card21"
   },
   {
     "id": 22001,
@@ -217,7 +236,8 @@
     "des": "language_10086216",
     "skinContain": "304104|300604",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 22002,
@@ -228,7 +248,20 @@
     "des": "language_10086216",
     "skinContain": "305304|308404|310903|307904",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
+  },
+  {
+    "id": 20019,
+    "name": "language_10089209",
+    "nameEn": "THE PEACE FRONT",
+    "highId": 10001,
+    "show": 1,
+    "des": "language_10089257",
+    "skinContain": "302303|310503|309403|302702",
+    "backImg": "",
+    "spineParams": "",
+    "tarotCardPath": ""
   },
   {
     "id": 22003,
@@ -239,6 +272,7 @@
     "des": "language_10086229",
     "skinContain": "306504|308704|311603|302804",
     "backImg": "",
-    "spineParams": ""
+    "spineParams": "",
+    "tarotCardPath": ""
   }
 ]

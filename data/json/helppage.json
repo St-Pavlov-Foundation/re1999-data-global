@@ -4550,6 +4550,166 @@
     "isCn": 0
   },
   {
+    "id": 3000001,
+    "title": "",
+    "type": 2,
+    "text": "3.0赛季超级市场指引图1",
+    "icon": "v3a0_season_help_1",
+    "iconText": "v3a0_season_help_1",
+    "unlockGuideId": 30001,
+    "isCn": 0
+  },
+  {
+    "id": 3000002,
+    "title": "",
+    "type": 2,
+    "text": "3.0赛季超级市场指引图2",
+    "icon": "va_1_1_season_2",
+    "iconText": "va_1_1_season_2",
+    "unlockGuideId": 30001,
+    "isCn": 1
+  },
+  {
+    "id": 3000003,
+    "title": "",
+    "type": 2,
+    "text": "3.0赛季试用角色",
+    "icon": "va_1_1_season_8",
+    "iconText": "va_1_1_season_8",
+    "unlockGuideId": 30001,
+    "isCn": 1
+  },
+  {
+    "id": 3000004,
+    "title": "",
+    "type": 2,
+    "text": "3.0赛季UTTU零售指引图1",
+    "icon": "va_1_1_season_3",
+    "iconText": "va_1_1_season_3",
+    "unlockGuideId": 30002,
+    "isCn": 1
+  },
+  {
+    "id": 3000005,
+    "title": "",
+    "type": 2,
+    "text": "3.0赛季UTTU零售指引图2",
+    "icon": "v1a2_season_4",
+    "iconText": "va_1_1_season_4",
+    "unlockGuideId": 30002,
+    "isCn": 1
+  },
+  {
+    "id": 3000006,
+    "title": "",
+    "type": 2,
+    "text": "3.0赛季编队指引图",
+    "icon": "va_1_1_season_5",
+    "iconText": "va_1_1_season_5",
+    "unlockGuideId": 30003,
+    "isCn": 0
+  },
+  {
+    "id": 3000007,
+    "title": "",
+    "type": 2,
+    "text": "3.0赛季特贩周指引图1",
+    "icon": "va_1_1_season_6",
+    "iconText": "va_1_1_season_6",
+    "unlockGuideId": 30004,
+    "isCn": 1
+  },
+  {
+    "id": 3000008,
+    "title": "",
+    "type": 2,
+    "text": "3.0赛季特贩周指引图2",
+    "icon": "v1a2_season_7",
+    "iconText": "va_1_1_season_7",
+    "unlockGuideId": 30004,
+    "isCn": 1
+  },
+  {
+    "id": 3000101,
+    "title": "",
+    "type": 1,
+    "text": "教学关智1a",
+    "icon": "v2a7_tower_help_24",
+    "iconText": "v2a7_tower_help_24",
+    "unlockGuideId": 30301,
+    "isCn": 0
+  },
+  {
+    "id": 3000102,
+    "title": "",
+    "type": 1,
+    "text": "教学关智1b",
+    "icon": "v2a7_tower_help_25",
+    "iconText": "v2a7_tower_help_25",
+    "unlockGuideId": 30301,
+    "isCn": 0
+  },
+  {
+    "id": 3000103,
+    "title": "",
+    "type": 1,
+    "text": "教学关智2a",
+    "icon": "v2a7_tower_help_24",
+    "iconText": "v2a7_tower_help_26",
+    "unlockGuideId": 30302,
+    "isCn": 0
+  },
+  {
+    "id": 3000104,
+    "title": "",
+    "type": 1,
+    "text": "教学关智2b",
+    "icon": "v2a7_tower_help_25",
+    "iconText": "v2a7_tower_help_27",
+    "unlockGuideId": 30302,
+    "isCn": 0
+  },
+  {
+    "id": 3000200,
+    "title": "",
+    "type": 2,
+    "text": "指挥所主界面指引图",
+    "icon": "v3a0_commandstation_help_1",
+    "iconText": "v3a0_commandstation_help_1",
+    "unlockGuideId": 31004,
+    "isCn": 0
+  },
+  {
+    "id": 3000201,
+    "title": "",
+    "type": 2,
+    "text": "指挥所任务界面指引图",
+    "icon": "v3a0_commandstation_help_2",
+    "iconText": "v3a0_commandstation_help_2",
+    "unlockGuideId": 31006,
+    "isCn": 0
+  },
+  {
+    "id": 3000202,
+    "title": "",
+    "type": 2,
+    "text": "指挥所沙盘指引图1",
+    "icon": "v3a0_commandstation_help_3",
+    "iconText": "v3a0_commandstation_help_3",
+    "unlockGuideId": 31003,
+    "isCn": 0
+  },
+  {
+    "id": 3000203,
+    "title": "",
+    "type": 2,
+    "text": "指挥所沙盘指引图2",
+    "icon": "v3a0_commandstation_help_4",
+    "iconText": "v3a0_commandstation_help_4",
+    "unlockGuideId": 31003,
+    "isCn": 0
+  },
+  {
     "id": 30500101,
     "title": "",
     "type": 1,

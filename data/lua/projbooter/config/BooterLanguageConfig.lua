@@ -920,6 +920,66 @@ local var_0_0 = {
 		fr = "",
 		thai = "",
 		en = "Download in-game videos in higher quality."
+	},
+	downloading_and_unzip = {
+		jp = "更新中…更新内容やご利用の通信環境によって時間がかかる場合がございます。\nWi-Fi環境など、通信環境の良い場所でのダウンロードをおすすめします。",
+		de = "",
+		zh = "正在下载、解压中，建议在wifi环境下进行下载，资源文件较多，请耐心等待！",
+		tw = "正在下載、解壓中，建議在wifi環境下進行下載，資源文件較多，請耐心等待！",
+		kr = "리소스 다운로드 및 압축 해제 중입니다. 용량이 커 시간이 다소 소요될 수 있습니다. 안정적인 진행을 위해 Wi-Fi 환경에서 다운로드해 주십시오. 잠시만 기다려 주세요.",
+		fr = "",
+		thai = "",
+		en = "Downloading and unpacking a large amount of resources ... Using a Wi-Fi connection is recommended."
+	},
+	downloading_and_unzip_wifi = {
+		jp = "更新中…リソースをダウンロードしています。お待ちください。",
+		de = "",
+		zh = "正在下载、解压中，资源文件较多，请耐心等待！",
+		tw = "正在下載、解壓中，資源文件較多，請耐心等待！",
+		kr = "리소스 다운로드 및 압축 해제 중입니다. 용량이 커 시간이 다소 소요될 수 있습니다. 잠시만 기다려 주세요.",
+		fr = "",
+		thai = "",
+		en = "Downloading and unpacking a large amount of resources ..."
+	},
+	unziping_progress_new = {
+		jp = "ファイル展開中…%d%% %s/%s",
+		de = "",
+		zh = "正在解压%d%% %s/%s",
+		tw = "正在解壓%d%% %s/%s",
+		kr = "리소스 압축 해제 중 %d%% %s/%s",
+		fr = "",
+		thai = "",
+		en = "Unpacking %d%%: %s/%s"
+	},
+	downloading_progress_new = {
+		jp = "更新中… %s/%s",
+		de = "",
+		zh = "正在更新中 %s/%s",
+		tw = "正在更新中 %s/%s",
+		kr = "업데이트 중 %s/%s",
+		fr = "",
+		thai = "",
+		en = "Updating: %s/%s"
+	},
+	res_fixing = {
+		jp = "修復中…",
+		de = "",
+		zh = "资源修复中",
+		tw = "資源修復中",
+		kr = "리소스 복구 중",
+		fr = "",
+		thai = "",
+		en = "Repairing ..."
+	},
+	res_checking = {
+		jp = "リソースチェック中…",
+		de = "",
+		zh = "正在检查资源",
+		tw = "正在檢查資源",
+		kr = "리소스 확인 중",
+		fr = "",
+		thai = "",
+		en = "Verifying resources ..."
 	}
 }
 

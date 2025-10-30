@@ -142,7 +142,7 @@ function var_0_0._getFitTips(arg_12_0)
 	local var_12_1 = PlayerModel.instance:getPlayerLevel()
 	local var_12_2 = {}
 
-	for iter_12_0, iter_12_1 in pairs(lua_loading_text.configList) do
+	for iter_12_0, iter_12_1 in pairs(SceneConfig.instance:getLoadingTexts()) do
 		local var_12_3 = string.splitToNumber(iter_12_1.scenes, "#")
 
 		for iter_12_2, iter_12_3 in pairs(var_12_3) do

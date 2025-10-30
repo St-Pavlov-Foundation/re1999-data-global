@@ -28,5 +28,11 @@
     "bossId": 5,
     "name": "language_10068621",
     "nameEn": "Primitive Urge"
+  },
+  {
+    "towerId": 6,
+    "bossId": 6,
+    "name": "language_10089099",
+    "nameEn": "Harbinger of the New Era"
   }
 ]

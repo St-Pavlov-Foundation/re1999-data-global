@@ -1915,6 +1915,86 @@
     "bankName": "activtiy_fuleyuan_combataudio_noise"
   },
   {
+    "id": 3309001,
+    "eventName": "",
+    "bankName": ""
+  },
+  {
+    "id": 3309002,
+    "eventName": "play_activitymusic_seasonmain_3_0",
+    "bankName": "activity3_0_music"
+  },
+  {
+    "id": 3309011,
+    "eventName": "play_battle_lushang_3_0_normalfight",
+    "bankName": "activtiy_lushang_combataudio"
+  },
+  {
+    "id": 3309012,
+    "eventName": "play_battle_lushang_3_0_bossfight",
+    "bankName": "activtiy_lushang_combataudio"
+  },
+  {
+    "id": 3309021,
+    "eventName": "play_ui_checkpoint_noise_wurenqu_hell_loop",
+    "bankName": "activtiy_lushang_combataudio_noise"
+  },
+  {
+    "id": 3309022,
+    "eventName": "play_ui_checkpoint_noise_fund_safezone_loop",
+    "bankName": "activtiy_lushang_combataudio_noise"
+  },
+  {
+    "id": 3309023,
+    "eventName": "play_ui_checkpoint_noise_trench_loop",
+    "bankName": "activtiy_lushang_combataudio_noise"
+  },
+  {
+    "id": 3309024,
+    "eventName": "play_ui_checkpoint_noise_cache_loop",
+    "bankName": "activtiy_lushang_combataudio_noise"
+  },
+  {
+    "id": 3309025,
+    "eventName": "play_ui_checkpoint_noise_wurenqu_common_loop",
+    "bankName": "activtiy_lushang_combataudio_noise"
+  },
+  {
+    "id": 3309026,
+    "eventName": "play_ui_checkpoint_noise_wurenqu_hell_loop",
+    "bankName": "activtiy_lushang_combataudio_noise"
+  },
+  {
+    "id": 3309050,
+    "eventName": "play_activitymusic_theme_3_0",
+    "bankName": "activity3_0_music"
+  },
+  {
+    "id": 3309051,
+    "eventName": "play_ui_zhihuisuo_music",
+    "bankName": "ui_zhihuisuo_music_3_0"
+  },
+  {
+    "id": 3309052,
+    "eventName": "play_login_interface_music_3_0",
+    "bankName": "ui_login_music_3_0"
+  },
+  {
+    "id": 3309053,
+    "eventName": "pause_cg_bus",
+    "bankName": "controlling_behavior"
+  },
+  {
+    "id": 3309054,
+    "eventName": "resume_cg_bus",
+    "bankName": "controlling_behavior"
+  },
+  {
+    "id": 3309055,
+    "eventName": "stop_login_interface_music_3_0",
+    "bankName": "ui_login_music_3_0"
+  },
+  {
     "id": 3290001,
     "eventName": "play_activitymusic_theme_s01_cikeshang",
     "bankName": "firsthalf_cikeshang_music"
@@ -1993,5 +2073,10 @@
     "id": 3290016,
     "eventName": "stop_activitymusic_ac2state_s01_cikeshang",
     "bankName": "firsthalf_cikeshang_music"
+  },
+  {
+    "id": 3310011,
+    "eventName": "play_activitymusic_tujianskin_3_0",
+    "bankName": "activity3_0_music_tujianskin"
   }
 ]

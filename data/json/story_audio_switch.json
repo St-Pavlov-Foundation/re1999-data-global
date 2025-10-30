@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "switchgroup": "Checkpointstate",
+    "switchstate": "Comeshow"
+  },
+  {
+    "id": 2,
+    "switchgroup": "Checkpointstate",
+    "switchstate": "Fightnormal"
+  },
+  {
+    "id": 3,
+    "switchgroup": "Checkpointstate",
+    "switchstate": "Victory"
+  }
+]

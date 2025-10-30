@@ -11,6 +11,9 @@ var_0_0.ProductItemType = {
 	ProductExp = 1,
 	Change = 3
 }
+var_0_0.Line = {
+	Spring = 7
+}
 var_0_0.AnimTime = {
 	TreeAnim = 0.1
 }

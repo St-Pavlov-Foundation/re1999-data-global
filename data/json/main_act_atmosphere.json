@@ -100,5 +100,17 @@
     ],
     "isShowfx": true,
     "mainThumbnailViewActBg": true
+  },
+  {
+    "id": 13018,
+    "effectDuration": 0,
+    "mainView": [],
+    "mainViewActBtn": [],
+    "mainViewActBtnPrefix": "",
+    "isShowLogo": false,
+    "isShowActBg": true,
+    "mainThumbnailView": [],
+    "isShowfx": false,
+    "mainThumbnailViewActBg": false
   }
 ]

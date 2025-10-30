@@ -178,34 +178,66 @@ function var_0_0.getNeedDownloadSize(arg_12_0)
 	return var_12_1
 end
 
-function var_0_0.formatLangPackList(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = {}
+function var_0_0.getTotalSize(arg_13_0)
+	local var_13_0 = arg_13_0:getHttpResult()
 
-	if not arg_13_2 or #arg_13_2 < 1 then
-		tabletool.addValues(var_13_0, arg_13_1)
-
-		return var_13_0
+	if not var_13_0 then
+		return 0
 	end
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_2) do
-		for iter_13_2, iter_13_3 in ipairs(arg_13_1) do
-			table.insert(var_13_0, arg_13_0:formatLangPackName(iter_13_3, iter_13_1))
+	local var_13_1 = 0
+
+	for iter_13_0, iter_13_1 in pairs(var_13_0) do
+		local var_13_2 = iter_13_1.res
+
+		if var_13_2 then
+			local var_13_3 = {}
+			local var_13_4 = {}
+			local var_13_5 = {}
+			local var_13_6 = {}
+
+			for iter_13_2, iter_13_3 in ipairs(var_13_2) do
+				table.insert(var_13_3, iter_13_3.name)
+				table.insert(var_13_4, iter_13_3.hash)
+				table.insert(var_13_5, iter_13_3.order)
+				table.insert(var_13_6, iter_13_3.length)
+
+				var_13_1 = var_13_1 + iter_13_3.length
+			end
 		end
 	end
 
-	return var_13_0
+	return var_13_1
 end
 
-function var_0_0.formatLangPackName(arg_14_0, arg_14_1, arg_14_2)
-	if string.nilorempty(arg_14_2) then
-		return arg_14_1
+function var_0_0.formatLangPackList(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = {}
+
+	if not arg_14_2 or #arg_14_2 < 1 then
+		tabletool.addValues(var_14_0, arg_14_1)
+
+		return var_14_0
 	end
 
-	return string.format("%s-%s", arg_14_1, arg_14_2)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_2) do
+		for iter_14_2, iter_14_3 in ipairs(arg_14_1) do
+			table.insert(var_14_0, arg_14_0:formatLangPackName(iter_14_3, iter_14_1))
+		end
+	end
+
+	return var_14_0
 end
 
-function var_0_0.stop(arg_15_0)
-	arg_15_0._downloader:cancelDownload()
+function var_0_0.formatLangPackName(arg_15_0, arg_15_1, arg_15_2)
+	if string.nilorempty(arg_15_2) then
+		return arg_15_1
+	end
+
+	return string.format("%s-%s", arg_15_1, arg_15_2)
+end
+
+function var_0_0.stop(arg_16_0)
+	arg_16_0._downloader:cancelDownload()
 end
 
 var_0_0.instance = var_0_0.New()

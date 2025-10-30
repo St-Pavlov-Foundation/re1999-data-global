@@ -189,6 +189,52 @@ function var_0_0.useCurStyleId(arg_22_0)
 	return arg_22_0:_setCurUseStyleId(var_22_0, var_22_1)
 end
 
+function var_0_0.isNewUnlockStyle(arg_23_0)
+	local var_23_0 = arg_23_0:getNewUnlockIds()
+
+	return LuaUtil.tableNotEmpty(var_23_0)
+end
+
+function var_0_0.getNewUnlockIds(arg_24_0)
+	local var_24_0 = {}
+
+	if not arg_24_0._styleMosList then
+		arg_24_0:initMo()
+	end
+
+	for iter_24_0, iter_24_1 in pairs(arg_24_0._styleMosList) do
+		if not iter_24_1:isDefault() and iter_24_1:isUnlock() then
+			local var_24_1 = arg_24_0:getUnlockPrefsKey(iter_24_1.id)
+
+			if GameUtil.playerPrefsGetNumberByUserId(var_24_1, 0) == 0 then
+				if not var_24_0[iter_24_1.classify] then
+					var_24_0[iter_24_1.classify] = {}
+				end
+
+				table.insert(var_24_0[iter_24_1.classify], iter_24_1.id)
+			end
+		end
+	end
+
+	return var_24_0
+end
+
+function var_0_0.cancelNewUnlockClassifyReddot(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0:getNewUnlockIds()[arg_25_1]
+
+	if var_25_0 then
+		for iter_25_0, iter_25_1 in ipairs(var_25_0) do
+			local var_25_1 = arg_25_0:getUnlockPrefsKey(iter_25_1)
+
+			GameUtil.playerPrefsSetNumberByUserId(var_25_1, 1)
+		end
+	end
+end
+
+function var_0_0.getUnlockPrefsKey(arg_26_0, arg_26_1)
+	return "FightUISwitchModel_unlockPrefsKey_" .. arg_26_1
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

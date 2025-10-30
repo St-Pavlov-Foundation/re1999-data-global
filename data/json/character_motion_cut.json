@@ -87,7 +87,7 @@
     "heroId": 3088,
     "skinId": 1,
     "motion": "woquan|baoxiong|sikao|yaoqing",
-    "onlyStopCut": 0
+    "onlyStopCut": 1
   },
   {
     "heroId": 3086,
@@ -201,6 +201,18 @@
     "heroId": 3107,
     "skinId": 310703,
     "motion": "chayao|baoxiong",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3126,
+    "skinId": 1,
+    "motion": "cidao",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3094,
+    "skinId": 309403,
+    "motion": "sikao|shouwan|naotou|toukui|anfu",
     "onlyStopCut": 1
   },
   {

@@ -1,0 +1,587 @@
+[
+  {
+    "id": 1000,
+    "chaId": 1,
+    "eventCoordinate": [
+      13.27,
+      -5.9
+    ],
+    "eventTextId": "50000"
+  },
+  {
+    "id": 1001,
+    "chaId": 1,
+    "eventCoordinate": [
+      13.5,
+      -5.63
+    ],
+    "eventTextId": "50001"
+  },
+  {
+    "id": 1002,
+    "chaId": 1,
+    "eventCoordinate": [
+      13.9,
+      -5.8
+    ],
+    "eventTextId": "50002"
+  },
+  {
+    "id": 1003,
+    "chaId": 2,
+    "eventCoordinate": [
+      11.4,
+      -6.7
+    ],
+    "eventTextId": "50003"
+  },
+  {
+    "id": 1004,
+    "chaId": 2,
+    "eventCoordinate": [
+      10.94,
+      -7.2
+    ],
+    "eventTextId": "50004"
+  },
+  {
+    "id": 1005,
+    "chaId": 2,
+    "eventCoordinate": [
+      9.1,
+      -6.1
+    ],
+    "eventTextId": "50005"
+  },
+  {
+    "id": 1006,
+    "chaId": 2,
+    "eventCoordinate": [
+      8.58,
+      -6.23
+    ],
+    "eventTextId": "50006"
+  },
+  {
+    "id": 1007,
+    "chaId": 2,
+    "eventCoordinate": [
+      12.14,
+      -5.4
+    ],
+    "eventTextId": "50007"
+  },
+  {
+    "id": 1008,
+    "chaId": 2,
+    "eventCoordinate": [
+      11.2,
+      -5
+    ],
+    "eventTextId": "50008"
+  },
+  {
+    "id": 1009,
+    "chaId": 2,
+    "eventCoordinate": [
+      9.04,
+      -3.7
+    ],
+    "eventTextId": "50009"
+  },
+  {
+    "id": 1010,
+    "chaId": 2,
+    "eventCoordinate": [
+      8.58,
+      -6.23
+    ],
+    "eventTextId": "50010"
+  },
+  {
+    "id": 1011,
+    "chaId": 3,
+    "eventCoordinate": [
+      13.1,
+      -6.6
+    ],
+    "eventTextId": "50011"
+  },
+  {
+    "id": 1012,
+    "chaId": 3,
+    "eventCoordinate": [
+      10.94,
+      -7.2
+    ],
+    "eventTextId": "50012"
+  },
+  {
+    "id": 1013,
+    "chaId": 3,
+    "eventCoordinate": [
+      10.27,
+      -6.83
+    ],
+    "eventTextId": "50013"
+  },
+  {
+    "id": 1014,
+    "chaId": 3,
+    "eventCoordinate": [
+      11.6,
+      -4.85
+    ],
+    "eventTextId": "50014"
+  },
+  {
+    "id": 1015,
+    "chaId": 3,
+    "eventCoordinate": [
+      10.9,
+      -7.2
+    ],
+    "eventTextId": "50015"
+  },
+  {
+    "id": 1016,
+    "chaId": 4,
+    "eventCoordinate": [
+      10.94,
+      -7.25
+    ],
+    "eventTextId": "50016"
+  },
+  {
+    "id": 1017,
+    "chaId": 4,
+    "eventCoordinate": [
+      10.66,
+      -7.25
+    ],
+    "eventTextId": "50017"
+  },
+  {
+    "id": 1018,
+    "chaId": 5,
+    "eventCoordinate": [
+      10.23,
+      -6.89
+    ],
+    "eventTextId": "50018"
+  },
+  {
+    "id": 1019,
+    "chaId": 5,
+    "eventCoordinate": [
+      9.9,
+      -6.89
+    ],
+    "eventTextId": "50019"
+  },
+  {
+    "id": 1020,
+    "chaId": 5,
+    "eventCoordinate": [
+      11.05,
+      -7.15
+    ],
+    "eventTextId": "50020"
+  },
+  {
+    "id": 1021,
+    "chaId": 6,
+    "eventCoordinate": [
+      12.67,
+      -6.4
+    ],
+    "eventTextId": "50021"
+  },
+  {
+    "id": 1022,
+    "chaId": 6,
+    "eventCoordinate": [
+      11.45,
+      -6.6
+    ],
+    "eventTextId": "50022"
+  },
+  {
+    "id": 1023,
+    "chaId": 6,
+    "eventCoordinate": [
+      10.94,
+      -7.04
+    ],
+    "eventTextId": "50023"
+  },
+  {
+    "id": 1024,
+    "chaId": 6,
+    "eventCoordinate": [
+      12.14,
+      -5.4
+    ],
+    "eventTextId": "50024"
+  },
+  {
+    "id": 1025,
+    "chaId": 6,
+    "eventCoordinate": [
+      11.81,
+      -6.1
+    ],
+    "eventTextId": "50025"
+  },
+  {
+    "id": 1026,
+    "chaId": 6,
+    "eventCoordinate": [
+      12.14,
+      -5.4
+    ],
+    "eventTextId": "50026"
+  },
+  {
+    "id": 1027,
+    "chaId": 7,
+    "eventCoordinate": [
+      13.95,
+      -6
+    ],
+    "eventTextId": "50027"
+  },
+  {
+    "id": 1028,
+    "chaId": 7,
+    "eventCoordinate": [
+      13,
+      -6.4
+    ],
+    "eventTextId": "50028"
+  },
+  {
+    "id": 1029,
+    "chaId": 7,
+    "eventCoordinate": [
+      12.8,
+      -6.4
+    ],
+    "eventTextId": "50029"
+  },
+  {
+    "id": 1030,
+    "chaId": 7,
+    "eventCoordinate": [
+      12.8,
+      -6.4
+    ],
+    "eventTextId": "50030"
+  },
+  {
+    "id": 1031,
+    "chaId": 7,
+    "eventCoordinate": [
+      12.5,
+      -6.4
+    ],
+    "eventTextId": "50031"
+  },
+  {
+    "id": 1032,
+    "chaId": 7,
+    "eventCoordinate": [
+      9.9,
+      -6.69
+    ],
+    "eventTextId": "50032"
+  },
+  {
+    "id": 1033,
+    "chaId": 7,
+    "eventCoordinate": [
+      10.2,
+      -6.67
+    ],
+    "eventTextId": "50033"
+  },
+  {
+    "id": 1034,
+    "chaId": 7,
+    "eventCoordinate": [
+      9.87,
+      -6.89
+    ],
+    "eventTextId": "50034"
+  },
+  {
+    "id": 1035,
+    "chaId": 8,
+    "eventCoordinate": [
+      12.59,
+      -6.6
+    ],
+    "eventTextId": "50035"
+  },
+  {
+    "id": 1036,
+    "chaId": 8,
+    "eventCoordinate": [
+      11.3,
+      -5.6
+    ],
+    "eventTextId": "50036"
+  },
+  {
+    "id": 1037,
+    "chaId": 8,
+    "eventCoordinate": [
+      9.14,
+      -4.1
+    ],
+    "eventTextId": "50037"
+  },
+  {
+    "id": 1038,
+    "chaId": 8,
+    "eventCoordinate": [
+      12.95,
+      -6.1
+    ],
+    "eventTextId": "50038"
+  },
+  {
+    "id": 1039,
+    "chaId": 8,
+    "eventCoordinate": [
+      10.26,
+      -5.36
+    ],
+    "eventTextId": "50039"
+  },
+  {
+    "id": 1040,
+    "chaId": 8,
+    "eventCoordinate": [
+      10.5,
+      -6.24
+    ],
+    "eventTextId": "50040"
+  },
+  {
+    "id": 1041,
+    "chaId": 8,
+    "eventCoordinate": [
+      11.25,
+      -7.34
+    ],
+    "eventTextId": "50041"
+  },
+  {
+    "id": 1042,
+    "chaId": 9,
+    "eventCoordinate": [
+      12.8,
+      -6.4
+    ],
+    "eventTextId": "50042"
+  },
+  {
+    "id": 1043,
+    "chaId": 9,
+    "eventCoordinate": [
+      9.96,
+      -6.89
+    ],
+    "eventTextId": "50043"
+  },
+  {
+    "id": 1044,
+    "chaId": 9,
+    "eventCoordinate": [
+      10.46,
+      -7.23
+    ],
+    "eventTextId": "50044"
+  },
+  {
+    "id": 1045,
+    "chaId": 10,
+    "eventCoordinate": [
+      13.3,
+      -6.3
+    ],
+    "eventTextId": "50045"
+  },
+  {
+    "id": 1046,
+    "chaId": 10,
+    "eventCoordinate": [
+      13.47,
+      -6
+    ],
+    "eventTextId": "50046"
+  },
+  {
+    "id": 1047,
+    "chaId": 11,
+    "eventCoordinate": [
+      13.7,
+      -6
+    ],
+    "eventTextId": "50047"
+  },
+  {
+    "id": 1048,
+    "chaId": 11,
+    "eventCoordinate": [
+      13.49,
+      -5.9
+    ],
+    "eventTextId": "50048"
+  },
+  {
+    "id": 1049,
+    "chaId": 11,
+    "eventCoordinate": [
+      13.49,
+      -5.9
+    ],
+    "eventTextId": "50049"
+  },
+  {
+    "id": 1050,
+    "chaId": 11,
+    "eventCoordinate": [
+      13.49,
+      -5.9
+    ],
+    "eventTextId": "50050"
+  },
+  {
+    "id": 1051,
+    "chaId": 11,
+    "eventCoordinate": [
+      13.49,
+      -5.9
+    ],
+    "eventTextId": "50051"
+  },
+  {
+    "id": 1052,
+    "chaId": 12,
+    "eventCoordinate": [
+      11.84,
+      -6.9
+    ],
+    "eventTextId": "50052"
+  },
+  {
+    "id": 1053,
+    "chaId": 12,
+    "eventCoordinate": [
+      11.85,
+      -6.8
+    ],
+    "eventTextId": "50053"
+  },
+  {
+    "id": 1054,
+    "chaId": 12,
+    "eventCoordinate": [
+      11.7,
+      -5.4
+    ],
+    "eventTextId": "50054"
+  },
+  {
+    "id": 1055,
+    "chaId": 12,
+    "eventCoordinate": [
+      12.5,
+      -5.5
+    ],
+    "eventTextId": "50055"
+  },
+  {
+    "id": 1056,
+    "chaId": 12,
+    "eventCoordinate": [
+      9.04,
+      -3.7
+    ],
+    "eventTextId": "50056"
+  },
+  {
+    "id": 1057,
+    "chaId": 12,
+    "eventCoordinate": [
+      12.94,
+      -6.75
+    ],
+    "eventTextId": "50057"
+  },
+  {
+    "id": 1058,
+    "chaId": 12,
+    "eventCoordinate": [
+      9.7,
+      -6.5
+    ],
+    "eventTextId": "50058"
+  },
+  {
+    "id": 1059,
+    "chaId": 13,
+    "eventCoordinate": [
+      9.8,
+      -6.89
+    ],
+    "eventTextId": "50059"
+  },
+  {
+    "id": 1060,
+    "chaId": 13,
+    "eventCoordinate": [
+      10,
+      -6.89
+    ],
+    "eventTextId": "50060"
+  },
+  {
+    "id": 1061,
+    "chaId": 13,
+    "eventCoordinate": [
+      10.36,
+      -6.8
+    ],
+    "eventTextId": "50061"
+  },
+  {
+    "id": 1062,
+    "chaId": 13,
+    "eventCoordinate": [
+      10.32,
+      -6.89
+    ],
+    "eventTextId": "50062"
+  },
+  {
+    "id": 1063,
+    "chaId": 13,
+    "eventCoordinate": [
+      10.1,
+      -7.25
+    ],
+    "eventTextId": "50063"
+  },
+  {
+    "id": 1064,
+    "chaId": 13,
+    "eventCoordinate": [
+      10.27,
+      -6.7
+    ],
+    "eventTextId": "50064"
+  }
+]

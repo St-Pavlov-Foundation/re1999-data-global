@@ -32,12 +32,44 @@
     "ruleRear": "1#9280209"
   },
   {
+    "timeId": 5,
+    "issueId": 5,
+    "optionalSkills": "2019#2020#2018#2023#2006#2021",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#8300110",
+    "ruleRear": "1#8300111"
+  },
+  {
+    "timeId": 6,
+    "issueId": 6,
+    "optionalSkills": "2011#2001#2022#2023#2017#2010",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#8300114",
+    "ruleRear": "1#8300115"
+  },
+  {
     "timeId": 7,
     "issueId": 7,
     "optionalSkills": "2024#2025#2026#2027#2004#2006",
     "ruleIcon": "shen_guize_18",
     "ruleFront": "1#8291209",
     "ruleRear": "1#8291210"
+  },
+  {
+    "timeId": 9,
+    "issueId": 5,
+    "optionalSkills": "2019#2020#2018#2023#2006#2021",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#8300110",
+    "ruleRear": "1#8300111"
+  },
+  {
+    "timeId": 10,
+    "issueId": 6,
+    "optionalSkills": "2011#2001#2022#2023#2017#2010",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#8300114",
+    "ruleRear": "1#8300115"
   },
   {
     "timeId": 8,

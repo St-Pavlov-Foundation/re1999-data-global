@@ -38,9 +38,10 @@ function var_0_0._editableInitView(arg_1_0)
 
 	gohelper.addUIClickAudio(arg_1_0._btnReplay.gameObject, AudioEnum.UI.Play_UI_Player_Interface_Close)
 
-	arg_1_0._iconGO = arg_1_0:getResInst(arg_1_0.viewContainer:getSetting().otherRes[1], arg_1_0._btncloth.gameObject)
+	arg_1_0._goskillpos = gohelper.findChild(arg_1_0._btncloth.gameObject, "bg/#go_skillpos")
+	arg_1_0._iconGO = arg_1_0:getResInst(arg_1_0.viewContainer:getSetting().otherRes[1], arg_1_0._goskillpos)
 
-	recthelper.setAnchor(arg_1_0._iconGO.transform, -100, 1)
+	recthelper.setAnchor(arg_1_0._iconGO.transform, 0, 0)
 
 	arg_1_0._tweeningId = 0
 	arg_1_0._replayMode = false

@@ -35,6 +35,8 @@ function var_0_0._editableInitView(arg_5_0)
 
 	table.insert(arg_5_0._txts, var_5_0)
 	table.insert(arg_5_0._txts, var_5_1)
+
+	arg_5_0._goreddot = gohelper.findChild(arg_5_0.viewGO, "reddot")
 end
 
 function var_0_0.init(arg_6_0, arg_6_1)
@@ -78,6 +80,10 @@ function var_0_0.onSelectByIndex(arg_13_0, arg_13_1)
 	local var_13_0 = arg_13_0._index == arg_13_1
 
 	arg_13_0:onSelect(var_13_0)
+end
+
+function var_0_0.showReddot(arg_14_0, arg_14_1)
+	gohelper.setActive(arg_14_0._goreddot, arg_14_1)
 end
 
 return var_0_0

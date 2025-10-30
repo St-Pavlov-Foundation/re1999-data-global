@@ -213,6 +213,7 @@ var_0_0.VersionActivityIdDict = {
 	Activity2_6 = 12601,
 	Activity1_52 = 11517,
 	Activity2_1 = 12101,
+	Activity3_0 = 13006,
 	Activity_Assassin_2 = 130506,
 	Activity1_9 = 11901,
 	Activity1_2 = 11201,
@@ -230,9 +231,7 @@ var_0_0.VersionActivityIdDict = {
 	Activity2_8 = 12801
 }
 var_0_0.VersionActivityIdList = {
-	var_0_0.VersionActivityIdDict.Activity2_8,
-	var_0_0.VersionActivityIdDict.Activity_Assassin_1,
-	var_0_0.VersionActivityIdDict.Activity_Assassin_2
+	var_0_0.VersionActivityIdDict.Activity3_0
 }
 var_0_0.MainIcon = {
 	[var_0_0.VersionActivityIdDict.Activity1_1] = "rk1111",
@@ -255,6 +254,7 @@ var_0_0.MainIcon = {
 	[var_0_0.VersionActivityIdDict.Activity2_6] = "rk_2_6",
 	[var_0_0.VersionActivityIdDict.Activity2_7] = "rk_2_7",
 	[var_0_0.VersionActivityIdDict.Activity2_8] = "rk_2_8",
+	[var_0_0.VersionActivityIdDict.Activity3_0] = "rk_3_0",
 	[var_0_0.VersionActivityIdDict.Activity_Assassin_1] = "rk_2_9_1",
 	[var_0_0.VersionActivityIdDict.Activity_Assassin_2] = "rk_2_9_2"
 }

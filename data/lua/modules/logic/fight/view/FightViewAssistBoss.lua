@@ -22,7 +22,8 @@ function var_0_0._editableInitView(arg_4_0)
 		FightAssistBoss2,
 		FightAssistBoss3,
 		FightAssistBoss4,
-		FightAssistBoss5
+		FightAssistBoss5,
+		FightAssistBoss6
 	}
 end
 

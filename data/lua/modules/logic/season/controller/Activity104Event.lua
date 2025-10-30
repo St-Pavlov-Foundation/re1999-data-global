@@ -20,6 +20,7 @@ var_0_0.OnComposeSuccess = 3002
 var_0_0.OnBookUpdateNotify = 3101
 var_0_0.OnBookChangeSelectNotify = 3102
 var_0_0.OnPlayerPrefNewUpdate = 3103
+var_0_0.OnCoverItemClick = 3104
 var_0_0.EnterSeasonMainView = 9001
 
 return var_0_0

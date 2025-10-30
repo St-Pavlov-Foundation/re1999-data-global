@@ -11,16 +11,17 @@ function var_0_0.reInit(arg_2_0)
 end
 
 function var_0_0.getTaskSeasonList(arg_3_0)
-	local var_3_0 = {}
-	local var_3_1 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Season)
+	local var_3_0 = Activity104Model.instance:getCurSeasonId()
+	local var_3_1 = {}
+	local var_3_2 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Season)
 
-	for iter_3_0, iter_3_1 in pairs(var_3_1) do
-		if iter_3_1.config then
-			table.insert(var_3_0, iter_3_1)
+	for iter_3_0, iter_3_1 in pairs(var_3_2) do
+		if iter_3_1.config and iter_3_1.config.seasonId == var_3_0 then
+			table.insert(var_3_1, iter_3_1)
 		end
 	end
 
-	table.sort(var_3_0, function(arg_4_0, arg_4_1)
+	table.sort(var_3_1, function(arg_4_0, arg_4_1)
 		local var_4_0 = arg_4_0.finishCount >= arg_4_0.config.maxFinishCount and 3 or arg_4_0.hasFinished and 1 or 2
 		local var_4_1 = arg_4_1.finishCount >= arg_4_1.config.maxFinishCount and 3 or arg_4_1.hasFinished and 1 or 2
 
@@ -33,7 +34,7 @@ function var_0_0.getTaskSeasonList(arg_3_0)
 		end
 	end)
 
-	return var_3_0
+	return var_3_1
 end
 
 var_0_0.instance = var_0_0.New()

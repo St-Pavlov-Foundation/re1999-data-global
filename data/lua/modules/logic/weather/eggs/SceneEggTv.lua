@@ -73,7 +73,7 @@ function var_0_0._initIconId(arg_6_0)
 		0
 	}
 
-	for iter_6_0, iter_6_1 in ipairs(lua_loading_icon.configList) do
+	for iter_6_0, iter_6_1 in ipairs(SceneConfig.instance:getLoadingIcons()) do
 		table.insert(arg_6_0._iconList, iter_6_1.id)
 	end
 end

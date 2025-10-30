@@ -17,6 +17,7 @@ local var_0_1 = {
 	expireTime = 16,
 	effect = 14,
 	useDesc = 3,
+	headIconSign = 21,
 	clienttag = 6,
 	id = 1,
 	isStackable = 10,

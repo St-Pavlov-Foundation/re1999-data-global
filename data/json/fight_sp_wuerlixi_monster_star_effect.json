@@ -1,0 +1,56 @@
+[
+  {
+    "buffId": 900045401,
+    "effect": "buff/buff_kxtyyj_monster2",
+    "height": -0.8,
+    "bornEffect": "buff/buff_kxtyyj_monster2_cx",
+    "bornEffectDuration": 1.0,
+    "disAppearEffect": "buff/buff_kxtyyj_monster2_cx",
+    "disAppearEffectDuration": 1.0
+  },
+  {
+    "buffId": 900045402,
+    "effect": "buff/buff_kxtyyj_monster4",
+    "height": -0.8,
+    "bornEffect": "buff/buff_kxtyyj_monster4_cx",
+    "bornEffectDuration": 1.0,
+    "disAppearEffect": "buff/buff_kxtyyj_monster4_cx",
+    "disAppearEffectDuration": 1.0
+  },
+  {
+    "buffId": 900045403,
+    "effect": "buff/buff_kxtyyj_monster1",
+    "height": -0.8,
+    "bornEffect": "buff/buff_kxtyyj_monster1_cx",
+    "bornEffectDuration": 1.0,
+    "disAppearEffect": "buff/buff_kxtyyj_monster1_cx",
+    "disAppearEffectDuration": 1.0
+  },
+  {
+    "buffId": 900045404,
+    "effect": "buff/buff_kxtyyj_monster3",
+    "height": -0.8,
+    "bornEffect": "buff/buff_kxtyyj_monster3_cx",
+    "bornEffectDuration": 1.0,
+    "disAppearEffect": "buff/buff_kxtyyj_monster3_cx",
+    "disAppearEffectDuration": 1.0
+  },
+  {
+    "buffId": 900045405,
+    "effect": "buff/buff_kxtyyj_monster0",
+    "height": -0.8,
+    "bornEffect": "",
+    "bornEffectDuration": 0.0,
+    "disAppearEffect": "",
+    "disAppearEffectDuration": 0.0
+  },
+  {
+    "buffId": 900045406,
+    "effect": "buff/pre_v2a8_welx_pf_skill1_channel",
+    "height": -0.8,
+    "bornEffect": "buff/pre_v2a8_welx_pf_skill1_channel_1",
+    "bornEffectDuration": 1.0,
+    "disAppearEffect": "buff/pre_v2a8_welx_pf_skill1_channel_1",
+    "disAppearEffectDuration": 1.0
+  }
+]

@@ -57,11 +57,11 @@
   },
   {
     "id": 15,
-    "skipvideo": "1_2_activity_02"
+    "skipvideo": "1_2_activity_01"
   },
   {
     "id": 16,
-    "skipvideo": "1_2_activity_01"
+    "skipvideo": "1_2_activity_02"
   },
   {
     "id": 17,
@@ -318,5 +318,21 @@
   {
     "id": 80,
     "skipvideo": "2_8_chapter10_05"
+  },
+  {
+    "id": 81,
+    "skipvideo": "3_0_chapter11_01"
+  },
+  {
+    "id": 82,
+    "skipvideo": "3_0_chapter11_02"
+  },
+  {
+    "id": 83,
+    "skipvideo": "3_0_chapter11_03"
+  },
+  {
+    "id": 84,
+    "skipvideo": "3_0_chapter11_04"
   }
 ]

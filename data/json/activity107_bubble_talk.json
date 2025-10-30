@@ -1012,5 +1012,77 @@
     "groupId": 6,
     "condition": "5#301#302",
     "weight": 100
+  },
+  {
+    "id": 630,
+    "groupId": 7,
+    "condition": "1",
+    "weight": 100
+  },
+  {
+    "id": 631,
+    "groupId": 7,
+    "condition": "1",
+    "weight": 100
+  },
+  {
+    "id": 632,
+    "groupId": 7,
+    "condition": "2",
+    "weight": 100
+  },
+  {
+    "id": 633,
+    "groupId": 7,
+    "condition": "2",
+    "weight": 100
+  },
+  {
+    "id": 634,
+    "groupId": 7,
+    "condition": "3#5",
+    "weight": 100
+  },
+  {
+    "id": 635,
+    "groupId": 7,
+    "condition": "3#4",
+    "weight": 100
+  },
+  {
+    "id": 636,
+    "groupId": 7,
+    "condition": "3#3",
+    "weight": 100
+  },
+  {
+    "id": 637,
+    "groupId": 7,
+    "condition": "3#2",
+    "weight": 100
+  },
+  {
+    "id": 638,
+    "groupId": 7,
+    "condition": "4#5",
+    "weight": 100
+  },
+  {
+    "id": 639,
+    "groupId": 7,
+    "condition": "4#4",
+    "weight": 100
+  },
+  {
+    "id": 640,
+    "groupId": 7,
+    "condition": "4#3",
+    "weight": 100
+  },
+  {
+    "id": 641,
+    "groupId": 7,
+    "condition": "4#2",
+    "weight": 100
   }
 ]

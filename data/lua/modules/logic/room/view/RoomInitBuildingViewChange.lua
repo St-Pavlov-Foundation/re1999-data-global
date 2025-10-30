@@ -125,21 +125,19 @@ function var_0_0._btncombineOnClick(arg_6_0)
 			return
 		end
 
-		local var_6_3 = {}
-		local var_6_4, var_6_5 = RoomProductionHelper.getEasyCombineFormulaAndCostItemList(var_6_0, var_6_1)
+		local var_6_3, var_6_4 = RoomProductionHelper.getEasyCombineFormulaAndCostItemList(var_6_0, var_6_1)
 
-		if var_6_4 then
-			var_6_3.costItemAndFormulaIdList = var_6_5
-			var_6_3.produce = {
+		if var_6_3 then
+			local var_6_5 = arg_6_0.viewContainer:getSelectLine()
+			local var_6_6 = {
 				type = var_6_2.type,
 				id = var_6_2.id,
 				quantity = var_6_1
 			}
-			var_6_3.lineId = arg_6_0.viewContainer:getSelectLine()
-			var_6_3.callback = arg_6_0.setStartFormulaStrId
-			var_6_3.callbackObj = arg_6_0
 
-			ViewMgr.instance:openView(ViewName.RoomFormulaMsgBoxView, var_6_3)
+			RoomProductionHelper.openRoomFormulaMsgBoxView(var_6_4, {
+				var_6_6
+			}, var_6_5, arg_6_0.setStartFormulaStrId, arg_6_0)
 		else
 			GameFacade.showToast(ToastEnum.RoomFormulaCantUse)
 		end
@@ -156,13 +154,13 @@ function var_0_0._btncombineOnClick(arg_6_0)
 			return
 		end
 
-		local var_6_6 = arg_6_0.viewContainer:getSelectLine()
-		local var_6_7 = RoomProductionModel.instance:getLineMO(var_6_6)
+		local var_6_7 = arg_6_0.viewContainer:getSelectLine()
+		local var_6_8 = RoomProductionModel.instance:getLineMO(var_6_7)
 
 		PopupController.instance:setPause("roominitbuildingview_changestart", true)
 		UIBlockMgr.instance:startBlock("roominitbuildingview_changestart")
 		arg_6_0:setStartFormulaStrId()
-		RoomRpc.instance:sendStartProductionLineRequest(var_6_7.id, {
+		RoomRpc.instance:sendStartProductionLineRequest(var_6_8.id, {
 			{
 				formulaId = var_6_0,
 				count = var_6_1

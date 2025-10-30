@@ -218,41 +218,6 @@
   },
   {
     "typeId": 1,
-    "itemId": 221131,
-    "limit": 1,
-    "price": "2#25#400",
-    "version": 130508
-  },
-  {
-    "typeId": 11,
-    "itemId": 12304,
-    "limit": 1,
-    "price": "2#25#500",
-    "version": 130508
-  },
-  {
-    "typeId": 13,
-    "itemId": 2304,
-    "limit": 1,
-    "price": "2#25#350",
-    "version": 130508
-  },
-  {
-    "typeId": 13,
-    "itemId": 2303,
-    "limit": 1,
-    "price": "2#25#150",
-    "version": 130508
-  },
-  {
-    "typeId": 13,
-    "itemId": 2306,
-    "limit": 1,
-    "price": "2#25#150",
-    "version": 130508
-  },
-  {
-    "typeId": 1,
     "itemId": 221111,
     "limit": 1,
     "price": "2#25#400",
@@ -285,5 +250,40 @@
     "limit": 1,
     "price": "2#25#150",
     "version": 13010
+  },
+  {
+    "typeId": 1,
+    "itemId": 221131,
+    "limit": 1,
+    "price": "2#25#400",
+    "version": 130508
+  },
+  {
+    "typeId": 11,
+    "itemId": 12304,
+    "limit": 1,
+    "price": "2#25#500",
+    "version": 130508
+  },
+  {
+    "typeId": 13,
+    "itemId": 2304,
+    "limit": 1,
+    "price": "2#25#350",
+    "version": 130508
+  },
+  {
+    "typeId": 13,
+    "itemId": 2303,
+    "limit": 1,
+    "price": "2#25#150",
+    "version": 130508
+  },
+  {
+    "typeId": 13,
+    "itemId": 2306,
+    "limit": 1,
+    "price": "2#25#150",
+    "version": 130508
   }
 ]

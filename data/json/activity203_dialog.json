@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1301102,
+    "dialogSeq": 1,
+    "dialogId": 30001,
+    "trigger": "4"
+  },
+  {
+    "id": 1301105,
+    "dialogSeq": 1,
+    "dialogId": 30002,
+    "trigger": "3"
+  },
+  {
+    "id": 1301105,
+    "dialogSeq": 2,
+    "dialogId": 30006,
+    "trigger": "4"
+  },
+  {
+    "id": 1301106,
+    "dialogSeq": 1,
+    "dialogId": 30003,
+    "trigger": "2#11004"
+  },
+  {
+    "id": 1301106,
+    "dialogSeq": 2,
+    "dialogId": 30004,
+    "trigger": "2#11003"
+  },
+  {
+    "id": 1301106,
+    "dialogSeq": 3,
+    "dialogId": 30005,
+    "trigger": "2#11002"
+  }
+]

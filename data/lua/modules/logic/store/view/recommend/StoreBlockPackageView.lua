@@ -30,7 +30,8 @@ function var_0_0._btnbuyOnClick(arg_5_0)
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 		[StatEnum.EventProperties.RecommendPageId] = tostring(arg_5_0.config and arg_5_0.config.id or ""),
-		[StatEnum.EventProperties.RecommendPageName] = arg_5_0.config and arg_5_0.config.name or "StoreBlockPackageView"
+		[StatEnum.EventProperties.RecommendPageName] = arg_5_0.config and arg_5_0.config.name or "StoreBlockPackageView",
+		[StatEnum.EventProperties.RecommendPageRank] = arg_5_0:getTabIndex()
 	})
 	GameFacade.jumpByAdditionParam(arg_5_0.config.systemJumpCode)
 end

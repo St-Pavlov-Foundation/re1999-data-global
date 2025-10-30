@@ -887,16 +887,25 @@ function var_0_0._rebuildEpisodeConfigs(arg_55_0)
 		__index = function(arg_56_0, arg_56_1)
 			local var_56_0 = var_55_0[arg_56_1] or arg_56_1
 			local var_56_1 = var_55_4.__index(arg_56_0, var_56_0)
+			local var_56_2 = arg_56_1 == "preEpisode"
 
-			if arg_56_1 == "preEpisode" and var_56_1 > 0 or arg_56_1 == "normalEpisodeId" then
+			if var_56_2 and var_56_1 > 0 or arg_56_1 == "normalEpisodeId" then
+				if var_56_2 then
+					local var_56_3 = var_55_4.__index(arg_56_0, "preEpisodeId")
+
+					if var_56_3 and var_56_3 > 0 then
+						return var_56_3
+					end
+				end
+
 				return var_55_2[var_56_1] or var_56_1
 			end
 
 			if tabletool.indexOf(var_55_1, arg_56_1) then
-				local var_56_2 = var_55_4.__index(arg_56_0, "chainEpisode")
+				local var_56_4 = var_55_4.__index(arg_56_0, "chainEpisode")
 
-				if var_56_2 > 0 and lua_episode.configDict[var_56_2] then
-					return lua_episode.configDict[var_56_2][arg_56_1]
+				if var_56_4 > 0 and lua_episode.configDict[var_56_4] then
+					return lua_episode.configDict[var_56_4][arg_56_1]
 				end
 			end
 

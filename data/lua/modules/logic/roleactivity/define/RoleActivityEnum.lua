@@ -17,7 +17,8 @@ var_0_0.LevelView = {
 	[VersionActivity2_0Enum.ActivityId.Mercuria] = ViewName.ActMercuriaLevelView,
 	[VersionActivity2_0Enum.ActivityId.Joe] = ViewName.ActJoeLevelView,
 	[VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr] = ViewName.ZhiXinQuanErLevelView,
-	[VersionActivity2_3Enum.ActivityId.DuDuGu] = ViewName.ActDuDuGuLevelView
+	[VersionActivity2_3Enum.ActivityId.DuDuGu] = ViewName.ActDuDuGuLevelView,
+	[VersionActivity3_0Enum.ActivityId.KaRong] = ViewName.KaRongLevelView
 }
 
 return var_0_0

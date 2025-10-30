@@ -310,6 +310,12 @@ function var_0_0.setParam(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_
 		if var_11_21 and var_11_21.aidDict then
 			var_11_21.aidDict = nil
 		end
+
+		if DungeonController.checkEpisodeFiveHero(arg_11_0.episodeId) then
+			arg_11_0.heroGroupType = ModuleEnum.HeroGroupType.General
+
+			HeroGroupSnapshotModel.instance:setParam(arg_11_0.episodeId)
+		end
 	else
 		arg_11_0.heroGroupType = ModuleEnum.HeroGroupType.Default
 		arg_11_0._heroGroupList = {}
@@ -629,6 +635,13 @@ function var_0_0.setHeroGroupSelectIndex(arg_26_0, arg_26_1)
 		var_26_1 = arg_26_0._episodeType
 	end
 
+	if var_26_1 == 1 and arg_26_1 == ModuleEnum.FiveHeroEnum.FifthIndex then
+		logError("编队设置错误，加个保底以及打印log线上确认问题")
+
+		arg_26_1 = arg_26_0._groupTypeSelect[var_26_1] or 0
+		arg_26_1 = math.min(arg_26_1, 4)
+	end
+
 	arg_26_0._groupTypeSelect[var_26_1] = arg_26_1
 
 	arg_26_0:_setSingleGroup()
@@ -700,6 +713,12 @@ function var_0_0.saveCurGroupData(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
 
 	if var_29_0.type == DungeonEnum.EpisodeType.Act183 then
 		Act183HeroGroupController.instance:saveGroupData(arg_29_3, arg_29_0.heroGroupType, arg_29_0.episodeId, arg_29_1, arg_29_2)
+
+		return
+	end
+
+	if DungeonController.checkEpisodeFiveHero(arg_29_0.episodeId) then
+		DungeonController.saveFiveHeroGroupData(arg_29_3, arg_29_0.heroGroupType, arg_29_0.episodeId, arg_29_1, arg_29_2)
 
 		return
 	end
@@ -864,6 +883,10 @@ function var_0_0.isPositionOpen(arg_36_0, arg_36_1)
 	local var_36_0 = lua_open_group.configDict[arg_36_1]
 
 	if not var_36_0 then
+		if arg_36_1 == ModuleEnum.FiveHeroEnum.MaxHeroNum and DungeonController.checkEpisodeFiveHero(arg_36_0.episodeId) then
+			return true
+		end
+
 		return false
 	end
 

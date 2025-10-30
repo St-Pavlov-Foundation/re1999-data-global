@@ -103,5 +103,12 @@
     "chapterIds": "28101",
     "saveGroup": 1,
     "changeForbiddenEpisode": 2810102
+  },
+  {
+    "id": 15,
+    "name": "language_10000137",
+    "chapterIds": "",
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 0
   }
 ]

@@ -48,10 +48,17 @@ function var_0_0.init(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
 	arg_5_0._setComponentStop = false
 	arg_5_0._playLastOne = nil
 
-	arg_5_0:removeTaskActions()
-
 	local var_5_0 = arg_5_0:getMouth(arg_5_2)
 
+	if string.nilorempty(var_5_0) and arg_5_0._spineVoice:getInStory() and arg_5_0._mouthStopDelayCallbackList then
+		local var_5_1 = arg_5_0._mouthStopDelayCallbackList[1]
+
+		if var_5_1 then
+			var_5_1()
+		end
+	end
+
+	arg_5_0:removeTaskActions()
 	arg_5_0:_checkPlayMouthActionList(var_5_0)
 end
 
@@ -146,6 +153,7 @@ function var_0_0._playMouthActionList(arg_12_0, arg_12_1)
 		end
 	else
 		arg_12_0._mouthDelayCallbackList = {}
+		arg_12_0._mouthStopDelayCallbackList = {}
 
 		if string.find(arg_12_1, var_0_2) then
 			arg_12_0._faceEndTime = arg_12_0:_getFaceEndTime()
@@ -233,6 +241,10 @@ function var_0_0._addMouth(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
 	end
 
 	local function var_14_1()
+		if arg_14_0._mouthStopDelayCallbackList then
+			tabletool.removeValue(arg_14_0._mouthStopDelayCallbackList, stopCallback)
+		end
+
 		if arg_14_0._spine then
 			arg_14_0._playLastOne = true
 
@@ -245,7 +257,7 @@ function var_0_0._addMouth(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
 	end
 
 	table.insert(arg_14_0._mouthDelayCallbackList, var_14_0)
-	table.insert(arg_14_0._mouthDelayCallbackList, var_14_1)
+	table.insert(arg_14_0._mouthStopDelayCallbackList, var_14_1)
 	TaskDispatcher.runDelay(var_14_0, nil, arg_14_3)
 	TaskDispatcher.runDelay(var_14_1, nil, arg_14_4)
 end
@@ -274,6 +286,10 @@ function var_0_0._addMouthBizui(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
 	end
 
 	local function var_17_1()
+		if arg_17_0._mouthStopDelayCallbackList then
+			tabletool.removeValue(arg_17_0._mouthStopDelayCallbackList, stopCallback)
+		end
+
 		if arg_17_0._spine then
 			arg_17_0._playLastOne = true
 
@@ -286,7 +302,7 @@ function var_0_0._addMouthBizui(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
 	end
 
 	table.insert(arg_17_0._mouthDelayCallbackList, var_17_0)
-	table.insert(arg_17_0._mouthDelayCallbackList, var_17_1)
+	table.insert(arg_17_0._mouthStopDelayCallbackList, var_17_1)
 	TaskDispatcher.runDelay(var_17_0, nil, arg_17_2)
 	TaskDispatcher.runDelay(var_17_1, nil, arg_17_3)
 end
@@ -359,15 +375,20 @@ function var_0_0.checkMouthEnd(arg_24_0, arg_24_1)
 end
 
 function var_0_0._clearAutoMouthCallback(arg_25_0)
-	if not arg_25_0._mouthDelayCallbackList then
-		return
+	if arg_25_0._mouthDelayCallbackList then
+		for iter_25_0, iter_25_1 in ipairs(arg_25_0._mouthDelayCallbackList) do
+			TaskDispatcher.cancelTask(iter_25_1, nil)
+		end
 	end
 
-	for iter_25_0, iter_25_1 in ipairs(arg_25_0._mouthDelayCallbackList) do
-		TaskDispatcher.cancelTask(iter_25_1, nil)
+	if arg_25_0._mouthStopDelayCallbackList then
+		for iter_25_2, iter_25_3 in ipairs(arg_25_0._mouthStopDelayCallbackList) do
+			TaskDispatcher.cancelTask(iter_25_3, nil)
+		end
 	end
 
 	arg_25_0._mouthDelayCallbackList = nil
+	arg_25_0._mouthStopDelayCallbackList = nil
 end
 
 function var_0_0.onVoiceStop(arg_26_0)

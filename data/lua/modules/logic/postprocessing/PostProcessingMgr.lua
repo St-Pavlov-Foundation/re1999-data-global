@@ -314,6 +314,8 @@ function var_0_0._refreshPopUpBlurNotBlur(arg_21_0, arg_21_1, arg_21_2)
 	if var_21_4 and arg_21_2 then
 		gohelper.setAsLastSibling(var_21_4)
 	end
+
+	var_0_0.instance:dispatchEvent(PostProcessingEvent.onRefreshPopUpBlurNotBlur, arg_21_2)
 end
 
 function var_0_0._setChildCanvasLayer(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
@@ -641,5 +643,7 @@ function var_0_0.ClearPPRenderRts(arg_59_0)
 end
 
 var_0_0.instance = var_0_0.New()
+
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
 return var_0_0

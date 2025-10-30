@@ -2052,6 +2052,11 @@ function var_0_0.playEffect338(arg_243_0, arg_243_1)
 	end
 
 	local var_243_0 = arg_243_0:getHandCard()
+
+	if string.nilorempty(arg_243_1.reserveStr) then
+		return
+	end
+
 	local var_243_1 = FightStrUtil.instance:getSplitString2Cache(arg_243_1.reserveStr, true)
 
 	for iter_243_0, iter_243_1 in ipairs(var_243_1) do

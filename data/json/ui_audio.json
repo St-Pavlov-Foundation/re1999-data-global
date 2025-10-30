@@ -11255,6 +11255,341 @@
     "bankName": "ui_activity_2_8_fuleyuan_yure"
   },
   {
+    "id": 20300011,
+    "eventName": "play_replay_music_theme_3_0",
+    "bankName": "ui_replay_mainmusic3_0"
+  },
+  {
+    "id": 20300012,
+    "eventName": "play_replay_music_huishi_3_0",
+    "bankName": "ui_replay_mainmusic3_0"
+  },
+  {
+    "id": 20300013,
+    "eventName": "play_replay_music_church_3_0",
+    "bankName": "ui_replay_mainmusic3_0"
+  },
+  {
+    "id": 20300021,
+    "eventName": "play_ui_fight_hands_admission",
+    "bankName": "fight_ui_sfx3_0"
+  },
+  {
+    "id": 20300031,
+    "eventName": "play_ui_lushang_yure_tear",
+    "bankName": "ui_activity_3_0_lushang_yure"
+  },
+  {
+    "id": 20300032,
+    "eventName": "play_ui_lushang_yure_typewriter",
+    "bankName": "ui_activity_3_0_lushang_yure"
+  },
+  {
+    "id": 20300033,
+    "eventName": "stop_ui_lushang_yure_typewriter",
+    "bankName": "ui_activity_3_0_lushang_yure"
+  },
+  {
+    "id": 20301001,
+    "eventName": "play_ui_common_click",
+    "bankName": "uiclick"
+  },
+  {
+    "id": 20301002,
+    "eventName": "play_ui_lushang_level_finish",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301003,
+    "eventName": "play_ui_lushang_level_appear",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301004,
+    "eventName": "play_ui_lushang_burn_loop",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301005,
+    "eventName": "stop_ui_lushang_burn_loop",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301006,
+    "eventName": "play_ui_leimi_theft_open",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20301007,
+    "eventName": "play_ui_lushang_fight_begin_1",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301008,
+    "eventName": "play_ui_lushang_fight_begin_2",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301009,
+    "eventName": "play_ui_leimi_smalluncharted_open",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20301010,
+    "eventName": "play_ui_lushang_our_occupy",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301011,
+    "eventName": "play_ui_lushang_enemy_occupy",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301012,
+    "eventName": "play_ui_lushang_link_click",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301013,
+    "eventName": "play_ui_lushang_offensive_loop",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301014,
+    "eventName": "stop_ui_lushang_offensive_loop",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301015,
+    "eventName": "play_ui_lushang_warring_loop",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301016,
+    "eventName": "stop_ui_lushang_warring_loop",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301017,
+    "eventName": "play_ui_pkls_endpoint_arrival",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20301018,
+    "eventName": "play_ui_pkls_challenge_fail",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20301019,
+    "eventName": "play_ui_activity_level_chosen",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20301020,
+    "eventName": "play_ui_youyu_attack_3",
+    "bankName": "ui_activity_2_2_youyu"
+  },
+  {
+    "id": 20301021,
+    "eventName": "play_ui_lushang_reinforce",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301022,
+    "eventName": "play_ui_youyu_front_buff",
+    "bankName": "ui_activity_2_2_youyu"
+  },
+  {
+    "id": 20301023,
+    "eventName": "play_ui_lushang_interference",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301024,
+    "eventName": "play_ui_lushang_zhihuibu_open",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301025,
+    "eventName": "play_ui_lushang_zhihuibu_handian",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301026,
+    "eventName": "play_ui_lushang_zhihuibu_paper2",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301027,
+    "eventName": "play_ui_common_click",
+    "bankName": "uiclick"
+  },
+  {
+    "id": 20301028,
+    "eventName": "play_ui_wenming_cards_effect",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 20301029,
+    "eventName": "play_ui_tangren_pen1",
+    "bankName": "ui_activity_2_5_tangren_tiaozhan"
+  },
+  {
+    "id": 20301030,
+    "eventName": "play_ui_lushang_zhihuibu_poyi",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301031,
+    "eventName": "play_ui_tangren_fei",
+    "bankName": "ui_activity_2_5_tangren_tiaozhan"
+  },
+  {
+    "id": 20301032,
+    "eventName": "play_ui_diqiu_yure_success",
+    "bankName": "ui_activity_2_4_diqiu_yure"
+  },
+  {
+    "id": 20301033,
+    "eventName": "play_ui_lushang_zhihuibu_fanhui",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301034,
+    "eventName": "play_ui_mission_open",
+    "bankName": "ui_mission"
+  },
+  {
+    "id": 20301035,
+    "eventName": "play_ui_lushang_zhihuibu_shapan",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301036,
+    "eventName": "play_ui_lushang_zhihuibu_timeline1",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301037,
+    "eventName": "play_ui_lushang_zhihuibu_timeline2",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301038,
+    "eventName": "play_ui_lushang_zhihuibu_zhizhen1",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301039,
+    "eventName": "stop_ui_lushang_zhihuibu_zhizhen2",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301040,
+    "eventName": "play_ui_common_click",
+    "bankName": "uiclick"
+  },
+  {
+    "id": 20301041,
+    "eventName": "play_ui_lushang_zhihuibu_timeline3",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301042,
+    "eventName": "play_ui_lushang_zhihuibu_switch",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301043,
+    "eventName": "play_ui_lushang_zhihuibu_paper",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301044,
+    "eventName": "play_ui_common_click",
+    "bankName": "uiclick"
+  },
+  {
+    "id": 20301045,
+    "eventName": "play_ui_lushang_zhihuibu_fanhui",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 20301046,
+    "eventName": "stop_ui_lushang_gunfire_loop",
+    "bankName": "ui_activity_3_0_lushang"
+  },
+  {
+    "id": 20301047,
+    "eventName": "play_ui_lushang_open_1",
+    "bankName": "ui_activity_3_0_lushang"
+  },
+  {
+    "id": 20301048,
+    "eventName": "play_ui_lushang_open_2",
+    "bankName": "ui_activity_3_0_lushang"
+  },
+  {
+    "id": 20301049,
+    "eventName": "play_ui_lushang_gunfire_loop",
+    "bankName": "ui_activity_3_0_lushang"
+  },
+  {
+    "id": 20301050,
+    "eventName": "play_ui_tujianskin_group_special",
+    "bankName": "ui_tujianskin_3_0"
+  },
+  {
+    "id": 20301051,
+    "eventName": "play_ui_common_click",
+    "bankName": "uiclick"
+  },
+  {
+    "id": 20301052,
+    "eventName": "play_ui_lushang_karong_finish",
+    "bankName": "ui_activity_3_0_lushang_karong"
+  },
+  {
+    "id": 20301053,
+    "eventName": "play_ui_lushang_karong_unlock",
+    "bankName": "ui_activity_3_0_lushang_karong"
+  },
+  {
+    "id": 20301054,
+    "eventName": "play_ui_lushang_burn_loop",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301055,
+    "eventName": "stop_ui_lushang_burn_loop",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 20301056,
+    "eventName": "play_ui_lushang_arrival",
+    "bankName": "ui_activity_3_0_lushang_karong"
+  },
+  {
+    "id": 20301057,
+    "eventName": "play_ui_role_culture_open",
+    "bankName": "ui_role"
+  },
+  {
+    "id": 20301058,
+    "eventName": "play_ui_lushang_skill_get",
+    "bankName": "ui_activity_3_0_lushang_karong"
+  },
+  {
+    "id": 20301059,
+    "eventName": "play_ui_lushang_barrier_dispel",
+    "bankName": "ui_activity_3_0_lushang_karong"
+  },
+  {
+    "id": 20301060,
+    "eventName": "play_ui_lushang_level_complete",
+    "bankName": "ui_activity_3_0_lushang_karong"
+  },
+  {
     "id": 20305001,
     "eventName": "play_ui_fight_click_expand",
     "bankName": "fight_ui_sfx_s01"
@@ -11815,6 +12150,16 @@
     "bankName": "ui_activity_s01_cikexia_link"
   },
   {
+    "id": 20305621,
+    "eventName": "play_ui_cikexia_screen_shine",
+    "bankName": "ui_activity_s01_cikexia_yure"
+  },
+  {
+    "id": 20305622,
+    "eventName": "play_ui_cikexia_computer_switch",
+    "bankName": "ui_activity_s01_cikexia_yure"
+  },
+  {
     "id": 310036,
     "eventName": "play_ui_leimi_souvenir_open",
     "bankName": "ui_activity"
@@ -11823,20 +12168,5 @@
     "id": 310037,
     "eventName": "play_ui_mln_page_turn",
     "bankName": "ui_activity"
-  },
-  {
-    "id": 20300031,
-    "eventName": "play_ui_lushang_yure_tear",
-    "bankName": "ui_activity_3_0_lushang_yure"
-  },
-  {
-    "id": 20300032,
-    "eventName": "play_ui_lushang_yure_typewriter",
-    "bankName": "ui_activity_3_0_lushang_yure"
-  },
-  {
-    "id": 20300033,
-    "eventName": "stop_ui_lushang_yure_typewriter",
-    "bankName": "ui_activity_3_0_lushang_yure"
   }
 ]

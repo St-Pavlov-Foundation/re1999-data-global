@@ -391,7 +391,7 @@ function var_0_0._showRedDot(arg_27_0)
 end
 
 function var_0_0._checkShowRedDot(arg_28_0)
-	arg_28_0._characterShowRedDot = arg_28_0:_checkCharacterShowRedDot()
+	arg_28_0._characterShowRedDot = arg_28_0:_checkCharacterShowRedDot() or arg_28_0:_checkFightUiShowRedDot()
 
 	return arg_28_0._characterShowRedDot or RedDotModel.instance:isDotShow(RedDotEnum.DotNode.MainSceneSwitch, 0)
 end
@@ -403,70 +403,74 @@ function var_0_0._checkCharacterShowRedDot(arg_29_0)
 	return #var_29_0 >= 2 and var_29_1 ~= "1"
 end
 
-function var_0_0._hideRedDot(arg_30_0)
-	if arg_30_0._characterShowRedDot then
-		arg_30_0._characterShowRedDot = false
+function var_0_0._checkFightUiShowRedDot(arg_30_0)
+	return FightUISwitchModel.instance:isNewUnlockStyle()
+end
 
-		local var_30_0 = PlayerEnum.SimpleProperty.MainThumbnailViewSwitch
-		local var_30_1 = "1"
+function var_0_0._hideRedDot(arg_31_0)
+	if arg_31_0._characterShowRedDot then
+		arg_31_0._characterShowRedDot = false
 
-		PlayerModel.instance:forceSetSimpleProperty(var_30_0, var_30_1)
-		PlayerRpc.instance:sendSetSimplePropertyRequest(var_30_0, var_30_1)
+		local var_31_0 = PlayerEnum.SimpleProperty.MainThumbnailViewSwitch
+		local var_31_1 = "1"
+
+		PlayerModel.instance:forceSetSimpleProperty(var_31_0, var_31_1)
+		PlayerRpc.instance:sendSetSimplePropertyRequest(var_31_0, var_31_1)
 	end
 
-	arg_30_0._isShowRedDot = arg_30_0:_checkShowRedDot()
+	arg_31_0._isShowRedDot = arg_31_0:_checkShowRedDot()
 
-	gohelper.setActive(arg_30_0._goswitchreddot, arg_30_0._isShowRedDot)
+	gohelper.setActive(arg_31_0._goswitchreddot, arg_31_0._isShowRedDot)
 end
 
-function var_0_0.isPlayingVoice(arg_31_0)
-	return arg_31_0._lightSpine:isPlayingVoice() or arg_31_0._tvOff
+function var_0_0.isPlayingVoice(arg_32_0)
+	return arg_32_0._lightSpine:isPlayingVoice() or arg_32_0._tvOff
 end
 
-function var_0_0.isShowInScene(arg_32_0)
-	return arg_32_0._showInScene
+function var_0_0.isShowInScene(arg_33_0)
+	return arg_33_0._showInScene
 end
 
-function var_0_0._checkSpecialTouch(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0 = "triggerArea" .. arg_33_1.param
-	local var_33_1 = arg_33_0._heroSkinTriggerArea[var_33_0]
+function var_0_0._checkSpecialTouch(arg_34_0, arg_34_1, arg_34_2)
+	local var_34_0 = "triggerArea" .. arg_34_1.param
+	local var_34_1 = arg_34_0._heroSkinTriggerArea[var_34_0]
 
-	if not var_33_1 then
-		var_33_1 = {}
-		arg_33_0._heroSkinTriggerArea[var_33_0] = var_33_1
+	if not var_34_1 then
+		var_34_1 = {}
+		arg_34_0._heroSkinTriggerArea[var_34_0] = var_34_1
 
-		local var_33_2 = arg_33_0._heroSkinConfig[var_33_0]
-		local var_33_3 = string.split(var_33_2, "_")
+		local var_34_2 = arg_34_0._heroSkinConfig[var_34_0]
+		local var_34_3 = string.split(var_34_2, "_")
 
-		for iter_33_0, iter_33_1 in ipairs(var_33_3) do
-			local var_33_4 = string.split(iter_33_1, "|")
+		for iter_34_0, iter_34_1 in ipairs(var_34_3) do
+			local var_34_4 = string.split(iter_34_1, "|")
 
-			if #var_33_4 == 2 then
-				local var_33_5 = string.split(var_33_4[1], "#")
-				local var_33_6 = string.split(var_33_4[2], "#")
-				local var_33_7 = tonumber(var_33_5[1])
-				local var_33_8 = tonumber(var_33_5[2])
-				local var_33_9 = tonumber(var_33_6[1])
-				local var_33_10 = tonumber(var_33_6[2])
-				local var_33_11 = {
-					var_33_7,
-					var_33_8,
-					var_33_9,
-					var_33_10
+			if #var_34_4 == 2 then
+				local var_34_5 = string.split(var_34_4[1], "#")
+				local var_34_6 = string.split(var_34_4[2], "#")
+				local var_34_7 = tonumber(var_34_5[1])
+				local var_34_8 = tonumber(var_34_5[2])
+				local var_34_9 = tonumber(var_34_6[1])
+				local var_34_10 = tonumber(var_34_6[2])
+				local var_34_11 = {
+					var_34_7,
+					var_34_8,
+					var_34_9,
+					var_34_10
 				}
 
-				table.insert(var_33_1, var_33_11)
+				table.insert(var_34_1, var_34_11)
 			end
 		end
 	end
 
-	for iter_33_2, iter_33_3 in ipairs(var_33_1) do
-		local var_33_12 = tonumber(iter_33_3[1])
-		local var_33_13 = tonumber(iter_33_3[2])
-		local var_33_14 = tonumber(iter_33_3[3])
-		local var_33_15 = tonumber(iter_33_3[4])
+	for iter_34_2, iter_34_3 in ipairs(var_34_1) do
+		local var_34_12 = tonumber(iter_34_3[1])
+		local var_34_13 = tonumber(iter_34_3[2])
+		local var_34_14 = tonumber(iter_34_3[3])
+		local var_34_15 = tonumber(iter_34_3[4])
 
-		if var_33_12 <= arg_33_2.x and var_33_14 >= arg_33_2.x and var_33_13 >= arg_33_2.y and var_33_15 <= arg_33_2.y then
+		if var_34_12 <= arg_34_2.x and var_34_14 >= arg_34_2.x and var_34_13 >= arg_34_2.y and var_34_15 <= arg_34_2.y then
 			return true
 		end
 	end
@@ -474,101 +478,101 @@ function var_0_0._checkSpecialTouch(arg_33_0, arg_33_1, arg_33_2)
 	return false
 end
 
-function var_0_0._clickDown(arg_34_0)
+function var_0_0._clickDown(arg_35_0)
 	return
 end
 
-function var_0_0._doClickDown(arg_35_0)
-	if not arg_35_0._showInScene then
+function var_0_0._doClickDown(arg_36_0)
+	if not arg_36_0._showInScene then
 		return
 	end
 
-	if gohelper.isNil(arg_35_0._spineGo) then
+	if gohelper.isNil(arg_36_0._spineGo) then
 		return
 	end
 
-	local var_35_0 = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), arg_35_0._golightspinecontrol.transform)
+	local var_36_0 = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), arg_36_0._golightspinecontrol.transform)
 
-	var_35_0.x = var_35_0.x - arg_35_0._offsetXWithMainView
+	var_36_0.x = var_36_0.x - arg_36_0._offsetXWithMainView
 
-	if arg_35_0._skinId == 303301 or arg_35_0._skinId == 303302 then
-		arg_35_0:_clickTTT(var_35_0)
+	if arg_36_0._skinId == 303301 or arg_36_0._skinId == 303302 then
+		arg_36_0:_clickTTT(var_36_0)
 
 		return
 	end
 
-	arg_35_0:_clickDefault(var_35_0)
+	arg_36_0:_clickDefault(var_36_0)
 end
 
-function var_0_0._clickTTT(arg_36_0, arg_36_1)
-	if not arg_36_0:_checkPosInBound(arg_36_1) then
+function var_0_0._clickTTT(arg_37_0, arg_37_1)
+	if not arg_37_0:_checkPosInBound(arg_37_1) then
 		return
 	end
 
-	local var_36_0 = CommonConfig.instance:getConstNum(ConstEnum.TTTCloseTv) / 100
+	local var_37_0 = CommonConfig.instance:getConstNum(ConstEnum.TTTCloseTv) / 100
 
-	if not arg_36_0._tvOff and var_36_0 > math.random() then
-		local var_36_1 = arg_36_0._lightSpine:getSpineGo()
+	if not arg_37_0._tvOff and var_37_0 > math.random() then
+		local var_37_1 = arg_37_0._lightSpine:getSpineGo()
 
-		arg_36_0._tvOff = true
-
-		TaskDispatcher.cancelTask(arg_36_0._hideCloseEffects, arg_36_0)
-
-		arg_36_0._closeEffectList = arg_36_0._closeEffectList or arg_36_0:getUserDataTb_()
-
-		local var_36_2 = gohelper.findChild(var_36_1, "mountroot").transform
-		local var_36_3 = var_36_2.childCount
-
-		for iter_36_0 = 1, var_36_3 do
-			local var_36_4 = var_36_2:GetChild(iter_36_0 - 1)
-
-			for iter_36_1 = 1, var_36_4.childCount do
-				local var_36_5 = var_36_4:GetChild(iter_36_1 - 1)
-
-				if string.find(var_36_5.name, "close") then
-					gohelper.setActive(var_36_5.gameObject, true)
-
-					arg_36_0._closeEffectList[iter_36_0] = var_36_5.gameObject
-				else
-					gohelper.setActive(var_36_5.gameObject, false)
-				end
-			end
-		end
-
-		if arg_36_0._lightSpine then
-			arg_36_0._lightSpine:stopVoice()
-		end
-
-		return
-	end
-
-	if arg_36_0:_openTv() then
-		return
-	end
-
-	arg_36_0:_clickDefault(arg_36_1)
-end
-
-function var_0_0._openTv(arg_37_0)
-	if arg_37_0._tvOff then
-		arg_37_0._tvOff = false
-
-		local var_37_0 = arg_37_0._lightSpine:getSpineGo()
+		arg_37_0._tvOff = true
 
 		TaskDispatcher.cancelTask(arg_37_0._hideCloseEffects, arg_37_0)
-		TaskDispatcher.runDelay(arg_37_0._hideCloseEffects, arg_37_0, 0.2)
 
-		local var_37_1 = gohelper.findChild(var_37_0, "mountroot").transform
-		local var_37_2 = var_37_1.childCount
+		arg_37_0._closeEffectList = arg_37_0._closeEffectList or arg_37_0:getUserDataTb_()
 
-		for iter_37_0 = 1, var_37_2 do
-			local var_37_3 = var_37_1:GetChild(iter_37_0 - 1)
+		local var_37_2 = gohelper.findChild(var_37_1, "mountroot").transform
+		local var_37_3 = var_37_2.childCount
 
-			for iter_37_1 = 1, var_37_3.childCount do
-				local var_37_4 = var_37_3:GetChild(iter_37_1 - 1)
+		for iter_37_0 = 1, var_37_3 do
+			local var_37_4 = var_37_2:GetChild(iter_37_0 - 1)
 
-				if not string.find(var_37_4.name, "close") then
-					gohelper.setActive(var_37_4.gameObject, true)
+			for iter_37_1 = 1, var_37_4.childCount do
+				local var_37_5 = var_37_4:GetChild(iter_37_1 - 1)
+
+				if string.find(var_37_5.name, "close") then
+					gohelper.setActive(var_37_5.gameObject, true)
+
+					arg_37_0._closeEffectList[iter_37_0] = var_37_5.gameObject
+				else
+					gohelper.setActive(var_37_5.gameObject, false)
+				end
+			end
+		end
+
+		if arg_37_0._lightSpine then
+			arg_37_0._lightSpine:stopVoice()
+		end
+
+		return
+	end
+
+	if arg_37_0:_openTv() then
+		return
+	end
+
+	arg_37_0:_clickDefault(arg_37_1)
+end
+
+function var_0_0._openTv(arg_38_0)
+	if arg_38_0._tvOff then
+		arg_38_0._tvOff = false
+
+		local var_38_0 = arg_38_0._lightSpine:getSpineGo()
+
+		TaskDispatcher.cancelTask(arg_38_0._hideCloseEffects, arg_38_0)
+		TaskDispatcher.runDelay(arg_38_0._hideCloseEffects, arg_38_0, 0.2)
+
+		local var_38_1 = gohelper.findChild(var_38_0, "mountroot").transform
+		local var_38_2 = var_38_1.childCount
+
+		for iter_38_0 = 1, var_38_2 do
+			local var_38_3 = var_38_1:GetChild(iter_38_0 - 1)
+
+			for iter_38_1 = 1, var_38_3.childCount do
+				local var_38_4 = var_38_3:GetChild(iter_38_1 - 1)
+
+				if not string.find(var_38_4.name, "close") then
+					gohelper.setActive(var_38_4.gameObject, true)
 				end
 			end
 		end
@@ -577,80 +581,80 @@ function var_0_0._openTv(arg_37_0)
 	end
 end
 
-function var_0_0._hideCloseEffects(arg_38_0)
-	for iter_38_0, iter_38_1 in pairs(arg_38_0._closeEffectList) do
-		gohelper.setActive(iter_38_1, false)
+function var_0_0._hideCloseEffects(arg_39_0)
+	for iter_39_0, iter_39_1 in pairs(arg_39_0._closeEffectList) do
+		gohelper.setActive(iter_39_1, false)
 	end
 end
 
-function var_0_0._clickDefault(arg_39_0, arg_39_1)
-	local var_39_0 = arg_39_0:_getSpecialTouch(arg_39_1)
+function var_0_0._clickDefault(arg_40_0, arg_40_1)
+	local var_40_0 = arg_40_0:_getSpecialTouch(arg_40_1)
 
-	if var_39_0 and math.random() > 0.5 then
-		arg_39_0:clickPlayVoice(var_39_0)
+	if var_40_0 and math.random() > 0.5 then
+		arg_40_0:clickPlayVoice(var_40_0)
 
 		return
 	end
 
-	local var_39_1 = arg_39_0:_getNormalTouch(arg_39_1)
+	local var_40_1 = arg_40_0:_getNormalTouch(arg_40_1)
 
-	if var_39_1 then
-		arg_39_0:clickPlayVoice(var_39_1)
+	if var_40_1 then
+		arg_40_0:clickPlayVoice(var_40_1)
 	end
 end
 
-function var_0_0._getSpecialTouch(arg_40_0, arg_40_1)
-	local var_40_0 = HeroModel.instance:getVoiceConfig(arg_40_0._heroId, CharacterEnum.VoiceType.MainViewSpecialTouch, function(arg_41_0)
-		return arg_40_0._clickPlayConfig ~= arg_41_0 and arg_40_0:_checkSpecialTouch(arg_41_0, arg_40_1)
+function var_0_0._getSpecialTouch(arg_41_0, arg_41_1)
+	local var_41_0 = HeroModel.instance:getVoiceConfig(arg_41_0._heroId, CharacterEnum.VoiceType.MainViewSpecialTouch, function(arg_42_0)
+		return arg_41_0._clickPlayConfig ~= arg_42_0 and arg_41_0:_checkSpecialTouch(arg_42_0, arg_41_1)
 	end)
 
-	if var_40_0 and #var_40_0 > 0 then
-		return var_40_0[1]
+	if var_41_0 and #var_41_0 > 0 then
+		return var_41_0[1]
 	end
 end
 
-function var_0_0._getNormalTouch(arg_42_0, arg_42_1)
-	if arg_42_0:_checkPosInBound(arg_42_1) then
-		local var_42_0 = HeroModel.instance:getVoiceConfig(arg_42_0._heroId, CharacterEnum.VoiceType.MainViewNormalTouch, function(arg_43_0)
-			return arg_42_0._clickPlayConfig ~= arg_43_0
+function var_0_0._getNormalTouch(arg_43_0, arg_43_1)
+	if arg_43_0:_checkPosInBound(arg_43_1) then
+		local var_43_0 = HeroModel.instance:getVoiceConfig(arg_43_0._heroId, CharacterEnum.VoiceType.MainViewNormalTouch, function(arg_44_0)
+			return arg_43_0._clickPlayConfig ~= arg_44_0
 		end)
 
-		return arg_42_0:getHeightWeight(var_42_0)
+		return arg_43_0:getHeightWeight(var_43_0)
 	end
 end
 
-function var_0_0._checkPosInBound(arg_44_0, arg_44_1)
-	if not arg_44_0._anchorMinPos or not arg_44_0._anchorMaxPos then
-		local var_44_0, var_44_1 = arg_44_0._lightSpine:getBoundsMinMaxPos()
+function var_0_0._checkPosInBound(arg_45_0, arg_45_1)
+	if not arg_45_0._anchorMinPos or not arg_45_0._anchorMaxPos then
+		local var_45_0, var_45_1 = arg_45_0._lightSpine:getBoundsMinMaxPos()
 
-		arg_44_0._anchorMinPos = recthelper.worldPosToAnchorPos(Vector3(var_44_0.x, var_44_1.y, var_44_0.z), arg_44_0._golightspinecontrol.transform, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUnitCamera())
-		arg_44_0._anchorMaxPos = recthelper.worldPosToAnchorPos(Vector3(var_44_1.x, var_44_0.y, var_44_1.z), arg_44_0._golightspinecontrol.transform, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUnitCamera())
+		arg_45_0._anchorMinPos = recthelper.worldPosToAnchorPos(Vector3(var_45_0.x, var_45_1.y, var_45_0.z), arg_45_0._golightspinecontrol.transform, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUnitCamera())
+		arg_45_0._anchorMaxPos = recthelper.worldPosToAnchorPos(Vector3(var_45_1.x, var_45_0.y, var_45_1.z), arg_45_0._golightspinecontrol.transform, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUnitCamera())
 	end
 
-	local var_44_2 = arg_44_0._anchorMinPos
-	local var_44_3 = arg_44_0._anchorMaxPos
+	local var_45_2 = arg_45_0._anchorMinPos
+	local var_45_3 = arg_45_0._anchorMaxPos
 
-	if arg_44_1.x >= var_44_2.x and arg_44_1.x <= var_44_3.x and arg_44_1.y <= var_44_2.y and arg_44_1.y >= var_44_3.y then
+	if arg_45_1.x >= var_45_2.x and arg_45_1.x <= var_45_3.x and arg_45_1.y <= var_45_2.y and arg_45_1.y >= var_45_3.y then
 		return true
 	end
 end
 
-function var_0_0.getHeightWeight(arg_45_0, arg_45_1)
-	if arg_45_1 and #arg_45_1 > 0 then
-		local var_45_0 = 0
+function var_0_0.getHeightWeight(arg_46_0, arg_46_1)
+	if arg_46_1 and #arg_46_1 > 0 then
+		local var_46_0 = 0
 
-		for iter_45_0, iter_45_1 in ipairs(arg_45_1) do
-			var_45_0 = var_45_0 + iter_45_1.param
+		for iter_46_0, iter_46_1 in ipairs(arg_46_1) do
+			var_46_0 = var_46_0 + iter_46_1.param
 		end
 
-		local var_45_1 = math.random()
-		local var_45_2 = 0
+		local var_46_1 = math.random()
+		local var_46_2 = 0
 
-		for iter_45_2, iter_45_3 in ipairs(arg_45_1) do
-			var_45_2 = var_45_2 + iter_45_3.param
+		for iter_46_2, iter_46_3 in ipairs(arg_46_1) do
+			var_46_2 = var_46_2 + iter_46_3.param
 
-			if var_45_1 <= var_45_2 / var_45_0 then
-				return iter_45_3
+			if var_46_1 <= var_46_2 / var_46_0 then
+				return iter_46_3
 			end
 		end
 	end
@@ -658,230 +662,230 @@ function var_0_0.getHeightWeight(arg_45_0, arg_45_1)
 	return nil
 end
 
-function var_0_0.clickPlayVoice(arg_46_0, arg_46_1)
-	arg_46_0._clickPlayConfig = arg_46_1
+function var_0_0.clickPlayVoice(arg_47_0, arg_47_1)
+	arg_47_0._clickPlayConfig = arg_47_1
 
-	arg_46_0:playVoice(arg_46_1)
+	arg_47_0:playVoice(arg_47_1)
 end
 
-function var_0_0.playVoice(arg_47_0, arg_47_1)
-	if not arg_47_0._lightSpine then
+function var_0_0.playVoice(arg_48_0, arg_48_1)
+	if not arg_48_0._lightSpine then
 		return
 	end
 
-	arg_47_0._lightSpine:playVoice(arg_47_1, function()
-		arg_47_0._interactionStartTime = Time.time
-	end, arg_47_0._txtanacn, arg_47_0._txtanaen, arg_47_0._gocontentbg)
+	arg_48_0._lightSpine:playVoice(arg_48_1, function()
+		arg_48_0._interactionStartTime = Time.time
+	end, arg_48_0._txtanacn, arg_48_0._txtanaen, arg_48_0._gocontentbg)
 end
 
-function var_0_0._enableKeyword(arg_49_0)
+function var_0_0._enableKeyword(arg_50_0)
 	return
 end
 
-function var_0_0._disableKeyword(arg_50_0)
+function var_0_0._disableKeyword(arg_51_0)
 	return
 end
 
-function var_0_0._onOpenFullView(arg_51_0, arg_51_1)
-	if arg_51_1 ~= arg_51_0:_getSwitchViewName() then
-		arg_51_0:_disableKeyword()
+function var_0_0._onOpenFullView(arg_52_0, arg_52_1)
+	if arg_52_1 ~= arg_52_0:_getSwitchViewName() then
+		arg_52_0:_disableKeyword()
 	end
 
-	if arg_51_0._lightSpine then
-		arg_51_0._lightSpine:stopVoice()
+	if arg_52_0._lightSpine then
+		arg_52_0._lightSpine:stopVoice()
 	end
 
 	var_0_0.setCameraIdle()
 end
 
 function var_0_0.setCameraIdle()
-	local var_52_0 = CameraMgr.instance:getCameraRootAnimator()
+	local var_53_0 = CameraMgr.instance:getCameraRootAnimator()
 
-	if var_52_0 then
-		var_52_0.enabled = false
+	if var_53_0 then
+		var_53_0.enabled = false
 	end
 
-	local var_52_1 = CameraMgr.instance:getCameraRootGO()
+	local var_53_1 = CameraMgr.instance:getCameraRootGO()
 
-	transformhelper.setLocalPos(var_52_1.transform, 0, 0, 0)
+	transformhelper.setLocalPos(var_53_1.transform, 0, 0, 0)
 
 	CameraMgr.instance:getCameraTrace().EnableTrace = true
 	CameraMgr.instance:getCameraTrace().EnableTrace = false
 
-	local var_52_2 = ViewMgr.instance:getUICanvas()
+	local var_53_2 = ViewMgr.instance:getUICanvas()
 
-	var_52_2.enabled = false
-	var_52_2.enabled = true
+	var_53_2.enabled = false
+	var_53_2.enabled = true
 end
 
-function var_0_0._hideLightSpineVisible(arg_53_0)
+function var_0_0._hideLightSpineVisible(arg_54_0)
 	return
 end
 
-function var_0_0._onCloseFullView(arg_54_0, arg_54_1)
+function var_0_0._onCloseFullView(arg_55_0, arg_55_1)
 	if not ViewMgr.instance:hasOpenFullView() then
-		arg_54_0:_startForceUpdateCameraPos()
+		arg_55_0:_startForceUpdateCameraPos()
 
-		if ViewMgr.instance:isOpen(arg_54_0:_getSwitchViewName()) then
-			arg_54_0._cameraPlayer:Play("clip2", arg_54_0._onCameraAnimDone, arg_54_0)
+		if ViewMgr.instance:isOpen(arg_55_0:_getSwitchViewName()) then
+			arg_55_0._cameraPlayer:Play("clip2", arg_55_0._onCameraAnimDone, arg_55_0)
 		else
-			arg_54_0._cameraPlayer:Play("clip", arg_54_0._onCameraAnimDone, arg_54_0)
+			arg_55_0._cameraPlayer:Play("clip", arg_55_0._onCameraAnimDone, arg_55_0)
 		end
 
-		arg_54_0:_enableKeyword()
-		arg_54_0:_openTv()
+		arg_55_0:_enableKeyword()
+		arg_55_0:_openTv()
 	end
 end
 
-function var_0_0._reOpenWhileOpen(arg_55_0, arg_55_1)
-	if ViewMgr.instance:isFull(arg_55_1) then
-		arg_55_0:_onOpenFullView(arg_55_1)
+function var_0_0._reOpenWhileOpen(arg_56_0, arg_56_1)
+	if ViewMgr.instance:isFull(arg_56_1) then
+		arg_56_0:_onOpenFullView(arg_56_1)
 	end
 end
 
-function var_0_0._setViewVisible(arg_56_0, arg_56_1)
-	recthelper.setAnchorY(arg_56_0.viewGO.transform, arg_56_1 and 0 or 10000)
-	arg_56_0.viewContainer:_setVisible(arg_56_1)
+function var_0_0._setViewVisible(arg_57_0, arg_57_1)
+	recthelper.setAnchorY(arg_57_0.viewGO.transform, arg_57_1 and 0 or 10000)
+	arg_57_0.viewContainer:_setVisible(arg_57_1)
 end
 
-function var_0_0._onOpenView(arg_57_0, arg_57_1)
-	if arg_57_1 == arg_57_0:_getSwitchViewName() then
-		arg_57_0:_setViewVisible(false)
-		arg_57_0:_startForceUpdateCameraPos()
-		arg_57_0._cameraPlayer:Play("ani02", arg_57_0._onCameraAnimDone, arg_57_0)
-		arg_57_0:resetSpineAnchorTween()
+function var_0_0._onOpenView(arg_58_0, arg_58_1)
+	if arg_58_1 == arg_58_0:_getSwitchViewName() then
+		arg_58_0:_setViewVisible(false)
+		arg_58_0:_startForceUpdateCameraPos()
+		arg_58_0._cameraPlayer:Play("ani02", arg_58_0._onCameraAnimDone, arg_58_0)
+		arg_58_0:resetSpineAnchorTween()
 
-		if arg_57_0._lightSpine then
-			arg_57_0._lightSpine:stopVoice()
+		if arg_58_0._lightSpine then
+			arg_58_0._lightSpine:stopVoice()
 		end
-	elseif (arg_57_1 == ViewName.CharacterGetView or arg_57_1 == ViewName.CharacterSkinGetDetailView) and arg_57_0._lightSpine then
-		gohelper.setActive(arg_57_0._lightSpine:getSpineGo(), false)
+	elseif (arg_58_1 == ViewName.CharacterGetView or arg_58_1 == ViewName.CharacterSkinGetDetailView) and arg_58_0._lightSpine then
+		gohelper.setActive(arg_58_0._lightSpine:getSpineGo(), false)
 	end
 end
 
-function var_0_0._startForceUpdateCameraPos(arg_58_0)
-	arg_58_0:_removeForceUpdateCameraPos()
-	LateUpdateBeat:Add(arg_58_0._forceUpdateCameraPos, arg_58_0)
+function var_0_0._startForceUpdateCameraPos(arg_59_0)
+	arg_59_0:_removeForceUpdateCameraPos()
+	LateUpdateBeat:Add(arg_59_0._forceUpdateCameraPos, arg_59_0)
 end
 
-function var_0_0._removeForceUpdateCameraPos(arg_59_0)
-	LateUpdateBeat:Remove(arg_59_0._forceUpdateCameraPos, arg_59_0)
+function var_0_0._removeForceUpdateCameraPos(arg_60_0)
+	LateUpdateBeat:Remove(arg_60_0._forceUpdateCameraPos, arg_60_0)
 end
 
-function var_0_0._forceUpdateCameraPos(arg_60_0)
-	local var_60_0 = CameraMgr.instance:getCameraTrace()
+function var_0_0._forceUpdateCameraPos(arg_61_0)
+	local var_61_0 = CameraMgr.instance:getCameraTrace()
 
-	var_60_0.EnableTrace = true
-	var_60_0.EnableTrace = false
-	var_60_0.enabled = false
+	var_61_0.EnableTrace = true
+	var_61_0.EnableTrace = false
+	var_61_0.enabled = false
 end
 
-function var_0_0._getSwitchViewName(arg_61_0)
+function var_0_0._getSwitchViewName(arg_62_0)
 	return ViewName.MainSwitchView
 end
 
-function var_0_0._onCloseViewFinish(arg_62_0, arg_62_1)
-	if arg_62_0:_isLogout() then
+function var_0_0._onCloseViewFinish(arg_63_0, arg_63_1)
+	if arg_63_0:_isLogout() then
 		return
 	end
 
-	arg_62_0:_showRedDot()
+	arg_63_0:_showRedDot()
 
-	if arg_62_1 == arg_62_0:_getSwitchViewName() then
-		arg_62_0:_hideRedDot()
-		arg_62_0:_setViewVisible(true)
-		arg_62_0._viewPlayer:Play("open3", arg_62_0._onViewAnimDone, arg_62_0)
-		arg_62_0:_startForceUpdateCameraPos()
-		arg_62_0._cameraPlayer:Play("ani03", arg_62_0._onCameraAnimDone, arg_62_0)
-		arg_62_0:resetSpineAnchorTween(true)
-		arg_62_0:setSpineAnchorTween()
+	if arg_63_1 == arg_63_0:_getSwitchViewName() then
+		arg_63_0:_hideRedDot()
+		arg_63_0:_setViewVisible(true)
+		arg_63_0._viewPlayer:Play("open3", arg_63_0._onViewAnimDone, arg_63_0)
+		arg_63_0:_startForceUpdateCameraPos()
+		arg_63_0._cameraPlayer:Play("ani03", arg_63_0._onCameraAnimDone, arg_63_0)
+		arg_63_0:resetSpineAnchorTween(true)
+		arg_63_0:setSpineAnchorTween()
 
-		local var_62_0, var_62_1 = CharacterSwitchListModel.instance:getMainHero()
+		local var_63_0, var_63_1 = CharacterSwitchListModel.instance:getMainHero()
 
-		if arg_62_0._curHeroId ~= var_62_0 and var_62_0 or arg_62_0._curSkinId ~= var_62_1 and var_62_1 or gohelper.isNil(arg_62_0._lightSpine:getSpineGo()) then
-			arg_62_0._curHeroId = var_62_0
-			arg_62_0._curSkinId = var_62_1
+		if arg_63_0._curHeroId ~= var_63_0 and var_63_0 or arg_63_0._curSkinId ~= var_63_1 and var_63_1 or gohelper.isNil(arg_63_0._lightSpine:getSpineGo()) then
+			arg_63_0._curHeroId = var_63_0
+			arg_63_0._curSkinId = var_63_1
 
-			arg_62_0:_updateHero(arg_62_0._curHeroId, arg_62_0._curSkinId)
-		elseif arg_62_0._lightSpine then
-			local var_62_2 = arg_62_0._lightSpine:getRenderer().sharedMaterial
-			local var_62_3 = {
+			arg_63_0:_updateHero(arg_63_0._curHeroId, arg_63_0._curSkinId)
+		elseif arg_63_0._lightSpine then
+			local var_63_2 = arg_63_0._lightSpine:getRenderer().sharedMaterial
+			local var_63_3 = {
 				heroPlayWeatherVoice = true,
-				roleGo = arg_62_0._lightSpine:getSpineGo(),
-				heroId = arg_62_0._heroId,
-				sharedMaterial = var_62_2,
-				skinId = var_62_1
+				roleGo = arg_63_0._lightSpine:getSpineGo(),
+				heroId = arg_63_0._heroId,
+				sharedMaterial = var_63_2,
+				skinId = var_63_1
 			}
 
-			var_0_2:changeRoleGo(var_62_3)
-			WeatherController.instance:setLightModel(arg_62_0._lightSpine)
+			var_0_2:changeRoleGo(var_63_3)
+			WeatherController.instance:setLightModel(arg_63_0._lightSpine)
 		end
-	elseif (arg_62_1 == ViewName.CharacterGetView or arg_62_1 == ViewName.CharacterSkinGetDetailView) and arg_62_0._lightSpine then
-		gohelper.setActive(arg_62_0._lightSpine:getSpineGo(), true)
+	elseif (arg_63_1 == ViewName.CharacterGetView or arg_63_1 == ViewName.CharacterSkinGetDetailView) and arg_63_0._lightSpine then
+		gohelper.setActive(arg_63_0._lightSpine:getSpineGo(), true)
 	end
 end
 
-function var_0_0.onCloseFinish(arg_63_0)
-	local var_63_0 = UnityEngine.GameObject.Find("UIRoot/HUD/MainView/#go_spine_scale/lightspine")
+function var_0_0.onCloseFinish(arg_64_0)
+	local var_64_0 = UnityEngine.GameObject.Find("UIRoot/HUD/MainView/#go_spine_scale/lightspine")
 
-	if gohelper.isNil(var_63_0) or gohelper.isNil(arg_63_0._golightspine) then
+	if gohelper.isNil(var_64_0) or gohelper.isNil(arg_64_0._golightspine) then
 		return
 	end
 
-	if var_63_0.transform.childCount > 0 then
+	if var_64_0.transform.childCount > 0 then
 		return
 	end
 
-	gohelper.addChildPosStay(var_63_0, arg_63_0._golightspine)
+	gohelper.addChildPosStay(var_64_0, arg_64_0._golightspine)
 end
 
-function var_0_0.onClose(arg_64_0)
-	if arg_64_0._lightSpine and not LimitedRoleController.instance:isPlayingAction() then
-		arg_64_0._lightSpine:stopVoice()
+function var_0_0.onClose(arg_65_0)
+	if arg_65_0._lightSpine and not LimitedRoleController.instance:isPlayingAction() then
+		arg_65_0._lightSpine:stopVoice()
 	end
 
-	arg_64_0._click:RemoveClickDownListener()
+	arg_65_0._click:RemoveClickDownListener()
 
-	if arg_64_0._touchEventMgr then
-		arg_64_0._touchEventMgr:ClearAllCallback()
+	if arg_65_0._touchEventMgr then
+		arg_65_0._touchEventMgr:ClearAllCallback()
 
-		arg_64_0._touchEventMgr = nil
+		arg_65_0._touchEventMgr = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_64_0._hideCloseEffects, arg_64_0)
-	TaskDispatcher.cancelTask(arg_64_0._greetingFinish, arg_64_0)
-	arg_64_0:_removeForceUpdateCameraPos()
-	arg_64_0:resetSpineAnchorTween()
+	TaskDispatcher.cancelTask(arg_65_0._hideCloseEffects, arg_65_0)
+	TaskDispatcher.cancelTask(arg_65_0._greetingFinish, arg_65_0)
+	arg_65_0:_removeForceUpdateCameraPos()
+	arg_65_0:resetSpineAnchorTween()
 
-	if arg_64_0:_isLogout() or ViewMgr.instance:isOpen(ViewName.SettingsView) then
+	if arg_65_0:_isLogout() or ViewMgr.instance:isOpen(ViewName.SettingsView) then
 		var_0_0.setCameraIdle()
 	else
 		GameGCMgr.instance:dispatchEvent(GameGCEvent.CancelDelayFullGC)
-		arg_64_0._cameraPlayer:Play("ani02", arg_64_0._onCameraAnimDone, arg_64_0)
+		arg_65_0._cameraPlayer:Play("ani02", arg_65_0._onCameraAnimDone, arg_65_0)
 	end
 
-	arg_64_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_64_0._onCloseFullView, arg_64_0)
-	arg_64_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_64_0._onCloseViewFinish, arg_64_0)
+	arg_65_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_65_0._onCloseFullView, arg_65_0)
+	arg_65_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_65_0._onCloseViewFinish, arg_65_0)
 
-	if arg_64_0._audioId then
-		AudioMgr.instance:stopPlayingID(arg_64_0._audioId)
+	if arg_65_0._audioId then
+		AudioMgr.instance:stopPlayingID(arg_65_0._audioId)
 
-		arg_64_0._audioId = nil
+		arg_65_0._audioId = nil
 	end
 end
 
-function var_0_0._isLogout(arg_65_0)
-	local var_65_0 = GameGlobalMgr.instance:getLoadingState()
+function var_0_0._isLogout(arg_66_0)
+	local var_66_0 = GameGlobalMgr.instance:getLoadingState()
 
-	return var_65_0 and var_65_0:getLoadingViewName()
+	return var_66_0 and var_66_0:getLoadingViewName()
 end
 
-function var_0_0.onDestroyView(arg_66_0)
-	arg_66_0:_disableKeyword()
+function var_0_0.onDestroyView(arg_67_0)
+	arg_67_0:_disableKeyword()
 end
 
-function var_0_0.getLightSpineGo(arg_67_0)
-	return arg_67_0._golightspine
+function var_0_0.getLightSpineGo(arg_68_0)
+	return arg_68_0._golightspine
 end
 
 return var_0_0

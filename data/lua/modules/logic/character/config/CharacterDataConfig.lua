@@ -42,6 +42,7 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"episode",
 		"character_motion_cut",
 		"character_motion_effect",
+		"character_motion_effect_layer",
 		"character_motion_play_cut",
 		"character_shop_voice",
 		"character_face_effect",
