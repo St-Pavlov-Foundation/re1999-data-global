@@ -1167,6 +1167,12 @@ function var_0_0._actBgEffBlur(arg_76_0)
 end
 
 function var_0_0._blurChange(arg_77_0, arg_77_1)
+	if not arg_77_0._bgBlur then
+		arg_77_0:_blurFinished()
+
+		return
+	end
+
 	arg_77_0._bgBlur.blurWeight = arg_77_1
 end
 

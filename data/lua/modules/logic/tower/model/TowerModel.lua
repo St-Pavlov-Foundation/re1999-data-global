@@ -208,8 +208,6 @@ function var_0_0.getCurPermanentMo(arg_18_0)
 
 	if arg_18_0.towerInfoMap[var_18_0] then
 		return arg_18_0.towerInfoMap[var_18_0][TowerEnum.PermanentTowerId]
-	else
-		logError("towerInfoMap is Empty")
 	end
 end
 

@@ -232,7 +232,9 @@ function var_0_0.checkLayerUnlock(arg_23_0, arg_23_1)
 end
 
 function var_0_0.getCurPermanentPassLayer(arg_24_0)
-	return TowerModel.instance:getCurPermanentMo().passLayerId or 0
+	local var_24_0 = TowerModel.instance:getCurPermanentMo()
+
+	return var_24_0 and var_24_0.passLayerId or 0
 end
 
 function var_0_0.getCurPassEpisodeId(arg_25_0)

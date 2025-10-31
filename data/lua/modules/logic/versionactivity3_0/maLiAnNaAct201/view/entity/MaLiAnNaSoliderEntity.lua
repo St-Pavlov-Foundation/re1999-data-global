@@ -70,7 +70,7 @@ function var_0_0._updateModelDirByMoveDir(arg_7_0)
 end
 
 function var_0_0._updateLocalPos(arg_8_0)
-	if arg_8_0._soliderMo == nil and arg_8_0._tr == nil then
+	if arg_8_0._soliderMo == nil or arg_8_0._tr == nil then
 		return
 	end
 

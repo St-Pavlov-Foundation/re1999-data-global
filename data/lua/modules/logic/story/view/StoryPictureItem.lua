@@ -25,6 +25,10 @@ function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 end
 
 function var_0_0._build(arg_3_0)
+	if not arg_3_0._picParentGo then
+		return
+	end
+
 	if not ViewMgr.instance:isOpen(ViewName.StoryView) then
 		return
 	end
@@ -57,6 +61,10 @@ function var_0_0._build(arg_3_0)
 end
 
 function var_0_0._onPicPrefabLoaded(arg_4_0)
+	if not arg_4_0._pictureLoader then
+		return
+	end
+
 	arg_4_0._picLoaded = true
 	arg_4_0._picGo = arg_4_0._pictureLoader:getInstGO()
 	arg_4_0._picAni = arg_4_0._picGo:GetComponent(typeof(UnityEngine.Animator))
@@ -396,12 +404,11 @@ function var_0_0._setFullPicture(arg_16_0)
 end
 
 function var_0_0._onFullFocusPictureLoaded(arg_17_0)
-	arg_17_0._picLoaded = true
-
 	if not arg_17_0._pictureLoader then
 		return
 	end
 
+	arg_17_0._picLoaded = true
 	arg_17_0._picGo = arg_17_0._pictureLoader:getInstGO()
 	arg_17_0._picGo.name = arg_17_0._picName
 
