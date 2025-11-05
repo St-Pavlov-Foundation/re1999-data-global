@@ -671,6 +671,14 @@ function var_0_0.getRegion(arg_66_0)
 	if arg_66_0:isNatives() then
 		return RegionEnum.zh
 	else
+		local var_66_0 = SDKMgr.instance:getGameId()
+
+		if tostring(var_66_0) == "80001" then
+			return RegionEnum.tw
+		elseif tostring(var_66_0) == "90001" then
+			return RegionEnum.ko
+		end
+
 		return GameConfig:GetCurRegionType()
 	end
 end
