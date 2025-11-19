@@ -289,6 +289,7 @@ function var_0_0._addCacheVideo(arg_29_0, arg_29_1, arg_29_2)
 	local var_29_0 = UnityEngine.GameObject.New(arg_29_1)
 
 	gohelper.addChild(arg_29_0.viewGO, var_29_0)
+	transformhelper.setLocalPosXY(var_29_0.transform, 10000, 0)
 
 	local var_29_1, var_29_2, var_29_3 = AvProMgr.instance:getVideoPlayer(var_29_0)
 
