@@ -2954,7 +2954,7 @@
     "name": "language_10089227",
     "nameEn": "Yes, Sir",
     "desc": "language_10089228",
-    "episodeId": 11101,
+    "episodeId": 1102,
     "image": "story_atcg/3_0/3_0_at_liaotian.jpg",
     "preCgId": 0
   },
@@ -2965,7 +2965,7 @@
     "name": "language_10089229",
     "nameEn": "Eyes Up",
     "desc": "language_10089230",
-    "episodeId": 1102,
+    "episodeId": 1104,
     "image": "story_atcg/3_0/3_0_at_aiguozhe.jpg",
     "preCgId": 0
   },
@@ -2976,7 +2976,7 @@
     "name": "language_10089231",
     "nameEn": "A \"Fair\" Encounter I",
     "desc": "language_10089232",
-    "episodeId": 11103,
+    "episodeId": 11110,
     "image": "story_atcg/3_0/3_0_at_zhuisha1.jpg",
     "preCgId": 0
   },
@@ -2987,7 +2987,7 @@
     "name": "language_10089233",
     "nameEn": "A \"Fair\" Encounter II",
     "desc": "language_10089234",
-    "episodeId": 1104,
+    "episodeId": 11110,
     "image": "story_atcg/3_0/3_0_at_zhuisha2.jpg",
     "preCgId": 2001303
   },
@@ -2998,7 +2998,7 @@
     "name": "language_10089235",
     "nameEn": "A \"Fair\" Encounter III",
     "desc": "language_10089236",
-    "episodeId": 1105,
+    "episodeId": 11110,
     "image": "story_atcg/3_0/3_0_at_zhuisha3.jpg",
     "preCgId": 2001304
   },
@@ -3009,7 +3009,7 @@
     "name": "language_10089237",
     "nameEn": "A \"Fair\" Encounter IV",
     "desc": "language_10089238",
-    "episodeId": 11106,
+    "episodeId": 11110,
     "image": "story_atcg/3_0/3_0_at_zhuisha4.jpg",
     "preCgId": 2001305
   },
@@ -3020,7 +3020,7 @@
     "name": "language_10089239",
     "nameEn": "A \"Fair\" Encounter V",
     "desc": "language_10089240",
-    "episodeId": 11107,
+    "episodeId": 11110,
     "image": "story_atcg/3_0/3_0_at_zhuisha5.jpg",
     "preCgId": 2001306
   },
@@ -3031,7 +3031,7 @@
     "name": "language_10089241",
     "nameEn": "Painted Red I",
     "desc": "language_10089242",
-    "episodeId": 11108,
+    "episodeId": 1111,
     "image": "story_atcg/3_0/3_0_at_bodou1.jpg",
     "preCgId": 0
   },
@@ -3042,7 +3042,7 @@
     "name": "language_10089243",
     "nameEn": "Painted Red II",
     "desc": "language_10089244",
-    "episodeId": 1109,
+    "episodeId": 1111,
     "image": "story_atcg/3_0/3_0_at_bodou2_zone.png",
     "preCgId": 2001308
   },
@@ -3053,7 +3053,7 @@
     "name": "language_10089245",
     "nameEn": "No Longer That Boy I",
     "desc": "language_10089246",
-    "episodeId": 11110,
+    "episodeId": 11115,
     "image": "story_atcg/3_0/3_0_at_gaobie.jpg",
     "preCgId": 0
   },
@@ -3064,8 +3064,8 @@
     "name": "language_10089247",
     "nameEn": "No Longer That Boy II",
     "desc": "language_10089248",
-    "episodeId": 1111,
-    "image": "story_atcg/3_0/3_0_at_gaobie2_zone.png",
+    "episodeId": 11115,
+    "image": "story_atcg/3_0/3_0_at_gaobie3_zone.jpg",
     "preCgId": 2001310
   },
   {
@@ -3075,7 +3075,7 @@
     "name": "language_10089249",
     "nameEn": "A Fleeting Moment of Serenity",
     "desc": "language_10089250",
-    "episodeId": 11112,
+    "episodeId": 11117,
     "image": "story_atcg/3_0/3_0_at_qixing.jpg",
     "preCgId": 0
   },
@@ -3086,7 +3086,7 @@
     "name": "language_10089251",
     "nameEn": "At the Gates of Hell",
     "desc": "language_10089252",
-    "episodeId": 11113,
+    "episodeId": 1120,
     "image": "story_atcg/3_0/3_0_at_diyuzhimen.jpg",
     "preCgId": 0
   },
