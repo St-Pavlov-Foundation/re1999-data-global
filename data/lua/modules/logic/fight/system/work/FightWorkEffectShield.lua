@@ -58,9 +58,15 @@ function var_0_0._getOriginFloatType(arg_3_0)
 			elseif var_3_1.effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT then
 				return FightEnum.FloatType.crit_additional_damage
 			elseif var_3_1.effectType == FightEnum.EffectType.DAMAGE then
-				return FightHelper.isRestrain(arg_3_0.fightStepData.fromId, arg_3_0.actEffectData.targetId) and FightEnum.FloatType.restrain or FightEnum.FloatType.damage
+				local var_3_2 = FightHelper.isRestrain(arg_3_0.fightStepData.fromId, arg_3_0.actEffectData.targetId)
+				local var_3_3 = FightHelper.isOppositeByEntityId(arg_3_0.fightStepData.fromId, arg_3_0.actEffectData.targetId)
+
+				return var_3_2 and var_3_3 and FightEnum.FloatType.restrain or FightEnum.FloatType.damage
 			elseif var_3_1.effectType == FightEnum.EffectType.CRIT then
-				return FightHelper.isRestrain(arg_3_0.fightStepData.fromId, arg_3_0.actEffectData.targetId) and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_damage
+				local var_3_4 = FightHelper.isRestrain(arg_3_0.fightStepData.fromId, arg_3_0.actEffectData.targetId)
+				local var_3_5 = FightHelper.isOppositeByEntityId(arg_3_0.fightStepData.fromId, arg_3_0.actEffectData.targetId)
+
+				return var_3_4 and var_3_5 and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_damage
 			elseif var_3_1.effectType == FightEnum.EffectType.DEADLYPOISONORIGINDAMAGE then
 				return FightEnum.FloatType.damage_origin
 			elseif var_3_1.effectType == FightEnum.EffectType.DEADLYPOISONORIGINCRIT then

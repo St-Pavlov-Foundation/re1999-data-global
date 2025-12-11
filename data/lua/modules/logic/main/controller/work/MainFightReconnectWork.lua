@@ -13,7 +13,7 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 
 	if FightModel.instance.needFightReconnect then
 		if FightDataHelper.fieldMgr:is191DouQuQu() then
-			Activity191Rpc.instance:sendGetAct191InfoRequest(VersionActivity2_7Enum.ActivityId.Act191)
+			Activity191Rpc.instance:sendGetAct191InfoRequest(VersionActivity3_1Enum.ActivityId.DouQuQu3)
 		end
 
 		local var_1_0 = FightModel.instance:getFightReason()
@@ -31,7 +31,6 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 			end)
 		elseif var_1_0.type == FightEnum.FightReason.DungeonRecord then
 			GameFacade.showMessageBox(MessageBoxIdDefine.FightSureToReconnect, MsgBoxEnum.BoxType.Yes_No, function()
-				FightReplayModel.instance:setReconnectReplay(true)
 				arg_1_0:_onConfirm()
 			end, function()
 				arg_1_0:_onCancel()
@@ -113,6 +112,11 @@ function var_0_0._onConfirm(arg_6_0)
 		SurvivalController.instance:tryEnterSurvivalFight(arg_6_0._enterFightScene, arg_6_0)
 
 		return
+	elseif var_6_2.type == DungeonEnum.EpisodeType.TowerDeep then
+		FightController.instance:setFightParamByEpisodeId(var_6_1, false, 1, var_6_0.battleId)
+		HeroGroupModel.instance:setBattleAndEpisodeId(var_6_0.battleId, var_6_1)
+		HeroGroupTrialModel.instance:setTrialByBattleId()
+		HeroGroupModel.instance:setParam(var_6_0.battleId, var_6_1, false, true)
 	elseif SeasonHeroGroupHandler.checkIsSeasonTypeByEpisodeId(var_6_1) then
 		SeasonFightHandler.checkProcessFightReconnect(var_6_0)
 	else

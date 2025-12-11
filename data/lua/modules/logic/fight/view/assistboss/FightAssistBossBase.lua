@@ -141,11 +141,11 @@ function var_0_0.refreshHeadImageColor(arg_16_0)
 end
 
 function var_0_0.onLongPress(arg_17_0)
-	if FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard then
+	if FightDataHelper.stateMgr:getIsAuto() then
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -204,11 +204,11 @@ function var_0_0.onLongPress(arg_17_0)
 end
 
 function var_0_0.playAssistBossCard(arg_18_0)
-	if FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard then
+	if FightDataHelper.stateMgr:getIsAuto() then
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -237,6 +237,10 @@ function var_0_0.playAssistBossCard(arg_18_0)
 end
 
 function var_0_0.canUseSkill(arg_19_0)
+	if FightDataHelper.lockOperateMgr:isLock() then
+		return
+	end
+
 	if FightViewHandCard.blockOperate then
 		return
 	end

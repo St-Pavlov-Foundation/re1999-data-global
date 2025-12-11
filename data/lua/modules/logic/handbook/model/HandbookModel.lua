@@ -77,9 +77,19 @@ function var_0_0.isRead(arg_6_0, arg_6_1, arg_6_2)
 end
 
 function var_0_0.isCGUnlock(arg_7_0, arg_7_1)
-	local var_7_0 = HandbookConfig.instance:getCGConfig(arg_7_1).episodeId
+	local var_7_0 = HandbookConfig.instance:getCGConfig(arg_7_1)
+	local var_7_1 = var_7_0.episodeId
+	local var_7_2 = var_7_0.herostoryId
 
-	return var_7_0 == 0 or DungeonModel.instance:hasPassLevelAndStory(var_7_0)
+	if var_7_1 == 0 and var_7_2 == 0 then
+		return true
+	end
+
+	if var_7_1 ~= 0 then
+		return DungeonModel.instance:hasPassLevelAndStory(var_7_1)
+	end
+
+	return RoleStoryModel.instance:isCGUnlock(var_7_2)
 end
 
 function var_0_0.getCGUnlockCount(arg_8_0, arg_8_1, arg_8_2)

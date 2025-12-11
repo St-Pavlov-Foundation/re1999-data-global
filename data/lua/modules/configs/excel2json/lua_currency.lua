@@ -2,21 +2,22 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	recoverNum = 10,
+	subType = 3,
 	name = 2,
-	useDesc = 7,
-	maxLimit = 13,
-	dayRecoverNum = 12,
-	headIconSign = 15,
-	rare = 3,
-	desc = 8,
-	recoverTime = 9,
-	smallIcon = 6,
-	recoverLimit = 11,
-	sources = 14,
+	useDesc = 8,
+	maxLimit = 14,
+	dayRecoverNum = 13,
+	headIconSign = 16,
+	rare = 4,
+	desc = 9,
+	recoverTime = 10,
+	smallIcon = 7,
+	recoverLimit = 12,
+	sources = 15,
 	id = 1,
-	icon = 5,
-	highQuality = 4
+	icon = 6,
+	recoverNum = 11,
+	highQuality = 5
 }
 local var_0_2 = {
 	"id"

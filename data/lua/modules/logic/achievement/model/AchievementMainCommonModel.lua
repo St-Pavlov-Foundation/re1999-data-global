@@ -97,7 +97,9 @@ function var_0_0.switchSortType(arg_12_0, arg_12_1)
 end
 
 function var_0_0.getViewExcuteModelInstance(arg_13_0, arg_13_1)
-	if arg_13_1 == AchievementEnum.ViewType.Tile then
+	if arg_13_0._curCategory == AchievementEnum.Type.NamePlate then
+		return AchievementMainListModel.instance
+	elseif arg_13_1 == AchievementEnum.ViewType.Tile then
 		return AchievementMainTileModel.instance
 	else
 		return AchievementMainListModel.instance
@@ -322,6 +324,10 @@ end
 
 function var_0_0.markCurrentScrollFocusing(arg_33_0, arg_33_1)
 	arg_33_0._isCurrentScrollFocusing = arg_33_1
+end
+
+function var_0_0.checkIsNamePlate(arg_34_0)
+	return arg_34_0._curCategory == AchievementEnum.Type.NamePlate
 end
 
 var_0_0.instance = var_0_0.New()

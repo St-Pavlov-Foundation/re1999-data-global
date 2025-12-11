@@ -2,17 +2,18 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	fightLevel = 11,
-	skinId = 5,
-	bloodAward = 9,
-	type = 2,
-	autoRewardView = 8,
-	title = 3,
-	offset = 6,
-	episodeId = 4,
-	rewardView = 7,
-	autoAward = 10,
-	id = 1
+	fightLevel = 12,
+	autoRewardView = 9,
+	bloodAward = 10,
+	type = 3,
+	skinId = 6,
+	title = 4,
+	offset = 7,
+	episodeId = 5,
+	rewardView = 8,
+	autoAward = 11,
+	id = 1,
+	activityId = 2
 }
 local var_0_2 = {
 	"id"

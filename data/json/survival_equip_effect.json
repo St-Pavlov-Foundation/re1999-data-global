@@ -430,6 +430,16 @@
     "effect_score": ""
   },
   {
+    "id": 1000087,
+    "effect": "skillStage#1000#0#107311107#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000088,
+    "effect": "skillStage#1000#0#107311108#1",
+    "effect_score": ""
+  },
+  {
     "id": 1010001,
     "effect": "ruleStage#1000#0#7280001#1",
     "effect_score": ""
@@ -667,6 +677,106 @@
   {
     "id": 1040006,
     "effect": "vorpalithSkillStage#1009#1#72810413",
+    "effect_score": ""
+  },
+  {
+    "id": 1060001,
+    "effect": "vorpalithSkillStage#1009#1#107311101",
+    "effect_score": ""
+  },
+  {
+    "id": 1060002,
+    "effect": "vorpalithSkillStage#1009#1#107311102",
+    "effect_score": ""
+  },
+  {
+    "id": 1060003,
+    "effect": "vorpalithSkillStage#1009#1#107311103",
+    "effect_score": ""
+  },
+  {
+    "id": 1060004,
+    "effect": "skillStage#1009#1#107311104#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1060005,
+    "effect": "skillStage#1009#1#107311105#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1060006,
+    "effect": "ruleStage#1009#1#107311106#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001001,
+    "effect": "skillStage#1000#0#107312001#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001002,
+    "effect": "skillStage#1000#0#107312002#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001003,
+    "effect": "skillStage#1000#0#107312003#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001004,
+    "effect": "ruleStage#1000#0#107312004#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001005,
+    "effect": "skillStage#1000#0#107312005#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001006,
+    "effect": "skillStage#1000#0#107312006#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001007,
+    "effect": "ruleStage#1000#0#107312007#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001008,
+    "effect": "ruleStage#1000#0#107312008#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001009,
+    "effect": "skillStage#1000#0#107312009#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001010,
+    "effect": "skillStage#1000#0#107312011#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001011,
+    "effect": "ruleStage#1000#0#107312016#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001012,
+    "effect": "skillStage#1000#0#107312017#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001013,
+    "effect": "skillStage#1000#0#107312018#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1001014,
+    "effect": "skillStage#1000#0#107312019#1",
     "effect_score": ""
   }
 ]

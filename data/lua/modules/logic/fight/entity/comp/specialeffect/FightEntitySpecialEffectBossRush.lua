@@ -139,10 +139,16 @@ end
 
 function var_0_0._onLoadCallback(arg_6_0, arg_6_1)
 	if arg_6_1.IsLoadSuccess then
+		local var_6_0 = arg_6_0._textureAssetItem
+
 		arg_6_0._isLoadingTexture = false
 		arg_6_0._textureAssetItem = arg_6_1
 
 		arg_6_1:Retain()
+
+		if var_6_0 then
+			var_6_0:Release()
+		end
 
 		arg_6_0._texture = arg_6_1:GetResource()
 

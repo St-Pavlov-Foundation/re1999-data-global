@@ -53,6 +53,9 @@ function var_0_0.showFullScreenText(arg_4_0, arg_4_1, arg_4_2)
 	end
 
 	arg_4_0._diatxt = string.gsub(arg_4_2, "<notShowInLog>", "")
+
+	local var_4_0 = StoryModel.instance:getCurStepId()
+
 	arg_4_0._markScreenText = arg_4_0._txtscreentext
 
 	if string.match(arg_4_2, "marktop") then
@@ -78,7 +81,7 @@ function var_0_0.showFullScreenText(arg_4_0, arg_4_1, arg_4_2)
 end
 
 function var_0_0._setFullScreenItem(arg_5_0)
-	local var_5_0 = StoryController.instance._curStepId
+	local var_5_0 = StoryModel.instance:getCurStepId()
 	local var_5_1 = StoryStepModel.instance:getStepListById(var_5_0)
 
 	arg_5_0._diatxt = StoryModel.instance:getStoryTxtByVoiceType(arg_5_0._diatxt, var_5_1.conversation.audio or 0)
@@ -170,7 +173,7 @@ function var_0_0.setFullTopShow(arg_11_0)
 end
 
 function var_0_0.playStoryViewIn(arg_12_0)
-	local var_12_0 = StoryModel.instance:isTypeSkip(StoryEnum.SkipType.InDarkFade, StoryController.instance._curStoryId)
+	local var_12_0 = StoryModel.instance:isTypeSkip(StoryEnum.SkipType.InDarkFade, StoryModel.instance:getCurStoryId())
 
 	StoryModel.instance.skipFade = var_12_0
 
@@ -194,7 +197,7 @@ function var_0_0._startStoryViewIn(arg_13_0)
 end
 
 function var_0_0.playStoryViewOut(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = StoryModel.instance:isTypeSkip(StoryEnum.SkipType.OutDarkFade, StoryController.instance._curStoryId)
+	local var_15_0 = StoryModel.instance:isTypeSkip(StoryEnum.SkipType.OutDarkFade, StoryModel.instance:getCurStoryId())
 
 	StoryModel.instance.skipFade = var_15_0
 
@@ -241,7 +244,7 @@ function var_0_0._onOpenView(arg_17_0, arg_17_1)
 		return
 	end
 
-	local var_17_0 = StoryController.instance._curStoryId
+	local var_17_0 = StoryModel.instance:getCurStoryId()
 
 	if StoryModel.instance:isStoryFinished(var_17_0) then
 		StoryController.instance:closeStoryView()
@@ -435,6 +438,8 @@ function var_0_0.lineShow(arg_36_0, arg_36_1, arg_36_2, arg_36_3, arg_36_4)
 	ZProj.UGUIHelper.SetColorAlpha(arg_36_0._markScreenText, 1)
 
 	if arg_36_0._stepCo.conversation.showTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		arg_36_0:_lineWordShowFinished()
+
 		if arg_36_0._finishCallback then
 			arg_36_0._finishCallback(arg_36_0._finishCallbackObj)
 
@@ -600,130 +605,158 @@ end
 function var_0_0._lineWordShowFinished(arg_43_0)
 	arg_43_0._txtscreentext.text = "\n" .. arg_43_0._diatxt
 
-	gohelper.setActive(arg_43_0._copyText.gameObject, false)
-
 	if arg_43_0._finishCallback then
 		arg_43_0._finishCallback(arg_43_0._finishCallbackObj)
 
 		arg_43_0._finishCallback = nil
 		arg_43_0._finishCallback = nil
 	end
+
+	local var_43_0 = StoryTool.getFilterAlignTxt(arg_43_0._diatxt)
+	local var_43_1 = StoryTool.getMarkTopTextList(var_43_0)
+	local var_43_2 = StoryTool.filterMarkTop(var_43_0)
+
+	arg_43_0._markScreenText.text = "\n" .. StoryTool.filterSpTag(var_43_2)
+
+	if arg_43_0._copyText then
+		gohelper.setActive(arg_43_0._copyText.gameObject, false)
+
+		arg_43_0._copyText.text = ""
+	end
+
+	TaskDispatcher.runDelay(function()
+		if arg_43_0._conMark and arg_43_0._txtscreentextmesh.gameObject.activeSelf then
+			arg_43_0._conMark:SetMarksTop(var_43_1)
+		end
+
+		if arg_43_0._copyText then
+			gohelper.destroyAllChildren(arg_43_0._copyText.gameObject)
+			gohelper.destroy(arg_43_0._copyText.gameObject)
+
+			arg_43_0._copyText = nil
+		end
+
+		if arg_43_0._finishCallback then
+			arg_43_0._finishCallback(arg_43_0._finishCallbackObj)
+		end
+	end, nil, 0.01)
 end
 
-function var_0_0.playFullTextFadeOut(arg_44_0, arg_44_1, arg_44_2, arg_44_3)
-	local var_44_0 = arg_44_1 or 0.5
+function var_0_0.playFullTextFadeOut(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
+	local var_45_0 = arg_45_1 or 0.5
 
-	arg_44_0._fadeOutCallback = arg_44_2
-	arg_44_0._fadeOutCallbackObj = arg_44_3
+	arg_45_0._fadeOutCallback = arg_45_2
+	arg_45_0._fadeOutCallbackObj = arg_45_3
 
-	ZProj.TweenHelper.KillByObj(arg_44_0._txtscreentext)
-	ZProj.TweenHelper.DoFade(arg_44_0._txtscreentext, 1, 0, var_44_0, arg_44_0._hideScreenTxt, arg_44_0, nil, EaseType.Linear)
-end
-
-function var_0_0._hideScreenTxt(arg_45_0)
 	arg_45_0:_killFloatTween()
-	gohelper.setActive(arg_45_0._txtscreentext.gameObject, false)
 
-	if arg_45_0._fadeOutCallback then
-		arg_45_0._fadeOutCallback(arg_45_0._fadeOutCallbackObj)
+	arg_45_0._floatTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, var_45_0, arg_45_0._fadeUpdate, arg_45_0._hideScreenTxt, arg_45_0, nil, EaseType.Linear)
+end
 
-		arg_45_0._fadeOutCallback = nil
-		arg_45_0._fadeOutCallbackObj = nil
+function var_0_0._hideScreenTxt(arg_46_0)
+	arg_46_0:_killFloatTween()
+	gohelper.setActive(arg_46_0._txtscreentext.gameObject, false)
+
+	if arg_46_0._fadeOutCallback then
+		arg_46_0._fadeOutCallback(arg_46_0._fadeOutCallbackObj)
+
+		arg_46_0._fadeOutCallback = nil
+		arg_46_0._fadeOutCallbackObj = nil
 	end
 end
 
-function var_0_0.playTextFadeIn(arg_46_0, arg_46_1, arg_46_2, arg_46_3)
-	arg_46_0._stepCo = arg_46_1
+function var_0_0.playTextFadeIn(arg_47_0, arg_47_1, arg_47_2, arg_47_3)
+	arg_47_0._stepCo = arg_47_1
 
-	gohelper.setActive(arg_46_0._markScreenText.gameObject, true)
+	gohelper.setActive(arg_47_0._markScreenText.gameObject, true)
 
-	arg_46_0._finishCallback = arg_46_2
-	arg_46_0._finishCallbackObj = arg_46_3
+	arg_47_0._finishCallback = arg_47_2
+	arg_47_0._finishCallbackObj = arg_47_3
 
-	ZProj.TweenHelper.KillByObj(arg_46_0._markScreenText)
+	arg_47_0:_killFloatTween()
 
-	if arg_46_0._stepCo.conversation.showTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		arg_46_0:_fadeFinished()
+	if arg_47_0._stepCo.conversation.showTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		arg_47_0:_fadeFinished()
 	else
-		local var_46_0 = arg_46_0._markScreenText.text
+		local var_47_0 = arg_47_0._markScreenText.text
 
-		if string.match(var_46_0, "<color=#%x+>") then
-			var_46_0 = string.gsub(var_46_0, "<color=#(%x%x%x%x%x%x)(%x-)>", "<color=#%100>")
+		if string.match(var_47_0, "<color=#%x+>") then
+			var_47_0 = string.gsub(var_47_0, "<color=#(%x%x%x%x%x%x)(%x-)>", "<color=#%100>")
 		end
 
-		local var_46_1 = StoryTool.getMarkTopTextList(var_46_0)
-		local var_46_2 = StoryTool.filterMarkTop(var_46_0)
+		local var_47_1 = StoryTool.getMarkTopTextList(var_47_0)
+		local var_47_2 = StoryTool.filterMarkTop(var_47_0)
 
-		arg_46_0._markScreenText.text = StoryTool.filterSpTag(var_46_2)
+		arg_47_0._markScreenText.text = StoryTool.filterSpTag(var_47_2)
 
 		TaskDispatcher.runDelay(function()
-			if arg_46_0._conMark and var_46_1 and #var_46_1 > 0 then
-				arg_46_0._conMark:SetMarksTop(var_46_1)
+			if arg_47_0._conMark and var_47_1 and #var_47_1 > 0 then
+				arg_47_0._conMark:SetMarksTop(var_47_1)
 			end
 		end, nil, 0.01)
 
-		arg_46_0._floatTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, arg_46_0._stepCo.conversation.showTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_46_0._fadeUpdate, arg_46_0._fadeFinished, arg_46_0, nil, EaseType.Linear)
+		arg_47_0._floatTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, arg_47_0._stepCo.conversation.showTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_47_0._fadeUpdate, arg_47_0._fadeFinished, arg_47_0, nil, EaseType.Linear)
 	end
 end
 
-function var_0_0._fadeUpdate(arg_48_0, arg_48_1)
-	local var_48_0 = arg_48_0._markScreenText.text
-	local var_48_1 = math.ceil(255 * arg_48_1)
-	local var_48_2 = string.format("%02x", var_48_1)
+function var_0_0._fadeUpdate(arg_49_0, arg_49_1)
+	local var_49_0 = arg_49_0._markScreenText.text
+	local var_49_1 = math.ceil(255 * arg_49_1)
+	local var_49_2 = string.format("%02x", var_49_1)
 
-	if string.match(var_48_0, "<color=#%x+>") then
-		local var_48_3 = string.gsub(var_48_0, "<color=#(%x%x%x%x%x%x)(%x+)>", "<color=#%1" .. var_48_2 .. ">")
+	if string.match(var_49_0, "<color=#%x+>") then
+		local var_49_3 = string.gsub(var_49_0, "<color=#(%x%x%x%x%x%x)(%x+)>", "<color=#%1" .. var_49_2 .. ">")
 
-		arg_48_0._markScreenText.text = var_48_3
+		arg_49_0._markScreenText.text = var_49_3
 
 		return
 	end
 
-	if not arg_48_0._txtCanvasGroup then
-		arg_48_0._txtCanvasGroup = gohelper.onceAddComponent(arg_48_0._markScreenText, typeof(UnityEngine.CanvasGroup))
+	if not arg_49_0._txtCanvasGroup then
+		arg_49_0._txtCanvasGroup = gohelper.onceAddComponent(arg_49_0._markScreenText, typeof(UnityEngine.CanvasGroup))
 	end
 
-	arg_48_0._txtCanvasGroup.alpha = arg_48_1
+	arg_49_0._txtCanvasGroup.alpha = arg_49_1
 end
 
-function var_0_0._fadeFinished(arg_49_0)
-	if arg_49_0._txtCanvasGroup then
-		arg_49_0._txtCanvasGroup.alpha = 1
+function var_0_0._fadeFinished(arg_50_0)
+	if arg_50_0._txtCanvasGroup then
+		arg_50_0._txtCanvasGroup.alpha = 1
 	end
 
-	if arg_49_0._finishCallback then
-		arg_49_0._finishCallback(arg_49_0._finishCallbackObj)
+	if arg_50_0._finishCallback then
+		arg_50_0._finishCallback(arg_50_0._finishCallbackObj)
 
-		arg_49_0._finishCallback = nil
-		arg_49_0._finishCallbackObj = nil
-	end
-end
-
-function var_0_0._killFloatTween(arg_50_0)
-	if arg_50_0._floatTweenId then
-		ZProj.TweenHelper.KillById(arg_50_0._floatTweenId)
-
-		arg_50_0._floatTweenId = nil
+		arg_50_0._finishCallback = nil
+		arg_50_0._finishCallbackObj = nil
 	end
 end
 
-function var_0_0.destroy(arg_51_0)
-	arg_51_0:_removeEvent()
+function var_0_0._killFloatTween(arg_51_0)
+	if arg_51_0._floatTweenId then
+		ZProj.TweenHelper.KillById(arg_51_0._floatTweenId)
 
-	arg_51_0._finishCallback = nil
-	arg_51_0._finishCallbackObj = nil
-	arg_51_0._outCallback = nil
-	arg_51_0._outCallbackObj = nil
-	arg_51_0._fadeOutCallback = nil
-	arg_51_0._fadeOutCallbackObj = nil
+		arg_51_0._floatTweenId = nil
+	end
+end
 
-	arg_51_0:_killFloatTween()
-	TaskDispatcher.cancelTask(arg_51_0._viewFadeOutFinished, arg_51_0)
-	TaskDispatcher.cancelTask(arg_51_0._startStoryViewIn, arg_51_0)
-	TaskDispatcher.cancelTask(arg_51_0._viewFadeOut, arg_51_0)
-	TaskDispatcher.cancelTask(arg_51_0._onShakeEnd, arg_51_0)
-	ZProj.TweenHelper.KillByObj(arg_51_0._imagefulltop)
-	ZProj.TweenHelper.KillByObj(arg_51_0._goupfade.transform)
+function var_0_0.destroy(arg_52_0)
+	arg_52_0:_removeEvent()
+
+	arg_52_0._finishCallback = nil
+	arg_52_0._finishCallbackObj = nil
+	arg_52_0._outCallback = nil
+	arg_52_0._outCallbackObj = nil
+	arg_52_0._fadeOutCallback = nil
+	arg_52_0._fadeOutCallbackObj = nil
+
+	arg_52_0:_killFloatTween()
+	TaskDispatcher.cancelTask(arg_52_0._viewFadeOutFinished, arg_52_0)
+	TaskDispatcher.cancelTask(arg_52_0._startStoryViewIn, arg_52_0)
+	TaskDispatcher.cancelTask(arg_52_0._viewFadeOut, arg_52_0)
+	TaskDispatcher.cancelTask(arg_52_0._onShakeEnd, arg_52_0)
+	ZProj.TweenHelper.KillByObj(arg_52_0._imagefulltop)
+	ZProj.TweenHelper.KillByObj(arg_52_0._goupfade.transform)
 end
 
 return var_0_0

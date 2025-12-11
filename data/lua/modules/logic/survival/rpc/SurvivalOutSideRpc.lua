@@ -29,50 +29,36 @@ function var_0_0.onReceiveSurvivalOutSideGainRewardReply(arg_4_0, arg_4_1, arg_4
 	end
 end
 
-function var_0_0.sendSurvivalOutSideAlterTalentGroup(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	local var_5_0 = SurvivalOutSideModule_pb.SurvivalOutSideAlterTalentGroupRequest()
+function var_0_0.sendSurvivalSurvivalOutSideClientData(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = SurvivalOutSideModule_pb.SurvivalSurvivalOutSideClientDataRequest()
 
-	var_5_0.groupId = arg_5_1
+	var_5_0.data = arg_5_1
 
-	if arg_5_2 then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_2) do
-			table.insert(var_5_0.talentId, iter_5_1)
-		end
-	end
-
-	return arg_5_0:sendMsg(var_5_0, arg_5_3, arg_5_4)
+	return arg_5_0:sendMsg(var_5_0, arg_5_2, arg_5_3)
 end
 
-function var_0_0.onReceiveSurvivalOutSideAlterTalentGroupReply(arg_6_0, arg_6_1, arg_6_2)
+function var_0_0.onReceiveSurvivalSurvivalOutSideClientDataReply(arg_6_0, arg_6_1, arg_6_2)
 	if arg_6_1 == 0 then
-		SurvivalModel.instance:getOutSideInfo().talentBox:updateGroupInfo(arg_6_2.group)
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnTalentGroupBoxUpdate)
-	end
-end
-
-function var_0_0.sendSurvivalSurvivalOutSideClientData(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = SurvivalOutSideModule_pb.SurvivalSurvivalOutSideClientDataRequest()
-
-	var_7_0.data = arg_7_1
-
-	return arg_7_0:sendMsg(var_7_0, arg_7_2, arg_7_3)
-end
-
-function var_0_0.onReceiveSurvivalSurvivalOutSideClientDataReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.onReceiveSurvivalOutSideUnlockTalentIdsPush(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 == 0 then
-		local var_9_0 = SurvivalModel.instance:getOutSideInfo()
+function var_0_0.onReceiveSurvivalHandbookPush(arg_7_0, arg_7_1, arg_7_2)
+	return
+end
 
-		var_9_0.talentBox:unLockTalent(arg_9_2.talentIds)
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnTalentGroupBoxUpdate)
-		tabletool.addValues(var_9_0.clientData.data.newTalents, arg_9_2.talentIds)
-		var_9_0.clientData:saveDataToServer()
+function var_0_0.onReceiveSurvivalMarkNewHandbookReply(arg_8_0, arg_8_1, arg_8_2)
+	SurvivalHandbookModel.instance:onReceiveSurvivalMarkNewHandbookReply(arg_8_1, arg_8_2)
+end
+
+function var_0_0.sendSurvivalMarkNewHandbook(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = SurvivalOutSideModule_pb.SurvivalMarkNewHandbookRequest()
+
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+		table.insert(var_9_0.ids, iter_9_1)
 	end
+
+	return arg_9_0:sendMsg(var_9_0, arg_9_2, arg_9_3)
 end
 
 var_0_0.instance = var_0_0.New()

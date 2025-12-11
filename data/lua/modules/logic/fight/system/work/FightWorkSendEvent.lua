@@ -2,7 +2,7 @@
 
 local var_0_0 = class("FightWorkSendEvent", FightWorkItem)
 
-function var_0_0.onAwake(arg_1_0, arg_1_1, ...)
+function var_0_0.onLogicEnter(arg_1_0, arg_1_1, ...)
 	arg_1_0._eventName = arg_1_1
 	arg_1_0._param = {
 		...

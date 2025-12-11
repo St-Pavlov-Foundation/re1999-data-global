@@ -76,15 +76,27 @@ function var_0_0._refreshSelectScene(arg_5_0)
 end
 
 function var_0_0.initEquipSceneGo(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._assetItemEquip
+
 	arg_6_0._assetItemEquip = arg_6_1
 
 	arg_6_0._assetItemEquip:Retain()
+
+	if var_6_0 then
+		var_6_0:Release()
+	end
 end
 
 function var_0_0.initCharSceneGo(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._assetItemChar
+
 	arg_7_0._assetItemChar = arg_7_1
 
 	arg_7_0._assetItemChar:Retain()
+
+	if var_7_0 then
+		var_7_0:Release()
+	end
 end
 
 function var_0_0.isSceneGOInited(arg_8_0, arg_8_1)

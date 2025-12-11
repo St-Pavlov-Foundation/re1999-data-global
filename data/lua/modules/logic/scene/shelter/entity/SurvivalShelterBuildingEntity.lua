@@ -47,14 +47,18 @@ function var_0_0.showModel(arg_5_0)
 	local var_5_0, var_5_1 = arg_5_0:getResPath()
 
 	arg_5_0._loader:addPath(var_5_0)
-	arg_5_0._loader:addPath(var_5_1)
+
+	if var_5_1 then
+		arg_5_0._loader:addPath(var_5_1)
+	end
+
 	arg_5_0._loader:startLoad(arg_5_0._onResLoadEnd, arg_5_0)
 end
 
 function var_0_0.getResPath(arg_6_0)
 	local var_6_0 = SurvivalConfig.instance:getBuildingConfig(arg_6_0.buildingCo.cfgId, 1)
 
-	return arg_6_0.buildingCo.assetPath, string.format("survival/buiding/v2a8/%s.prefab", var_6_0.ruins)
+	return arg_6_0.buildingCo.assetPath, not string.nilorempty(var_6_0.ruins) and string.format("survival/buiding/v2a8/%s.prefab", var_6_0.ruins)
 end
 
 function var_0_0._onResLoadEnd(arg_7_0)
@@ -69,14 +73,16 @@ function var_0_0._onResLoadEnd(arg_7_0)
 		arg_7_0:initTrans(arg_7_0.goModel.transform)
 	end
 
-	local var_7_4 = arg_7_0._loader:getAssetItem(var_7_1)
+	if var_7_1 then
+		local var_7_4 = arg_7_0._loader:getAssetItem(var_7_1)
 
-	if var_7_4 then
-		local var_7_5 = var_7_4:GetResource(var_7_1)
+		if var_7_4 then
+			local var_7_5 = var_7_4:GetResource(var_7_1)
 
-		arg_7_0.goRuins = gohelper.clone(var_7_5, arg_7_0.go, "ruins")
+			arg_7_0.goRuins = gohelper.clone(var_7_5, arg_7_0.go, "ruins")
 
-		arg_7_0:initTrans(arg_7_0.goRuins.transform)
+			arg_7_0:initTrans(arg_7_0.goRuins.transform)
+		end
 	end
 
 	arg_7_0:onLoadedEnd()
@@ -163,7 +169,7 @@ function var_0_0._showBuildEffect(arg_15_0)
 	arg_15_0._effectDelayTime = 1
 	arg_15_0._effectAudioId = var_15_1 and AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_transmit or AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_build
 
-	local var_15_2 = var_15_1 and SurvivalEnum.UnitEffectPath.Transfer2 or SurvivalEnum.UnitEffectPath.CreateUnit
+	local var_15_2 = var_15_1 and SurvivalConst.UnitEffectPath.Transfer2 or SurvivalConst.UnitEffectPath.CreateUnit
 
 	arg_15_0:loadEffect(var_15_2)
 end
@@ -215,6 +221,12 @@ function var_0_0.updateEntity(arg_19_0, arg_19_1)
 end
 
 function var_0_0.onDestroy(arg_20_0)
+	if arg_20_0._loader then
+		arg_20_0._loader:dispose()
+
+		arg_20_0._loader = nil
+	end
+
 	arg_20_0._effectDelayTime = nil
 
 	TaskDispatcher.cancelTask(arg_20_0._onBuildEffectPlayFinish, arg_20_0)

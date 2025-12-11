@@ -19,7 +19,7 @@ end
 function var_0_0.onStart(arg_2_0)
 	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.5)
 
-	if arg_2_0.fightStepData.actType == FightEnum.ActType.SKILL and not FightReplayModel.instance:isReplay() then
+	if arg_2_0.fightStepData.actType == FightEnum.ActType.SKILL and not FightDataHelper.stateMgr.isReplay then
 		local var_2_0 = EquipConfig.instance:isEquipSkill(arg_2_0.fightStepData.actId)
 
 		if var_2_0 then

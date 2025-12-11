@@ -79,33 +79,39 @@ function var_0_0._onLoadCallback(arg_6_0, arg_6_1)
 	arg_6_0._isLoadingRes = false
 
 	if arg_6_1.IsLoadSuccess then
+		local var_6_0 = arg_6_0._assetItem
+
 		arg_6_0._assetItem = arg_6_1
 
 		arg_6_0._assetItem:Retain()
 
-		local var_6_0 = arg_6_0:getCurScene():getSceneContainerGO()
+		if var_6_0 then
+			var_6_0:Release()
+		end
 
-		arg_6_0._instGO = gohelper.clone(arg_6_0._assetItem:GetResource(arg_6_0._resPath), var_6_0)
+		local var_6_1 = arg_6_0:getCurScene():getSceneContainerGO()
+
+		arg_6_0._instGO = gohelper.clone(arg_6_0._assetItem:GetResource(arg_6_0._resPath), var_6_1)
 
 		arg_6_0:dispatchEvent(var_0_0.OnLevelLoaded, arg_6_0._levelId)
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.OnLevelLoaded, arg_6_0._levelId)
 
-		local var_6_1 = SceneType.NameDict[GameSceneMgr.instance:getCurSceneType()]
-		local var_6_2 = arg_6_0._sceneId or -1
-		local var_6_3 = arg_6_0._levelId or -1
+		local var_6_2 = SceneType.NameDict[GameSceneMgr.instance:getCurSceneType()]
+		local var_6_3 = arg_6_0._sceneId or -1
+		local var_6_4 = arg_6_0._levelId or -1
 
-		logNormal(string.format("load scene level finish: %s %d level_%d", var_6_1, var_6_2, var_6_3))
+		logNormal(string.format("load scene level finish: %s %d level_%d", var_6_2, var_6_3, var_6_4))
 
-		local var_6_4 = lua_scene_level.configDict[var_6_3]
+		local var_6_5 = lua_scene_level.configDict[var_6_4]
 
-		if var_6_4 and not string.nilorempty(var_6_4.sceneEffects) then
+		if var_6_5 and not string.nilorempty(var_6_5.sceneEffects) then
 			arg_6_0:releaseSceneEffectsLoader()
 
-			local var_6_5 = string.split(var_6_4.sceneEffects, "#")
+			local var_6_6 = string.split(var_6_5.sceneEffects, "#")
 
 			arg_6_0._sceneEffectsLoader = MultiAbLoader.New()
 
-			for iter_6_0, iter_6_1 in ipairs(var_6_5) do
+			for iter_6_0, iter_6_1 in ipairs(var_6_6) do
 				arg_6_0._sceneEffectsLoader:addPath(string.format(var_0_1, iter_6_1))
 			end
 

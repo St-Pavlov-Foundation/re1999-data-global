@@ -98,6 +98,10 @@ function var_0_0._createBlockMOByCfg(arg_8_0, arg_8_1)
 		var_8_0.rotate = math.random(0, 6)
 	end
 
+	local var_8_1 = RoomWaterReformModel.instance:getBlockPermanentInfo(arg_8_1.blockId)
+
+	var_8_0:setBlockColorType(var_8_1)
+
 	return var_8_0
 end
 

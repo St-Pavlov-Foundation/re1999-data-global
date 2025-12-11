@@ -4,6 +4,7 @@ local var_0_0 = class("AchievementToastModel", BaseModel)
 
 function var_0_0.onInit(arg_1_0)
 	arg_1_0._waitToastList = {}
+	arg_1_0._waitNamePlateToastList = {}
 	arg_1_0._groupUnlockToastMap = {}
 	arg_1_0._groupFinishedToastMap = {}
 end
@@ -14,6 +15,7 @@ end
 
 function var_0_0.release(arg_3_0)
 	arg_3_0._waitToastList = nil
+	arg_3_0._waitNamePlateToastList = nil
 	arg_3_0._groupUnlockToastMap = nil
 	arg_3_0._groupFinishedToastMap = nil
 end
@@ -21,15 +23,59 @@ end
 function var_0_0.updateNeedPushToast(arg_4_0, arg_4_1)
 	arg_4_0._waitToastList = arg_4_0._waitToastList or {}
 	arg_4_0._waitToastMap = arg_4_0._waitToastMap or {}
+	arg_4_0._waitNamePlateToastList = arg_4_0._waitNamePlateToastList or {}
 	arg_4_0._groupUnlockToastMap = arg_4_0._groupUnlockToastMap or {}
 	arg_4_0._groupFinishedToastMap = arg_4_0._groupFinishedToastMap or {}
 
 	if arg_4_1 then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-			local var_4_0 = iter_4_1.id
+		local var_4_0 = {}
 
-			if iter_4_1 and iter_4_1.new then
-				arg_4_0:checkTaskSatify(var_4_0)
+		for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+			local var_4_1 = iter_4_1.id
+			local var_4_2 = iter_4_1 and iter_4_1.new
+			local var_4_3 = AchievementConfig.instance:getTask(var_4_1).achievementId
+			local var_4_4 = AchievementConfig.instance:getAchievement(var_4_3)
+
+			if var_4_4 and var_4_4.category == AchievementEnum.Type.NamePlate then
+				if var_4_2 then
+					var_4_0[var_4_3] = var_4_0[var_4_3] or {}
+
+					table.insert(var_4_0[var_4_3], {
+						taskId = var_4_1,
+						achievementId = var_4_3
+					})
+				end
+			elseif var_4_2 then
+				arg_4_0:checkTaskSatify(var_4_1)
+			end
+		end
+
+		for iter_4_2, iter_4_3 in pairs(var_4_0) do
+			local var_4_5
+			local var_4_6
+
+			for iter_4_4, iter_4_5 in ipairs(iter_4_3) do
+				local var_4_7 = AchievementConfig.instance:getTask(iter_4_5.taskId)
+
+				if not var_4_6 then
+					var_4_6 = iter_4_5.taskId
+					var_4_5 = iter_4_5.taskId
+				else
+					local var_4_8 = AchievementConfig.instance:getTask(var_4_6)
+
+					if var_4_7.level > var_4_8.level then
+						var_4_5 = iter_4_5.taskId
+					end
+
+					var_4_6 = iter_4_5.taskId
+				end
+			end
+
+			local var_4_9 = AchievementConfig.instance:getTask(var_4_5)
+			local var_4_10 = var_4_9.achievementId
+
+			if AchievementModel.instance:achievementHasNewWithTaskId(var_4_10, var_4_5) then
+				table.insert(arg_4_0._waitNamePlateToastList, var_4_9)
 			end
 		end
 	end
@@ -136,6 +182,11 @@ end
 
 function var_0_0.onToastFinished(arg_13_0)
 	arg_13_0._waitToastList = nil
+	arg_13_0._waitNamePlateToastList = nil
+end
+
+function var_0_0.getWaitNamePlateToastList(arg_14_0)
+	return arg_14_0._waitNamePlateToastList
 end
 
 var_0_0.instance = var_0_0.New()

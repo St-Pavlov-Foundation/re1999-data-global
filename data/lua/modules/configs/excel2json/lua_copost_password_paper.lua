@@ -4,6 +4,7 @@ local var_0_0 = {}
 local var_0_1 = {
 	id = 1,
 	diskText = 5,
+	order = 6,
 	allNum = 3,
 	diskIcon = 4,
 	versionId = 2

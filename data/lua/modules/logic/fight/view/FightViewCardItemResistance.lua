@@ -67,11 +67,11 @@ function var_0_0.updateByCardInfo(arg_7_0, arg_7_1)
 		return arg_7_0:hideResistanceGo()
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return arg_7_0:hideResistanceGo()
 	end
 
-	if FightModel.instance:isAuto() then
+	if FightDataHelper.stateMgr:getIsAuto() then
 		return arg_7_0:hideResistanceGo()
 	end
 

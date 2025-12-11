@@ -108,6 +108,10 @@ function var_0_0._isUnInteractType(arg_6_0)
 		return true
 	end
 
+	if StoryModel.instance:isLimitNoInteractLock(arg_6_0._stepCo) then
+		return true
+	end
+
 	return false
 end
 
@@ -298,7 +302,7 @@ function var_0_0._storyFinished(arg_22_0, arg_22_1)
 		return
 	end
 
-	if StoryModel.instance:isTypeSkip(StoryEnum.SkipType.OutDarkFade, StoryController.instance._curStoryId) then
+	if StoryModel.instance:isTypeSkip(StoryEnum.SkipType.OutDarkFade, StoryModel.instance:getCurStoryId()) then
 		return
 	end
 
@@ -580,11 +584,16 @@ function var_0_0._conShowIn(arg_36_0)
 		TaskDispatcher.runDelay(arg_36_0._enterNextStep, arg_36_0, arg_36_0._stepCo.conversation.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 	else
 		StoryController.instance:dispatchEvent(StoryEvent.SetFullText, "")
+		StoryModel.instance:setLimitNoInteractLock(false)
 
 		if arg_36_0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract then
 			StoryModel.instance:enableClick(false)
 			TaskDispatcher.runDelay(arg_36_0._guaranteeEnterNextStep, arg_36_0, arg_36_0._stepCo.conversation.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] + 0.2)
 			TaskDispatcher.runDelay(arg_36_0._enterNextStep, arg_36_0, arg_36_0._stepCo.conversation.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+		elseif arg_36_0._stepCo.conversation.type == StoryEnum.ConversationType.LimitNoInteract then
+			StoryModel.instance:setLimitNoInteractLock(true)
+			StoryModel.instance:enableClick(false)
+			TaskDispatcher.runDelay(arg_36_0._onLimitNoInteractFinished, arg_36_0, arg_36_0._stepCo.conversation.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 		end
 
 		arg_36_0:_showConversationItem(true)
@@ -603,202 +612,211 @@ function var_0_0._conShowIn(arg_36_0)
 	end
 end
 
-function var_0_0._startShowText(arg_37_0)
-	if not arg_37_0._stepCo then
+function var_0_0._onLimitNoInteractFinished(arg_37_0)
+	StoryModel.instance:setLimitNoInteractLock(false)
+	StoryModel.instance:enableClick(true)
+
+	if StoryModel.instance:isStoryAuto() then
+		arg_37_0:_enterNextStep()
+	end
+end
+
+function var_0_0._startShowText(arg_38_0)
+	if not arg_38_0._stepCo then
 		return
 	end
 
-	arg_37_0._conCanvasGroup.alpha = 1
+	arg_38_0._conCanvasGroup.alpha = 1
 
-	if arg_37_0._stepCo.conversation.effType ~= StoryEnum.ConversationEffectType.Shake then
-		StoryController.instance:dispatchEvent(StoryEvent.ConversationShake, arg_37_0._stepCo, 0, true)
-		TaskDispatcher.cancelTask(arg_37_0._startShake, arg_37_0)
-		TaskDispatcher.cancelTask(arg_37_0._shakeStop, arg_37_0)
-		arg_37_0._contentAnimator:Play(UIAnimationName.Idle)
+	if arg_38_0._stepCo.conversation.effType ~= StoryEnum.ConversationEffectType.Shake then
+		StoryController.instance:dispatchEvent(StoryEvent.ConversationShake, arg_38_0._stepCo, 0, true)
+		TaskDispatcher.cancelTask(arg_38_0._startShake, arg_38_0)
+		TaskDispatcher.cancelTask(arg_38_0._shakeStop, arg_38_0)
+		arg_38_0._contentAnimator:Play(UIAnimationName.Idle)
 	end
 
-	arg_37_0:_showText()
+	arg_38_0:_showText()
 end
 
-function var_0_0._showConversationItem(arg_38_0, arg_38_1)
-	local var_38_0 = arg_38_0._stepCo.conversation.type ~= StoryEnum.ConversationType.ScreenDialog and arg_38_0._stepCo.conversation.type ~= StoryEnum.ConversationType.IrregularShake
-	local var_38_1 = arg_38_0._stepCo.conversation.type == StoryEnum.ConversationType.SlideDialog
+function var_0_0._showConversationItem(arg_39_0, arg_39_1)
+	local var_39_0 = arg_39_0._stepCo.conversation.type ~= StoryEnum.ConversationType.ScreenDialog and arg_39_0._stepCo.conversation.type ~= StoryEnum.ConversationType.IrregularShake
+	local var_39_1 = arg_39_0._stepCo.conversation.type == StoryEnum.ConversationType.SlideDialog
 
-	if not arg_38_1 then
-		gohelper.setActive(arg_38_0._gocontentroot, false)
-		arg_38_0._simagehead:UnLoadImage()
+	if not arg_39_1 then
+		gohelper.setActive(arg_39_0._gocontentroot, false)
+		arg_39_0._simagehead:UnLoadImage()
 		StoryController.instance:dispatchEvent(StoryEvent.LeadRoleViewShow, false)
 
 		return
 	end
 
-	StoryController.instance:dispatchEvent(StoryEvent.SetFullText, arg_38_0._diatxt)
-	gohelper.setActive(arg_38_0._gobtns, var_38_0)
-	gohelper.setActive(arg_38_0._gocontentroot, var_38_0)
-	gohelper.setActive(arg_38_0._goconversation, not var_38_1)
-	StoryController.instance:dispatchEvent(StoryEvent.LeadRoleViewShow, var_38_0)
+	StoryController.instance:dispatchEvent(StoryEvent.SetFullText, arg_39_0._diatxt)
+	gohelper.setActive(arg_39_0._gobtns, var_39_0)
+	gohelper.setActive(arg_39_0._gocontentroot, var_39_0)
+	gohelper.setActive(arg_39_0._goconversation, not var_39_1)
+	StoryController.instance:dispatchEvent(StoryEvent.LeadRoleViewShow, var_39_0)
 
-	local var_38_2 = arg_38_0._stepCo.conversation.heroNames[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
-	local var_38_3 = arg_38_0._stepCo.conversation.heroNames[LanguageEnum.LanguageStoryType.EN]
+	local var_39_2 = arg_39_0._stepCo.conversation.heroNames[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
+	local var_39_3 = arg_39_0._stepCo.conversation.heroNames[LanguageEnum.LanguageStoryType.EN]
 
-	arg_38_0:_showHeadContentTxt(var_38_2, var_38_3)
-	gohelper.setActive(arg_38_0._goname, arg_38_0._stepCo.conversation.nameShow)
+	arg_39_0:_showHeadContentTxt(var_39_2, var_39_3)
+	gohelper.setActive(arg_39_0._goname, arg_39_0._stepCo.conversation.nameShow)
 
-	local var_38_4 = tonumber(arg_38_0._stepCo.conversation.heroNames[LanguageEnum.LanguageStoryType.CN])
-	local var_38_5 = arg_38_0._stepCo.conversation.nameEnShow
+	local var_39_4 = tonumber(arg_39_0._stepCo.conversation.heroNames[LanguageEnum.LanguageStoryType.CN])
+	local var_39_5 = arg_39_0._stepCo.conversation.nameEnShow
 
-	if var_38_4 and GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.EN then
-		var_38_5 = false
+	if var_39_4 and GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.EN then
+		var_39_5 = false
 	end
 
-	gohelper.setActive(arg_38_0._txtnameen.gameObject, var_38_5)
+	gohelper.setActive(arg_39_0._txtnameen.gameObject, var_39_5)
 
-	if not arg_38_0._stepCo.conversation.iconShow then
-		gohelper.setActive(arg_38_0._gohead, false)
-		gohelper.setActive(arg_38_0._gospine, false)
-		gohelper.setActive(arg_38_0._gonamebg, false)
-		arg_38_0._simagehead:UnLoadImage()
-		StoryController.instance:dispatchEvent(StoryEvent.ShowLeadRole, arg_38_0._stepCo, false, false, false)
+	if not arg_39_0._stepCo.conversation.iconShow then
+		gohelper.setActive(arg_39_0._gohead, false)
+		gohelper.setActive(arg_39_0._gospine, false)
+		gohelper.setActive(arg_39_0._gonamebg, false)
+		arg_39_0._simagehead:UnLoadImage()
+		StoryController.instance:dispatchEvent(StoryEvent.ShowLeadRole, arg_39_0._stepCo, false, false, false)
 
 		return
 	end
 
-	arg_38_0:_showHeadContentIcon(arg_38_0._stepCo.conversation.heroIcon)
+	arg_39_0:_showHeadContentIcon(arg_39_0._stepCo.conversation.heroIcon)
 end
 
-function var_0_0._showHeadContentTxt(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = string.match(arg_39_1, "[^?]") == nil
+function var_0_0._showHeadContentTxt(arg_40_0, arg_40_1, arg_40_2)
+	local var_40_0 = string.match(arg_40_1, "[^?]") == nil
 
-	gohelper.setActive(arg_39_0._txtnamecn1.gameObject, not var_39_0)
-	gohelper.setActive(arg_39_0._txtnamecn2.gameObject, var_39_0)
+	gohelper.setActive(arg_40_0._txtnamecn1.gameObject, not var_40_0)
+	gohelper.setActive(arg_40_0._txtnamecn2.gameObject, var_40_0)
 
-	if var_39_0 then
-		arg_39_0._txtnamecn2.text = string.split(arg_39_1, "_")[1]
+	if var_40_0 then
+		arg_40_0._txtnamecn2.text = string.split(arg_40_1, "_")[1]
 	else
-		arg_39_0._txtnamecn1.text = string.split(arg_39_1, "_")[1]
+		arg_40_0._txtnamecn1.text = string.split(arg_40_1, "_")[1]
 	end
 
-	local var_39_1 = tonumber(arg_39_0._stepCo.conversation.heroNames[LanguageEnum.LanguageStoryType.CN])
+	local var_40_1 = tonumber(arg_40_0._stepCo.conversation.heroNames[LanguageEnum.LanguageStoryType.CN])
 
-	if (var_39_1 and StoryTool.FilterStrByPatterns(arg_39_1, {
+	if (var_40_1 and StoryTool.FilterStrByPatterns(arg_40_1, {
 		"%a",
 		"%s",
 		"%p"
-	}) or StoryTool.FilterStrByPatterns(arg_39_1, {
+	}) or StoryTool.FilterStrByPatterns(arg_40_1, {
 		"%w",
 		"%s",
 		"%p"
 	})) ~= "" and GameLanguageMgr.instance:getLanguageTypeStoryIndex() ~= LanguageEnum.LanguageStoryType.EN then
-		if LangSettings.instance:isJp() and arg_39_2 == "Aleph" then
-			arg_39_2 = ""
+		if LangSettings.instance:isJp() and arg_40_2 == "Aleph" then
+			arg_40_2 = ""
 		end
 
-		arg_39_0._txtnameen.text = arg_39_2 ~= "" and "<voffset=4>/ </voffset>" .. arg_39_2 or ""
+		arg_40_0._txtnameen.text = arg_40_2 ~= "" and "<voffset=4>/ </voffset>" .. arg_40_2 or ""
 
-		gohelper.setActive(arg_39_0._txtnameen.gameObject, true)
+		gohelper.setActive(arg_40_0._txtnameen.gameObject, true)
 	else
-		arg_39_0._txtnameen.text = ""
+		arg_40_0._txtnameen.text = ""
 
-		if var_39_1 and GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.EN then
-			arg_39_0._txtnamecn1.text = arg_39_0._stepCo.conversation.heroNames[LanguageEnum.LanguageStoryType.CN]
+		if var_40_1 and GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.EN then
+			arg_40_0._txtnamecn1.text = arg_40_0._stepCo.conversation.heroNames[LanguageEnum.LanguageStoryType.CN]
 		end
 
-		gohelper.setActive(arg_39_0._txtnameen.gameObject, false)
+		gohelper.setActive(arg_40_0._txtnameen.gameObject, false)
 	end
 end
 
-function var_0_0._showHeadContentIcon(arg_40_0, arg_40_1)
-	if arg_40_0._goeffectIcon then
-		gohelper.destroy(arg_40_0._goeffectIcon)
+function var_0_0._showHeadContentIcon(arg_41_0, arg_41_1)
+	if arg_41_0._goeffectIcon then
+		gohelper.destroy(arg_41_0._goeffectIcon)
 
-		arg_40_0._goeffectIcon = nil
+		arg_41_0._goeffectIcon = nil
 	end
 
-	if arg_40_0:_isHeroLead() then
-		gohelper.setActive(arg_40_0._gohead, false)
-		gohelper.setActive(arg_40_0._gospine, true)
-		gohelper.setActive(arg_40_0._gonamebg, true)
-		arg_40_0._simagehead:UnLoadImage()
-		StoryController.instance:dispatchEvent(StoryEvent.ShowLeadRole, arg_40_0._stepCo, true, false, false)
+	if arg_41_0:_isHeroLead() then
+		gohelper.setActive(arg_41_0._gohead, false)
+		gohelper.setActive(arg_41_0._gospine, true)
+		gohelper.setActive(arg_41_0._gonamebg, true)
+		arg_41_0._simagehead:UnLoadImage()
+		StoryController.instance:dispatchEvent(StoryEvent.ShowLeadRole, arg_41_0._stepCo, true, false, false)
 	else
-		gohelper.setActive(arg_40_0._gospine, false)
-		gohelper.setActive(arg_40_0._gonamebg, false)
-		gohelper.setActive(arg_40_0._gohead, true)
+		gohelper.setActive(arg_41_0._gospine, false)
+		gohelper.setActive(arg_41_0._gonamebg, false)
+		gohelper.setActive(arg_41_0._gohead, true)
 
-		local var_40_0 = StoryModel.instance:isHeroIconCuts(string.split(arg_40_1, ".")[1])
+		local var_41_0 = StoryModel.instance:isHeroIconCuts(string.split(arg_41_1, ".")[1])
 
-		gohelper.setActive(arg_40_0._goheadblack, not var_40_0)
-		gohelper.setActive(arg_40_0._goheadgrey, false)
-		StoryController.instance:dispatchEvent(StoryEvent.ShowLeadRole, arg_40_0._stepCo, false, false, false)
+		gohelper.setActive(arg_41_0._goheadblack, not var_41_0)
+		gohelper.setActive(arg_41_0._goheadgrey, false)
+		StoryController.instance:dispatchEvent(StoryEvent.ShowLeadRole, arg_41_0._stepCo, false, false, false)
 
-		local var_40_1 = arg_40_0:_getEffectHeadIconCo()
+		local var_41_1 = arg_41_0:_getEffectHeadIconCo()
 
-		if var_40_1 then
-			arg_40_0._headEffectResPath = ResUrl.getStoryPrefabRes(var_40_1.path)
+		if var_41_1 then
+			arg_41_0._headEffectResPath = ResUrl.getStoryPrefabRes(var_41_1.path)
 
-			local var_40_2 = {}
+			local var_41_2 = {}
 
-			table.insert(var_40_2, arg_40_0._headEffectResPath)
-			arg_40_0:loadRes(var_40_2, arg_40_0._headEffectResLoaded, arg_40_0)
-			gohelper.setActive(arg_40_0._goheadgrey, true)
+			table.insert(var_41_2, arg_41_0._headEffectResPath)
+			arg_41_0:loadRes(var_41_2, arg_41_0._headEffectResLoaded, arg_41_0)
+			gohelper.setActive(arg_41_0._goheadgrey, true)
 		else
-			local var_40_3 = string.format("singlebg/headicon_small/%s", arg_40_1)
+			local var_41_3 = string.format("singlebg/headicon_small/%s", arg_41_1)
 
-			if arg_40_0._simagehead.curImageUrl == var_40_3 then
-				gohelper.setActive(arg_40_0._goheadgrey, true)
+			if arg_41_0._simagehead.curImageUrl == var_41_3 then
+				gohelper.setActive(arg_41_0._goheadgrey, true)
 			else
-				arg_40_0._simagehead:LoadImage(var_40_3, function()
-					gohelper.setActive(arg_40_0._goheadgrey, true)
+				arg_41_0._simagehead:LoadImage(var_41_3, function()
+					gohelper.setActive(arg_41_0._goheadgrey, true)
 				end)
 			end
 		end
 	end
 end
 
-function var_0_0._headEffectResLoaded(arg_42_0)
-	if arg_42_0._headEffectResPath then
-		local var_42_0 = arg_42_0._loader:getAssetItem(arg_42_0._headEffectResPath)
+function var_0_0._headEffectResLoaded(arg_43_0)
+	if arg_43_0._headEffectResPath then
+		local var_43_0 = arg_43_0._loader:getAssetItem(arg_43_0._headEffectResPath)
 
-		arg_42_0._goeffectIcon = gohelper.clone(var_42_0:GetResource(), arg_42_0._gohead)
+		arg_43_0._goeffectIcon = gohelper.clone(var_43_0:GetResource(), arg_43_0._gohead)
 	end
 end
 
-function var_0_0.loadRes(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
-	if arg_43_0._loader then
-		arg_43_0._loader:dispose()
+function var_0_0.loadRes(arg_44_0, arg_44_1, arg_44_2, arg_44_3)
+	if arg_44_0._loader then
+		arg_44_0._loader:dispose()
 
-		arg_43_0._loader = nil
+		arg_44_0._loader = nil
 	end
 
-	if arg_43_1 and #arg_43_1 > 0 then
-		arg_43_0._loader = MultiAbLoader.New()
+	if arg_44_1 and #arg_44_1 > 0 then
+		arg_44_0._loader = MultiAbLoader.New()
 
-		arg_43_0._loader:setPathList(arg_43_1)
-		arg_43_0._loader:startLoad(arg_43_2, arg_43_3)
-	elseif arg_43_2 then
-		arg_43_2(arg_43_3)
+		arg_44_0._loader:setPathList(arg_44_1)
+		arg_44_0._loader:startLoad(arg_44_2, arg_44_3)
+	elseif arg_44_2 then
+		arg_44_2(arg_44_3)
 	end
 end
 
-function var_0_0._getEffectHeadIconCo(arg_44_0)
-	local var_44_0 = string.split(arg_44_0._stepCo.conversation.heroIcon, ".")[1]
-	local var_44_1 = StoryConfig.instance:getStoryLeadHeroSpine()
+function var_0_0._getEffectHeadIconCo(arg_45_0)
+	local var_45_0 = string.split(arg_45_0._stepCo.conversation.heroIcon, ".")[1]
+	local var_45_1 = StoryConfig.instance:getStoryLeadHeroSpine()
 
-	for iter_44_0, iter_44_1 in ipairs(var_44_1) do
-		if iter_44_1.resType == StoryEnum.IconResType.IconEff and iter_44_1.icon == var_44_0 then
-			return iter_44_1
+	for iter_45_0, iter_45_1 in ipairs(var_45_1) do
+		if iter_45_1.resType == StoryEnum.IconResType.IconEff and iter_45_1.icon == var_45_0 then
+			return iter_45_1
 		end
 	end
 
 	return nil
 end
 
-function var_0_0._isHeroLead(arg_45_0)
-	local var_45_0 = string.split(arg_45_0._stepCo.conversation.heroIcon, ".")[1]
-	local var_45_1 = StoryConfig.instance:getStoryLeadHeroSpine()
+function var_0_0._isHeroLead(arg_46_0)
+	local var_46_0 = string.split(arg_46_0._stepCo.conversation.heroIcon, ".")[1]
+	local var_46_1 = StoryConfig.instance:getStoryLeadHeroSpine()
 
-	for iter_45_0, iter_45_1 in ipairs(var_45_1) do
-		if iter_45_1.resType == StoryEnum.IconResType.Spine and iter_45_1.icon == var_45_0 then
+	for iter_46_0, iter_46_1 in ipairs(var_46_1) do
+		if iter_46_1.resType == StoryEnum.IconResType.Spine and iter_46_1.icon == var_46_0 then
 			return true
 		end
 	end
@@ -806,218 +824,218 @@ function var_0_0._isHeroLead(arg_45_0)
 	return false
 end
 
-function var_0_0._showText(arg_46_0)
-	if arg_46_0._stepCo.conversation.type == StoryEnum.ConversationType.None then
-		arg_46_0._dialogItem:stopConAudio()
+function var_0_0._showText(arg_47_0)
+	if arg_47_0._stepCo.conversation.type == StoryEnum.ConversationType.None then
+		arg_47_0._dialogItem:stopConAudio()
 
 		return
 	end
 
 	StoryModel.instance:setTextShowing(true)
 
-	if arg_46_0._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog then
+	if arg_47_0._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog then
 		StoryModel.instance:enableClick(false)
-		arg_46_0:_playDialog()
-		StoryController.instance:dispatchEvent(StoryEvent.PlayFullText, arg_46_0._stepCo)
-	elseif arg_46_0._stepCo.conversation.type == StoryEnum.ConversationType.IrregularShake then
+		arg_47_0:_playDialog()
+		StoryController.instance:dispatchEvent(StoryEvent.PlayFullText, arg_47_0._stepCo)
+	elseif arg_47_0._stepCo.conversation.type == StoryEnum.ConversationType.IrregularShake then
 		StoryModel.instance:enableClick(false)
-		arg_46_0:_playDialog()
-		StoryController.instance:dispatchEvent(StoryEvent.PlayIrregularShakeText, arg_46_0._stepCo)
+		arg_47_0:_playDialog()
+		StoryController.instance:dispatchEvent(StoryEvent.PlayIrregularShakeText, arg_47_0._stepCo)
 	else
 		StoryModel.instance:enableClick(true)
-		arg_46_0:_playDialog()
+		arg_47_0:_playDialog()
 	end
 
-	if arg_46_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Shake then
-		arg_46_0:_shakeDialog()
-	elseif arg_46_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Fade then
-		arg_46_0:_fadeIn()
-	elseif arg_46_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.WordByWord then
+	if arg_47_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Shake then
+		arg_47_0:_shakeDialog()
+	elseif arg_47_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Fade then
+		arg_47_0:_fadeIn()
+	elseif arg_47_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.WordByWord then
 		-- block empty
-	elseif arg_46_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.LineByLine then
-		arg_46_0:_lineShow(1)
-	elseif arg_46_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.TwoLineShow then
-		arg_46_0:_lineShow(2)
+	elseif arg_47_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.LineByLine then
+		arg_47_0:_lineShow(1)
+	elseif arg_47_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.TwoLineShow then
+		arg_47_0:_lineShow(2)
 	end
 end
 
-function var_0_0._playDialog(arg_47_0)
-	arg_47_0._finishTime = nil
+function var_0_0._playDialog(arg_48_0)
+	arg_48_0._finishTime = nil
 
-	arg_47_0._dialogItem:hideDialog()
+	arg_48_0._dialogItem:hideDialog()
 
-	local var_47_0 = arg_47_0._stepCo.conversation.audios[1] or 0
-	local var_47_1 = StoryModel.instance:getStoryTxtByVoiceType(arg_47_0._diatxt, var_47_0)
+	local var_48_0 = arg_48_0._stepCo.conversation.audios[1] or 0
+	local var_48_1 = StoryModel.instance:getStoryTxtByVoiceType(arg_48_0._diatxt, var_48_0)
 
-	arg_47_0._dialogItem:playDialog(var_47_1, arg_47_0._stepCo, arg_47_0._conFinished, arg_47_0)
+	arg_48_0._dialogItem:playDialog(var_48_1, arg_48_0._stepCo, arg_48_0._conFinished, arg_48_0)
 end
 
-function var_0_0._conFinished(arg_48_0)
+function var_0_0._conFinished(arg_49_0)
 	StoryModel.instance:setTextShowing(false)
 
-	if arg_48_0._conTweenId then
-		ZProj.TweenHelper.KillById(arg_48_0._conTweenId)
+	if arg_49_0._conTweenId then
+		ZProj.TweenHelper.KillById(arg_49_0._conTweenId)
 
-		arg_48_0._conTweenId = nil
+		arg_49_0._conTweenId = nil
 	end
 
-	local var_48_0 = false
-	local var_48_1 = arg_48_0._stepCo and arg_48_0._stepCo.conversation.keepTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] or 1.5
+	local var_49_0 = false
+	local var_49_1 = arg_49_0._stepCo and arg_49_0._stepCo.conversation.keepTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] or 1.5
 
 	if StoryModel.instance:isStoryAuto() then
-		if not arg_48_0._finishTime then
-			arg_48_0._finishTime = ServerTime.now()
+		if not arg_49_0._finishTime then
+			arg_49_0._finishTime = ServerTime.now()
 		end
 
-		var_48_0 = var_48_1 < ServerTime.now() - arg_48_0._finishTime
+		var_49_0 = var_49_1 < ServerTime.now() - arg_49_0._finishTime
 	end
 
-	arg_48_0._finishTime = ServerTime.now()
+	arg_49_0._finishTime = ServerTime.now()
 
-	if var_48_0 then
-		arg_48_0:_onCheckNext()
+	if var_49_0 then
+		arg_49_0:_onCheckNext()
 	else
-		TaskDispatcher.runDelay(arg_48_0._onCheckNext, arg_48_0, var_48_1)
+		TaskDispatcher.runDelay(arg_49_0._onCheckNext, arg_49_0, var_49_1)
 	end
 end
 
-function var_0_0._shakeDialog(arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0._startShake, arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0._shakeStop, arg_49_0)
+function var_0_0._shakeDialog(arg_50_0)
+	TaskDispatcher.cancelTask(arg_50_0._startShake, arg_50_0)
+	TaskDispatcher.cancelTask(arg_50_0._shakeStop, arg_50_0)
 
-	if arg_49_0._stepCo.conversation.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+	if arg_50_0._stepCo.conversation.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
 		return
 	end
 
-	if arg_49_0._stepCo.conversation.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		arg_49_0:_startShake()
+	if arg_50_0._stepCo.conversation.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		arg_50_0:_startShake()
 	else
-		TaskDispatcher.runDelay(arg_49_0._startShake, arg_49_0, arg_49_0._stepCo.conversation.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+		TaskDispatcher.runDelay(arg_50_0._startShake, arg_50_0, arg_50_0._stepCo.conversation.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 	end
 end
 
-function var_0_0._startShake(arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._shakeStop, arg_50_0)
+function var_0_0._startShake(arg_51_0)
+	TaskDispatcher.cancelTask(arg_51_0._shakeStop, arg_51_0)
 
-	local var_50_0 = {
+	local var_51_0 = {
 		"low",
 		"middle",
 		"high"
 	}
 
-	arg_50_0._contentAnimator:Play(var_50_0[arg_50_0._stepCo.conversation.effLv + 1])
-
-	arg_50_0._contentAnimator.speed = arg_50_0._stepCo.conversation.effRate
-
-	TaskDispatcher.runDelay(arg_50_0._shakeStop, arg_50_0, arg_50_0._stepCo.conversation.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
-	StoryController.instance:dispatchEvent(StoryEvent.ConversationShake, arg_50_0._stepCo, true, arg_50_0._stepCo.conversation.effLv + 1)
-end
-
-function var_0_0._shakeStop(arg_51_0)
-	if not arg_51_0._stepCo then
-		return
-	end
-
-	StoryController.instance:dispatchEvent(StoryEvent.ConversationShake, arg_51_0._stepCo, false, arg_51_0._stepCo.conversation.effLv + 1)
+	arg_51_0._contentAnimator:Play(var_51_0[arg_51_0._stepCo.conversation.effLv + 1])
 
 	arg_51_0._contentAnimator.speed = arg_51_0._stepCo.conversation.effRate
 
-	arg_51_0._contentAnimator:SetBool("stoploop", true)
+	TaskDispatcher.runDelay(arg_51_0._shakeStop, arg_51_0, arg_51_0._stepCo.conversation.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+	StoryController.instance:dispatchEvent(StoryEvent.ConversationShake, arg_51_0._stepCo, true, arg_51_0._stepCo.conversation.effLv + 1)
 end
 
-function var_0_0._fadeIn(arg_52_0)
+function var_0_0._shakeStop(arg_52_0)
+	if not arg_52_0._stepCo then
+		return
+	end
+
+	StoryController.instance:dispatchEvent(StoryEvent.ConversationShake, arg_52_0._stepCo, false, arg_52_0._stepCo.conversation.effLv + 1)
+
+	arg_52_0._contentAnimator.speed = arg_52_0._stepCo.conversation.effRate
+
+	arg_52_0._contentAnimator:SetBool("stoploop", true)
+end
+
+function var_0_0._fadeIn(arg_53_0)
 	StoryModel.instance:setTextShowing(true)
-	arg_52_0._dialogItem:playNorDialogFadeIn(arg_52_0._fadeInFinished, arg_52_0)
+	arg_53_0._dialogItem:playNorDialogFadeIn(arg_53_0._fadeInFinished, arg_53_0)
 end
 
-function var_0_0._fadeInFinished(arg_53_0)
-	if not arg_53_0._stepCo then
+function var_0_0._fadeInFinished(arg_54_0)
+	if not arg_54_0._stepCo then
 		return
 	end
 
 	StoryModel.instance:setTextShowing(false)
-	TaskDispatcher.cancelTask(arg_53_0._onCheckNext, arg_53_0)
+	TaskDispatcher.cancelTask(arg_54_0._onCheckNext, arg_54_0)
 
-	if not arg_53_0._stepCo then
+	if not arg_54_0._stepCo then
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_53_0._onCheckNext, arg_53_0, arg_53_0._stepCo.conversation.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+	TaskDispatcher.runDelay(arg_54_0._onCheckNext, arg_54_0, arg_54_0._stepCo.conversation.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 end
 
-function var_0_0._wordByWord(arg_54_0)
+function var_0_0._wordByWord(arg_55_0)
 	StoryModel.instance:setTextShowing(true)
-	arg_54_0._dialogItem:playWordByWord(arg_54_0._wordByWordFinished, arg_54_0)
+	arg_55_0._dialogItem:playWordByWord(arg_55_0._wordByWordFinished, arg_55_0)
 end
 
-function var_0_0._wordByWordFinished(arg_55_0)
+function var_0_0._wordByWordFinished(arg_56_0)
 	StoryModel.instance:setTextShowing(false)
-	TaskDispatcher.cancelTask(arg_55_0._onCheckNext, arg_55_0)
+	TaskDispatcher.cancelTask(arg_56_0._onCheckNext, arg_56_0)
 
-	if not arg_55_0._stepCo then
-		return
-	end
-
-	TaskDispatcher.runDelay(arg_55_0._onCheckNext, arg_55_0, 1)
-end
-
-function var_0_0._lineShow(arg_56_0, arg_56_1)
 	if not arg_56_0._stepCo then
+		return
+	end
+
+	TaskDispatcher.runDelay(arg_56_0._onCheckNext, arg_56_0, 1)
+end
+
+function var_0_0._lineShow(arg_57_0, arg_57_1)
+	if not arg_57_0._stepCo then
 		return
 	end
 
 	StoryModel.instance:enableClick(false)
 	StoryModel.instance:setTextShowing(true)
-	StoryController.instance:dispatchEvent(StoryEvent.PlayFullTextLineShow, arg_56_1, arg_56_0._stepCo)
+	StoryController.instance:dispatchEvent(StoryEvent.PlayFullTextLineShow, arg_57_1, arg_57_0._stepCo)
 end
 
-function var_0_0._onFullTextShowFinished(arg_57_0)
-	if not arg_57_0._stepCo then
+function var_0_0._onFullTextShowFinished(arg_58_0)
+	if not arg_58_0._stepCo then
 		return
 	end
 
 	StoryModel.instance:setTextShowing(false)
-	TaskDispatcher.cancelTask(arg_57_0._onFullTextKeepFinished, arg_57_0)
-	TaskDispatcher.runDelay(arg_57_0._onFullTextKeepFinished, arg_57_0, arg_57_0._stepCo.conversation.keepTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+	TaskDispatcher.cancelTask(arg_58_0._onFullTextKeepFinished, arg_58_0)
+	TaskDispatcher.runDelay(arg_58_0._onFullTextKeepFinished, arg_58_0, arg_58_0._stepCo.conversation.keepTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 end
 
-function var_0_0._onFullTextKeepFinished(arg_58_0)
-	StoryController.instance:dispatchEvent(StoryEvent.PlayFullTextOut, arg_58_0._onFullTextFadeOutFinished, arg_58_0)
+function var_0_0._onFullTextKeepFinished(arg_59_0)
+	StoryController.instance:dispatchEvent(StoryEvent.PlayFullTextOut, arg_59_0._onFullTextFadeOutFinished, arg_59_0)
 end
 
-function var_0_0._onFullTextFadeOutFinished(arg_59_0)
+function var_0_0._onFullTextFadeOutFinished(arg_60_0)
 	StoryModel.instance:enableClick(true)
-	TaskDispatcher.cancelTask(arg_59_0._onFullTextKeepFinished, arg_59_0)
-	arg_59_0:_onConFinished(true)
+	TaskDispatcher.cancelTask(arg_60_0._onFullTextKeepFinished, arg_60_0)
+	arg_60_0:_onConFinished(true)
 end
 
-function var_0_0._onConFinished(arg_60_0, arg_60_1)
-	if arg_60_1 then
-		arg_60_0:_onAutoDialogFinished()
+function var_0_0._onConFinished(arg_61_0, arg_61_1)
+	if arg_61_1 then
+		arg_61_0:_onAutoDialogFinished()
 
 		return
 	end
 
 	if StoryModel.instance:isStoryAuto() then
-		if arg_60_0:_isUnInteractType() then
+		if arg_61_0:_isUnInteractType() then
 			return
 		end
 
-		if arg_60_0._dialogItem then
-			if arg_60_0._dialogItem:isAudioPlaying() then
-				arg_60_0._dialogItem:checkAutoEnterNext(arg_60_0._onAutoDialogFinished, arg_60_0)
+		if arg_61_0._dialogItem then
+			if arg_61_0._dialogItem:isAudioPlaying() then
+				arg_61_0._dialogItem:checkAutoEnterNext(arg_61_0._onAutoDialogFinished, arg_61_0)
 			else
-				arg_60_0:_onAutoDialogFinished()
+				arg_61_0:_onAutoDialogFinished()
 			end
 		end
 	end
 end
 
-function var_0_0._onAutoDialogFinished(arg_61_0)
+function var_0_0._onAutoDialogFinished(arg_62_0)
 	StoryController.instance:enterNext()
 end
 
-function var_0_0._onEnableClick(arg_62_0)
+function var_0_0._onEnableClick(arg_63_0)
 	if StoryModel.instance:isTextShowing() then
 		return
 	end
@@ -1025,98 +1043,98 @@ function var_0_0._onEnableClick(arg_62_0)
 	StoryModel.instance:enableClick(true)
 end
 
-function var_0_0._updateAudioList(arg_63_0, arg_63_1)
-	local var_63_0 = {}
-	local var_63_1 = StoryModel.instance:getStepLine()
-	local var_63_2 = 0
+function var_0_0._updateAudioList(arg_64_0, arg_64_1)
+	local var_64_0 = {}
+	local var_64_1 = StoryModel.instance:getStepLine()
+	local var_64_2 = 0
 
-	for iter_63_0, iter_63_1 in pairs(var_63_1) do
-		var_63_2 = var_63_2 + 1
+	for iter_64_0, iter_64_1 in pairs(var_64_1) do
+		var_64_2 = var_64_2 + 1
 	end
 
-	if var_63_2 > 1 then
-		arg_63_0:stopAllAudio(0)
+	if var_64_2 > 1 then
+		arg_64_0:stopAllAudio(0)
 	end
 
-	local var_63_3 = false
+	local var_64_3 = false
 
-	if var_63_1[arg_63_0._curStoryId] then
-		for iter_63_2, iter_63_3 in ipairs(var_63_1[arg_63_0._curStoryId]) do
-			if iter_63_3.skip then
-				var_63_3 = true
+	if var_64_1[arg_64_0._curStoryId] then
+		for iter_64_2, iter_64_3 in ipairs(var_64_1[arg_64_0._curStoryId]) do
+			if iter_64_3.skip then
+				var_64_3 = true
 
 				break
 			end
 		end
 	end
 
-	if var_63_3 then
-		arg_63_0:stopAllAudio(0)
+	if var_64_3 then
+		arg_64_0:stopAllAudio(0)
 	end
 
-	if arg_63_0._curStoryId and arg_63_0._curStoryId == StoryController.instance._curStoryId and arg_63_0._stepId and arg_63_0._stepId == StoryController.instance._curStepId and arg_63_0._audios then
-		for iter_63_4, iter_63_5 in pairs(arg_63_1) do
-			if not arg_63_0._audios[iter_63_5.audio] then
+	if arg_64_0._curStoryId and arg_64_0._curStoryId == StoryModel.instance:getCurStoryId() and arg_64_0._stepId and arg_64_0._stepId == StoryModel.instance:getCurStepId() and arg_64_0._audios then
+		for iter_64_4, iter_64_5 in pairs(arg_64_1) do
+			if not arg_64_0._audios[iter_64_5.audio] then
 				return
 			end
 		end
 	end
 
-	arg_63_0._audioCo = arg_63_1
+	arg_64_0._audioCo = arg_64_1
 
-	for iter_63_6, iter_63_7 in pairs(arg_63_0._audioCo) do
-		if not arg_63_0._audios then
-			arg_63_0._audios = {}
+	for iter_64_6, iter_64_7 in pairs(arg_64_0._audioCo) do
+		if not arg_64_0._audios then
+			arg_64_0._audios = {}
 		end
 
-		if not arg_63_0._audios[iter_63_7.audio] then
-			arg_63_0._audios[iter_63_7.audio] = StoryAudioItem.New()
+		if not arg_64_0._audios[iter_64_7.audio] then
+			arg_64_0._audios[iter_64_7.audio] = StoryAudioItem.New()
 
-			arg_63_0._audios[iter_63_7.audio]:init(iter_63_7.audio)
+			arg_64_0._audios[iter_64_7.audio]:init(iter_64_7.audio)
 		end
 
-		arg_63_0._audios[iter_63_7.audio]:setAudio(iter_63_7)
+		arg_64_0._audios[iter_64_7.audio]:setAudio(iter_64_7)
 	end
 end
 
-function var_0_0.stopAllAudio(arg_64_0, arg_64_1)
-	if arg_64_0._audios then
-		for iter_64_0, iter_64_1 in pairs(arg_64_0._audios) do
-			iter_64_1:stop(arg_64_1)
+function var_0_0.stopAllAudio(arg_65_0, arg_65_1)
+	if arg_65_0._audios then
+		for iter_65_0, iter_65_1 in pairs(arg_65_0._audios) do
+			iter_65_1:stop(arg_65_1)
 		end
 
-		arg_64_0._audios = nil
+		arg_65_0._audios = nil
 	end
 end
 
-function var_0_0._updateEffectList(arg_65_0, arg_65_1)
-	local var_65_0 = {}
-	local var_65_1 = StoryModel.instance:getStepLine()
-	local var_65_2 = 0
+function var_0_0._updateEffectList(arg_66_0, arg_66_1)
+	local var_66_0 = {}
+	local var_66_1 = StoryModel.instance:getStepLine()
+	local var_66_2 = 0
 
-	for iter_65_0, iter_65_1 in pairs(var_65_1) do
-		var_65_2 = var_65_2 + 1
+	for iter_66_0, iter_66_1 in pairs(var_66_1) do
+		var_66_2 = var_66_2 + 1
 	end
 
-	if var_65_2 > 1 then
-		for iter_65_2, iter_65_3 in pairs(arg_65_0._effects) do
-			iter_65_3:onDestroy()
+	if var_66_2 > 1 then
+		for iter_66_2, iter_66_3 in pairs(arg_66_0._effects) do
+			iter_66_3:onDestroy()
 		end
 	end
 
-	if var_65_1[arg_65_0._curStoryId] then
-		for iter_65_4, iter_65_5 in ipairs(var_65_1[arg_65_0._curStoryId]) do
-			if iter_65_5.skip and iter_65_5.skip then
-				local var_65_3 = StoryStepModel.instance:getStepListById(iter_65_5.stepId).effList
+	if var_66_1[arg_66_0._curStoryId] then
+		for iter_66_4, iter_66_5 in ipairs(var_66_1[arg_66_0._curStoryId]) do
+			if iter_66_5.skip and iter_66_5.skip then
+				local var_66_3 = StoryStepModel.instance:getStepListById(iter_66_5.stepId).effList
 
-				for iter_65_6 = 1, #var_65_3 do
-					table.insert(var_65_0, var_65_3[iter_65_6])
+				for iter_66_6 = 1, #var_66_3 do
+					table.insert(var_66_0, var_66_3[iter_66_6])
 
-					if var_65_3[iter_65_6].orderType == StoryEnum.EffectOrderType.Destroy then
-						for iter_65_7 = #var_65_0, 1, -1 do
-							if var_65_0[iter_65_7].orderType ~= StoryEnum.EffectOrderType.Destroy and var_65_0[iter_65_7].effect == var_65_3[iter_65_6].effect then
-								table.remove(var_65_0, #var_65_0)
-								table.remove(var_65_0, iter_65_7)
+					if var_66_3[iter_66_6].orderType == StoryEnum.EffectOrderType.Destroy then
+						for iter_66_7 = #var_66_0, 1, -1 do
+							if var_66_0[iter_66_7].orderType ~= StoryEnum.EffectOrderType.Destroy and var_66_0[iter_66_7].effect == var_66_3[iter_66_6].effect then
+								table.remove(var_66_0, #var_66_0)
+								table.remove(var_66_0, iter_66_7)
 							end
 						end
 					end
@@ -1125,116 +1143,116 @@ function var_0_0._updateEffectList(arg_65_0, arg_65_1)
 		end
 	end
 
-	if #arg_65_1 < 1 and #var_65_0 == 0 then
+	if #arg_66_1 < 1 and #var_66_0 == 0 then
 		return
 	end
 
-	arg_65_0._effCo = #var_65_0 == 0 and arg_65_1 or var_65_0
+	arg_66_0._effCo = #var_66_0 == 0 and arg_66_1 or var_66_0
 
-	local var_65_4 = false
+	local var_66_4 = false
 
-	for iter_65_8, iter_65_9 in pairs(arg_65_0._effCo) do
-		if iter_65_9.orderType ~= StoryEnum.EffectOrderType.Destroy and iter_65_9.layer > 0 then
-			arg_65_0:_buildEffect(iter_65_9.effect, iter_65_9)
+	for iter_66_8, iter_66_9 in pairs(arg_66_0._effCo) do
+		if iter_66_9.orderType ~= StoryEnum.EffectOrderType.Destroy and iter_66_9.layer > 0 then
+			arg_66_0:_buildEffect(iter_66_9.effect, iter_66_9)
 		else
-			arg_65_0:_destroyEffect(iter_65_9.effect, iter_65_9)
+			arg_66_0:_destroyEffect(iter_66_9.effect, iter_66_9)
 		end
 
-		if iter_65_9.layer < 4 then
-			var_65_4 = true
+		if iter_66_9.layer < 4 then
+			var_66_4 = true
 		end
 	end
 
 	StoryTool.enablePostProcess(false)
 
-	for iter_65_10, iter_65_11 in pairs(arg_65_0._effects) do
+	for iter_66_10, iter_66_11 in pairs(arg_66_0._effects) do
 		StoryTool.enablePostProcess(true)
 	end
 
-	StoryModel.instance:setHasBottomEffect(var_65_4)
+	StoryModel.instance:setHasBottomEffect(var_66_4)
 end
 
-function var_0_0._buildEffect(arg_66_0, arg_66_1, arg_66_2)
-	local var_66_0 = 0
-	local var_66_1
+function var_0_0._buildEffect(arg_67_0, arg_67_1, arg_67_2)
+	local var_67_0 = 0
+	local var_67_1
 
-	if arg_66_2.layer < 4 then
-		var_66_1 = arg_66_0._goeff1
-		var_66_0 = 4
-	elseif arg_66_2.layer < 7 then
-		var_66_1 = arg_66_0._goeff2
-		var_66_0 = 1000
-	elseif arg_66_2.layer < 10 then
-		var_66_1 = arg_66_0._goeff3
-		var_66_0 = 2000
+	if arg_67_2.layer < 4 then
+		var_67_1 = arg_67_0._goeff1
+		var_67_0 = 4
+	elseif arg_67_2.layer < 7 then
+		var_67_1 = arg_67_0._goeff2
+		var_67_0 = 1000
+	elseif arg_67_2.layer < 10 then
+		var_67_1 = arg_67_0._goeff3
+		var_67_0 = 2000
 	else
-		if not arg_66_0._goeff4 then
-			local var_66_2 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
+		if not arg_67_0._goeff4 then
+			local var_67_2 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
 
-			arg_66_0._goeff4 = gohelper.findChild(var_66_2, "#go_frontitem/#go_eff4")
+			arg_67_0._goeff4 = gohelper.findChild(var_67_2, "#go_frontitem/#go_eff4")
 		end
 
-		var_66_1 = arg_66_0._goeff4
+		var_67_1 = arg_67_0._goeff4
 	end
 
-	if not arg_66_0._effects[arg_66_1] then
-		arg_66_0._effects[arg_66_1] = StoryEffectItem.New()
+	if not arg_67_0._effects[arg_67_1] then
+		arg_67_0._effects[arg_67_1] = StoryEffectItem.New()
 
-		arg_66_0._effects[arg_66_1]:init(var_66_1, arg_66_1, arg_66_2, var_66_0)
+		arg_67_0._effects[arg_67_1]:init(var_67_1, arg_67_1, arg_67_2, var_67_0)
 	else
-		arg_66_0._effects[arg_66_1]:reset(var_66_1, arg_66_2, var_66_0)
+		arg_67_0._effects[arg_67_1]:reset(var_67_1, arg_67_2, var_67_0)
 	end
 end
 
-function var_0_0._destroyEffect(arg_67_0, arg_67_1, arg_67_2)
-	if not arg_67_0._effects[arg_67_1] then
+function var_0_0._destroyEffect(arg_68_0, arg_68_1, arg_68_2)
+	if not arg_68_0._effects[arg_68_1] then
 		return
 	end
 
-	local var_67_0 = {
-		callback = arg_67_0._effectRealDestroy,
-		callbackObj = arg_67_0
+	local var_68_0 = {
+		callback = arg_68_0._effectRealDestroy,
+		callbackObj = arg_68_0
 	}
 
-	arg_67_0._effects[arg_67_1]:destroyEffect(arg_67_2, var_67_0)
+	arg_68_0._effects[arg_68_1]:destroyEffect(arg_68_2, var_68_0)
 end
 
-function var_0_0._effectRealDestroy(arg_68_0, arg_68_1)
-	arg_68_0._effects[arg_68_1] = nil
+function var_0_0._effectRealDestroy(arg_69_0, arg_69_1)
+	arg_69_0._effects[arg_69_1] = nil
 end
 
-function var_0_0._updatePictureList(arg_69_0, arg_69_1)
-	local var_69_0 = {}
-	local var_69_1 = StoryModel.instance:getStepLine()
-	local var_69_2 = 0
+function var_0_0._updatePictureList(arg_70_0, arg_70_1)
+	local var_70_0 = {}
+	local var_70_1 = StoryModel.instance:getStepLine()
+	local var_70_2 = 0
 
-	for iter_69_0, iter_69_1 in pairs(var_69_1) do
-		var_69_2 = var_69_2 + 1
+	for iter_70_0, iter_70_1 in pairs(var_70_1) do
+		var_70_2 = var_70_2 + 1
 	end
 
-	if var_69_2 > 1 then
-		for iter_69_2, iter_69_3 in pairs(arg_69_0._pictures) do
-			iter_69_3:onDestroy()
+	if var_70_2 > 1 then
+		for iter_70_2, iter_70_3 in pairs(arg_70_0._pictures) do
+			iter_70_3:onDestroy()
 		end
 	end
 
-	local var_69_3 = false
+	local var_70_3 = false
 
-	if var_69_1[arg_69_0._curStoryId] then
-		for iter_69_4, iter_69_5 in ipairs(var_69_1[arg_69_0._curStoryId]) do
-			local var_69_4 = StoryStepModel.instance:getStepListById(iter_69_5.stepId).picList
+	if var_70_1[arg_70_0._curStoryId] then
+		for iter_70_4, iter_70_5 in ipairs(var_70_1[arg_70_0._curStoryId]) do
+			local var_70_4 = StoryStepModel.instance:getStepListById(iter_70_5.stepId).picList
 
-			if iter_69_5.skip then
-				var_69_3 = true
+			if iter_70_5.skip then
+				var_70_3 = true
 
-				for iter_69_6 = 1, #var_69_4 do
-					table.insert(var_69_0, var_69_4[iter_69_6])
+				for iter_70_6 = 1, #var_70_4 do
+					table.insert(var_70_0, var_70_4[iter_70_6])
 
-					if var_69_4[iter_69_6].orderType == StoryEnum.PictureOrderType.Destroy then
-						for iter_69_7 = #var_69_0, 1, -1 do
-							if var_69_0[iter_69_7].orderType == StoryEnum.PictureOrderType.Produce and var_69_0[iter_69_7].picture == var_69_4[iter_69_6].picture then
-								table.remove(var_69_0, #var_69_0)
-								table.remove(var_69_0, iter_69_7)
+					if var_70_4[iter_70_6].orderType == StoryEnum.PictureOrderType.Destroy then
+						for iter_70_7 = #var_70_0, 1, -1 do
+							if var_70_0[iter_70_7].orderType == StoryEnum.PictureOrderType.Produce and var_70_0[iter_70_7].picture == var_70_4[iter_70_6].picture then
+								table.remove(var_70_0, #var_70_0)
+								table.remove(var_70_0, iter_70_7)
 							end
 						end
 					end
@@ -1243,294 +1261,294 @@ function var_0_0._updatePictureList(arg_69_0, arg_69_1)
 		end
 	end
 
-	arg_69_0:_resetStepPictures()
+	arg_70_0:_resetStepPictures()
 
-	if #arg_69_1 < 1 and #var_69_0 == 0 then
+	if #arg_70_1 < 1 and #var_70_0 == 0 then
 		return
 	end
 
-	arg_69_0._picCo = #var_69_0 > 0 and var_69_0 or arg_69_1
+	arg_70_0._picCo = #var_70_0 > 0 and var_70_0 or arg_70_1
 
-	for iter_69_8, iter_69_9 in pairs(arg_69_0._picCo) do
-		local var_69_5 = iter_69_9.picType == StoryEnum.PictureType.FullScreen and "fullfocusitem" or iter_69_9.picture
+	for iter_70_8, iter_70_9 in pairs(arg_70_0._picCo) do
+		local var_70_5 = iter_70_9.picType == StoryEnum.PictureType.FullScreen and "fullfocusitem" or iter_70_9.picture
 
-		if iter_69_9.orderType == StoryEnum.PictureOrderType.Produce and iter_69_9.layer > 0 then
-			arg_69_0:_buildPicture(var_69_5, iter_69_9, var_69_3)
+		if iter_70_9.orderType == StoryEnum.PictureOrderType.Produce and iter_70_9.layer > 0 then
+			arg_70_0:_buildPicture(var_70_5, iter_70_9, var_70_3)
 		else
-			arg_69_0:_destroyPicture(var_69_5, iter_69_9, var_69_3)
+			arg_70_0:_destroyPicture(var_70_5, iter_70_9, var_70_3)
 		end
 	end
 
-	arg_69_0:_checkFloatBgShow()
+	arg_70_0:_checkFloatBgShow()
 end
 
-function var_0_0._resetStepPictures(arg_70_0)
-	for iter_70_0, iter_70_1 in pairs(arg_70_0._pictures) do
-		iter_70_1:resetStep()
+function var_0_0._resetStepPictures(arg_71_0)
+	for iter_71_0, iter_71_1 in pairs(arg_71_0._pictures) do
+		iter_71_1:resetStep()
 	end
 end
 
-function var_0_0._checkFloatBgShow(arg_71_0)
-	ZProj.TweenHelper.KillByObj(arg_71_0._imagefullbottom)
+function var_0_0._checkFloatBgShow(arg_72_0)
+	ZProj.TweenHelper.KillByObj(arg_72_0._imagefullbottom)
 
-	for iter_71_0, iter_71_1 in pairs(arg_71_0._pictures) do
-		if iter_71_1:isFloatType() then
-			gohelper.setActive(arg_71_0._imagefullbottom.gameObject, true)
+	for iter_72_0, iter_72_1 in pairs(arg_72_0._pictures) do
+		if iter_72_1:isFloatType() then
+			gohelper.setActive(arg_72_0._imagefullbottom.gameObject, true)
 
-			local var_71_0 = arg_71_0._imagefullbottom.color.a
+			local var_72_0 = arg_72_0._imagefullbottom.color.a
 
-			ZProj.TweenHelper.DoFade(arg_71_0._imagefullbottom, var_71_0, arg_71_0._initFullBottomAlpha, 0.1, nil, nil, nil, EaseType.Linear)
+			ZProj.TweenHelper.DoFade(arg_72_0._imagefullbottom, var_72_0, arg_72_0._initFullBottomAlpha, 0.1, nil, nil, nil, EaseType.Linear)
 
 			return
 		end
 	end
 
-	local var_71_1 = 0
+	local var_72_1 = 0
 
-	for iter_71_2, iter_71_3 in pairs(arg_71_0._picCo) do
-		var_71_1 = iter_71_3.orderType == StoryEnum.PictureOrderType.Destroy and iter_71_3.layer > 0 and iter_71_3.picType == StoryEnum.PictureType.Float and var_71_1 < iter_71_3.outTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] and iter_71_3.outTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] or var_71_1
+	for iter_72_2, iter_72_3 in pairs(arg_72_0._picCo) do
+		var_72_1 = iter_72_3.orderType == StoryEnum.PictureOrderType.Destroy and iter_72_3.layer > 0 and iter_72_3.picType == StoryEnum.PictureType.Float and var_72_1 < iter_72_3.outTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] and iter_72_3.outTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] or var_72_1
 	end
 
-	for iter_71_4, iter_71_5 in pairs(arg_71_0._picCo) do
-		if iter_71_5.orderType == StoryEnum.PictureOrderType.Produce and iter_71_5.layer > 0 and iter_71_5.picType == StoryEnum.PictureType.Float then
-			var_71_1 = 0
+	for iter_72_4, iter_72_5 in pairs(arg_72_0._picCo) do
+		if iter_72_5.orderType == StoryEnum.PictureOrderType.Produce and iter_72_5.layer > 0 and iter_72_5.picType == StoryEnum.PictureType.Float then
+			var_72_1 = 0
 		end
 	end
 
-	if var_71_1 < 0.01 then
-		gohelper.setActive(arg_71_0._imagefullbottom.gameObject, false)
+	if var_72_1 < 0.01 then
+		gohelper.setActive(arg_72_0._imagefullbottom.gameObject, false)
 	else
-		gohelper.setActive(arg_71_0._imagefullbottom.gameObject, true)
-		ZProj.TweenHelper.DoFade(arg_71_0._imagefullbottom, arg_71_0._initFullBottomAlpha, 0, var_71_1, function()
-			gohelper.setActive(arg_71_0._imagefullbottom.gameObject, false)
+		gohelper.setActive(arg_72_0._imagefullbottom.gameObject, true)
+		ZProj.TweenHelper.DoFade(arg_72_0._imagefullbottom, arg_72_0._initFullBottomAlpha, 0, var_72_1, function()
+			gohelper.setActive(arg_72_0._imagefullbottom.gameObject, false)
 		end, nil, nil, EaseType.Linear)
 	end
 end
 
-function var_0_0._buildPicture(arg_73_0, arg_73_1, arg_73_2, arg_73_3)
-	local var_73_0
+function var_0_0._buildPicture(arg_74_0, arg_74_1, arg_74_2, arg_74_3)
+	local var_74_0
 
-	if arg_73_2.layer < 4 then
-		var_73_0 = arg_73_0._goimg1
-	elseif arg_73_2.layer < 7 then
-		var_73_0 = arg_73_0._goimg2
-	elseif arg_73_2.layer < 10 then
-		var_73_0 = arg_73_0._goimg3
+	if arg_74_2.layer < 4 then
+		var_74_0 = arg_74_0._goimg1
+	elseif arg_74_2.layer < 7 then
+		var_74_0 = arg_74_0._goimg2
+	elseif arg_74_2.layer < 10 then
+		var_74_0 = arg_74_0._goimg3
 	else
-		if not arg_73_0._goimg4 then
-			local var_73_1 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
+		if not arg_74_0._goimg4 then
+			local var_74_1 = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
 
-			arg_73_0._goimg4 = gohelper.findChild(var_73_1, "#go_frontitem/#go_img4")
+			arg_74_0._goimg4 = gohelper.findChild(var_74_1, "#go_frontitem/#go_img4")
 		end
 
-		var_73_0 = arg_73_0._goimg4
+		var_74_0 = arg_74_0._goimg4
 	end
 
-	if not arg_73_0._pictures[arg_73_1] then
-		arg_73_0._pictures[arg_73_1] = StoryPictureItem.New()
+	if not arg_74_0._pictures[arg_74_1] then
+		arg_74_0._pictures[arg_74_1] = StoryPictureItem.New()
 
-		arg_73_0._pictures[arg_73_1]:init(var_73_0, arg_73_1, arg_73_2)
-	elseif not arg_73_3 then
-		arg_73_0._pictures[arg_73_1]:reset(var_73_0, arg_73_2)
+		arg_74_0._pictures[arg_74_1]:init(var_74_0, arg_74_1, arg_74_2)
+	elseif not arg_74_3 then
+		arg_74_0._pictures[arg_74_1]:reset(var_74_0, arg_74_2)
 	end
 end
 
-function var_0_0._destroyPicture(arg_74_0, arg_74_1, arg_74_2, arg_74_3)
-	if not arg_74_0._pictures[arg_74_1] then
-		if arg_74_3 then
-			if arg_74_2.orderType == StoryEnum.PictureOrderType.Produce then
-				arg_74_0:_buildPicture(arg_74_1, arg_74_2, arg_74_3)
+function var_0_0._destroyPicture(arg_75_0, arg_75_1, arg_75_2, arg_75_3)
+	if not arg_75_0._pictures[arg_75_1] then
+		if arg_75_3 then
+			if arg_75_2.orderType == StoryEnum.PictureOrderType.Produce then
+				arg_75_0:_buildPicture(arg_75_1, arg_75_2, arg_75_3)
 			end
 
 			TaskDispatcher.runDelay(function()
-				arg_74_0:_startDestroyPic(arg_74_2, arg_74_3, arg_74_1)
+				arg_75_0:_startDestroyPic(arg_75_2, arg_75_3, arg_75_1)
 			end, nil, 0.2)
 		end
 
 		return
 	end
 
-	arg_74_0:_startDestroyPic(arg_74_2, arg_74_3, arg_74_1)
+	arg_75_0:_startDestroyPic(arg_75_2, arg_75_3, arg_75_1)
 end
 
-function var_0_0._startDestroyPic(arg_76_0, arg_76_1, arg_76_2, arg_76_3)
-	if not arg_76_0._pictures[arg_76_3] then
+function var_0_0._startDestroyPic(arg_77_0, arg_77_1, arg_77_2, arg_77_3)
+	if not arg_77_0._pictures[arg_77_3] then
 		return
 	end
 
-	local var_76_0 = 0
-	local var_76_1 = arg_76_0._stepCo.videoList
+	local var_77_0 = 0
+	local var_77_1 = arg_77_0._stepCo.videoList
 
-	for iter_76_0, iter_76_1 in pairs(var_76_1) do
-		if iter_76_1.orderType == StoryEnum.VideoOrderType.Produce then
-			var_76_0 = 0.5
+	for iter_77_0, iter_77_1 in pairs(var_77_1) do
+		if iter_77_1.orderType == StoryEnum.VideoOrderType.Produce then
+			var_77_0 = 0.5
 		end
 	end
 
-	arg_76_0._pictures[arg_76_3]:destroyPicture(arg_76_1, arg_76_2, var_76_0)
+	arg_77_0._pictures[arg_77_3]:destroyPicture(arg_77_1, arg_77_2, var_77_0)
 
-	arg_76_0._pictures[arg_76_3] = nil
+	arg_77_0._pictures[arg_77_3] = nil
 end
 
-function var_0_0._updateNavigateList(arg_77_0, arg_77_1)
-	StoryController.instance:dispatchEvent(StoryEvent.RefreshNavigate, arg_77_1)
+function var_0_0._updateNavigateList(arg_78_0, arg_78_1)
+	StoryController.instance:dispatchEvent(StoryEvent.RefreshNavigate, arg_78_1)
 end
 
-function var_0_0._updateVideoList(arg_78_0, arg_78_1)
-	arg_78_0._videoCo = arg_78_1
+function var_0_0._updateVideoList(arg_79_0, arg_79_1)
+	arg_79_0._videoCo = arg_79_1
 
-	local var_78_0 = false
+	local var_79_0 = false
 
-	arg_78_0:_checkCreatePlayList()
+	arg_79_0:_checkCreatePlayList()
 
-	for iter_78_0, iter_78_1 in pairs(arg_78_0._videoCo) do
-		if iter_78_1.orderType == StoryEnum.VideoOrderType.Produce then
-			arg_78_0:_buildVideo(iter_78_1.video, iter_78_1)
-		elseif iter_78_1.orderType == StoryEnum.VideoOrderType.Destroy then
-			arg_78_0:_destroyVideo(iter_78_1.video, iter_78_1)
-		elseif iter_78_1.orderType == StoryEnum.VideoOrderType.Pause then
-			arg_78_0._videos[iter_78_1.video]:pause(true)
+	for iter_79_0, iter_79_1 in pairs(arg_79_0._videoCo) do
+		if iter_79_1.orderType == StoryEnum.VideoOrderType.Produce then
+			arg_79_0:_buildVideo(iter_79_1.video, iter_79_1)
+		elseif iter_79_1.orderType == StoryEnum.VideoOrderType.Destroy then
+			arg_79_0:_destroyVideo(iter_79_1.video, iter_79_1)
+		elseif iter_79_1.orderType == StoryEnum.VideoOrderType.Pause then
+			arg_79_0._videos[iter_79_1.video]:pause(true)
 		else
-			arg_78_0._videos[iter_78_1.video]:pause(false)
+			arg_79_0._videos[iter_79_1.video]:pause(false)
 		end
 	end
 
-	for iter_78_2, iter_78_3 in pairs(arg_78_0._videoCo) do
-		if iter_78_3.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 and (iter_78_3.orderType == StoryEnum.VideoOrderType.Produce or iter_78_3.orderType == StoryEnum.VideoOrderType.Pause or iter_78_3.orderType == StoryEnum.VideoOrderType.Restart) then
-			var_78_0 = true
+	for iter_79_2, iter_79_3 in pairs(arg_79_0._videoCo) do
+		if iter_79_3.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 and (iter_79_3.orderType == StoryEnum.VideoOrderType.Produce or iter_79_3.orderType == StoryEnum.VideoOrderType.Pause or iter_79_3.orderType == StoryEnum.VideoOrderType.Restart) then
+			var_79_0 = true
 		end
 	end
 
-	if not var_78_0 then
+	if not var_79_0 then
 		StoryController.instance:dispatchEvent(StoryEvent.ShowBackground)
 	end
 end
 
-function var_0_0._videoStarted(arg_79_0, arg_79_1)
-	for iter_79_0, iter_79_1 in pairs(arg_79_0._videos) do
-		if iter_79_1 ~= arg_79_1 then
-			iter_79_1:pause(true)
+function var_0_0._videoStarted(arg_80_0, arg_80_1)
+	for iter_80_0, iter_80_1 in pairs(arg_80_0._videos) do
+		if iter_80_1 ~= arg_80_1 then
+			iter_80_1:pause(true)
 		end
 	end
 end
 
-function var_0_0._buildVideo(arg_80_0, arg_80_1, arg_80_2)
-	arg_80_0:_checkCreatePlayList()
+function var_0_0._buildVideo(arg_81_0, arg_81_1, arg_81_2)
+	arg_81_0:_checkCreatePlayList()
 
-	local var_80_0
+	local var_81_0
 
-	if arg_80_2.layer < 4 then
-		var_80_0 = arg_80_0._govideo1
-	elseif arg_80_2.layer < 7 then
-		var_80_0 = arg_80_0._govideo2
+	if arg_81_2.layer < 4 then
+		var_81_0 = arg_81_0._govideo1
+	elseif arg_81_2.layer < 7 then
+		var_81_0 = arg_81_0._govideo2
 	else
-		var_80_0 = arg_80_0._govideo3
+		var_81_0 = arg_81_0._govideo3
 	end
 
-	if not arg_80_0._videos[arg_80_1] then
-		arg_80_0._videos[arg_80_1] = StoryVideoItem.New()
+	if not arg_81_0._videos[arg_81_1] then
+		arg_81_0._videos[arg_81_1] = StoryVideoItem.New()
 
-		arg_80_0._videos[arg_80_1]:init(var_80_0, arg_80_1, arg_80_2, arg_80_0._videoStarted, arg_80_0, arg_80_0._videoPlayList)
+		arg_81_0._videos[arg_81_1]:init(var_81_0, arg_81_1, arg_81_2, arg_81_0._videoStarted, arg_81_0, arg_81_0._videoPlayList)
 	else
-		arg_80_0._videos[arg_80_1]:reset(var_80_0, arg_80_2)
+		arg_81_0._videos[arg_81_1]:reset(var_81_0, arg_81_2)
 	end
 end
 
-function var_0_0._destroyVideo(arg_81_0, arg_81_1, arg_81_2)
-	if not arg_81_0._videos[arg_81_1] then
+function var_0_0._destroyVideo(arg_82_0, arg_82_1, arg_82_2)
+	if not arg_82_0._videos[arg_82_1] then
 		return
 	end
 
-	arg_81_0._videos[arg_81_1]:destroyVideo(arg_81_2)
+	arg_82_0._videos[arg_82_1]:destroyVideo(arg_82_2)
 
-	arg_81_0._videos[arg_81_1] = nil
+	arg_82_0._videos[arg_82_1] = nil
 end
 
-function var_0_0._checkCreatePlayList(arg_82_0)
-	if not arg_82_0._videoPlayList then
-		local var_82_0 = AvProMgr.instance:getStoryUrl()
-		local var_82_1 = arg_82_0:getResInst(var_82_0, arg_82_0.viewGO, "play_list")
+function var_0_0._checkCreatePlayList(arg_83_0)
+	if not arg_83_0._videoPlayList then
+		local var_83_0 = AvProMgr.instance:getStoryUrl()
+		local var_83_1 = arg_83_0:getResInst(var_83_0, arg_83_0.viewGO, "play_list")
 
-		arg_82_0._videoPlayList = StoryVideoPlayList.New()
+		arg_83_0._videoPlayList = StoryVideoPlayList.New()
 
-		arg_82_0._videoPlayList:init(var_82_1, arg_82_0.viewGO)
+		arg_83_0._videoPlayList:init(var_83_1, arg_83_0.viewGO)
 	end
 end
 
-function var_0_0._checkDisposePlayList(arg_83_0)
-	if arg_83_0._videoPlayList then
-		arg_83_0._videoPlayList:dispose()
+function var_0_0._checkDisposePlayList(arg_84_0)
+	if arg_84_0._videoPlayList then
+		arg_84_0._videoPlayList:dispose()
 
-		arg_83_0._videoPlayList = nil
+		arg_84_0._videoPlayList = nil
 	end
 end
 
-function var_0_0._updateOptionList(arg_84_0, arg_84_1)
-	arg_84_0._optCo = arg_84_1
+function var_0_0._updateOptionList(arg_85_0, arg_85_1)
+	arg_85_0._optCo = arg_85_1
 end
 
-function var_0_0._clearItems(arg_85_0, arg_85_1)
-	arg_85_0:_clearAllTimers()
-	TaskDispatcher.cancelTask(arg_85_0._viewFadeIn, arg_85_0)
-	TaskDispatcher.cancelTask(arg_85_0._enterNextStep, arg_85_0)
-	TaskDispatcher.cancelTask(arg_85_0._startShowText, arg_85_0)
-	TaskDispatcher.cancelTask(arg_85_0._startShake, arg_85_0)
-	TaskDispatcher.cancelTask(arg_85_0._shakeStop, arg_85_0)
+function var_0_0._clearItems(arg_86_0, arg_86_1)
+	arg_86_0:_clearAllTimers()
+	TaskDispatcher.cancelTask(arg_86_0._viewFadeIn, arg_86_0)
+	TaskDispatcher.cancelTask(arg_86_0._enterNextStep, arg_86_0)
+	TaskDispatcher.cancelTask(arg_86_0._startShowText, arg_86_0)
+	TaskDispatcher.cancelTask(arg_86_0._startShake, arg_86_0)
+	TaskDispatcher.cancelTask(arg_86_0._shakeStop, arg_86_0)
 
-	for iter_85_0, iter_85_1 in pairs(arg_85_0._pictures) do
-		iter_85_1:onDestroy()
+	for iter_86_0, iter_86_1 in pairs(arg_86_0._pictures) do
+		iter_86_1:onDestroy()
 	end
 
-	arg_85_0._pictures = {}
+	arg_86_0._pictures = {}
 
-	for iter_85_2, iter_85_3 in pairs(arg_85_0._effects) do
-		iter_85_3:onDestroy()
+	for iter_86_2, iter_86_3 in pairs(arg_86_0._effects) do
+		iter_86_3:onDestroy()
 	end
 
-	arg_85_0._effects = {}
+	arg_86_0._effects = {}
 
-	for iter_85_4, iter_85_5 in pairs(arg_85_0._videos) do
-		iter_85_5:onDestroy()
+	for iter_86_4, iter_86_5 in pairs(arg_86_0._videos) do
+		iter_86_5:onDestroy()
 	end
 
-	arg_85_0._videos = {}
+	arg_86_0._videos = {}
 
-	arg_85_0:_checkDisposePlayList()
+	arg_86_0:_checkDisposePlayList()
 end
 
-function var_0_0.onDestroyView(arg_86_0)
+function var_0_0.onDestroyView(arg_87_0)
 	if ViewMgr.instance:isOpen(ViewName.MessageBoxView) then
 		ViewMgr.instance:closeView(ViewName.MessageBoxView, true)
 	end
 
-	if arg_86_0._confadeId then
-		ZProj.TweenHelper.KillById(arg_86_0._confadeId)
+	if arg_87_0._confadeId then
+		ZProj.TweenHelper.KillById(arg_87_0._confadeId)
 
-		arg_86_0._confadeId = nil
+		arg_87_0._confadeId = nil
 	end
 
-	ZProj.TweenHelper.KillByObj(arg_86_0._imagefullbottom)
-	arg_86_0:_checkDisposePlayList()
-	TaskDispatcher.cancelTask(arg_86_0._conShowIn, arg_86_0)
-	TaskDispatcher.cancelTask(arg_86_0._startShowText, arg_86_0)
-	TaskDispatcher.cancelTask(arg_86_0._enterNextStep, arg_86_0)
-	TaskDispatcher.cancelTask(arg_86_0._onFullTextKeepFinished, arg_86_0)
-	TaskDispatcher.cancelTask(arg_86_0._startShake, arg_86_0)
-	TaskDispatcher.cancelTask(arg_86_0._guaranteeEnterNextStep, arg_86_0)
-	TaskDispatcher.cancelTask(arg_86_0._shakeStop, arg_86_0)
+	ZProj.TweenHelper.KillByObj(arg_87_0._imagefullbottom)
+	arg_87_0:_checkDisposePlayList()
+	TaskDispatcher.cancelTask(arg_87_0._conShowIn, arg_87_0)
+	TaskDispatcher.cancelTask(arg_87_0._startShowText, arg_87_0)
+	TaskDispatcher.cancelTask(arg_87_0._enterNextStep, arg_87_0)
+	TaskDispatcher.cancelTask(arg_87_0._onFullTextKeepFinished, arg_87_0)
+	TaskDispatcher.cancelTask(arg_87_0._startShake, arg_87_0)
+	TaskDispatcher.cancelTask(arg_87_0._guaranteeEnterNextStep, arg_87_0)
+	TaskDispatcher.cancelTask(arg_87_0._shakeStop, arg_87_0)
 	StoryTool.enablePostProcess(false)
 	ViewMgr.instance:closeView(ViewName.StoryFrontView, nil, true)
-	arg_86_0._simagehead:UnLoadImage()
+	arg_87_0._simagehead:UnLoadImage()
 	StoryController.instance:stopPlotMusic()
 
-	arg_86_0._bgAudio = nil
+	arg_87_0._bgAudio = nil
 
-	arg_86_0:stopAllAudio(0)
+	arg_87_0:stopAllAudio(0)
 
-	if arg_86_0._dialogItem then
-		arg_86_0._dialogItem:destroy()
+	if arg_87_0._dialogItem then
+		arg_87_0._dialogItem:destroy()
 
-		arg_86_0._dialogItem = nil
+		arg_87_0._dialogItem = nil
 	end
 end
 

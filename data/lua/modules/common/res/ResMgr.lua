@@ -46,7 +46,7 @@ function var_0_0.getAbAsset(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
 		var_0_4[arg_1_0][var_0_5] = var_1_2
 
-		loadAbAsset(arg_1_0, false, _onLoadCallback)
+		loadAbAsset(arg_1_0, false, var_0_0._onLoadCallback)
 
 		if not var_0_1[arg_1_0] then
 			return var_0_5
@@ -95,7 +95,7 @@ end
 
 function var_0_0._onLoadCallback(arg_6_0)
 	local var_6_0 = arg_6_0.AssetUrl
-	local var_6_1 = _getAssetMO(arg_6_0, var_6_0)
+	local var_6_1 = var_0_0._getAssetMO(arg_6_0, var_6_0)
 	local var_6_2 = var_0_4[var_6_0]
 
 	if var_6_2 then

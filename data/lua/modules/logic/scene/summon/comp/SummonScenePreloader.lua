@@ -5,6 +5,7 @@ local var_0_0 = class("SummonScenePreloader", BaseSceneComp)
 function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0._isImageLoad = false
 	arg_1_0._assetItemDict = {}
+	arg_1_0._assetItemList = {}
 
 	arg_1_0:_startLoadImage()
 end
@@ -28,6 +29,8 @@ function var_0_0._onUIPreloadFinish(arg_3_0)
 		iter_3_1:Retain()
 
 		arg_3_0._assetItemDict[iter_3_0] = iter_3_1
+
+		table.insert(arg_3_0._assetItemList, iter_3_1)
 	end
 
 	if arg_3_0._uiLoader then
@@ -54,11 +57,14 @@ function var_0_0.onSceneClose(arg_5_0)
 		arg_5_0._uiLoader = nil
 	end
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._assetItemDict) do
-		iter_5_1:Release()
-	end
+	if arg_5_0._assetItemList and #arg_5_0._assetItemList > 0 then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0._assetItemList) do
+			iter_5_1:Release()
+		end
 
-	arg_5_0._assetItemDict = {}
+		arg_5_0._assetItemList = {}
+		arg_5_0._assetItemDict = {}
+	end
 end
 
 function var_0_0.onSceneHide(arg_6_0)

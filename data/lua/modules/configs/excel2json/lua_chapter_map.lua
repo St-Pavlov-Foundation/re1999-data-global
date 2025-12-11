@@ -11,6 +11,7 @@ local var_0_1 = {
 	effectAudio = 7,
 	desc = 5,
 	res = 4,
+	playEffect = 11,
 	id = 1
 }
 local var_0_2 = {

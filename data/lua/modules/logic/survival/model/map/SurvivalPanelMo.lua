@@ -32,6 +32,12 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0.shop = SurvivalShopMo.New()
 
 	arg_1_0.shop:init(arg_1_1.shop)
+
+	arg_1_0.decreesProp = SurvivalDecreesPanelPropMo.New()
+
+	arg_1_0.decreesProp:init(arg_1_1.decreesProp)
+
+	arg_1_0.isFirstSearch = false
 end
 
 function var_0_0.getSearchItems(arg_2_0)

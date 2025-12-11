@@ -1,0 +1,182 @@
+[
+  {
+    "id": 10001,
+    "lv": 0,
+    "type": 1,
+    "cost": 0,
+    "icon": "survival_camp_logo_4",
+    "name": "language_10083502",
+    "reward": ""
+  },
+  {
+    "id": 10001,
+    "lv": 1,
+    "type": 1,
+    "cost": 500,
+    "icon": "survival_camp_logo_4",
+    "name": "language_10083502",
+    "reward": "item#8000221:1"
+  },
+  {
+    "id": 10001,
+    "lv": 2,
+    "type": 1,
+    "cost": 800,
+    "icon": "survival_camp_logo_4",
+    "name": "language_10083502",
+    "reward": "item#8000222:1"
+  },
+  {
+    "id": 10001,
+    "lv": 3,
+    "type": 1,
+    "cost": 1200,
+    "icon": "survival_camp_logo_4",
+    "name": "language_10083502",
+    "reward": "item#8000223:1"
+  },
+  {
+    "id": 10001,
+    "lv": 4,
+    "type": 1,
+    "cost": 1500,
+    "icon": "survival_camp_logo_4",
+    "name": "language_10083502",
+    "reward": "item#8000224:1"
+  },
+  {
+    "id": 20001,
+    "lv": 0,
+    "type": 2,
+    "cost": 0,
+    "icon": "survival_camp_logo_3",
+    "name": "language_10047526",
+    "reward": ""
+  },
+  {
+    "id": 20001,
+    "lv": 1,
+    "type": 2,
+    "cost": 500,
+    "icon": "survival_camp_logo_3",
+    "name": "language_10047526",
+    "reward": "item#8000231:1"
+  },
+  {
+    "id": 20001,
+    "lv": 2,
+    "type": 2,
+    "cost": 800,
+    "icon": "survival_camp_logo_3",
+    "name": "language_10047526",
+    "reward": "item#8000232:1"
+  },
+  {
+    "id": 20001,
+    "lv": 3,
+    "type": 2,
+    "cost": 1200,
+    "icon": "survival_camp_logo_3",
+    "name": "language_10047526",
+    "reward": "item#8000233:1"
+  },
+  {
+    "id": 20001,
+    "lv": 4,
+    "type": 2,
+    "cost": 1500,
+    "icon": "survival_camp_logo_3",
+    "name": "language_10047526",
+    "reward": "item#8000234:1"
+  },
+  {
+    "id": 30001,
+    "lv": 0,
+    "type": 3,
+    "cost": 0,
+    "icon": "survival_camp_logo_2",
+    "name": "language_10083505",
+    "reward": ""
+  },
+  {
+    "id": 30001,
+    "lv": 1,
+    "type": 3,
+    "cost": 500,
+    "icon": "survival_camp_logo_2",
+    "name": "language_10083505",
+    "reward": "item#8000241:1"
+  },
+  {
+    "id": 30001,
+    "lv": 2,
+    "type": 3,
+    "cost": 800,
+    "icon": "survival_camp_logo_2",
+    "name": "language_10083505",
+    "reward": "item#8000242:1"
+  },
+  {
+    "id": 30001,
+    "lv": 3,
+    "type": 3,
+    "cost": 1200,
+    "icon": "survival_camp_logo_2",
+    "name": "language_10083505",
+    "reward": "item#8000243:1"
+  },
+  {
+    "id": 30001,
+    "lv": 4,
+    "type": 3,
+    "cost": 1500,
+    "icon": "survival_camp_logo_2",
+    "name": "language_10083505",
+    "reward": "item#8000244:1"
+  },
+  {
+    "id": 40001,
+    "lv": 0,
+    "type": 4,
+    "cost": 0,
+    "icon": "survival_camp_logo_1",
+    "name": "language_10072903",
+    "reward": ""
+  },
+  {
+    "id": 40001,
+    "lv": 1,
+    "type": 4,
+    "cost": 500,
+    "icon": "survival_camp_logo_1",
+    "name": "language_10072903",
+    "reward": "item#8000251:1"
+  },
+  {
+    "id": 40001,
+    "lv": 2,
+    "type": 4,
+    "cost": 800,
+    "icon": "survival_camp_logo_1",
+    "name": "language_10072903",
+    "reward": "item#8000252:1"
+  },
+  {
+    "id": 40001,
+    "lv": 3,
+    "type": 4,
+    "cost": 1200,
+    "icon": "survival_camp_logo_1",
+    "name": "language_10072903",
+    "reward": "item#8000253:1"
+  },
+  {
+    "id": 40001,
+    "lv": 4,
+    "type": 4,
+    "cost": 1500,
+    "icon": "survival_camp_logo_1",
+    "name": "language_10072903",
+    "reward": "item#8000254:1"
+  }
+]

@@ -2,8 +2,13 @@
 
 local var_0_0 = {}
 local var_0_1 = {
+	groupId = 2,
+	item = 6,
+	worthFix = 5,
+	type = 3,
 	id = 1,
-	worthFix = 2
+	maxNum = 7,
+	unlock = 4
 }
 local var_0_2 = {
 	"id"

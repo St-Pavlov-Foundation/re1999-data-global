@@ -185,7 +185,7 @@ function var_0_0._setNewSkills(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
 
 			arg_8_0:_refreshSkillSpecial(var_8_2)
 		else
-			logError("找不到技能: " .. tostring(arg_8_1))
+			logError("找不到技能: " .. tostring(arg_8_1[1]))
 		end
 	end
 

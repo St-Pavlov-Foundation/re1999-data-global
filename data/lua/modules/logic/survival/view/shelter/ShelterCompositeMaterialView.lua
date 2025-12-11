@@ -180,14 +180,7 @@ function var_0_0._createItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
 end
 
 function var_0_0.getBag(arg_16_0)
-	local var_16_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_16_1 = var_16_0.bag
-
-	if var_16_0.inSurvival then
-		var_16_1 = SurvivalMapModel.instance:getSceneMo().bag
-	end
-
-	return var_16_1
+	return SurvivalMapHelper.instance:getBagMo()
 end
 
 function var_0_0.refreshFilter(arg_17_0)

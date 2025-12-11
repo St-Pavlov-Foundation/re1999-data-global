@@ -67,6 +67,10 @@ function var_0_0.getBinder(arg_8_0)
 end
 
 function var_0_0.skipSkill(arg_9_0)
+	if not arg_9_0.timelineItem then
+		return
+	end
+
 	arg_9_0.timelineItem:skipSkill()
 	arg_9_0.timelineItem:onTimelineEnd()
 end
@@ -166,7 +170,15 @@ function var_0_0.beforePlayTimeline(arg_12_0)
 		if var_12_0 and var_12_0:isPassiveSkill(arg_12_0.skillId) then
 			-- block empty
 		else
-			GameSceneMgr.instance:getCurScene().level:setFrontVisible(false)
+			local var_12_1 = true
+
+			if lua_fight_ignore_hide_front_effect.configDict[arg_12_0.timelineName] then
+				var_12_1 = false
+			end
+
+			if var_12_1 then
+				GameSceneMgr.instance:getCurScene().level:setFrontVisible(false)
+			end
 		end
 	end
 

@@ -71,7 +71,7 @@ function var_0_0.setData(arg_3_0, arg_3_1)
 		gohelper.setActive(var_3_5, iter_3_1 <= var_3_4)
 	end
 
-	arg_3_0._skillContainer:onUpdateMO(arg_3_1)
+	arg_3_0._skillContainer:setData(arg_3_1)
 end
 
 function var_0_0.onClickPassiveSkill(arg_4_0)

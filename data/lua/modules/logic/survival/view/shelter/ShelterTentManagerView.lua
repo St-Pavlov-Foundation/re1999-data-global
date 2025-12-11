@@ -241,7 +241,7 @@ function var_0_0.getSmallItem(arg_17_0, arg_17_1, arg_17_2)
 		var_17_0.index = arg_17_2
 		var_17_0.go = gohelper.clone(arg_17_0.goSmallItem, arg_17_1.goGrid, tostring(arg_17_2))
 		var_17_0.goNpc = gohelper.findChild(var_17_0.go, "#go_HaveHero")
-		var_17_0.imageNpc = gohelper.findChildImage(var_17_0.go, "#go_HaveHero/#image_Chess")
+		var_17_0.imageNpc = gohelper.findChildSingleImage(var_17_0.go, "#go_HaveHero/#image_Chess")
 		var_17_0.txtName = gohelper.findChildTextMesh(var_17_0.go, "#go_HaveHero/#txt_PartnerName")
 		var_17_0.goEmpty = gohelper.findChild(var_17_0.go, "#go_Empty")
 		var_17_0.goDestoryed = gohelper.findChild(var_17_0.go, "#go_Destoryed")
@@ -301,7 +301,7 @@ function var_0_0.refreshSmallItem(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18
 	if var_18_3 then
 		arg_18_1.txtName.text = var_18_3.name
 
-		UISpriteSetMgr.instance:setV2a2ChessSprite(arg_18_1.imageNpc, var_18_3.headIcon)
+		SurvivalUnitIconHelper.instance:setNpcIcon(arg_18_1.imageNpc, var_18_3.headIcon)
 	end
 end
 

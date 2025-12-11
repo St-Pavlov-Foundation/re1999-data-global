@@ -1,6 +1,7 @@
 ﻿module("modules.logic.scene.shelter.comp.SurvivalShelterSceneLevel", package.seeall)
 
 local var_0_0 = class("SurvivalShelterSceneLevel", CommonSceneLevelComp)
+local var_0_1 = UnityEngine.Shader
 
 function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0:loadLevel(arg_1_2)
@@ -66,17 +67,24 @@ function var_0_0.loadLightGo(arg_6_0)
 	end
 
 	arg_6_0._lightLoader:dispose()
-	arg_6_0._lightLoader:startLoad(var_6_1)
+	arg_6_0._lightLoader:startLoad(var_6_1, arg_6_0._onLoadedLight, arg_6_0)
 end
 
-function var_0_0.onSceneClose(arg_7_0)
-	if arg_7_0._lightLoader then
-		arg_7_0._lightLoader:dispose()
+function var_0_0._onLoadedLight(arg_7_0)
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.SceneLightLoaded, arg_7_0._lightLoader:getInstGO())
+end
 
-		arg_7_0._lightLoader = nil
+function var_0_0.onSceneClose(arg_8_0)
+	if arg_8_0._lightLoader then
+		arg_8_0._lightLoader:dispose()
+
+		arg_8_0._lightLoader = nil
 	end
 
-	var_0_0.super.onSceneClose(arg_7_0)
+	var_0_1.DisableKeyword("_SURVIAL_SCENE")
+	var_0_1.DisableKeyword("_ENABLE_SURVIVAL_RAIN_DISTORTION")
+	var_0_1.DisableKeyword("_ENABLE_SURVIVAL_RAIN_GLITCH")
+	var_0_0.super.onSceneClose(arg_8_0)
 end
 
 return var_0_0

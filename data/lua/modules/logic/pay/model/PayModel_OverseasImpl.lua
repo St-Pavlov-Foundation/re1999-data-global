@@ -70,7 +70,7 @@ function var_0_0.getGamePayInfo(arg_7_0)
 	local var_7_0 = var_0_0.super.getGamePayInfo(arg_7_0)
 
 	var_7_0.currency = arg_7_0._orderInfo.currency
-	var_7_0.amount = math.ceil(100 * StoreConfig.instance:getBaseChargeGoodsPrice(chargeConfig.id))
+	var_7_0.amount = math.ceil(100 * StoreConfig.instance:getBaseChargeGoodsPrice(arg_7_0._orderInfo.id))
 
 	if SLFramework.FrameworkSettings.IsEditor then
 		var_7_0.productId = ""

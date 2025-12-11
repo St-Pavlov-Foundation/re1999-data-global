@@ -20,6 +20,8 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goDestinyLock = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_Destiny/stone/#go_DestinyLock")
 	arg_1_0._goDestinyUnLock = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_Destiny/stone/#go_DestinyUnLock")
 	arg_1_0._btnDestiny = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_Destiny/#btn_Destiny")
+	arg_1_0._goAttrUp = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_AttrUp")
+	arg_1_0._goAttrUpFetter = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_AttrUp/attribute/#go_AttrUpFetter")
 	arg_1_0._gorolecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer")
 	arg_1_0._gorolesort = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort")
 	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank")
@@ -37,8 +39,6 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ops/#btn_cancel")
 	arg_1_0._gosearchfilter = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter")
 	arg_1_0._btnclosefilterview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/#btn_closefilterview")
-	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/container/#btn_ok")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/container/#btn_reset")
 	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
 
 	if arg_1_0._editableInitView then
@@ -73,18 +73,7 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._btnDestinyOnClick(arg_4_0)
-	if not arg_4_0.destinyUnlock then
-		GameFacade.showToast(ToastEnum.Act191DestinyLock)
-
-		return
-	end
-
-	local var_4_0 = {
-		config = arg_4_0.config,
-		stoneId = arg_4_0.stoneId
-	}
-
-	ViewMgr.instance:openView(ViewName.Act191CharacterDestinyView, var_4_0)
+	ViewMgr.instance:openView(ViewName.Act191CharacterDestinyView, arg_4_0.config)
 end
 
 function var_0_0._btnExSkillOnClick(arg_5_0)
@@ -251,8 +240,8 @@ function var_0_0._editableInitView(arg_16_0)
 	for iter_16_1 = 1, 5 do
 		local var_16_0 = arg_16_0:getUserDataTb_()
 
-		var_16_0.value = gohelper.findChildText(arg_16_0._goattribute, "attribute" .. tostring(iter_16_1) .. "/txt_attribute")
-		var_16_0.name = gohelper.findChildText(arg_16_0._goattribute, "attribute" .. tostring(iter_16_1) .. "/name")
+		var_16_0.txtAttr = gohelper.findChildText(arg_16_0._goattribute, "attribute" .. tostring(iter_16_1) .. "/txt_attribute")
+		var_16_0.txtUp = gohelper.findChildText(arg_16_0._goattribute, "attribute" .. tostring(iter_16_1) .. "/txt_up")
 		arg_16_0._attributevalues[iter_16_1] = var_16_0
 	end
 
@@ -292,7 +281,7 @@ function var_0_0.onOpen(arg_17_0)
 
 	arg_17_0:_refreshEditMode()
 	arg_17_0:_refreshCharacterInfo()
-	arg_17_0:addEventCb(Activity191Controller.instance, Activity191Event.OnClickHeroEditItem, arg_17_0._onHeroItemClick, arg_17_0)
+	arg_17_0:addEventCb(Activity191Controller.instance, Activity191Event.ClickHeroEditItem, arg_17_0._onHeroItemClick, arg_17_0)
 	gohelper.addUIClickAudio(arg_17_0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
 	gohelper.addUIClickAudio(arg_17_0._btnpassiveskill.gameObject, AudioEnum.UI.UI_Common_Click)
 	arg_17_0:refreshFetter()
@@ -323,19 +312,11 @@ function var_0_0.refreshBtnRare(arg_20_0)
 end
 
 function var_0_0.refreshDestiny(arg_21_0)
-	arg_21_0.hasDestiny = CharacterDestinyConfig.instance:hasDestinyHero(arg_21_0.config.roleId)
-
-	if arg_21_0.hasDestiny then
-		local var_21_0, var_21_1 = arg_21_0.gameInfo:isHeroDestinyUnlock(arg_21_0.config.roleId)
-
-		arg_21_0.destinyUnlock = var_21_0
-		arg_21_0.stoneId = var_21_1
-
-		gohelper.setActive(arg_21_0._goDestinyUnLock, arg_21_0.destinyUnlock)
-		gohelper.setActive(arg_21_0._goDestinyLock, not arg_21_0.destinyUnlock)
+	if string.nilorempty(arg_21_0.config.facetsId) then
+		gohelper.setActive(arg_21_0._goDestiny, false)
+	else
+		gohelper.setActive(arg_21_0._goDestiny, true)
 	end
-
-	gohelper.setActive(arg_21_0._goDestiny, arg_21_0.hasDestiny)
 end
 
 function var_0_0._onHeroItemClick(arg_22_0, arg_22_1)
@@ -359,6 +340,8 @@ end
 
 function var_0_0._refreshCharacterInfo(arg_23_0)
 	if arg_23_0.config then
+		arg_23_0.attrUpDic, arg_23_0.attrUpFetterList = arg_23_0.gameInfo:getAttrUpDicByRoleId(arg_23_0.config.roleId)
+
 		gohelper.setActive(arg_23_0._gononecharacter, false)
 		gohelper.setActive(arg_23_0._gocharacterinfo, true)
 		UISpriteSetMgr.instance:setCommonSprite(arg_23_0._imagecareericon, "sx_biandui_" .. tostring(arg_23_0.config.career))
@@ -366,42 +349,64 @@ function var_0_0._refreshCharacterInfo(arg_23_0)
 
 		arg_23_0._txtname.text = arg_23_0.config.name
 
-		local var_23_0 = lua_activity191_template.configDict[arg_23_0.config.id]
+		gohelper.setActive(arg_23_0._goAttrUp, next(arg_23_0.attrUpDic))
 
-		for iter_23_0, iter_23_1 in ipairs(CharacterEnum.BaseAttrIdList) do
-			local var_23_1 = HeroConfig.instance:getHeroAttributeCO(iter_23_1)
+		for iter_23_0, iter_23_1 in ipairs(arg_23_0.attrUpFetterList) do
+			local var_23_0 = gohelper.cloneInPlace(arg_23_0._goAttrUpFetter)
+			local var_23_1 = gohelper.findChildImage(var_23_0, "image_icon")
+			local var_23_2 = Activity191Config.instance:getRelationCo(iter_23_1)
 
-			arg_23_0._attributevalues[iter_23_0].name.text = var_23_1.name
+			Activity191Helper.setFetterIcon(var_23_1, var_23_2.icon)
 		end
 
-		arg_23_0._attributevalues[1].value.text = var_23_0.attack
-		arg_23_0._attributevalues[2].value.text = var_23_0.life
-		arg_23_0._attributevalues[3].value.text = var_23_0.defense
-		arg_23_0._attributevalues[4].value.text = var_23_0.mdefense
-		arg_23_0._attributevalues[5].value.text = var_23_0.technic
+		gohelper.setActive(arg_23_0._goAttrUpFetter, false)
+
+		for iter_23_2, iter_23_3 in ipairs(CharacterEnum.BaseAttrIdList) do
+			local var_23_3 = arg_23_0._attributevalues[iter_23_2].txtUp
+			local var_23_4 = arg_23_0.attrUpDic[iter_23_3]
+
+			if var_23_4 then
+				var_23_3.text = var_23_4 / 10 .. "%"
+			end
+
+			gohelper.setActive(var_23_3, var_23_4)
+		end
+
+		local var_23_5 = lua_activity191_template.configDict[arg_23_0.config.id]
+
+		arg_23_0._attributevalues[1].txtAttr.text = var_23_5.attack
+		arg_23_0._attributevalues[2].txtAttr.text = var_23_5.life
+		arg_23_0._attributevalues[3].txtAttr.text = var_23_5.defense
+		arg_23_0._attributevalues[4].txtAttr.text = var_23_5.mdefense
+		arg_23_0._attributevalues[5].txtAttr.text = var_23_5.technic
 		arg_23_0.passiveSkillIds = Activity191Config.instance:getHeroPassiveSkillIdList(arg_23_0.config.id)
 		arg_23_0._txtpassivename.text = lua_skill.configDict[arg_23_0.passiveSkillIds[1]].name
 
-		local var_23_2
+		local var_23_6 = 0
 
 		if arg_23_0.config.type == Activity191Enum.CharacterType.Hero then
-			var_23_2 = #SkillConfig.instance:getheroranksCO(arg_23_0.config.roleId) - 1
-		else
-			var_23_2 = 0
+			var_23_6 = #SkillConfig.instance:getheroranksCO(arg_23_0.config.roleId) - 1
 		end
 
-		for iter_23_2 = 1, 3 do
-			local var_23_3 = arg_23_0["goPassiveSkill" .. iter_23_2]
+		for iter_23_4 = 1, 3 do
+			local var_23_7 = arg_23_0["goPassiveSkill" .. iter_23_4]
 
-			gohelper.setActive(var_23_3, iter_23_2 <= var_23_2)
+			gohelper.setActive(var_23_7, iter_23_4 <= var_23_6)
 		end
 
-		for iter_23_3, iter_23_4 in ipairs(arg_23_0.exGoList) do
-			gohelper.setActive(iter_23_4, iter_23_3 <= arg_23_0.config.exLevel)
+		for iter_23_5, iter_23_6 in ipairs(arg_23_0.exGoList) do
+			gohelper.setActive(iter_23_6, iter_23_5 <= arg_23_0.config.exLevel)
 		end
 
 		arg_23_0:refreshFetterIcon()
-		arg_23_0._skillContainer:onUpdateMO(arg_23_0.config)
+		arg_23_0._skillContainer:setData(arg_23_0.config)
+
+		arg_23_0.stoneId = arg_23_0.gameInfo:getStoneId(arg_23_0.config)
+
+		if arg_23_0.stoneId then
+			arg_23_0.passiveSkillIds = Activity191Helper.replaceSkill(arg_23_0.stoneId, arg_23_0.passiveSkillIds)
+		end
+
 		arg_23_0:refreshDestiny()
 	else
 		gohelper.setActive(arg_23_0._gononecharacter, true)
@@ -443,28 +448,31 @@ function var_0_0._initFilterView(arg_25_0)
 
 	for iter_25_0, iter_25_1 in pairs(var_25_1) do
 		local var_25_2 = Activity191Config.instance:getRelationCo(iter_25_1.tag)
-		local var_25_3 = arg_25_0:getUserDataTb_()
-		local var_25_4 = gohelper.cloneInPlace(var_25_0, iter_25_1.tag)
 
-		var_25_3.goUnselect = gohelper.findChild(var_25_4, "unselected")
-		var_25_3.goSelect = gohelper.findChild(var_25_4, "selected")
-		gohelper.findChildText(var_25_4, "unselected/info1").text = var_25_2.name
+		if var_25_2 then
+			local var_25_3 = arg_25_0:getUserDataTb_()
+			local var_25_4 = gohelper.cloneInPlace(var_25_0, iter_25_1.tag)
 
-		local var_25_5 = gohelper.findChildImage(var_25_4, "unselected/attrIcon1")
+			var_25_3.goUnselect = gohelper.findChild(var_25_4, "unselected")
+			var_25_3.goSelect = gohelper.findChild(var_25_4, "selected")
+			gohelper.findChildText(var_25_4, "unselected/info1").text = var_25_2.name
 
-		Activity191Helper.setFetterIcon(var_25_5, var_25_2.icon)
+			local var_25_5 = gohelper.findChildImage(var_25_4, "unselected/attrIcon1")
 
-		gohelper.findChildText(var_25_4, "selected/info2").text = var_25_2.name
+			Activity191Helper.setFetterIcon(var_25_5, var_25_2.icon)
 
-		local var_25_6 = gohelper.findChildImage(var_25_4, "selected/attrIcon2")
+			gohelper.findChildText(var_25_4, "selected/info2").text = var_25_2.name
 
-		Activity191Helper.setFetterIcon(var_25_6, var_25_2.icon)
+			local var_25_6 = gohelper.findChildImage(var_25_4, "selected/attrIcon2")
 
-		local var_25_7 = gohelper.findChildButtonWithAudio(var_25_4, "click")
+			Activity191Helper.setFetterIcon(var_25_6, var_25_2.icon)
 
-		arg_25_0:addClickCb(var_25_7, arg_25_0._filterItemClick, arg_25_0, iter_25_1.tag)
+			local var_25_7 = gohelper.findChildButtonWithAudio(var_25_4, "click")
 
-		arg_25_0.filterItemMap[iter_25_1.tag] = var_25_3
+			arg_25_0:addClickCb(var_25_7, arg_25_0._filterItemClick, arg_25_0, iter_25_1.tag)
+
+			arg_25_0.filterItemMap[iter_25_1.tag] = var_25_3
+		end
 	end
 
 	gohelper.setActive(var_25_0, false)

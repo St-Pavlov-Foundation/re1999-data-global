@@ -24,6 +24,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnactivitystore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_activitystore")
 	arg_1_0._btnactivitytask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_activitytask")
 	arg_1_0._btnwuerlixi = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_wuerlixi")
+	arg_1_0._gowuerlixireddot = gohelper.findChild(arg_1_0.viewGO, "#btn_wuerlixi/image_Icon/#go_reddot")
 	arg_1_0._btnwuerlixiAnimator = arg_1_0._btnwuerlixi.gameObject:GetComponent(gohelper.Type_Animator)
 
 	if arg_1_0._editableInitView then
@@ -74,11 +75,11 @@ function var_0_0._btncloseviewOnClick(arg_4_0)
 end
 
 function var_0_0._btnactivitystoreOnClick(arg_5_0)
-	VersionActivity2_4DungeonController.instance:openStoreView()
+	ReactivityController.instance:openReactivityStoreView(VersionActivity3_1Enum.ActivityId.Reactivity)
 end
 
 function var_0_0._btnactivitytaskOnClick(arg_6_0)
-	VersionActivity2_4DungeonController.instance:openTaskView()
+	ReactivityController.instance:openReactivityTaskView(VersionActivity3_1Enum.ActivityId.Reactivity)
 end
 
 function var_0_0._btnwuerlixiOnClick(arg_7_0)
@@ -106,13 +107,22 @@ function var_0_0.onRemoveElement(arg_11_0, arg_11_1)
 end
 
 function var_0_0._editableInitView(arg_12_0)
-	local var_12_0 = ActivityModel.instance:getActivityInfo()[VersionActivity2_4Enum.ActivityId.DungeonStore]
+	local var_12_0 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V2a4Dungeon)
 
-	arg_12_0._txtstorename.text = var_12_0.config.name
+	if var_12_0 then
+		local var_12_1 = string.format("%s_1", var_12_0 and var_12_0.icon)
+
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_12_0._imagestoreicon, var_12_1)
+	end
+
+	local var_12_2 = ActivityModel.instance:getActivityInfo()[VersionActivity3_1Enum.ActivityId.ReactivityStore]
+
+	arg_12_0._txtstorename.text = var_12_2.config.name
 
 	NavigateMgr.instance:addEscape(arg_12_0.viewName, arg_12_0._onEscBtnClick, arg_12_0)
 	TaskDispatcher.runRepeat(arg_12_0._everyMinuteCall, arg_12_0, TimeUtil.OneMinuteSecond)
 	RedDotController.instance:addRedDot(arg_12_0._goTaskReddot, RedDotEnum.DotNode.V2a4DungeonTask)
+	RedDotController.instance:addRedDot(arg_12_0._gowuerlixireddot, RedDotEnum.DotNode.V2a4WuErLiXiTask)
 end
 
 function var_0_0._everyMinuteCall(arg_13_0)
@@ -248,7 +258,7 @@ function var_0_0.refreshMask(arg_30_0)
 end
 
 function var_0_0.refreshStoreRemainTime(arg_31_0)
-	local var_31_0 = VersionActivity2_4Enum.ActivityId.DungeonStore
+	local var_31_0 = VersionActivity3_1Enum.ActivityId.ReactivityStore
 	local var_31_1 = ActivityModel.instance:getActMO(var_31_0):getRealEndTimeStamp() - ServerTime.now()
 
 	if var_31_1 > TimeUtil.OneDaySecond then

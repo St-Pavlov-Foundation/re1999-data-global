@@ -36,7 +36,7 @@ function var_0_0.refreshItem(arg_3_0, arg_3_1)
 	arg_3_0.txtName.text = arg_3_1.co.name
 
 	if not string.nilorempty(arg_3_1.co.headIcon) then
-		UISpriteSetMgr.instance:setV2a2ChessSprite(arg_3_0.imageNpc, arg_3_1.co.headIcon)
+		SurvivalUnitIconHelper.instance:setNpcIcon(arg_3_0.imageNpc, arg_3_1.co.headIcon)
 	end
 
 	if arg_3_1.co.rare ~= nil then

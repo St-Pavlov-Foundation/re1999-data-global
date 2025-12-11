@@ -20,6 +20,10 @@ function var_0_0.onOpen(arg_2_0)
 end
 
 function var_0_0.updateWaterMark(arg_3_0, arg_3_1)
+	if GameChannelConfig.getServerType() == GameChannelConfig.ServerType.Develop and BootNativeUtil.isWindows() then
+		arg_3_1 = LoginModel.instance.channelUserId
+	end
+
 	if arg_3_1 == arg_3_0.userId then
 		return
 	end

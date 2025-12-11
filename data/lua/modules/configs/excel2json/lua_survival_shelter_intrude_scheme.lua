@@ -3,7 +3,7 @@
 local var_0_0 = {}
 local var_0_1 = {
 	id = 1,
-	tags = 3,
+	icon = 3,
 	desc = 2
 }
 local var_0_2 = {

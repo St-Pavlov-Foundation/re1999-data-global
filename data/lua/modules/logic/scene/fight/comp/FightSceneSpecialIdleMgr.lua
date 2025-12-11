@@ -3,7 +3,7 @@
 local var_0_0 = class("FightSceneSpecialIdleMgr", BaseSceneComp)
 
 function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	FightController.instance:registerCallback(FightEvent.OnStageChange, arg_1_0._onStageChange, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.StageChanged, arg_1_0.onStageChange, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.PlaySpecialIdle, arg_1_0._onPlaySpecialIdle, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.OnEntityDead, arg_1_0._releaseEntity, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_1_0._releaseAllEntity, arg_1_0)
@@ -13,7 +13,7 @@ function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
 end
 
 function var_0_0.onSceneClose(arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.OnStageChange, arg_2_0._onStageChange, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.StageChanged, arg_2_0.onStageChange, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.PlaySpecialIdle, arg_2_0._onPlaySpecialIdle, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.OnEntityDead, arg_2_0._releaseEntity, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_2_0._releaseAllEntity, arg_2_0)
@@ -23,8 +23,8 @@ function var_0_0.onSceneClose(arg_2_0)
 	arg_2_0._play_dic = nil
 end
 
-function var_0_0._onStageChange(arg_3_0, arg_3_1)
-	if arg_3_1 == FightEnum.Stage.Card then
+function var_0_0.onStageChange(arg_3_0, arg_3_1)
+	if arg_3_1 == FightStageMgr.StageType.Operate then
 		local var_3_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
 
 		for iter_3_0, iter_3_1 in ipairs(var_3_0) do

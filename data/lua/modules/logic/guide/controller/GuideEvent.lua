@@ -17,6 +17,7 @@ var_0_0.FinishGuideLastStep = 12
 var_0_0.OneKeyFinishGuides = 13
 var_0_0.FinishGuideFail = 14
 var_0_0.TriggerActive = 15
+var_0_0.onReceiveFinishGuideReply = 16
 var_0_0.SetMaskOffset = 101
 var_0_0.FadeView = 102
 var_0_0.SetMaskPosition = 103

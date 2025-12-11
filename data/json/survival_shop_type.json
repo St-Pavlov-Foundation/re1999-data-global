@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "language_10095004",
+    "tabIcon": "survival_shoptab_4"
+  },
+  {
+    "id": 2,
+    "name": "language_10082685",
+    "tabIcon": "survival_shoptab_3"
+  },
+  {
+    "id": 3,
+    "name": "language_10032052",
+    "tabIcon": "survival_shoptab_2"
+  },
+  {
+    "id": 4,
+    "name": "language_10095005",
+    "tabIcon": "survival_shoptab_1"
+  }
+]

@@ -76,102 +76,108 @@ function var_0_0.getFromUnity(arg_10_0, arg_10_1, arg_10_2)
 	return PlayerPrefsHelper._get(arg_10_1, arg_10_2, var_10_0)
 end
 
-function var_0_0.addBtnGM(arg_11_0, arg_11_1)
-	local var_11_0 = GMController.instance:getGMNode("mainview", arg_11_1.viewGO)
+function var_0_0._addBtnText(arg_11_0, arg_11_1)
+	local var_11_0 = GMController.instance:getGMNode("mainview", arg_11_1)
+	local var_11_1 = gohelper.findChildButtonWithAudio(var_11_0, "#btn_gm")
+	local var_11_2 = gohelper.findChildText(var_11_0, "#btn_gm/Text")
 
-	arg_11_1._btngm11235 = gohelper.findChildButtonWithAudio(var_11_0, "#btn_gm")
-
-	return arg_11_1._btngm11235
+	return var_11_1, var_11_2, var_11_0
 end
 
-local function var_0_3(arg_12_0)
-	local var_12_0 = arg_12_0.class.__cname
-	local var_12_1 = "GM_" .. var_12_0
+function var_0_0.addBtnGM(arg_12_0, arg_12_1)
+	arg_12_1._btngm11235 = arg_12_0:_addBtnText(arg_12_1.viewGO)
 
-	assert(ViewName[var_12_1], "please add customFunc when call btnGM_AddClickListener!!viewName not found: " .. var_12_1)
-	ViewMgr.instance:openView(var_12_1)
+	return arg_12_1._btngm11235
 end
 
-function var_0_0.btnGM_AddClickListener(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_1._btngm11235:AddClickListener(arg_13_2 or var_0_3, arg_13_1)
+local function var_0_3(arg_13_0)
+	local var_13_0 = arg_13_0.class.__cname
+	local var_13_1 = "GM_" .. var_13_0
+
+	assert(ViewName[var_13_1], "please add customFunc when call btnGM_AddClickListener!!viewName not found: " .. var_13_1)
+	ViewMgr.instance:openView(var_13_1)
 end
 
-function var_0_0.btnGM_RemoveClickListener(arg_14_0, arg_14_1)
-	arg_14_1._btngm11235:RemoveClickListener()
+function var_0_0.btnGM_AddClickListener(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_1._btngm11235:AddClickListener(arg_14_2 or var_0_3, arg_14_1)
+end
+
+function var_0_0.btnGM_RemoveClickListener(arg_15_0, arg_15_1)
+	arg_15_1._btngm11235:RemoveClickListener()
 end
 
 local var_0_4 = 20
 
-local function var_0_5(arg_15_0, arg_15_1)
-	return string.format("GM_%s_%s", arg_15_0.__cname, arg_15_1)
+local function var_0_5(arg_16_0, arg_16_1)
+	return string.format("GM_%s_%s", arg_16_0.__cname, arg_16_1)
 end
 
-function var_0_0.saveOriginalFunc(arg_16_0, arg_16_1, arg_16_2)
-	assert(type(arg_16_2) == "string")
+function var_0_0.saveOriginalFunc(arg_17_0, arg_17_1, arg_17_2)
+	assert(type(arg_17_2) == "string")
 
-	local var_16_0 = arg_16_1[arg_16_2]
+	local var_17_0 = arg_17_1[arg_17_2]
 
-	if var_16_0 == nil then
-		local var_16_1 = arg_16_1
-		local var_16_2 = var_0_4
+	if var_17_0 == nil then
+		local var_17_1 = arg_17_1
+		local var_17_2 = var_0_4
 
-		while var_16_1.super and var_16_0 == nil do
-			if var_16_2 <= 0 then
+		while var_17_1.super and var_17_0 == nil do
+			if var_17_2 <= 0 then
 				logError("stack overflow >= " .. tostring(var_0_4))
 
 				break
 			end
 
-			var_16_0 = var_16_1[arg_16_2]
-			var_16_1 = var_16_1.super
-			var_16_2 = var_16_2 - 1
+			var_17_0 = var_17_1[arg_17_2]
+			var_17_1 = var_17_1.super
+			var_17_2 = var_17_2 - 1
 		end
 	end
 
-	assert(type(var_16_0) == "function", "type(func)=" .. type(var_16_0) .. " funcName=" .. arg_16_2)
+	assert(type(var_17_0) == "function", "type(func)=" .. type(var_17_0) .. " funcName=" .. arg_17_2)
 
-	local var_16_3 = var_0_5(arg_16_1, arg_16_2)
+	local var_17_3 = var_0_5(arg_17_1, arg_17_2)
 
-	arg_16_0:setConst(var_16_3, var_16_0)
+	arg_17_0:setConst(var_17_3, var_17_0)
 end
 
-function var_0_0.loadOriginalFunc(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = var_0_5(arg_17_1, arg_17_2)
-	local var_17_1 = arg_17_0:getConst(var_17_0, nil)
+function var_0_0.loadOriginalFunc(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = var_0_5(arg_18_1, arg_18_2)
+	local var_18_1 = arg_18_0:getConst(var_18_0, nil)
 
-	if not var_17_1 then
-		local var_17_2 = arg_17_1.super
-		local var_17_3 = var_0_4
+	if not var_18_1 then
+		local var_18_2 = arg_18_1.super
+		local var_18_3 = var_0_4
 
-		while var_17_2 and var_17_1 == nil do
-			if var_17_3 <= 0 then
+		while var_18_2 and var_18_1 == nil do
+			if var_18_3 <= 0 then
 				logError("stack overflow >= " .. tostring(var_0_4))
 
 				break
 			end
 
-			local var_17_4 = var_0_5(var_17_2, arg_17_2)
+			local var_18_4 = var_0_5(var_18_2, arg_18_2)
 
-			var_17_1 = arg_17_0:getConst(var_17_4, nil)
-			var_17_1 = var_17_1 or var_17_2[arg_17_2]
-			var_17_2 = var_17_2.super
-			var_17_3 = var_17_3 - 1
+			var_18_1 = arg_18_0:getConst(var_18_4, nil)
+			var_18_1 = var_18_1 or var_18_2[arg_18_2]
+			var_18_2 = var_18_2.super
+			var_18_3 = var_18_3 - 1
 		end
 	end
 
-	return var_17_1 or function()
-		assert(false, string.format("undefine behaviour: '%s:%s'", arg_17_1.__cname, arg_17_2))
+	return var_18_1 or function()
+		assert(false, string.format("undefine behaviour: '%s:%s'", arg_18_1.__cname, arg_18_2))
 	end
 end
 
-function var_0_0.callOriginalSelfFunc(arg_19_0, arg_19_1, arg_19_2, ...)
-	local var_19_0 = arg_19_1.class
+function var_0_0.callOriginalSelfFunc(arg_20_0, arg_20_1, arg_20_2, ...)
+	local var_20_0 = arg_20_1.class
 
-	return arg_19_0:loadOriginalFunc(var_19_0, arg_19_2)(arg_19_1, ...)
+	return arg_20_0:loadOriginalFunc(var_20_0, arg_20_2)(arg_20_1, ...)
 end
 
-function var_0_0.callOriginalStaticFunc(arg_20_0, arg_20_1, arg_20_2, ...)
-	return arg_20_0:loadOriginalFunc(arg_20_1, arg_20_2)(...)
+function var_0_0.callOriginalStaticFunc(arg_21_0, arg_21_1, arg_21_2, ...)
+	return arg_21_0:loadOriginalFunc(arg_21_1, arg_21_2)(...)
 end
 
 var_0_0.instance = var_0_0.New()

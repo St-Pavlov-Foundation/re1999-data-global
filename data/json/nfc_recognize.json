@@ -54,5 +54,13 @@
     "notMainTipsId": 284001,
     "unlockId": 284002,
     "unclaimedId": 0
+  },
+  {
+    "id": 103101,
+    "type": 76,
+    "param": 10230502,
+    "notMainTipsId": 260001,
+    "unlockId": 260002,
+    "unclaimedId": 260003
   }
 ]

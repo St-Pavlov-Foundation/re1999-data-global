@@ -100,6 +100,7 @@ function var_0_0.createInfoByObInfo(arg_4_0)
 
 	var_4_0.buildingDegree = var_4_1
 	var_4_0.blockCount = var_4_2
+	var_4_0.changeColorCount = arg_4_0.changeColorCount
 
 	return var_4_0
 end

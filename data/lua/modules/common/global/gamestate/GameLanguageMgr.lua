@@ -29,8 +29,6 @@ function var_0_0.getVoiceTypeStoryIndex(arg_5_0)
 
 		return arg_5_0:getStoryIndexByShortCut(var_5_0)
 	end
-
-	return LanguageEnum.LanguageStoryType.EN
 end
 
 function var_0_0.getShortCutByStoryIndex(arg_6_0, arg_6_1)
@@ -49,6 +47,24 @@ function var_0_0.getStoryIndexByShortCut(arg_8_0, arg_8_1)
 	local var_8_0 = LangSettings[arg_8_1]
 
 	return var_8_0 and math.log(var_8_0) / math.log(2) + 1 or 1
+end
+
+function var_0_0.isAudioLangBankExist(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = AudioConfig.instance:getAudioCOById(arg_9_1)
+
+	if var_9_0 then
+		local var_9_1 = var_9_0.bankName
+
+		ZProj.AudioManager.Instance:LoadBank(var_9_1)
+
+		local var_9_2 = ZProj.AudioManager.Instance:GetLangByBankName(var_9_1)
+
+		ZProj.AudioManager.Instance:UnloadBank(var_9_1)
+
+		return var_9_2 == arg_9_2, var_9_2
+	end
+
+	return false, GameConfig:GetDefaultVoiceShortcut()
 end
 
 var_0_0.instance = var_0_0.New()

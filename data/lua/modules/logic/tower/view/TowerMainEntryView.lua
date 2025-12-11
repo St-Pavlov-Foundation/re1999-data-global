@@ -135,6 +135,7 @@ function var_0_0._editableInitView(arg_13_0)
 	local var_13_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Tower) or {}
 
 	TowerTaskModel.instance:setTaskInfoList(var_13_0)
+	TowerDeepTaskModel.instance:setTaskInfoList()
 end
 
 function var_0_0.onUpdateParam(arg_14_0)
@@ -162,6 +163,7 @@ function var_0_0.refreshUI(arg_16_0)
 
 	gohelper.setActive(arg_16_0._btnStart.gameObject, arg_16_0.isTowerOpen)
 	gohelper.setActive(arg_16_0._btnLock.gameObject, not arg_16_0.isTowerOpen)
+	arg_16_0:refreshStore()
 
 	if arg_16_0.isTowerOpen then
 		arg_16_0:refreshEntranceUI()
@@ -169,7 +171,6 @@ function var_0_0.refreshUI(arg_16_0)
 		arg_16_0:refreshBossNewTag()
 		arg_16_0:refreshTowerState()
 		arg_16_0:refreshTaskInfo()
-		arg_16_0:refreshStore()
 		TaskDispatcher.cancelTask(arg_16_0.refreshTowerState, arg_16_0)
 		TaskDispatcher.runRepeat(arg_16_0.refreshTowerState, arg_16_0, 1)
 	else
@@ -393,18 +394,17 @@ function var_0_0.refreshTowerState(arg_23_0)
 end
 
 function var_0_0.refreshStore(arg_24_0)
-	local var_24_0 = TowerController.instance:isTowerStoreOpen()
+	local var_24_0 = TowerStoreModel.instance:getCurrencyIcon()
 
-	gohelper.setActive(arg_24_0._gostore, var_24_0)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_24_0._imagecoin, var_24_0)
 
-	local var_24_1 = TowerStoreModel.instance:getCurrencyIcon()
+	local var_24_1 = TowerStoreModel.instance:getCurrencyCount()
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_24_0._imagecoin, var_24_1)
+	arg_24_0._txtcoinNum.text = var_24_1
 
-	local var_24_2 = TowerStoreModel.instance:getCurrencyCount()
+	local var_24_2 = TowerController.instance:isTowerStoreOpen()
 
-	arg_24_0._txtcoinNum.text = var_24_2
-
+	gohelper.setActive(arg_24_0._gostore, var_24_2)
 	arg_24_0:refreshStoreTime()
 end
 

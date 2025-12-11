@@ -422,92 +422,84 @@ function var_0_0.canJumpToSeasonMainView(arg_32_0, arg_32_1)
 	return arg_32_0:defaultCanJump(arg_32_1)
 end
 
-function var_0_0.canJumpToAct1_5DungeonView(arg_33_0, arg_33_1)
-	local var_33_0, var_33_1, var_33_2 = ActivityHelper.getActivityStatusAndToast(VersionActivity2_1Enum.ActivityId.EnterView)
-
-	if var_33_0 ~= ActivityEnum.ActivityStatus.Normal then
-		return false, var_33_1, var_33_2
+function var_0_0.canJumpToRoomFishing(arg_33_0, arg_33_1)
+	if FishingModel.instance:isUnlockRoomFishing() then
+		return arg_33_0:defaultCanJump(arg_33_1)
+	else
+		return false, ToastEnum.JumpSignView, var_0_0.DefaultToastParam
 	end
-
-	local var_33_3 = string.splitToNumber(arg_33_1, "#")[2]
-	local var_33_4 = DungeonConfig.instance:getEpisodeCO(var_33_3)
-
-	if not var_33_4 then
-		logError("not found episode : " .. arg_33_1)
-
-		return false, ToastEnum.EpisodeNotExist, var_0_0.DefaultToastParam
-	end
-
-	local var_33_5 = ActivityConfig.instance:getActivityDungeonConfig(VersionActivity1_5Enum.ActivityId.Dungeon)
-
-	if var_33_5 and var_33_5.hardChapterId and var_33_4.chapterId == var_33_5.hardChapterId and not VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(VersionActivity1_5Enum.ActivityId.Dungeon) then
-		return false, ToastEnum.ActivityHardDugeonLockedWithOpenTime, var_0_0.DefaultToastParam
-	end
-
-	if not DungeonModel.instance:getEpisodeInfo(var_33_3) then
-		return false, ToastEnum.WarmUpGotoOrder, var_0_0.DefaultToastParam
-	end
-
-	return arg_33_0:defaultCanJump(arg_33_1)
 end
 
-function var_0_0.canJumpToActivity142(arg_34_0, arg_34_1)
-	local var_34_0, var_34_1, var_34_2 = ActivityHelper.getActivityStatusAndToast(VersionActivity1_5Enum.ActivityId.Activity142)
+function var_0_0.canJumpToAct1_5DungeonView(arg_34_0, arg_34_1)
+	local var_34_0, var_34_1, var_34_2 = ActivityHelper.getActivityStatusAndToast(VersionActivity2_1Enum.ActivityId.EnterView)
 
 	if var_34_0 ~= ActivityEnum.ActivityStatus.Normal then
 		return false, var_34_1, var_34_2
 	end
 
+	local var_34_3 = string.splitToNumber(arg_34_1, "#")[2]
+	local var_34_4 = DungeonConfig.instance:getEpisodeCO(var_34_3)
+
+	if not var_34_4 then
+		logError("not found episode : " .. arg_34_1)
+
+		return false, ToastEnum.EpisodeNotExist, var_0_0.DefaultToastParam
+	end
+
+	local var_34_5 = ActivityConfig.instance:getActivityDungeonConfig(VersionActivity1_5Enum.ActivityId.Dungeon)
+
+	if var_34_5 and var_34_5.hardChapterId and var_34_4.chapterId == var_34_5.hardChapterId and not VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(VersionActivity1_5Enum.ActivityId.Dungeon) then
+		return false, ToastEnum.ActivityHardDugeonLockedWithOpenTime, var_0_0.DefaultToastParam
+	end
+
+	if not DungeonModel.instance:getEpisodeInfo(var_34_3) then
+		return false, ToastEnum.WarmUpGotoOrder, var_0_0.DefaultToastParam
+	end
+
 	return arg_34_0:defaultCanJump(arg_34_1)
 end
 
-function var_0_0.canJumpToAct1_6DungeonView(arg_35_0, arg_35_1)
-	local var_35_0, var_35_1, var_35_2 = ActivityHelper.getActivityStatusAndToast(VersionActivity2_5Enum.ActivityId.EnterView)
+function var_0_0.canJumpToActivity142(arg_35_0, arg_35_1)
+	local var_35_0, var_35_1, var_35_2 = ActivityHelper.getActivityStatusAndToast(VersionActivity1_5Enum.ActivityId.Activity142)
 
 	if var_35_0 ~= ActivityEnum.ActivityStatus.Normal then
 		return false, var_35_1, var_35_2
 	end
 
-	local var_35_3 = string.splitToNumber(arg_35_1, "#")[2]
-	local var_35_4 = DungeonConfig.instance:getEpisodeCO(var_35_3)
+	return arg_35_0:defaultCanJump(arg_35_1)
+end
 
-	if not var_35_4 then
-		logError("not found episode : " .. arg_35_1)
+function var_0_0.canJumpToAct1_6DungeonView(arg_36_0, arg_36_1)
+	local var_36_0, var_36_1, var_36_2 = ActivityHelper.getActivityStatusAndToast(VersionActivity2_5Enum.ActivityId.EnterView)
+
+	if var_36_0 ~= ActivityEnum.ActivityStatus.Normal then
+		return false, var_36_1, var_36_2
+	end
+
+	local var_36_3 = string.splitToNumber(arg_36_1, "#")[2]
+	local var_36_4 = DungeonConfig.instance:getEpisodeCO(var_36_3)
+
+	if not var_36_4 then
+		logError("not found episode : " .. arg_36_1)
 
 		return false, ToastEnum.EpisodeNotExist, var_0_0.DefaultToastParam
 	end
 
-	local var_35_5 = ActivityConfig.instance:getActivityDungeonConfig(VersionActivity1_6Enum.ActivityId.Dungeon)
+	local var_36_5 = ActivityConfig.instance:getActivityDungeonConfig(VersionActivity1_6Enum.ActivityId.Dungeon)
 
-	if var_35_5 and var_35_5.hardChapterId and var_35_4.chapterId == var_35_5.hardChapterId and not VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(VersionActivity1_6Enum.ActivityId.Dungeon) then
+	if var_36_5 and var_36_5.hardChapterId and var_36_4.chapterId == var_36_5.hardChapterId and not VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(VersionActivity1_6Enum.ActivityId.Dungeon) then
 		return false, ToastEnum.ActivityHardDugeonLockedWithOpenTime, var_0_0.DefaultToastParam
 	end
 
-	if not DungeonModel.instance:getEpisodeInfo(var_35_3) then
+	if not DungeonModel.instance:getEpisodeInfo(var_36_3) then
 		return false, ToastEnum.WarmUpGotoOrder, var_0_0.DefaultToastParam
-	end
-
-	return arg_35_0:defaultCanJump(arg_35_1)
-end
-
-function var_0_0.canJumpToSeason123(arg_36_0, arg_36_1)
-	local var_36_0 = Season123Model.instance:getCurSeasonId()
-
-	if var_36_0 then
-		local var_36_1 = ActivityModel.instance:getActMO(var_36_0)
-
-		if not var_36_1 or not var_36_1:isOpen() then
-			return false, ToastEnum.ActivityNotOpen, var_0_0.DefaultToastParam
-		end
-	else
-		return false, ToastEnum.ActivityNotOpen, var_0_0.DefaultToastParam
 	end
 
 	return arg_36_0:defaultCanJump(arg_36_1)
 end
 
-function var_0_0.canJumpToVersionEnterView(arg_37_0, arg_37_1)
-	local var_37_0 = string.splitToNumber(arg_37_1, "#")[2]
+function var_0_0.canJumpToSeason123(arg_37_0, arg_37_1)
+	local var_37_0 = Season123Model.instance:getCurSeasonId()
 
 	if var_37_0 then
 		local var_37_1 = ActivityModel.instance:getActMO(var_37_0)
@@ -522,23 +514,23 @@ function var_0_0.canJumpToVersionEnterView(arg_37_0, arg_37_1)
 	return arg_37_0:defaultCanJump(arg_37_1)
 end
 
-function var_0_0.canJumpToRougeMainView(arg_38_0, arg_38_1)
-	local var_38_0 = true
-	local var_38_1
-	local var_38_2
+function var_0_0.canJumpToVersionEnterView(arg_38_0, arg_38_1)
+	local var_38_0 = string.splitToNumber(arg_38_1, "#")[2]
 
-	if not RougeOutsideModel.instance:isUnlock() then
-		var_38_0 = false
+	if var_38_0 then
+		local var_38_1 = ActivityModel.instance:getActMO(var_38_0)
 
-		local var_38_3 = RougeOutsideModel.instance:openUnlockId()
-
-		var_38_1, var_38_2 = OpenHelper.getToastIdAndParam(var_38_3)
+		if not var_38_1 or not var_38_1:isOpen() then
+			return false, ToastEnum.ActivityNotOpen, var_0_0.DefaultToastParam
+		end
+	else
+		return false, ToastEnum.ActivityNotOpen, var_0_0.DefaultToastParam
 	end
 
-	return var_38_0, var_38_1, var_38_2
+	return arg_38_0:defaultCanJump(arg_38_1)
 end
 
-function var_0_0.canJumpToRougeRewardView(arg_39_0, arg_39_1)
+function var_0_0.canJumpToRougeMainView(arg_39_0, arg_39_1)
 	local var_39_0 = true
 	local var_39_1
 	local var_39_2
@@ -549,79 +541,95 @@ function var_0_0.canJumpToRougeRewardView(arg_39_0, arg_39_1)
 		local var_39_3 = RougeOutsideModel.instance:openUnlockId()
 
 		var_39_1, var_39_2 = OpenHelper.getToastIdAndParam(var_39_3)
-	else
-		local var_39_4 = string.splitToNumber(arg_39_1, "#")[3]
-
-		if not RougeRewardModel.instance:isStageOpen(var_39_4) then
-			var_39_0 = false
-			var_39_1 = ToastEnum.RougeRewardStageLock
-		end
 	end
 
 	return var_39_0, var_39_1, var_39_2
 end
 
-function var_0_0.canJumpToTower(arg_40_0, arg_40_1)
-	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
-		local var_40_0, var_40_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Tower)
+function var_0_0.canJumpToRougeRewardView(arg_40_0, arg_40_1)
+	local var_40_0 = true
+	local var_40_1
+	local var_40_2
 
-		return false, var_40_0, var_40_1
-	end
+	if not RougeOutsideModel.instance:isUnlock() then
+		var_40_0 = false
 
-	local var_40_2 = string.splitToNumber(arg_40_1, "#")[2]
+		local var_40_3 = RougeOutsideModel.instance:openUnlockId()
 
-	if var_40_2 == TowerEnum.TowerType.Boss then
-		local var_40_3 = TowerController.instance:isBossTowerOpen()
-		local var_40_4 = TowerModel.instance:checkHasOpenStateTower(TowerEnum.TowerType.Boss)
+		var_40_1, var_40_2 = OpenHelper.getToastIdAndParam(var_40_3)
+	else
+		local var_40_4 = string.splitToNumber(arg_40_1, "#")[3]
 
-		if not var_40_3 or not var_40_4 then
-			return false, ToastEnum.TowerNotOpen
-		end
-	elseif var_40_2 == TowerEnum.TowerType.Limited then
-		local var_40_5 = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
-		local var_40_6 = TowerController.instance:isTimeLimitTowerOpen()
-
-		if not var_40_5 or not var_40_6 then
-			return false, ToastEnum.TowerNotOpen
+		if not RougeRewardModel.instance:isStageOpen(var_40_4) then
+			var_40_0 = false
+			var_40_1 = ToastEnum.RougeRewardStageLock
 		end
 	end
 
-	return arg_40_0:defaultCanJump(arg_40_1)
+	return var_40_0, var_40_1, var_40_2
 end
 
-function var_0_0.canJumpToOdyssey(arg_41_0, arg_41_1)
-	local var_41_0 = VersionActivity2_9Enum.ActivityId.Dungeon2
+function var_0_0.canJumpToTower(arg_41_0, arg_41_1)
+	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
+		local var_41_0, var_41_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Tower)
 
-	if not VersionActivityEnterHelper.checkCanOpen(var_41_0) then
-		return false, ToastEnum.ActivityNotOpen
+		return false, var_41_0, var_41_1
 	end
 
-	local var_41_1 = string.splitToNumber(arg_41_1, "#")
-	local var_41_2 = var_41_1[2]
+	local var_41_2 = string.splitToNumber(arg_41_1, "#")[2]
 
-	if var_41_2 == OdysseyEnum.JumpType.JumpToElementAndOpen then
-		if not OdysseyDungeonModel.instance:getElementMo(var_41_1[3]) then
-			return false, ToastEnum.OdysseyElementLock
-		end
-	elseif var_41_2 == OdysseyEnum.JumpType.JumpToReligion then
-		local var_41_3 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.ReligionUnlock)
+	if var_41_2 == TowerEnum.TowerType.Boss then
+		local var_41_3 = TowerController.instance:isBossTowerOpen()
+		local var_41_4 = TowerModel.instance:checkHasOpenStateTower(TowerEnum.TowerType.Boss)
 
-		if not OdysseyDungeonModel.instance:checkConditionCanUnlock(var_41_3.value) then
-			return false, ToastEnum.OdysseyReligionLock
+		if not var_41_3 or not var_41_4 then
+			return false, ToastEnum.TowerNotOpen
 		end
-	elseif var_41_2 == OdysseyEnum.JumpType.JumpToMyth and not OdysseyDungeonModel.instance:checkHasFightTypeElement(OdysseyEnum.FightType.Myth) then
-		return false, ToastEnum.OdysseyMythViewLock
+	elseif var_41_2 == TowerEnum.TowerType.Limited then
+		local var_41_5 = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+		local var_41_6 = TowerController.instance:isTimeLimitTowerOpen()
+
+		if not var_41_5 or not var_41_6 then
+			return false, ToastEnum.TowerNotOpen
+		end
 	end
 
 	return arg_41_0:defaultCanJump(arg_41_1)
 end
 
-function var_0_0.canJumpToAssassinLibraryView(arg_42_0, arg_42_1)
-	local var_42_0 = string.splitToNumber(arg_42_1, "#")[2]
-	local var_42_1, var_42_2, var_42_3 = ActivityHelper.getActivityStatusAndToast(var_42_0)
+function var_0_0.canJumpToOdyssey(arg_42_0, arg_42_1)
+	local var_42_0 = VersionActivity2_9Enum.ActivityId.Dungeon2
 
-	if not (var_42_1 == ActivityEnum.ActivityStatus.Normal or var_42_1 == ActivityEnum.ActivityStatus.Expired) then
-		return false, var_42_2, var_42_3
+	if not VersionActivityEnterHelper.checkCanOpen(var_42_0) then
+		return false, ToastEnum.ActivityNotOpen
+	end
+
+	local var_42_1 = string.splitToNumber(arg_42_1, "#")
+	local var_42_2 = var_42_1[2]
+
+	if var_42_2 == OdysseyEnum.JumpType.JumpToElementAndOpen then
+		if not OdysseyDungeonModel.instance:getElementMo(var_42_1[3]) then
+			return false, ToastEnum.OdysseyElementLock
+		end
+	elseif var_42_2 == OdysseyEnum.JumpType.JumpToReligion then
+		local var_42_3 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.ReligionUnlock)
+
+		if not OdysseyDungeonModel.instance:checkConditionCanUnlock(var_42_3.value) then
+			return false, ToastEnum.OdysseyReligionLock
+		end
+	elseif var_42_2 == OdysseyEnum.JumpType.JumpToMyth and not OdysseyDungeonModel.instance:checkHasFightTypeElement(OdysseyEnum.FightType.Myth) then
+		return false, ToastEnum.OdysseyMythViewLock
+	end
+
+	return arg_42_0:defaultCanJump(arg_42_1)
+end
+
+function var_0_0.canJumpToAssassinLibraryView(arg_43_0, arg_43_1)
+	local var_43_0 = string.splitToNumber(arg_43_1, "#")[2]
+	local var_43_1, var_43_2, var_43_3 = ActivityHelper.getActivityStatusAndToast(var_43_0)
+
+	if not (var_43_1 == ActivityEnum.ActivityStatus.Normal or var_43_1 == ActivityEnum.ActivityStatus.Expired) then
+		return false, var_43_2, var_43_3
 	end
 
 	return true
@@ -652,10 +660,11 @@ var_0_0.JumpViewToCanJumpFunc = {
 	[JumpEnum.JumpView.Achievement] = var_0_0.canJumpToAchievement,
 	[JumpEnum.JumpView.BossRush] = var_0_0.canJumpToBossRush,
 	[JumpEnum.JumpView.SeasonMainView] = var_0_0.canJumpToSeasonMainView,
+	[JumpEnum.JumpView.RoomFishing] = var_0_0.canJumpToRoomFishing,
 	[JumpEnum.JumpView.Tower] = var_0_0.canJumpToTower,
-	[JumpEnum.JumpView.Challenge] = Act183JumpController.canJumpToAct183,
 	[JumpEnum.JumpView.Odyssey] = var_0_0.canJumpToOdyssey,
 	[JumpEnum.JumpView.AssassinLibraryView] = var_0_0.canJumpToAssassinLibraryView,
+	[JumpEnum.JumpView.Challenge] = Act183JumpController.canJumpToAct183,
 	[JumpEnum.JumpView.V1a5Dungeon] = var_0_0.canJumpToAct1_5DungeonView,
 	[JumpEnum.JumpView.V1a6Dungeon] = var_0_0.canJumpToAct1_6DungeonView,
 	[JumpEnum.JumpView.Season123] = var_0_0.canJumpToSeason123,

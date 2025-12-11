@@ -156,14 +156,18 @@ function var_0_0._checkShowBeginnerReddot(arg_13_0, arg_13_1)
 	local var_13_1 = RedDotModel.instance:getDotChilds(arg_13_1)
 
 	for iter_13_0, iter_13_1 in pairs(var_13_1) do
-		local var_13_2 = RedDotModel.instance:getRedDotInfo(iter_13_1).infos
+		local var_13_2 = RedDotModel.instance:getRedDotInfo(iter_13_1)
 
-		for iter_13_2, iter_13_3 in pairs(var_13_2) do
-			if iter_13_3.value > 0 and not arg_13_0:_isBeginnerIgnoreReddotActivity(iter_13_3.uid) then
-				gohelper.setActive(var_13_0, true)
+		if var_13_2 and var_13_2.infos then
+			for iter_13_2, iter_13_3 in pairs(var_13_2.infos) do
+				if iter_13_3.value > 0 and not arg_13_0:_isBeginnerIgnoreReddotActivity(iter_13_3.uid) then
+					gohelper.setActive(var_13_0, true)
 
-				return
+					return
+				end
 			end
+		else
+			logWarn(string.format("not found red dot mo, dotId = %s, parentDotId = %s", iter_13_1, arg_13_1))
 		end
 	end
 end

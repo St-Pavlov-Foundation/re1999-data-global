@@ -297,16 +297,11 @@ end
 function var_0_0.playVoiceWithLang(arg_27_0, arg_27_1, arg_27_2)
 	if arg_27_0._spineGO then
 		local var_27_0 = ZProj.AudioEmitter.Get(arg_27_0._spineGO)
+		local var_27_1 = AudioConfig.instance:getAudioCOById(arg_27_1).bankName
 
-		if GameConfig:GetCurVoiceShortcut() == LangSettings.shortcutTab[LangSettings.zh] then
-			local var_27_1 = AudioConfig.instance:getAudioCOById(arg_27_1).bankName
-
-			ZProj.AudioManager.Instance:LoadBank(var_27_1, arg_27_2)
-			var_27_0:Emitter(arg_27_1, arg_27_2)
-			ZProj.AudioManager.Instance:UnloadBank(var_27_1)
-		else
-			var_27_0:Emitter(arg_27_1, arg_27_2)
-		end
+		ZProj.AudioManager.Instance:LoadBank(var_27_1, arg_27_2)
+		var_27_0:Emitter(arg_27_1, arg_27_2)
+		ZProj.AudioManager.Instance:UnloadBank(var_27_1)
 	end
 end
 

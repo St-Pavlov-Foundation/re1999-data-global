@@ -501,7 +501,7 @@ function var_0_0.checkShowNewRedDot(arg_26_0)
 	local var_26_0 = PlayerPrefsKey.StoreRoomTreeItemShowNew .. arg_26_0.goodsId
 	local var_26_1 = GameUtil.playerPrefsGetStringByUserId(var_26_0, nil)
 
-	if arg_26_0.belongStoreId ~= StoreEnum.StoreId.NewRoomStore then
+	if arg_26_0.belongStoreId ~= StoreEnum.StoreId.NewRoomStore and arg_26_0.belongStoreId ~= StoreEnum.StoreId.Skin then
 		return false
 	end
 

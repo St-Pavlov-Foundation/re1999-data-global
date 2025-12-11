@@ -5,19 +5,20 @@ local var_0_0 = class("SurvivalMapSelectItem", LuaCompBase)
 function var_0_0.ctor(arg_1_0, arg_1_1)
 	arg_1_0._callback = arg_1_1.callback
 	arg_1_0._callobj = arg_1_1.callobj
+	arg_1_0._mapInfo = arg_1_1.mapInfo
 	arg_1_0._index = arg_1_1.index
 end
 
 function var_0_0.init(arg_2_0, arg_2_1)
 	arg_2_0._anim = gohelper.findChildAnim(arg_2_1, "")
-	arg_2_0._golocked = gohelper.findChild(arg_2_1, "locked")
-	arg_2_0._txtnamelock = gohelper.findChildTextMesh(arg_2_1, "locked/namebg/txt_map")
-	arg_2_0._txtnameenlock = gohelper.findChildTextMesh(arg_2_1, "locked/namebg/txt_map/en")
-	arg_2_0._gounlock = gohelper.findChild(arg_2_1, "unlock")
-	arg_2_0._txtnameunlock = gohelper.findChildTextMesh(arg_2_1, "unlock/namebg/txt_map")
-	arg_2_0._txtnameenunlock = gohelper.findChildTextMesh(arg_2_1, "unlock/namebg/txt_map/en")
-	arg_2_0._goselect = gohelper.findChild(arg_2_1, "unlock/#go_select")
-	arg_2_0._btnclick = gohelper.findChildButtonWithAudio(arg_2_1, "#btn_click")
+	arg_2_0._goinfo = gohelper.findChild(arg_2_1, "info")
+	arg_2_0._txtname = gohelper.findChildTextMesh(arg_2_1, "info/namebg/txt_map")
+	arg_2_0._goselect = gohelper.findChild(arg_2_1, "info/#go_select")
+	arg_2_0._btnclick = gohelper.findChildButtonWithAudio(arg_2_1, "info/#btn_click")
+	arg_2_0._simageBg = gohelper.findChildSingleImage(arg_2_1, "#simage_bg")
+	arg_2_0._gohard = gohelper.findChild(arg_2_1, "#simage_bghard")
+	arg_2_0._simageIcon = gohelper.findChildSingleImage(arg_2_1, "info/#simage_icon")
+	arg_2_0._goempty = gohelper.findChild(arg_2_1, "empty")
 
 	arg_2_0:_refreshView()
 end
@@ -31,45 +32,27 @@ function var_0_0.removeEventListeners(arg_4_0)
 end
 
 function var_0_0._refreshView(arg_5_0)
-	local var_5_0 = SurvivalShelterModel.instance:getWeekInfo()
+	gohelper.setActive(arg_5_0._goempty, not arg_5_0._mapInfo)
+	gohelper.setActive(arg_5_0._goinfo, arg_5_0._mapInfo)
 
-	if not var_5_0 then
-		return
+	if arg_5_0._mapInfo then
+		arg_5_0._txtname.text = GameUtil.setFirstStrSize(arg_5_0._mapInfo.groupCo.name, 56)
+
+		arg_5_0._simageBg:LoadImage(ResUrl.getSurvivalMapIcon(string.format("survival_map_newblock_%d_%d", arg_5_0._index, arg_5_0._mapInfo.level)))
+		arg_5_0._simageIcon:LoadImage(ResUrl.getSurvivalMapIcon("survival_map_block0" .. arg_5_0._mapInfo.groupCo.type))
+		gohelper.setActive(arg_5_0._gohard, arg_5_0._mapInfo.level == 3)
+	else
+		arg_5_0._simageBg:LoadImage(ResUrl.getSurvivalMapIcon(string.format("survival_map_newblock_%d_%d", arg_5_0._index, 0)))
+		gohelper.setActive(arg_5_0._gohard, false)
 	end
-
-	local var_5_1 = lua_survival_copy.configDict[arg_5_0._index]
-
-	if not var_5_1 then
-		return
-	end
-
-	arg_5_0._isLock = not var_5_0.copyIds[arg_5_0._index]
-
-	if arg_5_0._isLock then
-		local var_5_2 = var_5_0:getBuildingInfoByBuildType(SurvivalEnum.BuildingType.Base)
-
-		arg_5_0._needLv = (var_5_2 and var_5_2.level or 0) + arg_5_0._index - #var_5_0.copyIds
-	end
-
-	gohelper.setActive(arg_5_0._golocked, arg_5_0._isLock)
-	gohelper.setActive(arg_5_0._gounlock, not arg_5_0._isLock)
-
-	arg_5_0._txtnamelock.text = GameUtil.setFirstStrSize(var_5_1.name, 56)
-	arg_5_0._txtnameunlock.text = GameUtil.setFirstStrSize(var_5_1.name, 56)
-	arg_5_0._txtnameenlock.text = var_5_1.enName
-	arg_5_0._txtnameenunlock.text = var_5_1.enName
 end
 
 function var_0_0.playUnlockAnim(arg_6_0)
-	gohelper.setActive(arg_6_0._golocked, true)
-	gohelper.setActive(arg_6_0._gounlock, true)
 	arg_6_0._anim:Play("unlock", 0, 0)
 end
 
 function var_0_0._onClick(arg_7_0)
-	if arg_7_0._isLock then
-		GameFacade.showToast(ToastEnum.SurvivalMapLock, arg_7_0._needLv)
-
+	if not arg_7_0._mapInfo then
 		return
 	end
 

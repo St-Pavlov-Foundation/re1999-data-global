@@ -220,7 +220,7 @@ function var_0_0._refreshInfo(arg_10_0)
 end
 
 function var_0_0.getBag(arg_11_0)
-	return SurvivalMapModel.instance:getSceneMo().bag
+	return SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Map)
 end
 
 function var_0_0.onClickModalMask(arg_12_0)

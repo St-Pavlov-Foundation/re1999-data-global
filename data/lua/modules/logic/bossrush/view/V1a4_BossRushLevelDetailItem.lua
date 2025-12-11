@@ -83,9 +83,11 @@ function var_0_0._delayUnlockCallBack(arg_10_0)
 end
 
 function var_0_0.playUnlock(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._delayUnlockCallBack, arg_11_0)
-	TaskDispatcher.runDelay(arg_11_0._delayUnlockCallBack, arg_11_0, 0.5)
-	arg_11_0:playIdle(true)
+	if arg_11_0._isOpen then
+		TaskDispatcher.cancelTask(arg_11_0._delayUnlockCallBack, arg_11_0)
+		TaskDispatcher.runDelay(arg_11_0._delayUnlockCallBack, arg_11_0, 0.5)
+		arg_11_0:playIdle(true)
+	end
 end
 
 function var_0_0._onPlayUnlockSound(arg_12_0)

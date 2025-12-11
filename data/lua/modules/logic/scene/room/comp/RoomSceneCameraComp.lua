@@ -321,6 +321,11 @@ end
 
 function var_0_0.resetTransform(arg_19_0)
 	arg_19_0._cameraState = RoomEnum.CameraState.Overlook
+
+	if FishingModel.instance:isInFishing() then
+		arg_19_0._cameraState = RoomEnum.CameraState.OverlookAll
+	end
+
 	arg_19_0._cameraParam = {
 		focusY = 0,
 		focusX = 0,

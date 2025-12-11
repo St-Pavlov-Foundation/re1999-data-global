@@ -142,22 +142,18 @@ function var_0_0._play(arg_13_0)
 	end
 
 	if arg_13_0._audioLang then
-		if GameConfig:GetCurVoiceShortcut() == LangSettings.shortcutTab[LangSettings.zh] then
-			local var_13_4 = AudioConfig.instance:getAudioCOById(arg_13_0._audioId)
+		local var_13_4 = AudioConfig.instance:getAudioCOById(arg_13_0._audioId)
 
-			if not var_13_4 then
-				logError("audio cfg not config : " .. tostring(arg_13_0._audioId))
-			end
+		if not var_13_4 then
+			logError("audio cfg not config : " .. tostring(arg_13_0._audioId))
+		end
 
-			if var_13_4 then
-				local var_13_5 = var_13_4.bankName
+		if var_13_4 then
+			local var_13_5 = var_13_4.bankName
 
-				ZProj.AudioManager.Instance:LoadBank(var_13_5, arg_13_0._audioLang)
-				arg_13_0._emitter:EmitterByName(arg_13_0._bankName, arg_13_0._eventName, arg_13_0._audioLang, var_13_3)
-				ZProj.AudioManager.Instance:UnloadBank(var_13_5)
-			end
-		else
+			ZProj.AudioManager.Instance:LoadBank(var_13_5, arg_13_0._audioLang)
 			arg_13_0._emitter:EmitterByName(arg_13_0._bankName, arg_13_0._eventName, arg_13_0._audioLang, var_13_3)
+			ZProj.AudioManager.Instance:UnloadBank(var_13_5)
 		end
 	else
 		arg_13_0._emitter:EmitterByName(arg_13_0._bankName, arg_13_0._eventName, var_13_3)

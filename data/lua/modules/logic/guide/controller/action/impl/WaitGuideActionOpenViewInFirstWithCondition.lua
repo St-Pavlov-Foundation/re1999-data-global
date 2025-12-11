@@ -172,4 +172,22 @@ function var_0_0.NoOtherGuideExecute(arg_11_0, arg_11_1)
 	return false
 end
 
+function var_0_0.checkNecrologistReviewOpen(arg_12_0)
+	local var_12_0 = tonumber(arg_12_0)
+
+	return NecrologistStoryModel.instance:isReviewCanShow(var_12_0)
+end
+
+function var_0_0.checkV3A1NecrologistBaseFinish(arg_13_0)
+	local var_13_0 = tonumber(arg_13_0)
+	local var_13_1 = NecrologistStoryEnum.RoleStoryId.V3A1
+	local var_13_2 = NecrologistStoryModel.instance:getGameMO(var_13_1)
+
+	if not var_13_2 then
+		return false
+	end
+
+	return var_13_2:isBaseFinish(var_13_0)
+end
+
 return var_0_0

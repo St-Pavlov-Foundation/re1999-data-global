@@ -3,26 +3,30 @@
 local var_0_0 = class("VersionActivityFixedDungeonConfig", BaseConfig)
 
 local function var_0_1(arg_1_0)
-	local var_1_0 = DungeonConfig.instance:getEpisodeCO(arg_1_0)
+	local var_1_0, var_1_1 = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	local var_1_2 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(var_1_0, var_1_1)
+	local var_1_3 = DungeonConfig.instance:getEpisodeCO(arg_1_0)
 
-	if var_1_0.chapterId ~= VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonChapterId.ElementFight then
-		if var_1_0.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonChapterId.Hard then
+	if var_1_3.chapterId ~= var_1_2.DungeonChapterId.ElementFight then
+		if var_1_3.chapterId == var_1_2.DungeonChapterId.Hard then
 			arg_1_0 = arg_1_0 - 10000
-			var_1_0 = DungeonConfig.instance:getEpisodeCO(arg_1_0)
+			var_1_3 = DungeonConfig.instance:getEpisodeCO(arg_1_0)
 		else
-			while var_1_0.chapterId ~= VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonChapterId.Story do
-				var_1_0 = DungeonConfig.instance:getEpisodeCO(var_1_0.preEpisode)
+			while var_1_3.chapterId ~= var_1_2.DungeonChapterId.Story do
+				var_1_3 = DungeonConfig.instance:getEpisodeCO(var_1_3.preEpisode)
 			end
 		end
 	end
 
-	return var_1_0
+	return var_1_3
 end
 
 function var_0_0.getEpisodeMapConfig(arg_2_0, arg_2_1)
-	local var_2_0 = var_0_1(arg_2_1)
+	local var_2_0, var_2_1 = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	local var_2_2 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(var_2_0, var_2_1)
+	local var_2_3 = var_0_1(arg_2_1)
 
-	return DungeonConfig.instance:getChapterMapCfg(VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonChapterId.Story, var_2_0.preEpisode)
+	return DungeonConfig.instance:getChapterMapCfg(var_2_2.DungeonChapterId.Story, var_2_3.preEpisode)
 end
 
 function var_0_0.checkElementBelongMapId(arg_3_0, arg_3_1, arg_3_2)

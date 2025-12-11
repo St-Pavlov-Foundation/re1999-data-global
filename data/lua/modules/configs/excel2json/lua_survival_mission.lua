@@ -2,25 +2,27 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	id = 1,
+	desc = 6,
 	name = 2,
-	camera = 10,
-	rotate = 9,
-	grid = 8,
-	choiceText = 11,
-	desc = 5,
-	isRepeat = 16,
-	incidental = 18,
-	subType = 13,
-	copyIds = 14,
-	versions = 3,
-	priority = 6,
-	incidentalRange = 19,
-	roll = 17,
-	resource = 7,
-	enforce = 12,
-	seasons = 4,
-	worldLevel = 15
+	worldLevel = 17,
+	rotate = 11,
+	grid = 10,
+	choiceText = 13,
+	isRepeat = 18,
+	camera = 12,
+	incidental = 20,
+	subType = 15,
+	copyIds = 16,
+	versions = 4,
+	priority = 7,
+	incidentalRange = 21,
+	group = 3,
+	roll = 19,
+	resource = 8,
+	enforce = 14,
+	seasons = 5,
+	id = 1,
+	waterResource = 9
 }
 local var_0_2 = {
 	"id"

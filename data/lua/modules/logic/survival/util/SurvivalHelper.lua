@@ -14,12 +14,18 @@ function var_0_0.getAllPointsByDis(arg_2_0, arg_2_1, arg_2_2)
 	end
 
 	local var_2_0 = {}
+	local var_2_1 = 0
 
 	for iter_2_0 = -arg_2_2, arg_2_2 do
 		for iter_2_1 = -arg_2_2, arg_2_2 do
 			for iter_2_2 = -arg_2_2, arg_2_2 do
 				if iter_2_0 + iter_2_1 + iter_2_2 == 0 then
-					table.insert(var_2_0, SurvivalHexNode.New(iter_2_0 + arg_2_1.q, iter_2_1 + arg_2_1.r, iter_2_2 + arg_2_1.s))
+					var_2_1 = var_2_1 + 1
+
+					local var_2_2 = SurvivalMapModel.instance:getCacheHexNode(var_2_1)
+
+					var_2_2:set(iter_2_0 + arg_2_1.q, iter_2_1 + arg_2_1.r, iter_2_2 + arg_2_1.s)
+					table.insert(var_2_0, var_2_2)
 				end
 			end
 		end
@@ -54,7 +60,8 @@ function var_0_0.worldPointToHex(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 	return var_4_3, var_4_4, var_4_5
 end
 
-function var_0_0.getScene3DPos(arg_5_0, arg_5_1)
+function var_0_0.getScene3DPos(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_2 = arg_5_2 or 0
 	arg_5_1 = arg_5_1 or GamepadController.instance:getMousePosition()
 
 	local var_5_0 = CameraMgr.instance:getMainCamera():ScreenPointToRay(arg_5_1)
@@ -65,7 +72,7 @@ function var_0_0.getScene3DPos(arg_5_0, arg_5_1)
 	end
 
 	local var_5_2 = var_5_0.origin
-	local var_5_3 = -var_5_2.y / var_5_1.y
+	local var_5_3 = -(var_5_2.y - arg_5_2) / var_5_1.y
 
 	return var_5_2:Add(var_5_1:Mul(var_5_3))
 end
@@ -82,6 +89,8 @@ function var_0_0.getDir(arg_6_0, arg_6_1, arg_6_2)
 			return iter_6_0
 		end
 	end
+
+	logError("not dir! " .. tostring(arg_6_1) .. " " .. tostring(arg_6_2))
 end
 
 function var_0_0.screenPosToRay(arg_7_0, arg_7_1)
@@ -200,12 +209,16 @@ function var_0_0.fitlterPath(arg_12_0, arg_12_1)
 	return var_12_0
 end
 
-function var_0_0.addNodeToDict(arg_13_0, arg_13_1, arg_13_2)
+function var_0_0.addNodeToDict(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
 	if not arg_13_1[arg_13_2.q] then
 		arg_13_1[arg_13_2.q] = {}
 	end
 
-	arg_13_1[arg_13_2.q][arg_13_2.r] = arg_13_2
+	if arg_13_3 == nil then
+		arg_13_3 = arg_13_2
+	end
+
+	arg_13_1[arg_13_2.q][arg_13_2.r] = arg_13_3
 end
 
 function var_0_0.removeNodeToDict(arg_14_0, arg_14_1, arg_14_2)
@@ -221,23 +234,42 @@ function var_0_0.isHaveNode(arg_15_0, arg_15_1, arg_15_2)
 		return nil
 	end
 
-	return arg_15_1[arg_15_2.q][arg_15_2.r]
+	return arg_15_1[arg_15_2.q][arg_15_2.r] ~= nil
 end
 
-function var_0_0.getDirMustHave(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_2.q - arg_16_1.q
-	local var_16_1 = arg_16_2.r - arg_16_1.r
-	local var_16_2 = math.max(math.abs(var_16_0), math.abs(var_16_1))
-	local var_16_3 = math.floor(var_16_0 / var_16_2)
-	local var_16_4 = math.floor(var_16_1 / var_16_2)
+function var_0_0.getValueFromDict(arg_16_0, arg_16_1, arg_16_2)
+	if not arg_16_1[arg_16_2.q] then
+		return nil
+	end
 
-	for iter_16_0, iter_16_1 in pairs(SurvivalEnum.DirToPos) do
-		if iter_16_1.q == var_16_3 and iter_16_1.r == var_16_4 then
-			return iter_16_0
+	return arg_16_1[arg_16_2.q][arg_16_2.r]
+end
+
+function var_0_0.getDirMustHave(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_2.q - arg_17_1.q
+	local var_17_1 = arg_17_2.r - arg_17_1.r
+	local var_17_2 = math.max(math.abs(var_17_0), math.abs(var_17_1))
+	local var_17_3 = math.floor(var_17_0 / var_17_2)
+	local var_17_4 = math.floor(var_17_1 / var_17_2)
+
+	for iter_17_0, iter_17_1 in pairs(SurvivalEnum.DirToPos) do
+		if iter_17_1.q == var_17_3 and iter_17_1.r == var_17_4 then
+			return iter_17_0
 		end
 	end
 
 	return SurvivalEnum.Dir.Right
+end
+
+function var_0_0.createLuaSimpleListComp(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+	local var_18_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_18_1, SurvivalSimpleListComp, {
+		listScrollParam = arg_18_2,
+		viewContainer = arg_18_4
+	})
+
+	var_18_0:setRes(arg_18_3)
+
+	return var_18_0
 end
 
 var_0_0.instance = var_0_0.New()

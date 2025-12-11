@@ -16,6 +16,7 @@ end
 
 function var_0_0.onOpen(arg_4_0)
 	arg_4_0:checkAddSurvivalBtn()
+	arg_4_0:com_openSubView(FightAutoBtnView, gohelper.findChild(arg_4_0.topRightBtnRoot, "btnAuto"))
 end
 
 function var_0_0.checkAddSurvivalBtn(arg_5_0)

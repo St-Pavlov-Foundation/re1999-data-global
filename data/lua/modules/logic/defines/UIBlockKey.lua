@@ -26,6 +26,9 @@ var_0_0.VoiceHttpGetter = "VoiceHttpGetter"
 var_0_0.FightAuto = "FightAuto"
 var_0_0.LimitedRoleMainView = "LimitedRoleMainView"
 var_0_0.WaitItemAnimeDone = "WaitItemAnimeDone"
+var_0_0.SurvivalReputationSelectView = "SurvivalReputationSelectView"
+var_0_0.SurvivalBagInfoPart = "SurvivalBagInfoPart"
+var_0_0.SurvivalCommon = "SurvivalCommon"
 var_0_0.PayFinish = "PayFinish"
 
 return var_0_0

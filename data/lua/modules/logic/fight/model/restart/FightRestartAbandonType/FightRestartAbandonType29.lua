@@ -28,7 +28,7 @@ function var_0_0.confirmNotice(arg_3_0)
 end
 
 function var_0_0._onPushEndFight(arg_4_0)
-	FightSystem.instance:cancelRestart()
+	FightGameMgr.restartMgr:cancelRestart()
 	ViewMgr.instance:closeView(ViewName.MessageBoxView)
 end
 
@@ -46,7 +46,7 @@ end
 
 function var_0_0.noCallback(arg_6_0)
 	FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_6_0._onPushEndFight, arg_6_0)
-	FightSystem.instance:cancelRestart()
+	FightGameMgr.restartMgr:cancelRestart()
 end
 
 function var_0_0.startAbandon(arg_7_0)
@@ -58,7 +58,7 @@ function var_0_0._startRequestFight(arg_8_0, arg_8_1)
 	DungeonFightController.instance:unregisterCallback(DungeonEvent.OnEndDungeonReply, arg_8_0._startRequestFight, arg_8_0)
 
 	if arg_8_1 ~= 0 then
-		FightSystem.instance:restartFightFail()
+		FightGameMgr.restartMgr:restartFightFail()
 
 		return
 	end

@@ -276,18 +276,6 @@
     "extraSuitCount": 0
   },
   {
-    "id": 20404,
-    "rare": 3,
-    "type": 2,
-    "name": "language_10076224",
-    "desc": "language_10079162",
-    "skillDesc": "language_10076867",
-    "icon": "odyssey_equip_10",
-    "suitId": 4,
-    "addSkill": "2#8290307",
-    "extraSuitCount": 0
-  },
-  {
     "id": 20405,
     "rare": 3,
     "type": 2,
@@ -336,39 +324,15 @@
     "extraSuitCount": 0
   },
   {
-    "id": 20409,
-    "rare": 2,
-    "type": 2,
-    "name": "language_10076229",
-    "desc": "language_10079168",
-    "skillDesc": "language_10076872",
-    "icon": "odyssey_equip_5",
-    "suitId": 4,
-    "addSkill": "2#8290312",
-    "extraSuitCount": 0
-  },
-  {
-    "id": 20410,
-    "rare": 3,
-    "type": 2,
-    "name": "language_10076230",
-    "desc": "language_10079169",
-    "skillDesc": "language_10076873",
-    "icon": "odyssey_equip_6",
-    "suitId": 4,
-    "addSkill": "2#8290313",
-    "extraSuitCount": 0
-  },
-  {
     "id": 20411,
     "rare": 3,
     "type": 2,
     "name": "language_10076231",
     "desc": "language_10079170",
-    "skillDesc": "language_10076874",
+    "skillDesc": "language_10079837",
     "icon": "odyssey_equip_4",
     "suitId": 4,
-    "addSkill": "3#8290314",
+    "addSkill": "2#8290314",
     "extraSuitCount": 0
   },
   {
@@ -430,18 +394,6 @@
     "suitId": 5,
     "addSkill": "2#8290407",
     "extraSuitCount": 0
-  },
-  {
-    "id": 20505,
-    "rare": 4,
-    "type": 2,
-    "name": "language_10079177",
-    "desc": "language_10079178",
-    "skillDesc": "language_10079179",
-    "icon": "odyssey_equip_167",
-    "suitId": 5,
-    "addSkill": "2#8290408",
-    "extraSuitCount": 1
   },
   {
     "id": 20506,

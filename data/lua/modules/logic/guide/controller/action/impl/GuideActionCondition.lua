@@ -63,4 +63,8 @@ function var_0_0.checkRoomTaskHasFinished(arg_3_0)
 	return var_3_0
 end
 
+function var_0_0.checkSurvivalWeekDay(arg_4_0)
+	return SurvivalShelterModel.instance:getWeekInfo().day > 1
+end
+
 return var_0_0

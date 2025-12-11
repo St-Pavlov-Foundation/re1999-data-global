@@ -14,7 +14,9 @@ function var_0_0.init(arg_1_0)
 		"ui/materials/dynamic/ui_headicon_stylization_6.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_assist.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_7.mat",
-		"ui/materials/dynamic/ui_headicon_stylization_shadow.mat"
+		"ui/materials/dynamic/ui_headicon_stylization_shadow.mat",
+		"ui/materials/dynamic/ui_halfgray2.mat",
+		"ui/materials/dynamic/ui_halfgray.mat"
 	}
 	arg_1_0.variantIdToMaterialPathWithRound = {
 		[0] = "ui/materials/dynamic/ui_enemyinfo_headicon_mask.mat",

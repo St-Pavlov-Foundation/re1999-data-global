@@ -2,22 +2,23 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	prepareRole1 = 7,
-	prepareRole4 = 10,
-	collection1 = 11,
-	prepareRole3 = 9,
-	collection3 = 13,
-	role3 = 5,
 	enhance = 15,
-	collection4 = 14,
+	role3 = 5,
+	collection3 = 13,
+	prepareRole3 = 9,
+	prepareRole1 = 7,
+	rank = 17,
+	powerInitial = 16,
 	role1 = 3,
-	collection2 = 12,
-	role4 = 6,
-	rank = 16,
-	id = 1,
 	prepareRole2 = 8,
 	activityId = 2,
-	role2 = 4
+	role2 = 4,
+	prepareRole4 = 10,
+	collection1 = 11,
+	collection4 = 14,
+	collection2 = 12,
+	role4 = 6,
+	id = 1
 }
 local var_0_2 = {
 	"id"

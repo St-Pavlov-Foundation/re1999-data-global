@@ -38,7 +38,7 @@ function var_0_0._editableInitView(arg_5_0)
 
 	arg_5_0._passiveskillitems = {}
 
-	for iter_5_0 = 1, 3 do
+	for iter_5_0 = 0, 3 do
 		local var_5_0 = arg_5_0:getUserDataTb_()
 
 		var_5_0.go = gohelper.findChild(arg_5_0._gopassiveskilltip, "mask/root/scrollview/viewport/content/talentstar" .. tostring(iter_5_0))
@@ -85,77 +85,84 @@ function var_0_0._setPassiveSkill(arg_10_0, arg_10_1, arg_10_2)
 		var_10_0 = Activity191Helper.replaceSkill(arg_10_0.viewParam.stoneId, var_10_0)
 	end
 
-	local var_10_1 = #var_10_0 <= 3 and #var_10_0 or 3
-	local var_10_2 = var_10_0[1]
+	local var_10_1 = var_10_0[1]
 
-	arg_10_0._txtpassivename.text = lua_skill.configDict[var_10_2].name
+	arg_10_0._txtpassivename.text = lua_skill.configDict[var_10_1].name
 
-	local var_10_3 = {}
+	local var_10_2 = {}
 
-	for iter_10_0 = 1, var_10_1 do
-		local var_10_4 = var_10_0[iter_10_0]
-		local var_10_5 = lua_skill.configDict[var_10_4]
-		local var_10_6 = FightConfig.instance:getSkillEffectDesc(arg_10_0.config.name, var_10_5)
+	for iter_10_0, iter_10_1 in pairs(var_10_0) do
+		local var_10_3 = lua_skill.configDict[iter_10_1]
 
-		table.insert(var_10_3, var_10_6)
+		var_10_2[iter_10_0] = FightConfig.instance:getSkillEffectDesc(arg_10_0.config.name, var_10_3)
 	end
 
-	local var_10_7 = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion(var_10_3)
-	local var_10_8 = {}
-	local var_10_9 = {}
+	local var_10_4 = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion(var_10_2)
+	local var_10_5 = {}
+	local var_10_6 = {}
 
-	for iter_10_1 = 1, var_10_1 do
-		local var_10_10 = var_10_0[iter_10_1]
-		local var_10_11 = true
-		local var_10_12 = lua_skill.configDict[var_10_10]
-		local var_10_13 = FightConfig.instance:getSkillEffectDesc(arg_10_0.config.name, var_10_12)
+	for iter_10_2 = 0, 3 do
+		local var_10_7 = arg_10_0._passiveskillitems[iter_10_2]
+		local var_10_8 = var_10_0[iter_10_2]
 
-		for iter_10_2, iter_10_3 in ipairs(var_10_7[iter_10_1]) do
-			local var_10_14 = SkillConfig.instance:getSkillEffectDescCo(iter_10_3)
-			local var_10_15 = var_10_14.name
+		if var_10_8 then
+			local var_10_9 = true
+			local var_10_10 = lua_skill.configDict[var_10_8]
+			local var_10_11 = FightConfig.instance:getSkillEffectDesc(arg_10_0.config.name, var_10_10)
 
-			if HeroSkillModel.instance:canShowSkillTag(var_10_15, true) and not var_10_8[var_10_15] then
-				var_10_8[var_10_15] = true
+			for iter_10_3, iter_10_4 in pairs(var_10_4[iter_10_2]) do
+				local var_10_12 = SkillConfig.instance:getSkillEffectDescCo(iter_10_4)
+				local var_10_13 = var_10_12.name
 
-				if var_10_14.isSpecialCharacter == 1 then
-					local var_10_16 = var_10_14.desc
+				if HeroSkillModel.instance:canShowSkillTag(var_10_13, true) and not var_10_5[var_10_13] then
+					var_10_5[var_10_13] = true
 
-					var_10_13 = string.format("%s", var_10_13)
+					if var_10_12.isSpecialCharacter == 1 then
+						local var_10_14 = var_10_12.desc
 
-					local var_10_17 = SkillHelper.buildDesc(var_10_16)
+						var_10_11 = string.format("%s", var_10_11)
 
-					table.insert(var_10_9, {
-						desc = var_10_17,
-						title = var_10_14.name
-					})
+						local var_10_15 = SkillHelper.buildDesc(var_10_14)
+
+						table.insert(var_10_6, {
+							desc = var_10_15,
+							title = var_10_12.name
+						})
+					end
 				end
 			end
+
+			local var_10_16 = SkillHelper.buildDesc(var_10_11)
+
+			var_10_7.desc.text = var_10_16
+
+			local var_10_17
+
+			if iter_10_2 == 0 then
+				var_10_17 = luaLang("character_skill_passive_0")
+			else
+				local var_10_18 = arg_10_0:_getTargetRankByEffect(arg_10_0.config.roleId, iter_10_2)
+
+				var_10_17 = string.format(luaLang("character_passive_unlock"), GameUtil.getRomanNums(var_10_18))
+			end
+
+			var_10_7.unlocktxt.text = var_10_17
+
+			SLFramework.UGUI.GuiHelper.SetColor(var_10_7.unlocktxt, "#313B33")
+
+			var_10_7.canvasgroup.alpha = var_10_9 and 1 or 0.83
+
+			gohelper.setActive(var_10_7.on, var_10_9)
+			var_10_7.fixTmpBreakLine:refreshTmpContent(var_10_7.desc)
+			SLFramework.UGUI.GuiHelper.SetColor(var_10_7.desc, var_10_9 and "#272525" or "#3A3A3A")
+			gohelper.setActive(var_10_7.go, true)
+			gohelper.setActive(var_10_7.connectline, iter_10_2 ~= #var_10_0)
 		end
 
-		local var_10_18 = SkillHelper.buildDesc(var_10_13)
-		local var_10_19 = arg_10_0:_getTargetRankByEffect(arg_10_0.config.roleId, iter_10_1)
-
-		arg_10_0._passiveskillitems[iter_10_1].unlocktxt.text = string.format(luaLang("character_passive_unlock"), GameUtil.getRomanNums(var_10_19))
-
-		SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._passiveskillitems[iter_10_1].unlocktxt, "#313B33")
-
-		arg_10_0._passiveskillitems[iter_10_1].canvasgroup.alpha = var_10_11 and 1 or 0.83
-
-		gohelper.setActive(arg_10_0._passiveskillitems[iter_10_1].on, var_10_11)
-
-		arg_10_0._passiveskillitems[iter_10_1].desc.text = var_10_18
-
-		arg_10_0._passiveskillitems[iter_10_1].fixTmpBreakLine:refreshTmpContent(arg_10_0._passiveskillitems[iter_10_1].desc)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._passiveskillitems[iter_10_1].desc, var_10_11 and "#272525" or "#3A3A3A")
-		gohelper.setActive(arg_10_0._passiveskillitems[iter_10_1].go, true)
-		gohelper.setActive(arg_10_0._passiveskillitems[iter_10_1].connectline, iter_10_1 ~= var_10_1)
+		gohelper.setActive(var_10_7.go, var_10_8 ~= nil)
 	end
 
-	for iter_10_4 = var_10_1 + 1, #arg_10_0._passiveskillitems do
-		gohelper.setActive(arg_10_0._passiveskillitems[iter_10_4].go, false)
-	end
-
-	arg_10_0:_showSkillEffectDesc(var_10_9)
+	arg_10_0:_showSkillEffectDesc(var_10_6)
 	arg_10_0:_refreshPassiveSkillScroll()
 	arg_10_0:_setTipPos(arg_10_0._gopassiveskilltip.transform, arg_10_2, arg_10_1)
 end

@@ -310,6 +310,12 @@ function var_0_0.placeTempBlockMO(arg_22_0, arg_22_1)
 
 	var_22_0:init(var_22_1)
 
+	local var_22_2 = RoomWaterReformModel.instance:getBlockPermanentInfo(arg_22_0._tempBlockMO.blockId)
+
+	if var_22_2 and var_22_2 ~= RoomWaterReformModel.InitBlockColor then
+		arg_22_0._tempBlockMO:setBlockColorType(var_22_2)
+	end
+
 	arg_22_0._tempBlockMO.rotate = var_22_0.rotate
 	arg_22_0._tempBlockMO.blockState = RoomBlockEnum.BlockState.Map
 
@@ -448,102 +454,141 @@ function var_0_0.refreshNearRiver(arg_38_0, arg_38_1, arg_38_2)
 	end
 end
 
-function var_0_0._refreshEmptyMO(arg_39_0, arg_39_1, arg_39_2)
+function var_0_0.refreshNearRiverByHexPointList(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = {}
+
+	for iter_39_0, iter_39_1 in ipairs(arg_39_1) do
+		local var_39_1 = iter_39_1:getInRanges(arg_39_2)
+
+		for iter_39_2, iter_39_3 in ipairs(var_39_1) do
+			local var_39_2 = arg_39_0:getBlockMO(iter_39_3.x, iter_39_3.y)
+			local var_39_3 = var_39_2.blockId
+
+			if var_39_2 and var_39_2.blockState ~= RoomBlockEnum.BlockState.Water and not var_39_0[var_39_3] then
+				var_39_0[var_39_3] = var_39_2
+			end
+		end
+	end
+
+	for iter_39_4, iter_39_5 in pairs(var_39_0) do
+		iter_39_5:refreshRiver()
+	end
+end
+
+function var_0_0._refreshEmptyMO(arg_40_0, arg_40_1, arg_40_2)
 	return
 end
 
-function var_0_0.debugConfirmPlaceBlock(arg_40_0, arg_40_1, arg_40_2)
-	local var_40_0 = RoomBlockMO.New()
+function var_0_0.debugConfirmPlaceBlock(arg_41_0, arg_41_1, arg_41_2)
+	local var_41_0 = RoomBlockMO.New()
 
-	var_40_0:init(arg_40_2)
+	var_41_0:init(arg_41_2)
 
-	local var_40_1 = arg_40_0:getBlockMO(arg_40_1.x, arg_40_1.y)
+	local var_41_1 = arg_41_0:getBlockMO(arg_41_1.x, arg_41_1.y)
 
-	if var_40_1 then
-		arg_40_0:_removeBlockMO(var_40_1)
+	if var_41_1 then
+		arg_41_0:_removeBlockMO(var_41_1)
 	end
 
-	arg_40_0:_addBlockMO(var_40_0)
-	arg_40_0:_placeEmptyBlock(var_40_0)
-	arg_40_0:_refreshConvexHull()
+	arg_41_0:_addBlockMO(var_41_0)
+	arg_41_0:_placeEmptyBlock(var_41_0)
+	arg_41_0:_refreshConvexHull()
 
-	return var_40_0, var_40_1
+	return var_41_0, var_41_1
 end
 
-function var_0_0.debugRootOutBlock(arg_41_0, arg_41_1)
-	local var_41_0 = arg_41_0:getBlockMO(arg_41_1.x, arg_41_1.y)
+function var_0_0.debugRootOutBlock(arg_42_0, arg_42_1)
+	local var_42_0 = arg_42_0:getBlockMO(arg_42_1.x, arg_42_1.y)
 
-	if var_41_0 then
-		arg_41_0:_removeBlockMO(var_41_0)
+	if var_42_0 then
+		arg_42_0:_removeBlockMO(var_42_0)
 	end
 
-	local var_41_1 = arg_41_1:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
-	local var_41_2 = {}
+	local var_42_1 = arg_42_1:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
+	local var_42_2 = {}
 
-	for iter_41_0, iter_41_1 in ipairs(var_41_1) do
-		local var_41_3 = false
-		local var_41_4 = arg_41_0:getBlockMO(iter_41_1.x, iter_41_1.y)
+	for iter_42_0, iter_42_1 in ipairs(var_42_1) do
+		local var_42_3 = false
+		local var_42_4 = arg_42_0:getBlockMO(iter_42_1.x, iter_42_1.y)
 
-		if var_41_4 and var_41_4.blockState == RoomBlockEnum.BlockState.Water then
-			local var_41_5 = false
-			local var_41_6 = iter_41_1:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
+		if var_42_4 and var_42_4.blockState == RoomBlockEnum.BlockState.Water then
+			local var_42_5 = false
+			local var_42_6 = iter_42_1:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
 
-			for iter_41_2, iter_41_3 in ipairs(var_41_6) do
-				local var_41_7 = arg_41_0:getBlockMO(iter_41_3.x, iter_41_3.y)
+			for iter_42_2, iter_42_3 in ipairs(var_42_6) do
+				local var_42_7 = arg_42_0:getBlockMO(iter_42_3.x, iter_42_3.y)
 
-				if var_41_7 and var_41_7.blockState == RoomBlockEnum.BlockState.Map then
-					var_41_5 = true
+				if var_42_7 and var_42_7.blockState == RoomBlockEnum.BlockState.Map then
+					var_42_5 = true
 
 					break
 				end
 			end
 
-			if var_41_5 then
-				arg_41_0:_refreshEmptyMO(var_41_4)
+			if var_42_5 then
+				arg_42_0:_refreshEmptyMO(var_42_4)
 			else
-				arg_41_0:_removeBlockMO(var_41_4)
-				table.insert(var_41_2, var_41_4)
+				arg_42_0:_removeBlockMO(var_42_4)
+				table.insert(var_42_2, var_42_4)
 			end
-		elseif var_41_4 and var_41_4.blockState == RoomBlockEnum.BlockState.Map then
-			var_41_3 = true
+		elseif var_42_4 and var_42_4.blockState == RoomBlockEnum.BlockState.Map then
+			var_42_3 = true
 		end
 
-		if var_41_3 then
-			arg_41_0:_placeOneEmptyBlock(arg_41_1)
+		if var_42_3 then
+			arg_42_0:_placeOneEmptyBlock(arg_42_1)
 		end
 	end
 
-	arg_41_0:_refreshConvexHull()
+	arg_42_0:_refreshConvexHull()
 
-	return var_41_2
+	return var_42_2
 end
 
-function var_0_0.getFullMapSizeAndCenter(arg_42_0)
-	local var_42_0 = 0
-	local var_42_1 = 0
-	local var_42_2 = 0
-	local var_42_3 = 0
-
-	for iter_42_0, iter_42_1 in ipairs(arg_42_0._mapBlockMOList) do
-		local var_42_4 = iter_42_1.hexPoint
-		local var_42_5 = HexMath.hexToPosition(var_42_4, RoomBlockEnum.BlockSize)
-
-		var_42_0 = math.max(var_42_0, var_42_5.x)
-		var_42_1 = math.max(var_42_1, var_42_5.y)
-		var_42_2 = math.min(var_42_2, var_42_5.x)
-		var_42_3 = math.min(var_42_3, var_42_5.y)
+function var_0_0.debugMoveAllBlock(arg_43_0, arg_43_1, arg_43_2)
+	if not arg_43_0._mapBlockMOList then
+		return
 	end
 
-	local var_42_6 = math.floor((var_42_0 - var_42_2) * RoomEnum.WorldPosToAStarMeshWidth)
-	local var_42_7 = math.floor((var_42_1 - var_42_3) * RoomEnum.WorldPosToAStarMeshDepth)
-	local var_42_8 = 0
-	local var_42_9 = 0
-	local var_42_10 = math.min(var_42_6, RoomEnum.AStarMeshMaxWidthOrDepth)
-	local var_42_11 = math.min(var_42_7, RoomEnum.AStarMeshMaxWidthOrDepth)
-	local var_42_12 = (var_42_0 + var_42_2) * 0.5
-	local var_42_13 = (var_42_1 + var_42_3) * 0.5
+	for iter_43_0, iter_43_1 in ipairs(arg_43_0._mapBlockMOList) do
+		local var_43_0 = iter_43_1.hexPoint.x
+		local var_43_1 = iter_43_1.hexPoint.y
+		local var_43_2 = var_43_0 + arg_43_1
+		local var_43_3 = var_43_1 + arg_43_2
 
-	return var_42_10, var_42_11, var_42_12, var_42_13
+		iter_43_1.hexPoint = HexPoint(var_43_2, var_43_3)
+		arg_43_0._mapBlockMODict[var_43_0][var_43_1] = nil
+		arg_43_0._mapBlockMODict[var_43_2] = arg_43_0._mapBlockMODict[var_43_2] or {}
+		arg_43_0._mapBlockMODict[var_43_2][var_43_3] = iter_43_1
+	end
+end
+
+function var_0_0.getFullMapSizeAndCenter(arg_44_0)
+	local var_44_0 = 0
+	local var_44_1 = 0
+	local var_44_2 = 0
+	local var_44_3 = 0
+
+	for iter_44_0, iter_44_1 in ipairs(arg_44_0._mapBlockMOList) do
+		local var_44_4 = iter_44_1.hexPoint
+		local var_44_5 = HexMath.hexToPosition(var_44_4, RoomBlockEnum.BlockSize)
+
+		var_44_0 = math.max(var_44_0, var_44_5.x)
+		var_44_1 = math.max(var_44_1, var_44_5.y)
+		var_44_2 = math.min(var_44_2, var_44_5.x)
+		var_44_3 = math.min(var_44_3, var_44_5.y)
+	end
+
+	local var_44_6 = math.floor((var_44_0 - var_44_2) * RoomEnum.WorldPosToAStarMeshWidth)
+	local var_44_7 = math.floor((var_44_1 - var_44_3) * RoomEnum.WorldPosToAStarMeshDepth)
+	local var_44_8 = 0
+	local var_44_9 = 0
+	local var_44_10 = math.min(var_44_6, RoomEnum.AStarMeshMaxWidthOrDepth)
+	local var_44_11 = math.min(var_44_7, RoomEnum.AStarMeshMaxWidthOrDepth)
+	local var_44_12 = (var_44_0 + var_44_2) * 0.5
+	local var_44_13 = (var_44_1 + var_44_3) * 0.5
+
+	return var_44_10, var_44_11, var_44_12, var_44_13
 end
 
 var_0_0.instance = var_0_0.New()

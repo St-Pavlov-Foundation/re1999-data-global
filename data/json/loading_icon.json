@@ -2,9 +2,9 @@
   {
     "id": 1,
     "pic": "loading_1",
-    "scenes": "1#2#3#5",
+    "scenes": "4",
     "weight": 100,
-    "type": 1,
+    "type": 2,
     "isOnline": 1
   },
   {
@@ -12,7 +12,7 @@
     "pic": "loading_2",
     "scenes": "1#2#3#5",
     "weight": 100,
-    "type": 1,
+    "type": 2,
     "isOnline": 1
   },
   {
@@ -20,7 +20,7 @@
     "pic": "loading_3",
     "scenes": "1#2#3#5",
     "weight": 100,
-    "type": 1,
+    "type": 2,
     "isOnline": 1
   },
   {
@@ -28,7 +28,7 @@
     "pic": "loading_4",
     "scenes": "1#2#3#5",
     "weight": 100,
-    "type": 1,
+    "type": 2,
     "isOnline": 1
   },
   {
@@ -36,95 +36,103 @@
     "pic": "loading_5",
     "scenes": "1#2#3#5",
     "weight": 100,
-    "type": 1,
+    "type": 2,
     "isOnline": 1
   },
   {
     "id": 7,
-    "pic": "loading_7",
+    "pic": "loading_6",
     "scenes": "4",
     "weight": 100,
-    "type": 1,
+    "type": 2,
     "isOnline": 1
   },
   {
     "id": 8,
-    "pic": "loading_8",
+    "pic": "loading_7",
     "scenes": "1#2#3#5",
     "weight": 100,
-    "type": 1,
+    "type": 2,
     "isOnline": 1
   },
   {
     "id": 10,
-    "pic": "loading_10",
+    "pic": "loading_8",
     "scenes": "1#2#3#5",
     "weight": 100,
-    "type": 1,
+    "type": 2,
     "isOnline": 1
   },
   {
     "id": 12,
-    "pic": "loading_12",
-    "scenes": "1#2#3#5",
-    "weight": 100,
-    "type": 1,
-    "isOnline": 1
-  },
-  {
-    "id": 13,
-    "pic": "loading_13",
-    "scenes": "1#2#3#5",
-    "weight": 100,
-    "type": 1,
-    "isOnline": 1
-  },
-  {
-    "id": 14,
-    "pic": "loading_14",
-    "scenes": "1#2#3#5",
-    "weight": 100,
-    "type": 1,
-    "isOnline": 1
-  },
-  {
-    "id": 15,
-    "pic": "loading_15",
-    "scenes": "1#2#3#5",
-    "weight": 100,
-    "type": 1,
-    "isOnline": 1
-  },
-  {
-    "id": 6,
-    "pic": "loading_6",
-    "scenes": "1#2#3#5",
-    "weight": 100,
-    "type": 2,
-    "isOnline": 0
-  },
-  {
-    "id": 9,
     "pic": "loading_9",
     "scenes": "1#2#3#5",
     "weight": 100,
     "type": 2,
-    "isOnline": 0
+    "isOnline": 1
   },
   {
-    "id": 11,
+    "id": 13,
+    "pic": "loading_10",
+    "scenes": "1#2#3#5",
+    "weight": 100,
+    "type": 2,
+    "isOnline": 1
+  },
+  {
+    "id": 14,
     "pic": "loading_11",
     "scenes": "1#2#3#5",
     "weight": 100,
     "type": 2,
-    "isOnline": 0
+    "isOnline": 1
+  },
+  {
+    "id": 15,
+    "pic": "loading_12",
+    "scenes": "4",
+    "weight": 100,
+    "type": 2,
+    "isOnline": 1
+  },
+  {
+    "id": 6,
+    "pic": "loading_13",
+    "scenes": "4",
+    "weight": 100,
+    "type": 2,
+    "isOnline": 1
+  },
+  {
+    "id": 9,
+    "pic": "loading_14",
+    "scenes": "1#2#3#5",
+    "weight": 100,
+    "type": 2,
+    "isOnline": 1
+  },
+  {
+    "id": 11,
+    "pic": "loading_15",
+    "scenes": "1#2#3#5",
+    "weight": 100,
+    "type": 2,
+    "isOnline": 1
   },
   {
     "id": 16,
     "pic": "loading_16",
-    "scenes": "1#2#3#5",
+    "scenes": "4",
     "weight": 100,
     "type": 2,
-    "isOnline": 0
+    "isOnline": 1
+  },
+  {
+    "id": 17,
+    "pic": "loading_17",
+    "scenes": "4",
+    "weight": 100,
+    "type": 2,
+    "isOnline": 1
   }
 ]

@@ -27,7 +27,7 @@ function var_0_0.getTaskFinishedNum(arg_4_0, arg_4_1)
 	local var_4_2 = 0
 
 	for iter_4_0, iter_4_1 in pairs(var_4_0) do
-		if arg_4_1 == SurvivalEnum.TaskModule.SubTask then
+		if arg_4_1 == SurvivalEnum.TaskModule.SubTask or arg_4_1 == SurvivalEnum.TaskModule.MapMainTarget then
 			if iter_4_1:isFinish() then
 				var_4_2 = var_4_2 + 1
 			end

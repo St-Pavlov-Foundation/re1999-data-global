@@ -56,6 +56,22 @@
     "ruleRear": "1#8291210"
   },
   {
+    "timeId": 8,
+    "issueId": 4,
+    "optionalSkills": "2016#2001#2017#2018#2006#2012",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#9280208",
+    "ruleRear": "1#9280209"
+  },
+  {
+    "timeId": 11,
+    "issueId": 8,
+    "optionalSkills": "2012#2018#2019#2028#2029#2030",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#8291209",
+    "ruleRear": "1#8291210"
+  },
+  {
     "timeId": 9,
     "issueId": 5,
     "optionalSkills": "2019#2020#2018#2023#2006#2021",
@@ -70,13 +86,5 @@
     "ruleIcon": "shen_guize_18",
     "ruleFront": "1#8300114",
     "ruleRear": "1#8300115"
-  },
-  {
-    "timeId": 8,
-    "issueId": 4,
-    "optionalSkills": "2016#2001#2017#2018#2006#2012",
-    "ruleIcon": "shen_guize_18",
-    "ruleFront": "1#9280208",
-    "ruleRear": "1#9280209"
   }
 ]

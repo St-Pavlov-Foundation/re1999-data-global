@@ -33,6 +33,7 @@ function var_0_0.updateInfo(arg_2_0, arg_2_1, arg_2_2)
 	arg_2_0.towerBossPassCount = arg_2_1.towerBossPassCount
 	arg_2_0.maxLevelHero = arg_2_1.heroMaxLevelCount
 	arg_2_0.weekwalkVer2PlatinumCup = arg_2_1.weekwalkVer2PlatinumCup
+	arg_2_0.towerLayerMetre = arg_2_1.towerLayerMetre
 
 	arg_2_0:setHeroCount(arg_2_1.heroCount)
 end
@@ -292,11 +293,17 @@ function var_0_0.getProgressByIndex(arg_28_0, arg_28_1)
 		end
 	elseif arg_28_1 == PlayerCardEnum.LeftContent.TowerLayer then
 		if arg_28_0.towerLayer > 0 then
-			local var_28_2 = TowerConfig.instance:getPermanentEpisodeCo(arg_28_0.towerLayer)
-			local var_28_3 = string.splitToNumber(var_28_2.episodeIds, "|")
-			local var_28_4 = var_28_3[#var_28_3]
+			if arg_28_0.towerLayerMetre <= 500 then
+				local var_28_2 = TowerConfig.instance:getPermanentEpisodeCo(arg_28_0.towerLayer)
+				local var_28_3 = string.splitToNumber(var_28_2.episodeIds, "|")
+				local var_28_4 = var_28_3[#var_28_3]
 
-			return DungeonConfig.instance:getEpisodeCO(var_28_4).name
+				return DungeonConfig.instance:getEpisodeCO(var_28_4).name
+			else
+				local var_28_5 = TowerConfig.instance:getTowerPermanentTimeCo(PlayerCardEnum.TowerMaxStageId)
+
+				return (var_28_5 and var_28_5.name) .. arg_28_0.towerLayerMetre .. "M"
+			end
 		end
 
 		return -1

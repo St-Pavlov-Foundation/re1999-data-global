@@ -36,7 +36,7 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 
 	FightController.instance:registerCallback(FightEvent.OnBeginWave, arg_1_0._onBeginWave, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.RespBeginRound, arg_1_0._onBeginRound, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnStageChange, arg_1_0._onStageChange, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.StageChanged, arg_1_0._onStageChange, arg_1_0)
 end
 
 function var_0_0._onBeginWave(arg_2_0)
@@ -48,7 +48,7 @@ function var_0_0._onBeginRound(arg_3_0)
 end
 
 function var_0_0._onStageChange(arg_4_0)
-	if FightModel.instance:getCurStage() == FightEnum.Stage.EndRound then
+	if FightDataHelper.stateMgr.isFinish then
 		local var_4_0 = FightModel.instance:getRecordMO()
 
 		if var_4_0 and var_4_0.fightResult == FightEnum.FightResult.Fail then
@@ -64,7 +64,7 @@ end
 function var_0_0.clearWork(arg_5_0)
 	FightController.instance:unregisterCallback(FightEvent.OnBeginWave, arg_5_0._onBeginWave, arg_5_0)
 	FightController.instance:unregisterCallback(FightEvent.RespBeginRound, arg_5_0._onBeginRound, arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.OnStageChange, arg_5_0._onStageChange, arg_5_0)
+	FightController.instance:unregisterCallback(FightEvent.StageChanged, arg_5_0._onStageChange, arg_5_0)
 end
 
 return var_0_0

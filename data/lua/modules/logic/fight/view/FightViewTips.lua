@@ -173,10 +173,10 @@ function var_0_0.onOpen(arg_11_0)
 	arg_11_0:addEventCb(FightController.instance, FightEvent.HideCardSkillTips, arg_11_0._hideCardSkillTips, arg_11_0)
 	arg_11_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_11_0._onCloseBuffInfoContainer, arg_11_0)
 	arg_11_0:addEventCb(FightController.instance, FightEvent.EnterOperateState, arg_11_0._onEnterOperateState, arg_11_0)
-	arg_11_0:addEventCb(FightController.instance, FightEvent.EnterStage, arg_11_0._onEnterStage, arg_11_0)
+	arg_11_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_11_0.onStageChanged, arg_11_0)
 end
 
-function var_0_0._onEnterStage(arg_12_0, arg_12_1)
+function var_0_0.onStageChanged(arg_12_0, arg_12_1)
 	if arg_12_1 == FightStageMgr.StageType.Play then
 		arg_12_0:_hideTips()
 

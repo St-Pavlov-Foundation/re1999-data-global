@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkDoneFlowSequence", FightWorkFlowSequence)
 
 function var_0_0.start(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0.PARENT_ROOT_CLASS and arg_1_0.PARENT_ROOT_CLASS.PARENT_ROOT_CLASS
+	local var_1_0 = arg_1_0.PARENT_ROOT_OBJECT and arg_1_0.PARENT_ROOT_OBJECT.PARENT_ROOT_OBJECT
 
 	if var_1_0 and var_1_0.cancelFightWorkSafeTimer then
 		var_1_0:cancelFightWorkSafeTimer()

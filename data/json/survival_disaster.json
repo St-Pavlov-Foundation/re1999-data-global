@@ -1,0 +1,242 @@
+[
+  {
+    "id": 701,
+    "block": 70001,
+    "name": "language_10094964",
+    "recommend": 800034,
+    "disasterDesc": "language_10095834",
+    "level": 1
+  },
+  {
+    "id": 702,
+    "block": 70001,
+    "name": "language_10094964",
+    "recommend": 800034,
+    "disasterDesc": "language_10095835",
+    "level": 2
+  },
+  {
+    "id": 703,
+    "block": 70001,
+    "name": "language_10094964",
+    "recommend": 800034,
+    "disasterDesc": "language_10095836",
+    "level": 3
+  },
+  {
+    "id": 704,
+    "block": 70001,
+    "name": "language_10094964",
+    "recommend": 800034,
+    "disasterDesc": "language_10095837",
+    "level": 4
+  },
+  {
+    "id": 705,
+    "block": 70001,
+    "name": "language_10094964",
+    "recommend": 800034,
+    "disasterDesc": "language_10095838",
+    "level": 5
+  },
+  {
+    "id": 706,
+    "block": 70001,
+    "name": "language_10094964",
+    "recommend": 800034,
+    "disasterDesc": "language_10095839",
+    "level": 6
+  },
+  {
+    "id": 801,
+    "block": 70002,
+    "name": "language_10094966",
+    "recommend": 800035,
+    "disasterDesc": "language_10095840",
+    "level": 1
+  },
+  {
+    "id": 802,
+    "block": 70002,
+    "name": "language_10094966",
+    "recommend": 800035,
+    "disasterDesc": "language_10095841",
+    "level": 2
+  },
+  {
+    "id": 803,
+    "block": 70002,
+    "name": "language_10094966",
+    "recommend": 800035,
+    "disasterDesc": "language_10095842",
+    "level": 3
+  },
+  {
+    "id": 804,
+    "block": 70002,
+    "name": "language_10094966",
+    "recommend": 800035,
+    "disasterDesc": "language_10095843",
+    "level": 4
+  },
+  {
+    "id": 805,
+    "block": 70002,
+    "name": "language_10094966",
+    "recommend": 800035,
+    "disasterDesc": "language_10095844",
+    "level": 5
+  },
+  {
+    "id": 806,
+    "block": 70002,
+    "name": "language_10094966",
+    "recommend": 800035,
+    "disasterDesc": "language_10095845",
+    "level": 6
+  },
+  {
+    "id": 901,
+    "block": 70003,
+    "name": "language_10094968",
+    "recommend": 800036,
+    "disasterDesc": "language_10095846",
+    "level": 1
+  },
+  {
+    "id": 902,
+    "block": 70003,
+    "name": "language_10094968",
+    "recommend": 800036,
+    "disasterDesc": "language_10095847",
+    "level": 2
+  },
+  {
+    "id": 903,
+    "block": 70003,
+    "name": "language_10094968",
+    "recommend": 800036,
+    "disasterDesc": "language_10095848",
+    "level": 3
+  },
+  {
+    "id": 904,
+    "block": 70003,
+    "name": "language_10094968",
+    "recommend": 800036,
+    "disasterDesc": "language_10095849",
+    "level": 4
+  },
+  {
+    "id": 905,
+    "block": 70003,
+    "name": "language_10094968",
+    "recommend": 800036,
+    "disasterDesc": "language_10095850",
+    "level": 5
+  },
+  {
+    "id": 906,
+    "block": 70003,
+    "name": "language_10094968",
+    "recommend": 800036,
+    "disasterDesc": "language_10095851",
+    "level": 6
+  },
+  {
+    "id": 1001,
+    "block": 70004,
+    "name": "language_10094970",
+    "recommend": 800037,
+    "disasterDesc": "language_10095852",
+    "level": 1
+  },
+  {
+    "id": 1002,
+    "block": 70004,
+    "name": "language_10094970",
+    "recommend": 800037,
+    "disasterDesc": "language_10095853",
+    "level": 2
+  },
+  {
+    "id": 1003,
+    "block": 70004,
+    "name": "language_10094970",
+    "recommend": 800037,
+    "disasterDesc": "language_10095854",
+    "level": 3
+  },
+  {
+    "id": 1004,
+    "block": 70004,
+    "name": "language_10094970",
+    "recommend": 800037,
+    "disasterDesc": "language_10095855",
+    "level": 4
+  },
+  {
+    "id": 1005,
+    "block": 70004,
+    "name": "language_10094970",
+    "recommend": 800037,
+    "disasterDesc": "language_10095856",
+    "level": 5
+  },
+  {
+    "id": 1006,
+    "block": 70004,
+    "name": "language_10094970",
+    "recommend": 800037,
+    "disasterDesc": "language_10095857",
+    "level": 6
+  },
+  {
+    "id": 1101,
+    "block": 70005,
+    "name": "language_90001247",
+    "recommend": 800038,
+    "disasterDesc": "language_10095858",
+    "level": 1
+  },
+  {
+    "id": 1102,
+    "block": 70005,
+    "name": "language_90001247",
+    "recommend": 800038,
+    "disasterDesc": "language_10095859",
+    "level": 2
+  },
+  {
+    "id": 1103,
+    "block": 70005,
+    "name": "language_90001247",
+    "recommend": 800038,
+    "disasterDesc": "language_10095860",
+    "level": 3
+  },
+  {
+    "id": 1104,
+    "block": 70005,
+    "name": "language_90001247",
+    "recommend": 800038,
+    "disasterDesc": "language_10095861",
+    "level": 4
+  },
+  {
+    "id": 1105,
+    "block": 70005,
+    "name": "language_90001247",
+    "recommend": 800038,
+    "disasterDesc": "language_10095862",
+    "level": 5
+  },
+  {
+    "id": 1106,
+    "block": 70005,
+    "name": "language_90001247",
+    "recommend": 800038,
+    "disasterDesc": "language_10095863",
+    "level": 6
+  }
+]

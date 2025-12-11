@@ -63,8 +63,12 @@ function var_0_0._onClickStart(arg_5_0)
 		gohelper.setActive(arg_5_0._goherogroupcontain, true)
 	end
 
+	local var_5_0 = SurvivalShelterModel.instance:getWeekInfo().intrudeBox.fight
+
 	if SurvivalEquipRedDotHelper.instance.reddotType >= 0 then
 		GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalEnterFightEquipRed, MsgBoxEnum.BoxType.Yes_No, arg_5_0._realClickStart, nil, nil, arg_5_0, nil, nil)
+	elseif arg_5_0.selectIndex >= var_5_0.maxRound then
+		GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalEnterLastFightTip, MsgBoxEnum.BoxType.Yes_No, arg_5_0._realClickStart, nil, nil, arg_5_0, nil, nil)
 	else
 		var_0_0.super._onClickStart(arg_5_0)
 	end

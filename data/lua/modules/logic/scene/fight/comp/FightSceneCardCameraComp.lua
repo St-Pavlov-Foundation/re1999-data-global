@@ -4,7 +4,7 @@ local var_0_0 = class("FightSceneCardCameraComp", BaseSceneComp)
 
 function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
 	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, arg_1_0._onLevelLoaded, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnStageChange, arg_1_0._onStageChange, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.StageChanged, arg_1_0._onStageChange, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_1_0._stopCameraAnim, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.ChangeWaveEnd, arg_1_0._onChangeWaveEnd, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.SkillEditorPlayCardCameraAni, arg_1_0._onSkillEditorPlayCardCameraAni, arg_1_0)
@@ -15,7 +15,7 @@ end
 
 function var_0_0.onSceneClose(arg_2_0, arg_2_1, arg_2_2)
 	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.OnStageChange, arg_2_0._onStageChange, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.StageChanged, arg_2_0._onStageChange, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_2_0._stopCameraAnim, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.ChangeWaveEnd, arg_2_0._onChangeWaveEnd, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.SkillEditorPlayCardCameraAni, arg_2_0._onSkillEditorPlayCardCameraAni, arg_2_0)
@@ -137,10 +137,10 @@ end
 function var_0_0._onResLoadCallback(arg_7_0, arg_7_1)
 	arg_7_0._animatorInst = arg_7_0._multiLoader:getFirstAssetItem():GetResource(arg_7_0._path)
 
-	arg_7_0:_onStageChange(FightModel.instance:getCurStage())
+	arg_7_0:_onStageChange()
 end
 
-function var_0_0._onStageChange(arg_8_0, arg_8_1)
+function var_0_0._onStageChange(arg_8_0)
 	if arg_8_0._isPlaying then
 		return
 	end
@@ -149,7 +149,7 @@ function var_0_0._onStageChange(arg_8_0, arg_8_1)
 		return
 	end
 
-	if arg_8_0._animatorInst and arg_8_1 == FightEnum.Stage.Card or arg_8_1 == FightEnum.Stage.AutoCard then
+	if arg_8_0._animatorInst and FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
 		GameSceneMgr.instance:getCurScene().camera:switchNextVirtualCamera()
 		arg_8_0:_playCameraAnim()
 	end

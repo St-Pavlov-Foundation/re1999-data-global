@@ -141,6 +141,14 @@ function var_0_0._getAllLocalLang(arg_10_0)
 	local var_10_2 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
 	local var_10_3 = GameConfig:GetDefaultVoiceShortcut()
 
+	if not tabletool.indexOf(var_10_2, "jp") then
+		table.insert(var_10_2, "jp")
+	end
+
+	if not tabletool.indexOf(var_10_2, "kr") then
+		table.insert(var_10_2, "kr")
+	end
+
 	table.insert(var_10_2, "HD")
 
 	for iter_10_0 = 1, #var_10_2 do

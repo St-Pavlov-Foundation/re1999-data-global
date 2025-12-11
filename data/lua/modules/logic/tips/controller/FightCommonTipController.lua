@@ -36,8 +36,8 @@ function var_0_0.openCommonView(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg
 		screenPos = arg_2_3,
 		pivot = arg_2_4 or var_0_0.Pivot.TopLeft,
 		offsetAnchor = arg_2_5 or var_0_0.OffsetAnchor.TopLeft,
-		offsetPosX = arg_2_6,
-		offsetPosY = arg_2_7
+		offsetPosX = arg_2_6 or 0,
+		offsetPosY = arg_2_7 or 0
 	})
 end
 

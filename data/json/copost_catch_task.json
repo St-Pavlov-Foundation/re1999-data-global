@@ -1,7 +1,7 @@
 [
   {
     "id": 620001,
-    "finishNum": 0,
+    "finishNum": 1,
     "isOnline": 0,
     "taskType": 0,
     "listenerType": "CurrencyDec",
@@ -13,7 +13,7 @@
   },
   {
     "id": 620002,
-    "finishNum": 0,
+    "finishNum": 1,
     "isOnline": 0,
     "taskType": 0,
     "listenerType": "CurrencyDec",
@@ -25,7 +25,7 @@
   },
   {
     "id": 620003,
-    "finishNum": 0,
+    "finishNum": 1,
     "isOnline": 0,
     "taskType": 0,
     "listenerType": "CurrencyDec",
@@ -37,13 +37,25 @@
   },
   {
     "id": 620004,
-    "finishNum": 0,
+    "finishNum": 1,
     "isOnline": 0,
     "taskType": 0,
     "listenerType": "CurrencyDec",
     "listenerParam": "4",
     "maxProgress": 2400,
     "desc": "language_10089800",
+    "bonus": "1#300000#1",
+    "jumpId": 0
+  },
+  {
+    "id": 620005,
+    "finishNum": 999,
+    "isOnline": 1,
+    "taskType": 0,
+    "listenerType": "CurrencyDec",
+    "listenerParam": "4",
+    "maxProgress": 800,
+    "desc": "language_10096920",
     "bonus": "1#300000#1",
     "jumpId": 0
   }

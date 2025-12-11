@@ -102,41 +102,23 @@ function var_0_0.sortByEquipTag(arg_10_0, arg_10_1)
 	end
 end
 
-function var_0_0.getFirstEquipTag(arg_11_0)
-	local var_11_0 = arg_11_0.equipCo.tag
-	local var_11_1 = string.match(var_11_0, "^([0-9]+)")
+function var_0_0.sortByNPCItem(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:isNPCRecommendItem()
 
-	return tonumber(var_11_1) or 0
-end
-
-function var_0_0.filterItemMo(arg_12_0, arg_12_1)
-	if not arg_12_1 or arg_12_1:isEmpty() then
-		return false
-	end
-
-	if not next(arg_12_0) then
-		return true
-	end
-
-	local var_12_0 = arg_12_1.co.type
-
-	for iter_12_0, iter_12_1 in pairs(arg_12_0) do
-		if iter_12_1.type == SurvivalEnum.ItemFilterType.Material and var_12_0 == SurvivalEnum.ItemType.Material then
-			return true
-		end
-
-		if iter_12_1.type == SurvivalEnum.ItemFilterType.Equip and var_12_0 == SurvivalEnum.ItemType.Equip then
-			return true
-		end
-
-		if iter_12_1.type == SurvivalEnum.ItemFilterType.Consume and var_12_0 == SurvivalEnum.ItemType.Quick then
-			return true
-		end
+	if var_11_0 ~= arg_11_1:isNPCRecommendItem() then
+		return var_11_0
 	end
 end
 
-function var_0_0.filterEquipMo(arg_13_0, arg_13_1)
-	if not arg_13_1 or arg_13_1:isEmpty() or not arg_13_1.equipCo then
+function var_0_0.getFirstEquipTag(arg_12_0)
+	local var_12_0 = arg_12_0.equipCo.tag
+	local var_12_1 = string.match(var_12_0, "^([0-9]+)")
+
+	return tonumber(var_12_1) or 0
+end
+
+function var_0_0.filterItemMo(arg_13_0, arg_13_1)
+	if not arg_13_1 or arg_13_1:isEmpty() then
 		return false
 	end
 
@@ -144,41 +126,67 @@ function var_0_0.filterEquipMo(arg_13_0, arg_13_1)
 		return true
 	end
 
-	local var_13_0 = string.splitToNumber(arg_13_1.equipCo.tag, "#") or {}
+	local var_13_0 = arg_13_1.co.type
 
 	for iter_13_0, iter_13_1 in pairs(arg_13_0) do
-		if tabletool.indexOf(var_13_0, iter_13_1.type) then
+		if iter_13_1.type == SurvivalEnum.ItemFilterType.Material and var_13_0 == SurvivalEnum.ItemType.Material then
+			return true
+		end
+
+		if iter_13_1.type == SurvivalEnum.ItemFilterType.Equip and var_13_0 == SurvivalEnum.ItemType.Equip then
+			return true
+		end
+
+		if iter_13_1.type == SurvivalEnum.ItemFilterType.Consume and var_13_0 == SurvivalEnum.ItemType.Quick then
 			return true
 		end
 	end
 end
 
-function var_0_0.filterNpc(arg_14_0, arg_14_1)
-	if not arg_14_1 or not arg_14_1.co then
+function var_0_0.filterEquipMo(arg_14_0, arg_14_1)
+	if not arg_14_1 or arg_14_1:isEmpty() or not arg_14_1.equipCo then
 		return false
 	end
 
-	if not arg_14_0 or not next(arg_14_0) then
+	if not next(arg_14_0) then
 		return true
 	end
 
-	if string.nilorempty(arg_14_1.co.tag) then
+	local var_14_0 = string.splitToNumber(arg_14_1.equipCo.tag, "#") or {}
+
+	for iter_14_0, iter_14_1 in pairs(arg_14_0) do
+		if tabletool.indexOf(var_14_0, iter_14_1.type) then
+			return true
+		end
+	end
+end
+
+function var_0_0.filterNpc(arg_15_0, arg_15_1)
+	if not arg_15_1 or not arg_15_1.co then
 		return false
 	end
 
-	local var_14_0 = string.splitToNumber(arg_14_1.co.tag, "#")
-	local var_14_1 = {}
+	if not arg_15_0 or not next(arg_15_0) then
+		return true
+	end
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		local var_14_2 = lua_survival_tag.configDict[iter_14_1]
+	if string.nilorempty(arg_15_1.co.tag) then
+		return false
+	end
 
-		if var_14_2 then
-			var_14_1[var_14_2.tagType] = true
+	local var_15_0 = string.splitToNumber(arg_15_1.co.tag, "#")
+	local var_15_1 = {}
+
+	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+		local var_15_2 = lua_survival_tag.configDict[iter_15_1]
+
+		if var_15_2 then
+			var_15_1[var_15_2.tagType] = true
 		end
 	end
 
-	for iter_14_2, iter_14_3 in pairs(arg_14_0) do
-		if var_14_1[iter_14_3.type] then
+	for iter_15_2, iter_15_3 in pairs(arg_15_0) do
+		if var_15_1[iter_15_3.type] then
 			return true
 		end
 	end
@@ -251,32 +259,40 @@ local var_0_3
 local var_0_4
 local var_0_5
 
-function var_0_0.sortItems(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	var_0_3 = var_0_2[arg_15_1]
-	var_0_4 = arg_15_2
-	var_0_5 = arg_15_3
+function var_0_0.sortItems(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	var_0_3 = var_0_2[arg_16_1]
+	var_0_4 = arg_16_2
+	var_0_5 = arg_16_3
 
 	if not var_0_3 then
 		return
 	end
 
-	table.sort(arg_15_0, var_0_0.sortFunc)
+	table.sort(arg_16_0, var_0_0.sortFunc)
 
 	var_0_3 = nil
 	var_0_4 = nil
 	var_0_5 = nil
 end
 
-function var_0_0.sortFunc(arg_16_0, arg_16_1)
-	for iter_16_0, iter_16_1 in ipairs(var_0_3) do
-		local var_16_0 = iter_16_1(arg_16_0, arg_16_1, var_0_5)
+function var_0_0.sortFunc(arg_17_0, arg_17_1)
+	if var_0_5 and var_0_5.isCheckNPCItem then
+		local var_17_0 = var_0_0.sortByNPCItem(arg_17_0, arg_17_1)
 
-		if var_16_0 ~= nil then
+		if var_17_0 ~= nil then
+			return var_17_0
+		end
+	end
+
+	for iter_17_0, iter_17_1 in ipairs(var_0_3) do
+		local var_17_1 = iter_17_1(arg_17_0, arg_17_1, var_0_5)
+
+		if var_17_1 ~= nil then
 			if var_0_4 then
-				var_16_0 = not var_16_0
+				var_17_1 = not var_17_1
 			end
 
-			return var_16_0
+			return var_17_1
 		end
 	end
 

@@ -2,6 +2,8 @@
 
 local var_0_0 = class("FightWorkItem", FightBaseClass)
 
+var_0_0.IS_FIGHT_WORK = true
+
 function var_0_0.onConstructor(arg_1_0)
 	arg_1_0.CALLBACK = {}
 	arg_1_0.SAFETIME = 0.5
@@ -35,7 +37,7 @@ function var_0_0.__start(arg_3_0, arg_3_1)
 		return
 	end
 
-	arg_3_0.context = arg_3_1
+	arg_3_0.context = arg_3_0.context or arg_3_1
 	arg_3_0.STARTED = true
 	arg_3_0.EXCLUSIVETIMER = {}
 	arg_3_0.SAFETIMER = arg_3_0:com_registTimer(arg_3_0._fightWorkSafeTimer, arg_3_0.SAFETIME)
@@ -68,14 +70,14 @@ function var_0_0.finishWork(arg_8_0)
 	return arg_8_0:onDone(true)
 end
 
-function var_0_0.playWorkAndDone(arg_9_0, arg_9_1)
+function var_0_0.playWorkAndDone(arg_9_0, arg_9_1, arg_9_2)
 	if not arg_9_1 then
 		return arg_9_0:onDone(true)
 	end
 
 	arg_9_1:registFinishCallback(arg_9_0.finishWork, arg_9_0)
 	arg_9_0:cancelFightWorkSafeTimer()
-	arg_9_1:start()
+	arg_9_1:start(arg_9_2)
 end
 
 function var_0_0.com_registTimer(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
@@ -167,31 +169,27 @@ function var_0_0.playCallback(arg_21_0, arg_21_1)
 		for iter_21_0, iter_21_1 in ipairs(arg_21_1) do
 			local var_21_2 = arg_21_0.WORK_IS_FINISHED or arg_21_0.FIGHT_WORK_ENTRUSTED
 
-			if not arg_21_0.WORK_IS_FINISHED and arg_21_0.STARTED then
-				local var_21_3 = iter_21_1.handle
-
-				if isTypeOf(var_21_3, FightBaseClass) and not var_21_3.IS_RELEASING then
-					var_21_2 = true
-				end
+			if arg_21_0.CALLBACK_EVEN_IF_UNFINISHED and not arg_21_0.WORK_IS_FINISHED and arg_21_0.STARTED then
+				var_21_2 = true
 			end
 
 			if var_21_2 then
-				local var_21_4 = iter_21_1.handle
-				local var_21_5 = iter_21_1.callback
-				local var_21_6 = iter_21_1.param
+				local var_21_3 = iter_21_1.handle
+				local var_21_4 = iter_21_1.callback
+				local var_21_5 = iter_21_1.param
 
-				if var_21_4 then
-					if not var_21_4.IS_DISPOSED then
+				if var_21_3 then
+					if not var_21_3.IS_DISPOSED then
 						if iter_21_0 == var_21_1 then
-							return var_21_5(var_21_4, var_21_6, var_21_0)
+							return var_21_4(var_21_3, var_21_5, var_21_0)
 						else
-							var_21_5(var_21_4, var_21_6, var_21_0)
+							var_21_4(var_21_3, var_21_5, var_21_0)
 						end
 					end
 				elseif iter_21_0 == var_21_1 then
-					return var_21_5(var_21_6, var_21_0)
+					return var_21_4(var_21_5, var_21_0)
 				else
-					var_21_5(var_21_6, var_21_0)
+					var_21_4(var_21_5, var_21_0)
 				end
 			end
 		end
@@ -222,7 +220,13 @@ function var_0_0.onDone(arg_22_0, arg_22_1)
 end
 
 function var_0_0.onDoneAndKeepPlay(arg_23_0)
-	arg_23_0.FIGHT_WORK_ENTRUSTED = true
+	if not FightMsgMgr.sendMsg(FightMsgId.EntrustFightWork, arg_23_0) then
+		logError("托管fightwork未成功,类名:" .. arg_23_0.__cname)
+		arg_23_0:onDone(true)
+
+		return
+	end
+
 	arg_23_0.SUCCEEDED = true
 
 	local var_23_0 = tabletool.copy(arg_23_0.CALLBACK)
@@ -230,14 +234,6 @@ function var_0_0.onDoneAndKeepPlay(arg_23_0)
 	arg_23_0.CALLBACK = {}
 
 	arg_23_0:playCallback(var_23_0)
-
-	if not arg_23_0:com_sendMsg(FightMsgId.EntrustFightWork, arg_23_0) then
-		logError("托管fightwork未成功,类名:" .. arg_23_0.__cname)
-
-		arg_23_0.FIGHT_WORK_ENTRUSTED = nil
-
-		arg_23_0:disposeSelf()
-	end
 end
 
 function var_0_0.isAlive(arg_24_0)

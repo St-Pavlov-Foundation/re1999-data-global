@@ -68,7 +68,16 @@ end
 
 function var_0_0._onRoleStoryClick(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Rolesopen)
-	RoleStoryController.instance:openRoleStoryDispatchMainView()
+
+	local var_7_0 = RoleStoryModel.instance:getCurActStoryId()
+
+	if not var_7_0 or var_7_0 == 0 then
+		return
+	end
+
+	local var_7_1 = RoleStoryConfig.instance:getStoryById(var_7_0)
+
+	arg_7_0:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, nil, var_7_1.activityId)
 end
 
 function var_0_0._onSeasonClick(arg_8_0)
@@ -86,7 +95,7 @@ end
 
 function var_0_0._onSurvivalClick(arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	arg_10_0:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_8Enum.ActivityId.Survival)
+	arg_10_0:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity3_1Enum.ActivityId.Survival)
 end
 
 function var_0_0._onDouQuQuClick(arg_11_0)
@@ -253,13 +262,13 @@ function var_0_0._getRougeStartTime(arg_29_0)
 end
 
 function var_0_0._getSurvivalStatus(arg_30_0)
-	local var_30_0 = VersionActivity2_8Enum.ActivityId.Survival
+	local var_30_0 = VersionActivity3_1Enum.ActivityId.Survival
 
 	return (var_30_0 and ActivityHelper.getActivityStatus(var_30_0)) == ActivityEnum.ActivityStatus.Normal
 end
 
 function var_0_0._getSurvivalStartTime(arg_31_0)
-	local var_31_0 = VersionActivity2_8Enum.ActivityId.Survival
+	local var_31_0 = VersionActivity3_1Enum.ActivityId.Survival
 	local var_31_1 = ActivityModel.instance:getActMO(var_31_0)
 
 	return var_31_1 and var_31_1:getRealStartTimeStamp() * 1000
@@ -371,7 +380,7 @@ end
 function var_0_0.refreshSurvivalBtn(arg_47_0)
 	gohelper.setActive(arg_47_0._btnrolestory, true)
 
-	local var_47_0 = ActivityConfig.instance:getActivityCo(VersionActivity2_8Enum.ActivityId.Survival)
+	local var_47_0 = ActivityConfig.instance:getActivityCo(VersionActivity3_1Enum.ActivityId.Survival)
 
 	arg_47_0:_roleStoryLoadImage(var_47_0.extraDisplayIcon, arg_47_0.onLoadImage, arg_47_0)
 
@@ -465,7 +474,7 @@ function var_0_0.refreshRoleStoryBtn(arg_54_0)
 
 		arg_54_0._txtrolestory.text = var_54_3
 
-		RedDotController.instance:addRedDot(arg_54_0._gorolestoryred, RedDotEnum.DotNode.RoleStoryActivity)
+		RedDotController.instance:addRedDot(arg_54_0._gorolestoryred, RedDotEnum.DotNode.NecrologistStory)
 	end
 
 	arg_54_0:refreshRoleStoryRed()
@@ -476,18 +485,17 @@ function var_0_0.refreshRoleStoryRed(arg_55_0)
 		return
 	end
 
-	local var_55_0 = false
-	local var_55_1 = RoleStoryModel.instance:getCurActStoryId()
+	local var_55_0 = RoleStoryModel.instance:getCurActStoryId()
 
-	if not (var_55_1 > 0) then
+	if not (var_55_0 > 0) then
 		return
 	end
 
-	local var_55_2 = RoleStoryModel.instance:getMoById(var_55_1).cfg.activityId
-	local var_55_3 = ActivityStageHelper.checkOneActivityStageHasChange(var_55_2)
+	local var_55_1 = RoleStoryModel.instance:getMoById(var_55_0).cfg.activityId
+	local var_55_2 = ActivityStageHelper.checkOneActivityStageHasChange(var_55_1)
 
-	gohelper.setActive(arg_55_0._gorolestorynew, var_55_3)
-	gohelper.setActive(arg_55_0._gorolestoryred, not var_55_3)
+	gohelper.setActive(arg_55_0._gorolestorynew, var_55_2)
+	gohelper.setActive(arg_55_0._gorolestoryred, not var_55_2)
 end
 
 function var_0_0.refreshReactivityBtn(arg_56_0)

@@ -3,6 +3,7 @@
 local var_0_0 = class("FightRoundPreloadController", BaseController)
 
 function var_0_0.onInit(arg_1_0)
+	arg_1_0._assetItemDict = arg_1_0:getUserDataTb_()
 	arg_1_0._roundPreloadSequence = FlowSequence.New()
 
 	arg_1_0._roundPreloadSequence:addWork(FightRoundPreloadTimelineWork.New())
@@ -19,18 +20,18 @@ function var_0_0.onInit(arg_1_0)
 	}
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnStageChange, arg_2_0._onStageChange, arg_2_0)
+function var_0_0.registStageEvent(arg_2_0)
+	FightController.instance:registerCallback(FightEvent.StageChanged, arg_2_0.onStageChange, arg_2_0)
 end
 
 function var_0_0.reInit(arg_3_0)
 	arg_3_0:dispose()
 end
 
-function var_0_0._onStageChange(arg_4_0, arg_4_1)
-	if arg_4_1 == FightEnum.Stage.Card or arg_4_1 == FightEnum.Stage.AutoCard then
+function var_0_0.onStageChange(arg_4_0, arg_4_1)
+	if arg_4_1 == FightStageMgr.StageType.Operate then
 		arg_4_0:preload()
-	elseif arg_4_1 == FightEnum.Stage.Play then
+	elseif arg_4_1 == FightStageMgr.StageType.Play then
 		if arg_4_0._monsterPreloadSequence and arg_4_0._monsterPreloadSequence.status == WorkStatus.Running then
 			arg_4_0._monsterPreloadSequence:stop()
 		end
@@ -51,6 +52,8 @@ function var_0_0.preload(arg_5_0)
 end
 
 function var_0_0.dispose(arg_6_0)
+	FightController.instance:unregisterCallback(FightEvent.StageChanged, arg_6_0.onStageChange, arg_6_0)
+
 	arg_6_0._battleId = nil
 
 	arg_6_0._roundPreloadSequence:stop()

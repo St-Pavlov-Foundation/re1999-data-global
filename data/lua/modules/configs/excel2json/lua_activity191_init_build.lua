@@ -3,12 +3,16 @@
 local var_0_0 = {}
 local var_0_1 = {
 	name = 3,
-	style = 2,
+	randHero = 8,
 	item = 7,
-	coin = 5,
+	rewardHero = 10,
+	randItem = 9,
 	hero = 6,
-	activityId = 1,
-	desc = 4
+	rewardItem = 11,
+	desc = 4,
+	style = 2,
+	coin = 5,
+	activityId = 1
 }
 local var_0_2 = {
 	"activityId",

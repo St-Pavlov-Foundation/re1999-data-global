@@ -38,11 +38,8 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0.refreshActivityCurrency, arg_2_0)
 	arg_2_0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, arg_2_0.onModeChange, arg_2_0)
 	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.onRefreshActivityState, arg_2_0)
-
-	local var_2_0 = VersionActivityFixedHelper.getVersionActivityDungeonController()
-
-	arg_2_0:addEventCb(var_2_0.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_2_0.onClickElement, arg_2_0)
-	arg_2_0:addEventCb(var_2_0.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, arg_2_0.showBtnUI, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_2_0.onClickElement, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, arg_2_0.showBtnUI, arg_2_0)
 	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, arg_2_0._OnUpdateMapElementState, arg_2_0)
 	arg_2_0:addEventCb(GameSceneMgr.instance, SceneEventName.LoadingAnimEnd, arg_2_0.checkLoadingAndRefresh, arg_2_0)
 	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseviewOnClick, arg_2_0)
@@ -59,11 +56,8 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0.refreshActivityCurrency, arg_3_0)
 	arg_3_0:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, arg_3_0.onModeChange, arg_3_0)
 	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_3_0.onRefreshActivityState, arg_3_0)
-
-	local var_3_0 = VersionActivityFixedHelper.getVersionActivityDungeonController()
-
-	arg_3_0:removeEventCb(var_3_0.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_3_0.onClickElement, arg_3_0)
-	arg_3_0:removeEventCb(var_3_0.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, arg_3_0.showBtnUI, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_3_0.onClickElement, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, arg_3_0.showBtnUI, arg_3_0)
 	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, arg_3_0._OnUpdateMapElementState, arg_3_0)
 	arg_3_0:addEventCb(GameSceneMgr.instance, SceneEventName.LoadingAnimEnd, arg_3_0.checkLoadingAndRefresh, arg_3_0)
 	arg_3_0._btncloseview:RemoveClickListener()
@@ -72,15 +66,15 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._btncloseviewOnClick(arg_4_0)
-	ViewMgr.instance:closeView(VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName())
+	ViewMgr.instance:closeView(VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(arg_4_0._bigVersion, arg_4_0._smallVersion))
 end
 
 function var_0_0._btnactivitystoreOnClick(arg_5_0)
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:openStoreView()
+	VersionActivityFixedHelper.getVersionActivityDungeonController(arg_5_0._bigVersion, arg_5_0._smallVersion).instance:openStoreView()
 end
 
 function var_0_0._btnactivitytaskOnClick(arg_6_0)
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:openTaskView()
+	VersionActivityFixedHelper.getVersionActivityDungeonController(arg_6_0._bigVersion, arg_6_0._smallVersion).instance:openTaskView()
 end
 
 function var_0_0._onEscBtnClick(arg_7_0)
@@ -111,7 +105,9 @@ function var_0_0._editableInitView(arg_11_0)
 	NavigateMgr.instance:addEscape(arg_11_0.viewName, arg_11_0._onEscBtnClick, arg_11_0)
 	TaskDispatcher.runRepeat(arg_11_0._everyMinuteCall, arg_11_0, TimeUtil.OneMinuteSecond)
 
-	local var_11_1 = VersionActivityFixedHelper.getVersionActivityDungeonTaskReddotId()
+	arg_11_0._bigVersion, arg_11_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+
+	local var_11_1 = VersionActivityFixedHelper.getVersionActivityDungeonTaskReddotId(arg_11_0._bigVersion, arg_11_0._smallVersion)
 
 	RedDotController.instance:addRedDot(arg_11_0._goTaskReddot, var_11_1)
 end
@@ -125,7 +121,7 @@ function var_0_0.onUpdateParam(arg_13_0)
 end
 
 function var_0_0.onOpen(arg_14_0)
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:onVersionActivityDungeonMapViewOpen()
+	VersionActivityFixedHelper.getVersionActivityDungeonController(arg_14_0._bigVersion, arg_14_0._smallVersion).instance:onVersionActivityDungeonMapViewOpen()
 	arg_14_0:refreshUI()
 end
 
@@ -140,7 +136,7 @@ function var_0_0.refreshUI(arg_16_0)
 end
 
 function var_0_0.refreshActivityCurrency(arg_17_0)
-	local var_17_0 = VersionActivityFixedHelper.getVersionActivityCurrencyType()
+	local var_17_0 = VersionActivityFixedHelper.getVersionActivityCurrencyType(arg_17_0._bigVersion, arg_17_0._smallVersion)
 	local var_17_1 = CurrencyModel.instance:getCurrency(var_17_0)
 	local var_17_2 = var_17_1 and var_17_1.quantity or 0
 
@@ -152,7 +148,7 @@ function var_0_0.onRefreshActivityState(arg_18_0, arg_18_1)
 end
 
 function var_0_0._onOpenView(arg_19_0, arg_19_1)
-	if arg_19_1 ~= VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName() then
+	if arg_19_1 ~= VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(arg_19_0._bigVersion, arg_19_0._smallVersion) then
 		return
 	end
 
@@ -165,18 +161,18 @@ end
 function var_0_0.hideBtnUI(arg_20_0)
 	arg_20_0.animator:Play("close", 0, 0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockMgr.instance:startBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum().BlockKey.MapViewPlayCloseAnim)
+	UIBlockMgr.instance:startBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_20_0._bigVersion, arg_20_0._smallVersion).BlockKey.MapViewPlayCloseAnim)
 	TaskDispatcher.runDelay(arg_20_0.playCloseAnimaDone, arg_20_0, var_0_3)
 end
 
 function var_0_0.playCloseAnimaDone(arg_21_0)
 	gohelper.setActive(arg_21_0._gotopright, false)
 	gohelper.setActive(arg_21_0._goswitchmodecontainer, false)
-	UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum().BlockKey.MapViewPlayCloseAnim)
+	UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_21_0._bigVersion, arg_21_0._smallVersion).BlockKey.MapViewPlayCloseAnim)
 end
 
 function var_0_0._onCloseView(arg_22_0, arg_22_1)
-	if arg_22_1 ~= VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName() then
+	if arg_22_1 ~= VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(arg_22_0._bigVersion, arg_22_0._smallVersion) then
 		return
 	end
 
@@ -192,12 +188,12 @@ function var_0_0.showBtnUI(arg_23_0)
 	gohelper.setActive(arg_23_0._goswitchmodecontainer, true)
 	arg_23_0.animator:Play("open", 0, 0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockMgr.instance:startBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum().BlockKey.MapViewPlayOpenAnim)
+	UIBlockMgr.instance:startBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_23_0._bigVersion, arg_23_0._smallVersion).BlockKey.MapViewPlayOpenAnim)
 	TaskDispatcher.runDelay(arg_23_0.playOpenAnimaDone, arg_23_0, var_0_3)
 end
 
 function var_0_0.playOpenAnimaDone(arg_24_0)
-	UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum().BlockKey.MapViewPlayOpenAnim)
+	UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_24_0._bigVersion, arg_24_0._smallVersion).BlockKey.MapViewPlayOpenAnim)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
@@ -222,7 +218,7 @@ function var_0_0.refreshMask(arg_28_0)
 end
 
 function var_0_0.refreshStoreRemainTime(arg_29_0)
-	local var_29_0 = VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.DungeonStore
+	local var_29_0 = VersionActivityFixedHelper.getVersionActivityEnum(arg_29_0._bigVersion, arg_29_0._smallVersion).ActivityId.DungeonStore
 	local var_29_1 = ActivityModel.instance:getActMO(var_29_0):getRealEndTimeStamp() - ServerTime.now()
 
 	if var_29_1 > TimeUtil.OneDaySecond then
@@ -252,8 +248,8 @@ function var_0_0.onClose(arg_31_0)
 	arg_31_0._showRewardView = false
 
 	TaskDispatcher.cancelTask(arg_31_0._everyMinuteCall, arg_31_0)
-	UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum().BlockKey.MapViewPlayOpenAnim)
-	UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum().BlockKey.MapViewPlayCloseAnim)
+	UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_31_0._bigVersion, arg_31_0._smallVersion).BlockKey.MapViewPlayOpenAnim)
+	UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_31_0._bigVersion, arg_31_0._smallVersion).BlockKey.MapViewPlayCloseAnim)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 

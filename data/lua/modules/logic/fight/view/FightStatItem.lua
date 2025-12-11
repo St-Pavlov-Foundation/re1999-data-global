@@ -109,7 +109,7 @@ function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
 			arg_4_0._txtName.text = var_4_8.name
 		end
 
-		if not var_4_2 and FightReplayModel.instance:isReplay() then
+		if not var_4_2 and FightDataHelper.stateMgr.isReplay then
 			local var_4_9, var_4_10 = HeroConfig.instance:getShowLevel(arg_4_0.entityMO.level)
 
 			arg_4_0._txtLv.text = string.format("<size=20>Lv.</size>%d", var_4_9)
@@ -465,16 +465,63 @@ function var_0_0.refreshAct191Info(arg_16_0)
 	local var_16_0 = arg_16_0.entityMO.modelId
 
 	if var_16_0 then
-		local var_16_1 = Activity191Config.instance:getRoleCoByNativeId(var_16_0, 1)
-
-		UISpriteSetMgr.instance:setCommonSprite(arg_16_0._career, "lssx_" .. tostring(var_16_1.career))
 		UISpriteSetMgr.instance:setAct174Sprite(arg_16_0._rare, "act191_collection_rolebg")
 		transformhelper.setLocalScale(arg_16_0._rare.gameObject.transform, 0.8, 0.8, 1)
-		UISpriteSetMgr.instance:setAct174Sprite(arg_16_0._front, "act174_roleframe_" .. var_16_1.quality)
-		gohelper.setActive(arg_16_0._front, true)
-		arg_16_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_16_1.skinId))
 
-		arg_16_0._txtName.text = var_16_1.name
+		if arg_16_0.entityMO:isAct191Boss() then
+			local var_16_1
+
+			for iter_16_0, iter_16_1 in ipairs(lua_activity191_assist_boss.configList) do
+				if iter_16_1.skinId == var_16_0 then
+					var_16_1 = iter_16_1
+
+					break
+				end
+			end
+
+			if var_16_1 then
+				local var_16_2 = Activity191Config.instance:getSummonCfg(var_16_1.bossId)
+
+				if var_16_2 then
+					UISpriteSetMgr.instance:setCommonSprite(arg_16_0._career, "lssx_" .. tostring(var_16_2.career))
+					arg_16_0._heroIcon:LoadImage(ResUrl.monsterHeadIcon(var_16_2.headIcon))
+
+					arg_16_0._txtName.text = var_16_2.name
+				end
+			else
+				logError(string.format("斗蛐蛐协战Boss表 skinId : %s 找不到对应配置", var_16_0))
+			end
+		else
+			local var_16_3 = Activity191Config.instance:getRoleCoByNativeId(var_16_0, 1, true)
+
+			if var_16_3 then
+				UISpriteSetMgr.instance:setCommonSprite(arg_16_0._career, "lssx_" .. tostring(var_16_3.career))
+				UISpriteSetMgr.instance:setAct174Sprite(arg_16_0._front, "act174_roleframe_" .. var_16_3.quality)
+				gohelper.setActive(arg_16_0._front, true)
+				arg_16_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_16_3.skinId))
+
+				arg_16_0._txtName.text = var_16_3.name
+			else
+				local var_16_4
+
+				for iter_16_2, iter_16_3 in ipairs(lua_activity191_summon.configList) do
+					if iter_16_3.monsterId == var_16_0 then
+						var_16_4 = iter_16_3
+
+						break
+					end
+				end
+
+				if var_16_4 then
+					UISpriteSetMgr.instance:setCommonSprite(arg_16_0._career, "lssx_" .. tostring(var_16_4.career))
+					arg_16_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_16_4.headIcon))
+
+					arg_16_0._txtName.text = var_16_4.name
+				else
+					logError(string.format("斗蛐蛐召唤物表 monsterId : %s 找不到对应配置", var_16_0))
+				end
+			end
+		end
 	end
 end
 

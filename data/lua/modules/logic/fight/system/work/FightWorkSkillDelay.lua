@@ -10,7 +10,7 @@ function var_0_0.onStart(arg_2_0)
 	local var_2_0 = lua_fight_skill_delay.configDict[arg_2_0.fightStepData.actId]
 
 	if var_2_0 then
-		if FightReplayModel.instance:isReplay() then
+		if FightDataHelper.stateMgr.isReplay then
 			arg_2_0:onDone(true)
 		else
 			TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, var_2_0.delay / 1000 / FightModel.instance:getSpeed())

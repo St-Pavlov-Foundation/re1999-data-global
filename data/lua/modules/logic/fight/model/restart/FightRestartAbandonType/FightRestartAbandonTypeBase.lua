@@ -47,7 +47,7 @@ function var_0_0.episodeCostIsEnough(arg_1_0)
 				GameFacade.showMessageBox(arg_1_0._box_type, MsgBoxEnum.BoxType.Yes_No, function()
 					GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_1_2, var_1_1.name)
 				end, function()
-					FightSystem.instance:cancelRestart()
+					FightGameMgr.restartMgr:cancelRestart()
 				end, nil, nil, nil, nil, arg_1_0._cost_item_config.name)
 
 				return false
@@ -74,14 +74,14 @@ function var_0_0.confirmNotice(arg_4_0)
 
 		arg_4_0:startAbandon()
 	end, function()
-		FightSystem.instance:cancelRestart()
+		FightGameMgr.restartMgr:cancelRestart()
 	end, nil, nil, nil, nil, var_4_0)
 end
 
 function var_0_0._onPushEndFight(arg_7_0)
 	arg_7_0.IS_DEAD = true
 
-	FightSystem.instance:cancelRestart()
+	FightGameMgr.restartMgr:cancelRestart()
 
 	if arg_7_0._box_type then
 		ViewMgr.instance:closeView(ViewName.MessageBoxView)

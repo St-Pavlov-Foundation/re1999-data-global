@@ -142,6 +142,12 @@ function var_0_0.start(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
 	local var_13_8 = GameChannelConfig.getServerType()
 
 	arg_13_0._eventMgrInst:StartUpdate(var_13_0, var_13_1, var_13_2, var_13_3, var_13_8, var_13_4, var_13_5, var_13_6, var_13_7)
+
+	if not arg_13_0._tipsGetter then
+		arg_13_0._tipsGetter = HotUpdateTipsHttpGetter.New()
+	end
+
+	arg_13_0._tipsGetter:start(arg_13_0._onHotUpdateTipsHttpResult, arg_13_0)
 end
 
 function var_0_0.stop(arg_14_0)

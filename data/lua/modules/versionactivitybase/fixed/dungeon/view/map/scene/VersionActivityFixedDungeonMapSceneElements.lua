@@ -31,11 +31,8 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnDisposeOldMap, arg_2_0.onDisposeOldMap, arg_2_0)
 	arg_2_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnDisposeScene, arg_2_0.onDisposeScene, arg_2_0)
 	arg_2_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnChangeMap, arg_2_0.onChangeMap, arg_2_0)
-
-	local var_2_0 = VersionActivityFixedHelper.getVersionActivityDungeonController()
-
-	arg_2_0:addEventCb(var_2_0.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_2_0.onClickElement, arg_2_0)
-	arg_2_0:addEventCb(var_2_0.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, arg_2_0.onHideInteractUI, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_2_0.onClickElement, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, arg_2_0.onHideInteractUI, arg_2_0)
 	arg_2_0._click:AddClickUpListener(arg_2_0.onClickUp, arg_2_0)
 	arg_2_0._click:AddClickDownListener(arg_2_0.onClickDown, arg_2_0)
 	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.showNewElements, arg_2_0)
@@ -55,11 +52,8 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeEventCb(DungeonController.instance, DungeonMapElementEvent.OnDisposeOldMap, arg_3_0.onDisposeOldMap, arg_3_0)
 	arg_3_0:removeEventCb(DungeonController.instance, DungeonMapElementEvent.OnDisposeScene, arg_3_0.onDisposeScene, arg_3_0)
 	arg_3_0:removeEventCb(DungeonController.instance, DungeonMapElementEvent.OnChangeMap, arg_3_0.onChangeMap, arg_3_0)
-
-	local var_3_0 = VersionActivityFixedHelper.getVersionActivityDungeonController()
-
-	arg_3_0:removeEventCb(var_3_0.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_3_0.onClickElement, arg_3_0)
-	arg_3_0:removeEventCb(var_3_0.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, arg_3_0.onHideInteractUI, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_3_0.onClickElement, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, arg_3_0.onHideInteractUI, arg_3_0)
 	arg_3_0._click:RemoveClickUpListener()
 	arg_3_0._click:RemoveClickDownListener()
 	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.showNewElements, arg_3_0)
@@ -74,7 +68,7 @@ function var_0_0._editableInitView(arg_4_0)
 end
 
 function var_0_0.onOpen(arg_5_0)
-	return
+	arg_5_0._bigVersion, arg_5_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 end
 
 function var_0_0.onGamepadKeyDown(arg_6_0, arg_6_1)
@@ -89,7 +83,7 @@ function var_0_0.onGamepadKeyDown(arg_6_0, arg_6_1)
 
 	for iter_6_0 = 0, var_6_3 do
 		local var_6_4 = var_6_2[iter_6_0]
-		local var_6_5 = VersionActivityFixedHelper.getVersionActivityDungeonMapElement()
+		local var_6_5 = VersionActivityFixedHelper.getVersionActivityDungeonMapElement(arg_6_0._bigVersion, arg_6_0._smallVersion)
 		local var_6_6 = MonoHelper.getLuaComFromGo(var_6_4.transform.parent.gameObject, var_6_5)
 
 		if var_6_6 then
@@ -197,6 +191,10 @@ function var_0_0.onRemoveElement(arg_20_0, arg_20_1)
 		arg_20_0:showNewElements()
 	else
 		arg_20_0._needRemoveElementId = arg_20_1
+
+		if lua_chapter_map_element.configDict[arg_20_1].type == DungeonEnum.ElementType.EnterDialogue then
+			DungeonController.instance:dispatchEvent(DungeonEvent.EndShowRewardView)
+		end
 	end
 
 	local var_20_0 = arg_20_0._arrowList[arg_20_1]
@@ -221,7 +219,7 @@ function var_0_0._removeElement(arg_21_0, arg_21_1)
 		arg_21_0._elementCompPoolDict[arg_21_1] = var_21_0
 	end
 
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnRemoveElement, var_21_0)
+	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnRemoveElement, var_21_0)
 end
 
 function var_0_0.showNewElements(arg_22_0)
@@ -286,13 +284,13 @@ function var_0_0._showElementAnim(arg_23_0, arg_23_1, arg_23_2)
 	arg_23_0._showSequence:registerDoneListener(arg_23_0._stopShowSequence, arg_23_0)
 	arg_23_0._showSequence:start()
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockMgr.instance:startBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum().BlockKey.FocusNewElement)
+	UIBlockMgr.instance:startBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_23_0._bigVersion, arg_23_0._smallVersion).BlockKey.FocusNewElement)
 end
 
 function var_0_0._doFocusElement(arg_24_0)
 	local var_24_0 = arg_24_0[2]
 
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:dispatchEvent(VersionActivityFixedDungeonEvent.FocusElement, var_24_0, true)
+	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.FocusElement, var_24_0, true)
 end
 
 function var_0_0._doAddElement(arg_25_0)
@@ -344,7 +342,7 @@ function var_0_0._addElement(arg_28_0, arg_28_1)
 
 		gohelper.addChild(arg_28_0._elementRoot, var_28_1)
 
-		local var_28_2 = VersionActivityFixedHelper.getVersionActivityDungeonMapElement()
+		local var_28_2 = VersionActivityFixedHelper.getVersionActivityDungeonMapElement(arg_28_0._bigVersion, arg_28_0._smallVersion)
 
 		var_28_0 = MonoHelper.addLuaComOnceToGo(var_28_1, var_28_2, {
 			arg_28_1,
@@ -378,7 +376,7 @@ function var_0_0._addElement(arg_28_0, arg_28_1)
 		arg_28_0:_updateArrow(var_28_0)
 	end
 
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnAddOneElement, var_28_0)
+	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnAddOneElement, var_28_0)
 end
 
 function var_0_0.showElements(arg_29_0)
@@ -435,14 +433,14 @@ function var_0_0.recycleAllElements(arg_30_0)
 		tabletool.clear(arg_30_0._elementCompDict)
 	end
 
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnRecycleAllElement)
+	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnRecycleAllElement)
 end
 
 function var_0_0._arrowClick(arg_31_0, arg_31_1)
 	arg_31_0.mouseDownElement = nil
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_element_arrow_click)
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:dispatchEvent(VersionActivityFixedDungeonEvent.FocusElement, arg_31_1)
+	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.FocusElement, arg_31_1)
 end
 
 function var_0_0._updateArrow(arg_32_0, arg_32_1)
@@ -572,7 +570,7 @@ function var_0_0._stopShowSequence(arg_38_0)
 
 		arg_38_0._showSequence = nil
 
-		UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum().BlockKey.FocusNewElement)
+		UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_38_0._bigVersion, arg_38_0._smallVersion).BlockKey.FocusNewElement)
 	end
 end
 

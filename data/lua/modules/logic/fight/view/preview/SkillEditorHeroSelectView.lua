@@ -18,11 +18,13 @@ function var_0_0.onInitView(arg_2_0)
 	arg_2_0._selectMonsterImg = gohelper.findChild(arg_2_0.viewGO, "selectHeros/btnGroup/btnSelectMonster/imgSelect")
 	arg_2_0._selectMonsterGroupImg = gohelper.findChild(arg_2_0.viewGO, "selectHeros/btnGroup/btnSelectMonsterGroup/imgSelect")
 	arg_2_0._selectSubHeroImg = gohelper.findChild(arg_2_0.viewGO, "selectHeros/btnGroup/btnSelectSubHero/imgSelect")
+	arg_2_0._selectMonsterIdImg = gohelper.findChild(arg_2_0.viewGO, "selectHeros/btnGroup/btnSelectMonsterId/imgSelect")
 	arg_2_0._btnClose = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_2_0.viewGO, "selectHeros/btnClose")
 	arg_2_0._btnSelectHero = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_2_0.viewGO, "selectHeros/btnGroup/btnSelectHero")
 	arg_2_0._btnSelectSubHero = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_2_0.viewGO, "selectHeros/btnGroup/btnSelectSubHero")
 	arg_2_0._btnSelectMonster = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_2_0.viewGO, "selectHeros/btnGroup/btnSelectMonster")
 	arg_2_0._btnSelectMonsterGroup = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_2_0.viewGO, "selectHeros/btnGroup/btnSelectMonsterGroup")
+	arg_2_0._btnSelectMonsterId = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_2_0.viewGO, "selectHeros/btnGroup/btnSelectMonsterId")
 	arg_2_0._btncountAdd = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_2_0.viewGO, "selectHeros/btnGroup/btnSelectHero/imgSelect/btnAdd")
 	arg_2_0._btncountMinus = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_2_0.viewGO, "selectHeros/btnGroup/btnSelectHero/imgSelect/btnMinus")
 	arg_2_0._btnMonsterCountAdd = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_2_0.viewGO, "selectHeros/btnGroup/btnSelectMonster/imgSelect/btnAdd")
@@ -42,6 +44,7 @@ function var_0_0.addEvents(arg_3_0)
 	arg_3_0._btnSelectSubHero:AddClickListener(arg_3_0._onClickSelectSubHero, arg_3_0)
 	arg_3_0._btnSelectMonster:AddClickListener(arg_3_0._onClickSelectMonster, arg_3_0)
 	arg_3_0._btnSelectMonsterGroup:AddClickListener(arg_3_0._onClickSelectMonsterGroup, arg_3_0)
+	arg_3_0._btnSelectMonsterId:AddClickListener(arg_3_0._onClickSelectMonsterId, arg_3_0)
 	arg_3_0._btncountAdd:AddClickListener(arg_3_0._onClickAdd, arg_3_0)
 	arg_3_0._btncountMinus:AddClickListener(arg_3_0._onClickMinus, arg_3_0)
 	arg_3_0._btnMonsterCountAdd:AddClickListener(arg_3_0._onClickAdd, arg_3_0)
@@ -61,6 +64,7 @@ function var_0_0.removeEvents(arg_4_0)
 	arg_4_0._btnSelectSubHero:RemoveClickListener()
 	arg_4_0._btnSelectMonster:RemoveClickListener()
 	arg_4_0._btnSelectMonsterGroup:RemoveClickListener()
+	arg_4_0._btnSelectMonsterId:RemoveClickListener()
 	arg_4_0._btncountAdd:RemoveClickListener()
 	arg_4_0._btncountMinus:RemoveClickListener()
 	arg_4_0._btnMonsterCountAdd:RemoveClickListener()
@@ -156,65 +160,76 @@ function var_0_0._onClickSelectMonsterGroup(arg_13_0)
 	arg_13_0:_updateItemSelect()
 end
 
-function var_0_0._openAutoPlaySkillTool(arg_14_0)
-	arg_14_0._isOpenAutoSkillTool = not arg_14_0._isOpenAutoSkillTool
+function var_0_0._onClickSelectMonsterId(arg_14_0)
+	arg_14_0:_btnStateChange(arg_14_0._btnSelectMonsterId.gameObject)
 
-	gohelper.setActive(arg_14_0._goAutoPlaySkill, arg_14_0._isOpenAutoSkillTool)
+	arg_14_0._selectType = SkillEditorMgr.SelectType.MonsterId
+
+	arg_14_0:_updateItems()
+	arg_14_0:_updateTypeSelect()
+	arg_14_0:_updateItemSelect()
 end
 
-function var_0_0._onClickAdd(arg_15_0)
-	local var_15_0, var_15_1 = SkillEditorMgr.instance:getTypeInfo(arg_15_0._side)
+function var_0_0._openAutoPlaySkillTool(arg_15_0)
+	arg_15_0._isOpenAutoSkillTool = not arg_15_0._isOpenAutoSkillTool
 
-	if (SkillEditorHeroSelectModel.instance.side == FightEnum.EntitySide.MySide and SkillEditorMgr.instance.stance_count_limit or SkillEditorMgr.instance.enemy_stance_count_limit) > #var_15_1.ids then
-		table.insert(var_15_1.ids, var_15_1.ids[1])
-		table.insert(var_15_1.skinIds, var_15_1.skinIds[1])
-		SkillEditorMgr.instance:refreshInfo(arg_15_0._side)
-		SkillEditorMgr.instance:rebuildEntitys(arg_15_0._side)
-	end
+	gohelper.setActive(arg_15_0._goAutoPlaySkill, arg_15_0._isOpenAutoSkillTool)
 end
 
-function var_0_0._onClickMinus(arg_16_0)
+function var_0_0._onClickAdd(arg_16_0)
 	local var_16_0, var_16_1 = SkillEditorMgr.instance:getTypeInfo(arg_16_0._side)
 
-	if #var_16_1.ids > 1 then
-		table.remove(var_16_1.ids, #var_16_1.ids)
-		table.remove(var_16_1.skinIds, #var_16_1.ids)
+	if (SkillEditorHeroSelectModel.instance.side == FightEnum.EntitySide.MySide and SkillEditorMgr.instance.stance_count_limit or SkillEditorMgr.instance.enemy_stance_count_limit) > #var_16_1.ids then
+		table.insert(var_16_1.ids, var_16_1.ids[1])
+		table.insert(var_16_1.skinIds, var_16_1.skinIds[1])
 		SkillEditorMgr.instance:refreshInfo(arg_16_0._side)
 		SkillEditorMgr.instance:rebuildEntitys(arg_16_0._side)
 	end
 end
 
-function var_0_0._updateItems(arg_17_0)
-	SkillEditorHeroSelectModel.instance:setSelect(arg_17_0._side, arg_17_0._selectType, arg_17_0._stancePosId, arg_17_0._inp:GetText())
+function var_0_0._onClickMinus(arg_17_0)
+	local var_17_0, var_17_1 = SkillEditorMgr.instance:getTypeInfo(arg_17_0._side)
+
+	if #var_17_1.ids > 1 then
+		table.remove(var_17_1.ids, #var_17_1.ids)
+		table.remove(var_17_1.skinIds, #var_17_1.ids)
+		SkillEditorMgr.instance:refreshInfo(arg_17_0._side)
+		SkillEditorMgr.instance:rebuildEntitys(arg_17_0._side)
+	end
 end
 
-function var_0_0._updateTypeSelect(arg_18_0)
-	gohelper.setActive(arg_18_0._selectHeroImg, arg_18_0._selectType == SkillEditorMgr.SelectType.Hero)
-	gohelper.setActive(arg_18_0._selectMonsterImg, arg_18_0._selectType == SkillEditorMgr.SelectType.Monster)
-	gohelper.setActive(arg_18_0._selectMonsterGroupImg, arg_18_0._selectType == SkillEditorMgr.SelectType.Group)
-	gohelper.setActive(arg_18_0._btnclearsub.gameObject, arg_18_0._selectType == SkillEditorMgr.SelectType.SubHero)
-	gohelper.setActive(arg_18_0._selectSubHeroImg, arg_18_0._selectType == SkillEditorMgr.SelectType.SubHero)
+function var_0_0._updateItems(arg_18_0)
+	SkillEditorHeroSelectModel.instance:setSelect(arg_18_0._side, arg_18_0._selectType, arg_18_0._stancePosId, arg_18_0._inp:GetText())
 end
 
-function var_0_0._updateItemSelect(arg_19_0)
-	local var_19_0 = SkillEditorHeroSelectModel.instance:getList()
-	local var_19_1, var_19_2 = SkillEditorMgr.instance:getTypeInfo(arg_19_0._side)
+function var_0_0._updateTypeSelect(arg_19_0)
+	gohelper.setActive(arg_19_0._selectHeroImg, arg_19_0._selectType == SkillEditorMgr.SelectType.Hero)
+	gohelper.setActive(arg_19_0._selectMonsterImg, arg_19_0._selectType == SkillEditorMgr.SelectType.Monster)
+	gohelper.setActive(arg_19_0._selectMonsterGroupImg, arg_19_0._selectType == SkillEditorMgr.SelectType.Group)
+	gohelper.setActive(arg_19_0._btnclearsub.gameObject, arg_19_0._selectType == SkillEditorMgr.SelectType.SubHero)
+	gohelper.setActive(arg_19_0._selectSubHeroImg, arg_19_0._selectType == SkillEditorMgr.SelectType.SubHero)
+	gohelper.setActive(arg_19_0._selectMonsterIdImg, arg_19_0._selectType == SkillEditorMgr.SelectType.MonsterId)
+end
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-		local var_19_3 = iter_19_1.co
-		local var_19_4 = arg_19_0._stancePosId or 1
+function var_0_0._updateItemSelect(arg_20_0)
+	local var_20_0 = SkillEditorHeroSelectModel.instance:getList()
+	local var_20_1, var_20_2 = SkillEditorMgr.instance:getTypeInfo(arg_20_0._side)
 
-		if var_19_2.ids[var_19_4] == var_19_3.id then
-			if var_19_2.skinIds[var_19_4] == var_19_3.skinId then
-				SkillEditorHeroSelectModel.instance:selectCell(iter_19_1.id, true)
+	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
+		local var_20_3 = iter_20_1.co
+		local var_20_4 = arg_20_0._stancePosId or 1
+
+		if var_20_2.ids[var_20_4] == var_20_3.id then
+			if var_20_2.skinIds[var_20_4] == var_20_3.skinId then
+				SkillEditorHeroSelectModel.instance:selectCell(iter_20_1.id, true)
 			end
-		elseif var_19_2.groupId == var_19_3.id then
-			SkillEditorHeroSelectModel.instance:selectCell(iter_19_1.id, true)
+		elseif var_20_2.groupId == var_20_3.id then
+			SkillEditorHeroSelectModel.instance:selectCell(iter_20_1.id, true)
 		end
 	end
 end
 
-function var_0_0._clearSubHero(arg_20_0)
+function var_0_0._clearSubHero(arg_21_0)
 	SkillEditorMgr.instance:clearSubHero()
 end
 

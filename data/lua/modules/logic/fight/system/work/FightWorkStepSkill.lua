@@ -121,6 +121,11 @@ function var_0_0._playSkill(arg_8_0, arg_8_1)
 		if var_8_0 then
 			var_8_0:registFinishCallback(arg_8_0.onWorkTimelineFinish, arg_8_0)
 			TaskDispatcher.cancelTask(arg_8_0._delayDone, arg_8_0)
+
+			if FightScene.ios3GBMemory and (FightDataHelper.fieldMgr.episodeId == SurvivalConst.Shelter_EpisodeId or FightDataHelper.fieldMgr.episodeId == SurvivalConst.Survival_EpisodeId) and (var_8_0.timelineName == "ndk_312002_unique_1" or var_8_0.timelineName == "ndk_312002_unique_1ex") then
+				FightHelper.clearNoUseEffect()
+			end
+
 			var_8_0:start()
 		else
 			arg_8_0:onDone(true)

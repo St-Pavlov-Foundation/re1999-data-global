@@ -235,6 +235,20 @@ function var_0_0.onReceiveHeroStoryDispatchCompleteReply(arg_26_0, arg_26_1, arg
 	arg_26_0:sendGetHeroStoryRequest()
 end
 
+function var_0_0.sendHeroStoryPlotFinishRequest(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	local var_27_0 = HeroStoryModule_pb.HeroStoryPlotFinishRequest()
+
+	var_27_0.plot = arg_27_1
+
+	return arg_27_0:sendMsg(var_27_0, arg_27_2, arg_27_3)
+end
+
+function var_0_0.onReceiveHeroStoryPlotFinishReply(arg_28_0, arg_28_1, arg_28_2)
+	if arg_28_1 ~= 0 then
+		return
+	end
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

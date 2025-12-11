@@ -25,7 +25,7 @@ end
 function var_0_0.initNpc(arg_3_0)
 	arg_3_0.goNpc = gohelper.findChild(arg_3_0.goRoot, "#go_npc")
 	arg_3_0.imgNpcQuality = gohelper.findChildImage(arg_3_0.goNpc, "top/middle/npc/#image_quality")
-	arg_3_0.imgNpcChess = gohelper.findChildImage(arg_3_0.goNpc, "top/middle/npc/#image_chess")
+	arg_3_0.imgNpcChess = gohelper.findChildSingleImage(arg_3_0.goNpc, "top/middle/npc/#image_chess")
 	arg_3_0.txtNpcName = gohelper.findChildTextMesh(arg_3_0.goNpc, "top/middle/npc/#txt_name")
 	arg_3_0.goNpcReset = gohelper.findChild(arg_3_0.goNpc, "top/left/rest")
 	arg_3_0.btnNpcLeave = gohelper.findChildButtonWithAudio(arg_3_0.goNpc, "bottom/#btn_leave")
@@ -153,7 +153,7 @@ function var_0_0.onClickBtnBuildLevup(arg_16_0)
 	end
 
 	local var_16_2 = SurvivalConfig.instance:getBuildingConfig(var_16_1.buildingId, var_16_1.level + 1, true)
-	local var_16_3, var_16_4, var_16_5, var_16_6 = var_16_0.bag:costIsEnough(var_16_2.lvUpCost, var_16_1, SurvivalEnum.AttrType.BuildCost)
+	local var_16_3, var_16_4, var_16_5, var_16_6 = var_16_0:getBag(SurvivalEnum.ItemSource.Shelter):costIsEnough(var_16_2.lvUpCost, var_16_1, SurvivalEnum.AttrType.BuildCost)
 
 	if not var_16_3 then
 		local var_16_7 = lua_survival_item.configDict[var_16_4]
@@ -175,7 +175,7 @@ function var_0_0.onClickBtnBuild(arg_17_0)
 	end
 
 	local var_17_2 = SurvivalConfig.instance:getBuildingConfig(var_17_1.buildingId, var_17_1.level + 1, true)
-	local var_17_3, var_17_4, var_17_5, var_17_6 = var_17_0.bag:costIsEnough(var_17_2.lvUpCost, var_17_1, SurvivalEnum.AttrType.BuildCost)
+	local var_17_3, var_17_4, var_17_5, var_17_6 = var_17_0:getBag(SurvivalEnum.ItemSource.Shelter):costIsEnough(var_17_2.lvUpCost, var_17_1, SurvivalEnum.AttrType.BuildCost)
 
 	if not var_17_3 then
 		local var_17_7 = lua_survival_item.configDict[var_17_4]
@@ -197,7 +197,7 @@ function var_0_0.onClickBtnBuildRepair(arg_18_0)
 	end
 
 	local var_18_2 = SurvivalConfig.instance:getBuildingConfig(var_18_1.buildingId, var_18_1.level, true)
-	local var_18_3, var_18_4, var_18_5, var_18_6 = var_18_0.bag:costIsEnough(var_18_2.repairCost, var_18_1, SurvivalEnum.AttrType.RepairCost)
+	local var_18_3, var_18_4, var_18_5, var_18_6 = var_18_0:getBag(SurvivalEnum.ItemSource.Shelter):costIsEnough(var_18_2.repairCost, var_18_1, SurvivalEnum.AttrType.RepairCost)
 
 	if not var_18_3 then
 		local var_18_7 = lua_survival_item.configDict[var_18_4]
@@ -346,7 +346,7 @@ function var_0_0.refreshBuildCost(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
 	else
 		gohelper.setActive(arg_25_0.goBuildCost, true)
 
-		local var_25_0, var_25_1, var_25_2, var_25_3 = SurvivalShelterModel.instance:getWeekInfo().bag:costIsEnough(arg_25_1, arg_25_2, arg_25_3)
+		local var_25_0, var_25_1, var_25_2, var_25_3 = SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Shelter):costIsEnough(arg_25_1, arg_25_2, arg_25_3)
 
 		if var_25_0 then
 			arg_25_0.txtBuildCost.text = string.format("%s/%s", var_25_3, var_25_2)
@@ -383,7 +383,7 @@ function var_0_0.refreshNpc(arg_26_0)
 
 	arg_26_0.txtNpcName.text = var_26_5.name
 
-	UISpriteSetMgr.instance:setV2a2ChessSprite(arg_26_0.imgNpcChess, var_26_5.headIcon)
+	SurvivalUnitIconHelper.instance:setNpcIcon(arg_26_0.imgNpcChess, var_26_5.headIcon)
 	UISpriteSetMgr.instance:setSurvivalSprite(arg_26_0.imgNpcQuality, string.format("survival_bag_itemquality2_%s", var_26_5.rare))
 
 	arg_26_0.txtNpcInfo.text = var_26_5.npcDesc
@@ -436,7 +436,7 @@ function var_0_0._refreshNpcOnlyConfig(arg_28_0)
 		arg_28_0.txtNpcName.text = var_28_0.name
 
 		if not string.nilorempty(var_28_0.headIcon) then
-			UISpriteSetMgr.instance:setV2a2ChessSprite(arg_28_0.imgNpcChess, var_28_0.headIcon)
+			SurvivalUnitIconHelper.instance:setNpcIcon(arg_28_0.imgNpcChess, var_28_0.headIcon)
 		end
 
 		UISpriteSetMgr.instance:setSurvivalSprite(arg_28_0.imgNpcQuality, string.format("survival_bag_itemquality2_%s", var_28_0.rare))

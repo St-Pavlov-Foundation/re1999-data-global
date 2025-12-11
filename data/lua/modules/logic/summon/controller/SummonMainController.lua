@@ -67,6 +67,8 @@ function var_0_0.openSummonView(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
 	if SummonMainModel.equipPoolIsValid() and SummonModel.instance:getFreeEquipSummon() then
 		SummonController.instance:dispatchEvent(SummonEvent.GuideEquipPool)
 	end
+
+	SummonModel.instance:clearCacheReward()
 end
 
 function var_0_0.trySetDefaultPoolId(arg_6_0, arg_6_1)
@@ -266,6 +268,51 @@ function var_0_0.openpPogressRewardView(arg_15_0, arg_15_1)
 	ViewMgr.instance:openView(ViewName.SummonPoolPogressRewardView, {
 		poolId = arg_15_1
 	})
+end
+
+function var_0_0.openSummonConfirmView(arg_16_0, arg_16_1)
+	arg_16_0:setDiamondEnoughTipCb(arg_16_1)
+
+	if not arg_16_0:canShowMessageOptionBoxView() then
+		arg_16_0:checkFreeDiamondEnough(arg_16_1)
+
+		return
+	end
+
+	ViewMgr.instance:openView(ViewName.SummonConfirmView, arg_16_1)
+end
+
+function var_0_0.canShowMessageOptionBoxView(arg_17_0)
+	local var_17_0 = arg_17_0:getOptionLocalKey()
+
+	return (TimeUtil.getDayFirstLoginRed(var_17_0))
+end
+
+function var_0_0.getOptionLocalKey(arg_18_0)
+	return string.format("SummonConfirmView#%s", tostring(PlayerModel.instance:getPlayinfo().userId))
+end
+
+function var_0_0.checkFreeDiamondEnough(arg_19_0, arg_19_1)
+	if arg_19_1.notEnough then
+		local var_19_0 = SummonMainModel.getCurrencyByCost(arg_19_1.type, arg_19_1.id)
+
+		CurrencyController.instance:checkFreeDiamondEnoughDaily(arg_19_1.cost_quantity, CurrencyEnum.PayDiamondExchangeSource.Summon, true, arg_19_1.callback, arg_19_1.callbackObj, nil, nil, arg_19_1.miss_quantity, var_19_0, arg_19_1.noCallback, arg_19_1.noCallbackObj)
+	elseif arg_19_1.callback and arg_19_1.callbackObj then
+		callWithCatch(arg_19_1.callback, arg_19_1.callbackObj)
+	end
+end
+
+function var_0_0.setDiamondEnoughTipCb(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_1.callback
+	local var_20_1 = arg_20_1.callbackObj
+
+	function arg_20_1.callback()
+		if var_20_0 and var_20_1 then
+			callWithCatch(var_20_0, var_20_1)
+		end
+
+		GameFacade.showToast(ToastEnum.ExchangeDiamondSummon, arg_20_1.miss_quantity)
+	end
 end
 
 var_0_0.instance = var_0_0.New()

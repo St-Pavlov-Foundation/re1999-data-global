@@ -86,6 +86,8 @@ function var_0_0._getVisibleList(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, ar
 			var_2_2 = arg_2_1 == iter_2_1
 		elseif arg_2_4 == 4 then
 			var_2_2 = arg_2_1 ~= iter_2_1 and not tabletool.indexOf(arg_2_2, iter_2_1)
+		elseif arg_2_4 == 5 then
+			var_2_2 = iter_2_1.id ~= arg_2_7.toId
 		end
 
 		if var_2_2 then

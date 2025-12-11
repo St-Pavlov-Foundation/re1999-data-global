@@ -117,5 +117,131 @@
     "random": 0,
     "selectNum": 3,
     "desc": "language_10073028"
+  },
+  {
+    "ruleId": 2011,
+    "node": 1,
+    "random": 0,
+    "selectNum": 1,
+    "desc": "language_10090434"
+  },
+  {
+    "ruleId": 2011,
+    "node": 2,
+    "random": 1,
+    "selectNum": 2,
+    "desc": "language_10073025"
+  },
+  {
+    "ruleId": 2011,
+    "node": 3,
+    "random": 0,
+    "selectNum": 2,
+    "desc": "language_10073026"
+  },
+  {
+    "ruleId": 2011,
+    "node": 4,
+    "random": 1,
+    "selectNum": 2,
+    "desc": "language_10073027"
+  },
+  {
+    "ruleId": 2011,
+    "node": 5,
+    "random": 0,
+    "selectNum": 2,
+    "desc": "language_10073028"
+  },
+  {
+    "ruleId": 2021,
+    "node": 1,
+    "random": 0,
+    "selectNum": 1,
+    "desc": "language_10090434"
+  },
+  {
+    "ruleId": 2021,
+    "node": 2,
+    "random": 1,
+    "selectNum": 3,
+    "desc": "language_10073025"
+  },
+  {
+    "ruleId": 2021,
+    "node": 3,
+    "random": 0,
+    "selectNum": 3,
+    "desc": "language_10073026"
+  },
+  {
+    "ruleId": 2021,
+    "node": 4,
+    "random": 1,
+    "selectNum": 3,
+    "desc": "language_10073027"
+  },
+  {
+    "ruleId": 2021,
+    "node": 5,
+    "random": 0,
+    "selectNum": 3,
+    "desc": "language_10073028"
+  },
+  {
+    "ruleId": 3031,
+    "node": 1,
+    "random": 0,
+    "selectNum": 1,
+    "desc": "language_10073029"
+  },
+  {
+    "ruleId": 3031,
+    "node": 2,
+    "random": 1,
+    "selectNum": 3,
+    "desc": "language_10073025"
+  },
+  {
+    "ruleId": 3031,
+    "node": 3,
+    "random": 0,
+    "selectNum": 3,
+    "desc": "language_10073026"
+  },
+  {
+    "ruleId": 3031,
+    "node": 4,
+    "random": 1,
+    "selectNum": 3,
+    "desc": "language_10073027"
+  },
+  {
+    "ruleId": 3031,
+    "node": 5,
+    "random": 1,
+    "selectNum": 2,
+    "desc": "language_10090435"
+  },
+  {
+    "ruleId": 3031,
+    "node": 6,
+    "random": 0,
+    "selectNum": 3,
+    "desc": "language_10073028"
+  },
+  {
+    "ruleId": 3031,
+    "node": 7,
+    "random": 0,
+    "selectNum": 3,
+    "desc": "language_10073028"
+  },
+  {
+    "ruleId": 3031,
+    "node": 8,
+    "random": 0,
+    "selectNum": 3,
+    "desc": "language_10073028"
   }
 ]

@@ -57,9 +57,9 @@ var_0_0.HandbookSkinShowRedDotMap = {
 }
 var_0_0.Live2DSkin = {
 	[302504] = {
-		spineAsset = "roles_bust/v1a9_xtxx_skinstore/xtxx_skinstore.prefab",
-		scale = "1",
-		pos = "0,0"
+		spineAsset = "roles_bust/v3a1_302504_skinsuit/302504_skinsuit.prefab",
+		scale = "1.55",
+		pos = "0,-60"
 	},
 	[306604] = {
 		pos = "95,15",

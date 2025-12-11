@@ -52,6 +52,8 @@ function var_0_0.onReceiveNewOrderReply(arg_4_0, arg_4_1, arg_4_2)
 end
 
 function var_0_0.onReceiveOrderCompletePush(arg_5_0, arg_5_1, arg_5_2)
+	ChargePushStatController.instance:statPayFinished(arg_5_1, arg_5_2)
+
 	if arg_5_1 == 0 then
 		local var_5_0 = arg_5_2.id
 

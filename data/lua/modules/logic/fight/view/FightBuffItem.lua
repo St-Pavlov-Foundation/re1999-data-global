@@ -40,7 +40,7 @@ function var_0_0.setClickCallback(arg_4_0, arg_4_1, arg_4_2)
 end
 
 function var_0_0._onClick(arg_5_0)
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 

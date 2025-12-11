@@ -1180,5 +1180,23 @@
     "fromAct": "idle",
     "endAct": "posture",
     "transitionAct": "change"
+  },
+  {
+    "id": 312501,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 312502,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 309504,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "0"
   }
 ]

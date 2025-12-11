@@ -8,6 +8,7 @@ function var_0_0._createAllComps(arg_1_0)
 	arg_1_0:_addComp("camera", SurvivalSceneCameraComp)
 	arg_1_0:_addComp("director", SurvivalSceneDirector)
 	arg_1_0:_addComp("block", SurvivalSceneMapBlock)
+	arg_1_0:_addComp("spBlock", SurvivalSceneMapSpBlock)
 	arg_1_0:_addComp("path", SurvivalSceneMapPath)
 	arg_1_0:_addComp("unit", SurvivaSceneMapUnitComp)
 	arg_1_0:_addComp("level", SurvivalSceneLevel)
@@ -15,12 +16,14 @@ function var_0_0._createAllComps(arg_1_0)
 	arg_1_0:_addComp("preloader", SurvivalScenePreloader)
 	arg_1_0:_addComp("volume", SurvivalScenePPVolume)
 	arg_1_0:_addComp("graphics", SurvivalSceneGraphicsComp)
+	arg_1_0:_addComp("cloud", SurvivalSceneCloudComp)
+	arg_1_0:_addComp("ambient", SurvivalSceneAmbientComp)
 end
 
 function var_0_0.onClose(arg_2_0)
 	local var_2_0 = GameSceneMgr.instance:getNextSceneType()
 
-	if var_2_0 ~= SceneType.Survival and var_2_0 ~= SceneType.SurvivalShelter then
+	if var_2_0 ~= SceneType.Survival and var_2_0 ~= SceneType.SurvivalShelter and var_2_0 ~= SceneType.SurvivalSummaryAct then
 		SurvivalMapHelper.instance:clear()
 	end
 

@@ -78,11 +78,11 @@ function var_0_0._btnthemeOnClick(arg_6_0)
 end
 
 function var_0_0._btnblockOnClick(arg_7_0)
-	arg_7_0:_onClickSubTypeBtn(RoomBlockGiftEnum.SubType[1])
+	arg_7_0:_onClickSubTypeBtn(MaterialEnum.MaterialType.BlockPackage)
 end
 
 function var_0_0._btnbuildingOnClick(arg_8_0)
-	arg_8_0:_onClickSubTypeBtn(RoomBlockGiftEnum.SubType[2])
+	arg_8_0:_onClickSubTypeBtn(MaterialEnum.MaterialType.Building)
 end
 
 function var_0_0._btnconfirmOnClick(arg_9_0)
@@ -100,8 +100,8 @@ function var_0_0._btnconfirmOnClick(arg_9_0)
 
 	local var_9_1 = RoomBlockBuildingGiftModel.instance:getSelectGoodsData(arg_9_0.itemId)
 
-	for iter_9_0, iter_9_1 in pairs(var_9_1) do
-		ItemRpc.instance:sendUseItemRequest(iter_9_1.data, iter_9_1.goodsId, var_9_0, arg_9_0)
+	if var_9_1 then
+		ItemRpc.instance:sendUseItemRequest(var_9_1.data, var_9_1.goodsId, var_9_0, arg_9_0)
 	end
 end
 
@@ -150,9 +150,10 @@ function var_0_0.onUpdateParam(arg_14_0)
 end
 
 function var_0_0.onOpen(arg_15_0)
-	arg_15_0.itemId = arg_15_0.viewParam.itemId
+	arg_15_0.rare = arg_15_0.viewParam.rare
+	arg_15_0.itemId = arg_15_0.viewParam.id
 
-	RoomBlockBuildingGiftModel.instance:onOpenView(arg_15_0.itemId)
+	RoomBlockBuildingGiftModel.instance:onOpenView(arg_15_0.rare)
 	arg_15_0:_refreshView()
 	arg_15_0:_onRefreshSelect()
 end
@@ -171,7 +172,7 @@ function var_0_0._refreshView(arg_17_0)
 end
 
 function var_0_0._refreshBlockBuildingBtn(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_1 == RoomBlockGiftEnum.SubType[2]
+	local var_18_0 = arg_18_1 == MaterialEnum.MaterialType.Building
 
 	gohelper.setActive(arg_18_0._goblockselect.gameObject, not var_18_0)
 	gohelper.setActive(arg_18_0._goblocknormal.gameObject, var_18_0)
@@ -189,8 +190,8 @@ function var_0_0._refreshBlockBuildingBtn(arg_18_0, arg_18_1)
 end
 
 function var_0_0._refreshModeView(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = not arg_19_1 and arg_19_2 == RoomBlockGiftEnum.SubType[1]
-	local var_19_1 = not arg_19_1 and arg_19_2 == RoomBlockGiftEnum.SubType[2]
+	local var_19_0 = not arg_19_1 and arg_19_2 == MaterialEnum.MaterialType.BlockPackage
+	local var_19_1 = not arg_19_1 and arg_19_2 == MaterialEnum.MaterialType.Building
 
 	gohelper.setActive(arg_19_0._scrollblock.gameObject, var_19_0)
 	gohelper.setActive(arg_19_0._scrollbuilding.gameObject, var_19_1)
@@ -227,10 +228,10 @@ function var_0_0._onClickSubTypeBtn(arg_23_0, arg_23_1)
 		return
 	end
 
-	RoomBlockBuildingGiftModel.instance:setSelectSubType(arg_23_0.itemId, arg_23_1)
-	arg_23_0:_refreshBlockBuildingBtn(arg_23_1)
+	RoomBlockBuildingGiftModel.instance:openSubType(arg_23_1)
 	arg_23_0:_refreshTheme()
 	RoomBlockBuildingGiftModel.instance:setThemeList()
+	arg_23_0:_refreshBlockBuildingBtn(arg_23_1)
 end
 
 function var_0_0._getThemeItem(arg_24_0, arg_24_1)
@@ -273,7 +274,7 @@ function var_0_0._refreshTheme(arg_26_0)
 	local var_26_1 = RoomBlockBuildingGiftModel.instance:getSelectSubType()
 
 	if var_26_0 then
-		RoomBlockGiftEnum.SubTypeInfo[var_26_1].ListModel.instance:setThemeMoList()
+		RoomBlockBuildingGiftModel.instance:getSubTypeListModelInstance(var_26_1):setThemeMoList()
 		arg_26_0:_onRefreshTheme()
 	end
 
@@ -283,7 +284,7 @@ end
 
 function var_0_0._onRefreshTheme(arg_27_0)
 	local var_27_0 = RoomBlockBuildingGiftModel.instance:getSelectSubType()
-	local var_27_1 = RoomBlockGiftEnum.SubTypeInfo[var_27_0].ListModel.instance:getThemeMoList()
+	local var_27_1 = RoomBlockBuildingGiftModel.instance:getSubTypeListModelInstance(var_27_0):getThemeMoList()
 
 	if not var_27_1 or not arg_27_0:_isThemeFilter() then
 		return

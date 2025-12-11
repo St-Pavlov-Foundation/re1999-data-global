@@ -120,27 +120,29 @@ function var_0_0._getNextBlockId(arg_19_0, arg_19_1, arg_19_2)
 	local var_19_1 = RoomMapBlockModel.instance:getFullBlockMOList()
 
 	if arg_19_1 then
-		var_19_0 = arg_19_2 * 1000
+		var_19_0 = arg_19_2 * 1000 + 1
+
+		local var_19_2 = {}
 
 		if arg_19_0._tempPackageConfig then
 			for iter_19_0, iter_19_1 in ipairs(arg_19_0._tempPackageConfig) do
 				if iter_19_1.packageMapId ~= arg_19_2 then
 					for iter_19_2, iter_19_3 in ipairs(iter_19_1.infos) do
-						if var_19_0 < iter_19_3.blockId then
-							var_19_0 = iter_19_3.blockId
-						end
+						var_19_2[iter_19_3.blockId] = true
 					end
 				end
 			end
 		end
 
 		for iter_19_4, iter_19_5 in ipairs(var_19_1) do
-			if var_19_0 < iter_19_5.blockId then
-				var_19_0 = iter_19_5.blockId
-			end
+			var_19_2[iter_19_5.blockId] = true
 		end
 
-		return var_19_0 + 1
+		while var_19_2[var_19_0] do
+			var_19_0 = var_19_0 + 1
+		end
+
+		return var_19_0
 	else
 		for iter_19_6, iter_19_7 in ipairs(var_19_1) do
 			if var_19_0 > iter_19_7.blockId then
@@ -1253,7 +1255,21 @@ function var_0_0._saveBlockPrefabExcelData(arg_87_0, arg_87_1)
 	logNormal("生成excel格式独立地块的id和资源名字的数据,导入excel方式：数据->从文本/CSV。\n文件路径：" .. var_87_2)
 end
 
-function var_0_0.assetDatabaseRefresh(arg_88_0)
+function var_0_0.debugMoveAllMap(arg_88_0, arg_88_1, arg_88_2)
+	local var_88_0 = RoomCameraController.instance:getRoomScene()
+
+	if not var_88_0 or not arg_88_1 or not arg_88_2 then
+		return
+	end
+
+	RoomMapBuildingModel.instance:debugMoveAllBuilding(arg_88_1, arg_88_2)
+	var_88_0.buildingmgr:refreshAllBlockEntity()
+	RoomMapBlockModel.instance:debugMoveAllBlock(arg_88_1, arg_88_2)
+	var_88_0.mapmgr:refreshAllBlockEntity(SceneTag.RoomMapBlock)
+	var_88_0.mapmgr:refreshAllBlockEntity(SceneTag.RoomEmptyBlock)
+end
+
+function var_0_0.assetDatabaseRefresh(arg_89_0)
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
@@ -1261,59 +1277,133 @@ function var_0_0.assetDatabaseRefresh(arg_88_0)
 	require("tolua.reflection")
 	tolua.loadassembly("UnityEditor")
 
-	local var_88_0 = tolua.gettypemethod(typeof("UnityEditor.AssetDatabase"), "Refresh", System.Array.CreateInstance(typeof("System.Type"), 0))
+	local var_89_0 = tolua.gettypemethod(typeof("UnityEditor.AssetDatabase"), "Refresh", System.Array.CreateInstance(typeof("System.Type"), 0))
 
-	var_88_0:Call()
-	var_88_0:Destroy()
+	var_89_0:Call()
+	var_89_0:Destroy()
 end
 
-function var_0_0.output(arg_89_0, arg_89_1)
+function var_0_0.output(arg_90_0, arg_90_1)
 	if RoomController.instance:isDebugInitMode() then
-		local var_89_0 = RoomModel.instance:getDebugParam()
+		local var_90_0 = RoomModel.instance:getDebugParam()
 
-		arg_89_0:outputInitJson(arg_89_1)
+		arg_90_0:outputInitJson(arg_90_1)
 	elseif RoomController.instance:isDebugPackageMode() then
-		local var_89_1 = RoomModel.instance:getDebugParam()
+		local var_90_1 = RoomModel.instance:getDebugParam()
 
-		arg_89_0:outputPackageJson(var_89_1.packageMapId, arg_89_1)
+		arg_90_0:outputPackageJson(var_90_1.packageMapId, arg_90_1)
 	end
 end
 
-function var_0_0._wrapClientConfigParam(arg_90_0, arg_90_1, arg_90_2)
-	local var_90_0 = {}
+function var_0_0.outputFishing(arg_91_0)
+	local var_91_0 = FishingEnum.Const.DefaultMapId
+	local var_91_1 = {}
+	local var_91_2 = RoomMapBlockModel.instance:getFullBlockMOList()
 
-	JsonUtil.markAsArray(var_90_0)
-	table.insert(var_90_0, arg_90_2)
-	table.insert(var_90_0, arg_90_1)
+	for iter_91_0, iter_91_1 in ipairs(var_91_2) do
+		if iter_91_1.blockState == RoomBlockEnum.BlockState.Map then
+			local var_91_3 = {
+				mapId = var_91_0,
+				fishingBlockId = iter_91_1.blockId,
+				defineId = iter_91_1.defineId,
+				mainRes = iter_91_1.mainRes,
+				x = iter_91_1.hexPoint.x,
+				y = iter_91_1.hexPoint.y,
+				rotate = iter_91_1.rotate
+			}
+			local var_91_4 = arg_91_0:_jsonEncodeOrdered(var_91_3, {
+				"mapId",
+				"fishingBlockId",
+				"defineId",
+				"mainRes",
+				"x",
+				"y",
+				"rotate"
+			})
 
-	return arg_90_0:_jsonEncode(var_90_0)
+			table.insert(var_91_1, var_91_4)
+		end
+	end
+
+	local var_91_5 = table.concat(var_91_1, ",\n")
+	local var_91_6 = "[\"fishing_map_block\",[\n" .. var_91_5 .. "\n]]"
+	local var_91_7 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.FishingMapBlockPath)
+
+	SLFramework.FileHelper.WriteTextToPath(var_91_7, var_91_6)
+
+	local var_91_8 = {}
+	local var_91_9 = RoomMapBuildingModel.instance:getBuildingMOList()
+
+	for iter_91_2, iter_91_3 in ipairs(var_91_9) do
+		if iter_91_3.config and iter_91_3.config.buildingType ~= RoomBuildingEnum.BuildingType.Fishing then
+			local var_91_10 = {
+				use = true,
+				mapId = var_91_0,
+				uid = iter_91_2,
+				defineId = iter_91_3.buildingId,
+				x = iter_91_3.hexPoint.x,
+				y = iter_91_3.hexPoint.y,
+				rotate = iter_91_3.rotate,
+				resAreaDirection = iter_91_3.resAreaDirection
+			}
+			local var_91_11 = arg_91_0:_jsonEncodeOrdered(var_91_10, {
+				"mapId",
+				"uid",
+				"defineId",
+				"use",
+				"x",
+				"y",
+				"rotate",
+				"resAreaDirection"
+			})
+
+			table.insert(var_91_8, var_91_11)
+		end
+	end
+
+	local var_91_12 = table.concat(var_91_8, ",\n")
+	local var_91_13 = "[\"fishing_map_building\",[\n" .. var_91_12 .. "\n]]"
+	local var_91_14 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.FishingMapBuildingPath)
+
+	SLFramework.FileHelper.WriteTextToPath(var_91_14, var_91_13)
+	arg_91_0:output()
 end
 
-function var_0_0._jsonEncode(arg_91_0, arg_91_1)
-	local var_91_0 = JsonUtil.encode(arg_91_1)
-
-	return (string.gsub(var_91_0, "},{", "},\n{"))
-end
-
-function var_0_0._jsonEncodeOrdered(arg_92_0, arg_92_1, arg_92_2)
+function var_0_0._wrapClientConfigParam(arg_92_0, arg_92_1, arg_92_2)
 	local var_92_0 = {}
-	local var_92_1 = {}
 
-	for iter_92_0, iter_92_1 in ipairs(arg_92_2) do
-		if arg_92_1[iter_92_1] ~= nil then
-			table.insert(var_92_0, string.format("%q:%s", iter_92_1, cjson.encode(arg_92_1[iter_92_1])))
+	JsonUtil.markAsArray(var_92_0)
+	table.insert(var_92_0, arg_92_2)
+	table.insert(var_92_0, arg_92_1)
+
+	return arg_92_0:_jsonEncode(var_92_0)
+end
+
+function var_0_0._jsonEncode(arg_93_0, arg_93_1)
+	local var_93_0 = JsonUtil.encode(arg_93_1)
+
+	return (string.gsub(var_93_0, "},{", "},\n{"))
+end
+
+function var_0_0._jsonEncodeOrdered(arg_94_0, arg_94_1, arg_94_2)
+	local var_94_0 = {}
+	local var_94_1 = {}
+
+	for iter_94_0, iter_94_1 in ipairs(arg_94_2) do
+		if arg_94_1[iter_94_1] ~= nil then
+			table.insert(var_94_0, string.format("%q:%s", iter_94_1, cjson.encode(arg_94_1[iter_94_1])))
 		end
 
-		var_92_1[iter_92_1] = true
+		var_94_1[iter_94_1] = true
 	end
 
-	for iter_92_2, iter_92_3 in pairs(arg_92_1) do
-		if not var_92_1[iter_92_2] then
-			logError(string.format("RoomDebugController:_jsonEncodeOrdered error, no specific key order, key:%s", iter_92_2))
+	for iter_94_2, iter_94_3 in pairs(arg_94_1) do
+		if not var_94_1[iter_94_2] then
+			logError(string.format("RoomDebugController:_jsonEncodeOrdered error, no specific key order, key:%s", iter_94_2))
 		end
 	end
 
-	return "{" .. table.concat(var_92_0, ",") .. "}"
+	return "{" .. table.concat(var_94_0, ",") .. "}"
 end
 
 var_0_0.instance = var_0_0.New()

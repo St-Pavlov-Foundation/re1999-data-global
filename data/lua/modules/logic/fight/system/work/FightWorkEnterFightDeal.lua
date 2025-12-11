@@ -17,7 +17,7 @@ function var_0_0.onStart(arg_1_0)
 end
 
 function var_0_0._afterDistribute(arg_2_0)
-	FightController.instance:setCurStage(FightEnum.Stage.StartRound)
+	return
 end
 
 function var_0_0.clearWork(arg_3_0)

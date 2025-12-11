@@ -138,4 +138,22 @@ function var_0_0.V2a8_openBPSkinFaceViewPat()
 	end
 end
 
+function var_0_0.PowerMakerPatFaceViewCanPat(arg_21_0)
+	local var_21_0 = ItemPowerModel.instance:getPowerMakerInfo()
+
+	if not var_21_0 or var_21_0.makeCount <= 0 then
+		return
+	end
+
+	local var_21_1 = CommonConfig.instance:getConstStr(ConstEnum.PowerMakerPatFaceTime)
+
+	if not string.nilorempty(var_21_1) and TimeUtil.secondToHMS(var_21_0.logoutSecond) >= tonumber(var_21_1) then
+		return true
+	end
+end
+
+function var_0_0.PowerMakerPatFaceViewPat()
+	ViewMgr.instance:openView(ViewName.PowerMakerPatFaceView)
+end
+
 return var_0_0

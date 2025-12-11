@@ -33,16 +33,19 @@ var_0_0.CurrencyType = {
 	V1a6CachotCoin = 1603,
 	V1a9Dungeon = 1901,
 	V2a1Dungeon = 2101,
-	V2a8Dungeon = 2801,
+	V3a1Dungeon = 3101,
 	Act134Clue = 1414,
 	V1a8FactoryPart = 1812,
-	KeyCurrency = 2882,
-	V2a6Dungeon = 2601,
 	V2a9Dungeon = 30501,
+	V3a1DouQuQu = 3102,
+	KeyCurrency = 2882,
+	V2a8Dungeon = 2801,
 	V2a0Dungeon = 2001,
 	V3a0Dungeon = 3001,
+	RoomFishing = 3103,
 	Act186 = 2503,
 	RoomCritterTrain = 280001,
+	V2a6Dungeon = 2601,
 	LvHuEMen = 1201,
 	V1a6CachotCurrency = 1604,
 	V1a6Dungeon = 1605,
@@ -54,6 +57,9 @@ var_0_0.CurrencyType = {
 	V1a8FactoryRawMat = 1811,
 	V2a3Dungeon = 2301,
 	RoleStory = 24
+}
+var_0_0.SubType = {
+	RoomFishingResourceItem = 3101
 }
 var_0_0.AllCurrency = {
 	var_0_0.CurrencyType.Diamond,

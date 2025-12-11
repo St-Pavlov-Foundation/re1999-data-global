@@ -196,7 +196,7 @@ function var_0_0.getAnimator(arg_11_0)
 end
 
 function var_0_0.onSelect(arg_12_0)
-	arg_12_0._isSelect = RoomBlockBuildingGiftModel.instance:isSelect(arg_12_0._mo)
+	arg_12_0._isSelect = arg_12_0._mo.isSelect
 
 	gohelper.setActive(arg_12_0._goselect, arg_12_0._isSelect)
 end

@@ -1954,6 +1954,26 @@
 		"EndAct191GameRequest",
 		"EndAct191GameReply"
 	},
+	[32370] = {
+		"Activity191",
+		"Select191ReplaceEventRequest",
+		"Select191ReplaceEventReply"
+	},
+	[16745] = {
+		"Activity191",
+		"End191ReplaceEventRequest",
+		"End191ReplaceEventReply"
+	},
+	[4048] = {
+		"Activity191",
+		"Select191UpgradeEventRequest",
+		"Select191UpgradeEventReply"
+	},
+	[-11548] = {
+		"Activity191",
+		"Select191UseHeroFacetsIdRequest",
+		"Select191UseHeroFacetsIdReply"
+	},
 	[26889] = {
 		"Activity191",
 		"Act191GameInfoUpdatePush"
@@ -2186,6 +2206,73 @@
 	[-346] = {
 		"Activity206",
 		"Act206InfoPush"
+	},
+	[-74] = {
+		"Activity208",
+		"GetAct208InfoRequest",
+		"GetAct208InfoReply"
+	},
+	[-25484] = {
+		"Activity208",
+		"Act208ReceiveBonusRequest",
+		"Act208ReceiveBonusReply"
+	},
+	[12152] = {
+		"Activity209",
+		"GetAct209InfoRequest",
+		"GetAct209InfoReply"
+	},
+	[10252] = {
+		"Activity209",
+		"Act209InfoPush"
+	},
+	[-22104] = {
+		"Activity210",
+		"GetAct210InfoRequest",
+		"GetAct210InfoReply"
+	},
+	[-407] = {
+		"Activity210",
+		"Act210SaveEpisodeProgressRequest",
+		"Act210SaveEpisodeProgressReply"
+	},
+	[-29722] = {
+		"Activity210",
+		"Act210FinishEpisodeRequest",
+		"Act210FinishEpisodeReply"
+	},
+	[-26444] = {
+		"Activity210",
+		"Act210ChooseEpisodeBranchRequest",
+		"Act210ChooseEpisodeBranchReply"
+	},
+	[14457] = {
+		"Activity210",
+		"Act210EpisodePush"
+	},
+	[-9878] = {
+		"Activity211",
+		"GetAct211InfoRequest",
+		"GetAct211InfoReply"
+	},
+	[11659] = {
+		"Activity211",
+		"Act211SaveEpisodeProgressRequest",
+		"Act211SaveEpisodeProgressReply"
+	},
+	[-30328] = {
+		"Activity211",
+		"Act211FinishEpisodeRequest",
+		"Act211FinishEpisodeReply"
+	},
+	[-14378] = {
+		"Activity211",
+		"Act211ChooseEpisodeBranchRequest",
+		"Act211ChooseEpisodeBranchReply"
+	},
+	[24667] = {
+		"Activity211",
+		"Act211EpisodePush"
 	},
 	[2348] = {
 		"Activity212",
@@ -2578,6 +2665,20 @@
 		"Charge",
 		"ReadChargeNewRequest",
 		"ReadChargeNewReply"
+	},
+	[-17743] = {
+		"ChargePush",
+		"GetChargePushInfoRequest",
+		"GetChargePushInfoReply"
+	},
+	[-20283] = {
+		"ChargePush",
+		"GetChargePushPush"
+	},
+	[15268] = {
+		"ChargePush",
+		"RecordChargePushRequest",
+		"RecordChargePushReply"
 	},
 	[-29022] = {
 		"Chat",
@@ -3226,6 +3327,36 @@
 		"GetFightCardDeckDetailInfoRequest",
 		"GetFightCardDeckDetailInfoReply"
 	},
+	[-11219] = {
+		"Fishing",
+		"GetFishingInfoRequest",
+		"GetFishingInfoReply"
+	},
+	[-6609] = {
+		"Fishing",
+		"GetOtherFishingInfoRequest",
+		"GetOtherFishingInfoReply"
+	},
+	[1441] = {
+		"Fishing",
+		"FishingRequest",
+		"FishingReply"
+	},
+	[24055] = {
+		"Fishing",
+		"GetFishingBonusRequest",
+		"GetFishingBonusReply"
+	},
+	[-13006] = {
+		"Fishing",
+		"ChangeFishingCurrencyRequest",
+		"ChangeFishingCurrencyReply"
+	},
+	[-25524] = {
+		"Fishing",
+		"GetFishingFriendsRequest",
+		"GetFishingFriendsReply"
+	},
 	[28363] = {
 		"Friend",
 		"GetApplyListRequest",
@@ -3397,6 +3528,25 @@
 		"HeroGroup",
 		"GetHeroGroupSnapshotListRequest",
 		"GetHeroGroupSnapshotListReply"
+	},
+	[30458] = {
+		"HeroGroup",
+		"DeleteHeroGroupRequest",
+		"DeleteHeroGroupReply"
+	},
+	[26866] = {
+		"HeroGroup",
+		"UpdateHeroGroupSortRequest",
+		"UpdateHeroGroupSortReply"
+	},
+	[18790] = {
+		"HeroGroup",
+		"CheckHeroGroupNameRequest",
+		"CheckHeroGroupNameReply"
+	},
+	[1402] = {
+		"HeroGroup",
+		"UpdateHeroGroupSnapshotPush"
 	},
 	[-27005] = {
 		"HeroInvitation",
@@ -3655,6 +3805,11 @@
 		"HeroStoryDispatchResetRequest",
 		"HeroStoryDispatchResetReply"
 	},
+	[-23569] = {
+		"HeroStory",
+		"HeroStoryPlotFinishRequest",
+		"HeroStoryPlotFinishReply"
+	},
 	[-7309] = {
 		"Investigate",
 		"GetInvestigateRequest",
@@ -3697,6 +3852,11 @@
 		"Item",
 		"AutoUseExpirePowerItemRequest",
 		"AutoUseExpirePowerItemReply"
+	},
+	[18761] = {
+		"Item",
+		"GetPowerMakerInfoRequest",
+		"GetPowerMakerInfoReply"
 	},
 	[8246] = {
 		"Item",
@@ -3778,6 +3938,21 @@
 	[22389] = {
 		"Material",
 		"MaterialChangePush"
+	},
+	[-32123] = {
+		"NecrologistStory",
+		"GetNecrologistStoryRequest",
+		"GetNecrologistStoryReply"
+	},
+	[2792] = {
+		"NecrologistStory",
+		"UpdateNecrologistStoryRequest",
+		"UpdateNecrologistStoryReply"
+	},
+	[-9909] = {
+		"NecrologistStory",
+		"FinishNecrologistStoryModeRequest",
+		"FinishNecrologistStoryModeReply"
 	},
 	[23853] = {
 		"Odyssey",
@@ -4228,6 +4403,11 @@
 		"GetRoomInfoRequest",
 		"GetRoomInfoReply"
 	},
+	[9263] = {
+		"Room",
+		"GetBlockPermanentInfoRequest",
+		"GetBlockPermanentInfoReply"
+	},
 	[24678] = {
 		"Room",
 		"UseBlockRequest",
@@ -4447,6 +4627,11 @@
 		"Room",
 		"SetWaterTypeRequest",
 		"SetWaterTypeReply"
+	},
+	[8868] = {
+		"Room",
+		"SetBlockColorRequest",
+		"SetBlockColorReply"
 	},
 	[14540] = {
 		"Room",
@@ -5164,11 +5349,6 @@
 		"SurvivalSceneOperationRequest",
 		"SurvivalSceneOperationReply"
 	},
-	[19869] = {
-		"SurvivalInterior",
-		"SurvivalQuickItemBarUpdateRequest",
-		"SurvivalQuickItemBarUpdateReply"
-	},
 	[21447] = {
 		"SurvivalInterior",
 		"SurvivalUpdateClientDataRequest",
@@ -5238,19 +5418,19 @@
 		"SurvivalOutSideGetInfoRequest",
 		"SurvivalOutSideGetInfoReply"
 	},
+	[2465] = {
+		"SurvivalOutSide",
+		"SurvivalMarkNewHandbookRequest",
+		"SurvivalMarkNewHandbookReply"
+	},
 	[30471] = {
 		"SurvivalOutSide",
 		"SurvivalOutSideGainRewardRequest",
 		"SurvivalOutSideGainRewardReply"
 	},
-	[-29328] = {
+	[4684] = {
 		"SurvivalOutSide",
-		"SurvivalOutSideAlterTalentGroupRequest",
-		"SurvivalOutSideAlterTalentGroupReply"
-	},
-	[11799] = {
-		"SurvivalOutSide",
-		"SurvivalOutSideUnlockTalentIdsPush"
+		"SurvivalHandbookPush"
 	},
 	[-11044] = {
 		"SurvivalOutSide",
@@ -5288,10 +5468,10 @@
 		"SurvivalStartWeekChooseDiffRequest",
 		"SurvivalStartWeekChooseDiffReply"
 	},
-	[-2372] = {
+	[5063] = {
 		"SurvivalWeek",
-		"SurvivalStartWeekChooseTalentRequest",
-		"SurvivalStartWeekChooseTalentReply"
+		"SurvivalChooseBootyRequest",
+		"SurvivalChooseBootyReply"
 	},
 	[13041] = {
 		"SurvivalWeek",
@@ -5306,11 +5486,6 @@
 	[-5262] = {
 		"SurvivalWeek",
 		"SurvivalSettleWeekPush"
-	},
-	[5063] = {
-		"SurvivalWeek",
-		"SurvivalChooseBootyRequest",
-		"SurvivalChooseBootyReply"
 	},
 	[-24627] = {
 		"SurvivalWeek",
@@ -5356,6 +5531,10 @@
 		"SurvivalHeroExchangePositionRequest",
 		"SurvivalHeroExchangePositionReply"
 	},
+	[29926] = {
+		"SurvivalWeek",
+		"SurvivalBuildingUpdatePush"
+	},
 	[-22711] = {
 		"SurvivalWeek",
 		"SurvivalGetEquipInfoRequest",
@@ -5396,23 +5575,19 @@
 		"SurvivalEquipSetNewFlagRequest",
 		"SurvivalEquipSetNewFlagReply"
 	},
+	[-31474] = {
+		"SurvivalWeek",
+		"SurvivalJewelryEquipWearRequest",
+		"SurvivalJewelryEquipWearReply"
+	},
+	[4411] = {
+		"SurvivalWeek",
+		"SurvivalJewelryEquipDemountRequest",
+		"SurvivalJewelryEquipDemountReply"
+	},
 	[-17732] = {
 		"SurvivalWeek",
 		"SurvivalEquipUpdatePush"
-	},
-	[9953] = {
-		"SurvivalWeek",
-		"SurvivalDecreePromulgateRequest",
-		"SurvivalDecreePromulgateReply"
-	},
-	[-29838] = {
-		"SurvivalWeek",
-		"SurvivalDecreeChoosePolicyRequest",
-		"SurvivalDecreeChoosePolicyReply"
-	},
-	[-28470] = {
-		"SurvivalWeek",
-		"SurvivalDecreeChangeUpdatePush"
 	},
 	[-25510] = {
 		"SurvivalWeek",
@@ -5481,10 +5656,29 @@
 		"SurvivalShopBuyRequest",
 		"SurvivalShopBuyReply"
 	},
+	[-5201] = {
+		"SurvivalWeek",
+		"SurvivalShopUpdatePush"
+	},
 	[23641] = {
 		"SurvivalWeek",
 		"SurvivalNpcAcceptTaskRequest",
 		"SurvivalNpcAcceptTaskReply"
+	},
+	[8997] = {
+		"SurvivalWeek",
+		"SurvivalReputationRewardRequest",
+		"SurvivalReputationRewardReply"
+	},
+	[-14003] = {
+		"SurvivalWeek",
+		"SurvivalReputationExpRequest",
+		"SurvivalReputationExpReply"
+	},
+	[23433] = {
+		"SurvivalWeek",
+		"SurvivalGetTalentInfoRequest",
+		"SurvivalGetTalentInfoReply"
 	},
 	[-7905] = {
 		"SurvivalWeek",
@@ -5554,6 +5748,30 @@
 		"Task",
 		"FinishReadTaskRequest",
 		"FinishReadTaskReply"
+	},
+	[-2260] = {
+		"TowerDeep",
+		"TowerDeepGetInfoRequest",
+		"TowerDeepGetInfoReply"
+	},
+	[-1135] = {
+		"TowerDeep",
+		"TowerDeepSaveArchiveRequest",
+		"TowerDeepSaveArchiveReply"
+	},
+	[-9039] = {
+		"TowerDeep",
+		"TowerDeepLoadArchiveRequest",
+		"TowerDeepLoadArchiveReply"
+	},
+	[-23357] = {
+		"TowerDeep",
+		"TowerDeepResetRequest",
+		"TowerDeepResetReply"
+	},
+	[27299] = {
+		"TowerDeep",
+		"TowerDeepFightSettlePush"
 	},
 	[-13537] = {
 		"Tower",
@@ -5641,6 +5859,15 @@
 		"Turnback",
 		"RefreshOnlineTaskRequest",
 		"RefreshOnlineTaskReply"
+	},
+	[15277] = {
+		"UnlockVoucher",
+		"GetUnlockVoucherInfoRequest",
+		"GetUnlockVoucherInfoReply"
+	},
+	[21220] = {
+		"UnlockVoucher",
+		"UnlockVoucherInfoUpdatePush"
 	},
 	[21642] = {
 		"User",

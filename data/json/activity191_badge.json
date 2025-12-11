@@ -78,5 +78,85 @@
     "trigger": "WithoutLosePassStage",
     "actParam": 3,
     "spParam": 7
+  },
+  {
+    "activityId": 13105,
+    "id": 1,
+    "name": "language_10058452",
+    "desc": "language_10073030",
+    "icon": "act174_badgeicon1",
+    "trigger": "GameProgress",
+    "actParam": 5,
+    "spParam": 15
+  },
+  {
+    "activityId": 13105,
+    "id": 2,
+    "name": "language_10058464",
+    "desc": "language_10058465",
+    "icon": "act174_badgeicon7",
+    "trigger": "GainCoin",
+    "actParam": 99,
+    "spParam": 199
+  },
+  {
+    "activityId": 13105,
+    "id": 3,
+    "name": "language_10058456",
+    "desc": "language_10073031",
+    "icon": "act174_badgeicon2",
+    "trigger": "PVPWin",
+    "actParam": 9,
+    "spParam": 13
+  },
+  {
+    "activityId": 13105,
+    "id": 4,
+    "name": "language_10058454",
+    "desc": "language_10073032",
+    "icon": "act174_badgeicon4",
+    "trigger": "GainScore",
+    "actParam": 3000,
+    "spParam": 8500
+  },
+  {
+    "activityId": 13105,
+    "id": 5,
+    "name": "language_10073033",
+    "desc": "language_10073034",
+    "icon": "act174_badgeicon3",
+    "trigger": "PVPAutoWin",
+    "actParam": 5,
+    "spParam": 15
+  },
+  {
+    "activityId": 13105,
+    "id": 6,
+    "name": "language_10073035",
+    "desc": "language_10073036",
+    "icon": "act174_badgeicon5",
+    "trigger": "UpgradeHero",
+    "actParam": 15,
+    "spParam": 40
+  },
+  {
+    "activityId": 13105,
+    "id": 7,
+    "name": "language_10073037",
+    "desc": "language_10073038",
+    "icon": "act174_badgeicon6",
+    "trigger": "ActiveTagNum",
+    "actParam": 3,
+    "spParam": 5
+  },
+  {
+    "activityId": 13105,
+    "id": 8,
+    "name": "language_10058466",
+    "desc": "language_10073039",
+    "icon": "act174_badgeicon8",
+    "trigger": "WithoutLosePassStage",
+    "actParam": 3,
+    "spParam": 7
   }
 ]

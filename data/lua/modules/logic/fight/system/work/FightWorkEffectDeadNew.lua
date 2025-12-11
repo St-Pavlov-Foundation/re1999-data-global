@@ -213,13 +213,13 @@ function var_0_0._deadContinue(arg_9_0)
 		end
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		TaskDispatcher.runRepeat(arg_9_0._tick, arg_9_0, 1, 10)
 	end
 end
 
 function var_0_0._tick(arg_10_0)
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		FightController.instance:dispatchEvent(FightEvent.ReplayTick)
 	end
 end

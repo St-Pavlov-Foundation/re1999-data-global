@@ -29,7 +29,8 @@ function var_0_0._editableInitView(arg_4_0)
 		AchievementEnum.Type.Story,
 		AchievementEnum.Type.Normal,
 		AchievementEnum.Type.GamePlay,
-		AchievementEnum.Type.Activity
+		AchievementEnum.Type.Activity,
+		AchievementEnum.Type.NamePlate
 	}
 	arg_4_0._typeItems = {}
 end
@@ -39,7 +40,10 @@ function var_0_0.onDestroyView(arg_5_0)
 
 	for iter_5_0, iter_5_1 in pairs(arg_5_0._typeItems) do
 		iter_5_1.btnself:RemoveClickListener()
-		iter_5_1.simageicon:UnLoadImage()
+
+		if iter_5_1.simageicon then
+			iter_5_1.simageicon:UnLoadImage()
+		end
 	end
 
 	arg_5_0._simagebg:UnLoadImage()
@@ -86,31 +90,46 @@ function var_0_0.refreshCategoryItems(arg_11_0)
 end
 
 function var_0_0.refreshCategoryItem(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:getOrCreateCategory(arg_12_1)
+	local var_12_0 = arg_12_0:getOrCreateCategory(arg_12_1, arg_12_2)
 	local var_12_1, var_12_2 = AchievementEntryModel.instance:getFinishCount(arg_12_2)
 
-	var_12_0.txtprogress.text = string.format("<color=#c9c9c9><size=56>%s</size><size=40>/</size></color>%s", var_12_1, var_12_2)
-	var_12_0.txtname.text = luaLang("achievemententryview_type_" .. arg_12_2)
+	if arg_12_2 ~= AchievementEnum.Type.NamePlate then
+		var_12_0.txtname.text = luaLang("achievemententryview_type_" .. arg_12_2)
 
-	var_12_0.simageicon:LoadImage(ResUrl.getAchievementIcon("achievement_mainitem" .. arg_12_1))
+		var_12_0.simageicon:LoadImage(ResUrl.getAchievementIcon("achievement_mainitem" .. arg_12_1))
+	end
+
+	var_12_0.txtprogress.text = string.format("<color=#c9c9c9><size=56>%s</size><size=40>/</size></color>%s", var_12_1, var_12_2)
 end
 
-function var_0_0.getOrCreateCategory(arg_13_0, arg_13_1)
+function var_0_0.getOrCreateCategory(arg_13_0, arg_13_1, arg_13_2)
 	local var_13_0 = arg_13_0._typeItems[arg_13_1]
 
 	if not var_13_0 then
 		var_13_0 = arg_13_0:getUserDataTb_()
-		var_13_0.go = gohelper.findChild(arg_13_0.viewGO, "go_books/#go_item" .. tostring(arg_13_1))
-		var_13_0.txtprogress = gohelper.findChildText(var_13_0.go, "#txt_progress")
-		var_13_0.txtname = gohelper.findChildText(var_13_0.go, "#txt_name")
-		var_13_0.btnself = gohelper.findChildButtonWithAudio(var_13_0.go, "#btn_self")
+		var_13_0.achieveType = arg_13_2
 
-		var_13_0.btnself:AddClickListener(arg_13_0.onClickCategory, arg_13_0, arg_13_1)
+		if var_13_0.achieveType ~= AchievementEnum.Type.NamePlate then
+			var_13_0.go = gohelper.findChild(arg_13_0.viewGO, "go_books/#go_item" .. tostring(arg_13_1))
+			var_13_0.txtprogress = gohelper.findChildText(var_13_0.go, "#txt_progress")
+			var_13_0.txtname = gohelper.findChildText(var_13_0.go, "#txt_name")
+			var_13_0.btnself = gohelper.findChildButtonWithAudio(var_13_0.go, "#btn_self")
 
-		local var_13_1 = gohelper.findChild(var_13_0.go, "go_reddot")
+			var_13_0.btnself:AddClickListener(arg_13_0.onClickCategory, arg_13_0, arg_13_1)
 
-		var_13_0.reddot = RedDotController.instance:addRedDot(var_13_1, RedDotEnum.DotNode.AchievementFinish, arg_13_0._focusTypes[arg_13_1])
-		var_13_0.simageicon = gohelper.findChildSingleImage(var_13_0.go, "#btn_self")
+			local var_13_1 = gohelper.findChild(var_13_0.go, "go_reddot")
+
+			var_13_0.reddot = RedDotController.instance:addRedDot(var_13_1, RedDotEnum.DotNode.AchievementFinish, arg_13_0._focusTypes[arg_13_1])
+			var_13_0.simageicon = gohelper.findChildSingleImage(var_13_0.go, "#btn_self")
+		else
+			var_13_0.go = gohelper.findChild(arg_13_0.viewGO, "#go_misihai_entrance")
+			var_13_0.txtprogress = gohelper.findChildText(var_13_0.go, "#txt_progress")
+			var_13_0.txtname = gohelper.findChildText(var_13_0.go, "#txt_name")
+			var_13_0.btnself = gohelper.findChildButtonWithAudio(var_13_0.go, "image_misihai_entrance")
+
+			var_13_0.btnself:AddClickListener(arg_13_0.onClickCategory, arg_13_0, arg_13_1)
+		end
+
 		arg_13_0._typeItems[arg_13_1] = var_13_0
 	end
 

@@ -48,7 +48,7 @@ end
 function var_0_0.onStageChanged(arg_7_0, arg_7_1)
 	arg_7_0:clearClientSimulationData()
 
-	if arg_7_1 == FightStageMgr.StageType.Play and arg_7_0.dataMgr.stageMgr:getCurStageParam() == FightStageMgr.PlayType.Normal then
+	if arg_7_1 == FightStageMgr.StageType.Play and not FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.ClothSkill) then
 		arg_7_0.extraMoveAct = 0
 	end
 end
@@ -189,7 +189,7 @@ function var_0_0.setCurSelectEntityId(arg_18_0, arg_18_1)
 end
 
 function var_0_0.resetCurSelectEntityIdDefault(arg_19_0)
-	if FightModel.instance:isAuto() then
+	if FightDataHelper.stateMgr:getIsAuto() then
 		if FightHelper.canSelectEnemyEntity(arg_19_0.curSelectEntityId) then
 			arg_19_0:setCurSelectEntityId(arg_19_0.curSelectEntityId)
 		else

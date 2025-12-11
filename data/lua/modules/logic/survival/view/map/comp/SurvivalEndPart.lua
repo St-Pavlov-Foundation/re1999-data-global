@@ -12,7 +12,7 @@ function var_0_0.init(arg_2_0, arg_2_1)
 	arg_2_0.txtDefaultTime = gohelper.findChildTextMesh(arg_2_0.goDefaultBg, "image_LimitTimeBG/#txt_LimitTime")
 	arg_2_0.goEndBg = gohelper.findChild(arg_2_1, "#simage_FullBG2")
 	arg_2_0.txtEndTime = gohelper.findChildTextMesh(arg_2_0.goEndBg, "image_LimitTimeBG/#txt_LimitTime")
-	arg_2_0.goSpecialBg = gohelper.findChild(arg_2_0.goEndBg, "#simage_Character1")
+	arg_2_0.goSpecialBg = gohelper.findChild(arg_2_0.goEndBg, "#go_babieta")
 end
 
 function var_0_0.refreshView(arg_3_0)

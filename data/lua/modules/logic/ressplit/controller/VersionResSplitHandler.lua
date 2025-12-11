@@ -102,7 +102,7 @@ function var_0_1._generateResSplitCfg(arg_3_0)
 		end
 	end
 
-	local var_3_14 = "ui/viewres"
+	local var_3_14 = "ui"
 	local var_3_15 = var_0_1._getFolderPrefabs(var_3_14)
 
 	for iter_3_16, iter_3_17 in ipairs(var_3_15) do
@@ -531,8 +531,6 @@ function var_0_1._loadStoryCfgCallBack(arg_17_0, arg_17_1)
 	arg_17_0._loadStroyFinishCount = arg_17_0._loadStroyFinishCount - 1
 	arg_17_0._storyCfgMap = arg_17_0._storyCfgMap or {}
 	arg_17_0._storyCfgMap[arg_17_1.ResPath] = cjson.decode(arg_17_1.TextAsset)
-
-	arg_17_1:Retain()
 
 	if arg_17_0._loadStroyFinishCount <= 0 and arg_17_0._loadFinishCallblock then
 		if arg_17_0._loadFinishCallblockObj then

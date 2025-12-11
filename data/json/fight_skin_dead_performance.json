@@ -378,5 +378,43 @@
     "actParam7": "",
     "actType8": 0,
     "actParam8": ""
+  },
+  {
+    "id": 610413,
+    "actType1": 1,
+    "actParam1": "610412_die",
+    "actType2": 0,
+    "actParam2": "",
+    "actType3": 0,
+    "actParam3": "",
+    "actType4": 0,
+    "actParam4": "",
+    "actType5": 0,
+    "actParam5": "",
+    "actType6": 0,
+    "actParam6": "",
+    "actType7": 0,
+    "actParam7": "",
+    "actType8": 0,
+    "actParam8": ""
+  },
+  {
+    "id": 670407,
+    "actType1": 1,
+    "actParam1": "670407_die",
+    "actType2": 0,
+    "actParam2": "",
+    "actType3": 0,
+    "actParam3": "",
+    "actType4": 0,
+    "actParam4": "",
+    "actType5": 0,
+    "actParam5": "",
+    "actType6": 0,
+    "actParam6": "",
+    "actType7": 0,
+    "actParam7": "",
+    "actType8": 0,
+    "actParam8": ""
   }
 ]

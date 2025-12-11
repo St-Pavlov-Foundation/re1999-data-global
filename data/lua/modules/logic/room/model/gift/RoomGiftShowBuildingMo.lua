@@ -2,12 +2,15 @@
 
 local var_0_0 = pureTable("RoomGiftShowBuildingMo")
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_1
-	arg_1_0.config = RoomConfig.instance:getBuildingConfig(arg_1_1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.config = arg_1_1
 	arg_1_0.rare = arg_1_0.config.rare or 0
-	arg_1_0.subType = arg_1_2
+	arg_1_0.subTypeIndex = 2
+	arg_1_0.subType = RoomBlockGiftEnum.SubType[arg_1_0.subTypeIndex]
+	arg_1_0.itemCofig = ItemModel.instance:getItemConfig(arg_1_0.subType, arg_1_1.id)
 	arg_1_0.numLimit = arg_1_0.config.numLimit
+	arg_1_0.isSelect = false
 end
 
 function var_0_0.getIcon(arg_2_0)

@@ -287,21 +287,22 @@ end
 function var_0_0._checkRestrictHero(arg_10_0)
 	local var_10_0 = {}
 	local var_10_1 = SurvivalShelterModel.instance:getWeekInfo()
+	local var_10_2 = SurvivalMapModel.instance:getSceneMo()
 
 	for iter_10_0 = 1, 5 do
-		local var_10_2 = HeroSingleGroupModel.instance:getById(iter_10_0)
+		local var_10_3 = HeroSingleGroupModel.instance:getById(iter_10_0)
 
-		if var_10_2 then
-			local var_10_3 = var_10_2:getHeroMO()
+		if var_10_3 then
+			local var_10_4 = var_10_3:getHeroMO()
 
-			if var_10_3 then
-				local var_10_4 = var_10_1:getHeroMo(var_10_3.heroId)
+			if var_10_4 then
+				local var_10_5 = var_10_1:getHeroMo(var_10_4.heroId)
 
-				if HeroGroupModel.instance:isRestrict(var_10_2.heroUid) or var_10_4.health <= 0 then
-					var_10_0[var_10_2.heroUid] = true
+				if HeroGroupModel.instance:isRestrict(var_10_3.heroUid) or var_10_5.health <= 0 or not var_10_2.teamInfo:getHeroMo(var_10_3.heroUid) then
+					var_10_0[var_10_3.heroUid] = true
 				end
 			else
-				var_10_2:setEmpty()
+				var_10_3:setEmpty()
 			end
 		end
 	end
@@ -310,11 +311,11 @@ function var_0_0._checkRestrictHero(arg_10_0)
 		return
 	end
 
-	local var_10_5 = HeroGroupModel.instance:getCurrentBattleConfig()
-	local var_10_6 = var_10_5 and var_10_5.restrictReason
+	local var_10_6 = HeroGroupModel.instance:getCurrentBattleConfig()
+	local var_10_7 = var_10_6 and var_10_6.restrictReason
 
-	if not string.nilorempty(var_10_6) then
-		ToastController.instance:showToastWithString(var_10_6)
+	if not string.nilorempty(var_10_7) then
+		ToastController.instance:showToastWithString(var_10_7)
 	end
 
 	for iter_10_1, iter_10_2 in ipairs(arg_10_0._heroItemList) do

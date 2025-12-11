@@ -55,7 +55,8 @@ function var_0_0.buildViews(arg_1_0)
 		GMSubViewProfiler.New(),
 		GMSubViewRoom.New(),
 		GMSubViewEliminate.New(),
-		GMSubViewEditorFight.New()
+		GMSubViewEditorFight.New(),
+		GMYeShuMeiBtnView.New()
 	}
 end
 

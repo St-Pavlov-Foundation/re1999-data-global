@@ -69,9 +69,15 @@ end
 
 function var_0_0.loadCallback(arg_5_0, arg_5_1)
 	if arg_5_1.IsLoadSuccess then
+		local var_5_0 = arg_5_0.assetItem
+
 		arg_5_0.assetItem = arg_5_1
 
 		arg_5_0.assetItem:Retain()
+
+		if var_5_0 then
+			var_5_0:Release()
+		end
 
 		arg_5_0.aniCurveConfig = arg_5_0.assetItem:GetResource(var_0_0.CurveAssetPath)
 	else
@@ -305,6 +311,7 @@ function var_0_0.onSceneClose(arg_20_0)
 		arg_20_0.assetItem:Release()
 
 		arg_20_0.aniCurveConfig = nil
+		arg_20_0.assetItem = nil
 	else
 		removeAssetLoadCb(var_0_0.CurveAssetPath, arg_20_0.loadCallback, arg_20_0)
 	end

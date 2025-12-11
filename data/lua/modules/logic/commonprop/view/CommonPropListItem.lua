@@ -46,8 +46,12 @@ function var_0_0._playInEffect(arg_6_0)
 	local var_6_0, var_6_1 = ItemModel.instance:getItemConfigAndIcon(arg_6_0._type, arg_6_0._id)
 	local var_6_2 = var_6_0.rare
 
-	if not var_6_0.rare and (arg_6_0._type == MaterialEnum.MaterialType.PlayerCloth or arg_6_0._type == MaterialEnum.MaterialType.Antique) then
-		var_6_2 = 5
+	if not var_6_0.rare then
+		if arg_6_0._type == MaterialEnum.MaterialType.PlayerCloth or arg_6_0._type == MaterialEnum.MaterialType.Antique then
+			var_6_2 = 5
+		elseif arg_6_0._type == MaterialEnum.MaterialType.UnlockVoucher then
+			var_6_2 = UnlockVoucherConfig.instance:getVoucherRare(arg_6_0._id)
+		end
 	end
 
 	for iter_6_0, iter_6_1 in ipairs(arg_6_0._rareInGos) do

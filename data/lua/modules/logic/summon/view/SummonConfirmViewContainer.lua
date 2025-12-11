@@ -20,6 +20,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 			local var_2_2 = {}
 
 			SummonMainModel.addCurrencyByCostStr(var_2_1, var_2_0.cost1, var_2_2)
+			table.insert(var_2_1, CurrencyEnum.CurrencyType.Diamond)
 			table.insert(var_2_1, CurrencyEnum.CurrencyType.FreeDiamondCoupon)
 
 			arg_2_0._currencyView = CurrencyView.New(var_2_1, nil, nil, nil, true)

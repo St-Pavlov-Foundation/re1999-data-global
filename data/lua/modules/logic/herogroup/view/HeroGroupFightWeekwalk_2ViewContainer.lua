@@ -21,6 +21,7 @@ function var_0_0.addCommonViews(arg_3_0, arg_3_1)
 	table.insert(arg_3_1, HeroGroupFightWeekWalk_2ViewRule.New())
 	table.insert(arg_3_1, HeroGroupInfoScrollView.New())
 	table.insert(arg_3_1, CheckActivityEndView.New())
+	table.insert(arg_3_1, HeroGroupPresetFightView.New())
 	table.insert(arg_3_1, TabViewGroup.New(1, "#go_container/btnContain/commonBtns"))
 	table.insert(arg_3_1, TabViewGroup.New(2, "#go_righttop/#go_power"))
 end

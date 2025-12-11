@@ -80,7 +80,7 @@ function var_0_0.onClickBtnRecuit(arg_7_0)
 		return
 	end
 
-	local var_7_1, var_7_2, var_7_3, var_7_4 = SurvivalShelterModel.instance:getWeekInfo().bag:costIsEnough(var_7_0.cost)
+	local var_7_1, var_7_2, var_7_3, var_7_4 = SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Shelter):costIsEnough(var_7_0.cost)
 
 	if not var_7_1 then
 		local var_7_5 = lua_survival_item.configDict[var_7_2]
@@ -115,7 +115,7 @@ function var_0_0.onClickBtnRefresh(arg_8_0)
 
 	if arg_8_0.recruitInfo.canRefreshTimes == 0 then
 		local var_8_0 = arg_8_0.recruitInfo.config
-		local var_8_1, var_8_2 = SurvivalShelterModel.instance:getWeekInfo().bag:costIsEnough(var_8_0 and var_8_0.refreshCost)
+		local var_8_1, var_8_2 = SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Shelter):costIsEnough(var_8_0 and var_8_0.refreshCost)
 
 		if not var_8_1 then
 			local var_8_3 = lua_survival_item.configDict[var_8_2]
@@ -268,7 +268,7 @@ function var_0_0.refreshDemandButton(arg_19_0)
 	gohelper.setActive(arg_19_0.txtRefreshCost, not var_19_2)
 
 	if not var_19_2 then
-		local var_19_3, var_19_4, var_19_5, var_19_6 = var_19_0.bag:costIsEnough(var_19_1 and var_19_1.refreshCost)
+		local var_19_3, var_19_4, var_19_5, var_19_6 = var_19_0:getBag(SurvivalEnum.ItemSource.Shelter):costIsEnough(var_19_1 and var_19_1.refreshCost)
 
 		if var_19_3 then
 			arg_19_0.txtRefreshCost.text = tostring(var_19_5)
@@ -277,7 +277,7 @@ function var_0_0.refreshDemandButton(arg_19_0)
 		end
 	end
 
-	local var_19_7, var_19_8, var_19_9, var_19_10 = var_19_0.bag:costIsEnough(var_19_1 and var_19_1.cost)
+	local var_19_7, var_19_8, var_19_9, var_19_10 = var_19_0:getBag(SurvivalEnum.ItemSource.Shelter):costIsEnough(var_19_1 and var_19_1.cost)
 
 	if var_19_7 then
 		arg_19_0.txtRecuitCost.text = tostring(var_19_9)
@@ -389,7 +389,7 @@ function var_0_0.getNpcItem(arg_25_0, arg_25_1)
 	if not var_25_0 then
 		var_25_0 = arg_25_0:getUserDataTb_()
 		var_25_0.go = gohelper.cloneInPlace(arg_25_0.goNpcItem, tostring(arg_25_1))
-		var_25_0.imageChess = gohelper.findChildImage(var_25_0.go, "#image_Chess")
+		var_25_0.imageChess = gohelper.findChildSingleImage(var_25_0.go, "#image_Chess")
 		var_25_0.txtName = gohelper.findChildTextMesh(var_25_0.go, "#txt_PartnerName")
 		var_25_0.goSelect = gohelper.findChild(var_25_0.go, "#go_Selected")
 		var_25_0.goAttrItem = gohelper.findChild(var_25_0.go, "Scroll View/Viewport/#go_content/#go_Attr")
@@ -429,7 +429,7 @@ function var_0_0.refreshNpcItem(arg_26_0, arg_26_1, arg_26_2)
 
 	arg_26_1.txtName.text = var_26_1.name
 
-	UISpriteSetMgr.instance:setV2a2ChessSprite(arg_26_1.imageChess, var_26_1.headIcon)
+	SurvivalUnitIconHelper.instance:setNpcIcon(arg_26_1.imageChess, var_26_1.headIcon)
 
 	local var_26_2, var_26_3 = SurvivalConfig.instance:getNpcConfigTag(var_26_0)
 

@@ -45,6 +45,24 @@
     "sceneIcon": "m_s06_ui_jfj_02"
   },
   {
+    "poolId": 33141,
+    "bagId": 90006,
+    "heroChoices": "3108#3109#3104#3098#3080#3077#3111#3039#3048",
+    "name": "language_10097118",
+    "nameEn": "The Golden Skein I",
+    "icon": "heroversion_3_3/v3a3_luckybag/v3a3_luckybag_icon",
+    "sceneIcon": "v3a3_m_s06_ui_jft_01"
+  },
+  {
+    "poolId": 33141,
+    "bagId": 90007,
+    "heroChoices": "3114#3105#3088#3063#3097#3094#3084#3087#3065",
+    "name": "language_10097119",
+    "nameEn": "The Golden Skein II",
+    "icon": "heroversion_3_3/v3a3_luckybag/v3a3_luckybag_icon",
+    "sceneIcon": "v3a3_m_s06_ui_jft_01"
+  },
+  {
     "poolId": 21101,
     "bagId": 90004,
     "heroChoices": "3004#3048#3025#3053#3066#3074#3052#3051#3063#3070#3007",

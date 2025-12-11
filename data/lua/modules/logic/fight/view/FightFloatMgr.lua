@@ -145,6 +145,10 @@ function var_0_0.float(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
 		return
 	end
 
+	if FightDataHelper.entityMgr:isAct191Boss(arg_9_1) then
+		return
+	end
+
 	if not arg_9_0._classEnabled then
 		return
 	end
@@ -286,6 +290,8 @@ function var_0_0._doShowTip(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, ar
 
 	if FightDataHelper.entityMgr:isAssistBoss(arg_17_1) then
 		gohelper.addChild(arg_17_0._floatParent, var_17_2:getGO())
+	elseif FightDataHelper.entityMgr:isAct191Boss(arg_17_1) then
+		gohelper.addChild(arg_17_0._floatParent, var_17_2:getGO())
 	elseif var_17_1 and var_17_1.nameUI then
 		gohelper.addChild(var_17_1.nameUI:getFloatContainerGO(), var_17_2:getGO())
 	end
@@ -338,7 +344,7 @@ function var_0_0._doShowTip(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, ar
 
 	local var_17_10 = var_17_4
 
-	if FightDataHelper.entityMgr:isAssistBoss(arg_17_1) then
+	if FightDataHelper.entityMgr:isAssistBoss(arg_17_1) or FightDataHelper.entityMgr:isAct191Boss(arg_17_1) then
 		local var_17_11 = var_17_1:getHangPoint(ModuleEnum.SpineHangPoint.mounttop) or var_17_1:getHangPoint(ModuleEnum.SpineHangPointRoot)
 		local var_17_12, var_17_13 = recthelper.worldPosToAnchorPos2(var_17_11.transform.position, arg_17_0._floatParentRectTr, nil, CameraMgr.instance:getUnitCamera())
 

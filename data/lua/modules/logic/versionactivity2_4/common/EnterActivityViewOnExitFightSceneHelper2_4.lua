@@ -124,9 +124,9 @@ function var_0_0._enterActivity12402(arg_10_0, arg_10_1)
 	local var_10_2 = FlowSequence.New()
 
 	var_10_2:addWork(OpenViewWork.New({
-		openFunction = VersionActivity2_4EnterController.directOpenVersionActivityEnterView,
-		openFunctionObj = VersionActivity2_4EnterController.instance,
-		waitOpenViewName = ViewName.VersionActivity2_4EnterView
+		openFunction = var_0_0.open3_1ReactivityEnterView,
+		openFunctionObj = VersionActivityFixedHelper.getVersionActivityEnterController().instance,
+		waitOpenViewName = VersionActivityFixedHelper.getVersionActivityEnterViewName()
 	}))
 	var_10_2:registerDoneListener(function()
 		if var_10_1 then
@@ -144,20 +144,24 @@ function var_0_0._enterActivity12402(arg_10_0, arg_10_1)
 	var_0_0.sequence = var_10_2
 end
 
-function var_0_0.enterActivity12410(arg_13_0, arg_13_1)
-	local var_13_0 = DungeonModel.instance.curSendEpisodeId
-	local var_13_1, var_13_2 = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(var_13_0)
+function var_0_0.open3_1ReactivityEnterView()
+	VersionActivityFixedHelper.getVersionActivityEnterController():directOpenVersionActivityEnterView(VersionActivity3_1Enum.ActivityId.Reactivity)
+end
+
+function var_0_0.enterActivity12410(arg_14_0, arg_14_1)
+	local var_14_0 = DungeonModel.instance.curSendEpisodeId
+	local var_14_1, var_14_2 = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(var_14_0)
 
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	MainController.instance:enterMainScene(arg_13_0)
+	MainController.instance:enterMainScene(arg_14_0)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.V1a4_BossRushMainView)
 		VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 			BossRushController.instance:openMainView({
 				isOpenLevelDetail = true,
-				stage = var_13_1,
-				layer = var_13_2
+				stage = var_14_1,
+				layer = var_14_2
 			})
 		end, nil, BossRushConfig.instance:getActivityId())
 	end)

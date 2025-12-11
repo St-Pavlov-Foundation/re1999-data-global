@@ -9,7 +9,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10102,
@@ -21,7 +22,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10103,
@@ -33,7 +35,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10104,
@@ -45,7 +48,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10105,
@@ -57,7 +61,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10106,
@@ -69,7 +74,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10107,
@@ -81,7 +87,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10108,
@@ -93,7 +100,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10109,
@@ -105,7 +113,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10110,
@@ -117,7 +126,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10111,
@@ -129,7 +139,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10112,
@@ -141,7 +152,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10113,
@@ -153,7 +165,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10114,
@@ -165,7 +178,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10115,
@@ -177,7 +191,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10116,
@@ -189,7 +204,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10201,
@@ -201,7 +217,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10202,
@@ -213,7 +230,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10203,
@@ -225,7 +243,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10204,
@@ -237,7 +256,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10205,
@@ -249,7 +269,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10206,
@@ -261,7 +282,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10207,
@@ -273,7 +295,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10208,
@@ -285,7 +308,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10209,
@@ -297,7 +321,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10210,
@@ -309,7 +334,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10211,
@@ -321,7 +347,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10212,
@@ -333,7 +360,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10213,
@@ -345,7 +373,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10214,
@@ -357,7 +386,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10215,
@@ -369,7 +399,8 @@
     "effectAudio": 1,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10301,
@@ -381,7 +412,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_classroom",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10302,
@@ -393,7 +425,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_manor#play_ui_checkpoint_noise_classroom",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10303,
@@ -405,7 +438,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_manor",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10304,
@@ -417,7 +451,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_manor#play_ui_checkpoint_noise_office",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10305,
@@ -429,7 +464,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_manor",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10306,
@@ -441,7 +477,8 @@
     "effectAudio": 1,
     "areaAudio": "play_ui_checkpoint_noise_sea#play_ui_checkpoint_noise_square",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10307,
@@ -453,7 +490,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_sea",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10308,
@@ -465,7 +503,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_sea#play_ui_checkpoint_noise_square#play_ui_checkpoint_noise_office",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10309,
@@ -477,7 +516,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_sea#play_ui_checkpoint_noise_classroom",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10310,
@@ -489,7 +529,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_sea",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10311,
@@ -501,7 +542,8 @@
     "effectAudio": 1,
     "areaAudio": "play_ui_checkpoint_noise_sea#play_ui_checkpoint_noise_square",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10312,
@@ -513,7 +555,8 @@
     "effectAudio": 1,
     "areaAudio": "play_ui_checkpoint_noise_sea#play_ui_checkpoint_noise_classroom",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10313,
@@ -525,7 +568,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_sea#play_ui_checkpoint_noise_library",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10314,
@@ -537,7 +581,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_sea#play_ui_checkpoint_noise_office",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10315,
@@ -549,7 +594,8 @@
     "effectAudio": 2,
     "areaAudio": "play_ui_checkpoint_noise_sea#play_ui_checkpoint_noise_underpass",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10316,
@@ -561,7 +607,8 @@
     "effectAudio": 2,
     "areaAudio": "play_ui_checkpoint_noise_sea",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10401,
@@ -573,7 +620,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10402,
@@ -585,7 +633,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_library",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10403,
@@ -597,7 +646,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_office_building",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10404,
@@ -609,7 +659,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_manor",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10405,
@@ -621,7 +672,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square1",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10406,
@@ -633,7 +685,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10407,
@@ -645,7 +698,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2#play_ui_checkpoint_noise_office_building",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10408,
@@ -657,7 +711,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2#play_ui_checkpoint_noise_office_building",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10409,
@@ -669,7 +724,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2#play_ui_checkpoint_noise_office_building",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10410,
@@ -681,7 +737,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10411,
@@ -693,7 +750,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2#play_ui_checkpoint_noise_office_building",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10412,
@@ -705,7 +763,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2#play_ui_checkpoint_noise_office_building",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10413,
@@ -717,7 +776,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_manor",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10414,
@@ -729,7 +789,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_office_building#play_ui_checkpoint_noise_manor",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10415,
@@ -741,7 +802,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_office_building",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10416,
@@ -753,7 +815,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_office_building",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10417,
@@ -765,7 +828,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_office_building",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10418,
@@ -777,7 +841,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_office_building",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10419,
@@ -789,7 +854,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_office_building",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10420,
@@ -801,7 +867,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2#play_ui_checkpoint_noise_office_building",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10421,
@@ -813,7 +880,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_office_building#play_ui_checkpoint_noise_manor",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10422,
@@ -825,7 +893,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10423,
@@ -837,7 +906,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110101,
@@ -849,7 +919,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110102,
@@ -861,7 +932,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110103,
@@ -873,7 +945,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110104,
@@ -885,7 +958,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110105,
@@ -897,7 +971,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110106,
@@ -909,7 +984,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110107,
@@ -921,7 +997,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110108,
@@ -933,7 +1010,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110109,
@@ -945,7 +1023,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110110,
@@ -957,7 +1036,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110111,
@@ -969,7 +1049,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110112,
@@ -981,7 +1062,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110113,
@@ -993,7 +1075,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110114,
@@ -1005,7 +1088,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110115,
@@ -1017,7 +1101,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1110116,
@@ -1029,7 +1114,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210101,
@@ -1041,7 +1127,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210102,
@@ -1053,7 +1140,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210118,
@@ -1065,7 +1153,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210103,
@@ -1077,7 +1166,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210104,
@@ -1089,7 +1179,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210105,
@@ -1101,7 +1192,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210106,
@@ -1113,7 +1205,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210107,
@@ -1125,7 +1218,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210108,
@@ -1137,7 +1231,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210109,
@@ -1149,7 +1244,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210110,
@@ -1161,7 +1257,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210111,
@@ -1173,7 +1270,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210112,
@@ -1185,7 +1283,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210113,
@@ -1197,7 +1296,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210114,
@@ -1209,7 +1309,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210115,
@@ -1221,7 +1322,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210116,
@@ -1233,7 +1335,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1210117,
@@ -1245,7 +1348,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310101,
@@ -1257,7 +1361,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310102,
@@ -1269,7 +1374,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310103,
@@ -1281,7 +1387,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310104,
@@ -1293,7 +1400,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310194,
@@ -1305,7 +1413,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310105,
@@ -1317,7 +1426,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310106,
@@ -1329,7 +1439,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310107,
@@ -1341,7 +1452,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310108,
@@ -1353,7 +1465,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310109,
@@ -1365,7 +1478,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310110,
@@ -1377,7 +1491,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310111,
@@ -1389,7 +1504,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310112,
@@ -1401,7 +1517,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310113,
@@ -1413,7 +1530,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310114,
@@ -1425,7 +1543,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310115,
@@ -1437,7 +1556,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1310116,
@@ -1449,7 +1569,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10501,
@@ -1461,7 +1582,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_rain",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10502,
@@ -1473,7 +1595,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_rain",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10503,
@@ -1485,7 +1608,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_rain",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10504,
@@ -1497,7 +1621,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_rain",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10505,
@@ -1509,7 +1634,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_rain",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10506,
@@ -1521,7 +1647,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_ocean_day#play_1_4_qiutu_ui_checkpoint_amb_beach_day#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_day",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10507,
@@ -1533,7 +1660,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_ocean_day#play_1_4_qiutu_ui_checkpoint_amb_beach_day#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_day",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10508,
@@ -1545,7 +1673,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_ocean_day#play_1_4_qiutu_ui_checkpoint_amb_beach_day#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_day",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10509,
@@ -1557,7 +1686,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_ocean_day#play_1_4_qiutu_ui_checkpoint_amb_beach_day#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_day",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10510,
@@ -1569,7 +1699,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_ocean_day#play_1_4_qiutu_ui_checkpoint_amb_beach_day#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_day",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10511,
@@ -1581,7 +1712,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_night#play_1_4_qiutu_ui_checkpoint_amb_ocean_night#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_night#play_1_4_qiutu_ui_checkpoint_amb_beach_night",
     "mapState": 2,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10512,
@@ -1593,7 +1725,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_ocean_day#play_1_4_qiutu_ui_checkpoint_amb_beach_day#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_day",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10513,
@@ -1605,7 +1738,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_night#play_1_4_qiutu_ui_checkpoint_amb_ocean_night#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_night#play_1_4_qiutu_ui_checkpoint_amb_beach_night",
     "mapState": 2,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10514,
@@ -1617,7 +1751,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_ocean_day#play_1_4_qiutu_ui_checkpoint_amb_beach_day#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_day",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10515,
@@ -1629,7 +1764,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_ocean_day#play_1_4_qiutu_ui_checkpoint_amb_beach_day#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_day",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10516,
@@ -1641,7 +1777,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_day#play_1_4_qiutu_ui_checkpoint_amb_ocean_day#play_1_4_qiutu_ui_checkpoint_amb_beach_day#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_day",
     "mapState": 1,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10517,
@@ -1653,7 +1790,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_night#play_1_4_qiutu_ui_checkpoint_amb_ocean_night#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_night#play_1_4_qiutu_ui_checkpoint_amb_beach_night",
     "mapState": 2,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10518,
@@ -1665,7 +1803,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_night#play_1_4_qiutu_ui_checkpoint_amb_ocean_night#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_night#play_1_4_qiutu_ui_checkpoint_amb_beach_night",
     "mapState": 2,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10519,
@@ -1677,7 +1816,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_night#play_1_4_qiutu_ui_checkpoint_amb_ocean_night#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_night#play_1_4_qiutu_ui_checkpoint_amb_beach_night",
     "mapState": 2,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10520,
@@ -1689,7 +1829,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_night#play_1_4_qiutu_ui_checkpoint_amb_ocean_night#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_night#play_1_4_qiutu_ui_checkpoint_amb_beach_night",
     "mapState": 2,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10521,
@@ -1701,7 +1842,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_4_qiutu_ui_checkpoint_amb_sea_breeze_night#play_1_4_qiutu_ui_checkpoint_amb_ocean_night#play_1_4_qiutu_ui_checkpoint_amb_island_jungle_night#play_1_4_qiutu_ui_checkpoint_amb_beach_night",
     "mapState": 2,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 31001,
@@ -1713,7 +1855,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2#play_plotsfx_chap5_jianzhang_sea_wave_loop",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 31002,
@@ -1725,7 +1868,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2#play_plotsfx_chap5_jianzhang_sea_wave_loop",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 31003,
@@ -1737,7 +1881,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2#play_plotsfx_chap5_jianzhang_sea_wave_loop",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 31004,
@@ -1749,7 +1894,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2#play_plotsfx_chap5_jianzhang_sea_wave_loop",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 31005,
@@ -1761,7 +1907,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2#play_plotsfx_chap5_jianzhang_sea_wave_loop",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 31006,
@@ -1773,7 +1920,8 @@
     "effectAudio": 0,
     "areaAudio": "play_ui_checkpoint_noise_forest_square2#play_plotsfx_chap5_jianzhang_sea_wave_loop",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510101,
@@ -1785,7 +1933,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510102,
@@ -1797,7 +1946,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510103,
@@ -1809,7 +1959,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510104,
@@ -1821,7 +1972,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510105,
@@ -1833,7 +1985,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510106,
@@ -1845,7 +1998,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510107,
@@ -1857,7 +2011,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510108,
@@ -1869,7 +2024,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510109,
@@ -1881,7 +2037,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510110,
@@ -1893,7 +2050,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510111,
@@ -1905,7 +2063,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510112,
@@ -1917,7 +2076,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510113,
@@ -1929,7 +2089,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510114,
@@ -1941,7 +2102,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1510115,
@@ -1953,7 +2115,8 @@
     "effectAudio": 0,
     "areaAudio": "all",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610101,
@@ -1965,7 +2128,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610102,
@@ -1977,7 +2141,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610103,
@@ -1989,7 +2154,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_river",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610104,
@@ -2001,7 +2167,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_river",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610105,
@@ -2013,7 +2180,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_river",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610106,
@@ -2025,7 +2193,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_river",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610107,
@@ -2037,7 +2206,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610108,
@@ -2049,7 +2219,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610109,
@@ -2061,7 +2232,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_street",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610110,
@@ -2073,7 +2245,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_street",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610111,
@@ -2085,7 +2258,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610112,
@@ -2097,7 +2271,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610113,
@@ -2109,7 +2284,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610114,
@@ -2121,7 +2297,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610115,
@@ -2133,7 +2310,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_rain1",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610116,
@@ -2145,7 +2323,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610117,
@@ -2157,7 +2336,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610118,
@@ -2169,7 +2349,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_dushuo",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610119,
@@ -2181,7 +2362,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_dushuo",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610120,
@@ -2193,7 +2375,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610121,
@@ -2205,7 +2388,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_rain2",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610122,
@@ -2217,7 +2401,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1610123,
@@ -2229,7 +2414,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10601,
@@ -2241,7 +2427,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_building_1",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10602,
@@ -2253,7 +2440,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb_sci_center",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10603,
@@ -2265,7 +2453,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_building_4",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10604,
@@ -2277,7 +2466,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_building_3",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10605,
@@ -2289,7 +2479,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_building_3",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10606,
@@ -2301,7 +2492,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_building_3",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10607,
@@ -2313,7 +2505,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_building_1",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10608,
@@ -2325,7 +2518,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_street_1",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10609,
@@ -2337,7 +2531,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_clinic",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10610,
@@ -2349,7 +2544,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_clinic",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10611,
@@ -2361,7 +2557,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_clinic",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10612,
@@ -2373,7 +2570,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_building_3",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10613,
@@ -2385,7 +2583,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb_isiet",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10614,
@@ -2397,7 +2596,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_building_2",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10615,
@@ -2409,7 +2609,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_building_3",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10616,
@@ -2421,7 +2622,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_street#play_1_7_jinye_ui_checkpoint_amb_building_2",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10617,
@@ -2433,7 +2635,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_7_jinye_ui_checkpoint_amb#play_1_7_jinye_ui_checkpoint_amb_opera",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10618,
@@ -2445,7 +2648,8 @@
     "effectAudio": 0,
     "areaAudio": "1_4_qiutu_ui_checkpoint_amb_rain#play_1_7_jinye_ui_checkpoint_amb_opera",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10619,
@@ -2457,7 +2661,8 @@
     "effectAudio": 0,
     "areaAudio": "1_4_qiutu_ui_checkpoint_amb_rain#play_1_7_jinye_ui_checkpoint_amb_opera",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10620,
@@ -2469,7 +2674,8 @@
     "effectAudio": 0,
     "areaAudio": "1_4_qiutu_ui_checkpoint_amb_rain#play_1_7_jinye_ui_checkpoint_amb_opera",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10621,
@@ -2481,7 +2687,8 @@
     "effectAudio": 0,
     "areaAudio": "1_4_qiutu_ui_checkpoint_amb_rain#play_1_7_jinye_ui_checkpoint_amb_opera",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10622,
@@ -2493,7 +2700,8 @@
     "effectAudio": 0,
     "areaAudio": "1_4_qiutu_ui_checkpoint_amb_rain#play_1_7_jinye_ui_checkpoint_amb_opera",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10623,
@@ -2505,7 +2713,8 @@
     "effectAudio": 0,
     "areaAudio": "1_4_qiutu_ui_checkpoint_amb_rain#play_1_7_jinye_ui_checkpoint_amb_opera",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10624,
@@ -2517,7 +2726,8 @@
     "effectAudio": 0,
     "areaAudio": "1_4_qiutu_ui_checkpoint_amb_rain",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810101,
@@ -2529,7 +2739,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810102,
@@ -2541,7 +2752,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810103,
@@ -2553,7 +2765,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_river",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810104,
@@ -2565,7 +2778,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_river",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810105,
@@ -2577,7 +2791,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_river",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810106,
@@ -2589,7 +2804,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_river",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810107,
@@ -2601,7 +2817,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810108,
@@ -2613,7 +2830,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810109,
@@ -2625,7 +2843,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_street",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810110,
@@ -2637,7 +2856,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_street",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810111,
@@ -2649,7 +2869,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810112,
@@ -2661,7 +2882,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810113,
@@ -2673,7 +2895,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810114,
@@ -2685,7 +2908,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810115,
@@ -2697,7 +2921,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_rain1",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810116,
@@ -2709,7 +2934,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810117,
@@ -2721,7 +2947,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810118,
@@ -2733,7 +2960,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_dushuo",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 1810119,
@@ -2745,7 +2973,8 @@
     "effectAudio": 0,
     "areaAudio": "play_1_6_shuori_ui_checkpoint_amb_dushuo",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10701,
@@ -2757,7 +2986,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10702,
@@ -2769,7 +2999,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10703,
@@ -2781,7 +3012,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10704,
@@ -2793,7 +3025,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10705,
@@ -2805,7 +3038,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 2
+    "mapIdGroup": 2,
+    "playEffect": 0
   },
   {
     "id": 10706,
@@ -2817,7 +3051,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 2
+    "mapIdGroup": 2,
+    "playEffect": 0
   },
   {
     "id": 10707,
@@ -2829,7 +3064,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10708,
@@ -2841,7 +3077,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10709,
@@ -2853,7 +3090,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10710,
@@ -2865,7 +3103,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 2
+    "mapIdGroup": 2,
+    "playEffect": 0
   },
   {
     "id": 10711,
@@ -2877,7 +3116,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10712,
@@ -2889,7 +3129,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10713,
@@ -2901,7 +3142,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10714,
@@ -2913,7 +3155,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 2
+    "mapIdGroup": 2,
+    "playEffect": 0
   },
   {
     "id": 10715,
@@ -2925,7 +3168,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 2
+    "mapIdGroup": 2,
+    "playEffect": 0
   },
   {
     "id": 10716,
@@ -2937,7 +3181,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 2
+    "mapIdGroup": 2,
+    "playEffect": 0
   },
   {
     "id": 10717,
@@ -2949,7 +3194,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 2
+    "mapIdGroup": 2,
+    "playEffect": 0
   },
   {
     "id": 10718,
@@ -2961,7 +3207,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10719,
@@ -2973,7 +3220,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10720,
@@ -2985,7 +3233,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10721,
@@ -2997,7 +3246,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10722,
@@ -3009,7 +3259,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10723,
@@ -3021,7 +3272,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10724,
@@ -3033,7 +3285,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10725,
@@ -3045,7 +3298,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 2
+    "mapIdGroup": 2,
+    "playEffect": 0
   },
   {
     "id": 10726,
@@ -3057,7 +3311,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 2
+    "mapIdGroup": 2,
+    "playEffect": 0
   },
   {
     "id": 10727,
@@ -3069,7 +3324,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10728,
@@ -3081,7 +3337,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 1
+    "mapIdGroup": 1,
+    "playEffect": 0
   },
   {
     "id": 10729,
@@ -3093,7 +3350,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 2
+    "mapIdGroup": 2,
+    "playEffect": 0
   },
   {
     "id": 10730,
@@ -3105,7 +3363,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 2
+    "mapIdGroup": 2,
+    "playEffect": 0
   },
   {
     "id": 10731,
@@ -3117,7 +3376,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10732,
@@ -3129,7 +3389,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 31101,
@@ -3141,7 +3402,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010101,
@@ -3153,7 +3415,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010102,
@@ -3165,7 +3428,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010103,
@@ -3177,7 +3441,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010104,
@@ -3189,7 +3454,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010105,
@@ -3201,7 +3467,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010106,
@@ -3213,7 +3480,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010107,
@@ -3225,7 +3493,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010108,
@@ -3237,7 +3506,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010109,
@@ -3249,7 +3519,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010110,
@@ -3261,7 +3532,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010111,
@@ -3273,7 +3545,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010112,
@@ -3285,7 +3558,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010113,
@@ -3297,7 +3571,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010114,
@@ -3309,7 +3584,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010115,
@@ -3321,7 +3597,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010116,
@@ -3333,7 +3610,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010117,
@@ -3345,7 +3623,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010118,
@@ -3357,7 +3636,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010119,
@@ -3369,7 +3649,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010120,
@@ -3381,7 +3662,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010121,
@@ -3393,7 +3675,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010122,
@@ -3405,7 +3688,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2010123,
@@ -3417,7 +3701,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110101,
@@ -3429,7 +3714,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110102,
@@ -3441,7 +3727,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110103,
@@ -3453,7 +3740,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110104,
@@ -3465,7 +3753,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110105,
@@ -3477,7 +3766,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110106,
@@ -3489,7 +3779,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110107,
@@ -3501,7 +3792,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110108,
@@ -3513,7 +3805,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110109,
@@ -3525,7 +3818,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110110,
@@ -3537,7 +3831,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110111,
@@ -3549,7 +3844,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110112,
@@ -3561,7 +3857,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110113,
@@ -3573,7 +3870,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110114,
@@ -3585,7 +3883,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110115,
@@ -3597,7 +3896,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110116,
@@ -3609,7 +3909,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110117,
@@ -3621,7 +3922,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110118,
@@ -3633,7 +3935,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110119,
@@ -3645,7 +3948,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2110120,
@@ -3657,7 +3961,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10801,
@@ -3669,7 +3974,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10802,
@@ -3681,7 +3987,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10803,
@@ -3693,7 +4000,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10804,
@@ -3705,7 +4013,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10805,
@@ -3717,7 +4026,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10806,
@@ -3729,7 +4039,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10807,
@@ -3741,7 +4052,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10808,
@@ -3753,7 +4065,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10809,
@@ -3765,7 +4078,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10810,
@@ -3777,7 +4091,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10811,
@@ -3789,7 +4104,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10812,
@@ -3801,7 +4117,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10813,
@@ -3813,7 +4130,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10814,
@@ -3825,7 +4143,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10815,
@@ -3837,7 +4156,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10816,
@@ -3849,7 +4169,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10817,
@@ -3861,7 +4182,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10818,
@@ -3873,7 +4195,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10819,
@@ -3885,7 +4208,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10820,
@@ -3897,7 +4221,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10821,
@@ -3909,7 +4234,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10822,
@@ -3921,7 +4247,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10823,
@@ -3933,7 +4260,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10824,
@@ -3945,7 +4273,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310101,
@@ -3957,7 +4286,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310102,
@@ -3969,7 +4299,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310103,
@@ -3981,7 +4312,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310104,
@@ -3993,7 +4325,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310105,
@@ -4005,7 +4338,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310106,
@@ -4017,7 +4351,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310107,
@@ -4029,7 +4364,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310108,
@@ -4041,7 +4377,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310109,
@@ -4053,7 +4390,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310110,
@@ -4065,7 +4403,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310111,
@@ -4077,7 +4416,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310112,
@@ -4089,7 +4429,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310113,
@@ -4101,7 +4442,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310114,
@@ -4113,7 +4455,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310115,
@@ -4125,7 +4468,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310116,
@@ -4137,7 +4481,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310117,
@@ -4149,7 +4494,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310118,
@@ -4161,7 +4507,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310119,
@@ -4173,7 +4520,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2310120,
@@ -4185,7 +4533,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410101,
@@ -4197,7 +4546,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410102,
@@ -4209,7 +4559,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410103,
@@ -4221,7 +4572,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410104,
@@ -4233,7 +4585,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410105,
@@ -4245,7 +4598,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410106,
@@ -4257,7 +4611,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410107,
@@ -4269,7 +4624,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410108,
@@ -4281,7 +4637,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410109,
@@ -4293,7 +4650,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410110,
@@ -4305,7 +4663,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410111,
@@ -4317,7 +4676,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410112,
@@ -4329,7 +4689,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410113,
@@ -4341,7 +4702,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410114,
@@ -4353,7 +4715,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410115,
@@ -4365,7 +4728,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410116,
@@ -4377,7 +4741,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410117,
@@ -4389,7 +4754,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410118,
@@ -4401,7 +4767,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410119,
@@ -4413,7 +4780,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410120,
@@ -4425,7 +4793,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410121,
@@ -4437,7 +4806,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410122,
@@ -4449,7 +4819,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2410123,
@@ -4461,7 +4832,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510101,
@@ -4473,7 +4845,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510102,
@@ -4485,7 +4858,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510103,
@@ -4497,7 +4871,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510104,
@@ -4509,7 +4884,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510105,
@@ -4521,7 +4897,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510106,
@@ -4533,7 +4910,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510107,
@@ -4545,7 +4923,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510108,
@@ -4557,7 +4936,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510109,
@@ -4569,7 +4949,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510110,
@@ -4581,7 +4962,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510111,
@@ -4593,7 +4975,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510112,
@@ -4605,7 +4988,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510113,
@@ -4617,7 +5001,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510114,
@@ -4629,7 +5014,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510115,
@@ -4641,7 +5027,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510116,
@@ -4653,7 +5040,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510117,
@@ -4665,7 +5053,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510118,
@@ -4677,7 +5066,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510119,
@@ -4689,7 +5079,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510120,
@@ -4701,7 +5092,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510121,
@@ -4713,7 +5105,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2510122,
@@ -4725,7 +5118,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 10901,
@@ -4737,7 +5131,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10902,
@@ -4749,7 +5144,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10903,
@@ -4761,7 +5157,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10904,
@@ -4773,7 +5170,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10905,
@@ -4785,7 +5183,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10906,
@@ -4797,7 +5196,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10907,
@@ -4809,7 +5209,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10908,
@@ -4821,7 +5222,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10909,
@@ -4833,7 +5235,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10910,
@@ -4845,7 +5248,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10911,
@@ -4857,7 +5261,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10912,
@@ -4869,7 +5274,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10913,
@@ -4881,7 +5287,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10914,
@@ -4893,7 +5300,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10915,
@@ -4905,7 +5313,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 4
+    "mapIdGroup": 4,
+    "playEffect": 0
   },
   {
     "id": 10916,
@@ -4917,7 +5326,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 4
+    "mapIdGroup": 4,
+    "playEffect": 0
   },
   {
     "id": 10917,
@@ -4929,7 +5339,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 4
+    "mapIdGroup": 4,
+    "playEffect": 0
   },
   {
     "id": 10918,
@@ -4941,7 +5352,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10919,
@@ -4953,7 +5365,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 10920,
@@ -4965,7 +5378,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 2710101,
@@ -4977,7 +5391,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710102,
@@ -4989,7 +5404,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710103,
@@ -5001,7 +5417,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710104,
@@ -5013,7 +5430,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710105,
@@ -5025,7 +5443,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710106,
@@ -5037,7 +5456,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710107,
@@ -5049,7 +5469,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710108,
@@ -5061,7 +5482,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710109,
@@ -5073,7 +5495,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710110,
@@ -5085,7 +5508,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710111,
@@ -5097,7 +5521,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710112,
@@ -5109,7 +5534,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710113,
@@ -5121,7 +5547,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710114,
@@ -5133,7 +5560,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710115,
@@ -5145,7 +5573,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710116,
@@ -5157,7 +5586,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710117,
@@ -5169,7 +5599,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710118,
@@ -5181,7 +5612,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710119,
@@ -5193,7 +5625,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 2710120,
@@ -5205,7 +5638,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 11001,
@@ -5217,7 +5651,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11002,
@@ -5229,7 +5664,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11003,
@@ -5241,7 +5677,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11004,
@@ -5253,7 +5690,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11005,
@@ -5265,7 +5703,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11006,
@@ -5277,7 +5716,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11007,
@@ -5289,7 +5729,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11008,
@@ -5301,7 +5742,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11009,
@@ -5313,7 +5755,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11010,
@@ -5325,7 +5768,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11011,
@@ -5337,7 +5781,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11012,
@@ -5349,7 +5794,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11013,
@@ -5361,7 +5807,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11014,
@@ -5373,7 +5820,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11015,
@@ -5385,7 +5833,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11016,
@@ -5397,7 +5846,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11017,
@@ -5409,7 +5859,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11018,
@@ -5421,7 +5872,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11019,
@@ -5433,7 +5885,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11020,
@@ -5445,7 +5898,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11021,
@@ -5457,7 +5911,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11022,
@@ -5469,7 +5924,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11023,
@@ -5481,7 +5937,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11024,
@@ -5493,7 +5950,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11025,
@@ -5505,7 +5963,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 3
+    "mapIdGroup": 3,
+    "playEffect": 0
   },
   {
     "id": 11026,
@@ -5517,7 +5976,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 11027,
@@ -5529,7 +5989,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 11028,
@@ -5541,7 +6002,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 11029,
@@ -5553,7 +6015,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 11030,
@@ -5565,7 +6028,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 11101,
@@ -5577,7 +6041,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 4
+    "mapIdGroup": 4,
+    "playEffect": 0
   },
   {
     "id": 11102,
@@ -5589,7 +6054,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11103,
@@ -5601,7 +6067,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 4
+    "mapIdGroup": 4,
+    "playEffect": 0
   },
   {
     "id": 11104,
@@ -5613,7 +6080,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11105,
@@ -5625,7 +6093,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11106,
@@ -5637,7 +6106,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11107,
@@ -5649,7 +6119,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11108,
@@ -5661,7 +6132,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11109,
@@ -5673,7 +6145,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11110,
@@ -5685,7 +6158,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11111,
@@ -5697,7 +6171,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11112,
@@ -5709,7 +6184,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11113,
@@ -5721,7 +6197,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11114,
@@ -5733,7 +6210,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11115,
@@ -5745,7 +6223,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11116,
@@ -5757,7 +6236,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11117,
@@ -5769,7 +6249,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11118,
@@ -5781,7 +6262,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11119,
@@ -5793,7 +6275,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11120,
@@ -5805,7 +6288,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11121,
@@ -5817,7 +6301,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11122,
@@ -5829,7 +6314,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11123,
@@ -5841,7 +6327,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 11124,
@@ -5853,7 +6340,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 5
+    "mapIdGroup": 5,
+    "playEffect": 0
   },
   {
     "id": 30510101,
@@ -5865,7 +6353,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510102,
@@ -5877,7 +6366,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510103,
@@ -5889,7 +6379,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510104,
@@ -5901,7 +6392,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510105,
@@ -5913,7 +6405,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510106,
@@ -5925,7 +6418,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510107,
@@ -5937,7 +6431,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510108,
@@ -5949,7 +6444,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510109,
@@ -5961,7 +6457,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510110,
@@ -5973,7 +6470,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510111,
@@ -5985,7 +6483,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510112,
@@ -5997,7 +6496,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510113,
@@ -6009,7 +6509,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510114,
@@ -6021,7 +6522,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510115,
@@ -6033,7 +6535,8 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
   },
   {
     "id": 30510116,
@@ -6045,6 +6548,280 @@
     "effectAudio": 0,
     "areaAudio": "",
     "mapState": 0,
-    "mapIdGroup": 0
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110101,
+    "chapterId": 31101,
+    "unlockCondition": "",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_001_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110102,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110101",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_002_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110103,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110102",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_003_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110104,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110103",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_004_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 1
+  },
+  {
+    "id": 3110105,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110104",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_005_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 1
+  },
+  {
+    "id": 3110106,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110105",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_006_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 1
+  },
+  {
+    "id": 3110107,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110106",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_007_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 1
+  },
+  {
+    "id": 3110108,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110107",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_008_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 1
+  },
+  {
+    "id": 3110109,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110108",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_009_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110110,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110109",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_010_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 1
+  },
+  {
+    "id": 3110111,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110110",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_011_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 1
+  },
+  {
+    "id": 3110112,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110111",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_012_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110113,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110112",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_013_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110114,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110113",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_014_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110115,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110114",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_015_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110116,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110115",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_016_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110117,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110116",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_017_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110118,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110117",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_018_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110119,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110118",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_019_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110120,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110119",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_020_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
+  },
+  {
+    "id": 3110121,
+    "chapterId": 31101,
+    "unlockCondition": "EpisodeFinish=3110120",
+    "res": "v3a1_m_s08_hddt/scenes_prefab/v3a1_m_s08_hddt_021_p",
+    "desc": "",
+    "initPos": "-13#6",
+    "effectAudio": 0,
+    "areaAudio": "",
+    "mapState": 0,
+    "mapIdGroup": 0,
+    "playEffect": 0
   }
 ]

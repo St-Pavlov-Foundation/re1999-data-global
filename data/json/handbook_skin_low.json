@@ -104,7 +104,7 @@
     "des": "language_10086220",
     "skinContain": "304803|305603|302504|307503|305703",
     "backImg": "",
-    "spineParams": "",
+    "spineParams": "302504|roles_bust/v3a1_302504_xt_skinsuit/302504_xt_skinsuit.prefab|0,-60|1.55",
     "tarotCardPath": ""
   },
   {
@@ -140,7 +140,7 @@
     "des": "language_10086224",
     "skinContain": "306503|306604|308703|308203|307203|304603",
     "backImg": "",
-    "spineParams": "",
+    "spineParams": "306604|roles_bust/v3a1_306604_37_skinsuit/306604_37_skinsuit.prefab|150,210|0.8",
     "tarotCardPath": ""
   },
   {
@@ -212,20 +212,20 @@
     "des": "language_10086227",
     "skinContain": "311703|308603|311403|304002",
     "backImg": "",
-    "spineParams": "",
+    "spineParams": "308603|roles_bust/v3a1_308603_lx_skinsuit/308603_lx_skinsuit.prefab|30,20|1",
     "tarotCardPath": ""
   },
   {
     "id": 21001,
-    "name": "language_10090123",
+    "name": "language_10096590",
     "nameEn": "",
     "highId": 11001,
     "show": 1,
     "des": "language_10089256",
-    "skinContain": "306204|300306|305604|304804|308804|310703",
+    "skinContain": "306204|300306|305104|305604|304804|308804|300731|310703",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": "card01|card02|card06|card17|card18|card21"
+    "tarotCardPath": "card01|card02|card03|card06|card17|card18|card20|card21"
   },
   {
     "id": 22001,
@@ -233,7 +233,7 @@
     "nameEn": "ANOTHER STAGE",
     "highId": 12001,
     "show": 0,
-    "des": "language_10086216",
+    "des": "language_10096591",
     "skinContain": "304104|300604",
     "backImg": "",
     "spineParams": "",
@@ -245,7 +245,7 @@
     "nameEn": "AROUND THE THIRD ROCK",
     "highId": 12001,
     "show": 0,
-    "des": "language_10086216",
+    "des": "language_10096592",
     "skinContain": "305304|308404|310903|307904",
     "backImg": "",
     "spineParams": "",
@@ -271,6 +271,18 @@
     "show": 1,
     "des": "language_10086229",
     "skinContain": "306504|308704|311603|302804",
+    "backImg": "",
+    "spineParams": "",
+    "tarotCardPath": ""
+  },
+  {
+    "id": 20020,
+    "name": "language_10096593",
+    "nameEn": "A Night of the Bizarre",
+    "highId": 10005,
+    "show": 1,
+    "des": "language_10096594",
+    "skinContain": "307704|311303|303103",
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": ""

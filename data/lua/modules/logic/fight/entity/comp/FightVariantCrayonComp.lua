@@ -83,25 +83,37 @@ end
 
 function var_0_0._onLoadCallback1(arg_9_0, arg_9_1)
 	if arg_9_1.IsLoadSuccess then
+		local var_9_0 = arg_9_0._assetItem1
+
 		arg_9_0._assetItem1 = arg_9_1
 
 		arg_9_1:Retain()
 
-		local var_9_0 = arg_9_1:GetResource(arg_9_0._noiceMapPath)
+		if var_9_0 then
+			var_9_0:Release()
+		end
 
-		arg_9_0.entity.spineRenderer:getReplaceMat():SetTexture(var_0_3, var_9_0)
+		local var_9_1 = arg_9_1:GetResource(arg_9_0._noiceMapPath)
+
+		arg_9_0.entity.spineRenderer:getReplaceMat():SetTexture(var_0_3, var_9_1)
 	end
 end
 
 function var_0_0._onLoadCallback2(arg_10_0, arg_10_1)
 	if arg_10_1.IsLoadSuccess then
+		local var_10_0 = arg_10_0._assetItem2
+
 		arg_10_0._assetItem2 = arg_10_1
 
 		arg_10_1:Retain()
 
-		local var_10_0 = arg_10_1:GetResource(arg_10_0._shadowMapPath)
+		if var_10_0 then
+			var_10_0:Release()
+		end
 
-		arg_10_0.entity.spineRenderer:getReplaceMat():SetTexture(var_0_4, var_10_0)
+		local var_10_1 = arg_10_1:GetResource(arg_10_0._shadowMapPath)
+
+		arg_10_0.entity.spineRenderer:getReplaceMat():SetTexture(var_0_4, var_10_1)
 	end
 end
 

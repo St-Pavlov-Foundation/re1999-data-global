@@ -5,7 +5,12 @@ local var_0_0 = class("SDKModel", BaseModel)
 function var_0_0.onInit(arg_1_0)
 	arg_1_0:reInit()
 
-	arg_1_0._isDmm = SDKMgr.instance:getChannelId() == "301"
+	local var_1_0 = SDKMgr.instance:getChannelId()
+	local var_1_1 = SDKMgr.instance:getSubChannelId()
+
+	arg_1_0._isDmm = var_1_0 == "301"
+	arg_1_0._isSteam_GL = var_1_1 == "6007"
+	arg_1_0._isSteam_JP = var_1_1 == "6008"
 end
 
 function var_0_0.reInit(arg_2_0)
@@ -78,6 +83,22 @@ function var_0_0._modifyTrackDefine_PropertyTypes(arg_12_0)
 	var_12_0[var_12_1.poolid] = "number"
 	var_12_0[var_12_1.entrance] = "string"
 	var_12_0[var_12_1.position_list] = "string"
+end
+
+function var_0_0.isSteam_GL(arg_13_0)
+	return arg_13_0._isSteam_GL
+end
+
+function var_0_0.isSteam_JP(arg_14_0)
+	return arg_14_0._isSteam_JP
+end
+
+function var_0_0.isSteam(arg_15_0)
+	return arg_15_0:isSteam_GL() or arg_15_0:isSteam_JP()
+end
+
+function var_0_0.isPC(arg_16_0)
+	return BootNativeUtil.isWindows() or arg_16_0:isDmm() or arg_16_0:isSteam()
 end
 
 var_0_0.instance = var_0_0.New()

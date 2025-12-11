@@ -26,12 +26,14 @@ var_0_0.TouchTab = {
 }
 var_0_0.GameMode = {
 	Ob = 1,
-	DebugInit = 5,
 	DebugPackage = 6,
-	DebugNormal = 4,
-	Edit = 2,
 	VisitShare = 7,
-	Visit = 3
+	DebugNormal = 4,
+	DebugInit = 5,
+	Edit = 2,
+	Visit = 3,
+	FishingVisit = 9,
+	Fishing = 8
 }
 var_0_0.CameraState = {
 	Character = 3,
@@ -81,6 +83,8 @@ var_0_0.BlockPath = "configs/excel2json/json_block.json"
 var_0_0.InitMapConfigPath = "configs/excel2json/json_block_init.json"
 var_0_0.BlockPackageMapPath = "room/configs/json_block_package_map.json"
 var_0_0.BlockPackageDataPath = "configs/excel2json/json_block_package_data.json"
+var_0_0.FishingMapBlockPath = "configs/excel2json/json_fishing_map_block.json"
+var_0_0.FishingMapBuildingPath = "configs/excel2json/json_fishing_map_building.json"
 var_0_0.DefaultCameraParam = {
 	Angle = 25,
 	Height = 0,
@@ -329,7 +333,8 @@ var_0_0.EffectRebuildCompNames = {
 	"cameraFollowTargetComp",
 	"critter",
 	"vehickleTransport",
-	"atmosphere"
+	"atmosphere",
+	"changeColorComp"
 }
 var_0_0.AtmosphereCacheKey = "RoomAtmosphereCacheKey_v2a5"
 var_0_0.AtmosphereTriggerType = {
@@ -346,6 +351,20 @@ var_0_0.AtmosphereAudioFadeView = {
 var_0_0.RoomViewBlockOpMode = {
 	WaterReform = 2,
 	BackBlock = 1
+}
+var_0_0.ReformMode = {
+	Water = 1,
+	Block = 2
+}
+var_0_0.BlockColorReformSelectMode = {
+	All = 1,
+	Single = 2,
+	Multiple = 3
+}
+var_0_0.BlockColorReformSelectModeName = {
+	[var_0_0.BlockColorReformSelectMode.All] = "Room_block_reform_select_all",
+	[var_0_0.BlockColorReformSelectMode.Single] = "Room_block_reform_select_single",
+	[var_0_0.BlockColorReformSelectMode.Multiple] = "Room_block_reform_select_multiple"
 }
 var_0_0.DialogSpeakerType = {
 	Critter = 2,

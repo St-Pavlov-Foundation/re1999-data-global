@@ -4,7 +4,7 @@ local var_0_0 = class("FightWorkStartBornEnemy", BaseWork)
 local var_0_1 = 10
 
 function var_0_0.onStart(arg_1_0)
-	if FightWorkAppearTimeline.hasAppearTimeline() then
+	if FightWorkAppearTimeline.getAppearTimeline() then
 		arg_1_0:onDone(true)
 
 		return

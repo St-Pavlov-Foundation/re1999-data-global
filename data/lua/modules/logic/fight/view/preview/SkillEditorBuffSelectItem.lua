@@ -102,24 +102,23 @@ function var_0_0._onClickThis(arg_7_0)
 	local var_7_2 = arg_7_0:_getEntityBuffMO(var_7_0, var_7_1.id)
 
 	if var_7_2 == nil then
-		local var_7_3 = FightBuffMO.New()
-		local var_7_4 = {
-			buffId = var_7_1.id
-		}
+		local var_7_3 = FightDef_pb.BuffInfo()
 
-		var_7_4.duration = 1
-		var_7_4.count = 1
-		var_7_4.uid = SkillEditorBuffSelectView.genBuffUid()
+		var_7_3.buffId = var_7_1.id
+		var_7_3.duration = 1
+		var_7_3.count = 1
+		var_7_3.uid = SkillEditorBuffSelectView.genBuffUid()
 
-		var_7_3:init(var_7_4, var_7_0.id)
-		var_7_0:getMO():addBuff(var_7_3)
-		var_7_0.buff:addBuff(var_7_3)
+		local var_7_4 = FightBuffInfoData.New(var_7_3, var_7_0.id)
+
+		var_7_0:getMO():addBuff(var_7_4)
+		var_7_0.buff:addBuff(var_7_4)
 
 		if SkillEditorBuffSelectView._show_frame then
 			FightController.instance:dispatchEvent(FightEvent.OnEditorPlayBuffStart)
 		end
 
-		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_7_0.id, FightEnum.EffectType.BUFFADD, var_7_1.id, var_7_3.uid)
+		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_7_0.id, FightEnum.EffectType.BUFFADD, var_7_1.id, var_7_4.uid)
 	else
 		var_7_0:getMO():delBuff(var_7_2.uid)
 		var_7_0.buff:delBuff(var_7_2.uid)

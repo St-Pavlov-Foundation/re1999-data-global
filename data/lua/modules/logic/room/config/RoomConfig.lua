@@ -41,6 +41,7 @@ function var_0_0.ctor(arg_1_0)
 	arg_1_0._roomType2SkinsDict = nil
 	arg_1_0._unlockItem2RoomSkinList = nil
 	arg_1_0._blockId2WaterReformTypeDict = nil
+	arg_1_0._blockId2BlockColorDict = nil
 end
 
 function var_0_0.reqConfigNames(arg_2_0)
@@ -87,7 +88,9 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"room_water_reform",
 		"room_skin",
 		"room_building_occupy",
-		"room_building_type"
+		"room_building_type",
+		"room_block_color",
+		"room_block_color_param"
 	}
 end
 
@@ -1193,179 +1196,259 @@ function var_0_0._initBlockId2WaterReformTypeDict(arg_115_0)
 end
 
 local function var_0_5(arg_116_0, arg_116_1)
-	local var_116_0 = lua_room_skin.configDict[arg_116_0]
+	local var_116_0 = lua_room_block_color.configDict[arg_116_0]
 
 	if not var_116_0 and arg_116_1 then
-		logError(string.format("RoomConfig.getRoomSkinCfg error, cfg is nil, id:%s", arg_116_0))
+		logError(string.format("RoomConfig.getBlockColorReformCfg error, cfg is nil, id:%s", arg_116_0))
 	end
 
 	return var_116_0
 end
 
-function var_0_0.getAllSkinIdList(arg_117_0)
-	local var_117_0 = {}
+local function var_0_6(arg_117_0, arg_117_1)
+	return arg_117_0 < arg_117_1
+end
 
-	if lua_room_skin and lua_room_skin.configList then
-		for iter_117_0, iter_117_1 in ipairs(lua_room_skin.configList) do
-			var_117_0[#var_117_0 + 1] = iter_117_1.id
+function var_0_0.getBlockColorReformList(arg_118_0)
+	if not arg_118_0._blockColorReformList then
+		arg_118_0._blockColorReformList = {}
+
+		if lua_room_block_color and lua_room_block_color.configList then
+			for iter_118_0, iter_118_1 in ipairs(lua_room_block_color.configList) do
+				arg_118_0._blockColorReformList[#arg_118_0._blockColorReformList + 1] = iter_118_1.blockColor
+			end
+
+			table.sort(arg_118_0._blockColorReformList, var_0_6)
 		end
 	end
 
-	return var_117_0
+	return arg_118_0._blockColorReformList
 end
 
-function var_0_0.getSkinIdList(arg_118_0, arg_118_1)
-	local var_118_0 = {}
-	local var_118_1 = arg_118_1 and arg_118_0._roomType2SkinsDict and arg_118_0._roomType2SkinsDict[arg_118_1]
-
-	if var_118_1 then
-		var_118_0 = tabletool.copy(var_118_1)
-	end
-
-	return var_118_0
-end
-
-function var_0_0.getBelongPart(arg_119_0, arg_119_1)
+function var_0_0.getBlockColorReformBlockId(arg_119_0, arg_119_1)
 	local var_119_0
 	local var_119_1 = var_0_5(arg_119_1, true)
 
 	if var_119_1 then
-		var_119_0 = var_119_1.type
+		var_119_0 = var_119_1.blockId
 	end
 
 	return var_119_0
 end
 
-function var_0_0.getRoomSkinUnlockItemId(arg_120_0, arg_120_1)
+function var_0_0.getBlockColorReformBlockCfg(arg_120_0, arg_120_1)
 	local var_120_0
-	local var_120_1 = var_0_5(arg_120_1, true)
+	local var_120_1 = arg_120_0:getBlockColorReformBlockId(arg_120_1)
 
 	if var_120_1 then
-		var_120_0 = var_120_1.itemId
+		var_120_0 = arg_120_0:getBlock(var_120_1)
+		var_120_0 = var_120_0 or {
+			mainRes = 0,
+			blockId = var_120_1,
+			blockColor = arg_120_1,
+			defineId = RoomBlockEnum.BlockColorReformCommonDefineId
+		}
 	end
 
 	return var_120_0
 end
 
-function var_0_0.getRoomSkinName(arg_121_0, arg_121_1)
-	local var_121_0 = ""
-	local var_121_1 = var_0_5(arg_121_1, true)
+function var_0_0.getBlockColorReformVoucherId(arg_121_0, arg_121_1)
+	local var_121_0 = var_0_5(arg_121_1, true)
 
-	if var_121_1 then
-		var_121_0 = var_121_1.name
-	end
-
-	return var_121_0
+	return var_121_0 and var_121_0.voucherId or 0
 end
 
-function var_0_0.getRoomSkinActId(arg_122_0, arg_122_1)
-	local var_122_0
-	local var_122_1 = var_0_5(arg_122_1, true)
-
-	if var_122_1 then
-		var_122_0 = var_122_1.activity
+function var_0_0.getBlockColorByBlockId(arg_122_0, arg_122_1)
+	if not arg_122_0._blockId2BlockColorDict then
+		arg_122_0:_initBlockId2BlockColorDict()
 	end
 
-	return var_122_0
+	return arg_122_0._blockId2BlockColorDict[arg_122_1]
 end
 
-function var_0_0.getRoomSkinIcon(arg_123_0, arg_123_1)
-	local var_123_0
-	local var_123_1 = var_0_5(arg_123_1, true)
+function var_0_0._initBlockId2BlockColorDict(arg_123_0)
+	arg_123_0._blockId2BlockColorDict = {}
 
-	if var_123_1 then
-		var_123_0 = var_123_1.icon
+	for iter_123_0, iter_123_1 in ipairs(lua_room_block_color.configList) do
+		arg_123_0._blockId2BlockColorDict[iter_123_1.blockId] = iter_123_1.blockColor
 	end
-
-	return var_123_0
 end
 
-function var_0_0.getRoomSkinDesc(arg_124_0, arg_124_1)
-	local var_124_0 = ""
-	local var_124_1 = var_0_5(arg_124_1, true)
+local function var_0_7(arg_124_0, arg_124_1)
+	local var_124_0 = lua_room_skin.configDict[arg_124_0]
 
-	if var_124_1 then
-		var_124_0 = var_124_1.desc
+	if not var_124_0 and arg_124_1 then
+		logError(string.format("RoomConfig.getRoomSkinCfg error, cfg is nil, id:%s", arg_124_0))
 	end
 
 	return var_124_0
 end
 
-function var_0_0.getRoomSkinBannerIcon(arg_125_0, arg_125_1)
-	local var_125_0 = ""
-	local var_125_1 = var_0_5(arg_125_1, true)
+function var_0_0.getAllSkinIdList(arg_125_0)
+	local var_125_0 = {}
 
-	if var_125_1 then
-		var_125_0 = var_125_1.bannerIcon
+	if lua_room_skin and lua_room_skin.configList then
+		for iter_125_0, iter_125_1 in ipairs(lua_room_skin.configList) do
+			var_125_0[#var_125_0 + 1] = iter_125_1.id
+		end
 	end
 
 	return var_125_0
 end
 
-function var_0_0.getRoomSkinRare(arg_126_0, arg_126_1)
-	local var_126_0
-	local var_126_1 = var_0_5(arg_126_1, true)
+function var_0_0.getSkinIdList(arg_126_0, arg_126_1)
+	local var_126_0 = {}
+	local var_126_1 = arg_126_1 and arg_126_0._roomType2SkinsDict and arg_126_0._roomType2SkinsDict[arg_126_1]
 
 	if var_126_1 then
-		var_126_0 = var_126_1.rare
+		var_126_0 = tabletool.copy(var_126_1)
 	end
 
 	return var_126_0
 end
 
-function var_0_0.getRoomSkinPriority(arg_127_0, arg_127_1)
+function var_0_0.getBelongPart(arg_127_0, arg_127_1)
 	local var_127_0
-	local var_127_1 = var_0_5(arg_127_1, true)
+	local var_127_1 = var_0_7(arg_127_1, true)
 
 	if var_127_1 then
-		var_127_0 = var_127_1.priority
+		var_127_0 = var_127_1.type
 	end
 
 	return var_127_0
 end
 
-function var_0_0.getRoomSkinModelPath(arg_128_0, arg_128_1)
+function var_0_0.getRoomSkinUnlockItemId(arg_128_0, arg_128_1)
 	local var_128_0
-	local var_128_1 = var_0_5(arg_128_1, true)
+	local var_128_1 = var_0_7(arg_128_1, true)
 
 	if var_128_1 then
-		var_128_0 = var_128_1.model
+		var_128_0 = var_128_1.itemId
 	end
 
 	return var_128_0
 end
 
-function var_0_0.getRoomSkinEquipEffPos(arg_129_0, arg_129_1)
-	local var_129_0
-	local var_129_1 = var_0_5(arg_129_1, true)
+function var_0_0.getRoomSkinName(arg_129_0, arg_129_1)
+	local var_129_0 = ""
+	local var_129_1 = var_0_7(arg_129_1, true)
 
 	if var_129_1 then
-		var_129_0 = var_129_1.equipEffPos
+		var_129_0 = var_129_1.name
 	end
 
 	return var_129_0
 end
 
-function var_0_0.getRoomSkinEquipEffSize(arg_130_0, arg_130_1)
+function var_0_0.getRoomSkinActId(arg_130_0, arg_130_1)
 	local var_130_0
-	local var_130_1 = var_0_5(arg_130_1, true)
+	local var_130_1 = var_0_7(arg_130_1, true)
 
 	if var_130_1 then
-		var_130_0 = var_130_1.equipEffSize
+		var_130_0 = var_130_1.activity
 	end
 
 	return var_130_0
 end
 
-function var_0_0.getRoomSkinSources(arg_131_0, arg_131_1)
+function var_0_0.getRoomSkinIcon(arg_131_0, arg_131_1)
 	local var_131_0
-	local var_131_1 = var_0_5(arg_131_1, true)
+	local var_131_1 = var_0_7(arg_131_1, true)
 
 	if var_131_1 then
-		var_131_0 = var_131_1.sources
+		var_131_0 = var_131_1.icon
 	end
 
 	return var_131_0
+end
+
+function var_0_0.getRoomSkinDesc(arg_132_0, arg_132_1)
+	local var_132_0 = ""
+	local var_132_1 = var_0_7(arg_132_1, true)
+
+	if var_132_1 then
+		var_132_0 = var_132_1.desc
+	end
+
+	return var_132_0
+end
+
+function var_0_0.getRoomSkinBannerIcon(arg_133_0, arg_133_1)
+	local var_133_0 = ""
+	local var_133_1 = var_0_7(arg_133_1, true)
+
+	if var_133_1 then
+		var_133_0 = var_133_1.bannerIcon
+	end
+
+	return var_133_0
+end
+
+function var_0_0.getRoomSkinRare(arg_134_0, arg_134_1)
+	local var_134_0
+	local var_134_1 = var_0_7(arg_134_1, true)
+
+	if var_134_1 then
+		var_134_0 = var_134_1.rare
+	end
+
+	return var_134_0
+end
+
+function var_0_0.getRoomSkinPriority(arg_135_0, arg_135_1)
+	local var_135_0
+	local var_135_1 = var_0_7(arg_135_1, true)
+
+	if var_135_1 then
+		var_135_0 = var_135_1.priority
+	end
+
+	return var_135_0
+end
+
+function var_0_0.getRoomSkinModelPath(arg_136_0, arg_136_1)
+	local var_136_0
+	local var_136_1 = var_0_7(arg_136_1, true)
+
+	if var_136_1 then
+		var_136_0 = var_136_1.model
+	end
+
+	return var_136_0
+end
+
+function var_0_0.getRoomSkinEquipEffPos(arg_137_0, arg_137_1)
+	local var_137_0
+	local var_137_1 = var_0_7(arg_137_1, true)
+
+	if var_137_1 then
+		var_137_0 = var_137_1.equipEffPos
+	end
+
+	return var_137_0
+end
+
+function var_0_0.getRoomSkinEquipEffSize(arg_138_0, arg_138_1)
+	local var_138_0
+	local var_138_1 = var_0_7(arg_138_1, true)
+
+	if var_138_1 then
+		var_138_0 = var_138_1.equipEffSize
+	end
+
+	return var_138_0
+end
+
+function var_0_0.getRoomSkinSources(arg_139_0, arg_139_1)
+	local var_139_0
+	local var_139_1 = var_0_7(arg_139_1, true)
+
+	if var_139_1 then
+		var_139_0 = var_139_1.sources
+	end
+
+	return var_139_0
 end
 
 var_0_0.instance = var_0_0.New()

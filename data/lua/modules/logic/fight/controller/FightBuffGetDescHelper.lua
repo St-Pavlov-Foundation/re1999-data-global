@@ -64,7 +64,10 @@ function var_0_0.getBuffFeatureHandle(arg_3_0)
 			[FightEnum.BuffFeature.SpecialCountContinueChannelBuff] = var_0_0.getSpecialCountCastBuffDesc,
 			[FightEnum.BuffFeature.AddAttrBySpecialCount] = var_0_0.getAddAttrBySpecialCountDesc,
 			[FightEnum.BuffFeature.SpecialCountCastChannel] = var_0_0.getSpecialCountCastChannelDesc,
-			[FightEnum.BuffFeature.ConsumeBuffAddBuffContinueChannel] = var_0_0.getConsumeBuffAddBuffContinueChannelDesc
+			[FightEnum.BuffFeature.ConsumeBuffAddBuffContinueChannel] = var_0_0.getConsumeBuffAddBuffContinueChannelDesc,
+			[FightEnum.BuffFeature.BeAttackAccrualFixAttr] = var_0_0.getBeAttackAccrualFixAttr,
+			[FightEnum.BuffFeature.Raspberry] = var_0_0.getRaspberryDesc,
+			[FightEnum.BuffFeature.RaspberryBigSkill] = var_0_0.getRaspberryBigSkillDesc
 		}
 	end
 
@@ -135,45 +138,61 @@ function var_0_0.getStorageDamageDesc(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
 	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_10_1.desc, arg_10_3[2])
 end
 
-function var_0_0.getSpecialCountCastBuffDesc(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = SkillHelper.getColorFormat("#D65F3C", arg_11_3[2])
+function var_0_0.getKSDLBuffDesc(arg_11_0, arg_11_1)
+	local var_11_0 = FightBuffHelper.getKSDLSpecialBuffList(arg_11_0)
 
-	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_11_1.desc, var_11_0)
-end
-
-function var_0_0.getAddAttrBySpecialCountDesc(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = tonumber(arg_12_3[2]) / 10
-	local var_12_1 = string.format("%+.1f", var_12_0)
-
-	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_12_1.desc, var_12_1 .. "%%")
-end
-
-function var_0_0.getSpecialCountCastChannelDesc(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_13_1.desc, arg_13_3[2])
-end
-
-function var_0_0.getConsumeBuffAddBuffContinueChannelDesc(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_14_1.desc, arg_14_4.strParam)
-end
-
-function var_0_0.getKSDLBuffDesc(arg_15_0, arg_15_1)
-	local var_15_0 = FightBuffHelper.getKSDLSpecialBuffList(arg_15_0)
-
-	if #var_15_0 < 1 then
-		return var_0_0.buildDesc(arg_15_1.desc)
+	if #var_11_0 < 1 then
+		return var_0_0.buildDesc(arg_11_1.desc)
 	end
 
-	local var_15_1 = ""
+	local var_11_1 = ""
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		local var_15_2 = lua_skill_buff.configDict[iter_15_1.buffId]
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		local var_11_2 = lua_skill_buff.configDict[iter_11_1.buffId]
 
-		if var_15_2 then
-			var_15_1 = var_15_1 .. var_0_0.buildDesc(var_15_2.desc)
+		if var_11_2 then
+			var_11_1 = var_11_1 .. var_0_0.buildDesc(var_11_2.desc)
 		end
 	end
 
-	return var_15_1
+	return var_11_1
+end
+
+function var_0_0.getSpecialCountCastBuffDesc(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = SkillHelper.getColorFormat("#D65F3C", arg_12_3[2])
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_12_1.desc, var_12_0)
+end
+
+function var_0_0.getAddAttrBySpecialCountDesc(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = tonumber(arg_13_3[2]) / 10
+	local var_13_1 = string.format("%+.1f", var_13_0)
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_13_1.desc, var_13_1 .. "%%")
+end
+
+function var_0_0.getSpecialCountCastChannelDesc(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_14_1.desc, arg_14_3[2])
+end
+
+function var_0_0.getConsumeBuffAddBuffContinueChannelDesc(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_15_1.desc, arg_15_4.strParam)
+end
+
+function var_0_0.getBeAttackAccrualFixAttr(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_16_1.desc, math.abs(tonumber(arg_16_4.strParam) or 0) / 10)
+end
+
+function var_0_0.getRaspberryDesc(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
+	local var_17_0 = arg_17_4.param
+
+	return GameUtil.getSubPlaceholderLuaLangTwoParam(arg_17_1.desc, var_17_0[1], var_17_0[2])
+end
+
+function var_0_0.getRaspberryBigSkillDesc(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+	local var_18_0 = arg_18_4.param
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_18_1.desc, var_18_0[1])
 end
 
 return var_0_0

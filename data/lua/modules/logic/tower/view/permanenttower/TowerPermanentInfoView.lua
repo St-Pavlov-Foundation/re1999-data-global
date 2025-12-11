@@ -127,12 +127,24 @@ end
 
 function var_0_0.refreshUI(arg_13_0)
 	arg_13_0.permanentTowerMo = TowerModel.instance:getCurPermanentMo()
+	arg_13_0.isDeepLayerUnlock = TowerPermanentDeepModel.instance:checkDeepLayerUnlock()
+	arg_13_0.isEnterDeepGuideFinish = TowerPermanentDeepModel.instance:checkEnterDeepLayerGuideFinish()
+	arg_13_0.isInDeepLayer = TowerPermanentDeepModel.instance:getIsInDeepLayerState()
+	arg_13_0.canShowDeep = arg_13_0.isDeepLayerUnlock and arg_13_0.isEnterDeepGuideFinish and arg_13_0.isInDeepLayer
+
+	if arg_13_0.canShowDeep then
+		return
+	end
+
 	arg_13_0.curSelectEpisodeId = TowerPermanentModel.instance:getCurSelectEpisodeId()
 
 	local var_13_0, var_13_1 = TowerPermanentModel.instance:getRealSelectStage()
 
 	arg_13_0.layerConfig = TowerConfig.instance:getPermanentEpisodeLayerCo(var_13_0, var_13_1)
 	arg_13_0.episodeCo = lua_episode.configDict[arg_13_0.curSelectEpisodeId]
+
+	DungeonModel.instance:SetSendChapterEpisodeId(arg_13_0.episodeCo.chapterId, arg_13_0.episodeCo.id)
+
 	arg_13_0.isElite = arg_13_0.layerConfig.isElite == 1
 	arg_13_0._txtepisode.text = "ST - " .. var_13_1
 	arg_13_0._txtname.text = GameUtil.setFirstStrSize(arg_13_0.episodeCo.name, 90)
@@ -169,6 +181,12 @@ function var_0_0.refreshUI(arg_13_0)
 		end
 
 		gohelper.CreateObjList(arg_13_0, arg_13_0.showHeroGroupItem, var_13_6, arg_13_0._gocurherogroup, arg_13_0._goherogroupItem)
+	end
+
+	local var_13_8 = FightModel.instance:getFightParam()
+
+	if var_13_8 then
+		var_13_8:setEpisodeId(arg_13_0.episodeCo.id)
 	end
 
 	arg_13_0:refreshRecommend()

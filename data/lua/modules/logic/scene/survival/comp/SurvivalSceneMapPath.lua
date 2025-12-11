@@ -30,24 +30,46 @@ function var_0_0.setPathListShow(arg_2_0, arg_2_1)
 	TaskDispatcher.cancelTask(arg_2_0.setPathListShow, arg_2_0)
 	arg_2_0:clearCurLines()
 
-	if arg_2_1 and #arg_2_1 >= 2 then
-		for iter_2_0 = 1, #arg_2_1 do
-			local var_2_0, var_2_1 = arg_2_0:getPathAndRotate(arg_2_1[iter_2_0 - 1], arg_2_1[iter_2_0], arg_2_1[iter_2_0 + 1])
-			local var_2_2 = arg_2_0:getObj(var_2_0, arg_2_1[iter_2_0], var_2_1)
+	local var_2_0 = arg_2_1 and #arg_2_1 or 0
 
-			table.insert(arg_2_0._curShowLines, var_2_2)
+	if var_2_0 >= 2 then
+		for iter_2_0 = 1, var_2_0 do
+			local var_2_1, var_2_2 = arg_2_0:getPathAndRotate(arg_2_1[iter_2_0 - 1], arg_2_1[iter_2_0], arg_2_1[iter_2_0 + 1])
+			local var_2_3 = arg_2_0:getObj(var_2_1, arg_2_1[iter_2_0], var_2_2)
+
+			table.insert(arg_2_0._curShowLines, var_2_3)
 		end
 
 		table.insert(arg_2_0._curShowLines, arg_2_0:getObj(var_0_0.ResPaths.linePoint, arg_2_1[#arg_2_1], 0))
 
-		local var_2_3 = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.MoveCost)
+		local var_2_4 = SurvivalShelterModel.instance:getWeekInfo()
+		local var_2_5 = SurvivalMapModel.instance:getSceneMo()
+		local var_2_6 = var_2_4:getAttr(SurvivalEnum.AttrType.MoveCost)
+		local var_2_7 = 0
 
-		SurvivalMapModel.instance.showCostTime = (#arg_2_1 - 1) * var_2_3
+		for iter_2_1, iter_2_2 in ipairs(arg_2_1) do
+			if iter_2_1 ~= var_2_0 then
+				local var_2_8 = var_2_5:getBlockCoByPos(iter_2_2)
+
+				if var_2_8 then
+					if var_2_8.subType == SurvivalEnum.UnitSubType.Ice or var_2_8.subType == SurvivalEnum.UnitSubType.Morass and var_2_4:getAttr(SurvivalEnum.AttrType.Vehicle_Morass) == 0 or var_2_8.subType == SurvivalEnum.UnitSubType.Water and var_2_4:getAttr(SurvivalEnum.AttrType.Vehicle_Water) == 0 then
+						var_2_7 = var_2_7 + math.floor(var_2_6 * (1000 + var_2_8.preAttr) / 1000)
+					else
+						var_2_7 = var_2_7 + var_2_6
+					end
+				else
+					var_2_7 = var_2_7 + var_2_6
+				end
+			end
+		end
+
+		SurvivalMapModel.instance.showCostTime = var_2_7
 	else
 		SurvivalMapModel.instance.showCostTime = 0
+		arg_2_1 = nil
 	end
 
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapCostTimeUpdate)
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapCostTimeUpdate, arg_2_1)
 end
 
 function var_0_0.getPathAndRotate(arg_3_0, arg_3_1, arg_3_2, arg_3_3)

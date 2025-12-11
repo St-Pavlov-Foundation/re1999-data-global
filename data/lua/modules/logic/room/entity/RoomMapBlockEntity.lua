@@ -54,6 +54,7 @@ function var_0_0.onEffectRebuild(arg_7_0)
 	local var_7_0 = arg_7_0:getMO()
 
 	arg_7_0:_refreshWaterGradient(var_7_0)
+	arg_7_0.birthday:refreshBirthday()
 end
 
 function var_0_0.refreshBlock(arg_8_0)
@@ -77,31 +78,28 @@ function var_0_0.refreshBlock(arg_8_0)
 		arg_8_0._placingHereRotation = nil
 	end
 
-	local var_8_1 = false
-	local var_8_2 = RoomWaterReformModel.instance:isWaterReform()
-	local var_8_3 = var_8_0:hasRiver()
+	local var_8_1 = var_8_0:getOpState() == RoomBlockEnum.OpState.Back
+	local var_8_2 = RoomWaterReformModel.instance:isWaterReform() and RoomWaterReformModel.instance:isBlockInSelect(var_8_0)
 
-	if var_8_2 and var_8_3 then
-		var_8_1 = RoomWaterReformModel.instance:isBlockInSelect(var_8_0)
-	end
+	if var_8_1 or var_8_2 then
+		local var_8_3
 
-	local var_8_4 = var_8_0:getOpState() == RoomBlockEnum.OpState.Back
-
-	if var_8_4 or var_8_1 then
-		local var_8_5
-
-		if var_8_1 then
-			var_8_5 = RoomScenePreloader.ResEffectD03
-		elseif var_8_4 then
-			var_8_5 = var_8_0:getOpStateParam() and RoomScenePreloader.ResEffectD03 or RoomScenePreloader.ResEffectD04
+		if var_8_2 then
+			if var_8_0:hasRiver() then
+				var_8_3 = RoomScenePreloader.ResEffectD03
+			else
+				var_8_3 = RoomScenePreloader.ResEffectD04
+			end
+		elseif var_8_1 then
+			var_8_3 = var_8_0:getOpStateParam() and RoomScenePreloader.ResEffectD03 or RoomScenePreloader.ResEffectD04
 		end
 
-		if var_8_5 and arg_8_0._lastSelectEffPath ~= var_8_5 then
-			arg_8_0._lastSelectEffPath = var_8_5
+		if var_8_3 and arg_8_0._lastSelectEffPath ~= var_8_3 then
+			arg_8_0._lastSelectEffPath = var_8_3
 
 			arg_8_0.effect:addParams({
 				[RoomEnum.EffectKey.BlockBackBlockKey] = {
-					res = var_8_5
+					res = var_8_3
 				}
 			})
 		end

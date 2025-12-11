@@ -14,7 +14,6 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	end
 
 	var_1_0.ver = var_1_0.ver or arg_1_0:getCurVersion()
-	var_1_0.newTalents = var_1_0.newTalents or {}
 	arg_1_0.data = var_1_0
 end
 

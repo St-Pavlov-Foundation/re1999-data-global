@@ -29,7 +29,7 @@ function var_0_0.onDestroy(arg_2_0)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
+function var_0_0.setData(arg_3_0, arg_3_1)
 	arg_3_0._roleId = arg_3_1.id
 	arg_3_0._heroId = arg_3_1.roleId
 	arg_3_0._heroName = arg_3_1.name
@@ -44,12 +44,13 @@ function var_0_0._refreshSkillUI(arg_4_0)
 		for iter_4_0, iter_4_1 in pairs(var_4_0) do
 			local var_4_1 = lua_skill.configDict[iter_4_1]
 
-			if not var_4_1 then
+			if var_4_1 then
+				arg_4_0._skillitems[iter_4_0].icon:LoadImage(ResUrl.getSkillIcon(var_4_1.icon))
+				arg_4_0._skillitems[iter_4_0].tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_4_1.showTag))
+			else
 				logError(string.format("heroID : %s, skillId not found : %s", arg_4_0._roleId, iter_4_1))
 			end
 
-			arg_4_0._skillitems[iter_4_0].icon:LoadImage(ResUrl.getSkillIcon(var_4_1.icon))
-			arg_4_0._skillitems[iter_4_0].tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_4_1.showTag))
 			gohelper.setActive(arg_4_0._skillitems[iter_4_0].tag.gameObject, iter_4_0 ~= 3)
 		end
 	end
@@ -63,7 +64,6 @@ function var_0_0._onSkillCardClick(arg_5_0, arg_5_1)
 		var_5_0.super = arg_5_1 == 3
 		var_5_0.skillIdList = var_5_1[arg_5_1]
 		var_5_0.monsterName = arg_5_0._heroName
-		var_5_0.heroId = arg_5_0._heroId
 		var_5_0.skillIndex = arg_5_1
 
 		ViewMgr.instance:openView(ViewName.SkillTipView, var_5_0)

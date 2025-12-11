@@ -43,8 +43,9 @@ var_0_0.GuideRoom = {
 var_0_0.GuideId = {
 	RoomCritterTrain = 415,
 	Act157FactoryUnlock = 18103,
-	WeekWalkDeep = 506,
-	RoomDailyOrder = 418
+	RoomDailyOrder = 418,
+	NecrologistStoryLinkText = 31308,
+	WeekWalkDeep = 506
 }
 var_0_0.EventTrigger = {
 	Act178FoodNotEnough = 2,

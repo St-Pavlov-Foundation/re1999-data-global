@@ -15,6 +15,7 @@ var_0_0.TowerStatus = {
 }
 var_0_0.PermanentUI = {
 	SingleItemH = 120,
+	DeepScrollH = 800,
 	LockTipH = 200,
 	ScrollH = 950,
 	ItemSpaceH = 90,

@@ -9,7 +9,9 @@ function var_0_0.onConstructor(arg_1_0)
 	arg_1_0.aiJiAoQteEndlessLoop = 0
 	arg_1_0.aiJiAoFakeHpOffset = {}
 	arg_1_0.aiJiAoSelectTargetView = nil
+	arg_1_0.playAiJiAoPreTimeline = nil
 	arg_1_0.buffDurationDic = {}
+	arg_1_0.douQuQuDice = nil
 end
 
 function var_0_0.onCancelOperation(arg_2_0)

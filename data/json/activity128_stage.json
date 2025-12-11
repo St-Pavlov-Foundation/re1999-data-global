@@ -702,5 +702,53 @@
     "skinIds": "640305",
     "skinScales": "1.1",
     "skinOffsetXYs": "-316#-440"
+  },
+  {
+    "activityId": 13113,
+    "stage": 1,
+    "name": "language_10006101",
+    "name_en": "Marsh Creation",
+    "maxPoints": 850000,
+    "layer4MaxPoints": 0,
+    "openDay": 0,
+    "bossRushMainItemBossSprite": "v1a4_bossrush_boss03",
+    "bossRushLevelDetailFullBgSimage": "v1a4_bossrush_fullbg_3",
+    "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_3",
+    "resultViewNameSImage": "v1a4_bossrush_bossname_3",
+    "skinIds": "413401",
+    "skinScales": "1",
+    "skinOffsetXYs": "-353#-558"
+  },
+  {
+    "activityId": 13113,
+    "stage": 2,
+    "name": "language_10087632",
+    "name_en": "Avatar of Abhorrence",
+    "maxPoints": 850000,
+    "layer4MaxPoints": 0,
+    "openDay": 0,
+    "bossRushMainItemBossSprite": "v3a0_bossrush_boss01",
+    "bossRushLevelDetailFullBgSimage": "v3a0_bossrush_fullbg_1",
+    "resultViewFullBgSImage": "v3a0_bossrush_resultfullbg_1",
+    "resultViewNameSImage": "v3a0_bossrush_bossname_1",
+    "skinIds": "670405",
+    "skinScales": "0.85",
+    "skinOffsetXYs": "-483#-375"
+  },
+  {
+    "activityId": 13113,
+    "stage": 3,
+    "name": "language_10039296",
+    "name_en": "Echoes of Opera",
+    "maxPoints": 850000,
+    "layer4MaxPoints": 0,
+    "openDay": 0,
+    "bossRushMainItemBossSprite": "v1a8_bossrush_boss01",
+    "bossRushLevelDetailFullBgSimage": "v1a8_bossrush_fullbg_1",
+    "resultViewFullBgSImage": "v1a8_bossrush_resultfullbg_1",
+    "resultViewNameSImage": "v1a8_bossrush_bossname_1",
+    "skinIds": "630409",
+    "skinScales": "1",
+    "skinOffsetXYs": "-241#-473"
   }
 ]

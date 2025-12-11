@@ -2,16 +2,17 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	skinId = 9,
-	outDesc = 5,
-	type = 2,
-	title = 4,
-	offset = 10,
-	desc = 6,
-	rewardView = 8,
-	task = 7,
+	skinId = 10,
+	outDesc = 6,
+	type = 3,
+	title = 5,
+	offset = 11,
+	desc = 7,
+	rewardView = 9,
+	task = 8,
 	id = 1,
-	stage = 3
+	stage = 4,
+	activityId = 2
 }
 local var_0_2 = {
 	"id"

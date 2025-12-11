@@ -37,8 +37,14 @@ function var_0_0.setTabImg(arg_4_0, arg_4_1, arg_4_2)
 end
 
 function var_0_0.dispose(arg_5_0)
-	arg_5_0.simageSelectTabImg:UnLoadImage()
-	arg_5_0.simageUnSelectTabImg:UnLoadImage()
+	if arg_5_0.simageSelectTabImg then
+		arg_5_0.simageSelectTabImg:UnLoadImage()
+	end
+
+	if arg_5_0.simageUnSelectTabImg then
+		arg_5_0.simageUnSelectTabImg:UnLoadImage()
+	end
+
 	var_0_0.super.dispose(arg_5_0)
 end
 

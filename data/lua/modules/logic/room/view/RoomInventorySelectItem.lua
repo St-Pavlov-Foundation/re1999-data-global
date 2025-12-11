@@ -10,10 +10,12 @@ end
 
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnItem:AddClickListener(arg_2_0._onBtnItemClick, arg_2_0)
+	arg_2_0:addEventCb(RoomWaterReformController.instance, RoomEvent.OnGetBlockReformPermanentInfo, arg_2_0._onGetReformPermanentInfo, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btnItem:RemoveClickListener()
+	arg_3_0:removeEventCb(RoomWaterReformController.instance, RoomEvent.OnGetBlockReformPermanentInfo, arg_3_0._onGetReformPermanentInfo, arg_3_0)
 end
 
 function var_0_0._editableAddEvents(arg_4_0)
@@ -148,89 +150,105 @@ function var_0_0._onBtnItemClick(arg_11_0)
 	RoomMapController.instance:dispatchEvent(RoomEvent.SelectBlock)
 end
 
-function var_0_0._refreshBlock(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_2 then
-		arg_12_0._scene.inventorymgr:removeBlockEntity(arg_12_2)
-	end
+function var_0_0._onGetReformPermanentInfo(arg_12_0)
+	local var_12_0 = arg_12_0:getBlockMO()
 
-	if arg_12_1 then
-		arg_12_0._scene.inventorymgr:addBlockEntity(arg_12_1)
-
-		local var_12_0 = arg_12_0._scene.inventorymgr:getIndexById(arg_12_1)
-
-		OrthCameraRTMgr.instance:setRawImageUvRect(arg_12_0._rawImageIcon, var_12_0)
-	end
-end
-
-function var_0_0.getBlockMO(arg_13_0)
-	return arg_13_0._blockMO
-end
-
-function var_0_0.onUpdateMO(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0._blockMO and arg_14_0._blockMO.id
-	local var_14_1 = arg_14_1 and arg_14_1.id
-
-	arg_14_0._blockMO = arg_14_1
-
-	arg_14_0:_refreshBlock(var_14_1, var_14_0)
-
-	local var_14_2 = arg_14_0._blockMO and arg_14_0._blockMO.packageId == RoomBlockPackageEnum.ID.RoleBirthday
-
-	gohelper.setActive(arg_14_0._gobirthicon, var_14_2)
-
-	if var_14_2 then
-		arg_14_0:_refreshCharacter(var_14_1)
-	end
-end
-
-function var_0_0.onSelect(arg_15_0, arg_15_1)
-	gohelper.setActive(arg_15_0._goselect, arg_15_1)
-end
-
-function var_0_0.onDestroyView(arg_16_0)
-	if arg_16_0._blockMO then
-		arg_16_0._scene.inventorymgr:removeBlockEntity(arg_16_0._blockMO.id)
-	end
-
-	if arg_16_0._rawImageIcon then
-		arg_16_0._rawImageIcon.texture = nil
-	end
-
-	arg_16_0._simagebirthhero:UnLoadImage()
-end
-
-function var_0_0._refreshCharacter(arg_17_0, arg_17_1)
-	local var_17_0 = RoomConfig.instance:getSpecialBlockConfig(arg_17_1)
-
-	if not var_17_0 then
+	if not var_12_0 then
 		return
 	end
 
-	local var_17_1 = RoomCharacterModel.instance:isOnBirthday(var_17_0.heroId)
+	local var_12_1 = arg_12_0._scene.inventorymgr:getBlockEntity(var_12_0.id, SceneTag.RoomInventoryBlock)
 
-	gohelper.setActive(arg_17_0._goonbirthdayicon, var_17_1)
+	RoomBlockHelper.refreshBlockEntity({
+		var_12_1
+	}, "refreshBlock")
+end
 
-	local var_17_2 = arg_17_0:_findSkinIdByHeroId(var_17_0.heroId)
+function var_0_0._refreshBlock(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_2 then
+		arg_13_0._scene.inventorymgr:removeBlockEntity(arg_13_2)
+	end
 
-	if not var_17_2 then
+	if arg_13_1 then
+		arg_13_0._scene.inventorymgr:addBlockEntity(arg_13_1)
+
+		local var_13_0 = arg_13_0._scene.inventorymgr:getIndexById(arg_13_1)
+
+		OrthCameraRTMgr.instance:setRawImageUvRect(arg_13_0._rawImageIcon, var_13_0)
+	end
+end
+
+function var_0_0.getBlockMO(arg_14_0)
+	return arg_14_0._blockMO
+end
+
+function var_0_0.onUpdateMO(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0._blockMO and arg_15_0._blockMO.id
+	local var_15_1 = arg_15_1 and arg_15_1.id
+
+	arg_15_0._blockMO = arg_15_1
+
+	arg_15_0:_refreshBlock(var_15_1, var_15_0)
+
+	local var_15_2 = arg_15_0._blockMO and arg_15_0._blockMO.packageId == RoomBlockPackageEnum.ID.RoleBirthday
+
+	gohelper.setActive(arg_15_0._gobirthicon, var_15_2)
+
+	if var_15_2 then
+		arg_15_0:_refreshCharacter(var_15_1)
+	end
+
+	RoomMapController.instance:getNextBlockReformPermanentInfo(arg_15_0._index)
+end
+
+function var_0_0.onSelect(arg_16_0, arg_16_1)
+	gohelper.setActive(arg_16_0._goselect, arg_16_1)
+end
+
+function var_0_0.onDestroyView(arg_17_0)
+	if arg_17_0._blockMO then
+		arg_17_0._scene.inventorymgr:removeBlockEntity(arg_17_0._blockMO.id)
+	end
+
+	if arg_17_0._rawImageIcon then
+		arg_17_0._rawImageIcon.texture = nil
+	end
+
+	arg_17_0._simagebirthhero:UnLoadImage()
+end
+
+function var_0_0._refreshCharacter(arg_18_0, arg_18_1)
+	local var_18_0 = RoomConfig.instance:getSpecialBlockConfig(arg_18_1)
+
+	if not var_18_0 then
 		return
 	end
 
-	local var_17_3 = SkinConfig.instance:getSkinCo(var_17_2)
+	local var_18_1 = RoomCharacterModel.instance:isOnBirthday(var_18_0.heroId)
 
-	arg_17_0._simagebirthhero:LoadImage(ResUrl.getHeadIconSmall(var_17_3.headIcon))
-end
+	gohelper.setActive(arg_18_0._goonbirthdayicon, var_18_1)
 
-function var_0_0._findSkinIdByHeroId(arg_18_0, arg_18_1)
-	local var_18_0 = RoomCharacterModel.instance:getCharacterMOById(arg_18_1)
+	local var_18_2 = arg_18_0:_findSkinIdByHeroId(var_18_0.heroId)
 
-	if var_18_0 then
-		return var_18_0.skinId
+	if not var_18_2 then
+		return
 	end
 
-	local var_18_1 = HeroConfig.instance:getHeroCO(arg_18_1)
+	local var_18_3 = SkinConfig.instance:getSkinCo(var_18_2)
 
-	return var_18_1 and var_18_1.skinId or nil
+	arg_18_0._simagebirthhero:LoadImage(ResUrl.getHeadIconSmall(var_18_3.headIcon))
+end
+
+function var_0_0._findSkinIdByHeroId(arg_19_0, arg_19_1)
+	local var_19_0 = RoomCharacterModel.instance:getCharacterMOById(arg_19_1)
+
+	if var_19_0 then
+		return var_19_0.skinId
+	end
+
+	local var_19_1 = HeroConfig.instance:getHeroCO(arg_19_1)
+
+	return var_19_1 and var_19_1.skinId or nil
 end
 
 return var_0_0

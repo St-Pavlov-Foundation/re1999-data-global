@@ -27,7 +27,7 @@ function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
 end
 
 function var_0_0.isInRange(arg_2_0, arg_2_1)
-	return SurvivalHelper.instance:isHaveNode(arg_2_0.ponitRange, arg_2_1)
+	return SurvivalHelper.instance:getValueFromDict(arg_2_0.ponitRange, arg_2_1)
 end
 
 return var_0_0

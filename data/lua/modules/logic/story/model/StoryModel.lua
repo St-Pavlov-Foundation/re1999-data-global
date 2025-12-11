@@ -703,12 +703,40 @@ function var_0_0.isDirectSkipStory(arg_67_0, arg_67_1)
 	return false
 end
 
-function var_0_0.isStoryPvPause(arg_68_0)
-	return arg_68_0._pvPause
+function var_0_0.setCurStoryId(arg_68_0, arg_68_1)
+	arg_68_0._curStoryId = arg_68_1
 end
 
-function var_0_0.setStoryPvPause(arg_69_0, arg_69_1)
-	arg_69_0._pvPause = arg_69_1
+function var_0_0.getCurStoryId(arg_69_0)
+	return arg_69_0._curStoryId or 0
+end
+
+function var_0_0.setCurStepId(arg_70_0, arg_70_1)
+	arg_70_0._curStepId = arg_70_1 or 0
+end
+
+function var_0_0.getCurStepId(arg_71_0)
+	return arg_71_0._curStepId
+end
+
+function var_0_0.isStoryPvPause(arg_72_0)
+	return arg_72_0._pvPause
+end
+
+function var_0_0.setStoryPvPause(arg_73_0, arg_73_1)
+	arg_73_0._pvPause = arg_73_1
+end
+
+function var_0_0.setLimitNoInteractLock(arg_74_0, arg_74_1)
+	arg_74_0._isLimitNoInteractLock = arg_74_1
+end
+
+function var_0_0.isLimitNoInteractLock(arg_75_0, arg_75_1)
+	if not arg_75_1 or arg_75_1.conversation.type ~= StoryEnum.ConversationType.LimitNoInteract then
+		return false
+	end
+
+	return arg_75_0._isLimitNoInteractLock
 end
 
 var_0_0.instance = var_0_0.New()

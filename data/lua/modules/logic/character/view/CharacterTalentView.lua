@@ -116,6 +116,9 @@ function var_0_0._btninsightOnClick(arg_5_0)
 	arg_5_0.chess_ani:Play("chessboard_out")
 
 	if not ViewMgr.instance:isOpen(ViewName.CharacterTalentLevelUpView) or not arg_5_0.viewParam.isBack then
+		arg_5_0.hero_id = arg_5_0.hero_id or arg_5_0.viewParam.heroid
+		arg_5_0.hero_mo_data = arg_5_0.hero_mo_data or HeroModel.instance:getByHeroId(arg_5_0.hero_id)
+
 		CharacterController.instance:openCharacterTalentLevelUpView({
 			arg_5_0.hero_id
 		})

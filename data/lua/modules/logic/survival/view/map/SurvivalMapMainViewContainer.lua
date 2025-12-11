@@ -10,6 +10,10 @@ function var_0_0.buildViews(arg_1_0)
 		SurvivalMapUseItemView.New(),
 		SurvivalMapTreeOpenFogView.New(),
 		SurvivalHeroHealthView.New(),
+		SurvivalMapRadarView.New(),
+		SurvivalMapBubbleView.New(),
+		SurvivalMapGMPosView.New(),
+		SurvivalMapTalentView.New(),
 		TabViewGroup.New(1, "#go_lefttop")
 	}
 end

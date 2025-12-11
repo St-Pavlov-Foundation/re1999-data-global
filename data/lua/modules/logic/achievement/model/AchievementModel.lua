@@ -180,45 +180,46 @@ function var_0_0.achievementHasNew(arg_12_0, arg_12_1)
 	return false
 end
 
-function var_0_0.getAchievementTaskCoList(arg_13_0, arg_13_1)
-	if arg_13_0._achievementMap then
-		return arg_13_0._achievementMap[arg_13_1]
-	end
-end
+function var_0_0.achievementHasNewWithTaskId(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_0:getAchievementTaskCoList(arg_13_1)
 
-function var_0_0.getGroupUnlockTime(arg_14_0, arg_14_1)
-	local var_14_0
-	local var_14_1 = AchievementConfig.instance:getAchievementsByGroupId(arg_14_1)
+	if var_13_0 then
+		for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+			if iter_13_1.id == arg_13_2 then
+				local var_13_1 = arg_13_0:getById(iter_13_1.id)
 
-	if var_14_1 then
-		for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-			local var_14_2 = arg_14_0:getAchievementTaskCoList(iter_14_1.id)
-
-			if var_14_2 then
-				for iter_14_2, iter_14_3 in ipairs(var_14_2) do
-					local var_14_3 = arg_14_0:getById(iter_14_3.id)
-
-					if var_14_3 and var_14_3.hasFinished and (not var_14_0 or var_14_0 > var_14_3.finishTime) then
-						var_14_0 = var_14_3.finishTime
-					end
+				if var_13_1 and var_13_1.isNew then
+					return true
 				end
 			end
 		end
 	end
 
-	return var_14_0
+	return false
 end
 
-function var_0_0.getAchievementUnlockTime(arg_15_0, arg_15_1)
+function var_0_0.getAchievementTaskCoList(arg_14_0, arg_14_1)
+	if arg_14_0._achievementMap then
+		return arg_14_0._achievementMap[arg_14_1]
+	end
+end
+
+function var_0_0.getGroupUnlockTime(arg_15_0, arg_15_1)
 	local var_15_0
-	local var_15_1 = arg_15_0:getAchievementTaskCoList(arg_15_1)
+	local var_15_1 = AchievementConfig.instance:getAchievementsByGroupId(arg_15_1)
 
 	if var_15_1 then
 		for iter_15_0, iter_15_1 in ipairs(var_15_1) do
-			local var_15_2 = arg_15_0:getById(iter_15_1.id)
+			local var_15_2 = arg_15_0:getAchievementTaskCoList(iter_15_1.id)
 
-			if var_15_2 and var_15_2.hasFinished and (not var_15_0 or var_15_0 > var_15_2.finishTime) then
-				var_15_0 = var_15_2.finishTime
+			if var_15_2 then
+				for iter_15_2, iter_15_3 in ipairs(var_15_2) do
+					local var_15_3 = arg_15_0:getById(iter_15_3.id)
+
+					if var_15_3 and var_15_3.hasFinished and (not var_15_0 or var_15_0 > var_15_3.finishTime) then
+						var_15_0 = var_15_3.finishTime
+					end
+				end
 			end
 		end
 	end
@@ -226,28 +227,31 @@ function var_0_0.getAchievementUnlockTime(arg_15_0, arg_15_1)
 	return var_15_0
 end
 
-function var_0_0.achievementHasLocked(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getAchievementTaskCoList(arg_16_1)
+function var_0_0.getAchievementUnlockTime(arg_16_0, arg_16_1)
+	local var_16_0
+	local var_16_1 = arg_16_0:getAchievementTaskCoList(arg_16_1)
 
-	if var_16_0 then
-		for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-			local var_16_1 = arg_16_0:getById(iter_16_1.id)
+	if var_16_1 then
+		for iter_16_0, iter_16_1 in ipairs(var_16_1) do
+			local var_16_2 = arg_16_0:getById(iter_16_1.id)
 
-			if var_16_1 and var_16_1.hasFinished then
-				return false
+			if var_16_2 and var_16_2.hasFinished and (not var_16_0 or var_16_0 > var_16_2.finishTime) then
+				var_16_0 = var_16_2.finishTime
 			end
 		end
 	end
 
-	return true
+	return var_16_0
 end
 
-function var_0_0.achievementGroupHasLocked(arg_17_0, arg_17_1)
-	local var_17_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_17_1)
+function var_0_0.achievementHasLocked(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0:getAchievementTaskCoList(arg_17_1)
 
 	if var_17_0 then
-		for iter_17_0, iter_17_1 in pairs(var_17_0) do
-			if not arg_17_0:achievementHasLocked(iter_17_1.id) then
+		for iter_17_0, iter_17_1 in ipairs(var_17_0) do
+			local var_17_1 = arg_17_0:getById(iter_17_1.id)
+
+			if var_17_1 and var_17_1.hasFinished then
 				return false
 			end
 		end
@@ -256,47 +260,61 @@ function var_0_0.achievementGroupHasLocked(arg_17_0, arg_17_1)
 	return true
 end
 
-function var_0_0.isGroupFinished(arg_18_0, arg_18_1)
+function var_0_0.achievementGroupHasLocked(arg_18_0, arg_18_1)
 	local var_18_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_18_1)
-	local var_18_1 = false
 
 	if var_18_0 then
 		for iter_18_0, iter_18_1 in pairs(var_18_0) do
-			local var_18_2 = arg_18_0:getAchievementTaskCoList(iter_18_1.id)
+			if not arg_18_0:achievementHasLocked(iter_18_1.id) then
+				return false
+			end
+		end
+	end
 
-			if var_18_2 then
-				local var_18_3 = false
+	return true
+end
 
-				for iter_18_2, iter_18_3 in pairs(var_18_2) do
-					local var_18_4 = arg_18_0:getById(iter_18_3.id)
+function var_0_0.isGroupFinished(arg_19_0, arg_19_1)
+	local var_19_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_19_1)
+	local var_19_1 = false
 
-					var_18_3 = var_18_4 and var_18_4.hasFinished
+	if var_19_0 then
+		for iter_19_0, iter_19_1 in pairs(var_19_0) do
+			local var_19_2 = arg_19_0:getAchievementTaskCoList(iter_19_1.id)
 
-					if not var_18_3 then
+			if var_19_2 then
+				local var_19_3 = false
+
+				for iter_19_2, iter_19_3 in pairs(var_19_2) do
+					local var_19_4 = arg_19_0:getById(iter_19_3.id)
+
+					var_19_3 = var_19_4 and var_19_4.hasFinished
+
+					if not var_19_3 then
 						break
 					end
 				end
 
-				var_18_1 = var_18_3
+				var_19_1 = var_19_3
 
-				if not var_18_3 then
+				if not var_19_3 then
 					break
 				end
 			end
 		end
 	end
 
-	return var_18_1
+	return var_19_1
 end
 
-function var_0_0.isAchievementFinished(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0:getAchievementTaskCoList(arg_19_1)
+function var_0_0.isAchievementFinished(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0:getAchievementTaskCoList(arg_20_1)
 
-	if var_19_0 then
-		for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-			local var_19_1 = arg_19_0:getById(iter_19_1.id)
+	if var_20_0 then
+		for iter_20_0, iter_20_1 in ipairs(var_20_0) do
+			local var_20_1 = arg_20_0:getById(iter_20_1.id)
 
-			if not var_19_1 or not var_19_1.hasFinished then
+			if not var_20_1 or not var_20_1.hasFinished then
 				return false
 			end
 		end
@@ -305,34 +323,34 @@ function var_0_0.isAchievementFinished(arg_19_0, arg_19_1)
 	end
 end
 
-function var_0_0.getGroupFinishTaskList(arg_20_0, arg_20_1)
-	local var_20_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_20_1)
+function var_0_0.getGroupFinishTaskList(arg_21_0, arg_21_1)
+	local var_21_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_21_1)
 
-	if var_20_0 then
-		local var_20_1 = {}
+	if var_21_0 then
+		local var_21_1 = {}
 
-		for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-			local var_20_2 = AchievementConfig.instance:getTasksByAchievementId(iter_20_1.id)
+		for iter_21_0, iter_21_1 in ipairs(var_21_0) do
+			local var_21_2 = AchievementConfig.instance:getTasksByAchievementId(iter_21_1.id)
 
-			if var_20_2 then
-				for iter_20_2, iter_20_3 in ipairs(var_20_2) do
-					local var_20_3 = arg_20_0:getById(iter_20_3.id)
+			if var_21_2 then
+				for iter_21_2, iter_21_3 in ipairs(var_21_2) do
+					local var_21_3 = arg_21_0:getById(iter_21_3.id)
 
-					if var_20_3 and var_20_3.hasFinished then
-						table.insert(var_20_1, iter_20_3)
+					if var_21_3 and var_21_3.hasFinished then
+						table.insert(var_21_1, iter_21_3)
 					end
 				end
 			end
 		end
 
-		return var_20_1
+		return var_21_1
 	end
 end
 
-function var_0_0.isAchievementTaskFinished(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0:getById(arg_21_1)
+function var_0_0.isAchievementTaskFinished(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0:getById(arg_22_1)
 
-	return var_21_0 and var_21_0.hasFinished
+	return var_22_0 and var_22_0.hasFinished
 end
 
 var_0_0.instance = var_0_0.New()

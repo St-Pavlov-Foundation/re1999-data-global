@@ -101,21 +101,20 @@ function var_0_0._refreshVoiceDropDown(arg_8_0)
 	arg_8_0._allStoryVoiceTypesStr = {}
 
 	local var_8_0 = GameConfig:GetCurVoiceShortcut()
-	local var_8_1 = SettingsController.instance:getStoryVoiceType()
 
 	arg_8_0._curVoiceIndex = 0
 	arg_8_0._curStoryVoiceIndex = 0
 
-	local var_8_2 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
-	local var_8_3 = GameConfig:GetDefaultVoiceShortcut()
+	local var_8_1 = SettingsVoicePackageModel.instance:getSupportVoiceLangs()
+	local var_8_2 = GameConfig:GetDefaultVoiceShortcut()
 
-	for iter_8_0 = 1, #var_8_2 do
-		local var_8_4 = var_8_2[iter_8_0]
+	for iter_8_0 = 1, #var_8_1 do
+		local var_8_3 = var_8_1[iter_8_0]
 
-		if var_8_4 == var_8_3 then
-			table.insert(arg_8_0._allVoiceTypes, 1, var_8_4)
+		if var_8_3 == var_8_2 then
+			table.insert(arg_8_0._allVoiceTypes, 1, var_8_3)
 		elseif OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.AudioDownload) then
-			table.insert(arg_8_0._allVoiceTypes, var_8_4)
+			table.insert(arg_8_0._allVoiceTypes, var_8_3)
 		end
 	end
 

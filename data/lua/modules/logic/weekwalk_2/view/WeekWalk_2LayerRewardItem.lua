@@ -40,9 +40,15 @@ end
 function var_0_0._btncollectallOnClick(arg_4_0)
 	WeekWalk_2Controller.instance:dispatchEvent(WeekWalk_2Event.OnGetTaskReward, arg_4_0)
 
-	local var_4_0 = WeekWalk_2TaskListModel.instance:getCanGetList()
+	if arg_4_0._mo.minTypeId == WeekWalk_2Enum.TaskType.Once then
+		local var_4_0, var_4_1, var_4_2 = WeekWalk_2TaskListModel.instance:getOnceAllTaskInfo()
 
-	TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.WeekWalk_2, arg_4_0._mo.minTypeId, var_4_0)
+		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.WeekWalk_2, arg_4_0._mo.minTypeId, var_4_2)
+	else
+		local var_4_3, var_4_4, var_4_5 = WeekWalk_2TaskListModel.instance:getAllTaskInfo()
+
+		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.WeekWalk_2, arg_4_0._mo.minTypeId, var_4_5)
+	end
 end
 
 function var_0_0._btnnotfinishbgOnClick(arg_5_0)
@@ -50,8 +56,7 @@ function var_0_0._btnnotfinishbgOnClick(arg_5_0)
 end
 
 function var_0_0._btnfinishbgOnClick(arg_6_0)
-	WeekWalk_2Controller.instance:dispatchEvent(WeekWalk_2Event.OnGetTaskReward, arg_6_0)
-	TaskRpc.instance:sendFinishTaskRequest(arg_6_0._mo.id)
+	arg_6_0:_btncollectallOnClick()
 end
 
 function var_0_0.playOutAnim(arg_7_0)

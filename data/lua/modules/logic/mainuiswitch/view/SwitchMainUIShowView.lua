@@ -254,10 +254,6 @@ function var_0_0._refreshSummonNewFlag(arg_12_0)
 	local var_12_2 = SummonMainModel.instance:entryHasFree()
 
 	gohelper.setActive(arg_12_0._imagesummonfree, var_12_0 and var_12_2)
-
-	local var_12_3 = SummonMainModel.instance:entryNeedReddot()
-
-	gohelper.setActive(arg_12_0._imagesummonreddot, var_12_0 and var_12_3)
 end
 
 function var_0_0._refreshRedDot(arg_13_0)
@@ -315,8 +311,6 @@ function var_0_0._onRefreshDeadline(arg_17_0)
 		local var_17_0 = arg_17_0._itemDeadline - ServerTime.now()
 
 		if var_17_0 <= 0 then
-			ItemRpc.instance:sendGetItemListRequest()
-			ItemRpc.instance:sendAutoUseExpirePowerItemRequest()
 			gohelper.setActive(arg_17_0._godeadline, false)
 
 			return

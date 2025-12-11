@@ -215,7 +215,7 @@ function var_0_0.onStartSwitchAssistBoss(arg_10_0, arg_10_1)
 end
 
 function var_0_0._onStageChange(arg_11_0)
-	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Normal then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
 		tabletool.clear(arg_11_0.overFlowBuffDict)
 		arg_11_0:refreshPower()
 	end

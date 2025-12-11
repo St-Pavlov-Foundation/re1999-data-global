@@ -36,21 +36,9 @@ function var_0_0.onOpen(arg_3_0)
 	arg_3_0._battleCountInput:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.FightGMDouQuQuTestBattleCount))
 
 	arg_3_0._enemySelectList = arg_3_0:com_registViewItemList(arg_3_0._selectItem, FightGMDouQuQuTestSelectItem, arg_3_0._enemySelectItemContent)
-
-	arg_3_0._enemySelectList:setFuncNameOfRefreshItemData("refreshItemData")
-
 	arg_3_0._playerSelectList = arg_3_0:com_registViewItemList(arg_3_0._selectItem, FightGMDouQuQuTestSelectItem, arg_3_0._playerSelectItemContent)
-
-	arg_3_0._playerSelectList:setFuncNameOfRefreshItemData("refreshItemData")
-
 	arg_3_0._enemySelectedList = arg_3_0:com_registViewItemList(arg_3_0._selectItem, FightGMDouQuQuTestSelectItem, arg_3_0._enemySelectedItemContent)
-
-	arg_3_0._enemySelectedList:setFuncNameOfRefreshItemData("refreshItemData")
-
 	arg_3_0._playerSelectedList = arg_3_0:com_registViewItemList(arg_3_0._selectItem, FightGMDouQuQuTestSelectItem, arg_3_0._playerSelectedItemContent)
-
-	arg_3_0._playerSelectedList:setFuncNameOfRefreshItemData("refreshItemData")
-
 	arg_3_0._enemySelectList.listType = "_enemySelectList"
 	arg_3_0._playerSelectList.listType = "_playerSelectList"
 	arg_3_0._enemySelectedList.listType = "_enemySelectedList"

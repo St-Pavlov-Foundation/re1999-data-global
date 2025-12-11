@@ -305,6 +305,7 @@ function var_0_0.startDraw(arg_20_0)
 
 	AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(AudioEnum.SwitchGroup.Summon), AudioMgr.instance:getIdFromString(AudioEnum.SwitchState.SummonAward))
 
+	arg_20_0.resultViewIsClose = false
 	arg_20_0.summonResult = SummonModel.instance:getSummonResult(true)
 	arg_20_0.summonResultCount = tabletool.len(arg_20_0.summonResult)
 
@@ -521,6 +522,7 @@ end
 function var_0_0.initSummonResult(arg_31_0)
 	arg_31_0._waitEffectList = {}
 	arg_31_0._waitNormalEffectList = {}
+	arg_31_0._luckyBagIdList = {}
 
 	local var_31_0 = {}
 
@@ -597,16 +599,19 @@ function var_0_0.openSummonResult(arg_33_0, arg_33_1, arg_33_2)
 		end
 
 		if not var_33_3 or not arg_33_2 or var_33_1 <= 0 or var_33_5 and var_33_5.rare >= 5 then
-			table.insert(arg_33_0._waitEffectList, {
-				index = arg_33_1,
-				heroId = var_33_4,
-				luckyBagId = var_33_0.luckyBagId
-			})
-
 			if not var_33_0:isLuckyBag() then
+				table.insert(arg_33_0._waitEffectList, {
+					index = arg_33_1,
+					heroId = var_33_4,
+					luckyBagId = var_33_0.luckyBagId
+				})
 				arg_33_0:insertSingleCharPopup(var_33_4, var_33_1, var_33_3)
 			else
-				arg_33_0:insertLuckyBagPopup(var_33_0.luckyBagId)
+				local var_33_6 = {
+					var_33_0.luckyBagId
+				}
+
+				arg_33_0:insertLuckyBagPopup(var_33_6)
 			end
 		elseif not arg_33_2 then
 			arg_33_0._summonUIEffects[arg_33_1]:loadHeroIcon(var_33_4)
@@ -624,23 +629,23 @@ function var_0_0.openSummonResult(arg_33_0, arg_33_1, arg_33_2)
 			if not var_33_3 then
 				gohelper.setActive(arg_33_0._btnreturn.gameObject, true)
 			else
-				local var_33_6 = SummonController.instance:getLastPoolId()
-
-				if not var_33_6 then
-					return
-				end
-
-				local var_33_7 = SummonConfig.instance:getSummonPool(var_33_6)
+				local var_33_7 = SummonController.instance:getLastPoolId()
 
 				if not var_33_7 then
 					return
 				end
 
-				local var_33_8 = SummonController.instance:getResultViewName()
+				local var_33_8 = SummonConfig.instance:getSummonPool(var_33_7)
 
-				SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.SummonResultView, var_33_8, {
+				if not var_33_8 then
+					return
+				end
+
+				local var_33_9 = SummonController.instance:getResultViewName()
+
+				SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.SummonResultView, var_33_9, {
 					summonResultList = var_33_2,
-					curPool = var_33_7
+					curPool = var_33_8
 				})
 			end
 		end
@@ -691,7 +696,7 @@ function var_0_0.insertLuckyBagPopup(arg_35_0, arg_35_1)
 	end
 
 	local var_35_1 = {
-		luckyBagId = arg_35_1,
+		luckyBagIdList = arg_35_1,
 		poolId = var_35_0
 	}
 
@@ -779,6 +784,10 @@ function var_0_0._summonEnd(arg_37_0)
 end
 
 function var_0_0._onCloseView(arg_38_0, arg_38_1)
+	if arg_38_1 == ViewName.SummonResultView or arg_38_1 == ViewName.SummonSimulationResultView then
+		arg_38_0.resultViewIsClose = true
+	end
+
 	if arg_38_1 == ViewName.CharacterGetView or arg_38_1 == ViewName.SummonGetLuckyBag or arg_38_1 == ViewName.LimitedRoleView then
 		arg_38_0:_refreshIcons()
 
@@ -789,7 +798,7 @@ function var_0_0._onCloseView(arg_38_0, arg_38_1)
 				SummonController.instance:nextSummonPopupParam()
 			end
 		end
-	elseif arg_38_1 == ViewName.CommonPropView and arg_38_0.summonResult and arg_38_0.summonResultCount > 1 then
+	elseif arg_38_1 == ViewName.CommonPropView and arg_38_0.summonResult and arg_38_0.summonResultCount > 1 and arg_38_0.resultViewIsClose then
 		arg_38_0:_summonEnd()
 	end
 end
@@ -828,7 +837,7 @@ function var_0_0._gc(arg_42_0)
 	arg_42_0._summonCount = (arg_42_0._summonCount or 0) + (arg_42_0.summonResult and arg_42_0.summonResultCount)
 
 	if arg_42_0._summonCount > 1 then
-		GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, arg_42_0)
+		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, arg_42_0)
 
 		arg_42_0._summonCount = 0
 	end

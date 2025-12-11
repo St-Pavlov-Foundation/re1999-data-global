@@ -4,6 +4,7 @@ local var_0_0 = {}
 local var_0_1 = {
 	icon2 = 6,
 	name = 5,
+	power = 11,
 	desc1 = 3,
 	value = 8,
 	desc = 2,

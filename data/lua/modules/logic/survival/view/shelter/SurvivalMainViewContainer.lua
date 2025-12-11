@@ -8,6 +8,8 @@ function var_0_0.buildViews(arg_1_0)
 		ShelterSceneUnitView.New(),
 		SurvivalMainViewButton.New(),
 		SurvivalMainViewCurrency.New(),
+		SurvivalBubbleView.New(),
+		SurvivalMapTalentView.New("go_normalroot/"),
 		TabViewGroup.New(1, "#go_lefttop")
 	}
 end
@@ -17,8 +19,8 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		local var_2_0 = NavigateButtonsView.New({
 			true,
 			false,
-			true
-		}, HelpEnum.HelpId.Shelter)
+			false
+		})
 
 		var_2_0:setOverrideClose(arg_2_0.defaultOverrideCloseClick, arg_2_0)
 

@@ -4,7 +4,8 @@ local var_0_0 = class("VersionActivityFixedDungeonMapLevelViewContainer", BaseVi
 local var_0_1 = 2
 
 function var_0_0.buildViews(arg_1_0)
-	arg_1_0.mapLevelView = VersionActivityFixedHelper.getVersionActivityDungeonMapLevelView().New()
+	arg_1_0._bigVersion, arg_1_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	arg_1_0.mapLevelView = VersionActivityFixedHelper.getVersionActivityDungeonMapLevelView(arg_1_0._bigVersion, arg_1_0._smallVersion).New()
 
 	return {
 		arg_1_0.mapLevelView,

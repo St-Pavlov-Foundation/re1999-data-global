@@ -105,6 +105,10 @@ function var_0_0.onReceiveSetHeroGroupEquipReply(arg_6_0, arg_6_1, arg_6_2)
 end
 
 function var_0_0.sendSetHeroGroupSnapshotRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
+	if arg_7_1 == ModuleEnum.HeroGroupSnapshotType.Resources and arg_7_2 ~= VersionActivity2_8BossEnum.HeroGroupId.First and arg_7_2 ~= VersionActivity2_8BossEnum.HeroGroupId.Second then
+		logError(string.format("HeroGroupRpc:sendSetHeroGroupSnapshotRequest snapshotId:%s snapshotSubId:%s 使用错误", arg_7_1, arg_7_2))
+	end
+
 	arg_7_3.snapshotId = arg_7_1
 	arg_7_3.snapshotSubId = arg_7_2
 
@@ -135,58 +139,145 @@ function var_0_0.onReceiveUpdateHeroGroupPush(arg_9_0, arg_9_1, arg_9_2)
 	end
 end
 
-function var_0_0.sendGetHeroGroupCommonListRequest(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = HeroGroupModule_pb.GetHeroGroupCommonListRequest()
+function var_0_0.onReceiveUpdateHeroGroupSnapshotPush(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 == 0 then
+		local var_10_0 = arg_10_2.snapshotId
+		local var_10_1 = arg_10_2.snapshotSubId
+		local var_10_2 = arg_10_2.groupInfo
 
-	return arg_10_0:sendMsg(var_10_0, arg_10_1, arg_10_2)
-end
+		if var_10_0 ~= ModuleEnum.HeroGroupSnapshotType.Common or var_10_1 ~= 1 then
+			logError(string.format("HeroGroupRpc:onReceiveUpdateHeroGroupSnapshotPush snapshotId:%s snapshotSubId:%s is error", var_10_0, var_10_1))
 
-function var_0_0.onReceiveGetHeroGroupCommonListReply(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 == 0 then
-		HeroGroupModel.instance:onGetCommonGroupList(arg_11_2)
+			return
+		end
+
+		local var_10_3 = HeroGroupModel.instance:getCommonGroupList(var_10_1) or HeroGroupMO.New()
+
+		var_10_3:init(var_10_2)
+		HeroGroupModel.instance:addCommonGroupList(var_10_1, var_10_3)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	end
 end
 
-function var_0_0.sendChangeHeroGroupSelectRequest(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = HeroGroupModule_pb.ChangeHeroGroupSelectRequest()
+function var_0_0.sendGetHeroGroupCommonListRequest(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = HeroGroupModule_pb.GetHeroGroupCommonListRequest()
 
-	var_12_0.id = arg_12_1
-	var_12_0.currentSelect = arg_12_2
-
-	arg_12_0:sendMsg(var_12_0)
+	return arg_11_0:sendMsg(var_11_0, arg_11_1, arg_11_2)
 end
 
-function var_0_0.onReceiveChangeHeroGroupSelectReply(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 == 0 then
+function var_0_0.onReceiveGetHeroGroupCommonListReply(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 == 0 then
+		HeroGroupModel.instance:onGetCommonGroupList(arg_12_2)
+	end
+end
+
+function var_0_0.sendChangeHeroGroupSelectRequest(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = HeroGroupModule_pb.ChangeHeroGroupSelectRequest()
+
+	var_13_0.id = arg_13_1
+	var_13_0.currentSelect = arg_13_2
+
+	arg_13_0:sendMsg(var_13_0)
+end
+
+function var_0_0.onReceiveChangeHeroGroupSelectReply(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.sendUpdateHeroGroupNameRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5)
-	local var_14_0 = HeroGroupModule_pb.UpdateHeroGroupNameRequest()
+function var_0_0.sendUpdateHeroGroupNameRequest(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+	local var_15_0 = HeroGroupModule_pb.UpdateHeroGroupNameRequest()
 
-	var_14_0.id = arg_14_1
-	var_14_0.currentSelect = arg_14_2
-	var_14_0.name = arg_14_3
+	var_15_0.id = arg_15_1
+	var_15_0.currentSelect = arg_15_2
+	var_15_0.name = arg_15_3
 
-	arg_14_0:sendMsg(var_14_0, arg_14_4, arg_14_5)
+	arg_15_0:sendMsg(var_15_0, arg_15_4, arg_15_5)
 end
 
-function var_0_0.onReceiveUpdateHeroGroupNameReply(arg_15_0, arg_15_1, arg_15_2)
+function var_0_0.onReceiveUpdateHeroGroupNameReply(arg_16_0, arg_16_1, arg_16_2)
 	return
 end
 
-function var_0_0.sendGetHeroGroupSnapshotListRequest(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = HeroGroupModule_pb.GetHeroGroupSnapshotListRequest()
-
-	var_16_0.snapshotId = arg_16_1
-
-	arg_16_0:sendMsg(var_16_0, arg_16_2, arg_16_3)
+function var_0_0.sendGetAllHeroGroupSnapshotListRequest(arg_17_0, arg_17_1, arg_17_2)
+	return arg_17_0:sendGetHeroGroupSnapshotListRequest(0, arg_17_1, arg_17_2)
 end
 
-function var_0_0.onReceiveGetHeroGroupSnapshotListReply(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_1 == 0 then
-		HeroGroupSnapshotModel.instance:onReceiveGetHeroGroupSnapshotListReply(arg_17_2)
+function var_0_0.sendGetHeroGroupSnapshotListRequest(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	local var_18_0 = HeroGroupModule_pb.GetHeroGroupSnapshotListRequest()
+
+	var_18_0.snapshotId = arg_18_1
+
+	return arg_18_0:sendMsg(var_18_0, arg_18_2, arg_18_3)
+end
+
+function var_0_0.onReceiveGetHeroGroupSnapshotListReply(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_1 == 0 then
+		HeroGroupSnapshotModel.instance:onReceiveGetHeroGroupSnapshotListReply(arg_19_2)
+	end
+end
+
+function var_0_0.sendDeleteHeroGroupRequest(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = HeroGroupModule_pb.DeleteHeroGroupRequest()
+
+	var_20_0.snapshotId = arg_20_1
+	var_20_0.snapshotSubId = arg_20_2
+
+	arg_20_0:sendMsg(var_20_0)
+end
+
+function var_0_0.onReceiveDeleteHeroGroupReply(arg_21_0, arg_21_1, arg_21_2)
+	if arg_21_1 ~= 0 then
+		return
+	end
+
+	local var_21_0 = arg_21_2.snapshotId
+	local var_21_1 = arg_21_2.snapshotSubId
+	local var_21_2 = arg_21_2.sortSubIds
+
+	HeroGroupPresetController.instance:deleteHeroGroupCopy(var_21_0, var_21_1)
+	HeroGroupPresetHeroGroupChangeController.instance:removeHeroGroup(var_21_0, var_21_1)
+	HeroGroupSnapshotModel.instance:updateSortSubIds(var_21_0, var_21_2)
+	HeroGroupPresetItemListModel.instance:updateList()
+end
+
+function var_0_0.sendUpdateHeroGroupSortRequest(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0 = HeroGroupModule_pb.UpdateHeroGroupSortRequest()
+
+	var_22_0.snapshotId = arg_22_1
+
+	for iter_22_0, iter_22_1 in ipairs(arg_22_2) do
+		table.insert(var_22_0.sortSubIds, iter_22_1)
+	end
+
+	arg_22_0:sendMsg(var_22_0)
+end
+
+function var_0_0.onReceiveUpdateHeroGroupSortReply(arg_23_0, arg_23_1, arg_23_2)
+	if arg_23_1 ~= 0 then
+		return
+	end
+
+	local var_23_0 = arg_23_2.snapshotId
+	local var_23_1 = arg_23_2.sortSubIds
+
+	HeroGroupSnapshotModel.instance:updateSortSubIds(var_23_0, var_23_1)
+	HeroGroupPresetItemListModel.instance:updateList()
+	HeroGroupPresetController.instance:dispatchEvent(HeroGroupPresetEvent.UpdateHeroGroupSort)
+end
+
+function var_0_0.sendCheckHeroGroupNameRequest(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	local var_24_0 = HeroGroupModule_pb.CheckHeroGroupNameRequest()
+
+	var_24_0.name = arg_24_1
+
+	arg_24_0:sendMsg(var_24_0, arg_24_2, arg_24_3)
+end
+
+function var_0_0.onReceiveCheckHeroGroupNameReply(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_1 ~= 0 then
+		return
 	end
 end
 

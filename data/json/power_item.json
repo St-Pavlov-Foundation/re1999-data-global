@@ -63,5 +63,18 @@
     "desc": "language_10033888",
     "effect": 5,
     "sources": ""
+  },
+  {
+    "id": 31,
+    "name": "language_10090741",
+    "icon": "31",
+    "rare": 3,
+    "highQuality": 0,
+    "expireType": 3,
+    "expireTime": "8",
+    "useDesc": "language_10090742",
+    "desc": "language_10090743",
+    "effect": 60,
+    "sources": ""
   }
 ]

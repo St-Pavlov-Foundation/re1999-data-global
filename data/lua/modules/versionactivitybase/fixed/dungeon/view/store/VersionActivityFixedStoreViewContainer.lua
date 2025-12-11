@@ -3,8 +3,10 @@
 local var_0_0 = class("VersionActivityFixedStoreViewContainer", BaseViewContainer)
 
 function var_0_0.buildViews(arg_1_0)
+	arg_1_0._bigVersion, arg_1_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+
 	return {
-		VersionActivityFixedHelper.getVersionActivityStoreView().New(),
+		VersionActivityFixedHelper.getVersionActivityStoreView(arg_1_0._bigVersion, arg_1_0._smallVersion).New(),
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(2, "#go_righttop")
 	}
@@ -22,7 +24,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 
 	if arg_2_1 == 2 then
-		local var_2_0 = VersionActivityFixedHelper.getVersionActivityCurrencyType()
+		local var_2_0 = VersionActivityFixedHelper.getVersionActivityCurrencyType(arg_2_0._bigVersion, arg_2_0._smallVersio)
 
 		arg_2_0._currencyView = CurrencyView.New({
 			var_2_0

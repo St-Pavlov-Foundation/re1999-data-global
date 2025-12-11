@@ -140,14 +140,8 @@ function var_0_0.nextStep(arg_10_0)
 
 	local var_10_2 = arg_10_0.curStepData.animType or 0
 
-	if arg_10_0._curHeroPath then
-		if var_10_2 == 0 then
-			arg_10_0._modelComp:playAnim(arg_10_0._curHeroPath, "idle")
-		elseif var_10_2 == 1 then
-			arg_10_0._modelComp:playAnim(arg_10_0._curHeroPath, "jump")
-		elseif var_10_2 == 2 then
-			arg_10_0._modelComp:playAnim(arg_10_0._curHeroPath, "jump2")
-		end
+	if arg_10_0._modelComp then
+		arg_10_0._modelComp:playNextAnim(var_10_2)
 	end
 end
 
@@ -286,44 +280,10 @@ function var_0_0.onDestroyView(arg_20_0)
 end
 
 function var_0_0.refreshCamera(arg_21_0)
-	local var_21_0 = arg_21_0.unitResPath
-	local var_21_1
-	local var_21_2 = false
+	local var_21_0 = Survival3DModelMO.New()
 
-	if arg_21_0.eventID then
-		local var_21_3 = lua_survival_fight.configDict[arg_21_0.eventID] or SurvivalConfig.instance:getNpcConfig(arg_21_0.eventID, true)
-
-		var_21_3 = var_21_3 or lua_survival_search.configDict[arg_21_0.eventID]
-		var_21_3 = var_21_3 or lua_survival_mission.configDict[arg_21_0.eventID]
-
-		if var_21_3 then
-			var_21_0 = var_21_3.resource
-			var_21_1 = var_21_3.camera
-			var_21_2 = not string.nilorempty(var_21_3.grid)
-		end
-	end
-
-	if var_21_0 and string.find(var_21_0, "^survival/buiding") then
-		if var_21_1 == 2 then
-			arg_21_0._curUnitPath = "node4/buiding3"
-		elseif var_21_1 == 3 then
-			arg_21_0._curUnitPath = "node5/buiding4"
-		elseif var_21_2 or var_21_1 == 1 then
-			arg_21_0._curUnitPath = "node3/buiding2"
-		else
-			arg_21_0._curUnitPath = "node2/buiding1"
-			arg_21_0._curHeroPath = "node2/role"
-		end
-	else
-		arg_21_0._curHeroPath = "node1/role"
-		arg_21_0._curUnitPath = "node1/npc"
-	end
-
-	if arg_21_0._curUnitPath then
-		arg_21_0._allResGo[arg_21_0._curUnitPath] = arg_21_0._modelComp:addModel(arg_21_0._curUnitPath, var_21_0)
-	end
-
-	arg_21_0:hideOtherModel()
+	var_21_0:setDataByEventID(arg_21_0.eventID, arg_21_0.unitResPath)
+	arg_21_0._modelComp:setSurvival3DModelMO(var_21_0)
 end
 
 function var_0_0.onClickOption(arg_22_0, arg_22_1)
@@ -416,22 +376,16 @@ function var_0_0.acceptTask(arg_26_0)
 end
 
 function var_0_0.initCamera(arg_27_0)
-	arg_27_0._modelComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_27_0._imageModel, Survival3DModelComp, {
-		xOffset = 8000
-	})
+	if GameSceneMgr.instance:getCurSceneType() == SceneType.Survival then
+		local var_27_0 = SurvivalMapModel.instance:getCurMapCo()
+		local var_27_1, var_27_2, var_27_3 = SurvivalHelper.instance:hexPointToWorldPoint(var_27_0.exitPos.q, var_27_0.exitPos.r)
+		local var_27_4 = Vector3(var_27_1, -1000, var_27_3)
 
-	local var_27_0 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes)
-
-	arg_27_0._allResGo = arg_27_0:getUserDataTb_()
-	arg_27_0._allResGo["node1/role"] = arg_27_0._modelComp:addModel("node1/role", var_27_0)
-	arg_27_0._allResGo["node2/role"] = arg_27_0._modelComp:addModel("node2/role", var_27_0)
-
-	arg_27_0:hideOtherModel()
-end
-
-function var_0_0.hideOtherModel(arg_28_0)
-	for iter_28_0, iter_28_1 in pairs(arg_28_0._allResGo) do
-		gohelper.setActive(iter_28_1, iter_28_0 == arg_28_0._curHeroPath or iter_28_0 == arg_28_0._curUnitPath)
+		arg_27_0._modelComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_27_0._imageModel, Survival3DModelComp, {
+			customPos = var_27_4
+		})
+	else
+		arg_27_0._modelComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_27_0._imageModel, Survival3DModelComp)
 	end
 end
 

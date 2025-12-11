@@ -19,7 +19,8 @@ return {
 			otherRes = {
 				"singlebg/commandstation/enter/commandstation_enter_fullbg.png",
 				"singlebg/commandstation/enter/commandstation_enter_mask.png",
-				"singlebg/commandstation/enter/commandstation_enter_decbg.png"
+				"singlebg/commandstation/enter/commandstation_enter_decbg.png",
+				"ui/spriteassets/sp_commandstation.asset"
 			}
 		}
 		arg_1_0.CommandStationPaperView = {
@@ -173,7 +174,8 @@ return {
 			viewType = ViewType.Normal,
 			anim = ViewAnim.Internal,
 			otherRes = {
-				[1] = "ui/animations/dynamic/commandstation_enter.controller"
+				[1] = "ui/animations/dynamic/commandstation_enter.controller",
+				[2] = "ui/spriteassets/sp_commandstation.asset"
 			}
 		}
 	end

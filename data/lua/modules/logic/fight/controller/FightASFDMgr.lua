@@ -673,9 +673,16 @@ function var_0_0.loadStartAnimCallback(arg_37_0, arg_37_1)
 	end
 
 	arg_37_0.startAnimLoadingStatus = var_0_0.LoadingStatus.Loaded
+
+	local var_37_0 = arg_37_0.startAssetItem
+
 	arg_37_0.startAssetItem = arg_37_1
 
 	arg_37_1:Retain()
+
+	if var_37_0 then
+		var_37_0:Release()
+	end
 
 	arg_37_0.startAnimController = arg_37_1:GetResource(FightASFDConfig.instance.startAnim)
 
@@ -713,9 +720,16 @@ function var_0_0.loadEndAnimCallback(arg_39_0, arg_39_1)
 	end
 
 	arg_39_0.endAnimLoadingStatus = var_0_0.LoadingStatus.Loaded
+
+	local var_39_0 = arg_39_0.endAssetItem
+
 	arg_39_0.endAssetItem = arg_39_1
 
 	arg_39_1:Retain()
+
+	if var_39_0 then
+		var_39_0:Release()
+	end
 
 	arg_39_0.endAnimController = arg_39_1:GetResource(FightASFDConfig.instance.endAnim)
 

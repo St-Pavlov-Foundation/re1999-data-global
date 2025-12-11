@@ -73,7 +73,7 @@ end
 
 function var_0_0._closeCallback(arg_6_0)
 	if not ViewMgr.instance:isOpen(ViewName.MainView) then
-		ViewMgr.instance:openView(ViewName.MainView)
+		MainController.instance:dispatchEvent(MainEvent.ManuallyOpenMainView)
 	end
 end
 

@@ -119,7 +119,7 @@ function var_0_0.initHeroAndEquipItem(arg_11_0)
 
 		if iter_11_1 <= 4 then
 			local var_11_7 = gohelper.cloneInPlace(var_11_4, "equip" .. iter_11_1)
-			local var_11_8 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_7, Act191HeroGroupItem2, arg_11_0)
+			local var_11_8 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_7, Act191HeroGroupItem2)
 
 			var_11_8:setIndex(iter_11_1)
 			var_11_8:setOverrideClick(arg_11_0.clickCollection, arg_11_0)

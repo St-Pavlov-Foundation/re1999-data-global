@@ -25,6 +25,7 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._btndebugbuilding = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_debugbuilding")
 	arg_4_0._btndebugpackage = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_debugpackage")
 	arg_4_0._btnoutput = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_debugoutput")
+	arg_4_0._btnoutputfishing = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_debugoutputfishing")
 	arg_4_0._btnbuildingarea = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_buildingarea")
 	arg_4_0._blockoptab = gohelper.findChild(arg_4_0.viewGO, "blockop_tab")
 
@@ -34,6 +35,7 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._btndebugbuilding:AddClickListener(arg_4_0._btndebugbuildingOnClick, arg_4_0)
 	arg_4_0._btndebugpackage:AddClickListener(arg_4_0._btndebugpackageOnClick, arg_4_0)
 	arg_4_0._btnoutput:AddClickListener(arg_4_0._btnoutputOnClick, arg_4_0)
+	arg_4_0._btnoutputfishing:AddClickListener(arg_4_0._btnoutputfishingOnClick, arg_4_0)
 	arg_4_0._btnbuildingarea:AddClickListener(arg_4_0._btnbuildingareaOnClick, arg_4_0)
 
 	arg_4_0._scene = GameSceneMgr.instance:getCurScene()
@@ -88,77 +90,82 @@ function var_0_0._btnoutputOnClick(arg_11_0)
 	RoomDebugController.instance:output()
 end
 
+function var_0_0._btnoutputfishingOnClick(arg_12_0)
+	RoomDebugController.instance:outputFishing()
+end
+
 function var_0_0._resetYesCallback()
 	RoomMapController.instance:resetRoom()
 end
 
-function var_0_0._listViewShowChanged(arg_13_0)
-	arg_13_0:_refreshBtnShow()
-end
-
-function var_0_0._updateCharacterInteractionUI(arg_14_0)
+function var_0_0._listViewShowChanged(arg_14_0)
 	arg_14_0:_refreshBtnShow()
-	arg_14_0:_updateNavigateButtonShow()
 end
 
-function var_0_0._updateNavigateButtonShow(arg_15_0)
+function var_0_0._updateCharacterInteractionUI(arg_15_0)
+	arg_15_0:_refreshBtnShow()
+	arg_15_0:_updateNavigateButtonShow()
+end
+
+function var_0_0._updateNavigateButtonShow(arg_16_0)
 	return
 end
 
-function var_0_0._cameraStateUpdate(arg_16_0)
-	local var_16_0 = arg_16_0._scene.camera:getCameraState()
+function var_0_0._cameraStateUpdate(arg_17_0)
+	local var_17_0 = arg_17_0._scene.camera:getCameraState()
 
-	if var_16_0 == RoomEnum.CameraState.Overlook then
-		arg_16_0._txtcamera.text = luaLang("roomstandbyview_highview")
-	elseif var_16_0 == RoomEnum.CameraState.Normal then
-		arg_16_0._txtcamera.text = luaLang("roomstandbyview_lowview")
+	if var_17_0 == RoomEnum.CameraState.Overlook then
+		arg_17_0._txtcamera.text = luaLang("roomstandbyview_highview")
+	elseif var_17_0 == RoomEnum.CameraState.Normal then
+		arg_17_0._txtcamera.text = luaLang("roomstandbyview_lowview")
 	end
 end
 
-function var_0_0._addBtnAudio(arg_17_0)
-	gohelper.addUIClickAudio(arg_17_0._btnreset.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
+function var_0_0._addBtnAudio(arg_18_0)
+	gohelper.addUIClickAudio(arg_18_0._btnreset.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
 end
 
-function var_0_0._refreshBtnShow(arg_18_0)
-	local var_18_0 = RoomDebugController.instance:isDebugPlaceListShow()
-	local var_18_1 = RoomDebugController.instance:isDebugPackageListShow()
-	local var_18_2 = RoomDebugController.instance:isDebugBuildingListShow()
-	local var_18_3 = var_18_0 or var_18_1 or var_18_2
+function var_0_0._refreshBtnShow(arg_19_0)
+	local var_19_0 = RoomDebugController.instance:isDebugPlaceListShow()
+	local var_19_1 = RoomDebugController.instance:isDebugPackageListShow()
+	local var_19_2 = RoomDebugController.instance:isDebugBuildingListShow()
+	local var_19_3 = var_19_0 or var_19_1 or var_19_2
 
-	gohelper.setActive(arg_18_0._btnreset.gameObject, RoomController.instance:isDebugMode() and not var_18_3 and not RoomController.instance:isEditMode())
-	gohelper.setActive(arg_18_0._btndebugplace.gameObject, RoomController.instance:isDebugMode() and not var_18_3)
-	gohelper.setActive(arg_18_0._btndebugpackage.gameObject, RoomController.instance:isDebugPackageMode() and not var_18_3)
-	gohelper.setActive(arg_18_0._btndebugbuilding.gameObject, RoomController.instance:isDebugPackageMode() and not var_18_3)
-	gohelper.setActive(arg_18_0._btncamera.gameObject, RoomController.instance:isObMode() and not var_18_3 or RoomController.instance:isVisitMode() or RoomController.instance:isDebugMode())
-	gohelper.setActive(arg_18_0._btnoutput.gameObject, (RoomController.instance:isDebugInitMode() or RoomController.instance:isDebugPackageMode()) and not var_18_3)
+	gohelper.setActive(arg_19_0._btnreset.gameObject, RoomController.instance:isDebugMode() and not var_19_3 and not RoomController.instance:isEditMode())
+	gohelper.setActive(arg_19_0._btndebugplace.gameObject, RoomController.instance:isDebugMode() and not var_19_3)
+	gohelper.setActive(arg_19_0._btndebugpackage.gameObject, RoomController.instance:isDebugPackageMode() and not var_19_3)
+	gohelper.setActive(arg_19_0._btndebugbuilding.gameObject, RoomController.instance:isDebugPackageMode() and not var_19_3)
+	gohelper.setActive(arg_19_0._btncamera.gameObject, RoomController.instance:isObMode() and not var_19_3 or RoomController.instance:isVisitMode() or RoomController.instance:isDebugMode())
+	gohelper.setActive(arg_19_0._btnoutput.gameObject, (RoomController.instance:isDebugInitMode() or RoomController.instance:isDebugPackageMode()) and not var_19_3)
 end
 
-function var_0_0.onOpen(arg_19_0)
-	arg_19_0:_refreshBtnShow()
-	arg_19_0:_addBtnAudio()
-	arg_19_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPlaceListShowChanged, arg_19_0._listViewShowChanged, arg_19_0)
-	arg_19_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageListShowChanged, arg_19_0._listViewShowChanged, arg_19_0)
-	arg_19_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugBuildingListShowChanged, arg_19_0._listViewShowChanged, arg_19_0)
-	arg_19_0:addEventCb(RoomMapController.instance, RoomEvent.CameraStateUpdate, arg_19_0._cameraStateUpdate, arg_19_0)
-	arg_19_0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockShowChanged, arg_19_0._updateNavigateButtonShow, arg_19_0)
-	arg_19_0:addEventCb(RoomBuildingController.instance, RoomEvent.RefreshNavigateButton, arg_19_0._updateNavigateButtonShow, arg_19_0)
-	arg_19_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPlaceListShowChanged, arg_19_0._updateNavigateButtonShow, arg_19_0)
-	arg_19_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageListShowChanged, arg_19_0._updateNavigateButtonShow, arg_19_0)
-	arg_19_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugBuildingListShowChanged, arg_19_0._updateNavigateButtonShow, arg_19_0)
+function var_0_0.onOpen(arg_20_0)
+	arg_20_0:_refreshBtnShow()
+	arg_20_0:_addBtnAudio()
+	arg_20_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPlaceListShowChanged, arg_20_0._listViewShowChanged, arg_20_0)
+	arg_20_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageListShowChanged, arg_20_0._listViewShowChanged, arg_20_0)
+	arg_20_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugBuildingListShowChanged, arg_20_0._listViewShowChanged, arg_20_0)
+	arg_20_0:addEventCb(RoomMapController.instance, RoomEvent.CameraStateUpdate, arg_20_0._cameraStateUpdate, arg_20_0)
+	arg_20_0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockShowChanged, arg_20_0._updateNavigateButtonShow, arg_20_0)
+	arg_20_0:addEventCb(RoomBuildingController.instance, RoomEvent.RefreshNavigateButton, arg_20_0._updateNavigateButtonShow, arg_20_0)
+	arg_20_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPlaceListShowChanged, arg_20_0._updateNavigateButtonShow, arg_20_0)
+	arg_20_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageListShowChanged, arg_20_0._updateNavigateButtonShow, arg_20_0)
+	arg_20_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugBuildingListShowChanged, arg_20_0._updateNavigateButtonShow, arg_20_0)
 end
 
-function var_0_0.onClose(arg_20_0)
+function var_0_0.onClose(arg_21_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_21_0)
-	arg_21_0._btnreset:RemoveClickListener()
-	arg_21_0._btncamera:RemoveClickListener()
-	arg_21_0._btndebugplace:RemoveClickListener()
-	arg_21_0._btndebugbuilding:RemoveClickListener()
-	arg_21_0._btndebugpackage:RemoveClickListener()
-	arg_21_0._btnoutput:RemoveClickListener()
-	arg_21_0._btnbuildingarea:RemoveClickListener()
+function var_0_0.onDestroyView(arg_22_0)
+	arg_22_0._btnreset:RemoveClickListener()
+	arg_22_0._btncamera:RemoveClickListener()
+	arg_22_0._btndebugplace:RemoveClickListener()
+	arg_22_0._btndebugbuilding:RemoveClickListener()
+	arg_22_0._btndebugpackage:RemoveClickListener()
+	arg_22_0._btnoutput:RemoveClickListener()
+	arg_22_0._btnoutputfishing:RemoveClickListener()
+	arg_22_0._btnbuildingarea:RemoveClickListener()
 end
 
 return var_0_0

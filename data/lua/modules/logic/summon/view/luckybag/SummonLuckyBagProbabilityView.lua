@@ -109,7 +109,7 @@ function var_0_0._refreshSummonDesc(arg_8_0, arg_8_1, arg_8_2)
 			var_8_19 = var_8_19 + (arg_8_0._rareRates[iter_8_5] or 0)
 		end
 
-		local var_8_20 = string.format("%s%%%%", var_8_19 * 100 - var_8_19 * 100 % 0.1)
+		local var_8_20 = string.format("%s%%%%", var_8_19 * 100 - var_8_19 * 100 % 0.01)
 
 		iter_8_3 = string.format("%s%s%s", "%[rate=", var_8_16, "%]")
 		arg_8_2 = string.gsub(arg_8_2, iter_8_3, var_8_20)

@@ -3,10 +3,11 @@
 local var_0_0 = {}
 local var_0_1 = {
 	path = 8,
-	guide = 4,
+	packName = 11,
 	videoPath = 7,
 	audio = 2,
 	folderPath = 6,
+	guide = 4,
 	uiFolder = 9,
 	story = 5,
 	chapter = 3,

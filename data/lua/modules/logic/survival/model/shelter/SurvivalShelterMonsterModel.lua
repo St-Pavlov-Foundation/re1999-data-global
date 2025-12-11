@@ -3,38 +3,7 @@
 local var_0_0 = class("SurvivalShelterMonsterModel", BaseModel)
 
 function var_0_0.calBuffIsRepress(arg_1_0, arg_1_1)
-	local var_1_0 = SurvivalShelterNpcMonsterListModel.instance:getSelectList()
-	local var_1_1 = {}
-
-	for iter_1_0 = 1, #var_1_0 do
-		local var_1_2 = var_1_0[iter_1_0]
-		local var_1_3 = SurvivalConfig.instance:getNpcConfigTag(var_1_2)
-
-		for iter_1_1 = 1, #var_1_3 do
-			local var_1_4 = var_1_3[iter_1_1]
-
-			if var_1_1[var_1_4] == nil then
-				var_1_1[var_1_4] = true
-			end
-		end
-	end
-
-	local var_1_5 = SurvivalConfig.instance:getMonsterBuffConfigTag(arg_1_1)
-	local var_1_6 = false
-
-	if var_1_5 then
-		var_1_6 = true
-
-		for iter_1_2 = 1, #var_1_5 do
-			if var_1_1[var_1_5[iter_1_2]] == nil then
-				var_1_6 = false
-
-				break
-			end
-		end
-	end
-
-	return var_1_6
+	return SurvivalShelterModel.instance:getWeekInfo():getMonsterFight():getIntrudeSchemeMo(arg_1_1).survivalIntrudeScheme.repress
 end
 
 function var_0_0.getMonsterSelectNpc(arg_2_0)

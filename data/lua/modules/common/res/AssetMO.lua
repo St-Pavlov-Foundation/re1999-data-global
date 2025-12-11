@@ -7,12 +7,18 @@ function var_0_0.ctor(arg_1_0, arg_1_1)
 end
 
 function var_0_0.setAssetItem(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0._assetItem
+
 	arg_2_0._refCount = 0
 	arg_2_0.IsLoadSuccess = arg_2_1.IsLoadSuccess
 	arg_2_0._url = arg_2_1.AssetUrl
 	arg_2_0._assetItem = arg_2_1
 
 	arg_2_0._assetItem:Retain()
+
+	if var_2_0 then
+		arg_2_0:_clearItem(var_2_0)
+	end
 end
 
 function var_0_0.getUrl(arg_3_0)

@@ -159,7 +159,8 @@ local var_0_2 = string.format
 local var_0_3 = table.insert
 local var_0_4 = {
 	[MaterialEnum.MaterialType.Item] = {
-		[BpEnum.ScoreItemId] = true
+		[BpEnum.ScoreItemId] = true,
+		[MaterialEnum.PowerMakerItemId] = true
 	},
 	[MaterialEnum.MaterialType.Currency] = {
 		[CurrencyEnum.CurrencyType.V1a6CachotCoin] = true,
@@ -777,14 +778,22 @@ function var_0_0._btnuseOnClick(arg_24_0)
 		else
 			GameFacade.showToast(ToastEnum.NoHeroCanDestinyUp)
 		end
-	elseif arg_24_0._config.subType == ItemEnum.SubType.RoomBlockGiftNew then
+	elseif arg_24_0:_isRoomBlockGift() then
 		local function var_24_18()
-			RoomBlockGiftController.instance:openBlockView(arg_24_0._config.id, arg_24_0.closeThis, arg_24_0)
+			RoomBlockGiftController.instance:openBlockView(arg_24_0._config.rare, var_24_0, arg_24_0.closeThis, arg_24_0)
 		end
 
 		RoomRpc.instance:sendGetRoomInfoRequest(var_24_18, arg_24_0)
 
 		return
+	elseif arg_24_0._config.subType == ItemEnum.SubType.RoomBlockColorGift then
+		if RoomWaterReformModel.instance:isUnlockAllBlockColor() then
+			GameFacade.showToast(ToastEnum.HaveUnlockedAllBlockColor)
+
+			return
+		else
+			ItemRpc.instance:simpleSendUseItemRequest(var_24_0, var_24_1)
+		end
 	else
 		ItemRpc.instance:simpleSendUseItemRequest(var_24_0, var_24_1)
 	end
@@ -996,7 +1005,7 @@ function var_0_0._refreshUI(arg_41_0)
 			var_41_1 = false
 
 			recthelper.setAnchorY(arg_41_0._btnuse.transform, -190)
-		elseif arg_41_0._config.subType == ItemEnum.SubType.RoomBlockGiftNew then
+		elseif arg_41_0:_isRoomBlockGift() then
 			var_41_1 = false
 
 			recthelper.setAnchorY(arg_41_0._btnuse.transform, -190)
@@ -1228,9 +1237,18 @@ function var_0_0._onLoadCallback(arg_48_0)
 end
 
 function var_0_0._refreshItemQuantity(arg_49_0)
-	local var_49_0 = tostring(GameUtil.numberDisplay(ItemModel.instance:getItemQuantity(arg_49_0.viewParam.type, arg_49_0.viewParam.id, arg_49_0.viewParam.uid, arg_49_0.viewParam.fakeQuantity)) or 0)
+	if arg_49_0.viewParam.type == MaterialEnum.MaterialType.PowerPotion and arg_49_0.viewParam.id == MaterialEnum.PowerId.OverflowPowerId then
+		local var_49_0 = ItemPowerModel.instance:getPowerMakerInfo()
+		local var_49_1 = var_49_0 and var_49_0.itemTotalCount or ItemPowerModel.instance:getPowerCount(arg_49_0.viewParam.id)
 
-	arg_49_0._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", var_49_0)
+		arg_49_0._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", var_49_1)
+
+		return
+	end
+
+	local var_49_2 = tostring(GameUtil.numberDisplay(ItemModel.instance:getItemQuantity(arg_49_0.viewParam.type, arg_49_0.viewParam.id, arg_49_0.viewParam.uid, arg_49_0.viewParam.fakeQuantity)) or 0)
+
+	arg_49_0._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", var_49_2)
 end
 
 function var_0_0._refreshItemQuantityVisible(arg_50_0)
@@ -1253,7 +1271,7 @@ function var_0_0._refreshInclude(arg_52_0)
 	var_52_0 = var_52_0 or arg_52_0:_isPackageSkin()
 	var_52_0 = var_52_0 and arg_52_0.viewParam.inpack ~= true
 
-	if arg_52_0._config.subType == ItemEnum.SubType.SelfSelectSix or arg_52_0._config.subType == ItemEnum.SubType.RoomBlockGiftNew then
+	if arg_52_0:_isRoomBlockGift() then
 		var_52_0 = true
 	end
 
@@ -1307,7 +1325,7 @@ function var_0_0._refreshInclude(arg_52_0)
 					end
 				end
 			end
-		elseif arg_52_0._config.subType == ItemEnum.SubType.RoomBlockGiftNew then
+		elseif arg_52_0:_isRoomBlockGift() then
 			arg_52_0._contentHorizontal.enabled = false
 
 			if not arg_52_0._content then
@@ -1419,7 +1437,7 @@ function var_0_0._isUseBtnShow(arg_54_0)
 		return ItemModel.instance:getItemQuantity(arg_54_0.viewParam.type, arg_54_0.viewParam.id, arg_54_0.viewParam.uid, arg_54_0.viewParam.fakeQuantity) > 0
 	end
 
-	if arg_54_0._config.subType == ItemEnum.SubType.RoomBlockGiftNew then
+	if arg_54_0:_isRoomBlockGift() then
 		return arg_54_0.viewParam.inpack
 	end
 
@@ -1538,6 +1556,10 @@ end
 
 function var_0_0._isSummonSkin(arg_61_0)
 	return arg_61_0._config.clienttag == ItemEnum.Tag.SummonSkin
+end
+
+function var_0_0._isRoomBlockGift(arg_62_0)
+	return arg_62_0._config.subType == ItemEnum.SubType.RoomBlockGiftNew or arg_62_0._config.subType == ItemEnum.SubType.RoomBlockGift
 end
 
 return var_0_0

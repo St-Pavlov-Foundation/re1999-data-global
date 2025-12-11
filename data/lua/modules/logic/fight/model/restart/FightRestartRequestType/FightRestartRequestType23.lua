@@ -10,7 +10,7 @@ function var_0_0.requestFight(arg_1_0)
 		local var_1_1 = Season123Model.instance:getBattleContext()
 
 		if not var_1_1 then
-			FightSystem.instance:restartFightFail()
+			FightGameMgr.restartMgr:restartFightFail()
 
 			return
 		end
@@ -24,7 +24,7 @@ end
 
 function var_0_0.onReceiveStartBattle(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 	if arg_2_2 ~= 0 then
-		FightSystem.instance:restartFightFail()
+		FightGameMgr.restartMgr:restartFightFail()
 
 		return
 	end

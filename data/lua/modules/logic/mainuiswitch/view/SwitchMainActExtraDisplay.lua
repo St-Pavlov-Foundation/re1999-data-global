@@ -141,13 +141,13 @@ function var_0_0._getRougeStartTime(arg_16_0)
 end
 
 function var_0_0._getSurvivalStatus(arg_17_0)
-	local var_17_0 = VersionActivity2_8Enum.ActivityId.Survival
+	local var_17_0 = VersionActivity3_1Enum.ActivityId.Survival
 
 	return (var_17_0 and ActivityHelper.getActivityStatus(var_17_0)) == ActivityEnum.ActivityStatus.Normal
 end
 
 function var_0_0._getSurvivalStartTime(arg_18_0)
-	local var_18_0 = VersionActivity2_8Enum.ActivityId.Survival
+	local var_18_0 = VersionActivity3_1Enum.ActivityId.Survival
 	local var_18_1 = ActivityModel.instance:getActMO(var_18_0)
 
 	return var_18_1 and var_18_1:getRealStartTimeStamp() * 1000
@@ -259,7 +259,7 @@ end
 function var_0_0.refreshSurvivalBtn(arg_34_0)
 	gohelper.setActive(arg_34_0._btnrolestory, true)
 
-	local var_34_0 = ActivityConfig.instance:getActivityCo(VersionActivity2_8Enum.ActivityId.Survival)
+	local var_34_0 = ActivityConfig.instance:getActivityCo(VersionActivity3_1Enum.ActivityId.Survival)
 
 	arg_34_0:_roleStoryLoadImage(var_34_0.extraDisplayIcon, arg_34_0.onLoadImage, arg_34_0)
 

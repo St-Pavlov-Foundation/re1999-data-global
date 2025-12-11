@@ -1,0 +1,20 @@
+[
+  {
+    "activityId": 130531,
+    "id": 1,
+    "isAllBonus": 0,
+    "bonus": "2#3#10000"
+  },
+  {
+    "activityId": 130531,
+    "id": 2,
+    "isAllBonus": 0,
+    "bonus": "2#3#10000"
+  },
+  {
+    "activityId": 130531,
+    "id": 3,
+    "isAllBonus": 1,
+    "bonus": "1#171404#1"
+  }
+]

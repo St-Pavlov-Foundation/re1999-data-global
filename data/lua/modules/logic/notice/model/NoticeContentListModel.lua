@@ -111,7 +111,10 @@ function var_0_0.getInfoList(arg_10_0, arg_10_1)
 
 			table.insert(var_10_2, var_10_3)
 		elseif iter_10_1.type == NoticeContentType.TxtContent then
-			local var_10_4 = GameUtil.getPreferredHeight(var_10_1, iter_10_1.content)
+			local var_10_4 = iter_10_1 and iter_10_1.height
+
+			var_10_4 = var_10_4 or GameUtil.getPreferredHeight(var_10_1, iter_10_1.content)
+
 			local var_10_5 = SLFramework.UGUI.MixCellInfo.New(iter_10_1.type, var_10_4 + var_0_0.TxtSpaceVertical, nil)
 
 			table.insert(var_10_2, var_10_5)
@@ -135,6 +138,8 @@ function var_0_0.getInfoList(arg_10_0, arg_10_1)
 			local var_10_9 = SLFramework.UGUI.MixCellInfo.New(iter_10_1.type, (iter_10_1.height or 100) + var_0_0.ImgTitleSpaceVertical, nil)
 
 			table.insert(var_10_2, var_10_9)
+		elseif iter_10_1.type == NoticeContentType.LangType then
+			-- block empty
 		else
 			logError("notice content type not implement: " .. iter_10_1.type)
 		end

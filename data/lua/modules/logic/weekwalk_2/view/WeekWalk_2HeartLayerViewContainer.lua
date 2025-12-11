@@ -20,7 +20,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	if arg_2_1 == 1 then
 		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
-			true,
+			false,
 			true
 		}, HelpEnum.HelpId.WeekWalk_2HeartLayer)
 

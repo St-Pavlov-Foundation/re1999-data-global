@@ -47,15 +47,9 @@ function var_0_0.initNormalItem(arg_6_0)
 end
 
 function var_0_0._onClickMainActivity(arg_7_0)
-	local var_7_0 = ActivityEnum.VersionActivityIdList[#ActivityEnum.VersionActivityIdList]
-	local var_7_1 = ActivityHelper.getActivityVersion(var_7_0)
-	local var_7_2 = _G[string.format("VersionActivity%sEnterController", var_7_1)] or VersionActivityFixedEnterController.instance
+	local var_7_0 = GameBranchMgr.instance:getV_a()
 
-	if SettingsModel.instance:isOverseas() and GameBranchMgr.instance:isOnVer(2, 8) then
-		var_7_2 = _G.VersionActivity2_8EnterController
-	end
-
-	var_7_2:openVersionActivityEnterView()
+	_G[string.format("VersionActivity%sEnterController", var_7_0)]:openVersionActivityEnterView()
 end
 
 function var_0_0.refreshItem(arg_8_0, arg_8_1)

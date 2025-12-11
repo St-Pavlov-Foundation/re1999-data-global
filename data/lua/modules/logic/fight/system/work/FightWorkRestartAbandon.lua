@@ -19,10 +19,10 @@ function var_0_0.onStart(arg_2_0)
 		if arg_2_0._abandon_class:canRestart() then
 			arg_2_0._abandon_class:abandon()
 		else
-			FightSystem.instance:cancelRestart()
+			FightGameMgr.restartMgr:cancelRestart()
 		end
 	else
-		FightSystem.instance:cancelRestart()
+		FightGameMgr.restartMgr:cancelRestart()
 	end
 end
 

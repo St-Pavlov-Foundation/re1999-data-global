@@ -175,19 +175,19 @@ function var_0_0.getSceneGo(arg_16_0)
 end
 
 function var_0_0._setBlur(arg_17_0, arg_17_1)
-	arg_17_0._blurOriginalParam = arg_17_0._blurOriginalParam or {
-		dofFactor = PostProcessingMgr.instance:getUnitPPValue("dofFactor"),
-		dofDistance = PostProcessingMgr.instance:getUnitPPValue("dofDistance"),
-		dofSampleScale = PostProcessingMgr.instance:getUnitPPValue("dofSampleScale"),
-		dofRT1Scale = PostProcessingMgr.instance:getUnitPPValue("dofRT1Scale"),
-		dofRT2Scale = PostProcessingMgr.instance:getUnitPPValue("dofRT2Scale"),
-		dofRT3Scale = PostProcessingMgr.instance:getUnitPPValue("dofRT3Scale"),
-		dofTotalScale = PostProcessingMgr.instance:getUnitPPValue("dofTotalScale"),
-		rolesStoryMaskActive = PostProcessingMgr.instance:getUnitPPValue("rolesStoryMaskActive"),
-		bloomActive = PostProcessingMgr.instance:getUnitPPValue("bloomActive")
-	}
-
 	if arg_17_1 then
+		arg_17_0._blurOriginalParam = arg_17_0._blurOriginalParam or {
+			dofFactor = PostProcessingMgr.instance:getUnitPPValue("dofFactor"),
+			dofDistance = PostProcessingMgr.instance:getUnitPPValue("dofDistance"),
+			dofSampleScale = PostProcessingMgr.instance:getUnitPPValue("dofSampleScale"),
+			dofRT1Scale = PostProcessingMgr.instance:getUnitPPValue("dofRT1Scale"),
+			dofRT2Scale = PostProcessingMgr.instance:getUnitPPValue("dofRT2Scale"),
+			dofRT3Scale = PostProcessingMgr.instance:getUnitPPValue("dofRT3Scale"),
+			dofTotalScale = PostProcessingMgr.instance:getUnitPPValue("dofTotalScale"),
+			rolesStoryMaskActive = PostProcessingMgr.instance:getUnitPPValue("rolesStoryMaskActive"),
+			bloomActive = PostProcessingMgr.instance:getUnitPPValue("bloomActive")
+		}
+
 		if arg_17_0._tweenFactorFinish then
 			PostProcessingMgr.instance:setUnitPPValue("dofFactor", 1)
 		end
@@ -206,7 +206,10 @@ function var_0_0._setBlur(arg_17_0, arg_17_1)
 			return
 		end
 
-		gohelper.setActive(CameraMgr.instance:getUnitCameraGO(), false)
+		if ViewMgr.instance:isOpen(ViewName.CommandStationEnterView) then
+			gohelper.setActive(CameraMgr.instance:getUnitCameraGO(), false)
+		end
+
 		PostProcessingMgr.instance:setUnitPPValue("dofFactor", arg_17_0._blurOriginalParam.dofFactor)
 		PostProcessingMgr.instance:setUnitPPValue("dofDistance", arg_17_0._blurOriginalParam.dofDistance)
 		PostProcessingMgr.instance:setUnitPPValue("dofSampleScale", arg_17_0._blurOriginalParam.dofSampleScale)

@@ -9,6 +9,12 @@ function var_0_0.ctor(arg_1_0)
 end
 
 function var_0_0.onAssetResLoaded(arg_2_0, arg_2_1)
+	if arg_2_0.assetItem then
+		logError("GameAdaptionBgMgr:onAssetResLoaded 已经设置资源 assetItem")
+
+		return
+	end
+
 	arg_2_0.assetItem = arg_2_1
 
 	arg_2_0.assetItem:Retain()

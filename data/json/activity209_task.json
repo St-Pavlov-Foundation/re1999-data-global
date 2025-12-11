@@ -1,0 +1,62 @@
+[
+  {
+    "id": 660001,
+    "activityId": 13112,
+    "isOnline": 1,
+    "minType": "language_10092412",
+    "name": "language_10092412",
+    "desc": "language_10007595",
+    "prepose": "",
+    "listenerType": "LoginDays",
+    "listenerParam": "",
+    "maxProgress": 1,
+    "episodeId": 0,
+    "jumpId": 0,
+    "bonus": "2#3#10000"
+  },
+  {
+    "id": 660002,
+    "activityId": 13112,
+    "isOnline": 1,
+    "minType": "language_10092412",
+    "name": "language_10092412",
+    "desc": "language_10096988",
+    "prepose": "",
+    "listenerType": "FinishTowerEpisode",
+    "listenerParam": "1",
+    "maxProgress": 1,
+    "episodeId": 0,
+    "jumpId": 0,
+    "bonus": "10#10#1"
+  },
+  {
+    "id": 660003,
+    "activityId": 13112,
+    "isOnline": 1,
+    "minType": "language_10092412",
+    "name": "language_10092412",
+    "desc": "language_10096989",
+    "prepose": "",
+    "listenerType": "Act209GlobalTowerLayer",
+    "listenerParam": "13112",
+    "maxProgress": 500,
+    "episodeId": 0,
+    "jumpId": 0,
+    "bonus": "1#491007#1"
+  },
+  {
+    "id": 660004,
+    "activityId": 13112,
+    "isOnline": 1,
+    "minType": "language_10092412",
+    "name": "language_10092412",
+    "desc": "language_10096989",
+    "prepose": "660003",
+    "listenerType": "Act209GlobalTowerLayer",
+    "listenerParam": "13112",
+    "maxProgress": 1000,
+    "episodeId": 0,
+    "jumpId": 0,
+    "bonus": "1#491010#1"
+  }
+]

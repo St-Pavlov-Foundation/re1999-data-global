@@ -114,21 +114,27 @@ local var_0_1 = {
 	[ActivityEnum.Activity.V2a7_WarmUp] = ViewName.V2a7_WarmUp,
 	[ActivityEnum.Activity.V2a7_SelfSelectSix1] = ViewName.V2a7_SelfSelectSix_FullView,
 	[ActivityEnum.Activity.V2a7_TowerGift] = ViewName.TowerGiftFullView,
+	[ActivityEnum.Activity.V2a9_VersionSummon_Part1] = ViewName.V2a9_VersionSummonFull_Part1,
+	[ActivityEnum.Activity.V2a9_VersionSummon_Part2] = ViewName.V2a9_VersionSummonFull_Part2,
+	[ActivityEnum.Activity.V2a9_TurnBackH5] = ViewName.TurnBackInvitationMainView,
+	[ActivityEnum.Activity.V2a9_FreeMonthCard] = ViewName.V2a9_FreeMonthCard_FullView,
+	[ActivityEnum.Activity.V2a9_NewCultivationGift] = ViewName.VersionActivity2_3NewCultivationGiftView,
 	[ActivityEnum.Activity.V2a7_SelfSelectSix2] = ViewName.V2a7_SelfSelectSix_FullView,
 	[ActivityEnum.Activity.V2a8_Matildagift] = ViewName.V1a9_ActivityShow_MatildagiftView,
 	[ActivityEnum.Activity.V2a8_DecaLogPresent] = ViewName.V2a8DecalogPresentFullView,
 	[ActivityEnum.Activity.V2a8_NewCultivationDestiny] = ViewName.VersionActivity2_3NewCultivationGiftView,
 	[ActivityEnum.Activity.V2a8_DragonBoat] = ViewName.V2a8_DragonBoat_FullView,
 	[ActivityEnum.Activity.V2a8_WuErLiXiGift] = ViewName.V2a8_WuErLiXiGiftFullView,
-	[ActivityEnum.Activity.V2a9_VersionSummon_Part1] = ViewName.V2a9_VersionSummonFull_Part1,
-	[ActivityEnum.Activity.V2a9_VersionSummon_Part2] = ViewName.V2a9_VersionSummonFull_Part2,
-	[ActivityEnum.Activity.V2a9_TurnBackH5] = ViewName.TurnBackInvitationMainView,
-	[ActivityEnum.Activity.V2a9_FreeMonthCard] = ViewName.V2a9_FreeMonthCard_FullView,
-	[ActivityEnum.Activity.V2a9_NewCultivationGift] = ViewName.VersionActivity2_3NewCultivationGiftView,
 	[ActivityEnum.Activity.V3a0_NewCultivationGift] = ViewName.VersionActivity2_3NewCultivationGiftView,
 	[ActivityEnum.Activity.V3a0_SummerSign] = ViewName.V3a0_SummerSign_FullView,
 	[ActivityEnum.Activity.V2a9_WarmUp] = ViewName.V2a9_WarmUp,
-	[VersionActivity3_1Enum.ActivityId.NationalGift] = ViewName.NationalGiftFullView
+	[ActivityEnum.Activity.V2a9_Act208] = ViewName.V2a9_Act208MainView,
+	[VersionActivity3_1Enum.ActivityId.SurvivalOperAct] = ViewName.SurvivalOperActFullView,
+	[VersionActivity3_1Enum.ActivityId.TowerDeep] = ViewName.TowerDeepOperActFullView,
+	[VersionActivity3_1Enum.ActivityId.BpOperAct] = ViewName.V3a1_BpOperActShowView,
+	[VersionActivity3_1Enum.ActivityId.NationalGift] = ViewName.NationalGiftFullView,
+	[ActivityEnum.Activity.V3a1_AutumnSign] = ViewName.V3a1_AutumnSign_FullView,
+	[ActivityEnum.Activity.V3a1_NewCultivationDestiny] = ViewName.VersionActivity2_3NewCultivationGiftView
 }
 local var_0_2 = {
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView,
@@ -150,6 +156,8 @@ function var_0_0.onOpen(arg_6_0)
 	arg_6_0:_initSpecial_FullSignView()
 	arg_6_0:_initLinkageActivity_FullView()
 	arg_6_0:_initWarmUp()
+	arg_6_0:_initWarmUpH5()
+	arg_6_0:_initDoubleDan()
 
 	arg_6_0._needSetSortInfos = true
 
@@ -169,14 +177,20 @@ function var_0_0._refreshView(arg_7_0)
 
 	arg_7_0.data = {}
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		local var_7_1 = {
-			id = iter_7_1,
-			co = ActivityConfig.instance:getActivityCo(iter_7_1),
-			type = ActivityEnum.ActivityType.Beginner
-		}
+	local var_7_1 = BootNativeUtil.isIOS()
 
-		table.insert(arg_7_0.data, var_7_1)
+	for iter_7_0, iter_7_1 in pairs(var_7_0) do
+		if var_7_1 and ActivityEnum.IOSHideActIdMap[tonumber(iter_7_1)] then
+			logNormal("iOS临时屏蔽双端登录活动入口")
+		else
+			local var_7_2 = {
+				id = iter_7_1,
+				co = ActivityConfig.instance:getActivityCo(iter_7_1),
+				type = ActivityEnum.ActivityType.Beginner
+			}
+
+			table.insert(arg_7_0.data, var_7_2)
+		end
 	end
 
 	if arg_7_0._needSetSortInfos then
@@ -279,15 +293,22 @@ function var_0_0._initRole_FullSignView(arg_14_0)
 
 	var_0_3 = true
 
-	local var_14_0 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part1", ActivityEnum.Activity.V2a6_Role_SignView_Part1)
-	local var_14_1 = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part1", ViewName.V2a5_Role_FullSignView_Part1)
+	local var_14_0 = ActivityType101Model.instance:getRoleSignActIdList()
+	local var_14_1 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part1", var_14_0[1])
 
-	var_0_1[var_14_0] = var_14_1
+	if var_14_1 then
+		local var_14_2 = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part1", ViewName.Role_FullSignView_Part1)
 
-	local var_14_2 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part2", ActivityEnum.Activity.V2a6_Role_SignView_Part2)
-	local var_14_3 = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part2", ViewName.V2a5_Role_FullSignView_Part2)
+		var_0_1[var_14_1] = var_14_2
+	end
 
-	var_0_1[var_14_2] = var_14_3
+	local var_14_3 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part2", var_14_0[2])
+
+	if var_14_3 then
+		local var_14_4 = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part2", ViewName.Role_FullSignView_Part2)
+
+		var_0_1[var_14_3] = var_14_4
+	end
 end
 
 local var_0_4 = false
@@ -333,6 +354,95 @@ function var_0_0._initWarmUp(arg_17_0)
 	local var_17_1 = GameBranchMgr.instance:Vxax_ViewName("WarmUp", ViewName.V2a8_WarmUp)
 
 	var_0_1[var_17_0] = var_17_1
+end
+
+local var_0_7 = false
+
+function var_0_0._initWarmUpH5(arg_18_0)
+	if var_0_7 then
+		return
+	end
+
+	var_0_7 = true
+
+	local var_18_0 = ActivityType100Config.instance:getWarmUpH5ActivityId()
+
+	var_0_1[var_18_0] = ViewName.ActivityWarmUpH5FullView
+end
+
+local var_0_8 = false
+
+function var_0_0._initSelfSelectCharacter(arg_19_0)
+	if var_0_8 then
+		return
+	end
+
+	var_0_8 = true
+
+	local var_19_0 = Activity136Controller.instance:actId()
+
+	var_0_1[var_19_0] = ViewName.Activity136FullView
+end
+
+local var_0_9 = false
+
+function var_0_0._initVersionSummon(arg_20_0)
+	if var_0_9 then
+		return
+	end
+
+	var_0_9 = true
+
+	local var_20_0 = ActivityType101Config.instance:getVersionSummonActIdList()
+	local var_20_1 = GameBranchMgr.instance:Vxax_ActId("VersionSummon_Part1", var_20_0[1])
+
+	if var_20_1 then
+		local var_20_2 = GameBranchMgr.instance:Vxax_ViewName("VersionSummon_Part1", ViewName.VersionSummonFull_Part1)
+
+		var_0_1[var_20_1] = var_20_2
+	end
+
+	local var_20_3 = GameBranchMgr.instance:Vxax_ActId("VersionSummon_Part2", var_20_0[2])
+
+	if var_20_3 then
+		local var_20_4 = GameBranchMgr.instance:Vxax_ViewName("VersionSummonFull_Part2", ViewName.VersionSummonFull_Part2)
+
+		var_0_1[var_20_3] = var_20_4
+	end
+end
+
+local var_0_10 = false
+
+function var_0_0._initCultivationDestiny(arg_21_0)
+	if var_0_10 then
+		return
+	end
+
+	var_0_10 = true
+
+	local var_21_0 = Activity125Config.instance:getCultivationDestinyActId()
+
+	if not var_0_1[var_21_0] then
+		var_0_1[var_21_0] = ViewName.VersionActivity2_3NewCultivationGiftView
+	end
+end
+
+local var_0_11 = false
+
+function var_0_0._initDoubleDan(arg_22_0)
+	if var_0_11 then
+		return
+	end
+
+	var_0_11 = true
+
+	local var_22_0 = GameBranchMgr.instance:Vxax_ActId("DoubleDan", ActivityType101Config.instance:getDoubleDanActId())
+
+	if var_22_0 then
+		local var_22_1 = GameBranchMgr.instance:Vxax_ViewName("DoubleDanActivity_FullView", ViewName.V3a3_DoubleDanActivity_FullView)
+
+		var_0_1[var_22_0] = var_22_1
+	end
 end
 
 return var_0_0

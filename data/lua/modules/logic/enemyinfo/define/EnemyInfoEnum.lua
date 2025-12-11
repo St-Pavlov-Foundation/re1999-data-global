@@ -3,13 +3,14 @@
 local var_0_0 = _M
 
 var_0_0.TabEnum = {
-	Season123 = 3,
+	Act191 = 7,
 	WeekWalk_2 = 6,
 	Rouge = 5,
-	BossRush = 4,
-	Act191 = 7,
-	WeekWalk = 2,
+	Season123 = 3,
 	Survival = 8,
+	TowerDeep = 9,
+	WeekWalk = 2,
+	BossRush = 4,
 	Normal = 1
 }
 var_0_0.TabWidth = 252

@@ -25,10 +25,16 @@ end
 
 function var_0_0._compInitDone(arg_3_0)
 	arg_3_0._scene:onPrepared()
+
+	arg_3_0._compInitSequence = nil
 end
 
 function var_0_0.onSceneClose(arg_4_0)
-	return
+	if arg_4_0._compInitSequence then
+		arg_4_0._compInitSequence:destroy()
+
+		arg_4_0._compInitSequence = nil
+	end
 end
 
 function var_0_0._onLevelLoaded(arg_5_0, arg_5_1)

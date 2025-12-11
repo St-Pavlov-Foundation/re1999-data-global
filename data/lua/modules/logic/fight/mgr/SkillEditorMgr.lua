@@ -18,26 +18,31 @@ var_0_0.DefaultHeroId = 3023
 var_0_0.DefaultMonsterId = 110401
 var_0_0.SelectType = {
 	Group = 3,
-	Hero = 1,
 	Monster = 2,
+	MonsterId = 5,
+	Hero = 1,
 	SubHero = 4
 }
 
 function var_0_0.start(arg_1_0)
 	arg_1_0.inEditMode = true
 
-	FightMgr.instance:startFight()
+	local var_1_0 = FightData.New(FightDef_pb.Fight())
+
+	var_1_0.version = 999
+
+	FightMgr.instance:startFight(var_1_0)
 	arg_1_0:InitDefaultData()
 	LuaEventSystem.addEventMechanism(arg_1_0)
 
 	UnityEngine.Application.targetFrameRate = 60
 
-	local var_1_0 = lua_scene_level.configList
-	local var_1_1 = FightParam.New()
-	local var_1_2 = arg_1_0:getSceneLevelId() or var_0_0.DefaultSceneLevelId
+	local var_1_1 = lua_scene_level.configList
+	local var_1_2 = FightParam.New()
+	local var_1_3 = arg_1_0:getSceneLevelId() or var_0_0.DefaultSceneLevelId
 
-	var_1_1:setSceneLevel(var_1_2)
-	FightModel.instance:setFightParam(var_1_1)
+	var_1_2:setSceneLevel(var_1_3)
+	FightModel.instance:setFightParam(var_1_2)
 	arg_1_0:refreshInfo(FightEnum.EntitySide.MySide)
 	arg_1_0:AddSubHeroModelData()
 	arg_1_0:refreshInfo(FightEnum.EntitySide.EnemySide)

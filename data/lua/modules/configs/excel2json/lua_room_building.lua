@@ -29,6 +29,7 @@ local var_0_1 = {
 	nameEn = 12,
 	uiScale = 20,
 	audioExtendType = 26,
+	canExchange = 39,
 	desc = 6,
 	linkBlock = 35,
 	placeAudio = 25,

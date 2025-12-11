@@ -8,8 +8,10 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._txttitle = gohelper.findChildText(arg_1_1, "title/#txt_title")
 	arg_1_0._goNewTag = gohelper.findChild(arg_1_1, "title/#go_NewTag")
 	arg_1_0._godecitem = gohelper.findChild(arg_1_1, "#go_decitem")
-	arg_1_0._descItemList = {}
+	arg_1_0._goKeywordParent = gohelper.findChild(arg_1_1, "RoleTag")
+	arg_1_0._descItemList = arg_1_0:getUserDataTb_()
 	arg_1_0._descCompList = {}
+	arg_1_0.keywordItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._goKeywordParent, VersionActivity2_3NewCultivationKeywordItem)
 end
 
 function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
@@ -72,12 +74,17 @@ function var_0_0.refreshUI(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 			gohelper.setActive(var_4_7.transform.parent.gameObject, false)
 		end
 	end
+
+	arg_4_0.keywordItem:refreshKeyword(var_4_1.keyword)
 end
 
 function var_0_0.onDestroy(arg_5_0)
 	if not arg_5_0._isDisposed then
 		arg_5_0._isDisposed = true
 	end
+
+	arg_5_0._descItemList = nil
+	arg_5_0.keywordItem = nil
 end
 
 return var_0_0

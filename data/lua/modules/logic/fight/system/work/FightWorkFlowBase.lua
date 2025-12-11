@@ -4,9 +4,9 @@ local var_0_0 = class("FightWorkFlowBase", FightWorkItem)
 local var_0_1 = 10
 
 function var_0_0.start(arg_1_0, arg_1_1)
-	if arg_1_0.PARENT_ROOT_CLASS then
-		if isTypeOf(arg_1_0.PARENT_ROOT_CLASS, FightWorkFlowSequence) or isTypeOf(arg_1_0.PARENT_ROOT_CLASS, var_0_0) then
-			arg_1_0.ROOTFLOW = arg_1_0.PARENT_ROOT_CLASS.ROOTFLOW
+	if arg_1_0.PARENT_ROOT_OBJECT then
+		if isTypeOf(arg_1_0.PARENT_ROOT_OBJECT, FightWorkFlowSequence) or isTypeOf(arg_1_0.PARENT_ROOT_OBJECT, var_0_0) then
+			arg_1_0.ROOTFLOW = arg_1_0.PARENT_ROOT_OBJECT.ROOTFLOW
 			arg_1_0.ROOTFLOW.COUNTERDEEP = arg_1_0.ROOTFLOW.COUNTERDEEP + 1
 			arg_1_0.COUNTERDEEP = arg_1_0.ROOTFLOW.COUNTERDEEP
 		else

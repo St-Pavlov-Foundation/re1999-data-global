@@ -65,12 +65,13 @@ function var_0_0._setWeekWalkGroupSelectIndex(arg_7_0)
 		local var_7_7 = WeekWalkModel.instance:getBattleInfoByLayerAndIndex(var_7_1 - 1, var_7_3.index)
 
 		if var_7_7 and var_7_7.heroGroupSelect ~= 0 then
-			local var_7_8 = var_7_7.heroGroupSelect - 1
+			local var_7_8 = var_7_7.heroGroupSelect
+			local var_7_9 = HeroGroupPresetHeroGroupChangeController.instance:getValidHeroGroupId(HeroGroupModel.instance:getPresetHeroGroupType(), var_7_8)
 
-			if var_7_8 >= 0 and var_7_8 <= 3 then
-				arg_7_0._changeIndex = var_7_8
+			if var_7_9 then
+				arg_7_0._changeIndex = var_7_9
 
-				if var_7_7.heroGroupSelect == var_7_4 then
+				if var_7_9 == var_7_4 then
 					arg_7_0:_updateWeekWalkGroupSelectIndex()
 
 					return
@@ -80,9 +81,9 @@ function var_0_0._setWeekWalkGroupSelectIndex(arg_7_0)
 				UIBlockMgr.instance:startBlock("HeroGroupFightWeekWalkViewChangeGroup")
 				TaskDispatcher.cancelTask(arg_7_0._changeGroupIndex, arg_7_0)
 
-				local var_7_9 = arg_7_0:_anyHeroInCd() and 2.2 or 0.8
+				local var_7_10 = arg_7_0:_anyHeroInCd() and 2.2 or 0.8
 
-				TaskDispatcher.runDelay(arg_7_0._changeGroupIndex, arg_7_0, var_7_9)
+				TaskDispatcher.runDelay(arg_7_0._changeGroupIndex, arg_7_0, var_7_10)
 			end
 		end
 	end
@@ -107,7 +108,10 @@ function var_0_0._changeGroupIndex(arg_9_0)
 	local var_9_0 = arg_9_0.viewContainer:getHeroGroupFightView()
 
 	var_9_0:setGroupChangeToast(ToastEnum.WeekWalkChangeGroup)
-	arg_9_0._dropherogroup:SetValue(arg_9_0._changeIndex)
+	HeroGroupPresetController.instance:dispatchEvent(HeroGroupPresetEvent.UseHeroGroup, {
+		groupId = ModuleEnum.HeroGroupSnapshotType.Common,
+		subId = arg_9_0._changeIndex
+	})
 	var_9_0:setGroupChangeToast(nil)
 end
 

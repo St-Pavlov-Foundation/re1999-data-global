@@ -23,7 +23,8 @@ var_0_0.FromViewEnum = {
 	FromSeasonFightView = 3,
 	FromHeroGroupFightView = 1,
 	FromRougeHeroGroupFightView = 7,
-	FromCachotHeroGroupFightView = 5
+	FromCachotHeroGroupFightView = 5,
+	FromPresetPreviewView = 11
 }
 var_0_0.ConstId = {
 	equipNotShowRefineRare = 16

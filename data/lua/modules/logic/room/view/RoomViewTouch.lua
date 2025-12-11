@@ -205,7 +205,7 @@ function var_0_0._clickInEditMode(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
 			arg_12_0:_chickSelectInventontoryBlockId(arg_12_1, arg_12_2, arg_12_3)
 		elseif arg_12_1.blockState == RoomBlockEnum.BlockState.Map then
 			if var_12_1 then
-				RoomWaterReformController.instance:selectWater(arg_12_1, arg_12_2)
+				RoomWaterReformController.instance:onClickBlock(arg_12_1, arg_12_2)
 			elseif var_12_0 and arg_12_0:_isInitBlockById(arg_12_1.id) then
 				GameFacade.showToast(RoomEnum.Toast.InventoryCannotBackInitBlock)
 			else

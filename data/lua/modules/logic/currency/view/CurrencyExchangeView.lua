@@ -8,6 +8,9 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
 	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_yes")
 	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_no")
+	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
+	arg_1_0._toggleoption = gohelper.findChildToggle(arg_1_0.viewGO, "#toggle_option")
+	arg_1_0._txtoption = gohelper.findChildText(arg_1_0.viewGO, "#toggle_option/#txt_option")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -17,11 +20,13 @@ end
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
 	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
+	arg_2_0._toggleoption:AddOnValueChanged(arg_2_0._toggleOptionOnClick, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btnyes:RemoveClickListener()
 	arg_3_0._btnno:RemoveClickListener()
+	arg_3_0._toggleoption:RemoveOnValueChanged()
 end
 
 local var_0_1 = MsgBoxEnum.CloseType
@@ -39,21 +44,13 @@ function var_0_0._closeInvokeCallback(arg_6_0, arg_6_1)
 	local var_6_0 = false
 
 	if arg_6_1 == var_0_1.Yes then
-		if arg_6_0.viewParam.isExchangeStep then
-			var_6_0 = CurrencyController.instance:checkExchangeFreeDiamond(arg_6_0.viewParam.needDiamond, arg_6_0.viewParam.srcType, arg_6_0.viewParam.callback, arg_6_0.viewParam.callbackObj, arg_6_0.viewParam.jumpCallBack, arg_6_0.viewParam.jumpCallbackObj)
-		else
-			if arg_6_0.viewParam.jumpCallBack then
-				arg_6_0.viewParam.jumpCallBack(arg_6_0.viewParam.jumpCallbackObj)
-			end
-
-			StoreController.instance:checkAndOpenStoreView(StoreEnum.ChargeStoreTabId)
+		if arg_6_0._toggleoption.isOn then
+			arg_6_0:saveOptionData()
 		end
 
-		if arg_6_0.viewParam.yesCallback then
-			arg_6_0.viewParam.yesCallback()
-		end
+		var_6_0 = CurrencyController.instance:checkCurrencyExchange(arg_6_0.viewParam)
 	elseif arg_6_0.viewParam.noCallback then
-		arg_6_0.viewParam.noCallback()
+		arg_6_0.viewParam.noCallback(arg_6_0.viewParam.noCallbackObj)
 	end
 
 	if not var_6_0 then
@@ -99,6 +96,14 @@ function var_0_0.onOpen(arg_10_0)
 	recthelper.setAnchorX(arg_10_0._goYes.transform, 248)
 	recthelper.setAnchorX(arg_10_0._goNo.transform, -248)
 	NavigateMgr.instance:addEscape(ViewName.CurrencyExchangeView, arg_10_0._onEscapeBtnClick, arg_10_0)
+
+	arg_10_0._toggleoption.isOn = false
+
+	gohelper.setActive(arg_10_0._toggleoption.gameObject, false)
+
+	if arg_10_0.viewParam.isShowDailySure and arg_10_0.viewParam.isExchangeStep then
+		arg_10_0:refreshOptionUI()
+	end
 end
 
 function var_0_0._onEscapeBtnClick(arg_11_0)
@@ -107,7 +112,35 @@ function var_0_0._onEscapeBtnClick(arg_11_0)
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
+function var_0_0.refreshOptionUI(arg_12_0)
+	gohelper.setActive(arg_12_0._toggleoption.gameObject, true)
+
+	arg_12_0.optionType = MsgBoxEnum.optionType.Daily
+	arg_12_0._txtoption.text = luaLang("messageoptionbox_daily")
+end
+
+function var_0_0.saveOptionData(arg_13_0)
+	if not arg_13_0.viewParam.isShowDailySure or not arg_13_0.viewParam.isExchangeStep then
+		return
+	end
+
+	if arg_13_0.optionType == nil or arg_13_0.optionType <= 0 or not arg_13_0._toggleoption.isOn then
+		return
+	end
+
+	local var_13_0 = CurrencyController.instance:getOptionLocalKey(arg_13_0.viewParam.srcType)
+
+	if arg_13_0.optionType == MsgBoxEnum.optionType.Daily then
+		TimeUtil.setDayFirstLoginRed(var_13_0)
+	end
+end
+
+function var_0_0._toggleOptionOnClick(arg_14_0)
+	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
+	arg_14_0:saveOptionData()
+end
+
+function var_0_0.onClose(arg_15_0)
 	return
 end
 

@@ -94,7 +94,9 @@ function var_0_0._getInitMapFuncByGameMode(arg_9_0, arg_9_1)
 			[RoomEnum.GameMode.VisitShare] = arg_9_0._initMapVisit,
 			[RoomEnum.GameMode.DebugNormal] = arg_9_0._initMapDebug,
 			[RoomEnum.GameMode.DebugInit] = arg_9_0._initMapDebug,
-			[RoomEnum.GameMode.DebugPackage] = arg_9_0._initMapDebug
+			[RoomEnum.GameMode.DebugPackage] = arg_9_0._initMapDebug,
+			[RoomEnum.GameMode.Fishing] = arg_9_0._initMapFishing,
+			[RoomEnum.GameMode.FishingVisit] = arg_9_0._initMapFishing
 		}
 	end
 
@@ -215,7 +217,12 @@ function var_0_0._initMapDebug(arg_13_0, arg_13_1, arg_13_2)
 	end
 end
 
-function var_0_0.clearMap(arg_14_0)
+function var_0_0._initMapFishing(arg_14_0, arg_14_1, arg_14_2)
+	RoomMapBlockModel.instance:initMap(arg_14_2.infos)
+	RoomMapBuildingModel.instance:initMap(arg_14_2.buildingInfos)
+end
+
+function var_0_0.clearMap(arg_15_0)
 	RoomModel.instance:updateCharacterPoint()
 	RoomMapBlockModel.instance:clear()
 	RoomInventoryBlockModel.instance:clear()
@@ -230,7 +237,7 @@ function var_0_0.clearMap(arg_14_0)
 	RoomCharacterModel.instance:clear()
 	RoomMapBuildingAreaModel.instance:clear()
 	RoomTransportController.instance:clear()
-	arg_14_0:clear()
+	arg_15_0:clear()
 	RoomDebugController.instance:clear()
 	RoomBuildingController.instance:clear()
 	RoomBuildingFormulaController.instance:clear()
@@ -241,223 +248,223 @@ function var_0_0.clearMap(arg_14_0)
 	RoomInteractBuildingModel.instance:clear()
 end
 
-function var_0_0.resetRoom(arg_15_0)
+function var_0_0.resetRoom(arg_16_0)
 	if RoomController.instance:isDebugNormalMode() then
 		PlayerPrefsHelper.setString(PlayerPrefsKey.RoomDebugMapParam, "")
 		RoomController.instance:enterRoom(RoomEnum.GameMode.DebugNormal)
 	elseif RoomController.instance:isDebugInitMode() then
-		local var_15_0 = RoomModel.instance:getDebugParam()
+		local var_16_0 = RoomModel.instance:getDebugParam()
 
 		RoomDebugController.instance:resetInitJson()
-		RoomController.instance:enterRoom(RoomEnum.GameMode.DebugInit, nil, nil, var_15_0)
+		RoomController.instance:enterRoom(RoomEnum.GameMode.DebugInit, nil, nil, var_16_0)
 	elseif RoomController.instance:isDebugPackageMode() then
-		local var_15_1 = RoomModel.instance:getDebugParam()
+		local var_16_1 = RoomModel.instance:getDebugParam()
 
-		RoomDebugController.instance:resetPackageJson(var_15_1.packageMapId)
-		RoomController.instance:enterRoom(RoomEnum.GameMode.DebugPackage, nil, nil, var_15_1)
+		RoomDebugController.instance:resetPackageJson(var_16_1.packageMapId)
+		RoomController.instance:enterRoom(RoomEnum.GameMode.DebugPackage, nil, nil, var_16_1)
 	elseif RoomController.instance:isEditMode() then
-		RoomRpc.instance:sendResetRoomRequest(arg_15_0._resetRoomReply, arg_15_0)
+		RoomRpc.instance:sendResetRoomRequest(arg_16_0._resetRoomReply, arg_16_0)
 	end
 end
 
-function var_0_0._resetRoomReply(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	if arg_16_2 ~= 0 then
+function var_0_0._resetRoomReply(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	if arg_17_2 ~= 0 then
 		return
 	end
 
-	arg_16_0._isNeedConfirmRoom = true
-	arg_16_0._isResetRoomReply = true
+	arg_17_0._isNeedConfirmRoom = true
+	arg_17_0._isResetRoomReply = true
 
-	RoomController.instance:enterRoom(RoomEnum.GameMode.Edit, arg_16_3, RoomModel.instance:getObInfo(), nil, nil, nil, true)
+	RoomController.instance:enterRoom(RoomEnum.GameMode.Edit, arg_17_3, RoomModel.instance:getObInfo(), nil, nil, nil, true)
 end
 
-function var_0_0.useBlockRequest(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
-	local var_17_0 = RoomConfig.instance:getBlock(arg_17_1)
+function var_0_0.useBlockRequest(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+	local var_18_0 = RoomConfig.instance:getBlock(arg_18_1)
 
-	if var_17_0 then
-		RoomRpc.instance:sendUseBlockRequest(arg_17_1, var_17_0.packageId, arg_17_2, arg_17_3, arg_17_4)
+	if var_18_0 then
+		RoomRpc.instance:sendUseBlockRequest(arg_18_1, var_18_0.packageId, arg_18_2, arg_18_3, arg_18_4)
 	end
 end
 
-function var_0_0.unUseBlockListRequest(arg_18_0, arg_18_1)
-	local var_18_0 = 0
+function var_0_0.unUseBlockListRequest(arg_19_0, arg_19_1)
+	local var_19_0 = 0
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-		local var_18_1 = RoomConfig.instance:getPackageConfigByBlockId(iter_18_1)
+	for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
+		local var_19_1 = RoomConfig.instance:getPackageConfigByBlockId(iter_19_1)
 
-		var_18_0 = var_18_0 + (var_18_1 and var_18_1.blockBuildDegree or 0)
+		var_19_0 = var_19_0 + (var_19_1 and var_19_1.blockBuildDegree or 0)
 	end
 
-	RoomRpc.instance:sendUnUseBlockRequest(arg_18_1)
+	RoomRpc.instance:sendUnUseBlockRequest(arg_19_1)
 end
 
-function var_0_0.unUseBlockRequest(arg_19_0, arg_19_1)
+function var_0_0.unUseBlockRequest(arg_20_0, arg_20_1)
 	RoomRpc.instance:sendUnUseBlockRequest({
-		arg_19_1
+		arg_20_1
 	})
 end
 
-function var_0_0.unUseBlockReply(arg_20_0, arg_20_1)
-	arg_20_0._isNeedConfirmRoom = true
+function var_0_0.unUseBlockReply(arg_21_0, arg_21_1)
+	arg_21_0._isNeedConfirmRoom = true
 
-	local var_20_0 = GameSceneMgr.instance:getCurScene()
-	local var_20_1 = RoomMapBlockModel.instance
-	local var_20_2 = {}
-	local var_20_3 = arg_20_1.blockIds
-	local var_20_4 = arg_20_1.buildingInfos
-	local var_20_5 = {}
-	local var_20_6 = arg_20_1.roadInfos
+	local var_21_0 = GameSceneMgr.instance:getCurScene()
+	local var_21_1 = RoomMapBlockModel.instance
+	local var_21_2 = {}
+	local var_21_3 = arg_21_1.blockIds
+	local var_21_4 = arg_21_1.buildingInfos
+	local var_21_5 = {}
+	local var_21_6 = arg_21_1.roadInfos
 
-	for iter_20_0 = 1, #var_20_3 do
-		local var_20_7 = var_20_1:backBlockById(var_20_3[iter_20_0])
+	for iter_21_0 = 1, #var_21_3 do
+		local var_21_7 = var_21_1:backBlockById(var_21_3[iter_21_0])
 
-		if var_20_7 then
-			table.insert(var_20_2, var_20_7)
+		if var_21_7 then
+			table.insert(var_21_2, var_21_7)
 		end
 	end
 
-	if #var_20_4 > 0 then
-		for iter_20_1 = 1, #var_20_4 do
-			table.insert(var_20_5, var_20_4[iter_20_1].defineId)
+	if #var_21_4 > 0 then
+		for iter_21_1 = 1, #var_21_4 do
+			table.insert(var_21_5, var_21_4[iter_21_1].defineId)
 		end
 	end
 
-	RoomInventoryBlockModel.instance:blackBlocksByIds(var_20_3)
+	RoomInventoryBlockModel.instance:blackBlocksByIds(var_21_3)
 
-	local var_20_8 = var_20_1:getTempBlockMO()
+	local var_21_8 = var_21_1:getTempBlockMO()
 
-	if var_20_8 then
-		table.insert(var_20_2, var_20_8)
-		var_20_1:removeTempBlockMO()
+	if var_21_8 then
+		table.insert(var_21_2, var_21_8)
+		var_21_1:removeTempBlockMO()
 	end
 
-	RoomResourceModel.instance:unUseBlockList(var_20_2)
+	RoomResourceModel.instance:unUseBlockList(var_21_2)
 	RoomSceneTaskController.instance:dispatchEvent(RoomEvent.TaskUpdate)
 	var_0_0.instance:dispatchEvent(RoomEvent.SelectBlock)
-	var_20_0.fsm:triggerEvent(RoomSceneEvent.ConfirmBackBlock, {
-		blockMOList = var_20_2
+	var_21_0.fsm:triggerEvent(RoomSceneEvent.ConfirmBackBlock, {
+		blockMOList = var_21_2
 	})
-	arg_20_0:_unUseBuildings(var_20_4)
+	arg_21_0:_unUseBuildings(var_21_4)
 
-	local var_20_9 = RoomShowBlockListModel.instance:getCount()
+	local var_21_9 = RoomShowBlockListModel.instance:getCount()
 
-	RoomShowBlockListModel.instance:setShowBlockList()
+	arg_21_0:setRoomShowBlockList()
 	RoomModel.instance:setEditFlag()
 
-	if var_20_9 <= 0 and RoomShowBlockListModel.instance:getCount() > 0 then
+	if var_21_9 <= 0 and RoomShowBlockListModel.instance:getCount() > 0 then
 		var_0_0.instance:dispatchEvent(RoomEvent.SelectBlock)
 	end
 
-	local var_20_10
+	local var_21_10
 
-	for iter_20_2, iter_20_3 in ipairs(var_20_3) do
-		local var_20_11 = RoomShowBlockListModel.instance:getById(iter_20_3)
-		local var_20_12 = var_20_11 and RoomShowBlockListModel.instance:getIndex(var_20_11)
+	for iter_21_2, iter_21_3 in ipairs(var_21_3) do
+		local var_21_11 = RoomShowBlockListModel.instance:getById(iter_21_3)
+		local var_21_12 = var_21_11 and RoomShowBlockListModel.instance:getIndex(var_21_11)
 
-		if var_20_12 and (not var_20_10 or var_20_12 < var_20_10) then
-			var_20_10 = var_20_12
+		if var_21_12 and (not var_21_10 or var_21_12 < var_21_10) then
+			var_21_10 = var_21_12
 		end
 	end
 
-	arg_20_0:_deleteRoadInfos(var_20_6)
+	arg_21_0:_deleteRoadInfos(var_21_6)
 
-	local var_20_13 = var_20_9 < RoomShowBlockListModel.instance:getCount()
+	local var_21_13 = var_21_9 < RoomShowBlockListModel.instance:getCount()
 
-	var_0_0.instance:dispatchEvent(RoomEvent.BackBlockListDataChanged, var_20_3, var_20_13, var_20_5, var_20_10)
+	var_0_0.instance:dispatchEvent(RoomEvent.BackBlockListDataChanged, var_21_3, var_21_13, var_21_5, var_21_10)
 end
 
-function var_0_0._deleteRoadInfos(arg_21_0, arg_21_1)
-	if arg_21_1 and #arg_21_1 then
-		local var_21_0 = {}
+function var_0_0._deleteRoadInfos(arg_22_0, arg_22_1)
+	if arg_22_1 and #arg_22_1 then
+		local var_22_0 = {}
 
-		for iter_21_0, iter_21_1 in ipairs(arg_21_1) do
-			table.insert(var_21_0, iter_21_1.id)
+		for iter_22_0, iter_22_1 in ipairs(arg_22_1) do
+			table.insert(var_22_0, iter_22_1.id)
 		end
 
-		RoomTransportController.instance:deleteRoadByIds(var_21_0)
+		RoomTransportController.instance:deleteRoadByIds(var_22_0)
 	end
 end
 
-function var_0_0.useBlockReply(arg_22_0, arg_22_1)
-	arg_22_0._isNeedConfirmRoom = true
+function var_0_0.useBlockReply(arg_23_0, arg_23_1)
+	arg_23_0._isNeedConfirmRoom = true
 
-	local var_22_0 = GameSceneMgr.instance:getCurScene()
-	local var_22_1 = RoomMapBlockModel.instance:getTempBlockMO()
+	local var_23_0 = GameSceneMgr.instance:getCurScene()
+	local var_23_1 = RoomMapBlockModel.instance:getTempBlockMO()
 
-	if var_22_1 and var_22_1.id == arg_22_1.blockId then
-		RoomMapBlockModel.instance:placeTempBlockMO(arg_22_1)
-		RoomResourceModel.instance:useBlock(var_22_1)
+	if var_23_1 and var_23_1.id == arg_23_1.blockId then
+		RoomMapBlockModel.instance:placeTempBlockMO(arg_23_1)
+		RoomResourceModel.instance:useBlock(var_23_1)
 	end
 
-	RoomInventoryBlockModel.instance:placeBlock(arg_22_1.blockId)
-	RoomShowBlockListModel.instance:setShowBlockList()
+	RoomInventoryBlockModel.instance:placeBlock(arg_23_1.blockId)
+	arg_23_0:setRoomShowBlockList()
 	RoomResourceModel.instance:clearResourceAreaList()
 	RoomResourceModel.instance:clearLightResourcePoint()
 	RoomSceneTaskController.instance:dispatchEvent(RoomEvent.TaskUpdate)
 	RoomModel.instance:setEditFlag()
 	var_0_0.instance:dispatchEvent(RoomEvent.SelectBlock)
-	var_22_0.fsm:triggerEvent(RoomSceneEvent.ConfirmPlaceBlock, {
-		tempBlockMO = var_22_1
+	var_23_0.fsm:triggerEvent(RoomSceneEvent.ConfirmPlaceBlock, {
+		tempBlockMO = var_23_1
 	})
 end
 
-function var_0_0.useBuildingRequest(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
-	RoomRpc.instance:sendUseBuildingRequest(arg_23_1, arg_23_2, arg_23_3, arg_23_4)
+function var_0_0.useBuildingRequest(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
+	RoomRpc.instance:sendUseBuildingRequest(arg_24_1, arg_24_2, arg_24_3, arg_24_4)
 end
 
-function var_0_0.useBuildingReply(arg_24_0, arg_24_1)
-	arg_24_0._isNeedConfirmRoom = true
+function var_0_0.useBuildingReply(arg_25_0, arg_25_1)
+	arg_25_0._isNeedConfirmRoom = true
 
-	local var_24_0 = GameSceneMgr.instance:getCurScene()
-	local var_24_1 = arg_24_1.buildingInfo
-	local var_24_2 = RoomMapBuildingModel.instance:getTempBuildingMO()
+	local var_25_0 = GameSceneMgr.instance:getCurScene()
+	local var_25_1 = arg_25_1.buildingInfo
+	local var_25_2 = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-	RoomMapBuildingModel.instance:placeTempBuildingMO(var_24_1)
-	RoomInventoryBuildingModel.instance:placeBuilding(var_24_1)
+	RoomMapBuildingModel.instance:placeTempBuildingMO(var_25_1)
+	RoomInventoryBuildingModel.instance:placeBuilding(var_25_1)
 	RoomShowBuildingListModel.instance:setShowBuildingList()
 	RoomResourceModel.instance:clearResourceAreaList()
 	RoomModel.instance:setEditFlag()
 
-	if RoomBuildingAreaHelper.isBuildingArea(var_24_1.defineId) then
+	if RoomBuildingAreaHelper.isBuildingArea(var_25_1.defineId) then
 		RoomMapBuildingAreaModel.instance:refreshBuildingAreaMOList()
 	end
 
-	var_24_0.fsm:triggerEvent(RoomSceneEvent.ConfirmPlaceBuilding, {
-		buildingInfo = var_24_1,
-		tempBuildingMO = var_24_2
+	var_25_0.fsm:triggerEvent(RoomSceneEvent.ConfirmPlaceBuilding, {
+		buildingInfo = var_25_1,
+		tempBuildingMO = var_25_2
 	})
-	arg_24_0:_unUseBuildings(arg_24_1.deleteBuildingInfos)
-	arg_24_0:_deleteRoadInfos(arg_24_1.deleteRoadInfos)
+	arg_25_0:_unUseBuildings(arg_25_1.deleteBuildingInfos)
+	arg_25_0:_deleteRoadInfos(arg_25_1.deleteRoadInfos)
 end
 
-function var_0_0.unUseBuildingRequest(arg_25_0, arg_25_1)
-	RoomRpc.instance:sendUnUseBuildingRequest(arg_25_1)
+function var_0_0.unUseBuildingRequest(arg_26_0, arg_26_1)
+	RoomRpc.instance:sendUnUseBuildingRequest(arg_26_1)
 end
 
-function var_0_0.unUseBuildingReply(arg_26_0, arg_26_1)
+function var_0_0.unUseBuildingReply(arg_27_0, arg_27_1)
 	RoomModel.instance:setEditFlag()
 
-	arg_26_0._isNeedConfirmRoom = true
+	arg_27_0._isNeedConfirmRoom = true
 
-	arg_26_0:_unUseBuildings(arg_26_1.buildingInfos)
-	arg_26_0:_deleteRoadInfos(arg_26_1.roadInfos)
+	arg_27_0:_unUseBuildings(arg_27_1.buildingInfos)
+	arg_27_0:_deleteRoadInfos(arg_27_1.roadInfos)
 end
 
-function var_0_0._unUseBuildings(arg_27_0, arg_27_1)
-	local var_27_0 = GameSceneMgr.instance:getCurScene()
-	local var_27_1 = false
+function var_0_0._unUseBuildings(arg_28_0, arg_28_1)
+	local var_28_0 = GameSceneMgr.instance:getCurScene()
+	local var_28_1 = false
 
-	for iter_27_0 = 1, #arg_27_1 do
-		RoomInventoryBuildingModel.instance:unUseBuilding(arg_27_1[iter_27_0])
+	for iter_28_0 = 1, #arg_28_1 do
+		RoomInventoryBuildingModel.instance:unUseBuilding(arg_28_1[iter_28_0])
 
-		if not var_27_1 and RoomBuildingAreaHelper.isBuildingArea(arg_27_1[iter_27_0].defineId) then
-			var_27_1 = true
+		if not var_28_1 and RoomBuildingAreaHelper.isBuildingArea(arg_28_1[iter_28_0].defineId) then
+			var_28_1 = true
 		end
 	end
 
 	RoomResourceModel.instance:clearResourceAreaList()
-	var_27_0.fsm:triggerEvent(RoomSceneEvent.UnUseBuilding, {
-		buildingInfos = arg_27_1
+	var_28_0.fsm:triggerEvent(RoomSceneEvent.UnUseBuilding, {
+		buildingInfos = arg_28_1
 	})
 	RoomShowBuildingListModel.instance:setShowBuildingList()
 
@@ -465,178 +472,178 @@ function var_0_0._unUseBuildings(arg_27_0, arg_27_1)
 		RoomBlockController.instance:refreshBackBuildingEffect()
 	end
 
-	if var_27_1 then
+	if var_28_1 then
 		RoomMapBuildingAreaModel.instance:refreshBuildingAreaMOList()
 	end
 end
 
-function var_0_0.buildingLevelUpByInfos(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = false
-	local var_28_1 = {}
+function var_0_0.buildingLevelUpByInfos(arg_29_0, arg_29_1, arg_29_2)
+	local var_29_0 = false
+	local var_29_1 = {}
 
-	if arg_28_1 and (RoomController.instance:isObMode() or RoomController.instance:isEditMode()) then
-		local var_28_2 = RoomMapBuildingModel.instance
+	if arg_29_1 and (RoomController.instance:isObMode() or RoomController.instance:isEditMode()) then
+		local var_29_2 = RoomMapBuildingModel.instance
 
-		for iter_28_0, iter_28_1 in ipairs(arg_28_1) do
-			local var_28_3 = iter_28_1.uid
-			local var_28_4 = var_28_2:getBuildingMOById(var_28_3)
+		for iter_29_0, iter_29_1 in ipairs(arg_29_1) do
+			local var_29_3 = iter_29_1.uid
+			local var_29_4 = var_29_2:getBuildingMOById(var_29_3)
 
-			if iter_28_1.level and var_28_4 and var_28_4.config and var_28_4.config.canLevelUp then
-				var_28_4.level = iter_28_1.level
+			if iter_29_1.level and var_29_4 and var_29_4.config and var_29_4.config.canLevelUp then
+				var_29_4.level = iter_29_1.level
 
-				var_28_4:refreshCfg()
+				var_29_4:refreshCfg()
 
-				var_28_1[var_28_3] = true
-				var_28_0 = true
+				var_29_1[var_29_3] = true
+				var_29_0 = true
 			end
 		end
 	end
 
-	if var_28_0 or arg_28_2 then
-		arg_28_0:dispatchEvent(RoomEvent.BuildingLevelUpPush, var_28_1)
+	if var_29_0 or arg_29_2 then
+		arg_29_0:dispatchEvent(RoomEvent.BuildingLevelUpPush, var_29_1)
 	end
 end
 
-function var_0_0.useCharacterRequest(arg_29_0, arg_29_1)
-	local var_29_0 = {}
-	local var_29_1 = RoomCharacterModel.instance:getList()
+function var_0_0.useCharacterRequest(arg_30_0, arg_30_1)
+	local var_30_0 = {}
+	local var_30_1 = RoomCharacterModel.instance:getList()
 
-	for iter_29_0, iter_29_1 in ipairs(var_29_1) do
-		if iter_29_1:isPlaceSourceState() then
-			table.insert(var_29_0, iter_29_1.heroId)
+	for iter_30_0, iter_30_1 in ipairs(var_30_1) do
+		if iter_30_1:isPlaceSourceState() then
+			table.insert(var_30_0, iter_30_1.heroId)
 		end
 	end
 
-	if not tabletool.indexOf(var_29_0, arg_29_1) then
-		table.insert(var_29_0, arg_29_1)
+	if not tabletool.indexOf(var_30_0, arg_30_1) then
+		table.insert(var_30_0, arg_30_1)
 	end
 
-	RoomRpc.instance:sendUpdateRoomHeroDataRequest(var_29_0, arg_29_0.useCharacterReply, arg_29_0)
+	RoomRpc.instance:sendUpdateRoomHeroDataRequest(var_30_0, arg_30_0.useCharacterReply, arg_30_0)
 end
 
-function var_0_0.useCharacterReply(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	if arg_30_2 ~= 0 then
+function var_0_0.useCharacterReply(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+	if arg_31_2 ~= 0 then
 		return
 	end
 
-	local var_30_0 = GameSceneMgr.instance:getCurScene()
-	local var_30_1 = RoomCharacterModel.instance:getTempCharacterMO()
+	local var_31_0 = GameSceneMgr.instance:getCurScene()
+	local var_31_1 = RoomCharacterModel.instance:getTempCharacterMO()
 
-	if var_30_1 and not var_30_1:isPlaceSourceState() and RoomModel.instance:getCharacterById(var_30_1.id) then
-		var_30_1.sourceState = RoomCharacterEnum.SourceState.Place
+	if var_31_1 and not var_31_1:isPlaceSourceState() and RoomModel.instance:getCharacterById(var_31_1.id) then
+		var_31_1.sourceState = RoomCharacterEnum.SourceState.Place
 	end
 
 	RoomCharacterModel.instance:placeTempCharacterMO()
-	RoomCharacterController.instance:correctCharacterHeight(var_30_1)
+	RoomCharacterController.instance:correctCharacterHeight(var_31_1)
 	RoomCharacterPlaceListModel.instance:setCharacterPlaceList()
-	RoomCharacterController.instance:updateCharacterFaith(arg_30_3.roomHeroDatas)
-	var_30_0.fsm:triggerEvent(RoomSceneEvent.ConfirmPlaceCharacter, {
-		tempCharacterMO = var_30_1
+	RoomCharacterController.instance:updateCharacterFaith(arg_31_3.roomHeroDatas)
+	var_31_0.fsm:triggerEvent(RoomSceneEvent.ConfirmPlaceCharacter, {
+		tempCharacterMO = var_31_1
 	})
 	RoomInteractBuildingModel.instance:checkAllHero()
 end
 
-function var_0_0.unUseCharacterRequest(arg_31_0, arg_31_1, arg_31_2, arg_31_3, arg_31_4)
-	arg_31_0._unUseCharacterCallback = arg_31_2
-	arg_31_0._unUseCharacterCallbackObj = arg_31_3
-	arg_31_0._unUseAnim = arg_31_4
+function var_0_0.unUseCharacterRequest(arg_32_0, arg_32_1, arg_32_2, arg_32_3, arg_32_4)
+	arg_32_0._unUseCharacterCallback = arg_32_2
+	arg_32_0._unUseCharacterCallbackObj = arg_32_3
+	arg_32_0._unUseAnim = arg_32_4
 
-	local var_31_0 = {}
-	local var_31_1 = RoomCharacterModel.instance:getList()
+	local var_32_0 = {}
+	local var_32_1 = RoomCharacterModel.instance:getList()
 
-	for iter_31_0, iter_31_1 in ipairs(var_31_1) do
-		if iter_31_1:isPlaceSourceState() and iter_31_1.heroId ~= arg_31_1 then
-			table.insert(var_31_0, iter_31_1.heroId)
+	for iter_32_0, iter_32_1 in ipairs(var_32_1) do
+		if iter_32_1:isPlaceSourceState() and iter_32_1.heroId ~= arg_32_1 then
+			table.insert(var_32_0, iter_32_1.heroId)
 		end
 	end
 
-	if RoomCharacterController.instance:isCharacterFaithFull(arg_31_1) then
-		RoomCharacterController.instance:setCharacterFullFaithChecked(arg_31_1)
+	if RoomCharacterController.instance:isCharacterFaithFull(arg_32_1) then
+		RoomCharacterController.instance:setCharacterFullFaithChecked(arg_32_1)
 	end
 
-	RoomRpc.instance:sendUpdateRoomHeroDataRequest(var_31_0, arg_31_0.unUseCharacterReply, arg_31_0)
+	RoomRpc.instance:sendUpdateRoomHeroDataRequest(var_32_0, arg_32_0.unUseCharacterReply, arg_32_0)
 end
 
-function var_0_0.unUseCharacterReply(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
-	if arg_32_2 ~= 0 then
+function var_0_0.unUseCharacterReply(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
+	if arg_33_2 ~= 0 then
 		return
 	end
 
-	local var_32_0 = GameSceneMgr.instance:getCurScene()
-	local var_32_1 = RoomCharacterModel.instance:getTempCharacterMO()
+	local var_33_0 = GameSceneMgr.instance:getCurScene()
+	local var_33_1 = RoomCharacterModel.instance:getTempCharacterMO()
 
-	var_32_0.fsm:triggerEvent(RoomSceneEvent.UnUseCharacter, {
-		heroId = var_32_1.heroId,
-		tempCharacterMO = var_32_1,
-		anim = arg_32_0._unUseAnim
+	var_33_0.fsm:triggerEvent(RoomSceneEvent.UnUseCharacter, {
+		heroId = var_33_1.heroId,
+		tempCharacterMO = var_33_1,
+		anim = arg_33_0._unUseAnim
 	})
 
-	if var_32_1:isTrainSourceState() or var_32_1:isTraining() then
-		RoomCharacterModel.instance:setHideFaithFull(var_32_1.heroId, false)
+	if var_33_1:isTrainSourceState() or var_33_1:isTraining() then
+		RoomCharacterModel.instance:setHideFaithFull(var_33_1.heroId, false)
 	else
-		RoomCharacterModel.instance:deleteCharacterMO(var_32_1.heroId)
+		RoomCharacterModel.instance:deleteCharacterMO(var_33_1.heroId)
 	end
 
-	RoomCharacterController.instance:updateCharacterFaith(arg_32_3.roomHeroDatas)
+	RoomCharacterController.instance:updateCharacterFaith(arg_33_3.roomHeroDatas)
 	RoomInteractBuildingModel.instance:checkAllHero()
 
-	if arg_32_0._unUseCharacterCallback then
-		arg_32_0._unUseCharacterCallback(arg_32_0._unUseCharacterCallbackObj)
+	if arg_33_0._unUseCharacterCallback then
+		arg_33_0._unUseCharacterCallback(arg_33_0._unUseCharacterCallbackObj)
 	end
 
-	arg_32_0._unUseCharacterCallback = nil
-	arg_32_0._unUseCharacterCallbackObj = nil
+	arg_33_0._unUseCharacterCallback = nil
+	arg_33_0._unUseCharacterCallbackObj = nil
 end
 
-function var_0_0.confirmRoom(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
-	local var_33_0 = RoomController.instance:isReset()
+function var_0_0.confirmRoom(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
+	local var_34_0 = RoomController.instance:isReset()
 
-	if var_33_0 then
+	if var_34_0 then
 		RoomRpc.instance:sendUpdateRoomHeroDataRequest({})
 	end
 
-	local var_33_1 = RoomCharacterHelper.getNeedRemoveCount()
+	local var_34_1 = RoomCharacterHelper.getNeedRemoveCount()
 
-	if not var_33_0 and var_33_1 > 0 then
+	if not var_34_0 and var_34_1 > 0 then
 		GameFacade.showMessageBox(MessageBoxIdDefine.RoomRemoveCharacter, MsgBoxEnum.BoxType.Yes_No, function()
 			ViewMgr.instance:openView(ViewName.RoomCharacterPlaceInfoView, {
-				needRemoveCount = var_33_1,
-				sureCallback = arg_33_0._confirmYesCallback,
-				callbackObj = arg_33_0,
+				needRemoveCount = var_34_1,
+				sureCallback = arg_34_0._confirmYesCallback,
+				callbackObj = arg_34_0,
 				callbackParam = {
-					callback = arg_33_1,
-					callbackObj = arg_33_2,
-					param = arg_33_3
+					callback = arg_34_1,
+					callbackObj = arg_34_2,
+					param = arg_34_3
 				}
 			})
-		end, nil, nil, nil, nil, nil, var_33_1)
+		end, nil, nil, nil, nil, nil, var_34_1)
 	else
-		arg_33_0:_confirmYesCallback({
-			callback = arg_33_1,
-			callbackObj = arg_33_2,
-			param = arg_33_3
+		arg_34_0:_confirmYesCallback({
+			callback = arg_34_1,
+			callbackObj = arg_34_2,
+			param = arg_34_3
 		})
 	end
 end
 
-function var_0_0._confirmYesCallback(arg_35_0, arg_35_1)
-	RoomRpc.instance:sendRoomConfirmRequest(arg_35_0._confirmRoomReply, arg_35_0)
+function var_0_0._confirmYesCallback(arg_36_0, arg_36_1)
+	RoomRpc.instance:sendRoomConfirmRequest(arg_36_0._confirmRoomReply, arg_36_0)
 
-	if arg_35_1.callback then
-		if arg_35_1.callbackObj then
-			arg_35_1.callback(arg_35_1.callbackObj, arg_35_1.param)
+	if arg_36_1.callback then
+		if arg_36_1.callbackObj then
+			arg_36_1.callback(arg_36_1.callbackObj, arg_36_1.param)
 		else
-			arg_35_1.callback(arg_35_1.param)
+			arg_36_1.callback(arg_36_1.param)
 		end
 	end
 end
 
-function var_0_0._confirmRoomReply(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	if arg_36_2 == 0 then
-		RoomModel.instance:setObInfo(arg_36_3)
+function var_0_0._confirmRoomReply(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
+	if arg_37_2 == 0 then
+		RoomModel.instance:setObInfo(arg_37_3)
 
-		arg_36_0._isNeedConfirmRoom = false
-		arg_36_0._isHasConfirmOp = true
+		arg_37_0._isNeedConfirmRoom = false
+		arg_37_0._isHasConfirmOp = true
 
 		GameFacade.showToast(RoomEnum.Toast.RoomConfirmRoomSuccess)
 		RoomLayoutController.instance:sendGetRoomPlanInfoRpc()
@@ -644,29 +651,29 @@ function var_0_0._confirmRoomReply(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
 	end
 end
 
-function var_0_0.revertRoom(arg_37_0)
-	RoomRpc.instance:sendRoomRevertRequest(arg_37_0._revertRoomReply, arg_37_0)
+function var_0_0.revertRoom(arg_38_0)
+	RoomRpc.instance:sendRoomRevertRequest(arg_38_0._revertRoomReply, arg_38_0)
 end
 
-function var_0_0._revertRoomReply(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
-	if arg_38_2 == 0 then
-		arg_38_0._isNeedConfirmRoom = false
+function var_0_0._revertRoomReply(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
+	if arg_39_2 == 0 then
+		arg_39_0._isNeedConfirmRoom = false
 	end
 end
 
-function var_0_0.isResetEdit(arg_39_0)
-	return arg_39_0._isResetEdit
+function var_0_0.isResetEdit(arg_40_0)
+	return arg_40_0._isResetEdit
 end
 
-function var_0_0.isNeedConfirmRoom(arg_40_0)
-	return arg_40_0._isNeedConfirmRoom
+function var_0_0.isNeedConfirmRoom(arg_41_0)
+	return arg_41_0._isNeedConfirmRoom
 end
 
-function var_0_0.isHasConfirmOp(arg_41_0)
-	return arg_41_0._isHasConfirmOp
+function var_0_0.isHasConfirmOp(arg_42_0)
+	return arg_42_0._isHasConfirmOp
 end
 
-function var_0_0.openFormulaItemBuildingViewOutSide(arg_42_0)
+function var_0_0.openFormulaItemBuildingViewOutSide(arg_43_0)
 	RoomFormulaModel.instance:initFormula()
 	ViewMgr.instance:openView(ViewName.RoomInitBuildingView, {
 		openInOutside = true,
@@ -675,267 +682,294 @@ function var_0_0.openFormulaItemBuildingViewOutSide(arg_42_0)
 	})
 end
 
-function var_0_0.openRoomInitBuildingView(arg_43_0, arg_43_1, arg_43_2)
-	local var_43_0 = GameSceneMgr.instance:getCurScene()
+function var_0_0.openRoomInitBuildingView(arg_44_0, arg_44_1, arg_44_2)
+	local var_44_0 = GameSceneMgr.instance:getCurScene()
 
-	arg_43_0._openRoomInitBuildingViewCameraState = var_43_0.camera:getCameraState()
-	arg_43_0._openRoomInitBuildingViewZoom = var_43_0.camera:getCameraZoom()
+	arg_44_0._openRoomInitBuildingViewCameraState = var_44_0.camera:getCameraState()
+	arg_44_0._openRoomInitBuildingViewZoom = var_44_0.camera:getCameraZoom()
 
-	RoomBuildingController.instance:tweenCameraFocusPart(arg_43_2 and arg_43_2.partId, RoomEnum.CameraState.Normal, 0)
+	RoomBuildingController.instance:tweenCameraFocusPart(arg_44_2 and arg_44_2.partId, RoomEnum.CameraState.Normal, 0)
 
-	arg_43_0._openRoomInitBuildingViewParam = nil
+	arg_44_0._openRoomInitBuildingViewParam = nil
 
 	var_0_0.instance:dispatchEvent(RoomEvent.WillOpenRoomInitBuildingView)
 	RoomCharacterController.instance:dispatchEvent(RoomEvent.RefreshSpineShow)
 	RoomBuildingController.instance:dispatchEvent(RoomEvent.RefreshNavigateButton)
 
-	if not arg_43_1 or arg_43_1 <= 0 then
-		arg_43_0:_realOpenRoomInitBuildingView(arg_43_2)
-		arg_43_0:dispatchEvent(RoomEvent.RefreshUIShow)
+	if not arg_44_1 or arg_44_1 <= 0 then
+		arg_44_0:_realOpenRoomInitBuildingView(arg_44_2)
+		arg_44_0:dispatchEvent(RoomEvent.RefreshUIShow)
 
 		return
 	else
-		arg_43_0._openRoomInitBuildingViewParam = arg_43_2
+		arg_44_0._openRoomInitBuildingViewParam = arg_44_2
 
-		TaskDispatcher.cancelTask(arg_43_0._realOpenRoomInitBuildingView, arg_43_0)
-		TaskDispatcher.runDelay(arg_43_0._realOpenRoomInitBuildingView, arg_43_0, arg_43_1)
-		arg_43_0:dispatchEvent(RoomEvent.RefreshUIShow)
+		TaskDispatcher.cancelTask(arg_44_0._realOpenRoomInitBuildingView, arg_44_0)
+		TaskDispatcher.runDelay(arg_44_0._realOpenRoomInitBuildingView, arg_44_0, arg_44_1)
+		arg_44_0:dispatchEvent(RoomEvent.RefreshUIShow)
 	end
 end
 
-function var_0_0._realOpenRoomInitBuildingView(arg_44_0, arg_44_1)
-	arg_44_1 = arg_44_1 or arg_44_0._openRoomInitBuildingViewParam
-	arg_44_0._openRoomInitBuildingViewParam = nil
+function var_0_0._realOpenRoomInitBuildingView(arg_45_0, arg_45_1)
+	arg_45_1 = arg_45_1 or arg_45_0._openRoomInitBuildingViewParam
+	arg_45_0._openRoomInitBuildingViewParam = nil
 
-	ViewMgr.instance:openView(ViewName.RoomInitBuildingView, arg_44_1)
-	RoomSkinController.instance:clearInitBuildingEntranceReddot(arg_44_1 and arg_44_1.partId)
+	ViewMgr.instance:openView(ViewName.RoomInitBuildingView, arg_45_1)
+	RoomSkinController.instance:clearInitBuildingEntranceReddot(arg_45_1 and arg_45_1.partId)
 end
 
-function var_0_0.onCloseRoomInitBuildingView(arg_45_0)
-	if arg_45_0._openRoomInitBuildingViewCameraState and arg_45_0._openRoomInitBuildingViewZoom then
-		GameSceneMgr.instance:getCurScene().camera:switchCameraState(arg_45_0._openRoomInitBuildingViewCameraState, {
-			zoom = arg_45_0._openRoomInitBuildingViewZoom
+function var_0_0.onCloseRoomInitBuildingView(arg_46_0)
+	if arg_46_0._openRoomInitBuildingViewCameraState and arg_46_0._openRoomInitBuildingViewZoom then
+		GameSceneMgr.instance:getCurScene().camera:switchCameraState(arg_46_0._openRoomInitBuildingViewCameraState, {
+			zoom = arg_46_0._openRoomInitBuildingViewZoom
 		})
 
-		arg_45_0._openRoomInitBuildingViewCameraState = nil
-		arg_45_0._openRoomInitBuildingViewZoom = nil
+		arg_46_0._openRoomInitBuildingViewCameraState = nil
+		arg_46_0._openRoomInitBuildingViewZoom = nil
 
-		arg_45_0:dispatchEvent(RoomEvent.RefreshUIShow)
+		arg_46_0:dispatchEvent(RoomEvent.RefreshUIShow)
 		RoomCharacterController.instance:dispatchEvent(RoomEvent.RefreshSpineShow)
 		RoomBuildingController.instance:dispatchEvent(RoomEvent.RefreshNavigateButton)
 	end
 end
 
-function var_0_0.isInRoomInitBuildingViewCamera(arg_46_0)
-	return arg_46_0._openRoomInitBuildingViewCameraState and arg_46_0._openRoomInitBuildingViewZoom
+function var_0_0.isInRoomInitBuildingViewCamera(arg_47_0)
+	return arg_47_0._openRoomInitBuildingViewCameraState and arg_47_0._openRoomInitBuildingViewZoom
 end
 
-function var_0_0.openRoomLevelUpView(arg_47_0)
+function var_0_0.openRoomLevelUpView(arg_48_0)
 	ViewMgr.instance:openView(ViewName.RoomLevelUpView)
 end
 
-function var_0_0.switchBackBlock(arg_48_0, arg_48_1)
-	local var_48_0 = RoomMapBlockModel.instance:isBackMore()
+function var_0_0.switchBackBlock(arg_49_0, arg_49_1)
+	local var_49_0 = RoomMapBlockModel.instance:isBackMore()
 
-	RoomMapBlockModel.instance:setBackMore(arg_48_1)
+	RoomMapBlockModel.instance:setBackMore(arg_49_1)
 
-	local var_48_1 = GameSceneMgr.instance:getCurScene()
+	local var_49_1 = GameSceneMgr.instance:getCurScene()
 
-	if not arg_48_1 then
-		var_48_1.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
+	if not arg_49_1 then
+		var_49_1.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
 	else
 		if RoomMapBlockModel.instance:getBackBlockModel():getCount() > 0 and RoomMapBlockModel.instance:isCanBackBlock() == false then
-			var_48_1.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
+			var_49_1.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
 		end
 
-		var_48_1.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBlock)
+		var_49_1.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBlock)
 	end
 
 	var_0_0.instance:dispatchEvent(RoomEvent.BackBlockShowChanged)
 	var_0_0.instance:dispatchEvent(RoomEvent.SelectBlock)
 	RoomBackBlockHelper.resfreshInitBlockEntityEffect()
 
-	if var_48_0 == true and RoomMapBlockModel.instance:isBackMore() == false then
-		TaskDispatcher.cancelTask(arg_48_0._playBackBlockUIAnim, arg_48_0)
-		TaskDispatcher.runDelay(arg_48_0._playBackBlockUIAnim, arg_48_0, 0.3333333333333333)
+	if var_49_0 == true and RoomMapBlockModel.instance:isBackMore() == false then
+		TaskDispatcher.cancelTask(arg_49_0._playBackBlockUIAnim, arg_49_0)
+		TaskDispatcher.runDelay(arg_49_0._playBackBlockUIAnim, arg_49_0, 0.3333333333333333)
 	end
 
-	if var_48_0 ~= RoomMapBlockModel.instance:isBackMore() then
+	if var_49_0 ~= RoomMapBlockModel.instance:isBackMore() then
 		RoomBlockController.instance:refreshBackBuildingEffect()
 	end
 end
 
-function var_0_0._playBackBlockUIAnim(arg_49_0)
+function var_0_0._playBackBlockUIAnim(arg_50_0)
 	if RoomMapBlockModel.instance:isBackMore() == false then
-		arg_49_0:dispatchEvent(RoomEvent.BackBlockPlayUIAnim)
+		arg_50_0:dispatchEvent(RoomEvent.BackBlockPlayUIAnim)
 	end
 end
 
-function var_0_0.switchWaterReform(arg_50_0, arg_50_1)
-	local var_50_0 = GameSceneMgr.instance:getCurScene()
+function var_0_0.switchWaterReform(arg_51_0, arg_51_1)
+	local var_51_0 = GameSceneMgr.instance:getCurScene()
 
-	var_50_0.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
-	var_50_0.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBlock)
+	var_51_0.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
+	var_51_0.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBlock)
 
-	if arg_50_1 then
-		var_50_0.fsm:triggerEvent(RoomSceneEvent.EnterWaterReform)
+	if arg_51_1 then
+		var_51_0.fsm:triggerEvent(RoomSceneEvent.EnterWaterReform)
 	else
-		var_50_0.fsm:triggerEvent(RoomSceneEvent.CloseWaterReform)
+		var_51_0.fsm:triggerEvent(RoomSceneEvent.CloseWaterReform)
 	end
 
 	RoomWaterReformController.instance:dispatchEvent(RoomEvent.WaterReformShowChanged)
 end
 
-function var_0_0.statRoomStart(arg_51_0)
-	arg_51_0._statTime = ServerTime.now()
+function var_0_0.statRoomStart(arg_52_0)
+	arg_52_0._statTime = ServerTime.now()
 end
 
-function var_0_0.statRoomEnd(arg_52_0)
-	if not arg_52_0._statTime then
+function var_0_0.statRoomEnd(arg_53_0)
+	if not arg_53_0._statTime then
 		return
 	end
 
-	local var_52_0
-	local var_52_1 = ServerTime.now() - arg_52_0._statTime
+	local var_53_0
+	local var_53_1 = ServerTime.now() - arg_53_0._statTime
 
 	if RoomController.instance:isObMode() then
-		local var_52_2 = RoomMapBlockModel.instance:getConfirmBlockCount()
-		local var_52_3 = {}
-		local var_52_4 = RoomCharacterModel.instance:getList()
+		local var_53_2 = RoomMapBlockModel.instance:getConfirmBlockCount()
+		local var_53_3 = {}
+		local var_53_4 = RoomCharacterModel.instance:getList()
 
-		for iter_52_0, iter_52_1 in ipairs(var_52_4) do
-			table.insert(var_52_3, {
-				heroname = iter_52_1.heroConfig.name
+		for iter_53_0, iter_53_1 in ipairs(var_53_4) do
+			table.insert(var_53_3, {
+				heroname = iter_53_1.heroConfig.name
 			})
 		end
 
-		local var_52_5 = {}
-		local var_52_6 = RoomMapBuildingModel.instance:getBuildingMOList()
+		local var_53_5 = {}
+		local var_53_6 = RoomMapBuildingModel.instance:getBuildingMOList()
 
-		for iter_52_2, iter_52_3 in ipairs(var_52_6) do
-			local var_52_7 = var_52_5[iter_52_3.config.id]
+		for iter_53_2, iter_53_3 in ipairs(var_53_6) do
+			local var_53_7 = var_53_5[iter_53_3.config.id]
 
-			if not var_52_7 then
-				var_52_7 = {
+			if not var_53_7 then
+				var_53_7 = {
 					build_num = 1,
-					buildname = iter_52_3.config.name
+					buildname = iter_53_3.config.name
 				}
-				var_52_5[iter_52_3.config.id] = var_52_7
+				var_53_5[iter_53_3.config.id] = var_53_7
 			else
-				var_52_7.build_num = var_52_7.build_num + 1
+				var_53_7.build_num = var_53_7.build_num + 1
 			end
 		end
 
-		local var_52_8 = {}
+		local var_53_8 = {}
 
-		for iter_52_4, iter_52_5 in pairs(var_52_5) do
-			table.insert(var_52_8, iter_52_5)
+		for iter_53_4, iter_53_5 in pairs(var_53_5) do
+			table.insert(var_53_8, iter_53_5)
 		end
 
-		local var_52_9 = RoomMapModel.instance:getAllBuildDegree()
-		local var_52_10 = RoomMapModel.instance:getRoomLevel()
+		local var_53_9 = RoomMapModel.instance:getAllBuildDegree()
+		local var_53_10 = RoomMapModel.instance:getRoomLevel()
 
-		var_52_0 = {
-			[StatEnum.EventProperties.PlacePlotnum] = var_52_2,
-			[StatEnum.EventProperties.PlaceHero] = var_52_3,
-			[StatEnum.EventProperties.PlaceBuild] = var_52_8,
-			[StatEnum.EventProperties.UseTime] = var_52_1,
-			[StatEnum.EventProperties.VitalityValue] = var_52_9,
-			[StatEnum.EventProperties.PivotLevel] = var_52_10,
+		var_53_0 = {
+			[StatEnum.EventProperties.PlacePlotnum] = var_53_2,
+			[StatEnum.EventProperties.PlaceHero] = var_53_3,
+			[StatEnum.EventProperties.PlaceBuild] = var_53_8,
+			[StatEnum.EventProperties.UseTime] = var_53_1,
+			[StatEnum.EventProperties.VitalityValue] = var_53_9,
+			[StatEnum.EventProperties.PivotLevel] = var_53_10,
 			[StatEnum.EventProperties.OwnPlans] = RoomLayoutModel.instance:getLayoutCount(),
 			[StatEnum.EventProperties.PlanName] = RoomLayoutModel.instance:getCurrentUsePlanName(),
 			[StatEnum.EventProperties.PlotBag] = RoomLayoutModel.instance:getCurrentPlotBagData()
 		}
 	elseif RoomController.instance:isEditMode() then
-		local var_52_11 = RoomModel.instance:getObInfo()
-		local var_52_12 = 0
-		local var_52_13 = 0
+		local var_53_11 = RoomModel.instance:getObInfo()
+		local var_53_12 = 0
+		local var_53_13 = 0
 
-		for iter_52_6, iter_52_7 in ipairs(var_52_11.infos) do
-			if iter_52_7.blockId > 0 then
-				var_52_13 = var_52_13 + 1
+		for iter_53_6, iter_53_7 in ipairs(var_53_11.infos) do
+			if iter_53_7.blockId > 0 then
+				var_53_13 = var_53_13 + 1
 			end
 
-			local var_52_14 = RoomConfig.instance:getPackageConfigByBlockId(iter_52_7.blockId)
+			local var_53_14 = RoomConfig.instance:getPackageConfigByBlockId(iter_53_7.blockId)
 
-			var_52_12 = var_52_12 + (var_52_14 and var_52_14.blockBuildDegree or 0)
+			var_53_12 = var_53_12 + (var_53_14 and var_53_14.blockBuildDegree or 0)
 		end
 
-		local var_52_15 = {}
+		local var_53_15 = {}
 
-		for iter_52_8, iter_52_9 in ipairs(var_52_11.roomHeroDatas) do
-			local var_52_16 = HeroConfig.instance:getHeroCO(iter_52_9.heroId)
+		for iter_53_8, iter_53_9 in ipairs(var_53_11.roomHeroDatas) do
+			local var_53_16 = HeroConfig.instance:getHeroCO(iter_53_9.heroId)
 
-			table.insert(var_52_15, {
-				heroname = var_52_16.name
+			table.insert(var_53_15, {
+				heroname = var_53_16.name
 			})
 		end
 
-		local var_52_17 = {}
-		local var_52_18 = {}
+		local var_53_17 = {}
+		local var_53_18 = {}
 
-		for iter_52_10, iter_52_11 in ipairs(var_52_11.buildingInfos) do
-			local var_52_19 = var_52_18[iter_52_11.defineId]
+		for iter_53_10, iter_53_11 in ipairs(var_53_11.buildingInfos) do
+			local var_53_19 = var_53_18[iter_53_11.defineId]
 
-			if not var_52_19 then
-				local var_52_20 = RoomConfig.instance:getBuildingConfig(iter_52_11.defineId)
+			if not var_53_19 then
+				local var_53_20 = RoomConfig.instance:getBuildingConfig(iter_53_11.defineId)
 
-				var_52_19 = {
+				var_53_19 = {
 					build_num = 1,
-					buildname = var_52_20.name,
-					buildDegree = var_52_20.buildDegree
+					buildname = var_53_20.name,
+					buildDegree = var_53_20.buildDegree
 				}
-				var_52_18[iter_52_11.defineId] = var_52_19
-				var_52_12 = var_52_12 + var_52_20.buildDegree
+				var_53_18[iter_53_11.defineId] = var_53_19
+				var_53_12 = var_53_12 + var_53_20.buildDegree
 			else
-				var_52_19.build_num = var_52_19.build_num + 1
-				var_52_12 = var_52_12 + var_52_19.buildDegree
+				var_53_19.build_num = var_53_19.build_num + 1
+				var_53_12 = var_53_12 + var_53_19.buildDegree
 			end
 		end
 
-		for iter_52_12, iter_52_13 in pairs(var_52_18) do
-			iter_52_13.buildDegree = nil
+		for iter_53_12, iter_53_13 in pairs(var_53_18) do
+			iter_53_13.buildDegree = nil
 
-			table.insert(var_52_17, iter_52_13)
+			table.insert(var_53_17, iter_53_13)
 		end
 
-		local var_52_21 = var_52_11.roomLevel
+		local var_53_21 = var_53_11.roomLevel
 
-		var_52_0 = {
-			[StatEnum.EventProperties.PlacePlotnum] = var_52_13,
-			[StatEnum.EventProperties.PlaceHero] = var_52_15,
-			[StatEnum.EventProperties.PlaceBuild] = var_52_17,
-			[StatEnum.EventProperties.UseTime] = var_52_1,
-			[StatEnum.EventProperties.VitalityValue] = var_52_12,
-			[StatEnum.EventProperties.PivotLevel] = var_52_21,
+		var_53_0 = {
+			[StatEnum.EventProperties.PlacePlotnum] = var_53_13,
+			[StatEnum.EventProperties.PlaceHero] = var_53_15,
+			[StatEnum.EventProperties.PlaceBuild] = var_53_17,
+			[StatEnum.EventProperties.UseTime] = var_53_1,
+			[StatEnum.EventProperties.VitalityValue] = var_53_12,
+			[StatEnum.EventProperties.PivotLevel] = var_53_21,
 			[StatEnum.EventProperties.OwnPlans] = RoomLayoutModel.instance:getLayoutCount(),
 			[StatEnum.EventProperties.PlanName] = RoomLayoutModel.instance:getCurrentUsePlanName(),
 			[StatEnum.EventProperties.PlotBag] = RoomLayoutModel.instance:getCurrentPlotBagData()
 		}
 	end
 
-	if var_52_0 then
-		arg_52_0._statTime = nil
-		var_52_0[StatEnum.EventProperties.SharePlanNum] = RoomLayoutModel.instance:getSharePlanCount()
-		var_52_0[StatEnum.EventProperties.Attention] = RoomLayoutModel.instance:getUseCount()
+	if var_53_0 then
+		arg_53_0._statTime = nil
+		var_53_0[StatEnum.EventProperties.SharePlanNum] = RoomLayoutModel.instance:getSharePlanCount()
+		var_53_0[StatEnum.EventProperties.Attention] = RoomLayoutModel.instance:getUseCount()
 
-		StatController.instance:track(StatEnum.EventName.ExitCabin, var_52_0)
+		StatController.instance:track(StatEnum.EventName.ExitCabin, var_53_0)
 	end
 end
 
-function var_0_0.isUIHide(arg_53_0)
-	return arg_53_0._isUIHide
+function var_0_0.isUIHide(arg_54_0)
+	return arg_54_0._isUIHide
 end
 
-function var_0_0.setUIHide(arg_54_0, arg_54_1, arg_54_2)
-	local var_54_0 = arg_54_0._isUIHide ~= arg_54_1
+function var_0_0.setUIHide(arg_55_0, arg_55_1, arg_55_2)
+	local var_55_0 = arg_55_0._isUIHide ~= arg_55_1
 
-	arg_54_0._isUIHide = arg_54_1
+	arg_55_0._isUIHide = arg_55_1
 
-	if var_54_0 then
-		local var_54_1 = arg_54_1 and RoomEvent.HideUI or RoomEvent.ShowUI
+	if var_55_0 then
+		local var_55_1 = arg_55_1 and RoomEvent.HideUI or RoomEvent.ShowUI
 
-		arg_54_0:dispatchEvent(var_54_1, arg_54_2)
+		arg_55_0:dispatchEvent(var_55_1, arg_55_2)
+	end
+end
+
+function var_0_0.setRoomShowBlockList(arg_56_0)
+	RoomShowBlockListModel.instance:setShowBlockList()
+	arg_56_0:getNextBlockReformPermanentInfo()
+end
+
+function var_0_0.clearRoomShowBlockList(arg_57_0)
+	local var_57_0 = GameSceneMgr.instance:getCurScene()
+
+	if not var_57_0 or not var_57_0.inventorymgr then
+		return
+	end
+
+	local var_57_1 = RoomShowBlockListModel.instance:getList()
+
+	for iter_57_0, iter_57_1 in ipairs(var_57_1) do
+		var_57_0.inventorymgr:removeBlockEntity(iter_57_1.id)
+	end
+end
+
+function var_0_0.getNextBlockReformPermanentInfo(arg_58_0, arg_58_1)
+	local var_58_0 = RoomShowBlockListModel.instance:getPreviewBlockIdList(arg_58_1)
+
+	if var_58_0 and #var_58_0 > 0 then
+		RoomWaterReformController.instance:getBlockReformPermanentInfo(var_58_0)
 	end
 end
 

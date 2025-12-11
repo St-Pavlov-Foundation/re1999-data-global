@@ -190,14 +190,14 @@ function var_0_0.simulateSkillehavior(arg_10_0, arg_10_1, arg_10_2, arg_10_3, ar
 	end
 
 	if var_10_3 and var_10_2 and var_10_2.type == "AddBuff" then
-		local var_10_4 = FightBuffMO.New()
+		local var_10_4 = FightDef_pb.BuffInfo()
 
 		var_10_4.uid = "9999"
-		var_10_4.id = "9999"
-		var_10_4.entityId = arg_10_0.id
 		var_10_4.buffId = var_10_0[2]
 
-		table.insert(arg_10_4, var_10_4)
+		local var_10_5 = FightBuffInfoData.New(var_10_4, arg_10_0.id)
+
+		table.insert(arg_10_4, var_10_5)
 	end
 end
 

@@ -12,8 +12,10 @@ function var_0_0.refreshList(arg_2_0, arg_2_1)
 	arg_2_0.towerType = arg_2_1 and arg_2_1.towerType
 	arg_2_0.towerId = arg_2_1 and arg_2_1.towerId
 
+	local var_2_0 = arg_2_1.otherParam and arg_2_1.otherParam.heroGroupMO
+
 	if arg_2_0.isFromHeroGroup then
-		arg_2_0.bossId = HeroGroupModel.instance:getCurGroupMO():getAssistBossId()
+		arg_2_0.bossId = (var_2_0 or HeroGroupModel.instance:getCurGroupMO()):getAssistBossId()
 
 		if TowerModel.instance:isBossBan(arg_2_0.bossId) or TowerModel.instance:isLimitTowerBossBan(arg_2_0.towerType, arg_2_0.towerId, arg_2_0.bossId) then
 			arg_2_0.bossId = 0
@@ -21,50 +23,50 @@ function var_0_0.refreshList(arg_2_0, arg_2_1)
 	end
 
 	if arg_2_0.isFirstRefresh then
-		local var_2_0 = TowerConfig.instance:getAssistBossList()
-		local var_2_1 = {}
+		local var_2_1 = TowerConfig.instance:getAssistBossList()
+		local var_2_2 = {}
 
-		if var_2_0 then
-			for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		if var_2_1 then
+			for iter_2_0, iter_2_1 in ipairs(var_2_1) do
 				if arg_2_0:checkBossCanShow(iter_2_1.bossId) then
-					table.insert(var_2_1, arg_2_0:buildBossData(iter_2_1))
+					table.insert(var_2_2, arg_2_0:buildBossData(iter_2_1))
 				end
 			end
 		end
 
-		if #var_2_1 > 1 then
+		if #var_2_2 > 1 then
 			if arg_2_0.isFromHeroGroup then
-				table.sort(var_2_1, SortUtil.tableKeyLower({
+				table.sort(var_2_2, SortUtil.tableKeyLower({
 					"isBanOrder",
 					"isSelectOrder",
 					"isLock",
 					"bossId"
 				}))
 			else
-				table.sort(var_2_1, SortUtil.tableKeyLower({
+				table.sort(var_2_2, SortUtil.tableKeyLower({
 					"isLock",
 					"bossId"
 				}))
 			end
 		end
 
-		arg_2_0:setList(var_2_1)
+		arg_2_0:setList(var_2_2)
 	else
-		local var_2_2 = arg_2_0:getList()
+		local var_2_3 = arg_2_0:getList()
 
-		for iter_2_2, iter_2_3 in ipairs(var_2_2) do
+		for iter_2_2, iter_2_3 in ipairs(var_2_3) do
 			arg_2_0:buildBossData(iter_2_3.config, iter_2_3)
 		end
 
-		local var_2_3 = {}
+		local var_2_4 = {}
 
-		for iter_2_4, iter_2_5 in ipairs(var_2_2) do
+		for iter_2_4, iter_2_5 in ipairs(var_2_3) do
 			if arg_2_0:checkBossCanShow(iter_2_5.bossId) then
-				table.insert(var_2_3, iter_2_5)
+				table.insert(var_2_4, iter_2_5)
 			end
 		end
 
-		arg_2_0:setList(var_2_3)
+		arg_2_0:setList(var_2_4)
 	end
 
 	arg_2_0.isFirstRefresh = false

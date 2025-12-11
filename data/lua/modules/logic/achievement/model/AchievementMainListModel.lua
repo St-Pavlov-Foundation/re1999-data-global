@@ -8,6 +8,7 @@ function var_0_0.initDatas(arg_1_0)
 	arg_1_0._infoDict = AchievementConfig.instance:getCategoryAchievementMap()
 	arg_1_0._fitAchievementCfgTab = {}
 	arg_1_0._isCurTaskNeedPlayIdleAnim = false
+	arg_1_0._isNamePlateShowList = true
 end
 
 function var_0_0.refreshTabData(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
@@ -264,6 +265,25 @@ function var_0_0.getCurGroupMoList(arg_18_0, arg_18_1)
 	local var_18_2 = arg_18_0._moGroupMap[var_18_0] and arg_18_0._moGroupMap[var_18_0][var_18_1]
 
 	return var_18_2 and var_18_2[arg_18_1]
+end
+
+function var_0_0.getCurrentAchievementIds(arg_19_0)
+	local var_19_0 = {}
+	local var_19_1 = arg_19_0:getList()
+
+	for iter_19_0, iter_19_1 in ipairs(var_19_1) do
+		table.insert(var_19_0, iter_19_1.id)
+	end
+
+	return var_19_0
+end
+
+function var_0_0.setNamePlateShowList(arg_20_0, arg_20_1)
+	arg_20_0._isNamePlateShowList = arg_20_1
+end
+
+function var_0_0.checkNamePlateShowList(arg_21_0)
+	return arg_21_0._isNamePlateShowList
 end
 
 var_0_0.instance = var_0_0.New()

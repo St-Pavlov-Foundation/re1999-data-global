@@ -2668,5 +2668,230 @@
     "monsterId": 90233302,
     "hpPerScore": 5000,
     "killScore": 0
+  },
+  {
+    "monsterId": 109310001,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310002,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310011,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310012,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310021,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310022,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310101,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310111,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310121,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310201,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310202,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310203,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310211,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310212,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310213,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310221,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310222,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310223,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310301,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310311,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310321,
+    "hpPerScore": 10000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310401,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310402,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310411,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310412,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310421,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310422,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310501,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310502,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310511,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310512,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310521,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310522,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310601,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310611,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310621,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310701,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310702,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310711,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310712,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310721,
+    "hpPerScore": 5000,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310722,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310801,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310811,
+    "hpPerScore": 2500,
+    "killScore": 0
+  },
+  {
+    "monsterId": 109310821,
+    "hpPerScore": 2500,
+    "killScore": 0
   }
 ]

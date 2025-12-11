@@ -9,6 +9,7 @@ local var_0_1 = {
 	desc = 6,
 	image = 8,
 	episodeId = 7,
+	herostoryId = 10,
 	id = 1,
 	order = 2
 }

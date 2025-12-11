@@ -25,5 +25,7 @@ var_0_0.DecorateGoodItemClick = GameUtil.getEventId()
 var_0_0.PlayShowStoreAnim = GameUtil.getEventId()
 var_0_0.PlayHideStoreAnim = GameUtil.getEventId()
 var_0_0.SkinGoodsItemChanged = GameUtil.getEventId()
+var_0_0.SkinPreviewChanged = GameUtil.getEventId()
+var_0_0.OnPlaySkinVideo = GameUtil.getEventId()
 
 return var_0_0

@@ -17,6 +17,8 @@ end
 
 function var_0_0._clearData(arg_4_0)
 	arg_4_0:clearMapData()
+
+	arg_4_0._curPreviewIndex = 0
 end
 
 function var_0_0.clearMapData(arg_5_0)
@@ -33,21 +35,20 @@ end
 
 function var_0_0.setShowBlockList(arg_7_0)
 	local var_7_0 = {}
-	local var_7_1 = {}
-	local var_7_2
-	local var_7_3 = RoomInventoryBlockModel.instance:getSelectInventoryBlockId()
-	local var_7_4 = arg_7_0:_getPackageMOList()
+	local var_7_1
+	local var_7_2 = RoomInventoryBlockModel.instance:getSelectInventoryBlockId()
+	local var_7_3 = arg_7_0:_getPackageMOList()
 
-	for iter_7_0 = 1, #var_7_4 do
-		local var_7_5 = var_7_4[iter_7_0]
+	for iter_7_0 = 1, #var_7_3 do
+		local var_7_4 = var_7_3[iter_7_0]
 
-		if arg_7_0._isSelectPackage or arg_7_0:_checkTheme(var_7_5.id) then
-			local var_7_6 = var_7_5:getUnUseBlockMOList()
+		if arg_7_0._isSelectPackage or arg_7_0:_checkTheme(var_7_4.id) then
+			local var_7_5 = var_7_4:getUnUseBlockMOList()
 
-			for iter_7_1, iter_7_2 in ipairs(var_7_6) do
+			for iter_7_1, iter_7_2 in ipairs(var_7_5) do
 				if arg_7_0:_checkBlockMO(iter_7_2) then
-					if var_7_3 == iter_7_2.id then
-						var_7_2 = var_7_3
+					if var_7_2 == iter_7_2.id then
+						var_7_1 = var_7_2
 					end
 
 					table.insert(var_7_0, iter_7_2)
@@ -58,12 +59,14 @@ function var_0_0.setShowBlockList(arg_7_0)
 
 	table.sort(var_7_0, arg_7_0._sortFunction)
 
-	if var_7_2 == nil then
-		var_7_2 = arg_7_0:_findSelectId(var_7_0)
+	if var_7_1 == nil then
+		var_7_1 = arg_7_0:_findSelectId(var_7_0)
 	end
 
 	arg_7_0:setList(var_7_0)
-	arg_7_0:setSelect(var_7_2)
+	arg_7_0:setSelect(var_7_1)
+
+	arg_7_0._curPreviewIndex = 0
 end
 
 function var_0_0._getPackageMOList(arg_8_0)
@@ -210,55 +213,92 @@ function var_0_0.getIsPackage(arg_19_0)
 	return arg_19_0._isSelectPackage
 end
 
-function var_0_0.setFilterResType(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0._filterIncludeList = {}
-	arg_20_0._filterExcludeList = {}
+local var_0_1 = 1
+local var_0_2 = 20
+local var_0_3 = 100
 
-	arg_20_0:_setList(arg_20_0._filterIncludeList, arg_20_1)
-	arg_20_0:_setList(arg_20_0._filterExcludeList, arg_20_2)
+function var_0_0.getPreviewBlockIdList(arg_20_0, arg_20_1)
+	arg_20_1 = arg_20_1 or var_0_1
+
+	local var_20_0 = {}
+	local var_20_1 = arg_20_0:getList()
+	local var_20_2 = #var_20_1
+	local var_20_3 = var_20_2 <= arg_20_0._curPreviewIndex
+	local var_20_4 = arg_20_1 <= var_20_2
+	local var_20_5 = arg_20_0._curPreviewIndex - arg_20_1 <= var_0_2
+
+	if not var_20_3 and var_20_4 and var_20_5 then
+		local var_20_6 = arg_20_1 + var_0_3 - 1
+		local var_20_7
+
+		for iter_20_0 = arg_20_1, var_20_6 do
+			local var_20_8 = var_20_1[iter_20_0]
+
+			if not var_20_8 then
+				break
+			end
+
+			var_20_0[#var_20_0 + 1] = var_20_8.id
+			var_20_7 = iter_20_0
+		end
+
+		if var_20_7 then
+			arg_20_0._curPreviewIndex = var_20_7
+		end
+	end
+
+	return var_20_0
 end
 
-function var_0_0.isFilterType(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_0:_isSameValue(arg_21_0._filterIncludeList, arg_21_1) and arg_21_0:_isSameValue(arg_21_0._filterExcludeList, arg_21_2) then
+function var_0_0.setFilterResType(arg_21_0, arg_21_1, arg_21_2)
+	arg_21_0._filterIncludeList = {}
+	arg_21_0._filterExcludeList = {}
+
+	arg_21_0:_setList(arg_21_0._filterIncludeList, arg_21_1)
+	arg_21_0:_setList(arg_21_0._filterExcludeList, arg_21_2)
+end
+
+function var_0_0.isFilterType(arg_22_0, arg_22_1, arg_22_2)
+	if arg_22_0:_isSameValue(arg_22_0._filterIncludeList, arg_22_1) and arg_22_0:_isSameValue(arg_22_0._filterExcludeList, arg_22_2) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isFilterTypeEmpty(arg_22_0)
-	return arg_22_0:_isEmptyList(arg_22_0._filterTypeList)
+function var_0_0.isFilterTypeEmpty(arg_23_0)
+	return arg_23_0:_isEmptyList(arg_23_0._filterTypeList)
 end
 
-function var_0_0._setList(arg_23_0, arg_23_1, arg_23_2)
-	tabletool.addValues(arg_23_1, arg_23_2)
+function var_0_0._setList(arg_24_0, arg_24_1, arg_24_2)
+	tabletool.addValues(arg_24_1, arg_24_2)
 end
 
-function var_0_0._isListValue(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_2 and tabletool.indexOf(arg_24_1, arg_24_2) then
+function var_0_0._isListValue(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_2 and tabletool.indexOf(arg_25_1, arg_25_2) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._isSameValue(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_0:_isEmptyList(arg_25_1) and arg_25_0:_isEmptyList(arg_25_2) then
+function var_0_0._isSameValue(arg_26_0, arg_26_1, arg_26_2)
+	if arg_26_0:_isEmptyList(arg_26_1) and arg_26_0:_isEmptyList(arg_26_2) then
 		return true
 	end
 
-	if #arg_25_1 ~= #arg_25_2 then
+	if #arg_26_1 ~= #arg_26_2 then
 		return false
 	end
 
-	for iter_25_0, iter_25_1 in ipairs(arg_25_2) do
-		if not tabletool.indexOf(arg_25_1, iter_25_1) then
+	for iter_26_0, iter_26_1 in ipairs(arg_26_2) do
+		if not tabletool.indexOf(arg_26_1, iter_26_1) then
 			return false
 		end
 	end
 
-	for iter_25_2, iter_25_3 in ipairs(arg_25_1) do
-		if not tabletool.indexOf(arg_25_2, iter_25_3) then
+	for iter_26_2, iter_26_3 in ipairs(arg_26_1) do
+		if not tabletool.indexOf(arg_26_2, iter_26_3) then
 			return false
 		end
 	end
@@ -266,8 +306,8 @@ function var_0_0._isSameValue(arg_25_0, arg_25_1, arg_25_2)
 	return true
 end
 
-function var_0_0._isEmptyList(arg_26_0, arg_26_1)
-	return arg_26_1 == nil or #arg_26_1 < 1
+function var_0_0._isEmptyList(arg_27_0, arg_27_1)
+	return arg_27_1 == nil or #arg_27_1 < 1
 end
 
 var_0_0.instance = var_0_0.New()

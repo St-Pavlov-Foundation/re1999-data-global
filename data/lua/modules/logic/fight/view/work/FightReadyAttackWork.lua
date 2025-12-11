@@ -64,13 +64,11 @@ function var_0_0._onFrameSetColor(arg_2_0, arg_2_1)
 end
 
 function var_0_0._setMainColor(arg_3_0, arg_3_1)
-	local var_3_0 = FightModel.instance:getCurStage()
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
+		local var_3_0 = arg_3_0._entity.spineRenderer:getReplaceMat()
 
-	if var_3_0 == FightEnum.Stage.Card or var_3_0 == FightEnum.Stage.AutoCard then
-		local var_3_1 = arg_3_0._entity.spineRenderer:getReplaceMat()
-
-		if not gohelper.isNil(var_3_1) then
-			MaterialUtil.setMainColor(var_3_1, arg_3_1)
+		if not gohelper.isNil(var_3_0) then
+			MaterialUtil.setMainColor(var_3_0, arg_3_1)
 		end
 	end
 end

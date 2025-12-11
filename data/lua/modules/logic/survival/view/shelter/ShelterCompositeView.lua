@@ -175,7 +175,7 @@ function var_0_0.refreshRight(arg_16_0)
 end
 
 function var_0_0.getBag(arg_17_0)
-	return SurvivalShelterModel.instance:getWeekInfo().bag
+	return SurvivalMapHelper.instance:getBagMo()
 end
 
 function var_0_0.getSelectData(arg_18_0, arg_18_1)

@@ -204,28 +204,30 @@ function var_0_0._onReceiveMaterialChangePush_default(arg_7_0, arg_7_1, arg_7_2,
 	end
 
 	for iter_7_0, iter_7_1 in ipairs(arg_7_2) do
-		local var_7_2 = FightUISwitchModel.instance:getStyleMoByItemId(iter_7_1.materilId)
+		local var_7_2 = MainSceneSwitchConfig.instance:getConfigByItemId(iter_7_1.materilId)
 
 		if var_7_2 then
-			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.FightUISwitchEquipView, {
-				mo = var_7_2
-			})
-		end
-
-		local var_7_3 = MainSceneSwitchConfig.instance:getConfigByItemId(iter_7_1.materilId)
-
-		if var_7_3 then
 			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.MainSceneSwitchInfoView, {
-				sceneSkinId = var_7_3.id,
+				sceneSkinId = var_7_2.id,
 				materialDataMOList = arg_7_2
 			})
 		end
 
-		local var_7_4 = MainUISwitchConfig.instance:getUISwitchCoByItemId(iter_7_1.materilId)
+		local var_7_3 = MainUISwitchConfig.instance:getUISwitchCoByItemId(iter_7_1.materilId)
+
+		if var_7_3 then
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.MainUISwitchInfoBlurMaskView, {
+				SkinId = var_7_3.id
+			})
+		end
+	end
+
+	for iter_7_2, iter_7_3 in ipairs(arg_7_2) do
+		local var_7_4 = FightUISwitchModel.instance:getStyleMoByItemId(iter_7_3.materilId)
 
 		if var_7_4 then
-			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.MainUISwitchInfoBlurMaskView, {
-				SkinId = var_7_4.id
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.FightUISwitchEquipView, {
+				mo = var_7_4
 			})
 		end
 	end
@@ -243,9 +245,9 @@ function var_0_0._onReceiveMaterialChangePush_default(arg_7_0, arg_7_1, arg_7_2,
 	local var_7_6 = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.PlayerBg)
 
 	if var_7_6 and #var_7_6 > 0 then
-		for iter_7_2, iter_7_3 in ipairs(var_7_6) do
-			if #arg_7_2 == 1 and iter_7_3.id == arg_7_2[1].materilId then
-				PlayerCardController.instance:ShowChangeBgSkin(iter_7_3.id)
+		for iter_7_4, iter_7_5 in ipairs(var_7_6) do
+			if #arg_7_2 == 1 and iter_7_5.id == arg_7_2[1].materilId then
+				PlayerCardController.instance:ShowChangeBgSkin(iter_7_5.id)
 			end
 		end
 	end

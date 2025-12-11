@@ -180,78 +180,91 @@ function var_0_0.updateBuffDesc(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4
 
 			SkillHelper.addHyperLinkClick(var_10_16, var_0_0.onClickBuffHyperLink, var_10_13)
 
-			local var_10_17 = var_10_16.transform
-			local var_10_18 = gohelper.findChild(var_10_14, "title").transform
-			local var_10_19 = gohelper.findChildText(var_10_14, "title/txt_name")
-			local var_10_20 = gohelper.findChildImage(var_10_14, "title/simage_icon")
-			local var_10_21 = gohelper.findChild(var_10_14, "txt_desc/image_line")
-			local var_10_22 = gohelper.findChild(var_10_14, "title/txt_name/go_tag")
-			local var_10_23 = gohelper.findChildText(var_10_14, "title/txt_name/go_tag/bg/txt_tagname")
-			local var_10_24 = var_10_14.transform
+			local var_10_17 = gohelper.findChildText(var_10_14, "title/txt_name")
+
+			var_10_17.text = var_0_0.getBuffName(var_10_9, var_10_10)
+
+			local var_10_18 = var_10_17.preferredWidth
+			local var_10_19 = FightBuffGetDescHelper.getBuffDesc(var_10_9)
+			local var_10_20 = GameUtil.getTextHeightByLine(var_10_16, var_10_19, 52.1) + 62
+
+			recthelper.setHeight(var_10_14.transform, var_10_20)
+
+			var_10_16.text = var_10_19
+
+			local var_10_21 = gohelper.findChildImage(var_10_14, "title/simage_icon")
+
+			if var_10_21 then
+				UISpriteSetMgr.instance:setBuffSprite(var_10_21, var_10_10.iconId)
+			end
+
+			local var_10_22 = gohelper.findChild(var_10_14, "txt_desc/image_line")
+			local var_10_23 = gohelper.findChild(var_10_14, "title/txt_name/go_tag")
+			local var_10_24 = gohelper.findChildText(var_10_14, "title/txt_name/go_tag/bg/txt_tagname")
+			local var_10_25 = var_10_12.name
+
+			if not string.nilorempty(var_10_25) then
+				var_10_24.text = var_10_25
+				var_10_18 = var_10_18 + var_10_24.preferredWidth
+			end
+
+			gohelper.setActive(var_10_23, not string.nilorempty(var_10_25))
+			gohelper.setActive(var_10_22, var_10_4 ~= var_10_3)
+
+			arg_10_4._scrollbuff.verticalNormalizedPosition = 1
+
+			local var_10_26 = var_10_16.transform
+			local var_10_27 = gohelper.findChild(var_10_14, "title").transform
+			local var_10_28 = var_10_14.transform
 
 			gohelper.setActive(var_10_14, true)
-			gohelper.setActive(var_10_21, var_10_4 ~= var_10_3)
+			gohelper.setActive(var_10_22, var_10_4 ~= var_10_3)
 
-			var_10_8[#var_10_8 + 1] = var_10_17
-			var_10_8[#var_10_8 + 1] = var_10_18
-			var_10_8[#var_10_8 + 1] = var_10_24
+			var_10_8[#var_10_8 + 1] = var_10_26
+			var_10_8[#var_10_8 + 1] = var_10_27
+			var_10_8[#var_10_8 + 1] = var_10_28
 			var_10_8[#var_10_8 + 1] = var_10_16
 			var_10_8[#var_10_8 + 1] = var_10_9
 
 			var_0_0.showBuffTime(var_10_15, var_10_9, var_10_10, arg_10_1)
 
-			var_10_19.text = var_0_0.getBuffName(var_10_9, var_10_10)
+			local var_10_29 = var_10_15.preferredWidth
 
-			local var_10_25 = var_10_19.preferredWidth
-
-			if var_10_20 then
-				UISpriteSetMgr.instance:setBuffSprite(var_10_20, var_10_10.iconId)
+			if var_10_29 > var_0_4 then
+				var_10_18 = var_10_18 + math.max(0, var_10_29 - var_0_4)
 			end
 
-			if var_10_12 then
-				var_10_23.text = var_10_12.name
-				var_10_25 = var_10_25 + var_10_23.preferredWidth
+			if var_10_18 > var_0_3 then
+				local var_10_30 = var_10_18 - var_0_3
+				local var_10_31 = var_0_2 + var_10_30
+
+				var_10_6 = math.max(var_10_6, var_10_31)
+				var_10_7 = math.max(var_10_7, var_10_31)
 			end
-
-			local var_10_26 = var_10_15.preferredWidth
-
-			if var_10_26 > var_0_4 then
-				var_10_25 = var_10_25 + math.max(0, var_10_26 - var_0_4)
-			end
-
-			if var_10_25 > var_0_3 then
-				local var_10_27 = var_10_25 - var_0_3
-				local var_10_28 = var_0_2 + var_10_27
-
-				var_10_6 = math.max(var_10_6, var_10_28)
-				var_10_7 = math.max(var_10_7, var_10_28)
-			end
-
-			gohelper.setActive(var_10_22, var_10_12)
 		end
 	end
 
 	if #var_10_8 > 0 then
 		for iter_10_3 = 0, #var_10_8 - 1, 5 do
-			local var_10_29 = var_10_8[iter_10_3 + 1]
-			local var_10_30 = var_10_8[iter_10_3 + 2]
-			local var_10_31 = var_10_8[iter_10_3 + 3]
-			local var_10_32 = var_10_8[iter_10_3 + 4]
-			local var_10_33 = var_10_8[iter_10_3 + 5]
-			local var_10_34 = var_10_33.buffId
-			local var_10_35 = lua_skill_buff.configDict[var_10_34]
+			local var_10_32 = var_10_8[iter_10_3 + 1]
+			local var_10_33 = var_10_8[iter_10_3 + 2]
+			local var_10_34 = var_10_8[iter_10_3 + 3]
+			local var_10_35 = var_10_8[iter_10_3 + 4]
+			local var_10_36 = var_10_8[iter_10_3 + 5]
+			local var_10_37 = var_10_36.buffId
+			local var_10_38 = lua_skill_buff.configDict[var_10_37]
 
-			recthelper.setWidth(var_10_30, var_10_7 - 10)
-			recthelper.setWidth(var_10_29, var_10_7 - 46)
-			ZProj.UGUIHelper.RebuildLayout(var_10_31)
-			recthelper.setWidth(var_10_31, var_10_7)
+			recthelper.setWidth(var_10_33, var_10_7 - 10)
+			recthelper.setWidth(var_10_32, var_10_7 - 46)
+			ZProj.UGUIHelper.RebuildLayout(var_10_34)
+			recthelper.setWidth(var_10_34, var_10_7)
 
-			var_10_32.text = FightBuffGetDescHelper.getBuffDesc(var_10_33)
-			var_10_32.text = var_10_32.text
+			var_10_35.text = FightBuffGetDescHelper.getBuffDesc(var_10_36)
+			var_10_35.text = var_10_35.text
 
-			local var_10_36 = var_10_32.preferredHeight + 52.1 + 10
+			local var_10_39 = var_10_35.preferredHeight + 52.1 + 10
 
-			recthelper.setHeight(var_10_31, var_10_36)
+			recthelper.setHeight(var_10_34, var_10_39)
 		end
 	end
 
@@ -259,13 +272,13 @@ function var_0_0.updateBuffDesc(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4
 		rawset(var_10_8, iter_10_4, nil)
 	end
 
-	local var_10_37
+	local var_10_40
 
 	if var_10_5 ~= -1 then
-		local var_10_38 = arg_10_2[var_10_5].go
-		local var_10_39 = gohelper.findChild(var_10_38, "txt_desc/image_line")
+		local var_10_41 = arg_10_2[var_10_5].go
+		local var_10_42 = gohelper.findChild(var_10_41, "txt_desc/image_line")
 
-		gohelper.setActive(var_10_39, false)
+		gohelper.setActive(var_10_42, false)
 	end
 
 	if arg_10_4 then

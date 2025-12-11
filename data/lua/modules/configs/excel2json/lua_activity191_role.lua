@@ -18,11 +18,12 @@ local var_0_1 = {
 	uniqueSkill_point = 19,
 	activityId = 2,
 	powerMax = 20,
+	facetsId = 21,
 	passiveSkill = 15,
 	exLevel = 8,
 	template = 4,
 	id = 1,
-	weight = 21
+	weight = 22
 }
 local var_0_2 = {
 	"id"

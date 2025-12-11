@@ -479,49 +479,71 @@ function var_0_0.debugRootOutBuilding(arg_43_0, arg_43_1)
 	return var_43_0
 end
 
-function var_0_0.getRevertHexPoint(arg_44_0)
-	return arg_44_0._revertHexPoint
-end
+function var_0_0.debugMoveAllBuilding(arg_44_0, arg_44_1, arg_44_2)
+	local var_44_0 = arg_44_0:getList()
 
-function var_0_0.getRevertRotate(arg_45_0)
-	return arg_45_0._revertRotate
-end
-
-function var_0_0.getBuildingListByType(arg_46_0, arg_46_1, arg_46_2)
-	local var_46_0 = arg_46_0._type2BuildingDict[arg_46_1]
-
-	if var_46_0 and arg_46_2 then
-		table.sort(var_46_0, RoomHelper.sortBuildingById)
+	if not var_44_0 then
+		return
 	end
 
-	return var_46_0
+	for iter_44_0, iter_44_1 in ipairs(var_44_0) do
+		local var_44_1 = iter_44_1.hexPoint.x
+		local var_44_2 = iter_44_1.hexPoint.y
+		local var_44_3 = var_44_1 + arg_44_1
+		local var_44_4 = var_44_2 + arg_44_2
+
+		iter_44_1.hexPoint = HexPoint(var_44_3, var_44_4)
+		arg_44_0._mapBuildingMODict[var_44_1][var_44_2] = nil
+		arg_44_0._mapBuildingMODict[var_44_3] = arg_44_0._mapBuildingMODict[var_44_3] or {}
+		arg_44_0._mapBuildingMODict[var_44_3][var_44_4] = iter_44_1
+	end
+
+	arg_44_0:refreshAllOccupyDict()
 end
 
-function var_0_0.isHasCritterByBuid(arg_47_0, arg_47_1)
-	if not arg_47_0._isHasCritterDict then
-		arg_47_0._isHasCritterDict = {}
+function var_0_0.getRevertHexPoint(arg_45_0)
+	return arg_45_0._revertHexPoint
+end
 
-		local var_47_0 = CritterModel.instance:getAllCritters()
+function var_0_0.getRevertRotate(arg_46_0)
+	return arg_46_0._revertRotate
+end
 
-		for iter_47_0, iter_47_1 in ipairs(var_47_0) do
-			if iter_47_1.workInfo.buildingUid and iter_47_1.workInfo.buildingUid ~= 0 then
-				arg_47_0._isHasCritterDict[iter_47_1.workInfo.buildingUid] = true
-			elseif iter_47_1.restInfo.restBuildingUid and iter_47_1.restInfo.restBuildingUid ~= 0 then
-				arg_47_0._isHasCritterDict[iter_47_1.restInfo.restBuildingUid] = true
+function var_0_0.getBuildingListByType(arg_47_0, arg_47_1, arg_47_2)
+	local var_47_0 = arg_47_0._type2BuildingDict[arg_47_1]
+
+	if var_47_0 and arg_47_2 then
+		table.sort(var_47_0, RoomHelper.sortBuildingById)
+	end
+
+	return var_47_0
+end
+
+function var_0_0.isHasCritterByBuid(arg_48_0, arg_48_1)
+	if not arg_48_0._isHasCritterDict then
+		arg_48_0._isHasCritterDict = {}
+
+		local var_48_0 = CritterModel.instance:getAllCritters()
+
+		for iter_48_0, iter_48_1 in ipairs(var_48_0) do
+			if iter_48_1.workInfo.buildingUid and iter_48_1.workInfo.buildingUid ~= 0 then
+				arg_48_0._isHasCritterDict[iter_48_1.workInfo.buildingUid] = true
+			elseif iter_48_1.restInfo.restBuildingUid and iter_48_1.restInfo.restBuildingUid ~= 0 then
+				arg_48_0._isHasCritterDict[iter_48_1.restInfo.restBuildingUid] = true
 			end
 		end
 	end
 
-	return arg_47_0._isHasCritterDict[arg_47_1]
+	return arg_48_0._isHasCritterDict[arg_48_1]
 end
 
-function var_0_0.getBuildingMoByBuildingId(arg_48_0, arg_48_1)
-	local var_48_0 = arg_48_0:getList()
+function var_0_0.getBuildingMoByBuildingId(arg_49_0, arg_49_1)
+	local var_49_0 = arg_49_0:getList()
 
-	if var_48_0 then
-		for iter_48_0, iter_48_1 in pairs(var_48_0) do
-			if iter_48_1.buildingId == arg_48_1 then
-				return iter_48_1
+	if var_49_0 then
+		for iter_49_0, iter_49_1 in pairs(var_49_0) do
+			if iter_49_1.buildingId == arg_49_1 then
+				return iter_49_1
 			end
 		end
 	end

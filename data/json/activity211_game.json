@@ -1,0 +1,23 @@
+[
+  {
+    "groupId": 1000,
+    "gameId": "1#2#3",
+    "targetDesc": "language_10097002",
+    "shadowBg": "v3a1_yeshumei_game_shadow1#v3a1_yeshumei_game_shadow2#v3a1_yeshumei_game_shadow3",
+    "desc": "language_10097003"
+  },
+  {
+    "groupId": 1001,
+    "gameId": "4#5#6#7",
+    "targetDesc": "language_10097004",
+    "shadowBg": "v3a1_yeshumei_game_shadow4#v3a1_yeshumei_game_shadow5#v3a1_yeshumei_game_shadow6#v3a1_yeshumei_game_shadow7",
+    "desc": "language_10097005"
+  },
+  {
+    "groupId": 1002,
+    "gameId": "8#9",
+    "targetDesc": "language_10097006",
+    "shadowBg": "v3a1_yeshumei_game_shadow8#v3a1_yeshumei_game_shadow9",
+    "desc": "language_10097007"
+  }
+]

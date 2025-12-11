@@ -26,6 +26,7 @@ var_0_0.MaterialType = {
 	Explore = 15,
 	Currency = 2,
 	RoomTheme = 1001,
+	UnlockVoucher = 28,
 	V1a5AiZiLa = 1002,
 	None = 0
 }
@@ -86,11 +87,13 @@ var_0_0.PowerId = {
 	BigPower_Expire = 11,
 	SmallPower = 20,
 	ActPowerId = 30,
+	OverflowPowerId = 31,
 	SmallPower_Expire = 10,
 	BigPower = 21
 }
 var_0_0.PowerType = {
 	Big = 2,
+	Overflow = 4,
 	Act = 3,
 	Small = 1
 }
@@ -99,6 +102,12 @@ var_0_0.ItemSubType = {
 	Icon = 17,
 	SelfCard = 21
 }
+var_0_0.PowerMakerStatus = {
+	Making = 1,
+	Pause = 0
+}
+var_0_0.PowerMakerItemId = 140055
+var_0_0.PowerMakerFixedPauseTime = 43200
 var_0_0.ActPowerBindActId = 11904
 
 return var_0_0

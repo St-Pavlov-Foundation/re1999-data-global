@@ -37,71 +37,53 @@ function var_0_0.onStart(arg_3_0)
 	arg_3_0.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnDecreeVoteStart, arg_4_0._onDecreeVoteStart, arg_4_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnDecreeVoteEnd, arg_4_0._onDecreeVoteEnd, arg_4_0)
+function var_0_0.onInit(arg_4_0)
+	arg_4_0:showModel()
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnDecreeVoteStart, arg_5_0._onDecreeVoteStart, arg_5_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnDecreeVoteEnd, arg_5_0._onDecreeVoteEnd, arg_5_0)
-end
-
-function var_0_0.onInit(arg_6_0)
-	arg_6_0:showModel()
-end
-
-function var_0_0.showModel(arg_7_0)
-	if not gohelper.isNil(arg_7_0.goModel) then
+function var_0_0.showModel(arg_5_0)
+	if not gohelper.isNil(arg_5_0.goModel) then
 		return
 	end
 
-	if arg_7_0._loader then
+	if arg_5_0._loader then
 		return
 	end
 
-	arg_7_0._loader = PrefabInstantiate.Create(arg_7_0.go)
+	arg_5_0._loader = PrefabInstantiate.Create(arg_5_0.go)
 
-	local var_7_0 = arg_7_0:getResPath()
+	local var_5_0 = arg_5_0:getResPath()
 
-	if string.nilorempty(var_7_0) then
+	if string.nilorempty(var_5_0) then
 		return
 	end
 
-	arg_7_0._loader:startLoad(var_7_0, arg_7_0._onResLoadEnd, arg_7_0)
+	arg_5_0._loader:startLoad(var_5_0, arg_5_0._onResLoadEnd, arg_5_0)
 end
 
-function var_0_0.getResPath(arg_8_0)
-	local var_8_0 = SurvivalConfig.instance:getNpcConfig(arg_8_0.unitId)
+function var_0_0.getResPath(arg_6_0)
+	local var_6_0 = SurvivalConfig.instance:getNpcConfig(arg_6_0.unitId)
 
-	if not var_8_0 then
+	if not var_6_0 then
 		return nil
 	end
 
-	return var_8_0.resource
+	return var_6_0.resource
 end
 
-function var_0_0._onResLoadEnd(arg_9_0)
-	local var_9_0 = arg_9_0._loader:getInstGO()
-	local var_9_1 = var_9_0.transform
+function var_0_0._onResLoadEnd(arg_7_0)
+	local var_7_0 = arg_7_0._loader:getInstGO()
+	local var_7_1 = var_7_0.transform
 
-	arg_9_0.goModel = var_9_0
+	arg_7_0.goModel = var_7_0
 
-	transformhelper.setLocalPos(var_9_1, 0, 0, 0)
-	transformhelper.setLocalRotation(var_9_1, 0, 0, 0)
-	transformhelper.setLocalScale(var_9_1, 1, 1, 1)
-	arg_9_0:onLoadedEnd()
+	transformhelper.setLocalPos(var_7_1, 0, 0, 0)
+	transformhelper.setLocalRotation(var_7_1, 0, 0, 0)
+	transformhelper.setLocalScale(var_7_1, 1, 1, 1)
+	arg_7_0:onLoadedEnd()
 end
 
-function var_0_0._onDecreeVoteStart(arg_10_0)
-	arg_10_0:setVisible(false)
-end
-
-function var_0_0._onDecreeVoteEnd(arg_11_0)
-	arg_11_0:setVisible(true)
-end
-
-function var_0_0.needUI(arg_12_0)
+function var_0_0.needUI(arg_8_0)
 	return true
 end
 

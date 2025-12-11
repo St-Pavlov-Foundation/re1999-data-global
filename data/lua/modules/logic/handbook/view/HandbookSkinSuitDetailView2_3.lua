@@ -33,30 +33,11 @@ function var_0_0.refreshBtnStatus(arg_5_0)
 	return
 end
 
-function var_0_0._refreshDesc(arg_6_0)
-	HandbookSkinSuitDetailViewBase._refreshDesc(arg_6_0)
-end
-
-function var_0_0._refreshBg(arg_7_0)
+function var_0_0._refreshBg(arg_6_0)
 	return
 end
 
-function var_0_0._refreshSkinItems(arg_8_0)
-	arg_8_0._skinItemList = {}
-
-	for iter_8_0 = 1, #arg_8_0._skinIdList do
-		local var_8_0 = arg_8_0._skinItemGoList[iter_8_0]
-
-		if var_8_0 then
-			local var_8_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_0, HandbookSkinItem, arg_8_0)
-
-			var_8_1:refreshItem(arg_8_0._skinIdList[iter_8_0])
-			table.insert(arg_8_0._skinItemList, var_8_1)
-		end
-	end
-end
-
-function var_0_0.onDestroyView(arg_9_0)
+function var_0_0.onDestroyView(arg_7_0)
 	return
 end
 

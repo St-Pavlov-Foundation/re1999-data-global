@@ -18,7 +18,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 2,
@@ -39,7 +41,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 3,
@@ -60,7 +64,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 4,
@@ -81,7 +87,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 5,
@@ -102,7 +110,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 6,
@@ -123,7 +133,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 7,
@@ -144,7 +156,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 8,
@@ -165,7 +179,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 9,
@@ -186,7 +202,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 10,
@@ -207,7 +225,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 11,
@@ -228,7 +248,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 12,
@@ -249,7 +271,9 @@
     "showBonusDate": "",
     "isSp": true,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 13,
@@ -270,7 +294,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 14,
@@ -291,7 +317,9 @@
     "showBonusDate": "",
     "isSp": false,
     "weekLimitTimes": 500,
-    "expUpShow": true
+    "expUpShow": true,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 15,
@@ -312,7 +340,9 @@
     "showBonusDate": "2025-05-08 05:00:00",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 16,
@@ -333,7 +363,9 @@
     "showBonusDate": "2025-06-19 00:00:00",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 17,
@@ -354,7 +386,9 @@
     "showBonusDate": "2025-07-17 05:00:00",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 18,
@@ -375,7 +409,9 @@
     "showBonusDate": "2025-10-09 05:00:00",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 19,
@@ -396,7 +432,9 @@
     "showBonusDate": "2025-11-20 05:00:00",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
   },
   {
     "bpId": 305,
@@ -417,6 +455,31 @@
     "showBonusDate": "2025-08-28 05:00:00",
     "isSp": false,
     "weekLimitTimes": 0,
-    "expUpShow": false
+    "expUpShow": false,
+    "promptDays": 0,
+    "activityId": 0
+  },
+  {
+    "bpId": 20,
+    "chargeId1": 710001,
+    "chargeId2": 710002,
+    "chargeId1to2": 710003,
+    "payStatus1Bonus": "1#481010#1",
+    "payStatus2Bonus": "2#2#400|1#173201#1|10#21#3|1#120013#5",
+    "name": "",
+    "payStatus2AddLevel": 10,
+    "expLevelUp": 1000,
+    "bpSkinDesc": "language_10093860",
+    "bpSkinNametxt": "language_10096697",
+    "bpSkinEnNametxt": "The Evergreen <br> Soul",
+    "bpviewicon": "",
+    "bpviewpos": "",
+    "showBonus": "",
+    "showBonusDate": "2026-01-01 05:00:00",
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false,
+    "promptDays": 7,
+    "activityId": 13123
   }
 ]

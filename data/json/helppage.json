@@ -4890,6 +4890,166 @@
     "isCn": 0
   },
   {
+    "id": 3100101,
+    "title": "",
+    "type": 1,
+    "text": "3.1糖果制造机指引图",
+    "icon": "v3a1_power_help_1",
+    "iconText": "v3a1_power_help_1",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3101001,
+    "title": "",
+    "type": 1,
+    "text": "油画暴雨指引图",
+    "icon": "v3a1_survival_help_1",
+    "iconText": "v3a1_survival_help_1",
+    "unlockGuideId": 31613,
+    "isCn": 0
+  },
+  {
+    "id": 3101002,
+    "title": "",
+    "type": 1,
+    "text": "故障暴雨指引图",
+    "icon": "v3a1_survival_help_2",
+    "iconText": "v3a1_survival_help_2",
+    "unlockGuideId": 31614,
+    "isCn": 0
+  },
+  {
+    "id": 3101003,
+    "title": "",
+    "type": 1,
+    "text": "地形迷障指引图",
+    "icon": "v3a1_survival_help_3",
+    "iconText": "v3a1_survival_help_3",
+    "unlockGuideId": 31608,
+    "isCn": 0
+  },
+  {
+    "id": 3101004,
+    "title": "",
+    "type": 1,
+    "text": "地形油砂指引图",
+    "icon": "v3a1_survival_help_4",
+    "iconText": "v3a1_survival_help_4",
+    "unlockGuideId": 31609,
+    "isCn": 0
+  },
+  {
+    "id": 3101005,
+    "title": "",
+    "type": 1,
+    "text": "地形圣火指引图",
+    "icon": "v3a1_survival_help_5",
+    "iconText": "v3a1_survival_help_5",
+    "unlockGuideId": 31610,
+    "isCn": 0
+  },
+  {
+    "id": 3101006,
+    "title": "",
+    "type": 1,
+    "text": "地形冰场指引图",
+    "icon": "v3a1_survival_help_6",
+    "iconText": "v3a1_survival_help_6",
+    "unlockGuideId": 31611,
+    "isCn": 0
+  },
+  {
+    "id": 3101007,
+    "title": "",
+    "type": 1,
+    "text": "地形水域指引图",
+    "icon": "v3a1_survival_help_7",
+    "iconText": "v3a1_survival_help_7",
+    "unlockGuideId": 31612,
+    "isCn": 0
+  },
+  {
+    "id": 3102001,
+    "title": "",
+    "type": 1,
+    "text": "爬塔boss层编队指引",
+    "icon": "v3a1_towerdeep_help_1",
+    "iconText": "v3a1_towerdeep_help_1",
+    "unlockGuideId": 31102,
+    "isCn": 0
+  },
+  {
+    "id": 3102002,
+    "title": "",
+    "type": 1,
+    "text": "爬塔boss层战斗指引1",
+    "icon": "v3a1_towerdeep_help_2",
+    "iconText": "v3a1_towerdeep_help_2",
+    "unlockGuideId": 31101,
+    "isCn": 0
+  },
+  {
+    "id": 3102003,
+    "title": "",
+    "type": 1,
+    "text": "爬塔boss层战斗指引2",
+    "icon": "v3a1_towerdeep_help_3",
+    "iconText": "v3a1_towerdeep_help_3",
+    "unlockGuideId": 31101,
+    "isCn": 0
+  },
+  {
+    "id": 3102004,
+    "title": "",
+    "type": 1,
+    "text": "爬塔boss层存档指引",
+    "icon": "v3a1_towerdeep_help_4",
+    "iconText": "v3a1_towerdeep_help_4",
+    "unlockGuideId": 31102,
+    "isCn": 0
+  },
+  {
+    "id": 3100301,
+    "title": "",
+    "type": 1,
+    "text": "好梦井打捞指引图",
+    "icon": "v3a1_fish_help_1",
+    "iconText": "v3a1_fish_help_1",
+    "unlockGuideId": 426,
+    "isCn": 0
+  },
+  {
+    "id": 3100302,
+    "title": "",
+    "type": 1,
+    "text": "好梦井打捞指引图",
+    "icon": "v3a1_fish_help_2",
+    "iconText": "v3a1_fish_help_2",
+    "unlockGuideId": 426,
+    "isCn": 0
+  },
+  {
+    "id": 3100303,
+    "title": "",
+    "type": 1,
+    "text": "好梦井打捞指引图",
+    "icon": "v3a1_fish_help_3",
+    "iconText": "v3a1_fish_help_3",
+    "unlockGuideId": 426,
+    "isCn": 0
+  },
+  {
+    "id": 3100304,
+    "title": "",
+    "type": 1,
+    "text": "好梦井打捞指引图",
+    "icon": "v3a1_fish_help_4",
+    "iconText": "v3a1_fish_help_4",
+    "unlockGuideId": 427,
+    "isCn": 0
+  },
+  {
     "id": 2500201,
     "title": "",
     "type": 2,

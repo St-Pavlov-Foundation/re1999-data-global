@@ -240,9 +240,11 @@ function var_0_0._addMouth(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
 		end
 	end
 
-	local function var_14_1()
+	local var_14_1
+
+	local function var_14_2()
 		if arg_14_0._mouthStopDelayCallbackList then
-			tabletool.removeValue(arg_14_0._mouthStopDelayCallbackList, stopCallback)
+			tabletool.removeValue(arg_14_0._mouthStopDelayCallbackList, var_14_2)
 		end
 
 		if arg_14_0._spine then
@@ -257,9 +259,9 @@ function var_0_0._addMouth(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
 	end
 
 	table.insert(arg_14_0._mouthDelayCallbackList, var_14_0)
-	table.insert(arg_14_0._mouthStopDelayCallbackList, var_14_1)
+	table.insert(arg_14_0._mouthStopDelayCallbackList, var_14_2)
 	TaskDispatcher.runDelay(var_14_0, nil, arg_14_3)
-	TaskDispatcher.runDelay(var_14_1, nil, arg_14_4)
+	TaskDispatcher.runDelay(var_14_2, nil, arg_14_4)
 end
 
 function var_0_0._addMouthBizui(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
@@ -285,9 +287,11 @@ function var_0_0._addMouthBizui(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
 		end
 	end
 
-	local function var_17_1()
+	local var_17_1
+
+	local function var_17_2()
 		if arg_17_0._mouthStopDelayCallbackList then
-			tabletool.removeValue(arg_17_0._mouthStopDelayCallbackList, stopCallback)
+			tabletool.removeValue(arg_17_0._mouthStopDelayCallbackList, var_17_2)
 		end
 
 		if arg_17_0._spine then
@@ -302,9 +306,9 @@ function var_0_0._addMouthBizui(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
 	end
 
 	table.insert(arg_17_0._mouthDelayCallbackList, var_17_0)
-	table.insert(arg_17_0._mouthStopDelayCallbackList, var_17_1)
+	table.insert(arg_17_0._mouthStopDelayCallbackList, var_17_2)
 	TaskDispatcher.runDelay(var_17_0, nil, arg_17_2)
-	TaskDispatcher.runDelay(var_17_1, nil, arg_17_3)
+	TaskDispatcher.runDelay(var_17_2, nil, arg_17_3)
 end
 
 function var_0_0._mouthRepeat(arg_20_0)

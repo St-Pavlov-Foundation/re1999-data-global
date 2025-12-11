@@ -13,7 +13,7 @@ function var_0_0.addEvents(arg_2_0)
 end
 
 function var_0_0._onBtnSelect(arg_3_0)
-	local var_3_0 = arg_3_0:getItemIndex()
+	local var_3_0 = arg_3_0:getSelfIndex()
 
 	if arg_3_0.listType == "_enemySelectedList" or arg_3_0.listType == "_playerSelectedList" then
 		arg_3_0.PARENT_VIEW[arg_3_0.listType]:removeIndex(var_3_0)
@@ -30,7 +30,7 @@ function var_0_0._onBtnSelect(arg_3_0)
 		local var_3_3 = var_3_2 + 1
 		local var_3_4 = var_3_1:addIndex(var_3_3, arg_3_0.config)
 
-		gohelper.setSibling(var_3_4.keyword_gameObject, var_3_3 - 1)
+		gohelper.setSibling(var_3_4.GAMEOBJECT, var_3_3 - 1)
 	else
 		if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift) then
 			local var_3_5 = arg_3_0.ITEM_LIST_MGR.lastSelectIndex
@@ -61,8 +61,8 @@ function var_0_0._onBtnSelect(arg_3_0)
 	end
 end
 
-function var_0_0.refreshItemData(arg_4_0, arg_4_1)
-	gohelper.setSibling(arg_4_0.viewGO, arg_4_0:getItemIndex() - 1)
+function var_0_0.onRefreshItemData(arg_4_0, arg_4_1)
+	gohelper.setSibling(arg_4_0.viewGO, arg_4_0:getSelfIndex() - 1)
 
 	arg_4_0.listType = arg_4_0.ITEM_LIST_MGR.listType
 	arg_4_0.selecting = false

@@ -7,11 +7,10 @@ function var_0_0.onStart(arg_1_0)
 
 	arg_1_0._flow:addWork(FightWorkAppearTimeline.New())
 
-	local var_1_0, var_1_1 = FightWorkAppearTimeline.hasAppearTimeline()
-	local var_1_2 = FightHelper.getEntity(var_1_1)
-	local var_1_3 = var_1_2 and var_1_2:getMO()
+	local var_1_0, var_1_1 = FightWorkAppearTimeline.getAppearTimeline()
+	local var_1_2 = var_1_1 and var_1_1:getMO()
 
-	if var_1_0 and var_1_3 then
+	if var_1_0 and var_1_2 then
 		arg_1_0._flow:addWork(FunctionWork.New(function()
 			local var_2_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
 
@@ -25,7 +24,7 @@ function var_0_0.onStart(arg_1_0)
 				end
 			end
 		end))
-		arg_1_0._flow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.AfterAppearTimeline, var_1_3.modelId))
+		arg_1_0._flow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.AfterAppearTimeline, var_1_2.modelId))
 	end
 
 	arg_1_0._flow:registerDoneListener(arg_1_0._onFlowDone, arg_1_0)

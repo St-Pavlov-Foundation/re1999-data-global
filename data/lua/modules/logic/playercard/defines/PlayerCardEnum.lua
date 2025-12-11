@@ -49,5 +49,6 @@ var_0_0.FriendViewType = {
 	playerinfo = 4
 }
 var_0_0.PlayerCardGuideId = 24110
+var_0_0.TowerMaxStageId = 7
 
 return var_0_0

@@ -11,17 +11,6 @@ var_0_0.UniversalCard = {
 }
 var_0_0.MaxBehavior = 9
 var_0_0.MaxBuffIconCount = 8
-var_0_0.Stage = {
-	End = 8,
-	FillCard = 6,
-	Card = 3,
-	Play = 5,
-	StartRound = 1,
-	AutoCard = 4,
-	ClothSkill = 9,
-	EndRound = 7,
-	Distribute = 2
-}
 var_0_0.FightReason = {
 	Dungeon = 2,
 	DungeonRecord = 3,
@@ -314,20 +303,23 @@ var_0_0.EffectType = {
 	SURVIVALHEALTHCHANGE = 345,
 	BFSGCONVERTCARD = 156,
 	PROGRESSCHANGE = 251,
-	SHIELDCHANGE = 41,
+	RANDOMDICEUSESKILL = 353,
 	MOCKTAUNT = 201,
 	ORIGINCRIT = 131,
 	REDORBLUECOUNTEXSKILL = 311,
-	EZIOBIGSKILLORIGINDAMAGE = 1001,
+	TOWERDEEPCHANGE = 354,
 	ROUNDOFFSET = 318,
 	TEAMENERGYCHANGE = 275,
-	MAXHPCHANGE = 108,
+	FIGHTHURTDETAIL = 355,
 	SUMMON = 86,
 	CHANGECAREER = 97,
+	SHIELDCHANGE = 41,
 	PURIFY = 13,
 	INJURY = 34,
+	EZIOBIGSKILLORIGINDAMAGE = 1001,
 	SHIELDBROCKEN = 132,
 	REBOUND = 36,
+	MAXHPCHANGE = 108,
 	CARDLEVELCHANGE = 75,
 	CANTGETEXSKILL = 129,
 	UPDATEITEMPLAYERSKILL = 1002,
@@ -803,35 +795,37 @@ var_0_0.BuffType_AddCardRecordByRound = "AddCardRecordByRound"
 var_0_0.BuffType_AddCardCastChannel = "AddCardCastChannel"
 var_0_0.BuffType_BigSkillNoUseActPoint = "BigSkillNoUseActPoint"
 var_0_0.BuffType_NotBigSkillNoUseActPoint = "NotBigSkillNoUseActPoint"
+var_0_0.BuffType_SpecialCountCastBuff = "SpecialCountCastBuff"
 var_0_0.BuffType_SpecialCountCastChannel = "SpecialCountCastChannel"
 var_0_0.BuffType_SpecialCountContinueChannelBuff = "SpecialCountContinueChannelBuff"
 var_0_0.BuffType_LockHpMax = "LockHpMax"
 var_0_0.BuffType_NoUseCardEnergyRecordByRound = "NoUseCardEnergyRecordByRound"
 var_0_0.BuffType_RealDamageKill = "RealDamageKill"
-var_0_0.BuffType_SpecialCountCastBuff = "SpecialCountCastBuff"
-var_0_0.BuffType_SpecialCountCastChannel = "SpecialCountCastChannel"
 var_0_0.BuffTypeId_CoverPerson = 8398
 var_0_0.BuffTypeId_CelebrityCharm = 8399
 var_0_0.BuffFeature = {
-	UseSkillHasBuffCond = "UseSkillHasBuffCond",
+	CountUseSelfSkillContinueChannel = "CountUseSelfSkillContinueChannel",
 	PrecisionRegion = "PrecisionRegion",
 	FixAttrTeamEnergyAndBuff = "FixAttrTeamEnergyAndBuff",
 	FixAttrTeamEnergy = "FixAttrTeamEnergy",
 	AddAttrBySpecialCount = "AddAttrBySpecialCount",
 	AttrFixFromInjuryBank = "AttrFixFromInjuryBank",
-	ResistancesAttr = "ResistancesAttr",
-	CountUseSelfSkillContinueChannel = "CountUseSelfSkillContinueChannel",
+	SpecialCountCastChannel = "SpecialCountCastChannel",
 	EzioBigSkill = "EzioBigSkill",
+	ResistancesAttr = "ResistancesAttr",
+	RaspberryBigSkill = "RaspberryBigSkill",
 	SpecialCountCastBuff = "SpecialCountCastBuff",
 	InjuryBank = "InjuryBank",
 	ConsumeBuffAddBuffContinueChannel = "ConsumeBuffAddBuffContinueChannel",
+	BeAttackAccrualFixAttr = "BeAttackAccrualFixAttr",
 	StorageDamage = "StorageDamage",
 	NuoDiKaCastChannel = "NuoDiKaCastChannel",
 	Dream = "Dream",
 	ModifyAttrByBuffLayer = "ModifyAttrByBuffLayer",
 	SpecialCountContinueChannelBuff = "SpecialCountContinueChannelBuff",
 	ChangeComposeCardSkill = "ChangeComposeCardSkill",
-	SpecialCountCastChannel = "SpecialCountCastChannel",
+	UseSkillHasBuffCond = "UseSkillHasBuffCond",
+	Raspberry = "Raspberry",
 	SkillLevelJudgeAdd = "SkillLevelJudgeAdd",
 	None = "None"
 }
@@ -921,20 +915,22 @@ var_0_0.DissolveType = {
 	ZaoWu = 3
 }
 var_0_0.IndicatorId = {
+	Id4140004 = 4140004,
+	Progress_500M = 31,
 	NewSeasonScoreOffset = 163,
 	Season1_2 = 3,
-	BossInfiniteHPCount = 5,
-	Act1_6DungeonBoss = 161,
 	Season = 1,
 	V1a4_BossRush_ig_ScoreTips = 4,
 	NewSeasonScore = 162,
-	Id4140004 = 4140004,
-	PaTaScore = 165,
-	Id6181 = 6181,
-	Id6201 = 6201,
-	Id6202 = 6202,
-	DoomsdayClock = 10001,
 	FightSucc = 2,
+	PaTaScore = 165,
+	Id6202 = 6202,
+	Id6201 = 6201,
+	BossInfiniteHPCount = 5,
+	TowerDeep = 166,
+	Act1_6DungeonBoss = 161,
+	DoomsdayClock = 10001,
+	Id6181 = 6181,
 	Id6182 = 6182
 }
 var_0_0.AppearTimelineSkillId = -111
@@ -966,9 +962,11 @@ var_0_0.CardType = {
 }
 var_0_0.PowerType = {
 	Energy = 2,
-	PlayerFinisherSkill = 5,
+	Act191Boss = 7,
 	Alert = 6,
 	AssistBoss = 4,
+	PlayerFinisherSkill = 5,
+	SurvivalDot = 8,
 	Stress = 3,
 	Power = 1
 }
@@ -1145,9 +1143,10 @@ var_0_0.EntityStatus = {
 }
 var_0_0.EntityType = {
 	Character = 1,
-	ASFDEmitter = 6,
+	Act191Boss = 8,
 	Player = 3,
 	AssistBoss = 5,
+	ASFDEmitter = 6,
 	Vorpalith = 7,
 	Monster = 2
 }
@@ -1242,6 +1241,22 @@ var_0_0.ExPointTypeFeature = {
 }
 var_0_0.BuffDeleteReason = {
 	Overflow = 1
+}
+var_0_0.MultiHpType = {
+	Default = 1,
+	Tower500M = 2
+}
+var_0_0.ProgressId = {
+	Progress_5 = 5,
+	Progress_500M = 7,
+	Progress_6 = 6
+}
+var_0_0.HeroId = {
+	ALF = 3113
+}
+var_0_0.EntityCreateStage = {
+	Init = 1,
+	None = 0
 }
 
 return var_0_0

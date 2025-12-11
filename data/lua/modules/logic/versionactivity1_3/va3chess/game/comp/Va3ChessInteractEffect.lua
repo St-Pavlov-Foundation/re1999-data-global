@@ -97,8 +97,6 @@ function var_0_0.dispose(arg_8_0)
 
 	for iter_8_2, iter_8_3 in ipairs(arg_8_0.assetItemList) do
 		iter_8_3:Release()
-
-		arg_8_0.assetItemList[iter_8_2] = nil
 	end
 
 	arg_8_0.assetItemList = {}

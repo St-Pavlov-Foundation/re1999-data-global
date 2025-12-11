@@ -105,7 +105,7 @@ function var_0_0.getCurrencyNum(arg_6_0, arg_6_1)
 	local var_6_1 = 0
 
 	if arg_6_0.bagType == SurvivalEnum.ItemSource.Map then
-		var_6_1 = SurvivalShelterModel.instance:getWeekInfo().bag:getCurrencyNum(arg_6_1)
+		var_6_1 = SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Shelter):getCurrencyNum(arg_6_1)
 	end
 
 	return (var_6_0 and var_6_0.count or 0) + var_6_1
@@ -170,6 +170,22 @@ end
 
 function var_0_0.getItemByUid(arg_11_0, arg_11_1)
 	return arg_11_0.itemsByUid[arg_11_1]
+end
+
+function var_0_0.haveReputationItem(arg_12_0)
+	return #arg_12_0:getReputationItem() > 0
+end
+
+function var_0_0.getReputationItem(arg_13_0)
+	local var_13_0 = {}
+
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.items) do
+		if iter_13_1:isReputationItem() then
+			table.insert(var_13_0, iter_13_1)
+		end
+	end
+
+	return var_13_0
 end
 
 return var_0_0

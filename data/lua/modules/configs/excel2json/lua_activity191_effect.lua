@@ -3,9 +3,11 @@
 local var_0_0 = {}
 local var_0_1 = {
 	id = 1,
-	itemParam = 4,
-	typeParam = 3,
-	type = 2
+	group = 2,
+	typeParam = 5,
+	type = 4,
+	tag = 3,
+	itemParam = 6
 }
 local var_0_2 = {
 	"id"

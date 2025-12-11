@@ -84,6 +84,12 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 			table.insert(arg_1_0.itemSkillInfos, FightItemPlayerSkillInfoData.New(iter_1_11))
 		end
 	end
+
+	arg_1_0.spFightEntities = {}
+
+	for iter_1_12, iter_1_13 in ipairs(arg_1_1.spFightEntities) do
+		table.insert(arg_1_0.spFightEntities, FightEntityInfoData.New(iter_1_13))
+	end
 end
 
 return var_0_0

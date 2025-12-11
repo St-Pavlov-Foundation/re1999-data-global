@@ -88,7 +88,7 @@ function var_0_0.getGridItem(arg_7_0, arg_7_1)
 		var_7_0 = arg_7_0:getUserDataTb_()
 		var_7_0.index = arg_7_1
 		var_7_0.go = gohelper.clone(arg_7_0.goSmallItem, arg_7_0.goGrid, tostring(arg_7_1))
-		var_7_0.imgChess = gohelper.findChildImage(var_7_0.go, "#image_Chess")
+		var_7_0.imgChess = gohelper.findChildSingleImage(var_7_0.go, "#image_Chess")
 		var_7_0.txtName = gohelper.findChildTextMesh(var_7_0.go, "#txt_PartnerName")
 		var_7_0.goSelect = gohelper.findChild(var_7_0.go, "#go_Selected")
 		var_7_0.goRecommend = gohelper.findChild(var_7_0.go, "#go_recommend")
@@ -126,7 +126,7 @@ function var_0_0.refreshGridItem(arg_8_0, arg_8_1, arg_8_2)
 
 	arg_8_1.txtName.text = arg_8_2.co.name
 
-	UISpriteSetMgr.instance:setV2a2ChessSprite(arg_8_1.imgChess, arg_8_2.co.headIcon)
+	SurvivalUnitIconHelper.instance:setNpcIcon(arg_8_1.imgChess, arg_8_2.co.headIcon)
 
 	if arg_8_1.goEffect then
 		local var_8_1 = arg_8_1.data:getShelterNpcStatus()
@@ -154,7 +154,7 @@ function var_0_0.refreshGridItem(arg_8_0, arg_8_1, arg_8_2)
 			if var_8_6 ~= nil then
 				local var_8_7 = gohelper.cloneInPlace(arg_8_1.goTagItem, var_8_5)
 				local var_8_8 = gohelper.findChildImage(var_8_7, "#image_Type")
-				local var_8_9 = SurvivalEnum.ShelterTagColor[var_8_6.tagType]
+				local var_8_9 = SurvivalConst.ShelterTagColor[var_8_6.tagType]
 
 				if var_8_9 then
 					local var_8_10 = GameUtil.parseColor(var_8_9)

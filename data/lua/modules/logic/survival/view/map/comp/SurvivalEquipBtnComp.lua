@@ -10,7 +10,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._golevel1 = gohelper.findChild(arg_1_1, "#go_icon/#go_Has/#level1")
 	arg_1_0._golevel2 = gohelper.findChild(arg_1_1, "#go_icon/#go_Has/#level2")
 	arg_1_0._golevel3 = gohelper.findChild(arg_1_1, "#go_icon/#go_Has/#level3")
-	arg_1_0._txtplan = gohelper.findChildTextMesh(arg_1_1, "#go_plan/#txt_planId")
+	arg_1_0._txtplan = gohelper.findChildTextMesh(arg_1_1, "#txt_index")
 	arg_1_0._gored = gohelper.findChild(arg_1_1, "go_arrow")
 
 	arg_1_0:_refreshView()

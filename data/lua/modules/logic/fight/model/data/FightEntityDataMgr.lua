@@ -8,6 +8,7 @@ local var_0_1 = {
 	sp = "sp",
 	sub = "sub",
 	vorpalith = "vorpalith",
+	spFightEntities = "spFightEntities",
 	player = "player"
 }
 
@@ -29,6 +30,7 @@ function var_0_0.onConstructor(arg_1_0)
 	end
 
 	arg_1_0.deadUids = {}
+	arg_1_0.heroId2SkinId = {}
 end
 
 function var_0_0.getAllEntityList(arg_2_0, arg_2_1, arg_2_2)
@@ -147,55 +149,67 @@ function var_0_0.getEnemyDeadList(arg_23_0, arg_23_1, arg_23_2)
 	return arg_23_0:getDeadList(FightEnum.EntitySide.EnemySide, arg_23_2)
 end
 
-function var_0_0.getList(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
-	local var_24_0 = arg_24_3 or {}
+function var_0_0.getSpFightEntities(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	return arg_24_0:getList(arg_24_1, var_0_1.spFightEntities, arg_24_2, arg_24_3)
+end
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0.sideDic[arg_24_1][arg_24_2]) do
-		local var_24_1 = false
+function var_0_0.getMySpFightEntities(arg_25_0, arg_25_1, arg_25_2)
+	return arg_25_0:getSpFightEntities(FightEnum.EntitySide.MySide, arg_25_1, arg_25_2)
+end
 
-		if iter_24_1:isStatusDead() and not arg_24_4 then
-			var_24_1 = true
+function var_0_0.getEnemySpFightEntities(arg_26_0, arg_26_1, arg_26_2)
+	return arg_26_0:getSpFightEntities(FightEnum.EntitySide.EnemySide, arg_26_1, arg_26_2)
+end
+
+function var_0_0.getList(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4)
+	local var_27_0 = arg_27_3 or {}
+
+	for iter_27_0, iter_27_1 in ipairs(arg_27_0.sideDic[arg_27_1][arg_27_2]) do
+		local var_27_1 = false
+
+		if iter_27_1:isStatusDead() and not arg_27_4 then
+			var_27_1 = true
 		end
 
-		if not var_24_1 then
-			table.insert(var_24_0, iter_24_1)
+		if not var_27_1 then
+			table.insert(var_27_0, iter_27_1)
 		end
 	end
 
-	return var_24_0
+	return var_27_0
 end
 
-function var_0_0.getOriginSide(arg_25_0, arg_25_1)
-	return arg_25_0.sideDic[arg_25_1]
+function var_0_0.getOriginSide(arg_28_0, arg_28_1)
+	return arg_28_0.sideDic[arg_28_1]
 end
 
-function var_0_0.getOriginNormalList(arg_26_0, arg_26_1)
-	return arg_26_0.sideDic[arg_26_1][var_0_1.normal]
+function var_0_0.getOriginNormalList(arg_29_0, arg_29_1)
+	return arg_29_0.sideDic[arg_29_1][var_0_1.normal]
 end
 
-function var_0_0.getOriginSubList(arg_27_0, arg_27_1)
-	return arg_27_0.sideDic[arg_27_1][var_0_1.sub]
+function var_0_0.getOriginSubList(arg_30_0, arg_30_1)
+	return arg_30_0.sideDic[arg_30_1][var_0_1.sub]
 end
 
-function var_0_0.getOriginSpList(arg_28_0, arg_28_1)
-	return arg_28_0.sideDic[arg_28_1][var_0_1.sp]
+function var_0_0.getOriginSpList(arg_31_0, arg_31_1)
+	return arg_31_0.sideDic[arg_31_1][var_0_1.sp]
 end
 
-function var_0_0.getOriginASFDEmitterList(arg_29_0, arg_29_1)
-	return arg_29_0.sideDic[arg_29_1][var_0_1.ASFD_emitter]
+function var_0_0.getOriginASFDEmitterList(arg_32_0, arg_32_1)
+	return arg_32_0.sideDic[arg_32_1][var_0_1.ASFD_emitter]
 end
 
-function var_0_0.getOriginListById(arg_30_0, arg_30_1)
-	local var_30_0 = arg_30_0:getById(arg_30_1)
+function var_0_0.getOriginListById(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_0:getById(arg_33_1)
 
-	if var_30_0 then
-		local var_30_1 = var_30_0.side
-		local var_30_2 = arg_30_0.sideDic[var_30_1]
+	if var_33_0 then
+		local var_33_1 = var_33_0.side
+		local var_33_2 = arg_33_0.sideDic[var_33_1]
 
-		for iter_30_0, iter_30_1 in pairs(var_30_2) do
-			for iter_30_2, iter_30_3 in ipairs(iter_30_1) do
-				if iter_30_3.uid == var_30_0.uid then
-					return iter_30_1
+		for iter_33_0, iter_33_1 in pairs(var_33_2) do
+			for iter_33_2, iter_33_3 in ipairs(iter_33_1) do
+				if iter_33_3.uid == var_33_0.uid then
+					return iter_33_1
 				end
 			end
 		end
@@ -204,74 +218,86 @@ function var_0_0.getOriginListById(arg_30_0, arg_30_1)
 	return {}
 end
 
-function var_0_0.isSub(arg_31_0, arg_31_1)
-	for iter_31_0, iter_31_1 in pairs(arg_31_0.sideDic) do
-		for iter_31_2, iter_31_3 in ipairs(iter_31_1[var_0_1.sub]) do
-			if iter_31_3.id == arg_31_1 then
+function var_0_0.isSub(arg_34_0, arg_34_1)
+	for iter_34_0, iter_34_1 in pairs(arg_34_0.sideDic) do
+		for iter_34_2, iter_34_3 in ipairs(iter_34_1[var_0_1.sub]) do
+			if iter_34_3.id == arg_34_1 then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.isMySub(arg_32_0, arg_32_1)
-	for iter_32_0, iter_32_1 in ipairs(arg_32_0.sideDic[FightEnum.EntitySide.MySide][var_0_1.sub]) do
-		if iter_32_1.id == arg_32_1 then
-			return true
-		end
-	end
-end
-
-function var_0_0.isSp(arg_33_0, arg_33_1)
-	for iter_33_0, iter_33_1 in pairs(arg_33_0.sideDic) do
-		for iter_33_2, iter_33_3 in ipairs(iter_33_1[var_0_1.sp]) do
-			if iter_33_3.id == arg_33_1 then
-				return true
-			end
-		end
-	end
-end
-
-function var_0_0.isAssistBoss(arg_34_0, arg_34_1)
-	local var_34_0 = arg_34_0:getAssistBoss()
-
-	return var_34_0 and var_34_0.id == arg_34_1
-end
-
-function var_0_0.isMySp(arg_35_0, arg_35_1)
-	for iter_35_0, iter_35_1 in ipairs(arg_35_0.sideDic[FightEnum.EntitySide.MySide][var_0_1.sp]) do
+function var_0_0.isMySub(arg_35_0, arg_35_1)
+	for iter_35_0, iter_35_1 in ipairs(arg_35_0.sideDic[FightEnum.EntitySide.MySide][var_0_1.sub]) do
 		if iter_35_1.id == arg_35_1 then
 			return true
 		end
 	end
 end
 
-function var_0_0.addDeadUid(arg_36_0, arg_36_1)
-	arg_36_0.deadUids[arg_36_1] = true
-end
-
-function var_0_0.isDeadUid(arg_37_0, arg_37_1)
-	return arg_37_0.deadUids[arg_37_1]
-end
-
-function var_0_0.removeEntity(arg_38_0, arg_38_1)
-	if not arg_38_1 then
-		return
+function var_0_0.isSp(arg_36_0, arg_36_1)
+	for iter_36_0, iter_36_1 in pairs(arg_36_0.sideDic) do
+		for iter_36_2, iter_36_3 in ipairs(iter_36_1[var_0_1.sp]) do
+			if iter_36_3.id == arg_36_1 then
+				return true
+			end
+		end
 	end
+end
 
+function var_0_0.isAssistBoss(arg_37_0, arg_37_1)
+	local var_37_0 = arg_37_0:getAssistBoss()
+
+	return var_37_0 and var_37_0.id == arg_37_1
+end
+
+function var_0_0.isAct191Boss(arg_38_0, arg_38_1)
 	local var_38_0 = arg_38_0.entityDataDic[arg_38_1]
 
 	if not var_38_0 then
+		return false
+	end
+
+	if var_38_0.entityType == FightEnum.EntityType.Act191Boss then
+		return true
+	end
+end
+
+function var_0_0.isMySp(arg_39_0, arg_39_1)
+	for iter_39_0, iter_39_1 in ipairs(arg_39_0.sideDic[FightEnum.EntitySide.MySide][var_0_1.sp]) do
+		if iter_39_1.id == arg_39_1 then
+			return true
+		end
+	end
+end
+
+function var_0_0.addDeadUid(arg_40_0, arg_40_1)
+	arg_40_0.deadUids[arg_40_1] = true
+end
+
+function var_0_0.isDeadUid(arg_41_0, arg_41_1)
+	return arg_41_0.deadUids[arg_41_1]
+end
+
+function var_0_0.removeEntity(arg_42_0, arg_42_1)
+	if not arg_42_1 then
 		return
 	end
 
-	arg_38_0.entityDataDic[arg_38_1] = nil
+	local var_42_0 = arg_42_0.entityDataDic[arg_42_1]
 
-	for iter_38_0, iter_38_1 in pairs(arg_38_0.sideDic) do
-		for iter_38_2, iter_38_3 in pairs(iter_38_1) do
-			for iter_38_4, iter_38_5 in ipairs(iter_38_3) do
-				if iter_38_5.id == var_38_0.id then
-					table.remove(iter_38_3, iter_38_4)
+	if not var_42_0 then
+		return
+	end
+
+	arg_42_0.entityDataDic[arg_42_1] = nil
+
+	for iter_42_0, iter_42_1 in pairs(arg_42_0.sideDic) do
+		for iter_42_2, iter_42_3 in pairs(iter_42_1) do
+			for iter_42_4, iter_42_5 in ipairs(iter_42_3) do
+				if iter_42_5.id == var_42_0.id then
+					table.remove(iter_42_3, iter_42_4)
 
 					break
 				end
@@ -279,151 +305,158 @@ function var_0_0.removeEntity(arg_38_0, arg_38_1)
 		end
 	end
 
-	return var_38_0
+	return var_42_0
 end
 
-function var_0_0.getById(arg_39_0, arg_39_1)
-	return arg_39_0.entityDataDic[arg_39_1]
+function var_0_0.getById(arg_43_0, arg_43_1)
+	return arg_43_0.entityDataDic[arg_43_1]
 end
 
-function var_0_0.getByPosId(arg_40_0, arg_40_1, arg_40_2)
-	for iter_40_0, iter_40_1 in pairs(arg_40_0.sideDic[arg_40_1]) do
-		for iter_40_2, iter_40_3 in ipairs(iter_40_1) do
-			if not iter_40_3:isStatusDead() and iter_40_3.position == arg_40_2 then
-				return iter_40_3
+function var_0_0.getByPosId(arg_44_0, arg_44_1, arg_44_2)
+	for iter_44_0, iter_44_1 in pairs(arg_44_0.sideDic[arg_44_1]) do
+		for iter_44_2, iter_44_3 in ipairs(iter_44_1) do
+			if not iter_44_3:isStatusDead() and iter_44_3.position == arg_44_2 then
+				return iter_44_3
 			end
 		end
 	end
 end
 
-function var_0_0.getOldEntityMO(arg_41_0, arg_41_1)
-	local var_41_0 = FightEntityMO.New()
+function var_0_0.getOldEntityMO(arg_45_0, arg_45_1)
+	local var_45_0 = FightEntityMO.New()
 
-	FightDataUtil.coverData(arg_41_0:getById(arg_41_1), var_41_0)
+	FightDataUtil.coverData(arg_45_0:getById(arg_45_1), var_45_0)
 
-	return var_41_0
+	return var_45_0
 end
 
-function var_0_0.getAllEntityData(arg_42_0)
-	return arg_42_0.entityDataDic
+function var_0_0.getAllEntityData(arg_46_0)
+	return arg_46_0.entityDataDic
 end
 
-function var_0_0.getAllEntityMO(arg_43_0)
-	return arg_43_0.entityDataDic
+function var_0_0.getAllEntityMO(arg_47_0)
+	return arg_47_0.entityDataDic
 end
 
-function var_0_0.addEntityMO(arg_44_0, arg_44_1)
-	return arg_44_0:refreshEntityByEntityMO(arg_44_1)
+function var_0_0.addEntityMO(arg_48_0, arg_48_1)
+	return arg_48_0:refreshEntityByEntityMO(arg_48_1)
 end
 
-function var_0_0.replaceEntityMO(arg_45_0, arg_45_1)
-	return arg_45_0:refreshEntityByEntityMO(arg_45_1)
+function var_0_0.replaceEntityMO(arg_49_0, arg_49_1)
+	return arg_49_0:refreshEntityByEntityMO(arg_49_1)
 end
 
-function var_0_0.refreshEntityByEntityMO(arg_46_0, arg_46_1)
-	local var_46_0 = arg_46_0.entityDataDic[arg_46_1.id]
+function var_0_0.refreshEntityByEntityMO(arg_50_0, arg_50_1)
+	local var_50_0 = arg_50_0.entityDataDic[arg_50_1.id]
 
-	if not var_46_0 then
-		var_46_0 = FightEntityMO.New()
-		arg_46_0.entityDataDic[arg_46_1.id] = var_46_0
+	if not var_50_0 then
+		var_50_0 = FightEntityMO.New()
+		arg_50_0.entityDataDic[arg_50_1.id] = var_50_0
 	end
 
-	FightEntityDataHelper.copyEntityMO(arg_46_1, var_46_0)
-	arg_46_0.dataMgr.entityExMgr:setEXDataAfterAddEntityMO(arg_46_1)
+	FightEntityDataHelper.copyEntityMO(arg_50_1, var_50_0)
 
-	if var_46_0:isASFDEmitter() then
-		FightDataHelper.ASFDDataMgr:setEmitterEntityMo(var_46_0)
+	if var_50_0:isASFDEmitter() then
+		FightDataHelper.ASFDDataMgr:setEmitterEntityMo(var_50_0)
 	end
 
-	return var_46_0
+	arg_50_0.heroId2SkinId[var_50_0.modelId] = var_50_0.skin
+
+	return var_50_0
 end
 
-function var_0_0.addEntityMOByProto(arg_47_0, arg_47_1, arg_47_2)
-	local var_47_0 = FightEntityMO.New()
+function var_0_0.addEntityMOByProto(arg_51_0, arg_51_1, arg_51_2)
+	local var_51_0 = FightEntityMO.New()
 
-	var_47_0:init(arg_47_1, arg_47_2)
+	var_51_0:init(arg_51_1, arg_51_2)
 
 	if FightModel.instance:getVersion() >= 4 then
-		if var_47_0:isStatusDead() then
-			arg_47_0:addDeadUid(var_47_0.id)
+		if var_51_0:isStatusDead() then
+			arg_51_0:addDeadUid(var_51_0.id)
 		end
-	elseif var_47_0.currentHp <= 0 then
-		var_47_0:setDead()
-		arg_47_0:addDeadUid(var_47_0.id)
+	elseif var_51_0.currentHp <= 0 then
+		var_51_0:setDead()
+		arg_51_0:addDeadUid(var_51_0.id)
 	end
 
-	return arg_47_0:addEntityMO(var_47_0)
+	return arg_51_0:addEntityMO(var_51_0)
 end
 
-function var_0_0.initEntityListByProto(arg_48_0, arg_48_1, arg_48_2, arg_48_3)
-	tabletool.clear(arg_48_3)
+function var_0_0.initEntityListByProto(arg_52_0, arg_52_1, arg_52_2, arg_52_3)
+	tabletool.clear(arg_52_3)
 
-	for iter_48_0, iter_48_1 in ipairs(arg_48_1) do
-		table.insert(arg_48_3, arg_48_0:addEntityMOByProto(iter_48_1, arg_48_2))
-	end
-end
-
-function var_0_0.initOneEntityListByProto(arg_49_0, arg_49_1, arg_49_2, arg_49_3)
-	tabletool.clear(arg_49_3)
-	table.insert(arg_49_3, arg_49_0:addEntityMOByProto(arg_49_1, arg_49_2))
-end
-
-function var_0_0.updateData(arg_50_0, arg_50_1)
-	local var_50_0 = arg_50_0.sideDic[FightEnum.EntitySide.MySide]
-	local var_50_1 = arg_50_0.sideDic[FightEnum.EntitySide.EnemySide]
-
-	if arg_50_1.attacker.playerEntity then
-		arg_50_0:initOneEntityListByProto(arg_50_1.attacker.playerEntity, FightEnum.EntitySide.MySide, var_50_0[var_0_1.player])
-	end
-
-	arg_50_0:initEntityListByProto(arg_50_1.attacker.entitys, FightEnum.EntitySide.MySide, var_50_0[var_0_1.normal])
-	arg_50_0:initEntityListByProto(arg_50_1.attacker.subEntitys, FightEnum.EntitySide.MySide, var_50_0[var_0_1.sub])
-	arg_50_0:initEntityListByProto(arg_50_1.attacker.spEntitys, FightEnum.EntitySide.MySide, var_50_0[var_0_1.sp])
-
-	if arg_50_1.attacker.assistBoss then
-		arg_50_0:initOneEntityListByProto(arg_50_1.attacker.assistBoss, FightEnum.EntitySide.MySide, var_50_0[var_0_1.assistBoss])
-	end
-
-	if arg_50_1.attacker.emitter then
-		arg_50_0:initOneEntityListByProto(arg_50_1.attacker.emitter, FightEnum.EntitySide.MySide, var_50_0[var_0_1.ASFD_emitter])
-	end
-
-	if arg_50_1.attacker.vorpalith then
-		arg_50_0:initOneEntityListByProto(arg_50_1.attacker.vorpalith, FightEnum.EntitySide.MySide, var_50_0[var_0_1.vorpalith])
-	end
-
-	if arg_50_1.defender.playerEntity then
-		arg_50_0:initOneEntityListByProto(arg_50_1.defender.playerEntity, FightEnum.EntitySide.EnemySide, var_50_1[var_0_1.player])
-	end
-
-	arg_50_0:initEntityListByProto(arg_50_1.defender.entitys, FightEnum.EntitySide.EnemySide, var_50_1[var_0_1.normal])
-	arg_50_0:initEntityListByProto(arg_50_1.defender.subEntitys, FightEnum.EntitySide.EnemySide, var_50_1[var_0_1.sub])
-	arg_50_0:initEntityListByProto(arg_50_1.defender.spEntitys, FightEnum.EntitySide.EnemySide, var_50_1[var_0_1.sp])
-
-	if arg_50_1.defender.emitter then
-		arg_50_0:initOneEntityListByProto(arg_50_1.defender.emitter, FightEnum.EntitySide.EnemySide, var_50_1[var_0_1.ASFD_emitter])
+	for iter_52_0, iter_52_1 in ipairs(arg_52_1) do
+		table.insert(arg_52_3, arg_52_0:addEntityMOByProto(iter_52_1, arg_52_2))
 	end
 end
 
-function var_0_0.clientTestSetEntity(arg_51_0, arg_51_1, arg_51_2, arg_51_3)
-	arg_51_0:clientSetEntityList(arg_51_1, var_0_1.normal, arg_51_2)
-	arg_51_0:clientSetEntityList(arg_51_1, var_0_1.sub, arg_51_3)
+function var_0_0.initOneEntityListByProto(arg_53_0, arg_53_1, arg_53_2, arg_53_3)
+	tabletool.clear(arg_53_3)
+	table.insert(arg_53_3, arg_53_0:addEntityMOByProto(arg_53_1, arg_53_2))
 end
 
-function var_0_0.clientSetEntityList(arg_52_0, arg_52_1, arg_52_2, arg_52_3)
-	local var_52_0 = arg_52_0.sideDic[arg_52_1][arg_52_2]
+function var_0_0.updateData(arg_54_0, arg_54_1)
+	local var_54_0 = arg_54_0.sideDic[FightEnum.EntitySide.MySide]
+	local var_54_1 = arg_54_0.sideDic[FightEnum.EntitySide.EnemySide]
 
-	tabletool.clear(var_52_0)
+	if arg_54_1.attacker.playerEntity then
+		arg_54_0:initOneEntityListByProto(arg_54_1.attacker.playerEntity, FightEnum.EntitySide.MySide, var_54_0[var_0_1.player])
+	end
 
-	for iter_52_0, iter_52_1 in ipairs(arg_52_3) do
-		local var_52_1 = arg_52_0:addEntityMO(iter_52_1)
+	arg_54_0:initEntityListByProto(arg_54_1.attacker.entitys, FightEnum.EntitySide.MySide, var_54_0[var_0_1.normal])
+	arg_54_0:initEntityListByProto(arg_54_1.attacker.subEntitys, FightEnum.EntitySide.MySide, var_54_0[var_0_1.sub])
+	arg_54_0:initEntityListByProto(arg_54_1.attacker.spEntitys, FightEnum.EntitySide.MySide, var_54_0[var_0_1.sp])
+	arg_54_0:initEntityListByProto(arg_54_1.attacker.spFightEntities, FightEnum.EntitySide.MySide, var_54_0[var_0_1.spFightEntities])
 
-		table.insert(var_52_0, var_52_1)
+	if arg_54_1.attacker.assistBoss then
+		arg_54_0:initOneEntityListByProto(arg_54_1.attacker.assistBoss, FightEnum.EntitySide.MySide, var_54_0[var_0_1.assistBoss])
+	end
+
+	if arg_54_1.attacker.emitter then
+		arg_54_0:initOneEntityListByProto(arg_54_1.attacker.emitter, FightEnum.EntitySide.MySide, var_54_0[var_0_1.ASFD_emitter])
+	end
+
+	if arg_54_1.attacker.vorpalith then
+		arg_54_0:initOneEntityListByProto(arg_54_1.attacker.vorpalith, FightEnum.EntitySide.MySide, var_54_0[var_0_1.vorpalith])
+	end
+
+	if arg_54_1.defender.playerEntity then
+		arg_54_0:initOneEntityListByProto(arg_54_1.defender.playerEntity, FightEnum.EntitySide.EnemySide, var_54_1[var_0_1.player])
+	end
+
+	arg_54_0:initEntityListByProto(arg_54_1.defender.entitys, FightEnum.EntitySide.EnemySide, var_54_1[var_0_1.normal])
+	arg_54_0:initEntityListByProto(arg_54_1.defender.subEntitys, FightEnum.EntitySide.EnemySide, var_54_1[var_0_1.sub])
+	arg_54_0:initEntityListByProto(arg_54_1.defender.spEntitys, FightEnum.EntitySide.EnemySide, var_54_1[var_0_1.sp])
+	arg_54_0:initEntityListByProto(arg_54_1.defender.spFightEntities, FightEnum.EntitySide.EnemySide, var_54_1[var_0_1.spFightEntities])
+
+	if arg_54_1.defender.emitter then
+		arg_54_0:initOneEntityListByProto(arg_54_1.defender.emitter, FightEnum.EntitySide.EnemySide, var_54_1[var_0_1.ASFD_emitter])
 	end
 end
 
-function var_0_0.clientSetSubEntityList(arg_53_0, arg_53_1, arg_53_2)
-	arg_53_0:clientSetEntityList(arg_53_1, var_0_1.sub, arg_53_2)
+function var_0_0.clientTestSetEntity(arg_55_0, arg_55_1, arg_55_2, arg_55_3)
+	arg_55_0:clientSetEntityList(arg_55_1, var_0_1.normal, arg_55_2)
+	arg_55_0:clientSetEntityList(arg_55_1, var_0_1.sub, arg_55_3)
+end
+
+function var_0_0.clientSetEntityList(arg_56_0, arg_56_1, arg_56_2, arg_56_3)
+	local var_56_0 = arg_56_0.sideDic[arg_56_1][arg_56_2]
+
+	tabletool.clear(var_56_0)
+
+	for iter_56_0, iter_56_1 in ipairs(arg_56_3) do
+		local var_56_1 = arg_56_0:addEntityMO(iter_56_1)
+
+		table.insert(var_56_0, var_56_1)
+	end
+end
+
+function var_0_0.clientSetSubEntityList(arg_57_0, arg_57_1, arg_57_2)
+	arg_57_0:clientSetEntityList(arg_57_1, var_0_1.sub, arg_57_2)
+end
+
+function var_0_0.getHeroSkin(arg_58_0, arg_58_1)
+	return arg_58_0.heroId2SkinId[arg_58_1]
 end
 
 return var_0_0

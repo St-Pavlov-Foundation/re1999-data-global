@@ -6,18 +6,14 @@ function var_0_0.sendEnterSurvival(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_0 = SurvivalInteriorModule_pb.EnterSurvivalRequest()
 
 	if arg_1_1 then
-		var_1_0.copyId = arg_1_1.selectCopyIndex
+		var_1_0.index = arg_1_1.selectMapIndex
 
 		for iter_1_0 = 1, arg_1_1:getCarryHeroCount() do
 			local var_1_1 = arg_1_1.allSelectHeroMos[iter_1_0]
 
-			if var_1_1 and (not arg_1_1.assistHeroMo or var_1_1 ~= arg_1_1.assistHeroMo.heroMO) then
+			if var_1_1 then
 				table.insert(var_1_0.heroUid, var_1_1.uid)
 			end
-		end
-
-		if arg_1_1.assistHeroMo then
-			var_1_0.assistHeroUid = arg_1_1.assistHeroMo.heroUid
 		end
 
 		for iter_1_1 = 1, arg_1_1:getCarryNPCCount() do
@@ -80,7 +76,7 @@ function var_0_0.onReceiveSurvivalSceneOperationLogReply(arg_8_0, arg_8_1, arg_8
 		for iter_8_0, iter_8_1 in ipairs(arg_8_2.data) do
 			local var_8_1 = SurvivalLogMo.New()
 
-			var_8_1:init(iter_8_1, SurvivalEnum.ItemRareColor2)
+			var_8_1:init(iter_8_1, SurvivalConst.ItemRareColor2)
 			table.insert(var_8_0, var_8_1)
 		end
 

@@ -11,12 +11,16 @@ end
 function var_0_0.onInitView(arg_2_0)
 	arg_2_0.root = gohelper.findChild(arg_2_0.viewGO, "root")
 	arg_2_0._simagebg = gohelper.findChildSingleImage(arg_2_0.viewGO, "#simage_bg")
-	arg_2_0._simageicon = gohelper.findChildSingleImage(arg_2_0.viewGO, "root/center/#simage_icon")
-	arg_2_0._simageiconhui = gohelper.findChildSingleImage(arg_2_0.viewGO, "root/center/#simage_iconhui")
+	arg_2_0._iconList = arg_2_0:getUserDataTb_()
+
+	for iter_2_0 = 1, 3 do
+		local var_2_0 = gohelper.findChildSingleImage(arg_2_0.viewGO, "root/center/image_pic" .. iter_2_0)
+
+		table.insert(arg_2_0._iconList, var_2_0)
+	end
+
 	arg_2_0._txttip = gohelper.findChildText(arg_2_0.viewGO, "root/center/#txt_tip")
 	arg_2_0._animator = arg_2_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-
-	arg_2_0:setlineWidth()
 end
 
 function var_0_0.onOpen(arg_3_0)
@@ -87,8 +91,9 @@ function var_0_0._setIcon(arg_8_0)
 	if var_8_1 then
 		local var_8_2 = var_8_1.pic
 
-		arg_8_0._simageicon:LoadImage(ResUrl.getLoadingBg(var_8_2))
-		arg_8_0._simageiconhui:LoadImage(ResUrl.getLoadingBg(var_8_2))
+		for iter_8_0, iter_8_1 in ipairs(arg_8_0._iconList) do
+			iter_8_1:LoadImage(ResUrl.getLoadingBg(var_8_2 .. "_" .. iter_8_0))
+		end
 	end
 end
 

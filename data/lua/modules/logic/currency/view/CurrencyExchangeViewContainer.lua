@@ -16,10 +16,16 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 end
 
 function var_0_0._buildCurrency(arg_3_0)
-	arg_3_0._currencyView = CurrencyView.New({
-		CurrencyEnum.CurrencyType.Diamond,
-		CurrencyEnum.CurrencyType.FreeDiamondCoupon
-	}, nil, nil, nil, true)
+	local var_3_0 = {}
+
+	if arg_3_0.viewParam and arg_3_0.viewParam.costData then
+		table.insert(var_3_0, arg_3_0.viewParam.costData)
+	end
+
+	table.insert(var_3_0, CurrencyEnum.CurrencyType.Diamond)
+	table.insert(var_3_0, CurrencyEnum.CurrencyType.FreeDiamondCoupon)
+
+	arg_3_0._currencyView = CurrencyView.New(var_3_0, nil, nil, nil, true)
 
 	return {
 		arg_3_0._currencyView

@@ -9,13 +9,15 @@ var_0_0.BuildingState = {
 	Map = 1
 }
 var_0_0.BuildingType = {
-	Manufacture = 3,
 	Collect = 1,
-	Decoration = 0,
-	Rest = 4,
+	Manufacture = 3,
+	FishingStore = 9,
 	Interact = 7,
 	Process = 2,
 	Trade = 5,
+	Decoration = 0,
+	Rest = 4,
+	Fishing = 8,
 	Transport = 6
 }
 var_0_0.BuildingListViewResTabType = {

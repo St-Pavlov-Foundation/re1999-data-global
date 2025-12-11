@@ -79,7 +79,7 @@ function var_0_0.onOpen(arg_4_0)
 	gohelper.setActive(arg_4_0._goempty, true)
 	arg_4_0:setShowRightTips(false)
 
-	local var_4_4 = SurvivalMapModel.instance:getSceneMo().bag
+	local var_4_4 = SurvivalMapHelper.instance:getBagMo()
 	local var_4_5 = {}
 
 	for iter_4_0, iter_4_1 in ipairs(var_4_4.items) do
@@ -98,12 +98,17 @@ function var_0_0.onOpen(arg_4_0)
 
 	local var_4_7 = arg_4_0.viewContainer._viewSetting.otherRes.itemRes
 	local var_4_8 = arg_4_0:getResInst(var_4_7, arg_4_0.viewGO)
+	local var_4_9 = gohelper.findChildAnim(var_4_8, "")
+
+	if var_4_9 then
+		var_4_9.enabled = false
+	end
 
 	arg_4_0._dragItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_8, SurvivalBagItem)
 
-	local var_4_9 = arg_4_0:getResInst(var_4_7, arg_4_0._gotipitem)
+	local var_4_10 = arg_4_0:getResInst(var_4_7, arg_4_0._gotipitem)
 
-	arg_4_0._tipsItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_9, SurvivalBagItem)
+	arg_4_0._tipsItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_10, SurvivalBagItem)
 
 	arg_4_0._tipsItem:setShowNum(false)
 

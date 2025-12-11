@@ -477,6 +477,15 @@
     ]
   },
   {
+    "name": "2_4_opening_1",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
+  },
+  {
     "name": "2_5_opening_1",
     "supportLang": [
       "en",
@@ -583,6 +592,24 @@
   },
   {
     "name": "3_0_huigu",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
+  },
+  {
+    "name": "3_1_pv",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
+  },
+  {
+    "name": "3_1_opening_1",
     "supportLang": [
       "en",
       "zh",

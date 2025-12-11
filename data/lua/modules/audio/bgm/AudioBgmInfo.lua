@@ -102,6 +102,8 @@ function var_0_0._initBgmDatas(arg_2_0)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_6_DiceHero, AudioEnum2_6.DiceHero.Bgm, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_6_DiceHero_Game, AudioEnum2_6.DiceHero.Bgm_Game, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_7Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_9Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_9Stealth, AudioEnum2_9.StealthGameBgm.StealthGameBgm, AudioEnum2_9.StealthGameBgm.StealthGameStopBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_8Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_8DungeonBoss, AudioEnum2_8.DungeonBgm.boss, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.SurvivalBGM, AudioEnum2_8.Survival.play_activitymusic_dl_state_2_8, AudioEnum2_8.Survival.stop_activitymusic_dl_state_2_8)
@@ -109,8 +111,8 @@ function var_0_0._initBgmDatas(arg_2_0)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity3_0Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.CommanStationEnterView, AudioEnum3_0.Bgm.play_ui_zhihuisuo_music, AudioEnum.UI.Stop_UIMusic)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity3_0MainAmbientSound, 0, 0)
-	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_9Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
-	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_9Stealth, AudioEnum2_9.StealthGameBgm.StealthGameBgm, AudioEnum2_9.StealthGameBgm.StealthGameStopBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity3_1Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.NecrologistStoryView, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 end
 
 function var_0_0._initBgmUsage(arg_3_0)
@@ -507,7 +509,8 @@ function var_0_0._initBgmUsage(arg_3_0)
 	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity2_3Main
 	}, AudioBgmEnum.UsageType.View, {
-		ViewName.VersionActivity2_3EnterView
+		ViewName.VersionActivity2_3EnterView,
+		ViewName.V2a3_ReactivityEnterview
 	}, nil, nil, true)
 	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.Tower
@@ -582,6 +585,16 @@ function var_0_0._initBgmUsage(arg_3_0)
 		ViewName.VersionActivity2_7EnterView
 	}, nil, nil, true)
 	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_9Main
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.VersionActivity2_9EnterView
+	}, nil, nil, true)
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_9Stealth
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.AssassinStealthGameView
+	}, nil, nil, true)
+	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity2_8Main
 	}, AudioBgmEnum.UsageType.View, {
 		ViewName.VersionActivity2_8EnterView
@@ -603,6 +616,11 @@ function var_0_0._initBgmUsage(arg_3_0)
 		SceneType.SurvivalShelter
 	})
 	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.ShelterBGM
+	}, AudioBgmEnum.UsageType.Scene, {
+		SceneType.SurvivalSummaryAct
+	})
+	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity3_0Main
 	}, AudioBgmEnum.UsageType.View, {
 		ViewName.VersionActivity3_0EnterView
@@ -610,17 +628,18 @@ function var_0_0._initBgmUsage(arg_3_0)
 	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.CommanStationEnterView
 	}, AudioBgmEnum.UsageType.View, {
-		ViewName.CommandStationEnterView
+		ViewName.CommandStationEnterView,
+		ViewName.CommandStationMapView
 	})
 	arg_3_0:_addBgmUsage({
-		AudioBgmEnum.Layer.VersionActivity2_9Main
+		AudioBgmEnum.Layer.VersionActivity3_1Main
 	}, AudioBgmEnum.UsageType.View, {
-		ViewName.VersionActivity2_9EnterView
+		ViewName.VersionActivity3_1EnterView
 	}, nil, nil, true)
 	arg_3_0:_addBgmUsage({
-		AudioBgmEnum.Layer.VersionActivity2_9Stealth
+		AudioBgmEnum.Layer.NecrologistStoryView
 	}, AudioBgmEnum.UsageType.View, {
-		ViewName.AssassinStealthGameView
+		ViewName.NecrologistStoryView
 	}, nil, nil, true)
 end
 

@@ -55,11 +55,13 @@ end
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addClickCb(arg_2_0.btnDetail, arg_2_0._onBtnRankClick, arg_2_0)
 	arg_2_0:addClickCb(arg_2_0._click, arg_2_0._onClickClose, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeClickCb(arg_3_0.btnDetail)
 	arg_3_0:removeClickCb(arg_3_0._click)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
@@ -114,7 +116,12 @@ end
 function var_0_0.refreshView(arg_9_0)
 	arg_9_0:refreshEntry()
 	arg_9_0:refreshResult()
-	arg_9_0:startFlow()
+
+	local var_9_0 = AchievementToastModel.instance:getWaitNamePlateToastList()
+
+	if not var_9_0 or #var_9_0 == 0 then
+		arg_9_0:startFlow()
+	end
 end
 
 function var_0_0.startFlow(arg_10_0)
@@ -300,21 +307,27 @@ function var_0_0._onAllFinish(arg_17_0)
 	arg_17_0.canClick = true
 end
 
-function var_0_0.onClose(arg_18_0)
+function var_0_0._onCloseViewFinish(arg_18_0, arg_18_1)
+	if arg_18_1 == ViewName.AchievementNamePlateUnlockView then
+		arg_18_0:startFlow()
+	end
+end
+
+function var_0_0.onClose(arg_19_0)
 	FightController.onResultViewClose()
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	arg_19_0.simageBoss:UnLoadImage()
-	arg_19_0.simageWaveEntry:UnLoadImage()
-	arg_19_0.simageStageEntry:UnLoadImage()
-	arg_19_0.simageStageDetail:UnLoadImage()
-	arg_19_0.simageWaveDetail:UnLoadImage()
+function var_0_0.onDestroyView(arg_20_0)
+	arg_20_0.simageBoss:UnLoadImage()
+	arg_20_0.simageWaveEntry:UnLoadImage()
+	arg_20_0.simageStageEntry:UnLoadImage()
+	arg_20_0.simageStageDetail:UnLoadImage()
+	arg_20_0.simageWaveDetail:UnLoadImage()
 
-	if arg_19_0._popupFlow then
-		arg_19_0._popupFlow:destroy()
+	if arg_20_0._popupFlow then
+		arg_20_0._popupFlow:destroy()
 
-		arg_19_0._popupFlow = nil
+		arg_20_0._popupFlow = nil
 	end
 end
 

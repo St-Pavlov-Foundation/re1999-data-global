@@ -111,7 +111,7 @@ function var_0_0._onClothSkillShrink(arg_10_0)
 end
 
 function var_0_0._onCombineOneCard(arg_11_0)
-	if FightModel.instance:getCurStage() == FightEnum.Stage.Card or FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
 		arg_11_0:_onClothSkillShrink()
 	end
 end
@@ -179,7 +179,7 @@ function var_0_0.setActiveCanvasGroup(arg_16_0, arg_16_1, arg_16_2)
 end
 
 function var_0_0.onCameraFocusChanged(arg_17_0, arg_17_1)
-	if FightModel.instance:getCurStage() == FightEnum.Stage.Card or FightModel.instance:getCurStage() == FightEnum.Stage.ClothSkill then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
 		arg_17_0:setActiveCanvasGroup(arg_17_0._playCardGO, not arg_17_1)
 		gohelper.setActive(arg_17_0._handCardGO, not arg_17_1)
 		gohelper.setActiveCanvasGroup(FightNameMgr.instance:getNameParent(), not arg_17_1)

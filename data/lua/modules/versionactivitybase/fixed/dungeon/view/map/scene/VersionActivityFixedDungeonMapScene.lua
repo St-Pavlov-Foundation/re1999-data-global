@@ -17,12 +17,9 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_2_0._onScreenResize, arg_2_0)
 	arg_2_0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, arg_2_0.onModeChange, arg_2_0)
 	arg_2_0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, arg_2_0.onActivityDungeonMoChange, arg_2_0)
-
-	local var_2_0 = VersionActivityFixedHelper.getVersionActivityDungeonController()
-
-	arg_2_0:addEventCb(var_2_0.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_2_0.onClickElement, arg_2_0)
-	arg_2_0:addEventCb(var_2_0.instance, VersionActivityFixedDungeonEvent.FocusElement, arg_2_0.onFocusElement, arg_2_0)
-	arg_2_0:addEventCb(var_2_0.instance, VersionActivityFixedDungeonEvent.ManualClickElement, arg_2_0.manualClickElement, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_2_0.onClickElement, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.FocusElement, arg_2_0.onFocusElement, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.ManualClickElement, arg_2_0.manualClickElement, arg_2_0)
 
 	if arg_2_0._drag then
 		arg_2_0._drag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
@@ -37,12 +34,9 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0._onScreenResize, arg_3_0)
 	arg_3_0:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, arg_3_0.onModeChange, arg_3_0)
 	arg_3_0:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, arg_3_0.onActivityDungeonMoChange, arg_3_0)
-
-	local var_3_0 = VersionActivityFixedHelper.getVersionActivityDungeonController()
-
-	arg_3_0:removeEventCb(var_3_0.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_3_0.onClickElement, arg_3_0)
-	arg_3_0:removeEventCb(var_3_0.instance, VersionActivityFixedDungeonEvent.FocusElement, arg_3_0.onFocusElement, arg_3_0)
-	arg_3_0:removeEventCb(var_3_0.instance, VersionActivityFixedDungeonEvent.ManualClickElement, arg_3_0.manualClickElement, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_3_0.onClickElement, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.FocusElement, arg_3_0.onFocusElement, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.ManualClickElement, arg_3_0.manualClickElement, arg_3_0)
 
 	if arg_3_0._drag then
 		arg_3_0._drag:RemoveDragBeginListener()
@@ -69,7 +63,7 @@ function var_0_0._onScreenResize(arg_6_0)
 		local var_6_0 = CameraMgr.instance:getMainCamera()
 		local var_6_1 = GameUtil.getAdapterScale()
 
-		var_6_0.orthographicSize = VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonMapCameraSize * var_6_1
+		var_6_0.orthographicSize = VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_6_0._bigVersion, arg_6_0._smallVersion).DungeonMapCameraSize * var_6_1
 
 		arg_6_0:_initScene()
 	end
@@ -201,12 +195,13 @@ function var_0_0._editableInitView(arg_18_0)
 	arg_18_0._tempVector = Vector3()
 	arg_18_0._dragDeltaPos = Vector3()
 	arg_18_0._scenePos = Vector3()
+	arg_18_0._bigVersion, arg_18_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 
 	arg_18_0:_initMapRootNode()
 end
 
 function var_0_0._initMapRootNode(arg_19_0)
-	arg_19_0._sceneRoot = UnityEngine.GameObject.New(VersionActivityFixedHelper.getVersionActivityDungeonEnum().SceneRootName)
+	arg_19_0._sceneRoot = UnityEngine.GameObject.New(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_19_0._bigVersion, arg_19_0._smallVersion).SceneRootName)
 
 	local var_19_0 = CameraMgr.instance:getMainCameraTrs().parent
 	local var_19_1, var_19_2, var_19_3 = transformhelper.getLocalPos(var_19_0)
@@ -235,7 +230,7 @@ function var_0_0._initCamera(arg_22_0)
 
 	local var_22_1 = GameUtil.getAdapterScale()
 
-	var_22_0.orthographicSize = VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonMapCameraSize * var_22_1
+	var_22_0.orthographicSize = VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_22_0._bigVersion, arg_22_0._smallVersion).DungeonMapCameraSize * var_22_1
 end
 
 function var_0_0.refreshMap(arg_23_0, arg_23_1, arg_23_2)
@@ -341,7 +336,7 @@ function var_0_0._initScene(arg_28_0)
 	local var_28_6 = var_28_4.transform:GetWorldCorners()
 	local var_28_7 = CameraMgr.instance:getUICamera()
 	local var_28_8 = var_28_7 and var_28_7.orthographicSize or 5
-	local var_28_9 = VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonMapCameraSize / var_28_8
+	local var_28_9 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_28_0._bigVersion, arg_28_0._smallVersion).DungeonMapCameraSize / var_28_8
 	local var_28_10 = var_28_6[1] * var_28_5 * var_28_9
 	local var_28_11 = var_28_6[3] * var_28_5 * var_28_9
 
@@ -488,7 +483,7 @@ function var_0_0.directSetScenePos(arg_36_0, arg_36_1)
 	end
 
 	transformhelper.setLocalPos(arg_36_0._sceneTrans, arg_36_0._scenePos.x, arg_36_0._scenePos.y, 0)
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnMapPosChanged, arg_36_0._scenePos, arg_36_0.needTween)
+	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnMapPosChanged, arg_36_0._scenePos, arg_36_0.needTween)
 	arg_36_0:_updateElementArrow()
 end
 

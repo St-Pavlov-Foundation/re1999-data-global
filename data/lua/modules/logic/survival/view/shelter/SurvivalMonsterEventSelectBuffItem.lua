@@ -83,7 +83,7 @@ function var_0_0._initTagItem(arg_10_0)
 
 			if var_10_2 then
 				local var_10_4 = gohelper.findChildImage(var_10_3, "#image_Type")
-				local var_10_5 = SurvivalEnum.ShelterTagColor[var_10_2.tagType]
+				local var_10_5 = SurvivalConst.ShelterTagColor[var_10_2.tagType]
 
 				if var_10_5 then
 					var_10_4.color = GameUtil.parseColor(var_10_5)

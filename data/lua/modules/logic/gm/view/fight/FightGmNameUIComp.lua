@@ -20,17 +20,23 @@ function var_0_0.init(arg_2_0, arg_2_1)
 end
 
 function var_0_0.onLoadDone(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0.assetItem
+
 	arg_3_0.assetItem = arg_3_1
 
 	arg_3_0.assetItem:Retain()
+
+	if var_3_0 then
+		var_3_0:Release()
+	end
 
 	arg_3_0.go = gohelper.clone(arg_3_1:GetResource(), arg_3_0.goContainer)
 	arg_3_0.labelText = gohelper.findChildText(arg_3_0.go, "label")
 	arg_3_0.labelText.text = ""
 
-	local var_3_0 = arg_3_0.entity:getMO().side
+	local var_3_1 = arg_3_0.entity:getMO().side
 
-	recthelper.setAnchorY(arg_3_0.go.transform, var_0_0.SideAnchorY[var_3_0] or 0)
+	recthelper.setAnchorY(arg_3_0.go.transform, var_0_0.SideAnchorY[var_3_1] or 0)
 	arg_3_0:hide()
 
 	arg_3_0.loaded = true

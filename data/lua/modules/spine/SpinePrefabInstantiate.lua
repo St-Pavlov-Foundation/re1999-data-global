@@ -64,13 +64,19 @@ end
 
 function var_0_0._onLoadCallback(arg_9_0, arg_9_1)
 	if arg_9_1.IsLoadSuccess then
+		local var_9_0 = arg_9_0._assetItem
+
 		arg_9_0._assetItem = arg_9_1
 
 		arg_9_0._assetItem:Retain()
 
-		local var_9_0 = arg_9_0._assetItem:GetResource(arg_9_0._assetPath)
+		if var_9_0 then
+			var_9_0:Release()
+		end
 
-		arg_9_0._instGO = gohelper.clone(var_9_0, arg_9_0._containerGO)
+		local var_9_1 = arg_9_0._assetItem:GetResource(arg_9_0._assetPath)
+
+		arg_9_0._instGO = gohelper.clone(var_9_1, arg_9_0._containerGO)
 
 		if arg_9_0._finishCallback then
 			if arg_9_0._callbackTarget then

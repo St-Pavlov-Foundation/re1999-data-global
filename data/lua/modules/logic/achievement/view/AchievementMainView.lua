@@ -123,7 +123,8 @@ function var_0_0.initCategory(arg_13_0)
 		AchievementEnum.Type.Story,
 		AchievementEnum.Type.Normal,
 		AchievementEnum.Type.GamePlay,
-		AchievementEnum.Type.Activity
+		AchievementEnum.Type.Activity,
+		AchievementEnum.Type.NamePlate
 	}
 	arg_13_0._categoryItems = {}
 

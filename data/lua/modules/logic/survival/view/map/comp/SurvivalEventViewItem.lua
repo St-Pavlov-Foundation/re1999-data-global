@@ -34,7 +34,7 @@ local var_0_2 = {
 	[SurvivalEnum.UnitType.Task] = "survival_map_icon_1",
 	[SurvivalEnum.UnitType.NPC] = "survival_map_icon_2",
 	[SurvivalEnum.UnitType.Treasure] = "survival_map_icon_5",
-	[SurvivalEnum.UnitType.Exit] = "survival_map_icon_8",
+	[SurvivalEnum.UnitType.Exit] = "survival_map_icon_22",
 	[SurvivalEnum.UnitType.Door] = "survival_map_icon_9"
 }
 
@@ -45,16 +45,17 @@ function var_0_0.initData(arg_4_0, arg_4_1, arg_4_2)
 	arg_4_0:onSelectChange(1)
 
 	local var_4_0 = arg_4_1.unitType
+	local var_4_1 = arg_4_1.co and arg_4_1.co.subType
 
 	if var_4_0 == SurvivalEnum.UnitType.NPC then
 		gohelper.setActive(arg_4_0._imagehead, true)
 		gohelper.setActive(arg_4_0._imagecolor, false)
 		gohelper.setActive(arg_4_0._imageIcon, false)
 
-		local var_4_1 = SurvivalConfig.instance.npcIdToItemCo[arg_4_1.cfgId]
+		local var_4_2 = SurvivalConfig.instance.npcIdToItemCo[arg_4_1.cfgId]
 
-		if var_4_1 then
-			arg_4_0._imagehead:LoadImage(ResUrl.getSurvivalNpcIcon(var_4_1.icon))
+		if var_4_2 then
+			arg_4_0._imagehead:LoadImage(ResUrl.getSurvivalNpcIcon(var_4_2.icon))
 		end
 	else
 		gohelper.setActive(arg_4_0._imagehead, false)
@@ -63,7 +64,7 @@ function var_0_0.initData(arg_4_0, arg_4_1, arg_4_2)
 		UISpriteSetMgr.instance:setSurvivalSprite(arg_4_0._imagecolor, var_0_1[var_4_0])
 
 		if var_4_0 == SurvivalEnum.UnitType.Search then
-			if arg_4_1.extraParam == "true" then
+			if arg_4_1:isSearched() then
 				UISpriteSetMgr.instance:setSurvivalSprite(arg_4_0._imageIcon, "survival_map_icon_4")
 			else
 				UISpriteSetMgr.instance:setSurvivalSprite(arg_4_0._imageIcon, "survival_map_icon_3")
@@ -74,6 +75,8 @@ function var_0_0.initData(arg_4_0, arg_4_1, arg_4_2)
 			else
 				UISpriteSetMgr.instance:setSurvivalSprite(arg_4_0._imageIcon, "survival_map_icon_7")
 			end
+		elseif var_4_1 == SurvivalEnum.UnitSubType.Shop then
+			UISpriteSetMgr.instance:setSurvivalSprite(arg_4_0._imageIcon, "survival_map_icon_15")
 		else
 			UISpriteSetMgr.instance:setSurvivalSprite(arg_4_0._imageIcon, var_0_2[var_4_0])
 		end

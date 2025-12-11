@@ -337,12 +337,12 @@ function var_0_0._setSelectResData(arg_24_0, arg_24_1)
 
 	recthelper.setWidth(arg_24_0._scrollblockTrs, var_24_4)
 	recthelper.setAnchorX(arg_24_0._scrollblockTrs, (var_24_4 - var_24_2) * 0.5 + arg_24_0._scrollLeft)
-	RoomShowBlockListModel.instance:setShowBlockList()
+	RoomMapController.instance:setRoomShowBlockList()
 	arg_24_0:_refresFinishUI()
 end
 
 function var_0_0._themeFilterChanged(arg_25_0)
-	RoomShowBlockListModel.instance:setShowBlockList()
+	RoomMapController.instance:setRoomShowBlockList()
 	arg_25_0:_refreshFilterState()
 	arg_25_0:_refresFinishUI()
 end

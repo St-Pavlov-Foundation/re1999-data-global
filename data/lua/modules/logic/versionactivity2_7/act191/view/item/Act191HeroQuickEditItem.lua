@@ -96,7 +96,7 @@ function var_0_0._onItemClick(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 	Act191HeroQuickEditListModel.instance:selectHero(arg_7_0._mo.heroId, not arg_7_0.isSelect)
 	arg_7_0:refreshSelect()
-	Activity191Controller.instance:dispatchEvent(Activity191Event.OnClickHeroEditItem, arg_7_0._mo)
+	Activity191Controller.instance:dispatchEvent(Activity191Event.ClickHeroEditItem, arg_7_0._mo)
 end
 
 function var_0_0.onDestroy(arg_8_0)

@@ -161,11 +161,15 @@ function var_0_0.getCd(arg_11_0)
 end
 
 function var_0_0.clickIcon(arg_12_0)
-	if FightViewHandCard.blockOperate or FightModel.instance:isAuto() then
+	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightViewHandCard.blockOperate or FightDataHelper.stateMgr:getIsAuto() then
+		return
+	end
+
+	if FightDataHelper.stateMgr.isReplay then
 		return
 	end
 

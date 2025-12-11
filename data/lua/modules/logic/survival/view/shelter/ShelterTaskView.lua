@@ -131,26 +131,33 @@ function var_0_0.refreshTab(arg_12_0, arg_12_1, arg_12_2)
 		var_12_5 = var_12_5 + var_12_7
 	end
 
-	local var_12_8 = var_12_5 == 0
-	local var_12_9 = not var_12_8 and var_12_4 == var_12_5
+	if var_12_0 == SurvivalEnum.TaskModule.NormalTask then
+		local var_12_8, var_12_9 = SurvivalTaskModel.instance:getTaskFinishedNum(SurvivalEnum.TaskModule.MapMainTarget)
+
+		var_12_4 = var_12_4 + var_12_8
+		var_12_5 = var_12_5 + var_12_9
+	end
+
+	local var_12_10 = var_12_5 == 0
+	local var_12_11 = not var_12_10 and var_12_4 == var_12_5
 
 	gohelper.setActive(var_12_3.go, true)
 
 	if var_12_2 then
-		gohelper.setActive(arg_12_0.goEmpty, var_12_8)
-		gohelper.setActive(var_12_3.goSelectFinished, var_12_9)
-		gohelper.setActive(var_12_3.goSelectUnFinish, not var_12_9)
+		gohelper.setActive(arg_12_0.goEmpty, var_12_10)
+		gohelper.setActive(var_12_3.goSelectFinished, var_12_11)
+		gohelper.setActive(var_12_3.goSelectUnFinish, not var_12_11)
 
-		if var_12_8 then
+		if var_12_10 then
 			var_12_3.txtSelectNum.text = ""
 		else
 			var_12_3.txtSelectNum.text = string.format("<size=50>%s</size>/%s", var_12_4, var_12_5)
 		end
 	else
-		gohelper.setActive(var_12_3.goUnSelectFinished, var_12_9)
-		gohelper.setActive(var_12_3.goUnSelectUnFinish, not var_12_9)
+		gohelper.setActive(var_12_3.goUnSelectFinished, var_12_11)
+		gohelper.setActive(var_12_3.goUnSelectUnFinish, not var_12_11)
 
-		if var_12_8 then
+		if var_12_10 then
 			var_12_3.txtUnSelectNum.text = ""
 		else
 			var_12_3.txtUnSelectNum.text = string.format("<color=#FFFFFF><size=50>%s</size></color>/%s", var_12_4, var_12_5)

@@ -8,7 +8,6 @@ function var_0_0.onConstructor(arg_1_0)
 	arg_1_0:com_registFightEvent(FightEvent.OnRestartStageBefore, arg_1_0._onRestartStageBefore)
 	arg_1_0:com_registFightEvent(FightEvent.FightDialogEnd, arg_1_0._onFightDialogEnd)
 	arg_1_0:com_registFightEvent(FightEvent.StartFightEnd, arg_1_0.onStartFightEnd)
-	arg_1_0:com_registFightEvent(FightEvent.CoverPerformanceEntityData, arg_1_0.onCoverPerformanceEntityData)
 	arg_1_0:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, arg_1_0._onCloseView)
 end
 
@@ -97,16 +96,7 @@ function var_0_0.clearTab(arg_10_0)
 	arg_10_0.buffCount = nil
 end
 
-function var_0_0.onCoverPerformanceEntityData(arg_11_0, arg_11_1)
-	local var_11_0 = FightHelper.getEntity(arg_11_1)
-
-	if var_11_0 and var_11_0.buff then
-		var_11_0.buff:releaseAllBuff()
-		var_11_0.buff:dealStartBuff()
-	end
-end
-
-function var_0_0.onDestructor(arg_12_0)
+function var_0_0.onDestructor(arg_11_0)
 	return
 end
 

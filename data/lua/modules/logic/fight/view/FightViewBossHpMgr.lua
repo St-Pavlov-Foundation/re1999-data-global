@@ -33,8 +33,26 @@ function var_0_0._onRestartStage(arg_5_0)
 	arg_5_0:killAllChildView()
 end
 
+var_0_0.BossHpType = {
+	ScrollHp_Survival = 1,
+	ScrollHp_500M = 2
+}
+var_0_0.BossHpType2Cls = {
+	[var_0_0.BossHpType.ScrollHp_Survival] = FightViewSurvivalBossHp,
+	[var_0_0.BossHpType.ScrollHp_500M] = FightViewScrollBossHp_500M
+}
+
 function var_0_0._onBeforeEnterStepBehaviour(arg_6_0)
 	if not GMFightShowState.bossHp then
+		return
+	end
+
+	local var_6_0 = FightHelper.getCurBattleIdBossHpType()
+	local var_6_1 = var_6_0 and var_0_0.BossHpType2Cls[var_6_0]
+
+	if var_6_1 then
+		arg_6_0:com_openSubView(var_6_1, arg_6_0._hpItem)
+
 		return
 	end
 
@@ -50,68 +68,68 @@ function var_0_0._onBeforeEnterStepBehaviour(arg_6_0)
 		return
 	end
 
-	local var_6_0 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191]
+	local var_6_2 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191]
 
-	if var_6_0 and var_6_0.bloodReward then
+	if var_6_2 and var_6_2.bloodReward then
 		gohelper.setActive(arg_6_0._hpItem, false)
-		arg_6_0:com_openSubView(FightViewBossHpBloodReward, "ui/viewres/fight/fight_act191bosshpview.prefab", arg_6_0._bossHpRoot.gameObject, var_6_0)
+		arg_6_0:com_openSubView(FightViewBossHpBloodReward, "ui/viewres/fight/fight_act191bosshpview.prefab", arg_6_0._bossHpRoot.gameObject, var_6_2)
 
 		return
 	end
 
-	local var_6_1 = 3
+	local var_6_3 = 3
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.CardDeck) then
-		var_6_1 = var_6_1 + 1
+		var_6_3 = var_6_3 + 1
 	end
 
 	if FightView.canShowSpecialBtn() then
-		var_6_1 = var_6_1 + 1
+		var_6_3 = var_6_3 + 1
 	end
 
-	local var_6_2 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+	local var_6_4 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
 
-	if var_6_2 and var_6_2.type == DungeonEnum.EpisodeType.Rouge then
-		var_6_1 = var_6_1 + 1
+	if var_6_4 and var_6_4.type == DungeonEnum.EpisodeType.Rouge then
+		var_6_3 = var_6_3 + 1
 	end
 
-	if var_6_1 >= 6 then
+	if var_6_3 >= 6 then
 		recthelper.setAnchorX(arg_6_0._bossHpRoot, -70)
 	end
 
-	local var_6_3 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
-	local var_6_4 = 0
-	local var_6_5 = FightHelper.getCurBossId()
-	local var_6_6 = {}
+	local var_6_5 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
+	local var_6_6 = 0
+	local var_6_7 = FightHelper.getCurBossId()
+	local var_6_8 = {}
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_3) do
-		local var_6_7 = iter_6_1:getMO()
+	for iter_6_0, iter_6_1 in ipairs(var_6_5) do
+		local var_6_9 = iter_6_1:getMO()
 
-		if var_6_7 and FightHelper.isBossId(var_6_5, var_6_7.modelId) then
-			var_6_4 = var_6_4 + 1
+		if var_6_9 and FightHelper.isBossId(var_6_7, var_6_9.modelId) then
+			var_6_6 = var_6_6 + 1
 
-			table.insert(var_6_6, iter_6_1.id)
+			table.insert(var_6_8, iter_6_1.id)
 		end
 	end
 
-	if var_6_4 == 2 then
-		for iter_6_2, iter_6_3 in ipairs(var_6_6) do
-			local var_6_8 = gohelper.cloneInPlace(arg_6_0._hpItem, "bossHp" .. iter_6_2)
+	if var_6_6 == 2 then
+		for iter_6_2, iter_6_3 in ipairs(var_6_8) do
+			local var_6_10 = gohelper.cloneInPlace(arg_6_0._hpItem, "bossHp" .. iter_6_2)
 
-			gohelper.setActive(var_6_8, true)
+			gohelper.setActive(var_6_10, true)
 
-			local var_6_9 = var_6_1 >= 5 and 400 or 450
+			local var_6_11 = var_6_3 >= 5 and 400 or 450
 
-			recthelper.setWidth(var_6_8.transform, var_6_9)
+			recthelper.setWidth(var_6_10.transform, var_6_11)
 
-			local var_6_10 = var_6_1 >= 5 and 240 or 295
+			local var_6_12 = var_6_3 >= 5 and 240 or 295
 
-			if var_6_10 == 295 and iter_6_2 == 1 then
-				var_6_10 = 255
+			if var_6_12 == 295 and iter_6_2 == 1 then
+				var_6_12 = 255
 			end
 
-			recthelper.setAnchorX(var_6_8.transform, iter_6_2 == 1 and -var_6_10 or var_6_10)
-			arg_6_0:com_openSubView(FightViewMultiBossHp, var_6_8, nil, iter_6_3)
+			recthelper.setAnchorX(var_6_10.transform, iter_6_2 == 1 and -var_6_12 or var_6_12)
+			arg_6_0:com_openSubView(FightViewMultiBossHp, var_6_10, nil, iter_6_3)
 		end
 
 		gohelper.setActive(arg_6_0._hpItem, false)

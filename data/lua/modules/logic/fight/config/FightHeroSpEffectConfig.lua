@@ -16,6 +16,7 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"fight_sp_effect_alf",
 		"fight_sp_effect_alf_timeline",
 		"fight_sp_effect_alf_add_card",
+		"fight_sp_effect_alf_record_buff_effect",
 		"fight_sp_effect_ddg",
 		"fight_sp_effect_wuerlixi",
 		"fight_sp_effect_wuerlixi_timeline",
@@ -29,7 +30,15 @@ function var_0_0.reqConfigNames(arg_2_0)
 end
 
 function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	return
+	if arg_3_1 == "fight_sp_effect_alf" then
+		arg_3_0.initAlfRandomList = {}
+
+		for iter_3_0, iter_3_1 in ipairs(arg_3_2.configList) do
+			if iter_3_1.skinId == 0 then
+				table.insert(arg_3_0.initAlfRandomList, iter_3_1)
+			end
+		end
+	end
 end
 
 function var_0_0.getBKLEAddBuffEffect(arg_4_0, arg_4_1)
@@ -72,50 +81,95 @@ function var_0_0.getLYEffectCo(arg_6_0, arg_6_1)
 end
 
 function var_0_0.getRandomAlfASFDMissileRes(arg_7_0)
-	if arg_7_0.tempRandomList and #arg_7_0.tempRandomList > 0 then
-		arg_7_0.tempRandomList = arg_7_0.tempRandomList
-	else
-		arg_7_0.tempRandomList = tabletool.copy(lua_fight_sp_effect_alf.configList)
-	end
+	local var_7_0 = FightDataHelper.entityMgr:getHeroSkin(FightEnum.HeroId.ALF)
+	local var_7_1 = arg_7_0:getALFRandomList(var_7_0)
+	local var_7_2 = #var_7_1
+	local var_7_3 = math.random(var_7_2)
 
-	local var_7_0 = #arg_7_0.tempRandomList
-	local var_7_1 = math.random(var_7_0)
-
-	return table.remove(arg_7_0.tempRandomList, var_7_1)
+	return table.remove(var_7_1, var_7_3)
 end
 
-function var_0_0.isKSDLSpecialBuff(arg_8_0, arg_8_1)
-	if not arg_8_1 then
-		return false
+function var_0_0.getALFRandomList(arg_8_0, arg_8_1)
+	arg_8_1 = arg_8_1 or 0
+
+	if not arg_8_0.alfRandomDict then
+		arg_8_0.alfRandomDict = {}
 	end
 
-	arg_8_0:initKSDLSpecialBuffCo()
+	local var_8_0 = arg_8_0.alfRandomDict[arg_8_1]
 
-	return arg_8_0:getKSDLSpecialBuffRank(arg_8_1) ~= nil
+	if not var_8_0 then
+		var_8_0 = {}
+		arg_8_0.alfRandomDict[arg_8_1] = var_8_0
+	end
+
+	for iter_8_0, iter_8_1 in ipairs(lua_fight_sp_effect_alf.configList) do
+		if iter_8_1.skinId == arg_8_1 then
+			table.insert(var_8_0, iter_8_1)
+		end
+	end
+
+	if #var_8_0 < 1 then
+		for iter_8_2, iter_8_3 in ipairs(arg_8_0.initAlfRandomList) do
+			table.insert(var_8_0, iter_8_3)
+		end
+	end
+
+	return var_8_0
 end
 
-function var_0_0.getKSDLSpecialBuffRank(arg_9_0, arg_9_1)
+function var_0_0.isKSDLSpecialBuff(arg_9_0, arg_9_1)
 	if not arg_9_1 then
-		return
+		return false
 	end
 
 	arg_9_0:initKSDLSpecialBuffCo()
 
-	return arg_9_0.ksdlBuffDict[arg_9_1]
+	return arg_9_0:getKSDLSpecialBuffRank(arg_9_1) ~= nil
 end
 
-function var_0_0.initKSDLSpecialBuffCo(arg_10_0)
-	if arg_10_0.ksdlBuffDict then
-		return arg_10_0.ksdlBuffDict
+function var_0_0.getKSDLSpecialBuffRank(arg_10_0, arg_10_1)
+	if not arg_10_1 then
+		return
 	end
 
-	arg_10_0.ksdlBuffDict = {}
+	arg_10_0:initKSDLSpecialBuffCo()
 
-	for iter_10_0, iter_10_1 in ipairs(lua_hero3124_buff_talent.configList) do
-		arg_10_0.ksdlBuffDict[iter_10_1.buffId] = iter_10_1.rank
+	return arg_10_0.ksdlBuffDict[arg_10_1]
+end
+
+function var_0_0.initKSDLSpecialBuffCo(arg_11_0)
+	if arg_11_0.ksdlBuffDict then
+		return arg_11_0.ksdlBuffDict
 	end
 
-	return arg_10_0.ksdlBuffDict
+	arg_11_0.ksdlBuffDict = {}
+
+	for iter_11_0, iter_11_1 in ipairs(lua_hero3124_buff_talent.configList) do
+		arg_11_0.ksdlBuffDict[iter_11_1.buffId] = iter_11_1.rank
+	end
+
+	return arg_11_0.ksdlBuffDict
+end
+
+var_0_0.tempEntityMoList = {}
+
+function var_0_0.getAlfCardAddEffect(arg_12_0)
+	local var_12_0 = 0
+	local var_12_1 = var_0_0.tempEntityMoList
+	local var_12_2 = FightDataHelper.entityMgr:getMyNormalList(var_12_1)
+
+	for iter_12_0, iter_12_1 in ipairs(var_12_2) do
+		if iter_12_1.modelId == FightEnum.HeroId.ALF then
+			var_12_0 = iter_12_1.skin
+
+			break
+		end
+	end
+
+	local var_12_3 = lua_fight_sp_effect_alf_add_card.configDict[var_12_0] or lua_fight_sp_effect_alf_add_card.configList[1]
+
+	return string.format("ui/viewres/fight/%s.prefab", var_12_3.effect)
 end
 
 var_0_0.instance = var_0_0.New()

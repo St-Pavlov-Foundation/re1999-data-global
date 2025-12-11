@@ -2,18 +2,19 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	versions = 3,
-	name = 5,
-	tags = 10,
+	versions = 4,
+	name = 6,
+	tags = 11,
 	type = 2,
-	limit = 11,
+	group = 3,
 	stageVotes = 8,
 	condition = 9,
-	desc = 6,
-	getTalents = 12,
-	seasons = 4,
+	desc = 7,
+	limit = 12,
+	getTalents = 13,
+	seasons = 5,
 	id = 1,
-	icon = 7
+	icon = 10
 }
 local var_0_2 = {
 	"id"

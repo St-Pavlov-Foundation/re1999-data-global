@@ -20,7 +20,7 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 end
 
 function var_0_0.onStageChanged(arg_2_0, arg_2_1)
-	if arg_2_1 == FightStageMgr.StageType.Normal then
+	if arg_2_1 == FightStageMgr.StageType.Operate then
 		arg_2_0.lastVisible = false
 
 		gohelper.setActive(arg_2_0.bengFaRoot, false)

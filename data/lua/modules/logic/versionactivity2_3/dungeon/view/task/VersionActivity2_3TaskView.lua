@@ -18,6 +18,7 @@ end
 
 function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._txtremaintime = gohelper.findChildText(arg_4_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	arg_4_0._dungeonActId = VersionActivity2_3Enum.ActivityId.Dungeon
 end
 
 function var_0_0.onUpdateParam(arg_5_0)
@@ -28,6 +29,7 @@ function var_0_0.onOpen(arg_6_0)
 	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0.refreshRight, arg_6_0)
 	arg_6_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_6_0.refreshRight, arg_6_0)
 	arg_6_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_6_0.refreshRight, arg_6_0)
+	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_6_0._onRefreshActivityState, arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
 	TaskDispatcher.runRepeat(arg_6_0.refreshRemainTime, arg_6_0, TimeUtil.OneMinuteSecond)
 	VersionActivity2_3TaskListModel.instance:initTask()
@@ -56,6 +58,18 @@ end
 
 function var_0_0.onDestroyView(arg_11_0)
 	return
+end
+
+function var_0_0._onRefreshActivityState(arg_12_0, arg_12_1)
+	if not arg_12_1 or arg_12_0._dungeonActId ~= arg_12_1 then
+		return
+	end
+
+	if not ActivityHelper.isOpen(arg_12_1) then
+		arg_12_0:closeThis()
+
+		return
+	end
 end
 
 return var_0_0

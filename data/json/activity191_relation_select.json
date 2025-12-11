@@ -138,5 +138,145 @@
     "activityId": 12701,
     "tag": "challenge",
     "sortIndex": 28
+  },
+  {
+    "activityId": 13105,
+    "tag": "rite",
+    "sortIndex": 1
+  },
+  {
+    "activityId": 13105,
+    "tag": "enlightenment",
+    "sortIndex": 2
+  },
+  {
+    "activityId": 13105,
+    "tag": "lossLife",
+    "sortIndex": 3
+  },
+  {
+    "activityId": 13105,
+    "tag": "electricity",
+    "sortIndex": 4
+  },
+  {
+    "activityId": 13105,
+    "tag": "upgrade",
+    "sortIndex": 5
+  },
+  {
+    "activityId": 13105,
+    "tag": "unusual",
+    "sortIndex": 6
+  },
+  {
+    "activityId": 13105,
+    "tag": "remodeling",
+    "sortIndex": 7
+  },
+  {
+    "activityId": 13105,
+    "tag": "employe",
+    "sortIndex": 8
+  },
+  {
+    "activityId": 13105,
+    "tag": "foundation",
+    "sortIndex": 9
+  },
+  {
+    "activityId": 13105,
+    "tag": "peace",
+    "sortIndex": 10
+  },
+  {
+    "activityId": 13105,
+    "tag": "hunt",
+    "sortIndex": 11
+  },
+  {
+    "activityId": 13105,
+    "tag": "oldFriend",
+    "sortIndex": 12
+  },
+  {
+    "activityId": 13105,
+    "tag": "school",
+    "sortIndex": 13
+  },
+  {
+    "activityId": 13105,
+    "tag": "cure",
+    "sortIndex": 14
+  },
+  {
+    "activityId": 13105,
+    "tag": "lapras",
+    "sortIndex": 15
+  },
+  {
+    "activityId": 13105,
+    "tag": "child",
+    "sortIndex": 16
+  },
+  {
+    "activityId": 13105,
+    "tag": "sportsMeet",
+    "sortIndex": 17
+  },
+  {
+    "activityId": 13105,
+    "tag": "artist",
+    "sortIndex": 18
+  },
+  {
+    "activityId": 13105,
+    "tag": "legend",
+    "sortIndex": 19
+  },
+  {
+    "activityId": 13105,
+    "tag": "warfare",
+    "sortIndex": 20
+  },
+  {
+    "activityId": 13105,
+    "tag": "flashlight",
+    "sortIndex": 21
+  },
+  {
+    "activityId": 13105,
+    "tag": "dnd",
+    "sortIndex": 22
+  },
+  {
+    "activityId": 13105,
+    "tag": "chess",
+    "sortIndex": 23
+  },
+  {
+    "activityId": 13105,
+    "tag": "tarotCards",
+    "sortIndex": 24
+  },
+  {
+    "activityId": 13105,
+    "tag": "revival",
+    "sortIndex": 25
+  },
+  {
+    "activityId": 13105,
+    "tag": "ancient",
+    "sortIndex": 26
+  },
+  {
+    "activityId": 13105,
+    "tag": "confidant",
+    "sortIndex": 27
+  },
+  {
+    "activityId": 13105,
+    "tag": "lineScience",
+    "sortIndex": 28
   }
 ]

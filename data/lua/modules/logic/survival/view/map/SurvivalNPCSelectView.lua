@@ -88,14 +88,11 @@ function var_0_0.initNPCData(arg_7_0)
 	local var_7_0 = SurvivalShelterModel.instance:getWeekInfo()
 	local var_7_1 = {}
 	local var_7_2 = {}
-	local var_7_3 = {}
-	local var_7_4 = SurvivalMapModel.instance:getInitGroup()
+	local var_7_3 = SurvivalMapModel.instance:getInitGroup()
 
 	for iter_7_0, iter_7_1 in pairs(var_7_0.npcDict) do
 		if iter_7_1 then
-			if iter_7_1:getShelterNpcStatus() ~= SurvivalEnum.ShelterNpcStatus.InBuild then
-				table.insert(var_7_3, iter_7_1)
-			elseif tabletool.indexOf(var_7_4.allSelectNpcs, iter_7_1) then
+			if tabletool.indexOf(var_7_3.allSelectNpcs, iter_7_1) then
 				table.insert(var_7_1, iter_7_1)
 			else
 				table.insert(var_7_2, iter_7_1)
@@ -104,10 +101,9 @@ function var_0_0.initNPCData(arg_7_0)
 	end
 
 	tabletool.addValues(var_7_1, var_7_2)
-	tabletool.addValues(var_7_1, var_7_3)
 
 	arg_7_0._allNpcs = var_7_1
-	arg_7_0._initGroupMo = var_7_4
+	arg_7_0._initGroupMo = var_7_3
 end
 
 function var_0_0._onFilterChange(arg_8_0, arg_8_1)
@@ -122,7 +118,7 @@ function var_0_0._refreshView(arg_9_0)
 	local var_9_0 = {}
 
 	for iter_9_0, iter_9_1 in ipairs(arg_9_0._allNpcs) do
-		if SurvivalBagSortHelper.filterNpc(arg_9_0._filterList, iter_9_1) then
+		if SurvivalBagSortHelper.filterNpc(arg_9_0._filterList, iter_9_1) and iter_9_1.co.takeOut == 0 then
 			table.insert(var_9_0, iter_9_1)
 		end
 	end
@@ -136,29 +132,29 @@ function var_0_0._refreshView(arg_9_0)
 end
 
 function var_0_0._createNPCItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = gohelper.findChildImage(arg_10_1, "#image_Chess")
+	local var_10_0 = gohelper.findChildSingleImage(arg_10_1, "#image_Chess")
 	local var_10_1 = gohelper.findChildImage(arg_10_1, "#image_quality")
 	local var_10_2 = gohelper.findChildTextMesh(arg_10_1, "#txt_PartnerName")
 	local var_10_3 = gohelper.findChild(arg_10_1, "#go_Selected")
 	local var_10_4 = gohelper.findChild(arg_10_1, "#go_Tips")
 	local var_10_5 = gohelper.findChildTextMesh(arg_10_1, "#go_Tips/#txt_TentName")
-	local var_10_6 = gohelper.findButtonWithAudio(arg_10_1)
+	local var_10_6 = gohelper.findChild(arg_10_1, "recommend")
+	local var_10_7 = gohelper.findButtonWithAudio(arg_10_1)
 
 	arg_10_0._npcSelects[arg_10_3] = var_10_3
 	var_10_2.text = arg_10_2.co.name
-
-	if arg_10_2:getShelterNpcStatus() == SurvivalEnum.ShelterNpcStatus.InBuild then
-		var_10_5.text = luaLang("survival_npcselectview_inteam")
-	else
-		var_10_5.text = luaLang("survival_npcselectview_cantuse")
-	end
+	var_10_5.text = luaLang("survival_npcselectview_inteam")
 
 	UISpriteSetMgr.instance:setSurvivalSprite(var_10_1, string.format("survival_bag_itemquality2_%s", arg_10_2.co.rare))
-	UISpriteSetMgr.instance:setV2a2ChessSprite(var_10_0, arg_10_2.co.headIcon)
-	gohelper.setActive(var_10_4, arg_10_2:getShelterNpcStatus() ~= SurvivalEnum.ShelterNpcStatus.InBuild or tabletool.indexOf(arg_10_0._initGroupMo.allSelectNpcs, arg_10_2))
-	arg_10_0:removeClickCb(var_10_6)
-	arg_10_0:addClickCb(var_10_6, arg_10_0._onClickNpc, arg_10_0, arg_10_3)
+	SurvivalUnitIconHelper.instance:setNpcIcon(var_10_0, arg_10_2.co.headIcon)
+	gohelper.setActive(var_10_4, tabletool.indexOf(arg_10_0._initGroupMo.allSelectNpcs, arg_10_2))
+	arg_10_0:removeClickCb(var_10_7)
+	arg_10_0:addClickCb(var_10_7, arg_10_0._onClickNpc, arg_10_0, arg_10_3)
 	gohelper.setActive(var_10_3, arg_10_0._curSelectIndex == arg_10_3)
+
+	local var_10_8 = SurvivalMapModel.instance:getSelectMapId()
+
+	gohelper.setActive(var_10_6, arg_10_2:isRecommend(var_10_8))
 end
 
 function var_0_0._onCellRecycle(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
@@ -171,12 +167,6 @@ function var_0_0._onClickNpc(arg_12_0, arg_12_1)
 		local var_12_1 = SurvivalMapModel.instance:getInitGroup()
 		local var_12_2 = tabletool.indexOf(var_12_1.allSelectNpcs, var_12_0)
 		local var_12_3 = tabletool.len(var_12_1.allSelectNpcs) == var_12_1:getCarryNPCCount()
-
-		if not (var_12_0:getShelterNpcStatus() == SurvivalEnum.ShelterNpcStatus.InBuild) then
-			GameFacade.showToast(ToastEnum.SurvivalCantSelectNpc)
-
-			return
-		end
 
 		if var_12_2 then
 			tabletool.removeValue(var_12_1.allSelectNpcs, var_12_0)

@@ -2,15 +2,31 @@
 
 local var_0_0 = _M
 
+var_0_0.RainType = {
+	Rain3 = 2,
+	Rain2 = 3,
+	Rain1 = 1
+}
 var_0_0.UnitType = {
-	Search = 3,
-	Task = 7,
-	Treasure = 6,
-	Exit = 2,
 	NPC = 5,
+	Task = 7,
+	Door = 8,
+	Exit = 2,
+	Search = 3,
 	Born = 1,
+	Treasure = 6,
 	Battle = 4,
-	Door = 8
+	Block = 9
+}
+var_0_0.UnitSubType = {
+	Water = 96,
+	Shop = 77,
+	Ice = 95,
+	Magma = 94,
+	Miasma = 92,
+	Morass = 93,
+	BlockEvent = 791,
+	Block = 91
 }
 var_0_0.Dir = {
 	BottomRight = 1,
@@ -29,25 +45,44 @@ var_0_0.DirToPos = {
 	[var_0_0.Dir.TopRight] = SurvivalHexNode.New(1, -1, 0)
 }
 var_0_0.ConstId = {
-	ShelterMonsterSelectNpcMax = 2801,
-	TeamHealthState = 2318,
-	TalentDesc = 23,
+	TornadoSpEvent = 4202,
+	Vehicle_WaterNormal = 3906,
+	HeroHealth2 = 2302,
+	StoryFirstEnter = 4601,
+	SurvivalHpFixRate_WorldLv = 3301,
+	DoorCfgId = 10,
 	HeroWeight = 12,
+	TeamHealthState = 2318,
+	RadarLv3 = 4101,
+	PlayerRes = 6,
+	FightExRule = 3201,
+	ShelterMonsterSelectNpcMax = 2801,
+	Vehicle_Magma = 3903,
+	StoryHiddenEnding = 4603,
+	Vehicle_Ice = 3904,
+	Vehicle_Miasma = 3901,
+	IceSpEvent = 4201,
+	ShowEffectUnitSubTypes = 22,
 	CarryNpcMax = 21,
 	HeroHealth3 = 2303,
 	HeroHealthMax = 2301,
-	DoorCfgId = 10,
-	FightExRule = 3201,
-	PlayerRes = 6,
 	CarryHeroMax = 18,
 	ExitCfgId = 9,
 	TotalTime = 1,
-	SurvivalHpFixRate_WorldLv = 3301,
+	RadarLv1 = 4103,
 	TreasureCfgId = 19,
-	HeroHealth2 = 2302,
 	SurvivalHpFixRate_Hard = 3401,
-	ShowEffectUnitSubTypes = 22,
+	Vehicle_Morass = 3902,
+	StoryPassEnter = 4602,
+	RadarLv2 = 4102,
+	NoShowIconUnitSubType = 4401,
+	NoDisasterDesc = 4501,
+	Vehicle_Water = 3905,
 	ShelterCompositeCost = 2601
+}
+var_0_0.HardUnlockCondition = {
+	overDifMult = "passMods",
+	overDif = "overDif"
 }
 var_0_0.OperType = {
 	PlayerMove = 1,
@@ -56,33 +91,56 @@ var_0_0.OperType = {
 	OperSearch = 3,
 	FightBack = 6
 }
+var_0_0.StepRunOrder = {
+	Before = 1,
+	After = 3,
+	None = 2
+}
 var_0_0.StepType = {
-	ShowEventPanel = 4,
-	UpdateUnitData = 6,
-	FollowTaskUpdate = 16,
-	UpdateSafeZoneInfo = 15,
 	MapTickAfter = 22,
+	TeleportGateUpdate = 32,
+	FollowTaskUpdate = 16,
+	UpdateUnitData = 6,
+	ShowEventPanel = 4,
 	CircleUpdate = 3,
 	RemoveEventPanel = 10,
 	FastBattle = 23,
 	TweenCamera = 24,
-	UpdateTalentCount = 25,
+	RemoExPoints = 27,
+	RadarPositionUpdate = 31,
 	CircleShrinkFinish = 14,
+	RemovePoints = 30,
+	UpdateSafeZoneInfo = 15,
+	AddTalent = 35,
 	UnitHide = 20,
 	GameTimeUpdate = 2,
+	SearchPanelChange = 33,
 	UpdatePoints = 7,
 	UnitMove = 1,
-	GetTalent = 18,
+	AddExBlock = 26,
+	DelTalent = 36,
+	MagmaStatusUpdate = 29,
 	UnitShow = 19,
+	UpdateExPoints = 28,
+	PlayExplodeEffect = 34,
 	UpdateEventPanel = 5,
 	PlayDialog = 17,
-	BeginFight = 12
+	StopMove = 37,
+	PlayFastBattleEffect = 38,
+	BeginFight = 12,
+	ShowToast = 39
+}
+var_0_0.MagmaStatus = {
+	Intermittent = 2,
+	Active = 0,
+	Normal = 1
 }
 var_0_0.PanelType = {
 	TreeEvent = 2,
 	Store = 4,
 	DropSelect = 3,
 	Search = 1,
+	Decrees = 5,
 	None = 0
 }
 var_0_0.FightStatu = {
@@ -93,32 +151,49 @@ var_0_0.FightStatu = {
 var_0_0.ItemType = {
 	Quick = 5,
 	Equip = 7,
+	Pileup = 8,
 	NPC = 6,
+	DecreeSelect = 10,
+	Reputation = 9,
 	Material = 1,
 	Currency = 2
 }
 var_0_0.CurrencyType = {
 	Gold = 1,
 	Enthusiastic = 4,
+	Decoding = 5,
 	Food = 3,
-	Likability = 5,
 	Build = 2
 }
 var_0_0.ItemSubType = {
-	Quick_GetTalent = 54,
-	Quick_ClearFog = 60,
+	Quick_TransferToEvent = 65,
+	Quick_Revival = 64,
+	Quick_SwapPos = 61,
+	Quick_Summon = 63,
 	Quick_Fly = 51,
-	Quick_ShowEvent = 55,
+	Quick_TransferUnitOut = 67,
+	Quick_MakeItem = 68,
 	Quick_CreateEvent = 56,
 	Quick_Transfer = 58,
-	Quick_DelEvent = 53,
+	Material_NPCItem = 101,
 	Quick_CreateEvent2 = 57,
+	Material_VehicleItem = 102,
 	Quick_Exit = 52,
-	Quick_AddTime = 59
+	Quick_AddTime = 59,
+	Quick_TeleportGate = 66,
+	Quick_ShowEvent = 55,
+	Quick_DelObstructNPCFight = 62,
+	Quick_DelEvent = 53,
+	Quick_GetTalent = 54,
+	Quick_ClearFog = 60
 }
 var_0_0.CustomUseItemSubType = {
 	[var_0_0.ItemSubType.Quick_Fly] = true,
-	[var_0_0.ItemSubType.Quick_ClearFog] = true
+	[var_0_0.ItemSubType.Quick_ClearFog] = true,
+	[var_0_0.ItemSubType.Quick_SwapPos] = true,
+	[var_0_0.ItemSubType.Quick_DelObstructNPCFight] = true,
+	[var_0_0.ItemSubType.Quick_TransferToEvent] = true,
+	[var_0_0.ItemSubType.Quick_TransferUnitOut] = true
 }
 var_0_0.ItemSource = {
 	Commited = -5,
@@ -156,8 +231,6 @@ var_0_0.MapSettleReason = {
 	UseItem = 4,
 	Success = 0
 }
-var_0_0.Shelter_EpisodeId = 1280601
-var_0_0.Survival_EpisodeId = 1280602
 var_0_0.StepTypeToName = {}
 
 for iter_0_0, iter_0_1 in pairs(var_0_0.StepType) do
@@ -185,12 +258,6 @@ var_0_0.NpcStatus = {
 	HomeLess = 3,
 	Normal = 0
 }
-var_0_0.EventChoiceColor = {
-	Yellow = "#B28135",
-	Green = "#7FAA88",
-	Gray = "#F5F1EB",
-	Red = "#FF7C72"
-}
 var_0_0.EventChoiceIcon = {
 	NPC = 2,
 	Task = 1,
@@ -205,17 +272,17 @@ var_0_0.EventChoiceIcon = {
 	None = 0
 }
 var_0_0.IconToColor = {
-	[var_0_0.EventChoiceIcon.None] = var_0_0.EventChoiceColor.Yellow,
-	[var_0_0.EventChoiceIcon.Task] = var_0_0.EventChoiceColor.Green,
-	[var_0_0.EventChoiceIcon.NPC] = var_0_0.EventChoiceColor.Green,
-	[var_0_0.EventChoiceIcon.Search] = var_0_0.EventChoiceColor.Green,
-	[var_0_0.EventChoiceIcon.Treasure] = var_0_0.EventChoiceColor.Green,
-	[var_0_0.EventChoiceIcon.Fight] = var_0_0.EventChoiceColor.Red,
-	[var_0_0.EventChoiceIcon.FightElite] = var_0_0.EventChoiceColor.Red,
-	[var_0_0.EventChoiceIcon.Exit] = var_0_0.EventChoiceColor.Yellow,
-	[var_0_0.EventChoiceIcon.Obstruct] = var_0_0.EventChoiceColor.Yellow,
-	[var_0_0.EventChoiceIcon.Talk] = var_0_0.EventChoiceColor.Yellow,
-	[var_0_0.EventChoiceIcon.Return] = var_0_0.EventChoiceColor.Yellow
+	[var_0_0.EventChoiceIcon.None] = SurvivalConst.EventChoiceColor.Yellow,
+	[var_0_0.EventChoiceIcon.Task] = SurvivalConst.EventChoiceColor.Green,
+	[var_0_0.EventChoiceIcon.NPC] = SurvivalConst.EventChoiceColor.Green,
+	[var_0_0.EventChoiceIcon.Search] = SurvivalConst.EventChoiceColor.Green,
+	[var_0_0.EventChoiceIcon.Treasure] = SurvivalConst.EventChoiceColor.Green,
+	[var_0_0.EventChoiceIcon.Fight] = SurvivalConst.EventChoiceColor.Red,
+	[var_0_0.EventChoiceIcon.FightElite] = SurvivalConst.EventChoiceColor.Red,
+	[var_0_0.EventChoiceIcon.Exit] = SurvivalConst.EventChoiceColor.Yellow,
+	[var_0_0.EventChoiceIcon.Obstruct] = SurvivalConst.EventChoiceColor.Yellow,
+	[var_0_0.EventChoiceIcon.Talk] = SurvivalConst.EventChoiceColor.Yellow,
+	[var_0_0.EventChoiceIcon.Return] = SurvivalConst.EventChoiceColor.Yellow
 }
 var_0_0.ItemSortType = {
 	ItemReward = 8,
@@ -239,86 +306,97 @@ var_0_0.TaskStatus = {
 	Finish = 3
 }
 var_0_0.TaskModule = {
-	DecreeTask = 5,
-	MainTask = 1,
 	StoryTask = 3,
+	MainTask = 1,
+	MapMainTarget = 5,
 	SubTask = 2,
 	NormalTask = 4
 }
 var_0_0.AttrType = {
 	ChoiceCostTime = 811,
 	BuildCost = 102,
+	HealthInc = 601,
+	RepairCost = 103,
 	NpcFoodCost = 101,
-	HeroWeight = 809,
-	CantTreatToRelive = 104,
 	BalanceResonanceLv = 702,
 	SurvivalFightFail = 502,
 	AttrWeight = 813,
 	Day = 802,
-	RepairCost = 103,
+	BuyPriceFix = 301,
 	DecreeNum = 402,
 	ExploreNpcNum = 807,
-	MoveCost = 803,
+	Vision2 = 818,
 	BalanceRoleLv = 701,
-	HeroHealthMax = 105,
+	Vehicle_Magma = 1003,
 	Vision = 801,
 	PolluteSpeed = 804,
 	SurvivalTimeFail = 504,
 	CoinChangeRate = 814,
 	HealthDec = 501,
-	BuildChangeRate = 815,
+	Vehicle_Ice = 1004,
 	FoodChangeRate = 816,
-	NoWarming = 817,
+	Vehicle_Miasma = 1001,
+	MapSellPriceFix = 824,
 	HeroFightLevel = 812,
+	MoveCost = 803,
+	CantTreatToRelive = 104,
 	ExploreRoleNum = 806,
-	HealthInc = 601,
+	BuildChangeRate = 815,
+	Vehicle_Water = 1005,
+	BuildSellPriceFix = 304,
+	DecodingFix = 1202,
 	DropNum = 201,
-	BuyPriceFix = 301,
+	ItemCopyRateFix = 822,
+	ExtraCoin = 820,
+	WarningRange = 1201,
+	HeroHealthMax = 105,
 	ShelterFightFail = 503,
 	BuildNpcCapNum = 401,
 	DropSelectNum = 202,
 	HeroHealthRest = 404,
 	BalanceEquipLv = 703,
 	SurvivalInRange = 505,
+	RenownChangeFix = 825,
+	Vehicle_Morass = 1002,
 	NpcRecruitment = 810,
+	ShopBuyPriceFix = 823,
 	LoungeRoleNum = 403,
+	NoWarning = 817,
+	ItemCopyRate = 821,
 	EvacuateLoss = 805,
 	WorldLevel = 808,
+	BuildBuyPriceFix = 303,
 	SellPriceFix = 302
 }
 var_0_0.AttrTypePer = {
 	[var_0_0.AttrType.BuyPriceFix] = true,
 	[var_0_0.AttrType.SellPriceFix] = true,
+	[var_0_0.AttrType.BuildBuyPriceFix] = true,
+	[var_0_0.AttrType.BuildSellPriceFix] = true,
 	[var_0_0.AttrType.HealthDec] = true,
 	[var_0_0.AttrType.HealthInc] = true,
 	[var_0_0.AttrType.NpcRecruitment] = true,
 	[var_0_0.AttrType.ChoiceCostTime] = true,
 	[var_0_0.AttrType.BuildCost] = true,
 	[var_0_0.AttrType.RepairCost] = true,
-	[var_0_0.AttrType.NpcFoodCost] = true
-}
-var_0_0.UnitEffectPath = {
-	Fly = "survival/effects/prefab/v2a8_scene_yidong.prefab",
-	FastFight = "survival/effects/prefab/v2a8_scene_tiaoguo.prefab",
-	CreateUnit = "survival/effects/prefab/v2a8_scene_bianshen.prefab",
-	UnitType42 = "survival/effects/prefab/v2a8_scene_smoke_01.prefab",
-	UnitType44 = "survival/effects/prefab/v2a8_scene_smoke_02.prefab",
-	Transfer2 = "survival/effects/prefab/v2a8_scene_chuansong_01.prefab",
-	FollowUnit = "survival/effects/prefab/v2a8_scene_jinguang.prefab",
-	Transfer1 = "survival/effects/prefab/v2a8_scene_chuansong_02.prefab"
-}
-var_0_0.UnitEffectTime = {
-	[var_0_0.UnitEffectPath.FastFight] = 1,
-	[var_0_0.UnitEffectPath.Fly] = 0.4,
-	[var_0_0.UnitEffectPath.Transfer1] = 0.8,
-	[var_0_0.UnitEffectPath.Transfer2] = 0.8,
-	[var_0_0.UnitEffectPath.CreateUnit] = 2
+	[var_0_0.AttrType.NpcFoodCost] = true,
+	[var_0_0.AttrType.ShopBuyPriceFix] = true,
+	[var_0_0.AttrType.MapSellPriceFix] = true,
+	[var_0_0.AttrType.RenownChangeFix] = true,
+	[var_0_0.AttrType.DecodingFix] = true
 }
 var_0_0.PlayerMoveReason = {
-	Transfer = 3,
-	Back = 2,
 	Fly = 4,
+	Transfer = 3,
+	Tornado = 5,
+	Swap = 6,
+	Back = 2,
+	Summon = 7,
 	Normal = 1
+}
+var_0_0.UnitDeadReason = {
+	DieByQuickItem = 2006,
+	PlayDieAnim = 2003
 }
 var_0_0.NpcRecruitmentType = {
 	NpcNumCheck = 3,
@@ -333,27 +411,6 @@ var_0_0.ConditionOper = {
 	LE = 3,
 	EQ = 2
 }
-var_0_0.EntityChildKey = {
-	ModelGOKey = "model",
-	BodyGOKey = "body",
-	HeadGOKey = "head"
-}
-var_0_0.CustomDifficulty = 9999
-var_0_0.FirstPlayDifficulty = 999
-var_0_0.ItemRareColor = {
-	"#27682e",
-	"#6384E5",
-	"#C28DC7",
-	"#D2C197",
-	"#E99B56"
-}
-var_0_0.ItemRareColor2 = {
-	"#27682e",
-	"#324bb6",
-	"#804885",
-	"#897519",
-	"#ac5320"
-}
 var_0_0.BuildingType = {
 	Base = 1,
 	Task = 4,
@@ -362,6 +419,7 @@ var_0_0.BuildingType = {
 	Explore = 5,
 	Warehouse = 10,
 	Shop = 11,
+	ReputationShop = 12,
 	Equipment = 8,
 	Decree = 2,
 	Health = 6,
@@ -392,12 +450,6 @@ var_0_0.ShelterMonsterFightState = {
 	Fail = 3,
 	NoStart = 1,
 	Win = 5
-}
-var_0_0.ShelterTagColor = {
-	"#986452",
-	"#74657F",
-	"#6A837F",
-	"#5E6D94"
 }
 var_0_0.ShelterUnitTypeToName = {}
 
@@ -441,6 +493,58 @@ var_0_0.SurvivalMonsterEventViewShowType = {
 	Watch = 1,
 	Normal = 0
 }
-var_0_0.MoveSpeed = 0.4
+var_0_0.HandBookType = {
+	Amplifier = 2,
+	Result = 4,
+	Event = 3,
+	Npc = 1
+}
+var_0_0.HandBookTypeToName = {}
+
+for iter_0_6, iter_0_7 in pairs(var_0_0.HandBookType) do
+	var_0_0.HandBookTypeToName[iter_0_7] = iter_0_6
+end
+
+var_0_0.HandBookEventSubType = {
+	Fight = 2,
+	Task = 3,
+	Search = 1
+}
+var_0_0.HandBookAmplifierSubType = {
+	Common = 1,
+	Bloom = 4,
+	ElectricEnergy = 2,
+	ExtraActions = 5,
+	Ceremony = 6,
+	Revelation = 3,
+	StateAbnormal = 7
+}
+var_0_0.HandBookAmplifierSubTypeUIPos = {
+	var_0_0.HandBookAmplifierSubType.Common,
+	var_0_0.HandBookAmplifierSubType.Bloom,
+	var_0_0.HandBookAmplifierSubType.ElectricEnergy,
+	var_0_0.HandBookAmplifierSubType.Revelation,
+	var_0_0.HandBookAmplifierSubType.Ceremony,
+	var_0_0.HandBookAmplifierSubType.ExtraActions,
+	var_0_0.HandBookAmplifierSubType.StateAbnormal
+}
+var_0_0.HandBookNpcSubType = {
+	Foundation = 3,
+	People = 1,
+	Laplace = 2,
+	Zeno = 4
+}
+var_0_0.ReputationType = {
+	Zeno = 2,
+	People = 1,
+	Laplace = 4,
+	Foundation = 3
+}
+var_0_0.ShopType = {
+	Reputation = 2,
+	PreExplore = 3,
+	GeneralShop = 4,
+	Normal = 1
+}
 
 return var_0_0

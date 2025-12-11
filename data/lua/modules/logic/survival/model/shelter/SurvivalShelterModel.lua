@@ -13,12 +13,12 @@ function var_0_0.reInit(arg_2_0)
 	arg_2_0:onInit()
 end
 
-function var_0_0.setWeekData(arg_3_0, arg_3_1, arg_3_2)
+function var_0_0.setWeekData(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 	if not arg_3_0._weekInfo then
 		arg_3_0._weekInfo = SurvivalShelterWeekMo.New()
 	end
 
-	arg_3_0._weekInfo:init(arg_3_1)
+	arg_3_0._weekInfo:init(arg_3_1, arg_3_3)
 
 	if not arg_3_0._playerMo then
 		arg_3_0._playerMo = SurvivalShelterPlayerMo.New()
@@ -64,7 +64,7 @@ end
 
 function var_0_0.haveBoss(arg_7_0)
 	if arg_7_0._weekInfo then
-		return arg_7_0._weekInfo:getMonsterFight():canShowEntity()
+		return arg_7_0._weekInfo:getMonsterFight():isFighting()
 	else
 		return true
 	end

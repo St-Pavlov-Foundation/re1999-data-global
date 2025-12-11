@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.system.flow.FightRestartSequence", package.seeall)
 
-local var_0_0 = class("FightRestartSequence", BaseFightSequence)
+local var_0_0 = class("FightRestartSequence", FightWorkItem)
 
 var_0_0.RestartType2Type = {
 	[38] = 34,
@@ -33,15 +33,15 @@ var_0_0.RestartType2Type = {
 	[132] = 131
 }
 
-function var_0_0.buildFlow(arg_1_0)
-	var_0_0.super.buildFlow(arg_1_0)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0:com_registFlowSequence()
+	local var_1_1 = FightModel.instance:getFightParam()
 
-	local var_1_0 = FightModel.instance:getFightParam()
-
-	arg_1_0:addWork(FightWorkRestartAbandon.New(var_1_0))
-	arg_1_0:addWork(FunctionWork.New(arg_1_0.startRestartGame, arg_1_0))
-	arg_1_0:addWork(FightWorkRestartBefore.New(var_1_0))
-	arg_1_0:addWork(FightWorkRestartRequest.New(var_1_0))
+	var_1_0:addWork(FightWorkRestartAbandon.New(var_1_1))
+	var_1_0:addWork(FunctionWork.New(arg_1_0.startRestartGame, arg_1_0))
+	var_1_0:addWork(FightWorkRestartBefore.New(var_1_1))
+	var_1_0:addWork(FightWorkRestartRequest.New(var_1_1))
+	arg_1_0:playWorkAndDone(var_1_0)
 end
 
 function var_0_0.startRestartGame(arg_2_0)

@@ -17,14 +17,14 @@ function var_0_0.onBuffStart(arg_1_0, arg_1_1, arg_1_2)
 	FightController.instance:registerCallback(FightEvent.AddPlayOperationData, arg_1_0._onAddPlayOperationData, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.OnResetCard, arg_1_0._onResetCard, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.RespBeginRound, arg_1_0._respBeginRound, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnStageChange, arg_1_0._onStageChange, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.StageChanged, arg_1_0.onStageChange, arg_1_0)
 end
 
 function var_0_0._removeEvents(arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.AddPlayOperationData, arg_2_0._onAddPlayOperationData, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.OnResetCard, arg_2_0._onResetCard, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.RespBeginRound, arg_2_0._respBeginRound, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.OnStageChange, arg_2_0._onStageChange, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.StageChanged, arg_2_0.onStageChange, arg_2_0)
 end
 
 function var_0_0._onAddPlayOperationData(arg_3_0, arg_3_1)
@@ -56,8 +56,8 @@ function var_0_0._respBeginRound(arg_5_0)
 	arg_5_0._useCelebrityCharm = 0
 end
 
-function var_0_0._onStageChange(arg_6_0, arg_6_1)
-	if arg_6_1 == FightEnum.Stage.Card or arg_6_1 == FightEnum.Stage.AutoCard then
+function var_0_0.onStageChange(arg_6_0, arg_6_1)
+	if arg_6_1 == FightStageMgr.StageType.Operate then
 		arg_6_0._useCelebrityCharm = 0
 		arg_6_0._celebrityCharm = arg_6_0:_calcCelebrityCharm()
 	end

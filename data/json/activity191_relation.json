@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "activityId": 12701,
     "tag": "extraAction",
     "name": "language_10018041",
     "level": 0,
@@ -9,10 +10,12 @@
     "desc": "language_10072796",
     "levelDesc": "",
     "effects": "",
-    "icon": "1001"
+    "icon": "1001",
+    "summon": 0
   },
   {
     "id": 2,
+    "activityId": 12701,
     "tag": "extraAction",
     "name": "language_10018041",
     "level": 1,
@@ -21,10 +24,12 @@
     "desc": "language_10072797",
     "levelDesc": "language_10072798",
     "effects": "",
-    "icon": "1001"
+    "icon": "1001",
+    "summon": 0
   },
   {
     "id": 3,
+    "activityId": 12701,
     "tag": "extraAction",
     "name": "language_10018041",
     "level": 2,
@@ -33,10 +38,12 @@
     "desc": "language_10072799",
     "levelDesc": "language_10072800",
     "effects": "",
-    "icon": "1001"
+    "icon": "1001",
+    "summon": 0
   },
   {
     "id": 4,
+    "activityId": 12701,
     "tag": "extraAction",
     "name": "language_10018041",
     "level": 3,
@@ -45,10 +52,12 @@
     "desc": "language_10072801",
     "levelDesc": "language_10072800",
     "effects": "",
-    "icon": "1001"
+    "icon": "1001",
+    "summon": 0
   },
   {
     "id": 5,
+    "activityId": 12701,
     "tag": "extraAction",
     "name": "language_10018041",
     "level": 4,
@@ -57,10 +66,12 @@
     "desc": "language_10072802",
     "levelDesc": "language_10072803",
     "effects": "",
-    "icon": "1001"
+    "icon": "1001",
+    "summon": 0
   },
   {
     "id": 6,
+    "activityId": 0,
     "tag": "rite",
     "name": "language_90001157",
     "level": 0,
@@ -69,10 +80,12 @@
     "desc": "language_10072804",
     "levelDesc": "",
     "effects": "",
-    "icon": "1002"
+    "icon": "1002",
+    "summon": 0
   },
   {
     "id": 7,
+    "activityId": 0,
     "tag": "rite",
     "name": "language_90001157",
     "level": 1,
@@ -81,10 +94,12 @@
     "desc": "language_10072805",
     "levelDesc": "language_10072806",
     "effects": "",
-    "icon": "1002"
+    "icon": "1002",
+    "summon": 0
   },
   {
     "id": 8,
+    "activityId": 0,
     "tag": "rite",
     "name": "language_90001157",
     "level": 2,
@@ -93,10 +108,12 @@
     "desc": "language_10072807",
     "levelDesc": "language_10072808",
     "effects": "",
-    "icon": "1002"
+    "icon": "1002",
+    "summon": 0
   },
   {
     "id": 9,
+    "activityId": 0,
     "tag": "rite",
     "name": "language_90001157",
     "level": 3,
@@ -105,10 +122,12 @@
     "desc": "language_10072809",
     "levelDesc": "language_10072810",
     "effects": "",
-    "icon": "1002"
+    "icon": "1002",
+    "summon": 0
   },
   {
     "id": 10,
+    "activityId": 0,
     "tag": "rite",
     "name": "language_90001157",
     "level": 4,
@@ -117,10 +136,12 @@
     "desc": "language_10072811",
     "levelDesc": "language_10072812",
     "effects": "",
-    "icon": "1002"
+    "icon": "1002",
+    "summon": 0
   },
   {
     "id": 11,
+    "activityId": 12701,
     "tag": "enlightenment",
     "name": "language_10063814",
     "level": 0,
@@ -129,10 +150,12 @@
     "desc": "language_10072813",
     "levelDesc": "",
     "effects": "",
-    "icon": "1003"
+    "icon": "1003",
+    "summon": 0
   },
   {
     "id": 12,
+    "activityId": 12701,
     "tag": "enlightenment",
     "name": "language_10063814",
     "level": 1,
@@ -141,10 +164,12 @@
     "desc": "language_10072814",
     "levelDesc": "language_10072815",
     "effects": "",
-    "icon": "1003"
+    "icon": "1003",
+    "summon": 0
   },
   {
     "id": 13,
+    "activityId": 12701,
     "tag": "enlightenment",
     "name": "language_10063814",
     "level": 2,
@@ -153,10 +178,12 @@
     "desc": "language_10072816",
     "levelDesc": "language_10072817",
     "effects": "",
-    "icon": "1003"
+    "icon": "1003",
+    "summon": 0
   },
   {
     "id": 14,
+    "activityId": 12701,
     "tag": "enlightenment",
     "name": "language_10063814",
     "level": 3,
@@ -165,10 +192,12 @@
     "desc": "language_10072818",
     "levelDesc": "language_10072819",
     "effects": "",
-    "icon": "1003"
+    "icon": "1003",
+    "summon": 0
   },
   {
     "id": 15,
+    "activityId": 12701,
     "tag": "enlightenment",
     "name": "language_10063814",
     "level": 4,
@@ -177,10 +206,12 @@
     "desc": "language_10072820",
     "levelDesc": "language_10072821",
     "effects": "",
-    "icon": "1003"
+    "icon": "1003",
+    "summon": 0
   },
   {
     "id": 16,
+    "activityId": 0,
     "tag": "lossLife",
     "name": "language_90001156",
     "level": 0,
@@ -189,10 +220,12 @@
     "desc": "language_10072822",
     "levelDesc": "",
     "effects": "",
-    "icon": "1004"
+    "icon": "1004",
+    "summon": 0
   },
   {
     "id": 17,
+    "activityId": 0,
     "tag": "lossLife",
     "name": "language_90001156",
     "level": 1,
@@ -201,10 +234,12 @@
     "desc": "language_10072823",
     "levelDesc": "language_10072824",
     "effects": "",
-    "icon": "1004"
+    "icon": "1004",
+    "summon": 0
   },
   {
     "id": 18,
+    "activityId": 0,
     "tag": "lossLife",
     "name": "language_90001156",
     "level": 2,
@@ -213,10 +248,12 @@
     "desc": "language_10072825",
     "levelDesc": "language_10072826",
     "effects": "",
-    "icon": "1004"
+    "icon": "1004",
+    "summon": 0
   },
   {
     "id": 19,
+    "activityId": 12701,
     "tag": "electricity",
     "name": "language_10017063",
     "level": 0,
@@ -225,10 +262,12 @@
     "desc": "language_10072827",
     "levelDesc": "",
     "effects": "",
-    "icon": "1005"
+    "icon": "1005",
+    "summon": 0
   },
   {
     "id": 20,
+    "activityId": 12701,
     "tag": "electricity",
     "name": "language_10017063",
     "level": 1,
@@ -237,10 +276,12 @@
     "desc": "language_10072828",
     "levelDesc": "language_10072829",
     "effects": "",
-    "icon": "1005"
+    "icon": "1005",
+    "summon": 0
   },
   {
     "id": 21,
+    "activityId": 12701,
     "tag": "electricity",
     "name": "language_10017063",
     "level": 2,
@@ -249,10 +290,12 @@
     "desc": "language_10072830",
     "levelDesc": "language_10072831",
     "effects": "",
-    "icon": "1005"
+    "icon": "1005",
+    "summon": 0
   },
   {
     "id": 22,
+    "activityId": 12701,
     "tag": "upgrade",
     "name": "language_10072832",
     "level": 0,
@@ -261,10 +304,12 @@
     "desc": "language_10072833",
     "levelDesc": "",
     "effects": "",
-    "icon": "1006"
+    "icon": "1006",
+    "summon": 0
   },
   {
     "id": 23,
+    "activityId": 12701,
     "tag": "upgrade",
     "name": "language_10072832",
     "level": 1,
@@ -273,10 +318,12 @@
     "desc": "language_10072834",
     "levelDesc": "language_10072835",
     "effects": "",
-    "icon": "1006"
+    "icon": "1006",
+    "summon": 0
   },
   {
     "id": 24,
+    "activityId": 12701,
     "tag": "upgrade",
     "name": "language_10072832",
     "level": 2,
@@ -285,10 +332,12 @@
     "desc": "language_10072836",
     "levelDesc": "language_10072837",
     "effects": "",
-    "icon": "1006"
+    "icon": "1006",
+    "summon": 0
   },
   {
     "id": 25,
+    "activityId": 12701,
     "tag": "oldMoney",
     "name": "language_10072838",
     "level": 0,
@@ -297,10 +346,12 @@
     "desc": "language_10072839",
     "levelDesc": "",
     "effects": "",
-    "icon": "1007"
+    "icon": "1007",
+    "summon": 0
   },
   {
     "id": 26,
+    "activityId": 12701,
     "tag": "oldMoney",
     "name": "language_10072838",
     "level": 1,
@@ -309,10 +360,12 @@
     "desc": "language_10072840",
     "levelDesc": "language_10072841",
     "effects": "",
-    "icon": "1007"
+    "icon": "1007",
+    "summon": 0
   },
   {
     "id": 27,
+    "activityId": 12701,
     "tag": "oldMoney",
     "name": "language_10072838",
     "level": 2,
@@ -321,10 +374,12 @@
     "desc": "language_10072842",
     "levelDesc": "language_10072843",
     "effects": "",
-    "icon": "1007"
+    "icon": "1007",
+    "summon": 0
   },
   {
     "id": 28,
+    "activityId": 12701,
     "tag": "employe",
     "name": "language_10072844",
     "level": 0,
@@ -333,10 +388,12 @@
     "desc": "language_10072845",
     "levelDesc": "",
     "effects": "",
-    "icon": "1008"
+    "icon": "1008",
+    "summon": 0
   },
   {
     "id": 29,
+    "activityId": 12701,
     "tag": "employe",
     "name": "language_10072844",
     "level": 1,
@@ -345,10 +402,12 @@
     "desc": "language_10072846",
     "levelDesc": "language_10072847",
     "effects": "201",
-    "icon": "1008"
+    "icon": "1008",
+    "summon": 0
   },
   {
     "id": 30,
+    "activityId": 12701,
     "tag": "employe",
     "name": "language_10072844",
     "level": 2,
@@ -357,10 +416,12 @@
     "desc": "language_10072848",
     "levelDesc": "language_10072849",
     "effects": "202",
-    "icon": "1008"
+    "icon": "1008",
+    "summon": 0
   },
   {
     "id": 31,
+    "activityId": 12701,
     "tag": "employe",
     "name": "language_10072844",
     "level": 3,
@@ -369,10 +430,12 @@
     "desc": "language_10072850",
     "levelDesc": "language_10072851",
     "effects": "203",
-    "icon": "1008"
+    "icon": "1008",
+    "summon": 0
   },
   {
     "id": 32,
+    "activityId": 12701,
     "tag": "employe",
     "name": "language_10072844",
     "level": 4,
@@ -381,10 +444,12 @@
     "desc": "language_10072852",
     "levelDesc": "language_10072853",
     "effects": "204",
-    "icon": "1008"
+    "icon": "1008",
+    "summon": 0
   },
   {
     "id": 33,
+    "activityId": 12701,
     "tag": "cure",
     "name": "language_10017009",
     "level": 0,
@@ -393,10 +458,12 @@
     "desc": "language_10072854",
     "levelDesc": "",
     "effects": "",
-    "icon": "1009"
+    "icon": "1009",
+    "summon": 0
   },
   {
     "id": 34,
+    "activityId": 12701,
     "tag": "cure",
     "name": "language_10017009",
     "level": 1,
@@ -405,10 +472,12 @@
     "desc": "language_10072855",
     "levelDesc": "language_10072855",
     "effects": "",
-    "icon": "1009"
+    "icon": "1009",
+    "summon": 0
   },
   {
     "id": 35,
+    "activityId": 12701,
     "tag": "cure",
     "name": "language_10017009",
     "level": 2,
@@ -417,10 +486,12 @@
     "desc": "language_10072856",
     "levelDesc": "language_10072857",
     "effects": "",
-    "icon": "1009"
+    "icon": "1009",
+    "summon": 0
   },
   {
     "id": 36,
+    "activityId": 12701,
     "tag": "unusual",
     "name": "language_10072858",
     "level": 0,
@@ -429,10 +500,12 @@
     "desc": "language_10072859",
     "levelDesc": "",
     "effects": "",
-    "icon": "1010"
+    "icon": "1010",
+    "summon": 0
   },
   {
     "id": 37,
+    "activityId": 12701,
     "tag": "unusual",
     "name": "language_10072858",
     "level": 1,
@@ -441,10 +514,12 @@
     "desc": "language_10072860",
     "levelDesc": "language_10072861",
     "effects": "",
-    "icon": "1010"
+    "icon": "1010",
+    "summon": 0
   },
   {
     "id": 38,
+    "activityId": 12701,
     "tag": "unusual",
     "name": "language_10072858",
     "level": 2,
@@ -453,10 +528,12 @@
     "desc": "language_10072862",
     "levelDesc": "language_10072863",
     "effects": "",
-    "icon": "1010"
+    "icon": "1010",
+    "summon": 0
   },
   {
     "id": 39,
+    "activityId": 12701,
     "tag": "unusual",
     "name": "language_10072858",
     "level": 3,
@@ -465,10 +542,12 @@
     "desc": "language_10072864",
     "levelDesc": "language_10072865",
     "effects": "",
-    "icon": "1010"
+    "icon": "1010",
+    "summon": 0
   },
   {
     "id": 40,
+    "activityId": 12701,
     "tag": "unusual",
     "name": "language_10072858",
     "level": 4,
@@ -477,10 +556,12 @@
     "desc": "language_10072864",
     "levelDesc": "language_10072866",
     "effects": "",
-    "icon": "1010"
+    "icon": "1010",
+    "summon": 0
   },
   {
     "id": 41,
+    "activityId": 12701,
     "tag": "hunt",
     "name": "language_10072867",
     "level": 0,
@@ -489,10 +570,12 @@
     "desc": "language_10072868",
     "levelDesc": "",
     "effects": "",
-    "icon": "1011"
+    "icon": "1011",
+    "summon": 0
   },
   {
     "id": 42,
+    "activityId": 12701,
     "tag": "hunt",
     "name": "language_10072867",
     "level": 1,
@@ -501,10 +584,12 @@
     "desc": "language_10072869",
     "levelDesc": "language_10072870",
     "effects": "211|212|213|214|215|216|217|218",
-    "icon": "1011"
+    "icon": "1011",
+    "summon": 0
   },
   {
     "id": 43,
+    "activityId": 12701,
     "tag": "hunt",
     "name": "language_10072867",
     "level": 2,
@@ -513,10 +598,12 @@
     "desc": "language_10072871",
     "levelDesc": "language_10072872",
     "effects": "211|212|213|214|215|216|217|218",
-    "icon": "1011"
+    "icon": "1011",
+    "summon": 0
   },
   {
     "id": 44,
+    "activityId": 12701,
     "tag": "hunt",
     "name": "language_10072867",
     "level": 3,
@@ -525,10 +612,12 @@
     "desc": "language_10072873",
     "levelDesc": "language_10072874",
     "effects": "211|212|213|214|215|216|217|218",
-    "icon": "1011"
+    "icon": "1011",
+    "summon": 0
   },
   {
     "id": 45,
+    "activityId": 0,
     "tag": "fightBack",
     "name": "language_90001154",
     "level": 0,
@@ -537,10 +626,12 @@
     "desc": "language_10072875",
     "levelDesc": "",
     "effects": "",
-    "icon": "1012"
+    "icon": "1012",
+    "summon": 0
   },
   {
     "id": 46,
+    "activityId": 0,
     "tag": "fightBack",
     "name": "language_90001154",
     "level": 1,
@@ -549,10 +640,12 @@
     "desc": "language_10072876",
     "levelDesc": "language_10072877",
     "effects": "",
-    "icon": "1012"
+    "icon": "1012",
+    "summon": 0
   },
   {
     "id": 47,
+    "activityId": 0,
     "tag": "fightBack",
     "name": "language_90001154",
     "level": 2,
@@ -561,10 +654,12 @@
     "desc": "language_10072878",
     "levelDesc": "language_10072879",
     "effects": "",
-    "icon": "1012"
+    "icon": "1012",
+    "summon": 0
   },
   {
     "id": 48,
+    "activityId": 0,
     "tag": "fightBack",
     "name": "language_90001154",
     "level": 3,
@@ -573,10 +668,12 @@
     "desc": "language_10072880",
     "levelDesc": "language_10072881",
     "effects": "",
-    "icon": "1012"
+    "icon": "1012",
+    "summon": 0
   },
   {
     "id": 49,
+    "activityId": 0,
     "tag": "fightBack",
     "name": "language_90001154",
     "level": 4,
@@ -585,10 +682,12 @@
     "desc": "language_10072882",
     "levelDesc": "language_10072883",
     "effects": "",
-    "icon": "1012"
+    "icon": "1012",
+    "summon": 0
   },
   {
     "id": 50,
+    "activityId": 12701,
     "tag": "school",
     "name": "language_10072884",
     "level": 0,
@@ -597,10 +696,12 @@
     "desc": "language_10072885",
     "levelDesc": "",
     "effects": "",
-    "icon": "1013"
+    "icon": "1013",
+    "summon": 0
   },
   {
     "id": 51,
+    "activityId": 12701,
     "tag": "school",
     "name": "language_10072884",
     "level": 1,
@@ -609,10 +710,12 @@
     "desc": "language_10072886",
     "levelDesc": "language_10072886",
     "effects": "",
-    "icon": "1013"
+    "icon": "1013",
+    "summon": 0
   },
   {
     "id": 52,
+    "activityId": 12701,
     "tag": "school",
     "name": "language_10072884",
     "level": 2,
@@ -621,10 +724,12 @@
     "desc": "language_10072887",
     "levelDesc": "language_10072888",
     "effects": "",
-    "icon": "1013"
+    "icon": "1013",
+    "summon": 0
   },
   {
     "id": 53,
+    "activityId": 12701,
     "tag": "remodeling",
     "name": "language_10003456",
     "level": 0,
@@ -633,10 +738,12 @@
     "desc": "language_10072889",
     "levelDesc": "",
     "effects": "",
-    "icon": "1014"
+    "icon": "1014",
+    "summon": 0
   },
   {
     "id": 54,
+    "activityId": 12701,
     "tag": "remodeling",
     "name": "language_10003456",
     "level": 1,
@@ -645,10 +752,12 @@
     "desc": "language_10072889",
     "levelDesc": "language_10072890",
     "effects": "",
-    "icon": "1014"
+    "icon": "1014",
+    "summon": 0
   },
   {
     "id": 55,
+    "activityId": 12701,
     "tag": "remodeling",
     "name": "language_10003456",
     "level": 2,
@@ -657,10 +766,12 @@
     "desc": "language_10072891",
     "levelDesc": "language_10072892",
     "effects": "",
-    "icon": "1014"
+    "icon": "1014",
+    "summon": 0
   },
   {
     "id": 56,
+    "activityId": 12701,
     "tag": "foundation",
     "name": "language_10072893",
     "level": 0,
@@ -669,10 +780,12 @@
     "desc": "language_10072894",
     "levelDesc": "",
     "effects": "",
-    "icon": "1015"
+    "icon": "1015",
+    "summon": 0
   },
   {
     "id": 57,
+    "activityId": 12701,
     "tag": "foundation",
     "name": "language_10072893",
     "level": 1,
@@ -681,10 +794,12 @@
     "desc": "language_10072895",
     "levelDesc": "language_10072896",
     "effects": "231",
-    "icon": "1015"
+    "icon": "1015",
+    "summon": 0
   },
   {
     "id": 58,
+    "activityId": 12701,
     "tag": "foundation",
     "name": "language_10072893",
     "level": 2,
@@ -693,10 +808,12 @@
     "desc": "language_10072897",
     "levelDesc": "language_10072898",
     "effects": "232",
-    "icon": "1015"
+    "icon": "1015",
+    "summon": 0
   },
   {
     "id": 59,
+    "activityId": 12701,
     "tag": "foundation",
     "name": "language_10072893",
     "level": 3,
@@ -705,10 +822,12 @@
     "desc": "language_10072899",
     "levelDesc": "language_10072900",
     "effects": "233",
-    "icon": "1015"
+    "icon": "1015",
+    "summon": 0
   },
   {
     "id": 60,
+    "activityId": 12701,
     "tag": "foundation",
     "name": "language_10072893",
     "level": 4,
@@ -717,10 +836,12 @@
     "desc": "language_10072901",
     "levelDesc": "language_10072902",
     "effects": "234",
-    "icon": "1015"
+    "icon": "1015",
+    "summon": 0
   },
   {
     "id": 61,
+    "activityId": 12701,
     "tag": "lapras",
     "name": "language_10072903",
     "level": 0,
@@ -729,10 +850,12 @@
     "desc": "language_10072904",
     "levelDesc": "",
     "effects": "",
-    "icon": "1016"
+    "icon": "1016",
+    "summon": 0
   },
   {
     "id": 62,
+    "activityId": 12701,
     "tag": "lapras",
     "name": "language_10072903",
     "level": 1,
@@ -741,10 +864,12 @@
     "desc": "language_10072905",
     "levelDesc": "language_10072905",
     "effects": "",
-    "icon": "1016"
+    "icon": "1016",
+    "summon": 0
   },
   {
     "id": 63,
+    "activityId": 12701,
     "tag": "lapras",
     "name": "language_10072903",
     "level": 2,
@@ -753,10 +878,12 @@
     "desc": "language_10072906",
     "levelDesc": "language_10072906",
     "effects": "",
-    "icon": "1016"
+    "icon": "1016",
+    "summon": 0
   },
   {
     "id": 64,
+    "activityId": 12701,
     "tag": "vienna",
     "name": "language_10036743",
     "level": 0,
@@ -765,10 +892,12 @@
     "desc": "language_10072907",
     "levelDesc": "",
     "effects": "",
-    "icon": "1027"
+    "icon": "1027",
+    "summon": 0
   },
   {
     "id": 65,
+    "activityId": 12701,
     "tag": "vienna",
     "name": "language_10036743",
     "level": 1,
@@ -777,10 +906,12 @@
     "desc": "language_10072908",
     "levelDesc": "language_10072909",
     "effects": "",
-    "icon": "1027"
+    "icon": "1027",
+    "summon": 0
   },
   {
     "id": 66,
+    "activityId": 12701,
     "tag": "challenge",
     "name": "language_10072910",
     "level": 0,
@@ -789,10 +920,12 @@
     "desc": "language_10072911",
     "levelDesc": "",
     "effects": "",
-    "icon": "1028"
+    "icon": "1028",
+    "summon": 0
   },
   {
     "id": 67,
+    "activityId": 12701,
     "tag": "challenge",
     "name": "language_10072910",
     "level": 1,
@@ -801,10 +934,12 @@
     "desc": "language_10072912",
     "levelDesc": "language_10072913",
     "effects": "",
-    "icon": "1028"
+    "icon": "1028",
+    "summon": 0
   },
   {
     "id": 68,
+    "activityId": 12701,
     "tag": "child",
     "name": "language_10072914",
     "level": 0,
@@ -813,10 +948,12 @@
     "desc": "language_10072915",
     "levelDesc": "",
     "effects": "",
-    "icon": "1017"
+    "icon": "1017",
+    "summon": 0
   },
   {
     "id": 69,
+    "activityId": 12701,
     "tag": "child",
     "name": "language_10072914",
     "level": 1,
@@ -825,10 +962,12 @@
     "desc": "language_10072916",
     "levelDesc": "language_10072917",
     "effects": "",
-    "icon": "1017"
+    "icon": "1017",
+    "summon": 0
   },
   {
     "id": 70,
+    "activityId": 12701,
     "tag": "child",
     "name": "language_10072914",
     "level": 2,
@@ -837,10 +976,12 @@
     "desc": "language_10072918",
     "levelDesc": "language_10072919",
     "effects": "",
-    "icon": "1017"
+    "icon": "1017",
+    "summon": 0
   },
   {
     "id": 71,
+    "activityId": 12701,
     "tag": "child",
     "name": "language_10072914",
     "level": 3,
@@ -849,10 +990,12 @@
     "desc": "language_10072920",
     "levelDesc": "language_10072921",
     "effects": "",
-    "icon": "1017"
+    "icon": "1017",
+    "summon": 0
   },
   {
     "id": 72,
+    "activityId": 12701,
     "tag": "thief",
     "name": "language_10072922",
     "level": 0,
@@ -861,10 +1004,12 @@
     "desc": "language_10072923",
     "levelDesc": "",
     "effects": "",
-    "icon": "1018"
+    "icon": "1018",
+    "summon": 0
   },
   {
     "id": 73,
+    "activityId": 12701,
     "tag": "thief",
     "name": "language_10072922",
     "level": 1,
@@ -873,10 +1018,12 @@
     "desc": "language_10072924",
     "levelDesc": "language_10072925",
     "effects": "",
-    "icon": "1018"
+    "icon": "1018",
+    "summon": 0
   },
   {
     "id": 74,
+    "activityId": 12701,
     "tag": "thief",
     "name": "language_10072922",
     "level": 2,
@@ -885,10 +1032,12 @@
     "desc": "language_10072926",
     "levelDesc": "language_10072927",
     "effects": "",
-    "icon": "1018"
+    "icon": "1018",
+    "summon": 0
   },
   {
     "id": 75,
+    "activityId": 12701,
     "tag": "sportsMeet",
     "name": "language_10072928",
     "level": 0,
@@ -897,10 +1046,12 @@
     "desc": "language_10072929",
     "levelDesc": "",
     "effects": "",
-    "icon": "1019"
+    "icon": "1019",
+    "summon": 0
   },
   {
     "id": 76,
+    "activityId": 12701,
     "tag": "sportsMeet",
     "name": "language_10072928",
     "level": 1,
@@ -909,10 +1060,12 @@
     "desc": "language_10072930",
     "levelDesc": "language_10072930",
     "effects": "",
-    "icon": "1019"
+    "icon": "1019",
+    "summon": 0
   },
   {
     "id": 77,
+    "activityId": 12701,
     "tag": "sportsMeet",
     "name": "language_10072928",
     "level": 2,
@@ -921,10 +1074,12 @@
     "desc": "language_10072931",
     "levelDesc": "language_10072932",
     "effects": "",
-    "icon": "1019"
+    "icon": "1019",
+    "summon": 0
   },
   {
     "id": 78,
+    "activityId": 12701,
     "tag": "artist",
     "name": "language_10072933",
     "level": 0,
@@ -933,10 +1088,12 @@
     "desc": "language_10072934",
     "levelDesc": "",
     "effects": "",
-    "icon": "1020"
+    "icon": "1020",
+    "summon": 0
   },
   {
     "id": 79,
+    "activityId": 12701,
     "tag": "artist",
     "name": "language_10072933",
     "level": 1,
@@ -945,10 +1102,12 @@
     "desc": "language_10072935",
     "levelDesc": "language_10072936",
     "effects": "",
-    "icon": "1020"
+    "icon": "1020",
+    "summon": 0
   },
   {
     "id": 80,
+    "activityId": 12701,
     "tag": "artist",
     "name": "language_10072933",
     "level": 2,
@@ -957,10 +1116,12 @@
     "desc": "language_10072937",
     "levelDesc": "language_10072938",
     "effects": "",
-    "icon": "1020"
+    "icon": "1020",
+    "summon": 0
   },
   {
     "id": 81,
+    "activityId": 12701,
     "tag": "revival",
     "name": "language_10022449",
     "level": 0,
@@ -969,10 +1130,12 @@
     "desc": "language_10072939",
     "levelDesc": "",
     "effects": "",
-    "icon": "1021"
+    "icon": "1021",
+    "summon": 0
   },
   {
     "id": 82,
+    "activityId": 12701,
     "tag": "revival",
     "name": "language_10022449",
     "level": 1,
@@ -981,10 +1144,12 @@
     "desc": "language_10072940",
     "levelDesc": "language_10072941",
     "effects": "",
-    "icon": "1021"
+    "icon": "1021",
+    "summon": 0
   },
   {
     "id": 83,
+    "activityId": 12701,
     "tag": "revival",
     "name": "language_10022449",
     "level": 2,
@@ -993,10 +1158,12 @@
     "desc": "language_10072942",
     "levelDesc": "language_10072943",
     "effects": "",
-    "icon": "1021"
+    "icon": "1021",
+    "summon": 0
   },
   {
     "id": 84,
+    "activityId": 0,
     "tag": "humanism",
     "name": "language_90001155",
     "level": 0,
@@ -1005,10 +1172,12 @@
     "desc": "language_10072944",
     "levelDesc": "",
     "effects": "",
-    "icon": "1022"
+    "icon": "1022",
+    "summon": 0
   },
   {
     "id": 85,
+    "activityId": 0,
     "tag": "humanism",
     "name": "language_90001155",
     "level": 1,
@@ -1017,10 +1186,12 @@
     "desc": "language_10072945",
     "levelDesc": "language_10072946",
     "effects": "",
-    "icon": "1022"
+    "icon": "1022",
+    "summon": 0
   },
   {
     "id": 86,
+    "activityId": 0,
     "tag": "humanism",
     "name": "language_90001155",
     "level": 2,
@@ -1029,10 +1200,12 @@
     "desc": "language_10072947",
     "levelDesc": "language_10072948",
     "effects": "",
-    "icon": "1022"
+    "icon": "1022",
+    "summon": 0
   },
   {
     "id": 87,
+    "activityId": 12701,
     "tag": "legend",
     "name": "language_10072949",
     "level": 0,
@@ -1041,10 +1214,12 @@
     "desc": "language_10072950",
     "levelDesc": "",
     "effects": "",
-    "icon": "1023"
+    "icon": "1023",
+    "summon": 0
   },
   {
     "id": 88,
+    "activityId": 12701,
     "tag": "legend",
     "name": "language_10072949",
     "level": 1,
@@ -1053,10 +1228,12 @@
     "desc": "language_10072951",
     "levelDesc": "language_10072952",
     "effects": "",
-    "icon": "1023"
+    "icon": "1023",
+    "summon": 0
   },
   {
     "id": 89,
+    "activityId": 12701,
     "tag": "legend",
     "name": "language_10072949",
     "level": 2,
@@ -1065,10 +1242,12 @@
     "desc": "language_10072953",
     "levelDesc": "language_10072954",
     "effects": "",
-    "icon": "1023"
+    "icon": "1023",
+    "summon": 0
   },
   {
     "id": 90,
+    "activityId": 12701,
     "tag": "legend",
     "name": "language_10072949",
     "level": 3,
@@ -1077,10 +1256,12 @@
     "desc": "language_10072955",
     "levelDesc": "language_10072956",
     "effects": "",
-    "icon": "1023"
+    "icon": "1023",
+    "summon": 0
   },
   {
     "id": 91,
+    "activityId": 12701,
     "tag": "warfare",
     "name": "language_10072957",
     "level": 0,
@@ -1089,10 +1270,12 @@
     "desc": "language_10072958",
     "levelDesc": "",
     "effects": "",
-    "icon": "1024"
+    "icon": "1024",
+    "summon": 0
   },
   {
     "id": 92,
+    "activityId": 12701,
     "tag": "warfare",
     "name": "language_10072957",
     "level": 1,
@@ -1101,10 +1284,12 @@
     "desc": "language_10072959",
     "levelDesc": "language_10072959",
     "effects": "",
-    "icon": "1024"
+    "icon": "1024",
+    "summon": 0
   },
   {
     "id": 93,
+    "activityId": 12701,
     "tag": "warfare",
     "name": "language_10072957",
     "level": 2,
@@ -1113,10 +1298,12 @@
     "desc": "language_10072960",
     "levelDesc": "language_10072961",
     "effects": "",
-    "icon": "1024"
+    "icon": "1024",
+    "summon": 0
   },
   {
     "id": 94,
+    "activityId": 12701,
     "tag": "flashlight",
     "name": "language_10072962",
     "level": 0,
@@ -1125,10 +1312,12 @@
     "desc": "language_10072963",
     "levelDesc": "",
     "effects": "",
-    "icon": "1025"
+    "icon": "1025",
+    "summon": 0
   },
   {
     "id": 95,
+    "activityId": 12701,
     "tag": "flashlight",
     "name": "language_10072962",
     "level": 1,
@@ -1137,10 +1326,12 @@
     "desc": "language_10072964",
     "levelDesc": "language_10072965",
     "effects": "",
-    "icon": "1025"
+    "icon": "1025",
+    "summon": 0
   },
   {
     "id": 96,
+    "activityId": 12701,
     "tag": "flashlight",
     "name": "language_10072962",
     "level": 2,
@@ -1149,10 +1340,12 @@
     "desc": "language_10072966",
     "levelDesc": "language_10072967",
     "effects": "",
-    "icon": "1025"
+    "icon": "1025",
+    "summon": 0
   },
   {
     "id": 97,
+    "activityId": 0,
     "tag": "begin",
     "name": "language_90001160",
     "level": 0,
@@ -1161,10 +1354,12 @@
     "desc": "language_10072968",
     "levelDesc": "",
     "effects": "",
-    "icon": "1026"
+    "icon": "1026",
+    "summon": 0
   },
   {
     "id": 98,
+    "activityId": 0,
     "tag": "begin",
     "name": "language_90001160",
     "level": 1,
@@ -1173,10 +1368,12 @@
     "desc": "language_10072969",
     "levelDesc": "language_10072970",
     "effects": "",
-    "icon": "1026"
+    "icon": "1026",
+    "summon": 0
   },
   {
     "id": 99,
+    "activityId": 0,
     "tag": "begin",
     "name": "language_90001160",
     "level": 2,
@@ -1185,6 +1382,1603 @@
     "desc": "language_10072971",
     "levelDesc": "language_10072972",
     "effects": "",
-    "icon": "1026"
+    "icon": "1026",
+    "summon": 0
+  },
+  {
+    "id": 101,
+    "activityId": 13105,
+    "tag": "rite",
+    "name": "language_90001157",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090207",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1002",
+    "summon": 0
+  },
+  {
+    "id": 102,
+    "activityId": 13105,
+    "tag": "rite",
+    "name": "language_90001157",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090208",
+    "levelDesc": "language_10090209",
+    "effects": "",
+    "icon": "1002",
+    "summon": 0
+  },
+  {
+    "id": 103,
+    "activityId": 13105,
+    "tag": "rite",
+    "name": "language_90001157",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10090210",
+    "levelDesc": "language_10090211",
+    "effects": "",
+    "icon": "1002",
+    "summon": 0
+  },
+  {
+    "id": 104,
+    "activityId": 13105,
+    "tag": "rite",
+    "name": "language_90001157",
+    "level": 3,
+    "tagBg": 3,
+    "activeNum": 6,
+    "desc": "language_10090212",
+    "levelDesc": "language_10090213",
+    "effects": "",
+    "icon": "1002",
+    "summon": 0
+  },
+  {
+    "id": 105,
+    "activityId": 13105,
+    "tag": "rite",
+    "name": "language_90001157",
+    "level": 4,
+    "tagBg": 4,
+    "activeNum": 8,
+    "desc": "language_10090214",
+    "levelDesc": "language_10090215",
+    "effects": "",
+    "icon": "1002",
+    "summon": 0
+  },
+  {
+    "id": 106,
+    "activityId": 13105,
+    "tag": "rite",
+    "name": "language_90001157",
+    "level": 5,
+    "tagBg": 5,
+    "activeNum": 10,
+    "desc": "language_10090216",
+    "levelDesc": "language_10090217",
+    "effects": "",
+    "icon": "1002",
+    "summon": 0
+  },
+  {
+    "id": 107,
+    "activityId": 13105,
+    "tag": "enlightenment",
+    "name": "language_10063814",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10073887",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1003",
+    "summon": 0
+  },
+  {
+    "id": 108,
+    "activityId": 13105,
+    "tag": "enlightenment",
+    "name": "language_10063814",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090218",
+    "levelDesc": "language_10090219",
+    "effects": "",
+    "icon": "1003",
+    "summon": 0
+  },
+  {
+    "id": 109,
+    "activityId": 13105,
+    "tag": "enlightenment",
+    "name": "language_10063814",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10090220",
+    "levelDesc": "language_10090221",
+    "effects": "",
+    "icon": "1003",
+    "summon": 0
+  },
+  {
+    "id": 110,
+    "activityId": 13105,
+    "tag": "enlightenment",
+    "name": "language_10063814",
+    "level": 3,
+    "tagBg": 3,
+    "activeNum": 6,
+    "desc": "language_10090222",
+    "levelDesc": "language_10090223",
+    "effects": "",
+    "icon": "1003",
+    "summon": 0
+  },
+  {
+    "id": 111,
+    "activityId": 13105,
+    "tag": "enlightenment",
+    "name": "language_10063814",
+    "level": 4,
+    "tagBg": 4,
+    "activeNum": 8,
+    "desc": "language_10090224",
+    "levelDesc": "language_10090225",
+    "effects": "",
+    "icon": "1003",
+    "summon": 0
+  },
+  {
+    "id": 112,
+    "activityId": 13105,
+    "tag": "enlightenment",
+    "name": "language_10063814",
+    "level": 5,
+    "tagBg": 5,
+    "activeNum": 10,
+    "desc": "language_10090226",
+    "levelDesc": "language_10090227",
+    "effects": "",
+    "icon": "1003",
+    "summon": 0
+  },
+  {
+    "id": 113,
+    "activityId": 13105,
+    "tag": "lossLife",
+    "name": "language_10074378",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090228",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1035",
+    "summon": 0
+  },
+  {
+    "id": 114,
+    "activityId": 13105,
+    "tag": "lossLife",
+    "name": "language_10074378",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090229",
+    "levelDesc": "language_10090230",
+    "effects": "",
+    "icon": "1035",
+    "summon": 0
+  },
+  {
+    "id": 115,
+    "activityId": 13105,
+    "tag": "lossLife",
+    "name": "language_10074378",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10090231",
+    "levelDesc": "language_10090232",
+    "effects": "",
+    "icon": "1035",
+    "summon": 0
+  },
+  {
+    "id": 116,
+    "activityId": 13105,
+    "tag": "lossLife",
+    "name": "language_10074378",
+    "level": 3,
+    "tagBg": 3,
+    "activeNum": 6,
+    "desc": "language_10090233",
+    "levelDesc": "language_10090234",
+    "effects": "",
+    "icon": "1035",
+    "summon": 0
+  },
+  {
+    "id": 117,
+    "activityId": 13105,
+    "tag": "lossLife",
+    "name": "language_10074378",
+    "level": 4,
+    "tagBg": 4,
+    "activeNum": 8,
+    "desc": "language_10090235",
+    "levelDesc": "language_10090236",
+    "effects": "",
+    "icon": "1035",
+    "summon": 0
+  },
+  {
+    "id": 118,
+    "activityId": 13105,
+    "tag": "lossLife",
+    "name": "language_10074378",
+    "level": 5,
+    "tagBg": 5,
+    "activeNum": 10,
+    "desc": "language_10090237",
+    "levelDesc": "language_10090238",
+    "effects": "",
+    "icon": "1035",
+    "summon": 0
+  },
+  {
+    "id": 119,
+    "activityId": 13105,
+    "tag": "electricity",
+    "name": "language_10017063",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090239",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1005",
+    "summon": 0
+  },
+  {
+    "id": 120,
+    "activityId": 13105,
+    "tag": "electricity",
+    "name": "language_10017063",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090240",
+    "levelDesc": "language_10090241",
+    "effects": "",
+    "icon": "1005",
+    "summon": 0
+  },
+  {
+    "id": 121,
+    "activityId": 13105,
+    "tag": "electricity",
+    "name": "language_10017063",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10090242",
+    "levelDesc": "language_10090243",
+    "effects": "",
+    "icon": "1005",
+    "summon": 0
+  },
+  {
+    "id": 122,
+    "activityId": 13105,
+    "tag": "electricity",
+    "name": "language_10017063",
+    "level": 3,
+    "tagBg": 3,
+    "activeNum": 6,
+    "desc": "language_10090244",
+    "levelDesc": "language_10090245",
+    "effects": "",
+    "icon": "1005",
+    "summon": 0
+  },
+  {
+    "id": 123,
+    "activityId": 13105,
+    "tag": "electricity",
+    "name": "language_10017063",
+    "level": 4,
+    "tagBg": 4,
+    "activeNum": 8,
+    "desc": "language_10090246",
+    "levelDesc": "language_10090247",
+    "effects": "",
+    "icon": "1005",
+    "summon": 0
+  },
+  {
+    "id": 124,
+    "activityId": 13105,
+    "tag": "electricity",
+    "name": "language_10017063",
+    "level": 5,
+    "tagBg": 5,
+    "activeNum": 10,
+    "desc": "language_10090248",
+    "levelDesc": "language_10090249",
+    "effects": "",
+    "icon": "1005",
+    "summon": 0
+  },
+  {
+    "id": 125,
+    "activityId": 13105,
+    "tag": "upgrade",
+    "name": "language_10072832",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090250",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1006",
+    "summon": 0
+  },
+  {
+    "id": 126,
+    "activityId": 13105,
+    "tag": "upgrade",
+    "name": "language_10072832",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090251",
+    "levelDesc": "language_10090251",
+    "effects": "",
+    "icon": "1006",
+    "summon": 0
+  },
+  {
+    "id": 127,
+    "activityId": 13105,
+    "tag": "upgrade",
+    "name": "language_10072832",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 3,
+    "desc": "language_10090252",
+    "levelDesc": "language_10090253",
+    "effects": "",
+    "icon": "1006",
+    "summon": 0
+  },
+  {
+    "id": 128,
+    "activityId": 13105,
+    "tag": "upgrade",
+    "name": "language_10072832",
+    "level": 3,
+    "tagBg": 3,
+    "activeNum": 5,
+    "desc": "language_10090254",
+    "levelDesc": "language_10090255",
+    "effects": "",
+    "icon": "1006",
+    "summon": 0
+  },
+  {
+    "id": 129,
+    "activityId": 13105,
+    "tag": "upgrade",
+    "name": "language_10072832",
+    "level": 4,
+    "tagBg": 4,
+    "activeNum": 7,
+    "desc": "language_10090256",
+    "levelDesc": "language_10090257",
+    "effects": "",
+    "icon": "1006",
+    "summon": 0
+  },
+  {
+    "id": 130,
+    "activityId": 13105,
+    "tag": "upgrade",
+    "name": "language_10072832",
+    "level": 5,
+    "tagBg": 5,
+    "activeNum": 9,
+    "desc": "language_10090258",
+    "levelDesc": "language_10090259",
+    "effects": "",
+    "icon": "1006",
+    "summon": 0
+  },
+  {
+    "id": 131,
+    "activityId": 13105,
+    "tag": "unusual",
+    "name": "language_10090260",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090261",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1010",
+    "summon": 0
+  },
+  {
+    "id": 132,
+    "activityId": 13105,
+    "tag": "unusual",
+    "name": "language_10090260",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090262",
+    "levelDesc": "language_10090263",
+    "effects": "",
+    "icon": "1010",
+    "summon": 0
+  },
+  {
+    "id": 133,
+    "activityId": 13105,
+    "tag": "unusual",
+    "name": "language_10090260",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10090264",
+    "levelDesc": "language_10090265",
+    "effects": "",
+    "icon": "1010",
+    "summon": 0
+  },
+  {
+    "id": 134,
+    "activityId": 13105,
+    "tag": "unusual",
+    "name": "language_10090260",
+    "level": 3,
+    "tagBg": 3,
+    "activeNum": 6,
+    "desc": "language_10090264",
+    "levelDesc": "language_10090266",
+    "effects": "",
+    "icon": "1010",
+    "summon": 0
+  },
+  {
+    "id": 135,
+    "activityId": 13105,
+    "tag": "unusual",
+    "name": "language_10090260",
+    "level": 4,
+    "tagBg": 4,
+    "activeNum": 8,
+    "desc": "language_10090267",
+    "levelDesc": "language_10090268",
+    "effects": "",
+    "icon": "1010",
+    "summon": 0
+  },
+  {
+    "id": 136,
+    "activityId": 13105,
+    "tag": "unusual",
+    "name": "language_10090260",
+    "level": 5,
+    "tagBg": 5,
+    "activeNum": 10,
+    "desc": "language_10090269",
+    "levelDesc": "language_10090270",
+    "effects": "",
+    "icon": "1010",
+    "summon": 0
+  },
+  {
+    "id": 137,
+    "activityId": 13105,
+    "tag": "remodeling",
+    "name": "language_10003456",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090271",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1014",
+    "summon": 0
+  },
+  {
+    "id": 138,
+    "activityId": 13105,
+    "tag": "remodeling",
+    "name": "language_10003456",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090272",
+    "levelDesc": "language_10090273",
+    "effects": "",
+    "icon": "1014",
+    "summon": 0
+  },
+  {
+    "id": 139,
+    "activityId": 13105,
+    "tag": "remodeling",
+    "name": "language_10003456",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10090274",
+    "levelDesc": "language_10090275",
+    "effects": "",
+    "icon": "1014",
+    "summon": 0
+  },
+  {
+    "id": 140,
+    "activityId": 13105,
+    "tag": "remodeling",
+    "name": "language_10003456",
+    "level": 3,
+    "tagBg": 3,
+    "activeNum": 6,
+    "desc": "language_10090276",
+    "levelDesc": "language_10090277",
+    "effects": "1072",
+    "icon": "1014",
+    "summon": 0
+  },
+  {
+    "id": 142,
+    "activityId": 13105,
+    "tag": "employe",
+    "name": "language_10090278",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10072845",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1008",
+    "summon": 0
+  },
+  {
+    "id": 143,
+    "activityId": 13105,
+    "tag": "employe",
+    "name": "language_10090278",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10072848",
+    "levelDesc": "language_10090279",
+    "effects": "1101",
+    "icon": "1008",
+    "summon": 0
+  },
+  {
+    "id": 144,
+    "activityId": 13105,
+    "tag": "employe",
+    "name": "language_10090278",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10090280",
+    "levelDesc": "language_10090281",
+    "effects": "1102",
+    "icon": "1008",
+    "summon": 0
+  },
+  {
+    "id": 145,
+    "activityId": 13105,
+    "tag": "employe",
+    "name": "language_10090278",
+    "level": 3,
+    "tagBg": 3,
+    "activeNum": 6,
+    "desc": "language_10090282",
+    "levelDesc": "language_10090283",
+    "effects": "1103",
+    "icon": "1008",
+    "summon": 0
+  },
+  {
+    "id": 147,
+    "activityId": 13105,
+    "tag": "foundation",
+    "name": "language_10072893",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090284",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1015",
+    "summon": 0
+  },
+  {
+    "id": 148,
+    "activityId": 13105,
+    "tag": "foundation",
+    "name": "language_10072893",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090285",
+    "levelDesc": "language_10090286",
+    "effects": "1081",
+    "icon": "1015",
+    "summon": 101
+  },
+  {
+    "id": 149,
+    "activityId": 13105,
+    "tag": "foundation",
+    "name": "language_10072893",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10090287",
+    "levelDesc": "language_10090288",
+    "effects": "1081",
+    "icon": "1015",
+    "summon": 102
+  },
+  {
+    "id": 150,
+    "activityId": 13105,
+    "tag": "foundation",
+    "name": "language_10072893",
+    "level": 3,
+    "tagBg": 3,
+    "activeNum": 6,
+    "desc": "language_10090289",
+    "levelDesc": "language_10090290",
+    "effects": "1082",
+    "icon": "1015",
+    "summon": 103
+  },
+  {
+    "id": 152,
+    "activityId": 13105,
+    "tag": "peace",
+    "name": "language_10017351",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090291",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1030",
+    "summon": 0
+  },
+  {
+    "id": 153,
+    "activityId": 13105,
+    "tag": "peace",
+    "name": "language_10017351",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090292",
+    "levelDesc": "language_10090293",
+    "effects": "1021|1022|1023|1024|1025|1026|1027|1028|1011|1012",
+    "icon": "1030",
+    "summon": 0
+  },
+  {
+    "id": 154,
+    "activityId": 13105,
+    "tag": "peace",
+    "name": "language_10017351",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 3,
+    "desc": "language_10090294",
+    "levelDesc": "language_10090295",
+    "effects": "1021|1022|1023|1024|1025|1026|1027|1028|1011|1012",
+    "icon": "1030",
+    "summon": 0
+  },
+  {
+    "id": 155,
+    "activityId": 13105,
+    "tag": "peace",
+    "name": "language_10017351",
+    "level": 3,
+    "tagBg": 3,
+    "activeNum": 5,
+    "desc": "language_10090296",
+    "levelDesc": "language_10090297",
+    "effects": "1021|1022|1023|1024|1025|1026|1027|1028|1011|1014|1012|1013",
+    "icon": "1030",
+    "summon": 0
+  },
+  {
+    "id": 156,
+    "activityId": 13105,
+    "tag": "peace",
+    "name": "language_10017351",
+    "level": 4,
+    "tagBg": 4,
+    "activeNum": 7,
+    "desc": "language_10090298",
+    "levelDesc": "language_10090299",
+    "effects": "1021|1022|1023|1024|1025|1026|1027|1028|1011|1014|1015|1012|1013",
+    "icon": "1030",
+    "summon": 0
+  },
+  {
+    "id": 157,
+    "activityId": 13105,
+    "tag": "hunt",
+    "name": "language_10090300",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090301",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1011",
+    "summon": 0
+  },
+  {
+    "id": 158,
+    "activityId": 13105,
+    "tag": "hunt",
+    "name": "language_10090300",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090302",
+    "levelDesc": "language_10090303",
+    "effects": "1051|1052|1053|1054|1055|1056|1057|1058|1041",
+    "icon": "1011",
+    "summon": 0
+  },
+  {
+    "id": 159,
+    "activityId": 13105,
+    "tag": "hunt",
+    "name": "language_10090300",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 3,
+    "desc": "language_10090304",
+    "levelDesc": "language_10090305",
+    "effects": "1051|1052|1053|1054|1055|1056|1057|1058|1041",
+    "icon": "1011",
+    "summon": 0
+  },
+  {
+    "id": 160,
+    "activityId": 13105,
+    "tag": "hunt",
+    "name": "language_10090300",
+    "level": 3,
+    "tagBg": 3,
+    "activeNum": 5,
+    "desc": "language_10090306",
+    "levelDesc": "language_10090307",
+    "effects": "1051|1052|1053|1054|1055|1056|1057|1058|1041|1042",
+    "icon": "1011",
+    "summon": 0
+  },
+  {
+    "id": 161,
+    "activityId": 13105,
+    "tag": "hunt",
+    "name": "language_10090300",
+    "level": 4,
+    "tagBg": 4,
+    "activeNum": 7,
+    "desc": "language_10090308",
+    "levelDesc": "language_10090309",
+    "effects": "1051|1052|1053|1054|1055|1056|1057|1058|1041|1042|1043",
+    "icon": "1011",
+    "summon": 0
+  },
+  {
+    "id": 162,
+    "activityId": 13105,
+    "tag": "oldFriend",
+    "name": "language_10090310",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090311",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1026",
+    "summon": 0
+  },
+  {
+    "id": 163,
+    "activityId": 13105,
+    "tag": "oldFriend",
+    "name": "language_10090310",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 1,
+    "desc": "language_10090312",
+    "levelDesc": "language_10090312",
+    "effects": "",
+    "icon": "1026",
+    "summon": 0
+  },
+  {
+    "id": 164,
+    "activityId": 13105,
+    "tag": "oldFriend",
+    "name": "language_10090310",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 2,
+    "desc": "language_10090313",
+    "levelDesc": "language_10090314",
+    "effects": "",
+    "icon": "1026",
+    "summon": 0
+  },
+  {
+    "id": 165,
+    "activityId": 13105,
+    "tag": "oldFriend",
+    "name": "language_10090310",
+    "level": 3,
+    "tagBg": 4,
+    "activeNum": 3,
+    "desc": "language_10090315",
+    "levelDesc": "language_10090316",
+    "effects": "",
+    "icon": "1026",
+    "summon": 0
+  },
+  {
+    "id": 170,
+    "activityId": 13105,
+    "tag": "school",
+    "name": "language_10072884",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090317",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1013",
+    "summon": 0
+  },
+  {
+    "id": 171,
+    "activityId": 13105,
+    "tag": "school",
+    "name": "language_10072884",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10072886",
+    "levelDesc": "language_10072886",
+    "effects": "",
+    "icon": "1013",
+    "summon": 0
+  },
+  {
+    "id": 172,
+    "activityId": 13105,
+    "tag": "school",
+    "name": "language_10072884",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10090318",
+    "levelDesc": "language_10090319",
+    "effects": "",
+    "icon": "1013",
+    "summon": 0
+  },
+  {
+    "id": 173,
+    "activityId": 13105,
+    "tag": "cure",
+    "name": "language_10017009",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10072854",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1009",
+    "summon": 0
+  },
+  {
+    "id": 174,
+    "activityId": 13105,
+    "tag": "cure",
+    "name": "language_10017009",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10072855",
+    "levelDesc": "language_10072855",
+    "effects": "",
+    "icon": "1009",
+    "summon": 0
+  },
+  {
+    "id": 175,
+    "activityId": 13105,
+    "tag": "cure",
+    "name": "language_10017009",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10072856",
+    "levelDesc": "language_10072857",
+    "effects": "",
+    "icon": "1009",
+    "summon": 0
+  },
+  {
+    "id": 176,
+    "activityId": 13105,
+    "tag": "lapras",
+    "name": "language_10072903",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090320",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1016",
+    "summon": 0
+  },
+  {
+    "id": 177,
+    "activityId": 13105,
+    "tag": "lapras",
+    "name": "language_10072903",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 3,
+    "desc": "language_10090321",
+    "levelDesc": "language_10090322",
+    "effects": "",
+    "icon": "1016",
+    "summon": 104
+  },
+  {
+    "id": 178,
+    "activityId": 13105,
+    "tag": "lapras",
+    "name": "language_10072903",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 6,
+    "desc": "language_10090323",
+    "levelDesc": "language_10090324",
+    "effects": "",
+    "icon": "1016",
+    "summon": 105
+  },
+  {
+    "id": 179,
+    "activityId": 13105,
+    "tag": "lapras",
+    "name": "language_10072903",
+    "level": 3,
+    "tagBg": 4,
+    "activeNum": 8,
+    "desc": "language_10090323",
+    "levelDesc": "language_10090325",
+    "effects": "",
+    "icon": "1016",
+    "summon": 106
+  },
+  {
+    "id": 180,
+    "activityId": 13105,
+    "tag": "child",
+    "name": "language_10090326",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090327",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1017",
+    "summon": 0
+  },
+  {
+    "id": 181,
+    "activityId": 13105,
+    "tag": "child",
+    "name": "language_10090326",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090328",
+    "levelDesc": "language_10072917",
+    "effects": "",
+    "icon": "1017",
+    "summon": 0
+  },
+  {
+    "id": 182,
+    "activityId": 13105,
+    "tag": "child",
+    "name": "language_10090326",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 5,
+    "desc": "language_10090329",
+    "levelDesc": "language_10090330",
+    "effects": "",
+    "icon": "1017",
+    "summon": 0
+  },
+  {
+    "id": 183,
+    "activityId": 13105,
+    "tag": "sportsMeet",
+    "name": "language_10090331",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090332",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1019",
+    "summon": 0
+  },
+  {
+    "id": 184,
+    "activityId": 13105,
+    "tag": "sportsMeet",
+    "name": "language_10090331",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090333",
+    "levelDesc": "language_10090334",
+    "effects": "",
+    "icon": "1019",
+    "summon": 0
+  },
+  {
+    "id": 185,
+    "activityId": 13105,
+    "tag": "sportsMeet",
+    "name": "language_10090331",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10090335",
+    "levelDesc": "language_10090336",
+    "effects": "",
+    "icon": "1019",
+    "summon": 0
+  },
+  {
+    "id": 186,
+    "activityId": 13105,
+    "tag": "sportsMeet",
+    "name": "language_10090331",
+    "level": 3,
+    "tagBg": 4,
+    "activeNum": 6,
+    "desc": "language_10090337",
+    "levelDesc": "language_10090338",
+    "effects": "",
+    "icon": "1019",
+    "summon": 0
+  },
+  {
+    "id": 187,
+    "activityId": 13105,
+    "tag": "artist",
+    "name": "language_10090339",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090340",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1020",
+    "summon": 0
+  },
+  {
+    "id": 188,
+    "activityId": 13105,
+    "tag": "artist",
+    "name": "language_10090339",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 3,
+    "desc": "language_10090341",
+    "levelDesc": "language_10090342",
+    "effects": "",
+    "icon": "1020",
+    "summon": 0
+  },
+  {
+    "id": 189,
+    "activityId": 13105,
+    "tag": "artist",
+    "name": "language_10090339",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 5,
+    "desc": "language_10090343",
+    "levelDesc": "language_10090344",
+    "effects": "",
+    "icon": "1020",
+    "summon": 0
+  },
+  {
+    "id": 190,
+    "activityId": 13105,
+    "tag": "artist",
+    "name": "language_10090339",
+    "level": 3,
+    "tagBg": 4,
+    "activeNum": 8,
+    "desc": "language_10090345",
+    "levelDesc": "language_10090346",
+    "effects": "",
+    "icon": "1020",
+    "summon": 0
+  },
+  {
+    "id": 191,
+    "activityId": 13105,
+    "tag": "legend",
+    "name": "language_10072949",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090347",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1023",
+    "summon": 0
+  },
+  {
+    "id": 192,
+    "activityId": 13105,
+    "tag": "legend",
+    "name": "language_10072949",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 3,
+    "desc": "language_10090348",
+    "levelDesc": "language_10090349",
+    "effects": "",
+    "icon": "1023",
+    "summon": 0
+  },
+  {
+    "id": 193,
+    "activityId": 13105,
+    "tag": "legend",
+    "name": "language_10072949",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 5,
+    "desc": "language_10090350",
+    "levelDesc": "language_10090351",
+    "effects": "",
+    "icon": "1023",
+    "summon": 0
+  },
+  {
+    "id": 194,
+    "activityId": 13105,
+    "tag": "legend",
+    "name": "language_10072949",
+    "level": 3,
+    "tagBg": 4,
+    "activeNum": 8,
+    "desc": "language_10090352",
+    "levelDesc": "language_10090353",
+    "effects": "",
+    "icon": "1023",
+    "summon": 0
+  },
+  {
+    "id": 195,
+    "activityId": 13105,
+    "tag": "warfare",
+    "name": "language_10072957",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090354",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1024",
+    "summon": 0
+  },
+  {
+    "id": 196,
+    "activityId": 13105,
+    "tag": "warfare",
+    "name": "language_10072957",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 3,
+    "desc": "language_10090355",
+    "levelDesc": "language_10090356",
+    "effects": "",
+    "icon": "1024",
+    "summon": 0
+  },
+  {
+    "id": 197,
+    "activityId": 13105,
+    "tag": "warfare",
+    "name": "language_10072957",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 5,
+    "desc": "language_10090357",
+    "levelDesc": "language_10090358",
+    "effects": "",
+    "icon": "1024",
+    "summon": 0
+  },
+  {
+    "id": 198,
+    "activityId": 13105,
+    "tag": "warfare",
+    "name": "language_10072957",
+    "level": 3,
+    "tagBg": 4,
+    "activeNum": 8,
+    "desc": "language_10090359",
+    "levelDesc": "language_10090360",
+    "effects": "",
+    "icon": "1024",
+    "summon": 0
+  },
+  {
+    "id": 199,
+    "activityId": 13105,
+    "tag": "flashlight",
+    "name": "language_10072962",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090361",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1025",
+    "summon": 0
+  },
+  {
+    "id": 200,
+    "activityId": 13105,
+    "tag": "flashlight",
+    "name": "language_10072962",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090362",
+    "levelDesc": "language_10090363",
+    "effects": "",
+    "icon": "1025",
+    "summon": 0
+  },
+  {
+    "id": 201,
+    "activityId": 13105,
+    "tag": "flashlight",
+    "name": "language_10072962",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10090364",
+    "levelDesc": "language_10090365",
+    "effects": "",
+    "icon": "1025",
+    "summon": 0
+  },
+  {
+    "id": 202,
+    "activityId": 13105,
+    "tag": "dnd",
+    "name": "language_10090366",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090367",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1029",
+    "summon": 0
+  },
+  {
+    "id": 203,
+    "activityId": 13105,
+    "tag": "dnd",
+    "name": "language_10090366",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090368",
+    "levelDesc": "language_10090369",
+    "effects": "",
+    "icon": "1029",
+    "summon": 0
+  },
+  {
+    "id": 204,
+    "activityId": 13105,
+    "tag": "dnd",
+    "name": "language_10090366",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 3,
+    "desc": "language_10090370",
+    "levelDesc": "language_10090371",
+    "effects": "",
+    "icon": "1029",
+    "summon": 0
+  },
+  {
+    "id": 205,
+    "activityId": 13105,
+    "tag": "chess",
+    "name": "language_10090372",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090373",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1031",
+    "summon": 0
+  },
+  {
+    "id": 206,
+    "activityId": 13105,
+    "tag": "chess",
+    "name": "language_10090372",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 2,
+    "desc": "language_10090374",
+    "levelDesc": "language_10090375",
+    "effects": "",
+    "icon": "1031",
+    "summon": 0
+  },
+  {
+    "id": 207,
+    "activityId": 13105,
+    "tag": "chess",
+    "name": "language_10090372",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 4,
+    "desc": "language_10090374",
+    "levelDesc": "language_10090376",
+    "effects": "",
+    "icon": "1031",
+    "summon": 0
+  },
+  {
+    "id": 208,
+    "activityId": 13105,
+    "tag": "tarotCards",
+    "name": "language_10090377",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090378",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1034",
+    "summon": 0
+  },
+  {
+    "id": 209,
+    "activityId": 13105,
+    "tag": "tarotCards",
+    "name": "language_10090377",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 3,
+    "desc": "language_10090379",
+    "levelDesc": "language_10090379",
+    "effects": "",
+    "icon": "1034",
+    "summon": 0
+  },
+  {
+    "id": 210,
+    "activityId": 13105,
+    "tag": "tarotCards",
+    "name": "language_10090377",
+    "level": 2,
+    "tagBg": 2,
+    "activeNum": 6,
+    "desc": "language_10090380",
+    "levelDesc": "language_10090381",
+    "effects": "",
+    "icon": "1034",
+    "summon": 0
+  },
+  {
+    "id": 211,
+    "activityId": 13105,
+    "tag": "tarotCards",
+    "name": "language_10090377",
+    "level": 3,
+    "tagBg": 3,
+    "activeNum": 8,
+    "desc": "language_10090382",
+    "levelDesc": "language_10090383",
+    "effects": "",
+    "icon": "1034",
+    "summon": 0
+  },
+  {
+    "id": 212,
+    "activityId": 13105,
+    "tag": "revival",
+    "name": "language_10090384",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090385",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1021",
+    "summon": 0
+  },
+  {
+    "id": 213,
+    "activityId": 13105,
+    "tag": "revival",
+    "name": "language_10090384",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 3,
+    "desc": "language_10090386",
+    "levelDesc": "language_10090386",
+    "effects": "",
+    "icon": "1021",
+    "summon": 0
+  },
+  {
+    "id": 214,
+    "activityId": 13105,
+    "tag": "revival",
+    "name": "language_10090384",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 6,
+    "desc": "language_10090387",
+    "levelDesc": "language_10090388",
+    "effects": "",
+    "icon": "1021",
+    "summon": 0
+  },
+  {
+    "id": 215,
+    "activityId": 13105,
+    "tag": "ancient",
+    "name": "language_10090389",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090390",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1001",
+    "summon": 0
+  },
+  {
+    "id": 216,
+    "activityId": 13105,
+    "tag": "ancient",
+    "name": "language_10090389",
+    "level": 1,
+    "tagBg": 2,
+    "activeNum": 3,
+    "desc": "language_10090391",
+    "levelDesc": "language_10090391",
+    "effects": "",
+    "icon": "1001",
+    "summon": 0
+  },
+  {
+    "id": 217,
+    "activityId": 13105,
+    "tag": "ancient",
+    "name": "language_10090389",
+    "level": 2,
+    "tagBg": 3,
+    "activeNum": 6,
+    "desc": "language_10090392",
+    "levelDesc": "language_10090393",
+    "effects": "",
+    "icon": "1001",
+    "summon": 0
+  },
+  {
+    "id": 218,
+    "activityId": 13105,
+    "tag": "confidant",
+    "name": "language_90001243",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090394",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1032",
+    "summon": 0
+  },
+  {
+    "id": 219,
+    "activityId": 13105,
+    "tag": "confidant",
+    "name": "language_90001243",
+    "level": 1,
+    "tagBg": 4,
+    "activeNum": 2,
+    "desc": "language_10090395",
+    "levelDesc": "language_10090396",
+    "effects": "",
+    "icon": "1032",
+    "summon": 0
+  },
+  {
+    "id": 220,
+    "activityId": 13105,
+    "tag": "lineScience",
+    "name": "language_10038277",
+    "level": 0,
+    "tagBg": 1,
+    "activeNum": 0,
+    "desc": "language_10090397",
+    "levelDesc": "",
+    "effects": "",
+    "icon": "1033",
+    "summon": 0
+  },
+  {
+    "id": 221,
+    "activityId": 13105,
+    "tag": "lineScience",
+    "name": "language_10038277",
+    "level": 1,
+    "tagBg": 4,
+    "activeNum": 2,
+    "desc": "language_10090398",
+    "levelDesc": "language_10090399",
+    "effects": "",
+    "icon": "1033",
+    "summon": 0
   }
 ]

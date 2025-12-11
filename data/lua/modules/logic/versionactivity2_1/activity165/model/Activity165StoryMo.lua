@@ -748,6 +748,10 @@ function var_0_0.getElements(arg_57_0)
 end
 
 function var_0_0.isShowReddot(arg_58_0)
+	if arg_58_0:isAllClaimed() then
+		return false
+	end
+
 	return arg_58_0._isNewUnlock or arg_58_0:_isShowRewardReddot()
 end
 
@@ -814,6 +818,13 @@ end
 
 function var_0_0._getNewUnlockStoryKey(arg_66_0)
 	return Activity165Model.instance:_getStoryPrefsKey("NewUnlockStory", arg_66_0.storyId)
+end
+
+function var_0_0.isAllClaimed(arg_67_0)
+	local var_67_0 = arg_67_0:getclaimRewardCount() or 0
+	local var_67_1 = arg_67_0:getAllEndingRewardCo()
+
+	return var_67_0 >= (var_67_1 and tabletool.len(var_67_1) or 0)
 end
 
 return var_0_0

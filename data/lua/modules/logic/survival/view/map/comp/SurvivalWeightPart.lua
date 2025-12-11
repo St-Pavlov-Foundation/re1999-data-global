@@ -4,7 +4,7 @@ local var_0_0 = class("SurvivalWeightPart", LuaCompBase)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
 	if arg_1_1 == nil then
-		arg_1_1 = SurvivalMapModel.instance:getSceneMo().bag
+		arg_1_1 = SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Map)
 	end
 
 	arg_1_0.bag = arg_1_1

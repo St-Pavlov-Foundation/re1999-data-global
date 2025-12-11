@@ -7,15 +7,16 @@ function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
 
 	if not GameResMgr.IsFromEditorDir then
 		local var_1_0 = SurvivalConfig.instance:getShelterMapCo()
+		local var_1_1 = tabletool.copy(var_1_0.allBuildingPaths)
 
-		arg_1_0._loader:setPathList(tabletool.copy(var_1_0.allBuildingPaths))
+		arg_1_0._loader:setPathList(var_1_1)
 		arg_1_0._loader:addPath(arg_1_0:getMapBlockAbPath())
 	else
-		local var_1_1 = SurvivalConfig.instance:getShelterMapCo()
-		local var_1_2 = tabletool.copy(var_1_1.allBlockPaths)
+		local var_1_2 = SurvivalConfig.instance:getShelterMapCo()
+		local var_1_3 = tabletool.copy(var_1_2.allBlockPaths)
 
-		tabletool.addValues(var_1_2, var_1_1.allBuildingPaths)
-		arg_1_0._loader:setPathList(var_1_2)
+		tabletool.addValues(var_1_3, var_1_2.allBuildingPaths)
+		arg_1_0._loader:setPathList(var_1_3)
 	end
 
 	arg_1_0._loader:addPath(SurvivalShelterSceneFogComp.FogResPath)

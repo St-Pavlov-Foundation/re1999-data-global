@@ -45,23 +45,31 @@ function var_0_0._initScene(arg_7_0)
 
 	arg_7_0._sceneLoader:addPath(var_7_2)
 	arg_7_0._sceneLoader:startLoad(function(arg_8_0)
-		arg_7_0._assetItem = arg_8_0:getAssetItem(var_7_2)
+		local var_8_0 = arg_8_0:getAssetItem(var_7_2)
 
-		if not arg_7_0._assetItem then
+		if not var_8_0 then
 			return
 		end
 
+		local var_8_1 = arg_7_0._assetItem
+
+		arg_7_0._assetItem = var_8_0
+
 		arg_7_0._assetItem:Retain()
 
-		local var_8_0 = arg_7_0._assetItem:GetResource(var_7_2)
-		local var_8_1 = gohelper.clone(var_8_0, arg_7_0._sceneContainer, var_7_1.resName)
+		if var_8_1 then
+			var_8_1:Release()
+		end
+
+		local var_8_2 = arg_7_0._assetItem:GetResource(var_7_2)
+		local var_8_3 = gohelper.clone(var_8_2, arg_7_0._sceneContainer, var_7_1.resName)
 
 		if var_7_0 == 10101 then
-			local var_8_2 = arg_7_0.viewContainer:getStoryMainSceneView()
+			local var_8_4 = arg_7_0.viewContainer:getStoryMainSceneView()
 
-			if var_8_2 then
-				var_8_2:setSceneId(1)
-				var_8_2:initSceneGo(var_8_1, var_7_1.resName)
+			if var_8_4 then
+				var_8_4:setSceneId(1)
+				var_8_4:initSceneGo(var_8_3, var_7_1.resName)
 			end
 		end
 	end)

@@ -40,44 +40,40 @@ function var_0_0.onUpdateParam(arg_7_0)
 	arg_7_0:onOpen()
 end
 
-function var_0_0.onClose(arg_8_0)
+function var_0_0.onDestroyView(arg_8_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	return
-end
+function var_0_0.autoQte(arg_9_0, arg_9_1)
+	local var_9_0 = FightDataModel.instance.aiJiAoAutoSequenceForGM
 
-function var_0_0.autoQte(arg_10_0, arg_10_1)
-	local var_10_0 = FightDataModel.instance.aiJiAoAutoSequenceForGM
+	if var_9_0 then
+		local var_9_1 = var_9_0.autoSequence
 
-	if var_10_0 then
-		local var_10_1 = var_10_0.autoSequence
+		if var_9_1 and #var_9_1 > 0 then
+			local var_9_2 = var_9_0.index + 1
 
-		if var_10_1 and #var_10_1 > 0 then
-			local var_10_2 = var_10_0.index + 1
-
-			if not var_10_1[var_10_2] then
-				var_10_2 = 1
+			if not var_9_1[var_9_2] then
+				var_9_2 = 1
 			end
 
-			var_10_0.index = var_10_2
+			var_9_0.index = var_9_2
 
-			local var_10_3 = var_10_1[var_10_2]
+			local var_9_3 = var_9_1[var_9_2]
 
-			FightRpc.instance:sendUseClothSkillRequest(var_10_3, arg_10_0, arg_10_1, FightEnum.ClothSkillType.EzioBigSkill)
+			FightRpc.instance:sendUseClothSkillRequest(var_9_3, arg_9_0, arg_9_1, FightEnum.ClothSkillType.EzioBigSkill)
 
 			return
 		end
 	end
 
-	local var_10_4 = FightDataHelper.entityMgr:getById(arg_10_1)
+	local var_9_4 = FightDataHelper.entityMgr:getById(arg_9_1)
 
-	if var_10_4 then
-		if var_10_4.currentHp / var_10_4.attrMO.hp >= 0.5 then
-			FightRpc.instance:sendUseClothSkillRequest(2, arg_10_0, arg_10_1, FightEnum.ClothSkillType.EzioBigSkill)
+	if var_9_4 then
+		if var_9_4.currentHp / var_9_4.attrMO.hp >= 0.5 then
+			FightRpc.instance:sendUseClothSkillRequest(2, arg_9_0, arg_9_1, FightEnum.ClothSkillType.EzioBigSkill)
 		else
-			FightRpc.instance:sendUseClothSkillRequest(1, arg_10_0, arg_10_1, FightEnum.ClothSkillType.EzioBigSkill)
+			FightRpc.instance:sendUseClothSkillRequest(1, arg_9_0, arg_9_1, FightEnum.ClothSkillType.EzioBigSkill)
 		end
 	end
 end

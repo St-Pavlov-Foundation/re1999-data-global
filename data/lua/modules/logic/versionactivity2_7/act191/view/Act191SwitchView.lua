@@ -58,8 +58,10 @@ function var_0_0.onOpen(arg_6_0)
 			var_6_4 = Activity191Helper.getNodeIcon(var_6_5.type)
 		end
 
-		UISpriteSetMgr.instance:setAct174Sprite(var_6_2.imageNode, var_6_4)
-		UISpriteSetMgr.instance:setAct174Sprite(var_6_2.imageNodeS, var_6_4 .. "_light")
+		if var_6_4 then
+			UISpriteSetMgr.instance:setAct174Sprite(var_6_2.imageNode, var_6_4)
+			UISpriteSetMgr.instance:setAct174Sprite(var_6_2.imageNodeS, var_6_4 .. "_light")
+		end
 
 		if iter_6_1.nodeId == arg_6_0.gameInfo.curNode then
 			arg_6_0._txtStage.text = string.format("<#FAB459>%s</color>-%d", var_6_0.name, iter_6_0)

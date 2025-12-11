@@ -22,7 +22,8 @@ function var_0_0.ctor(arg_1_0)
 		[MaterialEnum.MaterialType.V1a5AiZiLa] = var_0_0._getV1a5AiZiLaItem,
 		[MaterialEnum.MaterialType.Season123EquipCard] = var_0_0._getEquipCard,
 		[MaterialEnum.MaterialType.NewInsight] = var_0_0._getNewInsight,
-		[MaterialEnum.MaterialType.Critter] = var_0_0._getCritterIcon
+		[MaterialEnum.MaterialType.Critter] = var_0_0._getCritterIcon,
+		[MaterialEnum.MaterialType.UnlockVoucher] = var_0_0._getUnlockVoucherIcon
 	}
 end
 
@@ -100,10 +101,14 @@ function var_0_0._getCritterIcon(arg_19_0)
 	return ResUrl.getCritterItemIcon(arg_19_0.icon)
 end
 
-function var_0_0.getItemIconFunc(arg_20_0, arg_20_1)
-	arg_20_1 = tonumber(arg_20_1)
+function var_0_0._getUnlockVoucherIcon(arg_20_0)
+	return ResUrl.getPropItemIcon(arg_20_0.icon)
+end
 
-	return arg_20_0._defineList[arg_20_1]
+function var_0_0.getItemIconFunc(arg_21_0, arg_21_1)
+	arg_21_1 = tonumber(arg_21_1)
+
+	return arg_21_0._defineList[arg_21_1]
 end
 
 var_0_0.instance = var_0_0.New()

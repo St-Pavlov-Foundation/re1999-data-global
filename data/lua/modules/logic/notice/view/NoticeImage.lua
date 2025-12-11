@@ -75,12 +75,20 @@ function var_0_0._onLoadCallback(arg_5_0, arg_5_1)
 	NoticeModel.instance:setLoadedSprite(var_5_0)
 
 	if arg_5_1.IsLoadSuccess then
+		local var_5_1 = arg_5_0._assetItem
+
 		arg_5_1:Retain()
 
-		local var_5_1 = arg_5_1:GetResource()
+		arg_5_0._assetItem = arg_5_1
 
-		NoticeModel.instance:setSpriteCache(var_5_0, UnityEngine.Sprite.Create(var_5_1, UnityEngine.Rect.New(0, 0, var_5_1.width, var_5_1.height), Vector2.zero, 100, 0))
-		NoticeModel.instance:setSpriteCacheDefaultSize(var_5_0, var_5_1.width, var_5_1.height)
+		if var_5_1 then
+			var_5_1:Release()
+		end
+
+		local var_5_2 = arg_5_1:GetResource()
+
+		NoticeModel.instance:setSpriteCache(var_5_0, UnityEngine.Sprite.Create(var_5_2, UnityEngine.Rect.New(0, 0, var_5_2.width, var_5_2.height), Vector2.zero, 100, 0))
+		NoticeModel.instance:setSpriteCacheDefaultSize(var_5_0, var_5_2.width, var_5_2.height)
 		NoticeModel.instance:addAssetItem(arg_5_1)
 		arg_5_0:_doCallback(true, var_5_0)
 	else
@@ -145,6 +153,14 @@ end
 
 function var_0_0.log(arg_10_0, arg_10_1)
 	logWarn(string.format("【NoticeImageLog】msg : %s", arg_10_1))
+end
+
+function var_0_0.onDestroy(arg_11_0)
+	if arg_11_0._assetItem then
+		arg_11_0._assetItem:Release()
+
+		arg_11_0._assetItem = nil
+	end
 end
 
 return var_0_0

@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkDetectReplayEnterSceneActive", BaseWork)
 
 function var_0_0.onStart(arg_1_0)
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		local var_1_0 = FightModel.instance:getBattleId()
 		local var_1_1 = lua_fight_replay_enter_scene_root_active.configDict[var_1_0]
 

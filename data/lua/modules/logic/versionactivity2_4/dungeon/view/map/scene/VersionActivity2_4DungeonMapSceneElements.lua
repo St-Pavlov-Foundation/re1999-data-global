@@ -190,6 +190,10 @@ function var_0_0.onRemoveElement(arg_20_0, arg_20_1)
 		arg_20_0:showNewElements()
 	else
 		arg_20_0._needRemoveElementId = arg_20_1
+
+		if lua_chapter_map_element.configDict[arg_20_1].type == DungeonEnum.ElementType.EnterDialogue then
+			DungeonController.instance:dispatchEvent(DungeonEvent.EndShowRewardView)
+		end
 	end
 
 	local var_20_0 = arg_20_0._arrowList[arg_20_1]

@@ -13,7 +13,7 @@ function var_0_0.addEvents(arg_1_0)
 	arg_1_0:addEventCb(FightController.instance, FightEvent.OnResetCard, arg_1_0._onResetCard, arg_1_0)
 	arg_1_0:addEventCb(FightController.instance, FightEvent.RespBeginRound, arg_1_0._respBeginRound, arg_1_0)
 	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnStageChange, arg_1_0._onStageChange, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_1_0.onStageChange, arg_1_0)
 end
 
 function var_0_0.removeEvents(arg_2_0)
@@ -27,7 +27,7 @@ function var_0_0.removeEvents(arg_2_0)
 	arg_2_0:removeEventCb(FightController.instance, FightEvent.OnResetCard, arg_2_0._onResetCard, arg_2_0)
 	arg_2_0:removeEventCb(FightController.instance, FightEvent.RespBeginRound, arg_2_0._respBeginRound, arg_2_0)
 	arg_2_0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_2_0._onSkillPlayStart, arg_2_0)
-	arg_2_0:removeEventCb(FightController.instance, FightEvent.OnStageChange, arg_2_0._onStageChange, arg_2_0)
+	arg_2_0:removeEventCb(FightController.instance, FightEvent.StageChanged, arg_2_0.onStageChange, arg_2_0)
 end
 
 function var_0_0._onStartSequenceFinish(arg_3_0)
@@ -65,7 +65,7 @@ function var_0_0._onCombineOneCard(arg_6_0, arg_6_1, arg_6_2)
 end
 
 function var_0_0._onMoveOrCombine(arg_7_0, arg_7_1, arg_7_2)
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -103,7 +103,7 @@ function var_0_0._onPlayHandCard(arg_8_0, arg_8_1)
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -180,10 +180,8 @@ function var_0_0._onSkillPlayStart(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
 	return
 end
 
-function var_0_0._onStageChange(arg_14_0, arg_14_1)
-	if arg_14_1 ~= FightEnum.Stage.Card and arg_14_1 == FightEnum.Stage.AutoCard then
-		-- block empty
-	end
+function var_0_0.onStageChange(arg_14_0, arg_14_1)
+	return
 end
 
 return var_0_0

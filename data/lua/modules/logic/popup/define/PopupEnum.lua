@@ -32,8 +32,7 @@ var_0_0.CheckCacheHandler = {
 var_0_0.CheckCacheGetApproach = {
 	[MaterialEnum.GetApproach.Charge] = {
 		var_0_0.CacheType.Fight,
-		var_0_0.CacheType.Guide,
-		var_0_0.CacheType.Summon
+		var_0_0.CacheType.Guide
 	},
 	[MaterialEnum.GetApproach.MonthCard] = {
 		var_0_0.CacheType.Fight,

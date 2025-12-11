@@ -150,10 +150,16 @@ function var_0_0.getDotChilds(arg_12_0, arg_12_1)
 end
 
 function var_0_0.isDotShow(arg_14_0, arg_14_1, arg_14_2)
-	if not arg_14_0._dotInfos[arg_14_1] then
-		local var_14_0 = arg_14_0:getDotChilds(arg_14_1)
+	local var_14_0, var_14_1 = RedDotCustomFunc.isCustomShow(arg_14_1, arg_14_2)
 
-		for iter_14_0, iter_14_1 in pairs(var_14_0) do
+	if var_14_0 then
+		return var_14_1
+	end
+
+	if not arg_14_0._dotInfos[arg_14_1] then
+		local var_14_2 = arg_14_0:getDotChilds(arg_14_1)
+
+		for iter_14_0, iter_14_1 in pairs(var_14_2) do
 			if arg_14_0._dotInfos[iter_14_1] then
 				for iter_14_2, iter_14_3 in pairs(arg_14_0._dotInfos[iter_14_1].infos) do
 					if iter_14_3.value > 0 then

@@ -74,7 +74,7 @@ function var_0_0.getMapData(arg_6_0)
 	end
 
 	local var_6_1 = lua_survival_map_group_mapping.configDict[var_6_0.mapId].id
-	local var_6_2 = SurvivalConfig.instance:getCopyCo(var_6_1)
+	local var_6_2 = lua_survival_map_group.configDict[var_6_1]
 	local var_6_3 = var_6_0.currMaxGameTime - var_6_0.gameTime
 	local var_6_4 = {}
 
@@ -86,7 +86,9 @@ function var_0_0.getMapData(arg_6_0)
 		map_type = var_6_2.id,
 		map_id = var_6_0.mapId,
 		countdown = var_6_3,
-		alive_events = var_6_4
+		alive_events = var_6_4,
+		rain_id = var_6_0._mapInfo.rainId,
+		disaster_id = var_6_0._mapInfo.disasterId
 	}
 end
 

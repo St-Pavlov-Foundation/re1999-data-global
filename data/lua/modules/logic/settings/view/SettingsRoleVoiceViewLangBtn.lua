@@ -49,61 +49,69 @@ function var_0_0._langId(arg_10_0)
 	return arg_10_0._mo.langId
 end
 
-function var_0_0._isValid(arg_11_0)
-	return arg_11_0._mo.available
+function var_0_0.getLangId(arg_11_0)
+	return arg_11_0._mo.langId
 end
 
-function var_0_0.setData(arg_12_0, arg_12_1)
-	arg_12_0._mo = arg_12_1
-
-	local var_12_0 = luaLang(arg_12_0:_lang())
-
-	arg_12_0._info1.text = var_12_0
-	arg_12_0._info2.text = var_12_0
-
-	arg_12_0:refreshLangOptionDownloadState()
+function var_0_0._isValid(arg_12_0)
+	return arg_12_0._mo.available
 end
 
-function var_0_0._btnCNOnClick(arg_13_0)
-	if arg_13_0:isSelected() then
+function var_0_0.setData(arg_13_0, arg_13_1)
+	arg_13_0._mo = arg_13_1
+
+	local var_13_0 = luaLang(arg_13_0:_lang())
+
+	arg_13_0._info1.text = var_13_0
+	arg_13_0._info2.text = var_13_0
+
+	arg_13_0:refreshLangOptionDownloadState()
+end
+
+function var_0_0._btnCNOnClick(arg_14_0)
+	if arg_14_0:isSelected() then
 		return
 	end
 
-	if not arg_13_0:_isValid() then
+	if not arg_14_0:_isValid() then
 		GameFacade.showToast(ToastEnum.CharVoiceLangLost)
 
 		return
 	end
 
-	arg_13_0:_useCurLang()
-	arg_13_0:parent():afterSelectedNewLang()
+	arg_14_0:_useCurLang()
+	arg_14_0:parent():afterSelectedNewLang()
 end
 
-function var_0_0.onSelect(arg_14_0, arg_14_1)
-	arg_14_0:_setSelectedActive(arg_14_1)
+function var_0_0.onSelect(arg_15_0, arg_15_1)
+	arg_15_0:_setSelectedActive(arg_15_1)
 
-	arg_14_0._staticData.isSelected = arg_14_1
+	arg_15_0._staticData.isSelected = arg_15_1
 end
 
-function var_0_0._setSelectedActive(arg_15_0, arg_15_1)
-	gohelper.setActive(arg_15_0._goCNUnSelected, not arg_15_1)
-	gohelper.setActive(arg_15_0._goCNSelected, arg_15_1)
+function var_0_0._setSelectedActive(arg_16_0, arg_16_1)
+	gohelper.setActive(arg_16_0._goCNUnSelected, not arg_16_1)
+	gohelper.setActive(arg_16_0._goCNSelected, arg_16_1)
 end
 
-function var_0_0._setActive_goCNSelectPoint(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0._goCNSelectPoint, arg_16_1)
+function var_0_0._setActive_goCNSelectPoint(arg_17_0, arg_17_1)
+	gohelper.setActive(arg_17_0._goCNSelectPoint, arg_17_1)
 end
 
-function var_0_0.refreshLangOptionSelectState(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0:_setActive_goCNSelectPoint(arg_17_1 == arg_17_0:_langId() and arg_17_2)
+function var_0_0.refreshLangOptionSelectState(arg_18_0, arg_18_1, arg_18_2)
+	arg_18_0:_setActive_goCNSelectPoint(arg_18_1 == arg_18_0:_langId() and arg_18_2)
 end
 
-function var_0_0.refreshLangMode(arg_18_0, arg_18_1)
-	arg_18_0:_setSelectedActive(arg_18_1 == arg_18_0:_langId())
+function var_0_0.refreshLangMode(arg_19_0, arg_19_1, arg_19_2)
+	gohelper.setActive(arg_19_0.viewGO, arg_19_2)
+
+	if arg_19_2 then
+		arg_19_0:_setSelectedActive(arg_19_1 == arg_19_0:_langId())
+	end
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	var_0_0.super.onDestroyView(arg_19_0)
+function var_0_0.onDestroyView(arg_20_0)
+	var_0_0.super.onDestroyView(arg_20_0)
 end
 
 return var_0_0

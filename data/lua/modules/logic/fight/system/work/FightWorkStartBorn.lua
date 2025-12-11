@@ -18,6 +18,10 @@ function var_0_0.onStart(arg_1_0)
 			var_1_2 = true
 		end
 
+		if var_1_1:isAct191Boss() then
+			var_1_2 = true
+		end
+
 		if iter_1_1.spine and not iter_1_1.spine:hasAnimation(SpineAnimState.born) then
 			var_1_2 = true
 		end

@@ -2,14 +2,16 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	score = 3,
-	effect = 8,
-	group = 2,
-	desc = 6,
-	effectDesc = 4,
-	tag = 7,
+	score = 4,
+	extendCost = 2,
 	id = 1,
-	effectDesc2 = 5
+	effectDesc = 5,
+	group = 3,
+	desc = 7,
+	effect = 9,
+	effectDesc2 = 6,
+	tag = 8,
+	equipType = 10
 }
 local var_0_2 = {
 	"id"

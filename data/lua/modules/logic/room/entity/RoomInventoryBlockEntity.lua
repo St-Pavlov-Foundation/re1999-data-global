@@ -83,23 +83,27 @@ end
 
 function var_0_0.getMO(arg_9_0)
 	if arg_9_0.isWaterReform then
-		if not arg_9_0._waterBlockMO then
-			local var_9_0 = RoomBlockMO.New()
-			local var_9_1 = RoomConfig.instance:getWaterTypeByBlockId(arg_9_0.id)
-			local var_9_2 = RoomConfig.instance:getWaterReformTypeBlockCfg(var_9_1)
+		if not arg_9_0._reformTypeBlockMO then
+			local var_9_0
+			local var_9_1 = RoomBlockMO.New()
 
-			var_9_0:init(var_9_2)
+			if RoomWaterReformModel.instance:getReformMode() == RoomEnum.ReformMode.Water then
+				local var_9_2 = RoomConfig.instance:getWaterTypeByBlockId(arg_9_0.id)
 
-			var_9_0.blockState = RoomBlockEnum.BlockState.WaterReform
+				var_9_0 = RoomConfig.instance:getWaterReformTypeBlockCfg(var_9_2)
+			else
+				local var_9_3 = RoomConfig.instance:getBlockColorByBlockId(arg_9_0.id)
 
-			if var_9_0.defineId == RoomBlockEnum.EmptyDefineId then
-				var_9_0.rotate = math.random(0, 6)
+				var_9_0 = RoomConfig.instance:getBlockColorReformBlockCfg(var_9_3)
 			end
 
-			arg_9_0._waterBlockMO = var_9_0
+			var_9_1:init(var_9_0)
+
+			var_9_1.blockState = RoomBlockEnum.BlockState.WaterReform
+			arg_9_0._reformTypeBlockMO = var_9_1
 		end
 
-		return arg_9_0._waterBlockMO
+		return arg_9_0._reformTypeBlockMO
 	else
 		return RoomInventoryBlockModel.instance:getInventoryBlockMOById(arg_9_0.id)
 	end

@@ -71,16 +71,8 @@ function var_0_0._internalOpenVersionActivityDungeonMapView(arg_9_0)
 
 	if not arg_9_0.dungeonMapViewParam.episodeId then
 		local var_9_0 = VersionActivity2_4DungeonModel.instance:getUnFinishElementEpisodeId()
-		local var_9_1 = VersionActivity2_4DungeonModel.instance:getUnFinishStoryElements()
-		local var_9_2
 
-		if var_9_1 and #var_9_1 > 0 then
-			var_9_2 = DungeonConfig.instance:getEpisodeByElement(var_9_1[1])
-		end
-
-		if var_9_2 then
-			arg_9_0.dungeonMapViewParam.episodeId = var_9_2
-		elseif var_9_0 > 0 then
+		if var_9_0 > 0 then
 			arg_9_0.dungeonMapViewParam.episodeId = var_9_0
 		end
 	end

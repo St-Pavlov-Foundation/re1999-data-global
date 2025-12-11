@@ -2,7 +2,7 @@
 
 local var_0_0 = class("FightBuffJuDaBenYePuDormancyTail", FightBaseClass)
 
-function var_0_0.onAwake(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onLogicEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0._entity = arg_1_1
 	arg_1_0._buffUid = arg_1_3
 	arg_1_0._entityMat = arg_1_0._entity.spineRenderer:getCloneOriginMat()
@@ -122,7 +122,7 @@ function var_0_0._delayDone(arg_11_0)
 	arg_11_0:disposeSelf()
 end
 
-function var_0_0.releaseSelf(arg_12_0)
+function var_0_0.onLogicExit(arg_12_0)
 	arg_12_0:_releaseTween()
 	TaskDispatcher.cancelTask(arg_12_0._delayDone, arg_12_0)
 end

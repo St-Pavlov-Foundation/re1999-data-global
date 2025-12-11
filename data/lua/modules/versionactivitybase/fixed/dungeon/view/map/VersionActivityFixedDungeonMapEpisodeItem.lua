@@ -49,13 +49,13 @@ function var_0_0.onClick(arg_4_0)
 		return
 	end
 
-	local var_4_0 = ViewMgr.instance:getContainer(VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName())
+	local var_4_0 = ViewMgr.instance:getContainer(VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(arg_4_0._bigVersion, arg_4_0._smallVersion))
 
 	if var_4_0 then
 		var_4_0:stopCloseViewTask()
 
 		if var_4_0:getOpenedEpisodeId() == arg_4_0._config.id then
-			ViewMgr.instance:closeView(VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName())
+			ViewMgr.instance:closeView(VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(arg_4_0._bigVersion, arg_4_0._smallVersion))
 
 			return
 		end
@@ -63,7 +63,7 @@ function var_0_0.onClick(arg_4_0)
 
 	arg_4_0.activityDungeonMo:changeEpisode(arg_4_0:getEpisodeId())
 	arg_4_0._layout:setSelectEpisodeItem(arg_4_0)
-	ViewMgr.instance:openView(VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(), {
+	ViewMgr.instance:openView(VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(arg_4_0._bigVersion, arg_4_0._smallVersion), {
 		episodeId = arg_4_0._config.id
 	})
 end
@@ -77,6 +77,7 @@ function var_0_0._editableInitView(arg_5_0)
 	gohelper.setActive(arg_5_0._gobgicon1, true)
 	gohelper.setActive(arg_5_0._gobgicon2, false)
 
+	arg_5_0._bigVersion, arg_5_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 	arg_5_0.starItemList = {}
 	arg_5_0.elementItemList = {}
 
@@ -101,7 +102,7 @@ function var_0_0._showEye(arg_6_0)
 	gohelper.setActive(arg_6_0._gobgicon1, not var_6_0)
 	gohelper.setActive(arg_6_0._gobgicon2, var_6_0)
 
-	local var_6_1 = arg_6_0._config.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonChapterId.Hard
+	local var_6_1 = arg_6_0._config.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_6_0._bigVersion, arg_6_0._smallVersion).DungeonChapterId.Hard
 
 	gohelper.setActive(arg_6_0._gonormaleye, not var_6_1)
 	gohelper.setActive(arg_6_0._gohardeye, var_6_1)
@@ -127,7 +128,7 @@ function var_0_0.getMapAllElementList(arg_10_0)
 end
 
 function var_0_0._showAllElementTipView(arg_11_0)
-	if not arg_11_0._map or arg_11_0._config.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonChapterId.Hard then
+	if not arg_11_0._map or arg_11_0._config.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_11_0._bigVersion, arg_11_0._smallVersion).DungeonChapterId.Hard then
 		gohelper.setActive(arg_11_0._gotipcontent, false)
 
 		return
@@ -364,7 +365,7 @@ function var_0_0.calculatePosInContent(arg_28_0)
 	local var_28_7 = (arg_28_0.starItemList and #arg_28_0.starItemList or 1) * 70 + 80 - var_28_2 - var_28_4
 	local var_28_8 = math.max(var_28_7, var_28_6)
 
-	arg_28_0._maxWidth = (var_28_8 > 0 and var_28_5 + var_28_8 or var_28_5) + VersionActivityFixedHelper.getVersionActivityDungeonEnum().EpisodeItemMinWidth
+	arg_28_0._maxWidth = (var_28_8 > 0 and var_28_5 + var_28_8 or var_28_5) + VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_28_0._bigVersion, arg_28_0._smallVersion).EpisodeItemMinWidth
 
 	recthelper.setWidth(arg_28_0._goclickarea.transform, arg_28_0._maxWidth)
 	recthelper.setWidth(arg_28_0._goraycast.transform, arg_28_0._maxWidth + arg_28_0._layout._constDungeonNormalDeltaX)
@@ -374,7 +375,7 @@ end
 
 function var_0_0.setImage(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
 	local var_29_0 = DungeonConfig.instance:getEpisodeCO(arg_29_3)
-	local var_29_1 = VersionActivityFixedHelper.getVersionActivityDungeonEnum().EpisodeStarType[var_29_0.chapterId]
+	local var_29_1 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_29_0._bigVersion, arg_29_0._smallVersion).EpisodeStarType[var_29_0.chapterId]
 	local var_29_2 = arg_29_2 and var_29_1.light or var_29_1.empty
 
 	VersionActivityFixedHelper.setDungeonSprite(arg_29_1, var_29_2)

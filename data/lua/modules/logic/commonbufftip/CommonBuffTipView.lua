@@ -7,7 +7,17 @@ function var_0_0._refreshScrollHeight(arg_1_0)
 	local var_1_1 = math.min(arg_1_0.maxHeight, var_1_0)
 
 	recthelper.setHeight(arg_1_0.rectTrScrollTip, var_1_1)
-	arg_1_0:setScrollPos(var_1_1)
+	arg_1_0:setScrollPos()
+
+	local var_1_2, var_1_3 = SettingsModel.instance:getCurrentScreenSize()
+	local var_1_4 = var_1_3 * 0.5
+	local var_1_5 = recthelper.getAnchorY(arg_1_0.rectTrScrollTip)
+
+	if var_1_1 >= var_1_4 + var_1_5 then
+		local var_1_6 = var_1_1 - (var_1_4 + var_1_5)
+
+		recthelper.setAnchorY(arg_1_0.rectTrScrollTip, var_1_5 + var_1_6)
+	end
 end
 
 function var_0_0.onInitView(arg_2_0)
@@ -69,7 +79,7 @@ function var_0_0.onOpen(arg_8_0)
 	arg_8_0:addEventCb(FightController.instance, FightEvent.SetIsShowUI, arg_8_0.setIsShowUI, arg_8_0)
 end
 
-function var_0_0.setScrollPos(arg_9_0, arg_9_1)
+function var_0_0.setScrollPos(arg_9_0)
 	if arg_9_0.setScrollPosCallback then
 		arg_9_0.setScrollPosCallback(arg_9_0.setScrollPosCallbackObj, arg_9_0.rectTrViewGo, arg_9_0.rectTrScrollTip)
 
@@ -79,26 +89,20 @@ function var_0_0.setScrollPos(arg_9_0, arg_9_1)
 	if arg_9_0.scrollAnchorPos then
 		arg_9_0.rectTrScrollTip.pivot = arg_9_0.pivot
 
-		local var_9_0 = arg_9_0.scrollAnchorPos.y
-
-		if arg_9_1 and arg_9_1 > 540 + var_9_0 then
-			var_9_0 = arg_9_1 - 540
-		end
-
-		recthelper.setAnchor(arg_9_0.rectTrScrollTip, arg_9_0.scrollAnchorPos.x, var_9_0)
+		recthelper.setAnchor(arg_9_0.rectTrScrollTip, arg_9_0.scrollAnchorPos.x, arg_9_0.scrollAnchorPos.y)
 
 		return
 	end
 
-	local var_9_1 = GameUtil.checkClickPositionInRight(arg_9_0.clickPosition)
+	local var_9_0 = GameUtil.checkClickPositionInRight(arg_9_0.clickPosition)
 
-	arg_9_0.rectTrScrollTip.pivot = var_9_1 and CommonBuffTipEnum.Pivot.Right or CommonBuffTipEnum.Pivot.Left
+	arg_9_0.rectTrScrollTip.pivot = var_9_0 and CommonBuffTipEnum.Pivot.Right or CommonBuffTipEnum.Pivot.Left
 
-	local var_9_2, var_9_3 = recthelper.screenPosToAnchorPos2(arg_9_0.clickPosition, arg_9_0.rectTrViewGo)
+	local var_9_1, var_9_2 = recthelper.screenPosToAnchorPos2(arg_9_0.clickPosition, arg_9_0.rectTrViewGo)
 
-	var_9_2 = var_9_1 and var_9_2 - CommonBuffTipEnum.DefaultInterval or var_9_2 + CommonBuffTipEnum.DefaultInterval
+	var_9_1 = var_9_0 and var_9_1 - CommonBuffTipEnum.DefaultInterval or var_9_1 + CommonBuffTipEnum.DefaultInterval
 
-	recthelper.setAnchor(arg_9_0.rectTrScrollTip, var_9_2, var_9_3 + CommonBuffTipEnum.DefaultInterval)
+	recthelper.setAnchor(arg_9_0.rectTrScrollTip, var_9_1, var_9_2 + CommonBuffTipEnum.DefaultInterval)
 end
 
 function var_0_0.calculateMaxHeight(arg_10_0)
@@ -107,10 +111,6 @@ function var_0_0.calculateMaxHeight(arg_10_0)
 	local var_10_2 = math.abs(var_10_1)
 
 	arg_10_0.maxHeight = var_10_0 / 2 + var_10_2 - CommonBuffTipEnum.BottomMargin
-
-	if arg_10_0.rectTrScrollTip.pivot.y == 0 then
-		arg_10_0.maxHeight = var_10_0 / 2 - var_10_2 - CommonBuffTipEnum.BottomMargin
-	end
 end
 
 function var_0_0.addBuffTip(arg_11_0, arg_11_1)

@@ -2,7 +2,7 @@
 
 local var_0_0 = class("FightEntitySummonedComp", FightBaseClass)
 
-function var_0_0.onAwake(arg_1_0, arg_1_1)
+function var_0_0.onLogicEnter(arg_1_0, arg_1_1)
 	arg_1_0._entity = arg_1_1
 
 	arg_1_0:com_registFightEvent(FightEvent.SummonedAdd, arg_1_0._onSummonedAdd)
@@ -35,7 +35,7 @@ function var_0_0._onSummonedAdd(arg_4_0, arg_4_1, arg_4_2)
 	arg_4_0:_instantiateSummoned(arg_4_2)
 end
 
-function var_0_0.releaseSelf(arg_5_0)
+function var_0_0.onLogicExit(arg_5_0)
 	return
 end
 

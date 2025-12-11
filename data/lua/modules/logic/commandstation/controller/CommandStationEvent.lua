@@ -26,5 +26,6 @@ var_0_0.OneClickClaimReward = var_0_1()
 var_0_0.OnTaskUpdate = var_0_1()
 var_0_0.OnPaperUpdate = var_0_1()
 var_0_0.OnBonusUpdate = var_0_1()
+var_0_0.OnGetCommandPostInfo = var_0_1()
 
 return var_0_0

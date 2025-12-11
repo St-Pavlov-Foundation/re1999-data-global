@@ -1,1442 +1,2258 @@
 [
   {
     "id": 7100101,
+    "extendCost": 0,
     "group": 10001,
     "score": 100,
-    "effectDesc": "language_10084987",
-    "effectDesc2": "language_10084988",
+    "effectDesc": "language_10095543",
+    "effectDesc2": "language_10095544",
     "desc": "language_10084989",
     "tag": "",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7200101,
+    "extendCost": 200,
     "group": 10001,
     "score": 200,
-    "effectDesc": "language_10084990",
-    "effectDesc2": "language_10084991",
+    "effectDesc": "language_10095545",
+    "effectDesc2": "language_10095546",
     "desc": "language_10084989",
     "tag": "",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7300101,
+    "extendCost": 500,
     "group": 10001,
     "score": 300,
-    "effectDesc": "language_10084992",
-    "effectDesc2": "language_10084993",
+    "effectDesc": "language_10095547",
+    "effectDesc2": "language_10095548",
     "desc": "language_10084989",
     "tag": "",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7100102,
+    "extendCost": 0,
     "group": 10002,
     "score": 100,
-    "effectDesc": "language_10084994",
-    "effectDesc2": "language_10084995",
+    "effectDesc": "language_10095549",
+    "effectDesc2": "language_10085002",
     "desc": "language_10084996",
     "tag": "",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7200102,
+    "extendCost": 200,
     "group": 10002,
     "score": 200,
-    "effectDesc": "language_10084997",
-    "effectDesc2": "language_10084998",
+    "effectDesc": "language_10095550",
+    "effectDesc2": "language_10085005",
     "desc": "language_10084996",
     "tag": "",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7300102,
+    "extendCost": 500,
     "group": 10002,
     "score": 300,
-    "effectDesc": "language_10084999",
-    "effectDesc2": "language_10085000",
+    "effectDesc": "language_10095551",
+    "effectDesc2": "language_10085007",
     "desc": "language_10084996",
     "tag": "",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7100103,
+    "extendCost": 0,
     "group": 10003,
     "score": 100,
-    "effectDesc": "language_10085001",
-    "effectDesc2": "language_10085002",
+    "effectDesc": "language_10095552",
+    "effectDesc2": "language_10095553",
     "desc": "language_10085003",
     "tag": "",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7200103,
+    "extendCost": 200,
     "group": 10003,
     "score": 200,
-    "effectDesc": "language_10085004",
-    "effectDesc2": "language_10085005",
+    "effectDesc": "language_10095554",
+    "effectDesc2": "language_10095555",
     "desc": "language_10085003",
     "tag": "",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7300103,
+    "extendCost": 500,
     "group": 10003,
     "score": 300,
-    "effectDesc": "language_10085006",
-    "effectDesc2": "language_10085007",
+    "effectDesc": "language_10095556",
+    "effectDesc2": "language_10095557",
     "desc": "language_10085003",
     "tag": "",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7100104,
+    "extendCost": 0,
     "group": 10004,
     "score": 100,
     "effectDesc": "language_10085008",
     "effectDesc2": "language_10085009",
     "desc": "language_10085010",
     "tag": "",
-    "effect": "1000016"
+    "effect": "1000016",
+    "equipType": 0
   },
   {
     "id": 7200104,
+    "extendCost": 200,
     "group": 10004,
     "score": 200,
     "effectDesc": "language_10085011",
     "effectDesc2": "language_10085012",
     "desc": "language_10085010",
     "tag": "",
-    "effect": "1000018#1000018"
+    "effect": "1000018#1000018",
+    "equipType": 0
   },
   {
     "id": 7300104,
+    "extendCost": 500,
     "group": 10004,
     "score": 300,
     "effectDesc": "language_10085013",
     "effectDesc2": "language_10085014",
     "desc": "language_10085010",
     "tag": "",
-    "effect": "1000018#1000018#1000020#1000005"
+    "effect": "1000018#1000018#1000020",
+    "equipType": 0
   },
   {
     "id": 7100105,
+    "extendCost": 0,
     "group": 10005,
     "score": 100,
     "effectDesc": "language_10085015",
     "effectDesc2": "language_10085016",
     "desc": "language_10085017",
     "tag": "",
-    "effect": "1000006"
+    "effect": "1000006",
+    "equipType": 0
   },
   {
     "id": 7200105,
+    "extendCost": 200,
     "group": 10005,
     "score": 200,
     "effectDesc": "language_10085018",
     "effectDesc2": "language_10085019",
     "desc": "language_10085017",
     "tag": "",
-    "effect": "1000010"
+    "effect": "1000010",
+    "equipType": 0
   },
   {
     "id": 7300105,
+    "extendCost": 500,
     "group": 10005,
     "score": 300,
     "effectDesc": "language_10085020",
     "effectDesc2": "language_10085021",
     "desc": "language_10085017",
     "tag": "",
-    "effect": "1000008#1000010"
+    "effect": "1000008#1000010",
+    "equipType": 0
   },
   {
     "id": 7100201,
+    "extendCost": 0,
     "group": 10006,
     "score": 100,
     "effectDesc": "language_10085022",
     "effectDesc2": "language_10085023",
     "desc": "language_10085024",
     "tag": "",
-    "effect": "1000077#1000001"
+    "effect": "1000077#1000001",
+    "equipType": 0
   },
   {
     "id": 7200201,
+    "extendCost": 200,
     "group": 10006,
     "score": 200,
     "effectDesc": "language_10085025",
     "effectDesc2": "language_10085026",
     "desc": "language_10085024",
     "tag": "",
-    "effect": "1000078#1000003"
+    "effect": "1000078#1000003",
+    "equipType": 0
   },
   {
     "id": 7300201,
+    "extendCost": 500,
     "group": 10006,
     "score": 300,
     "effectDesc": "language_10085027",
     "effectDesc2": "language_10085028",
     "desc": "language_10085024",
     "tag": "",
-    "effect": "1000079#1000005#1000001"
+    "effect": "1000079#1000005#1000001",
+    "equipType": 0
   },
   {
     "id": 7100202,
+    "extendCost": 0,
     "group": 10007,
     "score": 100,
     "effectDesc": "language_10085029",
     "effectDesc2": "language_10085030",
     "desc": "language_10085031",
     "tag": "",
-    "effect": "1000011"
+    "effect": "1000011",
+    "equipType": 0
   },
   {
     "id": 7200202,
+    "extendCost": 200,
     "group": 10007,
     "score": 200,
     "effectDesc": "language_10085032",
     "effectDesc2": "language_10085033",
     "desc": "language_10085031",
     "tag": "",
-    "effect": "1000013"
+    "effect": "1000013",
+    "equipType": 0
   },
   {
     "id": 7300202,
+    "extendCost": 500,
     "group": 10007,
     "score": 300,
     "effectDesc": "language_10085034",
     "effectDesc2": "language_10085035",
     "desc": "language_10085031",
     "tag": "",
-    "effect": "1000015"
+    "effect": "1000015",
+    "equipType": 0
   },
   {
     "id": 7100203,
+    "extendCost": 0,
     "group": 10008,
     "score": 100,
-    "effectDesc": "language_10085036",
-    "effectDesc2": "language_10085037",
+    "effectDesc": "language_10085258",
+    "effectDesc2": "language_10016292",
     "desc": "language_10085038",
     "tag": "",
-    "effect": "1000021"
+    "effect": "1000021",
+    "equipType": 0
   },
   {
     "id": 7200203,
+    "extendCost": 200,
     "group": 10008,
     "score": 200,
-    "effectDesc": "language_10085039",
+    "effectDesc": "language_10095558",
     "effectDesc2": "language_10085040",
     "desc": "language_10085038",
     "tag": "",
-    "effect": "1000023#1000023"
+    "effect": "1000023#1000023",
+    "equipType": 0
   },
   {
     "id": 7300203,
+    "extendCost": 500,
     "group": 10008,
     "score": 300,
-    "effectDesc": "language_10085041",
-    "effectDesc2": "language_10085042",
+    "effectDesc": "language_10095559",
+    "effectDesc2": "language_10095560",
     "desc": "language_10085038",
     "tag": "",
-    "effect": "1000025#1000025#1000021"
+    "effect": "1000025#1000025#1000021",
+    "equipType": 0
   },
   {
     "id": 7101101,
+    "extendCost": 0,
     "group": 10101,
     "score": 100,
-    "effectDesc": "language_10085043",
-    "effectDesc2": "language_10085044",
+    "effectDesc": "language_10095561",
+    "effectDesc2": "language_10095562",
     "desc": "language_10085045",
     "tag": "101",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7201101,
+    "extendCost": 200,
     "group": 10101,
     "score": 200,
-    "effectDesc": "language_10085046",
-    "effectDesc2": "language_10085047",
+    "effectDesc": "language_10095563",
+    "effectDesc2": "language_10095564",
     "desc": "language_10085045",
     "tag": "101",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7301101,
+    "extendCost": 500,
     "group": 10101,
     "score": 300,
-    "effectDesc": "language_10085048",
-    "effectDesc2": "language_10085049",
+    "effectDesc": "language_10095565",
+    "effectDesc2": "language_10095566",
     "desc": "language_10085045",
     "tag": "101",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7101102,
+    "extendCost": 0,
     "group": 10102,
     "score": 100,
-    "effectDesc": "language_10085050",
-    "effectDesc2": "language_10085051",
+    "effectDesc": "language_10095567",
+    "effectDesc2": "language_10095568",
     "desc": "language_10085052",
     "tag": "101",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7201102,
+    "extendCost": 200,
     "group": 10102,
     "score": 200,
-    "effectDesc": "language_10085053",
-    "effectDesc2": "language_10085054",
+    "effectDesc": "language_10095569",
+    "effectDesc2": "language_10095570",
     "desc": "language_10085052",
     "tag": "101",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7301102,
+    "extendCost": 500,
     "group": 10102,
     "score": 300,
-    "effectDesc": "language_10085055",
-    "effectDesc2": "language_10085056",
+    "effectDesc": "language_10095571",
+    "effectDesc2": "language_10095572",
     "desc": "language_10085052",
     "tag": "101",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7101201,
+    "extendCost": 0,
     "group": 10103,
     "score": 100,
     "effectDesc": "language_10085057",
     "effectDesc2": "language_10085058",
     "desc": "language_10085059",
     "tag": "101",
-    "effect": "1000001"
+    "effect": "1000001",
+    "equipType": 0
   },
   {
     "id": 7201201,
+    "extendCost": 200,
     "group": 10103,
     "score": 200,
-    "effectDesc": "language_10085060",
-    "effectDesc2": "language_10085061",
+    "effectDesc": "language_10095573",
+    "effectDesc2": "language_10095574",
     "desc": "language_10085059",
     "tag": "101",
-    "effect": "1000003#1010009#1010001"
+    "effect": "1000003#1010009#1010001",
+    "equipType": 0
   },
   {
     "id": 7301201,
+    "extendCost": 500,
     "group": 10103,
     "score": 300,
-    "effectDesc": "language_10085062",
-    "effectDesc2": "language_10085063",
+    "effectDesc": "language_10095575",
+    "effectDesc2": "language_10095576",
     "desc": "language_10085059",
     "tag": "101",
-    "effect": "1000001#1000005#1010010#1010002"
+    "effect": "1000001#1000005#1010010#1010002",
+    "equipType": 0
   },
   {
     "id": 7101202,
+    "extendCost": 0,
     "group": 10104,
     "score": 100,
     "effectDesc": "language_10085015",
     "effectDesc2": "language_10085016",
     "desc": "language_10085064",
     "tag": "101",
-    "effect": "1000006"
+    "effect": "1000006",
+    "equipType": 0
   },
   {
     "id": 7201202,
+    "extendCost": 200,
     "group": 10104,
     "score": 200,
-    "effectDesc": "language_10085065",
-    "effectDesc2": "language_10085066",
+    "effectDesc": "language_10095577",
+    "effectDesc2": "language_10095578",
     "desc": "language_10085064",
     "tag": "101#104",
-    "effect": "1000008"
+    "effect": "1000008",
+    "equipType": 0
   },
   {
     "id": 7301202,
+    "extendCost": 500,
     "group": 10104,
     "score": 300,
-    "effectDesc": "language_10085067",
-    "effectDesc2": "language_10085068",
+    "effectDesc": "language_10095579",
+    "effectDesc2": "language_10095580",
     "desc": "language_10085064",
     "tag": "101#104",
-    "effect": "1000008#1000008"
+    "effect": "1000008#1000008",
+    "equipType": 0
   },
   {
     "id": 7101203,
+    "extendCost": 0,
     "group": 10105,
     "score": 100,
     "effectDesc": "language_10085057",
     "effectDesc2": "language_10085058",
     "desc": "language_10085069",
     "tag": "101",
-    "effect": "1000001"
+    "effect": "1000001",
+    "equipType": 0
   },
   {
     "id": 7201203,
+    "extendCost": 200,
     "group": 10105,
     "score": 200,
-    "effectDesc": "language_10085070",
-    "effectDesc2": "language_10085071",
+    "effectDesc": "language_10095581",
+    "effectDesc2": "language_10095582",
     "desc": "language_10085069",
     "tag": "101#103",
-    "effect": "1000003"
+    "effect": "1000003",
+    "equipType": 0
   },
   {
     "id": 7301203,
+    "extendCost": 500,
     "group": 10105,
     "score": 300,
-    "effectDesc": "language_10085072",
-    "effectDesc2": "language_10085073",
+    "effectDesc": "language_10095583",
+    "effectDesc2": "language_10095584",
     "desc": "language_10085069",
     "tag": "101#103",
-    "effect": "1000003#1000003"
+    "effect": "1000003#1000003",
+    "equipType": 0
   },
   {
     "id": 7101204,
+    "extendCost": 0,
     "group": 10106,
     "score": 100,
     "effectDesc": "language_10085008",
     "effectDesc2": "language_10085009",
     "desc": "language_10085074",
     "tag": "101",
-    "effect": "1000016"
+    "effect": "1000016",
+    "equipType": 0
   },
   {
     "id": 7201204,
+    "extendCost": 200,
     "group": 10106,
     "score": 200,
-    "effectDesc": "language_10085075",
-    "effectDesc2": "language_10085076",
+    "effectDesc": "language_10095585",
+    "effectDesc2": "language_10095586",
     "desc": "language_10085074",
     "tag": "101",
-    "effect": "1000018#1010003"
+    "effect": "1000018#1010003",
+    "equipType": 0
   },
   {
     "id": 7301204,
+    "extendCost": 500,
     "group": 10106,
     "score": 300,
-    "effectDesc": "language_10085077",
-    "effectDesc2": "language_10085078",
+    "effectDesc": "language_10095587",
+    "effectDesc2": "language_10095588",
     "desc": "language_10085074",
     "tag": "101",
-    "effect": "1000018#1000018#1010004"
+    "effect": "1000018#1000018#1010004",
+    "equipType": 0
   },
   {
     "id": 7101205,
+    "extendCost": 0,
     "group": 10107,
     "score": 100,
     "effectDesc": "language_10085079",
     "effectDesc2": "language_10085080",
     "desc": "language_10085081",
     "tag": "101",
-    "effect": "1000011"
+    "effect": "1000011",
+    "equipType": 0
   },
   {
     "id": 7201205,
+    "extendCost": 200,
     "group": 10107,
     "score": 200,
-    "effectDesc": "language_10085082",
-    "effectDesc2": "language_10085083",
+    "effectDesc": "language_10095589",
+    "effectDesc2": "language_10095590",
     "desc": "language_10085081",
     "tag": "101",
-    "effect": "1000012#1010005"
+    "effect": "1000012#1010005",
+    "equipType": 0
   },
   {
     "id": 7301205,
+    "extendCost": 500,
     "group": 10107,
     "score": 300,
-    "effectDesc": "language_10085084",
-    "effectDesc2": "language_10085085",
+    "effectDesc": "language_10095591",
+    "effectDesc2": "language_10095592",
     "desc": "language_10085081",
     "tag": "101",
-    "effect": "1000015#1010006"
+    "effect": "1000015#1010006",
+    "equipType": 0
   },
   {
     "id": 7101206,
+    "extendCost": 0,
     "group": 10108,
     "score": 100,
     "effectDesc": "language_10085015",
     "effectDesc2": "language_10085016",
     "desc": "language_10085086",
     "tag": "101",
-    "effect": "1000006"
+    "effect": "1000006",
+    "equipType": 0
   },
   {
     "id": 7201206,
+    "extendCost": 200,
     "group": 10108,
     "score": 200,
-    "effectDesc": "language_10085087",
-    "effectDesc2": "language_10085088",
+    "effectDesc": "language_10095593",
+    "effectDesc2": "language_10095594",
     "desc": "language_10085086",
     "tag": "101",
-    "effect": "1000007#1010007"
+    "effect": "1000007#1010007",
+    "equipType": 0
   },
   {
     "id": 7301206,
+    "extendCost": 500,
     "group": 10108,
     "score": 300,
-    "effectDesc": "language_10085089",
-    "effectDesc2": "language_10085090",
+    "effectDesc": "language_10095595",
+    "effectDesc2": "language_10095596",
     "desc": "language_10085086",
     "tag": "101",
-    "effect": "1000010#1010008"
+    "effect": "1000010#1010008",
+    "equipType": 0
   },
   {
     "id": 7102101,
+    "extendCost": 0,
     "group": 10201,
     "score": 100,
-    "effectDesc": "language_10085091",
-    "effectDesc2": "language_10085092",
+    "effectDesc": "language_10095597",
+    "effectDesc2": "language_10095598",
     "desc": "language_10085093",
     "tag": "102",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7202101,
+    "extendCost": 200,
     "group": 10201,
     "score": 200,
-    "effectDesc": "language_10085094",
-    "effectDesc2": "language_10085095",
+    "effectDesc": "language_10095599",
+    "effectDesc2": "language_10095600",
     "desc": "language_10085093",
     "tag": "102",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7302101,
+    "extendCost": 500,
     "group": 10201,
     "score": 300,
-    "effectDesc": "language_10085096",
-    "effectDesc2": "language_10085097",
+    "effectDesc": "language_10095601",
+    "effectDesc2": "language_10095602",
     "desc": "language_10085093",
     "tag": "102",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7102102,
+    "extendCost": 0,
     "group": 10202,
     "score": 100,
-    "effectDesc": "language_10085098",
-    "effectDesc2": "language_10085099",
+    "effectDesc": "language_10095603",
+    "effectDesc2": "language_10095604",
     "desc": "language_10085100",
     "tag": "102",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7202102,
+    "extendCost": 200,
     "group": 10202,
     "score": 200,
-    "effectDesc": "language_10085101",
-    "effectDesc2": "language_10085102",
+    "effectDesc": "language_10095605",
+    "effectDesc2": "language_10095606",
     "desc": "language_10085100",
     "tag": "102",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7302102,
+    "extendCost": 500,
     "group": 10202,
     "score": 300,
-    "effectDesc": "language_10085103",
-    "effectDesc2": "language_10085104",
+    "effectDesc": "language_10095607",
+    "effectDesc2": "language_10095608",
     "desc": "language_10085100",
     "tag": "102",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7102201,
+    "extendCost": 0,
     "group": 10203,
     "score": 100,
     "effectDesc": "language_10085057",
     "effectDesc2": "language_10085058",
     "desc": "language_10085105",
     "tag": "102",
-    "effect": "1000001"
+    "effect": "1000001",
+    "equipType": 0
   },
   {
     "id": 7202201,
+    "extendCost": 200,
     "group": 10203,
     "score": 200,
     "effectDesc": "language_10085106",
     "effectDesc2": "language_10085107",
     "desc": "language_10085105",
     "tag": "102",
-    "effect": "1000003#1020001"
+    "effect": "1000003#1020001",
+    "equipType": 0
   },
   {
     "id": 7302201,
+    "extendCost": 500,
     "group": 10203,
     "score": 300,
-    "effectDesc": "language_10085108",
-    "effectDesc2": "language_10085109",
+    "effectDesc": "language_10095609",
+    "effectDesc2": "language_10095610",
     "desc": "language_10085105",
     "tag": "102",
-    "effect": "1000003#1000003#1020002#1020003"
+    "effect": "1000003#1000003#1020002#1020003",
+    "equipType": 0
   },
   {
     "id": 7102202,
+    "extendCost": 0,
     "group": 10204,
     "score": 100,
     "effectDesc": "language_10085008",
     "effectDesc2": "language_10085009",
     "desc": "language_10085110",
     "tag": "102",
-    "effect": "1000016"
+    "effect": "1000016",
+    "equipType": 0
   },
   {
     "id": 7202202,
+    "extendCost": 200,
     "group": 10204,
     "score": 200,
-    "effectDesc": "language_10085111",
-    "effectDesc2": "language_10085112",
+    "effectDesc": "language_10095611",
+    "effectDesc2": "language_10095612",
     "desc": "language_10085110",
     "tag": "102#105",
-    "effect": "1000018"
+    "effect": "1000018",
+    "equipType": 0
   },
   {
     "id": 7302202,
+    "extendCost": 500,
     "group": 10204,
     "score": 300,
-    "effectDesc": "language_10085113",
-    "effectDesc2": "language_10085114",
+    "effectDesc": "language_10095613",
+    "effectDesc2": "language_10095614",
     "desc": "language_10085110",
     "tag": "102#105",
-    "effect": "1000018#1000018#1020004"
+    "effect": "1000018#1000018#1020004",
+    "equipType": 0
   },
   {
     "id": 7102203,
+    "extendCost": 0,
     "group": 10205,
     "score": 100,
     "effectDesc": "language_10085008",
     "effectDesc2": "language_10085009",
     "desc": "language_10085115",
     "tag": "102",
-    "effect": "1000016"
+    "effect": "1000016",
+    "equipType": 0
   },
   {
     "id": 7202203,
+    "extendCost": 200,
     "group": 10205,
     "score": 200,
     "effectDesc": "language_10085116",
     "effectDesc2": "language_10085117",
     "desc": "language_10085115",
     "tag": "102",
-    "effect": "1000018#1020012"
+    "effect": "1000018#1020012",
+    "equipType": 0
   },
   {
     "id": 7302203,
+    "extendCost": 500,
     "group": 10205,
     "score": 300,
-    "effectDesc": "language_10085118",
-    "effectDesc2": "language_10085119",
+    "effectDesc": "language_10095615",
+    "effectDesc2": "language_10095616",
     "desc": "language_10085115",
     "tag": "102",
-    "effect": "1000018#1000018#1020005#1020012#1020012"
+    "effect": "1000018#1000018#1020005#1020012#1020012",
+    "equipType": 0
   },
   {
     "id": 7102204,
+    "extendCost": 0,
     "group": 10206,
     "score": 100,
     "effectDesc": "language_10085120",
     "effectDesc2": "language_10085121",
     "desc": "language_10085122",
     "tag": "102",
-    "effect": "1000061"
+    "effect": "1000061",
+    "equipType": 0
   },
   {
     "id": 7202204,
+    "extendCost": 200,
     "group": 10206,
     "score": 200,
     "effectDesc": "language_10085123",
     "effectDesc2": "language_10085124",
     "desc": "language_10085122",
     "tag": "102",
-    "effect": "1000063#1020006"
+    "effect": "1000063#1020006",
+    "equipType": 0
   },
   {
     "id": 7302204,
+    "extendCost": 500,
     "group": 10206,
     "score": 300,
-    "effectDesc": "language_10085125",
-    "effectDesc2": "language_10085126",
+    "effectDesc": "language_10095617",
+    "effectDesc2": "language_10095618",
     "desc": "language_10085122",
     "tag": "102",
-    "effect": "1000063#1000063#1020007"
+    "effect": "1000063#1000063#1020007",
+    "equipType": 0
   },
   {
     "id": 7102205,
+    "extendCost": 0,
     "group": 10207,
     "score": 100,
     "effectDesc": "language_10085015",
     "effectDesc2": "language_10085016",
     "desc": "language_10085127",
     "tag": "102",
-    "effect": "1000006"
+    "effect": "1000006",
+    "equipType": 0
   },
   {
     "id": 7202205,
+    "extendCost": 200,
     "group": 10207,
     "score": 200,
-    "effectDesc": "language_10085128",
-    "effectDesc2": "language_10085129",
+    "effectDesc": "language_10095619",
+    "effectDesc2": "language_10095620",
     "desc": "language_10085127",
     "tag": "102",
-    "effect": "1000007#1020009"
+    "effect": "1000007#1020009",
+    "equipType": 0
   },
   {
     "id": 7302205,
+    "extendCost": 500,
     "group": 10207,
     "score": 300,
-    "effectDesc": "language_10085130",
-    "effectDesc2": "language_10085131",
+    "effectDesc": "language_10095621",
+    "effectDesc2": "language_10095622",
     "desc": "language_10085127",
     "tag": "102",
-    "effect": "1000010#1020009#1020010"
+    "effect": "1000010#1020009#1020010",
+    "equipType": 0
   },
   {
     "id": 7102206,
+    "extendCost": 0,
     "group": 10208,
     "score": 100,
     "effectDesc": "language_10085079",
     "effectDesc2": "language_10085080",
     "desc": "language_10085132",
     "tag": "102",
-    "effect": "1000011"
+    "effect": "1000011",
+    "equipType": 0
   },
   {
     "id": 7202206,
+    "extendCost": 200,
     "group": 10208,
     "score": 200,
-    "effectDesc": "language_10085133",
-    "effectDesc2": "language_10085134",
+    "effectDesc": "language_10095623",
+    "effectDesc2": "language_10095624",
     "desc": "language_10085132",
     "tag": "102",
-    "effect": "1000012"
+    "effect": "1000012",
+    "equipType": 0
   },
   {
     "id": 7302206,
+    "extendCost": 500,
     "group": 10208,
     "score": 300,
-    "effectDesc": "language_10085135",
-    "effectDesc2": "language_10085136",
+    "effectDesc": "language_10095625",
+    "effectDesc2": "language_10095626",
     "desc": "language_10085132",
     "tag": "102",
-    "effect": "1000015#1020011"
+    "effect": "1000015#1020011",
+    "equipType": 0
   },
   {
     "id": 7103101,
+    "extendCost": 0,
     "group": 10301,
     "score": 100,
-    "effectDesc": "language_10085137",
-    "effectDesc2": "language_10085138",
+    "effectDesc": "language_10095627",
+    "effectDesc2": "language_10095628",
     "desc": "language_10085139",
     "tag": "103",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7203101,
+    "extendCost": 200,
     "group": 10301,
     "score": 200,
-    "effectDesc": "language_10085140",
-    "effectDesc2": "language_10085141",
+    "effectDesc": "language_10095629",
+    "effectDesc2": "language_10095630",
     "desc": "language_10085139",
     "tag": "103",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7303101,
+    "extendCost": 500,
     "group": 10301,
     "score": 300,
-    "effectDesc": "language_10085142",
-    "effectDesc2": "language_10085143",
+    "effectDesc": "language_10095631",
+    "effectDesc2": "language_10095632",
     "desc": "language_10085139",
     "tag": "103",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7103102,
+    "extendCost": 0,
     "group": 10302,
     "score": 100,
-    "effectDesc": "language_10085144",
-    "effectDesc2": "language_10085145",
+    "effectDesc": "language_10095633",
+    "effectDesc2": "language_10095634",
     "desc": "language_10085146",
     "tag": "103",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7203102,
+    "extendCost": 200,
     "group": 10302,
     "score": 200,
-    "effectDesc": "language_10085147",
-    "effectDesc2": "language_10085148",
+    "effectDesc": "language_10095635",
+    "effectDesc2": "language_10095636",
     "desc": "language_10085146",
     "tag": "103",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7303102,
+    "extendCost": 500,
     "group": 10302,
     "score": 300,
-    "effectDesc": "language_10085149",
-    "effectDesc2": "language_10085150",
+    "effectDesc": "language_10095637",
+    "effectDesc2": "language_10095638",
     "desc": "language_10085146",
     "tag": "103",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7103201,
+    "extendCost": 0,
     "group": 10303,
     "score": 100,
     "effectDesc": "language_10085151",
     "effectDesc2": "language_10085152",
     "desc": "language_10085153",
     "tag": "103",
-    "effect": "1000071"
+    "effect": "1000071",
+    "equipType": 0
   },
   {
     "id": 7203201,
+    "extendCost": 200,
     "group": 10303,
     "score": 200,
-    "effectDesc": "language_10085154",
-    "effectDesc2": "language_10085155",
+    "effectDesc": "language_10095639",
+    "effectDesc2": "language_10095640",
     "desc": "language_10085153",
     "tag": "103",
-    "effect": "1000073#1030008"
+    "effect": "1000073#1030008",
+    "equipType": 0
   },
   {
     "id": 7303201,
+    "extendCost": 500,
     "group": 10303,
     "score": 300,
-    "effectDesc": "language_10085156",
-    "effectDesc2": "language_10085157",
+    "effectDesc": "language_10095641",
+    "effectDesc2": "language_10095642",
     "desc": "language_10085153",
     "tag": "103",
-    "effect": "1000075#1030009"
+    "effect": "1000075#1030009",
+    "equipType": 0
   },
   {
     "id": 7103202,
+    "extendCost": 0,
     "group": 10304,
     "score": 100,
     "effectDesc": "language_10085015",
     "effectDesc2": "language_10085016",
     "desc": "language_10085158",
     "tag": "103",
-    "effect": "1000006"
+    "effect": "1000006",
+    "equipType": 0
   },
   {
     "id": 7203202,
+    "extendCost": 200,
     "group": 10304,
     "score": 200,
-    "effectDesc": "language_10085159",
-    "effectDesc2": "language_10085160",
+    "effectDesc": "language_10095643",
+    "effectDesc2": "language_10095644",
     "desc": "language_10085158",
     "tag": "103",
-    "effect": "1000007#1030001"
+    "effect": "1000007#1030001",
+    "equipType": 0
   },
   {
     "id": 7303202,
+    "extendCost": 500,
     "group": 10304,
     "score": 300,
-    "effectDesc": "language_10085161",
-    "effectDesc2": "language_10085162",
+    "effectDesc": "language_10095645",
+    "effectDesc2": "language_10095646",
     "desc": "language_10085158",
     "tag": "103",
-    "effect": "1000010#1030002"
+    "effect": "1000010#1030002",
+    "equipType": 0
   },
   {
     "id": 7103203,
+    "extendCost": 0,
     "group": 10305,
     "score": 100,
     "effectDesc": "language_10085079",
     "effectDesc2": "language_10085080",
     "desc": "language_10085163",
     "tag": "103",
-    "effect": "1000011"
+    "effect": "1000011",
+    "equipType": 0
   },
   {
     "id": 7203203,
+    "extendCost": 200,
     "group": 10305,
     "score": 200,
-    "effectDesc": "language_10085164",
-    "effectDesc2": "language_10085165",
+    "effectDesc": "language_10095647",
+    "effectDesc2": "language_10095648",
     "desc": "language_10085163",
     "tag": "103",
-    "effect": "1000012#1030010"
+    "effect": "1000012#1030010",
+    "equipType": 0
   },
   {
     "id": 7303203,
+    "extendCost": 500,
     "group": 10305,
     "score": 300,
-    "effectDesc": "language_10085166",
-    "effectDesc2": "language_10085167",
+    "effectDesc": "language_10095649",
+    "effectDesc2": "language_10095650",
     "desc": "language_10085163",
     "tag": "103",
-    "effect": "1000015#1030011"
+    "effect": "1000015#1030011",
+    "equipType": 0
   },
   {
     "id": 7103204,
+    "extendCost": 0,
     "group": 10306,
     "score": 100,
     "effectDesc": "language_10085008",
     "effectDesc2": "language_10085009",
     "desc": "language_10085168",
     "tag": "103",
-    "effect": "1000016"
+    "effect": "1000016",
+    "equipType": 0
   },
   {
     "id": 7203204,
+    "extendCost": 200,
     "group": 10306,
     "score": 200,
-    "effectDesc": "language_10085169",
-    "effectDesc2": "language_10085170",
+    "effectDesc": "language_10095651",
+    "effectDesc2": "language_10095652",
     "desc": "language_10085168",
     "tag": "103#104",
-    "effect": "1000018"
+    "effect": "1000018",
+    "equipType": 0
   },
   {
     "id": 7303204,
+    "extendCost": 500,
     "group": 10306,
     "score": 300,
-    "effectDesc": "language_10085171",
-    "effectDesc2": "language_10085172",
+    "effectDesc": "language_10095653",
+    "effectDesc2": "language_10095654",
     "desc": "language_10085168",
     "tag": "103#104",
-    "effect": "1000018#1000018"
+    "effect": "1000018#1000018",
+    "equipType": 0
   },
   {
     "id": 7103205,
+    "extendCost": 0,
     "group": 10307,
     "score": 100,
     "effectDesc": "language_10085120",
     "effectDesc2": "language_10085121",
     "desc": "language_10085173",
     "tag": "103",
-    "effect": "1000061"
+    "effect": "1000061",
+    "equipType": 0
   },
   {
     "id": 7203205,
+    "extendCost": 200,
     "group": 10307,
     "score": 200,
-    "effectDesc": "language_10085174",
-    "effectDesc2": "language_10085175",
+    "effectDesc": "language_10095655",
+    "effectDesc2": "language_10095656",
     "desc": "language_10085173",
     "tag": "103",
-    "effect": "1000063#1030006"
+    "effect": "1000063#1030006",
+    "equipType": 0
   },
   {
     "id": 7303205,
+    "extendCost": 500,
     "group": 10307,
     "score": 300,
-    "effectDesc": "language_10085176",
-    "effectDesc2": "language_10085177",
+    "effectDesc": "language_10095657",
+    "effectDesc2": "language_10095658",
     "desc": "language_10085173",
     "tag": "103",
-    "effect": "1000063#1000063#1030007"
+    "effect": "1000063#1000063#1030007",
+    "equipType": 0
   },
   {
     "id": 7103206,
+    "extendCost": 0,
     "group": 10308,
     "score": 100,
     "effectDesc": "language_10085178",
     "effectDesc2": "language_10085179",
     "desc": "language_10085180",
     "tag": "103",
-    "effect": "1000026"
+    "effect": "1000026",
+    "equipType": 0
   },
   {
     "id": 7203206,
+    "extendCost": 200,
     "group": 10308,
     "score": 200,
-    "effectDesc": "language_10085181",
-    "effectDesc2": "language_10085182",
+    "effectDesc": "language_10095659",
+    "effectDesc2": "language_10095660",
     "desc": "language_10085180",
     "tag": "103",
-    "effect": "1000027#1030012"
+    "effect": "1000027#1030012",
+    "equipType": 0
   },
   {
     "id": 7303206,
+    "extendCost": 500,
     "group": 10308,
     "score": 300,
-    "effectDesc": "language_10085183",
-    "effectDesc2": "language_10085184",
+    "effectDesc": "language_10095661",
+    "effectDesc2": "language_10095662",
     "desc": "language_10085180",
     "tag": "103",
-    "effect": "1000028#1030013"
+    "effect": "1000028#1030013",
+    "equipType": 0
   },
   {
     "id": 7104101,
+    "extendCost": 0,
     "group": 10401,
     "score": 100,
-    "effectDesc": "language_10085185",
-    "effectDesc2": "language_10085186",
+    "effectDesc": "language_10095663",
+    "effectDesc2": "language_10095664",
     "desc": "language_10085187",
     "tag": "104",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7204101,
+    "extendCost": 200,
     "group": 10401,
     "score": 200,
-    "effectDesc": "language_10085188",
-    "effectDesc2": "language_10085189",
+    "effectDesc": "language_10095665",
+    "effectDesc2": "language_10095666",
     "desc": "language_10085187",
     "tag": "104",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7304101,
+    "extendCost": 500,
     "group": 10401,
     "score": 300,
-    "effectDesc": "language_10085190",
-    "effectDesc2": "language_10085191",
+    "effectDesc": "language_10095667",
+    "effectDesc2": "language_10095668",
     "desc": "language_10085187",
     "tag": "104",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7104102,
+    "extendCost": 0,
     "group": 10402,
     "score": 100,
-    "effectDesc": "language_10085192",
-    "effectDesc2": "language_10085193",
+    "effectDesc": "language_10095669",
+    "effectDesc2": "language_10095670",
     "desc": "language_10085194",
     "tag": "104",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7204102,
+    "extendCost": 200,
     "group": 10402,
     "score": 200,
-    "effectDesc": "language_10085195",
-    "effectDesc2": "language_10085196",
+    "effectDesc": "language_10095671",
+    "effectDesc2": "language_10095672",
     "desc": "language_10085194",
     "tag": "104",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7304102,
+    "extendCost": 500,
     "group": 10402,
     "score": 300,
-    "effectDesc": "language_10085197",
-    "effectDesc2": "language_10085198",
+    "effectDesc": "language_10095673",
+    "effectDesc2": "language_10095674",
     "desc": "language_10085194",
     "tag": "104",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7104201,
+    "extendCost": 0,
     "group": 10403,
     "score": 100,
     "effectDesc": "language_10085057",
     "effectDesc2": "language_10085058",
     "desc": "language_10085199",
     "tag": "104",
-    "effect": "1000001"
+    "effect": "1000001",
+    "equipType": 0
   },
   {
     "id": 7204201,
+    "extendCost": 200,
     "group": 10403,
     "score": 200,
     "effectDesc": "language_10085200",
     "effectDesc2": "language_10085201",
     "desc": "language_10085199",
     "tag": "104",
-    "effect": "1000001#1040001"
+    "effect": "1000001#1040001",
+    "equipType": 0
   },
   {
     "id": 7304201,
+    "extendCost": 500,
     "group": 10403,
     "score": 300,
-    "effectDesc": "language_10085202",
-    "effectDesc2": "language_10085203",
+    "effectDesc": "language_10095675",
+    "effectDesc2": "language_10095676",
     "desc": "language_10085199",
     "tag": "104",
-    "effect": "1000001#1040002#1040003"
+    "effect": "1000001#1040002#1040003",
+    "equipType": 0
   },
   {
     "id": 7104202,
+    "extendCost": 0,
     "group": 10404,
     "score": 100,
     "effectDesc": "language_10085057",
     "effectDesc2": "language_10085058",
     "desc": "language_10085204",
     "tag": "104",
-    "effect": "1000001"
+    "effect": "1000001",
+    "equipType": 0
   },
   {
     "id": 7204202,
+    "extendCost": 200,
     "group": 10404,
     "score": 200,
-    "effectDesc": "language_10085205",
-    "effectDesc2": "language_10085206",
+    "effectDesc": "language_10095677",
+    "effectDesc2": "language_10095678",
     "desc": "language_10085204",
     "tag": "104",
-    "effect": "1000003"
+    "effect": "1000003",
+    "equipType": 0
   },
   {
     "id": 7304202,
+    "extendCost": 500,
     "group": 10404,
     "score": 300,
-    "effectDesc": "language_10085207",
-    "effectDesc2": "language_10085208",
+    "effectDesc": "language_10095679",
+    "effectDesc2": "language_10095680",
     "desc": "language_10085204",
     "tag": "104",
-    "effect": "1000003#1000003"
+    "effect": "1000003#1000003",
+    "equipType": 0
   },
   {
     "id": 7104203,
+    "extendCost": 0,
     "group": 10405,
     "score": 100,
     "effectDesc": "language_10085015",
     "effectDesc2": "language_10085016",
     "desc": "language_10085209",
     "tag": "104",
-    "effect": "1000006"
+    "effect": "1000006",
+    "equipType": 0
   },
   {
     "id": 7204203,
+    "extendCost": 200,
     "group": 10405,
     "score": 200,
-    "effectDesc": "language_10085210",
-    "effectDesc2": "language_10085211",
+    "effectDesc": "language_10095681",
+    "effectDesc2": "language_10095682",
     "desc": "language_10085209",
     "tag": "104",
-    "effect": "1000007"
+    "effect": "1000007",
+    "equipType": 0
   },
   {
     "id": 7304203,
+    "extendCost": 500,
     "group": 10405,
     "score": 300,
-    "effectDesc": "language_10085212",
-    "effectDesc2": "language_10085213",
+    "effectDesc": "language_10095683",
+    "effectDesc2": "language_10095684",
     "desc": "language_10085209",
     "tag": "104",
-    "effect": "1000010#1040004"
+    "effect": "1000010#1040004",
+    "equipType": 0
   },
   {
     "id": 7104204,
+    "extendCost": 0,
     "group": 10406,
     "score": 100,
     "effectDesc": "language_10085120",
     "effectDesc2": "language_10085121",
     "desc": "language_10085214",
     "tag": "104",
-    "effect": "1000061"
+    "effect": "1000061",
+    "equipType": 0
   },
   {
     "id": 7204204,
+    "extendCost": 200,
     "group": 10406,
     "score": 200,
-    "effectDesc": "language_10085215",
-    "effectDesc2": "language_10085216",
+    "effectDesc": "language_10095685",
+    "effectDesc2": "language_10095686",
     "desc": "language_10085214",
     "tag": "104",
-    "effect": "1000062"
+    "effect": "1000062",
+    "equipType": 0
   },
   {
     "id": 7304204,
+    "extendCost": 500,
     "group": 10406,
     "score": 300,
-    "effectDesc": "language_10085217",
-    "effectDesc2": "language_10085218",
+    "effectDesc": "language_10095687",
+    "effectDesc2": "language_10095688",
     "desc": "language_10085214",
     "tag": "104",
-    "effect": "1000065"
+    "effect": "1000065",
+    "equipType": 0
   },
   {
     "id": 7104205,
+    "extendCost": 0,
     "group": 10407,
     "score": 100,
     "effectDesc": "language_10085008",
     "effectDesc2": "language_10085009",
     "desc": "language_10085219",
     "tag": "104",
-    "effect": "1000016"
+    "effect": "1000016",
+    "equipType": 0
   },
   {
     "id": 7204205,
+    "extendCost": 200,
     "group": 10407,
     "score": 200,
-    "effectDesc": "language_10085220",
-    "effectDesc2": "language_10085221",
+    "effectDesc": "language_10095689",
+    "effectDesc2": "language_10095690",
     "desc": "language_10085219",
     "tag": "104",
-    "effect": "1000018"
+    "effect": "1000018",
+    "equipType": 0
   },
   {
     "id": 7304205,
+    "extendCost": 500,
     "group": 10407,
     "score": 300,
-    "effectDesc": "language_10085222",
-    "effectDesc2": "language_10085223",
+    "effectDesc": "language_10095691",
+    "effectDesc2": "language_10095692",
     "desc": "language_10085219",
     "tag": "104",
-    "effect": "1000018#1000018#1040005"
+    "effect": "1000018#1000018#1040005",
+    "equipType": 0
   },
   {
     "id": 7104206,
+    "extendCost": 0,
     "group": 10408,
     "score": 100,
     "effectDesc": "language_10085079",
     "effectDesc2": "language_10085080",
     "desc": "language_10085224",
     "tag": "104",
-    "effect": "1000011"
+    "effect": "1000011",
+    "equipType": 0
   },
   {
     "id": 7204206,
+    "extendCost": 200,
     "group": 10408,
     "score": 200,
-    "effectDesc": "language_10085225",
-    "effectDesc2": "language_10085226",
+    "effectDesc": "language_10095693",
+    "effectDesc2": "language_10095694",
     "desc": "language_10085224",
     "tag": "104",
-    "effect": "1000012"
+    "effect": "1000012",
+    "equipType": 0
   },
   {
     "id": 7304206,
+    "extendCost": 500,
     "group": 10408,
     "score": 300,
-    "effectDesc": "language_10085227",
-    "effectDesc2": "language_10085228",
+    "effectDesc": "language_10095695",
+    "effectDesc2": "language_10095696",
     "desc": "language_10085224",
     "tag": "104",
-    "effect": "1000015#1040006"
+    "effect": "1000015#1040006",
+    "equipType": 0
   },
   {
     "id": 7105101,
+    "extendCost": 0,
     "group": 10501,
     "score": 100,
-    "effectDesc": "language_10085229",
-    "effectDesc2": "language_10085230",
+    "effectDesc": "language_10095697",
+    "effectDesc2": "language_10095698",
     "desc": "language_10085231",
     "tag": "105",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7205101,
+    "extendCost": 200,
     "group": 10501,
     "score": 200,
-    "effectDesc": "language_10085232",
-    "effectDesc2": "language_10085233",
+    "effectDesc": "language_10095699",
+    "effectDesc2": "language_10095700",
     "desc": "language_10085231",
     "tag": "105",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7305101,
+    "extendCost": 500,
     "group": 10501,
     "score": 300,
-    "effectDesc": "language_10085234",
-    "effectDesc2": "language_10085235",
+    "effectDesc": "language_10095701",
+    "effectDesc2": "language_10095702",
     "desc": "language_10085231",
     "tag": "105",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7105102,
+    "extendCost": 0,
     "group": 10502,
     "score": 100,
-    "effectDesc": "language_10085236",
-    "effectDesc2": "language_10085237",
+    "effectDesc": "language_10095703",
+    "effectDesc2": "language_10095704",
     "desc": "language_10085238",
     "tag": "105",
-    "effect": "1000081"
+    "effect": "1000081",
+    "equipType": 0
   },
   {
     "id": 7205102,
+    "extendCost": 200,
     "group": 10502,
     "score": 200,
-    "effectDesc": "language_10085239",
-    "effectDesc2": "language_10085240",
+    "effectDesc": "language_10095705",
+    "effectDesc2": "language_10095706",
     "desc": "language_10085238",
     "tag": "105",
-    "effect": "1000083"
+    "effect": "1000083",
+    "equipType": 0
   },
   {
     "id": 7305102,
+    "extendCost": 500,
     "group": 10502,
     "score": 300,
-    "effectDesc": "language_10085241",
-    "effectDesc2": "language_10085242",
+    "effectDesc": "language_10095707",
+    "effectDesc2": "language_10095708",
     "desc": "language_10085238",
     "tag": "105",
-    "effect": "1000086"
+    "effect": "1000086",
+    "equipType": 0
   },
   {
     "id": 7105201,
+    "extendCost": 0,
     "group": 10503,
     "score": 100,
     "effectDesc": "language_10085015",
     "effectDesc2": "language_10085016",
     "desc": "language_10085243",
     "tag": "105",
-    "effect": "1000006"
+    "effect": "1000006",
+    "equipType": 0
   },
   {
     "id": 7205201,
+    "extendCost": 200,
     "group": 10503,
     "score": 200,
-    "effectDesc": "language_10085244",
-    "effectDesc2": "language_10085245",
+    "effectDesc": "language_10095709",
+    "effectDesc2": "language_10095710",
     "desc": "language_10085243",
     "tag": "105",
-    "effect": "1000007#1050009"
+    "effect": "1000007#1050009",
+    "equipType": 0
   },
   {
     "id": 7305201,
+    "extendCost": 500,
     "group": 10503,
     "score": 300,
-    "effectDesc": "language_10085246",
-    "effectDesc2": "language_10085247",
+    "effectDesc": "language_10095711",
+    "effectDesc2": "language_10095712",
     "desc": "language_10085243",
     "tag": "105",
-    "effect": "1000010#1050009"
+    "effect": "1000010#1050009",
+    "equipType": 0
   },
   {
     "id": 7105202,
+    "extendCost": 0,
     "group": 10504,
     "score": 100,
     "effectDesc": "language_10085079",
     "effectDesc2": "language_10085080",
     "desc": "language_10085248",
     "tag": "105",
-    "effect": "1000011"
+    "effect": "1000011",
+    "equipType": 0
   },
   {
     "id": 7205202,
+    "extendCost": 200,
     "group": 10504,
     "score": 200,
-    "effectDesc": "language_10085249",
-    "effectDesc2": "language_10085250",
+    "effectDesc": "language_10095713",
+    "effectDesc2": "language_10095714",
     "desc": "language_10085248",
     "tag": "105",
-    "effect": "1000012#1050010"
+    "effect": "1000012#1050010",
+    "equipType": 0
   },
   {
     "id": 7305202,
+    "extendCost": 500,
     "group": 10504,
     "score": 300,
-    "effectDesc": "language_10085251",
-    "effectDesc2": "language_10085252",
+    "effectDesc": "language_10095715",
+    "effectDesc2": "language_10095716",
     "desc": "language_10085248",
     "tag": "105",
-    "effect": "1000015#1050010"
+    "effect": "1000015#1050010",
+    "equipType": 0
   },
   {
     "id": 7105203,
+    "extendCost": 0,
     "group": 10505,
     "score": 100,
     "effectDesc": "language_10085120",
     "effectDesc2": "language_10085121",
     "desc": "language_10085253",
     "tag": "105",
-    "effect": "1000061"
+    "effect": "1000061",
+    "equipType": 0
   },
   {
     "id": 7205203,
+    "extendCost": 200,
     "group": 10505,
     "score": 200,
-    "effectDesc": "language_10085254",
-    "effectDesc2": "language_10085255",
+    "effectDesc": "language_10095717",
+    "effectDesc2": "language_10095718",
     "desc": "language_10085253",
     "tag": "105",
-    "effect": "1000063#1050001"
+    "effect": "1000063#1050001",
+    "equipType": 0
   },
   {
     "id": 7305203,
+    "extendCost": 500,
     "group": 10505,
     "score": 300,
-    "effectDesc": "language_10085256",
-    "effectDesc2": "language_10085257",
+    "effectDesc": "language_10095719",
+    "effectDesc2": "language_10095720",
     "desc": "language_10085253",
     "tag": "105",
-    "effect": "1000063#1000063#1050002"
+    "effect": "1000063#1000063#1050002",
+    "equipType": 0
   },
   {
     "id": 7105204,
+    "extendCost": 0,
     "group": 10506,
     "score": 100,
     "effectDesc": "language_10085258",
     "effectDesc2": "language_10085259",
     "desc": "language_10085260",
     "tag": "105",
-    "effect": "1000021"
+    "effect": "1000021",
+    "equipType": 0
   },
   {
     "id": 7205204,
+    "extendCost": 200,
     "group": 10506,
     "score": 200,
-    "effectDesc": "language_10085261",
-    "effectDesc2": "language_10085262",
+    "effectDesc": "language_10095721",
+    "effectDesc2": "language_10095722",
     "desc": "language_10085260",
     "tag": "105",
-    "effect": "1000023"
+    "effect": "1000023",
+    "equipType": 0
   },
   {
     "id": 7305204,
+    "extendCost": 500,
     "group": 10506,
     "score": 300,
-    "effectDesc": "language_10085263",
-    "effectDesc2": "language_10085264",
+    "effectDesc": "language_10095723",
+    "effectDesc2": "language_10095724",
     "desc": "language_10085260",
     "tag": "105",
-    "effect": "1000023#1000023"
+    "effect": "1000023#1000023",
+    "equipType": 0
   },
   {
     "id": 7105205,
+    "extendCost": 0,
     "group": 10507,
     "score": 100,
     "effectDesc": "language_10085265",
     "effectDesc2": "language_10085266",
     "desc": "language_10085267",
     "tag": "105",
-    "effect": "1000076"
+    "effect": "1000076",
+    "equipType": 0
   },
   {
     "id": 7205205,
+    "extendCost": 200,
     "group": 10507,
     "score": 200,
-    "effectDesc": "language_10085268",
-    "effectDesc2": "language_10085269",
+    "effectDesc": "language_10095725",
+    "effectDesc2": "language_10095726",
     "desc": "language_10085267",
     "tag": "105",
-    "effect": "1000076#1050005"
+    "effect": "1000076#1050005",
+    "equipType": 0
   },
   {
     "id": 7305205,
+    "extendCost": 500,
     "group": 10507,
     "score": 300,
-    "effectDesc": "language_10085270",
-    "effectDesc2": "language_10085271",
+    "effectDesc": "language_10095727",
+    "effectDesc2": "language_10095728",
     "desc": "language_10085267",
     "tag": "105",
-    "effect": "1000076#1050006"
+    "effect": "1000076#1050006",
+    "equipType": 0
   },
   {
     "id": 7105206,
+    "extendCost": 0,
     "group": 10508,
     "score": 100,
     "effectDesc": "language_10085057",
     "effectDesc2": "language_10085058",
     "desc": "language_10085272",
     "tag": "105",
-    "effect": "1000001"
+    "effect": "1000001",
+    "equipType": 0
   },
   {
     "id": 7205206,
+    "extendCost": 200,
     "group": 10508,
     "score": 200,
-    "effectDesc": "language_10085273",
-    "effectDesc2": "language_10085274",
+    "effectDesc": "language_10095729",
+    "effectDesc2": "language_10095730",
     "desc": "language_10085272",
     "tag": "105",
-    "effect": "1000003#1050007"
+    "effect": "1000003#1050007",
+    "equipType": 0
   },
   {
     "id": 7305206,
+    "extendCost": 500,
     "group": 10508,
     "score": 300,
-    "effectDesc": "language_10085275",
-    "effectDesc2": "language_10085276",
+    "effectDesc": "language_10095731",
+    "effectDesc2": "language_10095732",
     "desc": "language_10085272",
     "tag": "105",
-    "effect": "1000003#1000003#1050008"
+    "effect": "1000003#1000003#1050008",
+    "equipType": 0
+  },
+  {
+    "id": 7106101,
+    "extendCost": 0,
+    "group": 10601,
+    "score": 100,
+    "effectDesc": "language_10095733",
+    "effectDesc2": "language_10095734",
+    "desc": "language_10095007",
+    "tag": "106",
+    "effect": "1000081",
+    "equipType": 0
+  },
+  {
+    "id": 7206101,
+    "extendCost": 200,
+    "group": 10601,
+    "score": 200,
+    "effectDesc": "language_10095735",
+    "effectDesc2": "language_10095736",
+    "desc": "language_10095007",
+    "tag": "106",
+    "effect": "1000083",
+    "equipType": 0
+  },
+  {
+    "id": 7306101,
+    "extendCost": 500,
+    "group": 10601,
+    "score": 300,
+    "effectDesc": "language_10095737",
+    "effectDesc2": "language_10095738",
+    "desc": "language_10095007",
+    "tag": "106",
+    "effect": "1000086",
+    "equipType": 0
+  },
+  {
+    "id": 7106102,
+    "extendCost": 0,
+    "group": 10602,
+    "score": 100,
+    "effectDesc": "language_10095739",
+    "effectDesc2": "language_10095740",
+    "desc": "language_10095009",
+    "tag": "106",
+    "effect": "1000081",
+    "equipType": 0
+  },
+  {
+    "id": 7206102,
+    "extendCost": 200,
+    "group": 10602,
+    "score": 200,
+    "effectDesc": "language_10095741",
+    "effectDesc2": "language_10095742",
+    "desc": "language_10095009",
+    "tag": "106",
+    "effect": "1000083",
+    "equipType": 0
+  },
+  {
+    "id": 7306102,
+    "extendCost": 500,
+    "group": 10602,
+    "score": 300,
+    "effectDesc": "language_10095743",
+    "effectDesc2": "language_10095744",
+    "desc": "language_10095009",
+    "tag": "106",
+    "effect": "1000086",
+    "equipType": 0
+  },
+  {
+    "id": 7106201,
+    "extendCost": 0,
+    "group": 10603,
+    "score": 100,
+    "effectDesc": "language_10095745",
+    "effectDesc2": "language_10085266",
+    "desc": "language_10095011",
+    "tag": "106",
+    "effect": "1000076",
+    "equipType": 0
+  },
+  {
+    "id": 7206201,
+    "extendCost": 200,
+    "group": 10603,
+    "score": 200,
+    "effectDesc": "language_10095746",
+    "effectDesc2": "language_10095747",
+    "desc": "language_10095011",
+    "tag": "106",
+    "effect": "1000076",
+    "equipType": 0
+  },
+  {
+    "id": 7306201,
+    "extendCost": 500,
+    "group": 10603,
+    "score": 300,
+    "effectDesc": "language_10095748",
+    "effectDesc2": "language_10095749",
+    "desc": "language_10095011",
+    "tag": "106",
+    "effect": "1000076#1060001",
+    "equipType": 0
+  },
+  {
+    "id": 7106202,
+    "extendCost": 0,
+    "group": 10604,
+    "score": 100,
+    "effectDesc": "language_10095750",
+    "effectDesc2": "language_10085016",
+    "desc": "language_10095013",
+    "tag": "106",
+    "effect": "1000006",
+    "equipType": 0
+  },
+  {
+    "id": 7206202,
+    "extendCost": 200,
+    "group": 10604,
+    "score": 200,
+    "effectDesc": "language_10095751",
+    "effectDesc2": "language_10095752",
+    "desc": "language_10095013",
+    "tag": "106",
+    "effect": "1000007",
+    "equipType": 0
+  },
+  {
+    "id": 7306202,
+    "extendCost": 500,
+    "group": 10604,
+    "score": 300,
+    "effectDesc": "language_10095753",
+    "effectDesc2": "language_10095754",
+    "desc": "language_10095013",
+    "tag": "106",
+    "effect": "1000010#1060002",
+    "equipType": 0
+  },
+  {
+    "id": 7106203,
+    "extendCost": 0,
+    "group": 10605,
+    "score": 100,
+    "effectDesc": "language_10085079",
+    "effectDesc2": "language_10085080",
+    "desc": "language_10095015",
+    "tag": "106",
+    "effect": "1000011",
+    "equipType": 0
+  },
+  {
+    "id": 7206203,
+    "extendCost": 200,
+    "group": 10605,
+    "score": 200,
+    "effectDesc": "language_10095755",
+    "effectDesc2": "language_10095756",
+    "desc": "language_10095015",
+    "tag": "106",
+    "effect": "1000012",
+    "equipType": 0
+  },
+  {
+    "id": 7306203,
+    "extendCost": 500,
+    "group": 10605,
+    "score": 300,
+    "effectDesc": "language_10095757",
+    "effectDesc2": "language_10095758",
+    "desc": "language_10095015",
+    "tag": "106",
+    "effect": "1000015#1060003",
+    "equipType": 0
+  },
+  {
+    "id": 7106204,
+    "extendCost": 0,
+    "group": 10606,
+    "score": 100,
+    "effectDesc": "language_10095759",
+    "effectDesc2": "language_10095760",
+    "desc": "language_10095017",
+    "tag": "106",
+    "effect": "1000087",
+    "equipType": 0
+  },
+  {
+    "id": 7206204,
+    "extendCost": 200,
+    "group": 10606,
+    "score": 200,
+    "effectDesc": "language_10095761",
+    "effectDesc2": "language_10095762",
+    "desc": "language_10095017",
+    "tag": "106",
+    "effect": "1000088",
+    "equipType": 0
+  },
+  {
+    "id": 7306204,
+    "extendCost": 500,
+    "group": 10606,
+    "score": 300,
+    "effectDesc": "language_10095763",
+    "effectDesc2": "language_10095764",
+    "desc": "language_10095017",
+    "tag": "106",
+    "effect": "1000088#1000088#1060004",
+    "equipType": 0
+  },
+  {
+    "id": 7106205,
+    "extendCost": 0,
+    "group": 10607,
+    "score": 100,
+    "effectDesc": "language_10085258",
+    "effectDesc2": "language_10085259",
+    "desc": "language_10095019",
+    "tag": "106",
+    "effect": "1000021",
+    "equipType": 0
+  },
+  {
+    "id": 7206205,
+    "extendCost": 200,
+    "group": 10607,
+    "score": 200,
+    "effectDesc": "language_10095765",
+    "effectDesc2": "language_10095766",
+    "desc": "language_10095019",
+    "tag": "106",
+    "effect": "1000023",
+    "equipType": 0
+  },
+  {
+    "id": 7306205,
+    "extendCost": 500,
+    "group": 10607,
+    "score": 300,
+    "effectDesc": "language_10095767",
+    "effectDesc2": "language_10095768",
+    "desc": "language_10095019",
+    "tag": "106",
+    "effect": "1000023#1000023#1060005",
+    "equipType": 0
+  },
+  {
+    "id": 7106206,
+    "extendCost": 0,
+    "group": 10608,
+    "score": 100,
+    "effectDesc": "language_10085057",
+    "effectDesc2": "language_10085058",
+    "desc": "language_10095021",
+    "tag": "106",
+    "effect": "1000001",
+    "equipType": 0
+  },
+  {
+    "id": 7206206,
+    "extendCost": 200,
+    "group": 10608,
+    "score": 200,
+    "effectDesc": "language_10095769",
+    "effectDesc2": "language_10095770",
+    "desc": "language_10095021",
+    "tag": "106",
+    "effect": "1000003",
+    "equipType": 0
+  },
+  {
+    "id": 7306206,
+    "extendCost": 500,
+    "group": 10608,
+    "score": 300,
+    "effectDesc": "language_10095771",
+    "effectDesc2": "language_10095772",
+    "desc": "language_10095021",
+    "tag": "106",
+    "effect": "1000003#1000003#1060006",
+    "equipType": 0
+  },
+  {
+    "id": 7000301,
+    "extendCost": 800,
+    "group": 10009,
+    "score": 400,
+    "effectDesc": "language_10095773",
+    "effectDesc2": "language_10095774",
+    "desc": "language_10095022",
+    "tag": "",
+    "effect": "1001001",
+    "equipType": 1
+  },
+  {
+    "id": 7000302,
+    "extendCost": 800,
+    "group": 10010,
+    "score": 400,
+    "effectDesc": "language_10095775",
+    "effectDesc2": "language_10095776",
+    "desc": "language_10095024",
+    "tag": "",
+    "effect": "1001002",
+    "equipType": 1
+  },
+  {
+    "id": 7000303,
+    "extendCost": 800,
+    "group": 10011,
+    "score": 400,
+    "effectDesc": "language_10095777",
+    "effectDesc2": "language_10095778",
+    "desc": "language_10095026",
+    "tag": "",
+    "effect": "1001003",
+    "equipType": 1
+  },
+  {
+    "id": 7000304,
+    "extendCost": 800,
+    "group": 10012,
+    "score": 400,
+    "effectDesc": "language_10095779",
+    "effectDesc2": "language_10095780",
+    "desc": "language_10095028",
+    "tag": "",
+    "effect": "1001004",
+    "equipType": 1
+  },
+  {
+    "id": 7000305,
+    "extendCost": 800,
+    "group": 10013,
+    "score": 400,
+    "effectDesc": "language_10095781",
+    "effectDesc2": "language_10095782",
+    "desc": "language_10095030",
+    "tag": "",
+    "effect": "1001005",
+    "equipType": 1
+  },
+  {
+    "id": 7000306,
+    "extendCost": 800,
+    "group": 10014,
+    "score": 400,
+    "effectDesc": "language_10095783",
+    "effectDesc2": "language_10095784",
+    "desc": "language_10095032",
+    "tag": "",
+    "effect": "1001006",
+    "equipType": 1
+  },
+  {
+    "id": 7000307,
+    "extendCost": 800,
+    "group": 10015,
+    "score": 400,
+    "effectDesc": "language_10095785",
+    "effectDesc2": "language_10095786",
+    "desc": "language_10095034",
+    "tag": "",
+    "effect": "1001007#1001013",
+    "equipType": 1
+  },
+  {
+    "id": 7000308,
+    "extendCost": 800,
+    "group": 10016,
+    "score": 400,
+    "effectDesc": "language_10095787",
+    "effectDesc2": "language_10095788",
+    "desc": "language_10095036",
+    "tag": "",
+    "effect": "1001008",
+    "equipType": 1
+  },
+  {
+    "id": 7000309,
+    "extendCost": 800,
+    "group": 10017,
+    "score": 400,
+    "effectDesc": "language_10095789",
+    "effectDesc2": "language_10095790",
+    "desc": "language_10095038",
+    "tag": "",
+    "effect": "1001009",
+    "equipType": 1
+  },
+  {
+    "id": 7000310,
+    "extendCost": 800,
+    "group": 10018,
+    "score": 400,
+    "effectDesc": "language_10070853",
+    "effectDesc2": "language_10095791",
+    "desc": "language_10095040",
+    "tag": "",
+    "effect": "1001010",
+    "equipType": 1
+  },
+  {
+    "id": 7000311,
+    "extendCost": 800,
+    "group": 10019,
+    "score": 400,
+    "effectDesc": "language_10095792",
+    "effectDesc2": "language_10095793",
+    "desc": "language_10095042",
+    "tag": "",
+    "effect": "1001011",
+    "equipType": 1
+  },
+  {
+    "id": 7000312,
+    "extendCost": 800,
+    "group": 10020,
+    "score": 400,
+    "effectDesc": "language_10095794",
+    "effectDesc2": "language_10095795",
+    "desc": "language_10095044",
+    "tag": "",
+    "effect": "1001012",
+    "equipType": 1
+  },
+  {
+    "id": 7000313,
+    "extendCost": 800,
+    "group": 10021,
+    "score": 400,
+    "effectDesc": "language_10095796",
+    "effectDesc2": "language_10095797",
+    "desc": "language_10095046",
+    "tag": "",
+    "effect": "",
+    "equipType": 1
+  },
+  {
+    "id": 7000314,
+    "extendCost": 800,
+    "group": 10022,
+    "score": 400,
+    "effectDesc": "language_10095798",
+    "effectDesc2": "language_10095799",
+    "desc": "language_10095048",
+    "tag": "",
+    "effect": "",
+    "equipType": 1
+  },
+  {
+    "id": 7000315,
+    "extendCost": 800,
+    "group": 10023,
+    "score": 400,
+    "effectDesc": "language_10095800",
+    "effectDesc2": "language_10095801",
+    "desc": "language_10095050",
+    "tag": "",
+    "effect": "",
+    "equipType": 1
+  },
+  {
+    "id": 7000316,
+    "extendCost": 400,
+    "group": 10015,
+    "score": 250,
+    "effectDesc": "language_10095802",
+    "effectDesc2": "language_10095803",
+    "desc": "language_10095034",
+    "tag": "",
+    "effect": "1001013",
+    "equipType": 1
+  },
+  {
+    "id": 7000317,
+    "extendCost": 400,
+    "group": 10017,
+    "score": 250,
+    "effectDesc": "language_10095804",
+    "effectDesc2": "language_10095790",
+    "desc": "language_10095038",
+    "tag": "",
+    "effect": "1001014",
+    "equipType": 1
+  },
+  {
+    "id": 7000318,
+    "extendCost": 400,
+    "group": 10021,
+    "score": 250,
+    "effectDesc": "language_10095805",
+    "effectDesc2": "language_10095806",
+    "desc": "language_10095046",
+    "tag": "",
+    "effect": "",
+    "equipType": 1
+  },
+  {
+    "id": 7000319,
+    "extendCost": 400,
+    "group": 10022,
+    "score": 250,
+    "effectDesc": "language_10095807",
+    "effectDesc2": "language_10095808",
+    "desc": "language_10095048",
+    "tag": "",
+    "effect": "",
+    "equipType": 1
+  },
+  {
+    "id": 7000320,
+    "extendCost": 400,
+    "group": 10023,
+    "score": 250,
+    "effectDesc": "language_10095809",
+    "effectDesc2": "language_10095810",
+    "desc": "language_10095050",
+    "tag": "",
+    "effect": "",
+    "equipType": 1
   }
 ]

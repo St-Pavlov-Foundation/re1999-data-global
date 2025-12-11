@@ -18,6 +18,7 @@ function var_0_0.initForceAnimViewList()
 	var_0_2 = {
 		ViewName.HeroGroupEditView,
 		ViewName.RougeHeroGroupEditView,
+		ViewName.HeroGroupPresetEditView,
 		ViewName.V1a6_CachotHeroGroupEditView,
 		ViewName.Season123HeroGroupEditView,
 		ViewName.Season123_2_3HeroGroupEditView,

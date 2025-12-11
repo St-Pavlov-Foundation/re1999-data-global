@@ -41,11 +41,8 @@ end
 
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, arg_2_0.onModeChange, arg_2_0)
-
-	local var_2_0 = VersionActivityFixedHelper.getVersionActivityDungeonController()
-
-	arg_2_0:addEventCb(var_2_0.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_2_0.hideUI, arg_2_0)
-	arg_2_0:addEventCb(var_2_0.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, arg_2_0.showUI, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_2_0.hideUI, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, arg_2_0.showUI, arg_2_0)
 	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, arg_2_0._onUpdateDungeonInfo, arg_2_0)
 	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
 	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.dailyRefresh, arg_2_0)
@@ -59,10 +56,10 @@ end
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, arg_3_0.onModeChange, arg_3_0)
 
-	local var_3_0 = VersionActivityFixedHelper.getVersionActivityDungeonController()
+	local var_3_0 = VersionActivityFixedHelper.getVersionActivityDungeonController(arg_3_0._bigVersion, arg_3_0._smallVersion)
 
-	arg_3_0:removeEventCb(var_3_0.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_3_0.hideUI, arg_3_0)
-	arg_3_0:removeEventCb(var_3_0.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, arg_3_0.showUI, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnClickElement, arg_3_0.hideUI, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, arg_3_0.showUI, arg_3_0)
 	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, arg_3_0._onUpdateDungeonInfo, arg_3_0)
 	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
 	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.dailyRefresh, arg_3_0)
@@ -74,6 +71,8 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._bigVersion, arg_4_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+
 	gohelper.setActive(arg_4_0._gochaptercontentitem, false)
 	gohelper.setActive(arg_4_0._goexcessive, true)
 	recthelper.setAnchorY(arg_4_0.goScrollRect.transform, var_0_2)
@@ -149,7 +148,7 @@ function var_0_0.onLoadLayoutFinish(arg_10_0)
 end
 
 function var_0_0.refreshModeLockText(arg_11_0)
-	local var_11_0 = VersionActivityConfig.instance:getAct113DungeonChapterOpenTimeStamp(VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonChapterId.Hard)
+	local var_11_0 = VersionActivityConfig.instance:getAct113DungeonChapterOpenTimeStamp(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_11_0._bigVersion, arg_11_0._smallVersion).DungeonChapterId.Hard)
 	local var_11_1 = ServerTime.now()
 	local var_11_2 = false
 
@@ -158,7 +157,7 @@ function var_0_0.refreshModeLockText(arg_11_0)
 		local var_11_4 = Mathf.Floor(var_11_3 / TimeUtil.OneDaySecond)
 		local var_11_5 = var_11_3 % TimeUtil.OneDaySecond
 		local var_11_6 = Mathf.Floor(var_11_5 / TimeUtil.OneHourSecond)
-		local var_11_7 = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon]
+		local var_11_7 = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum(arg_11_0._bigVersion, arg_11_0._smallVersion).ActivityId.Dungeon]
 
 		if var_11_4 > 0 then
 			local var_11_8 = var_11_7:getRemainTimeStr2(var_11_3)
@@ -275,7 +274,7 @@ function var_0_0.btnHardModeClick(arg_20_0)
 end
 
 function var_0_0.checkHardModeIsOpen(arg_21_0)
-	local var_21_0 = VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon
+	local var_21_0 = VersionActivityFixedHelper.getVersionActivityEnum(arg_21_0._bigVersion, arg_21_0._smallVersion).ActivityId.Dungeon
 
 	return VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapterAndGetToast(var_21_0)
 end
@@ -360,7 +359,7 @@ function var_0_0._refreshHardModeCurrency(arg_29_0, arg_29_1)
 end
 
 function var_0_0._refreshHardModeVx(arg_30_0)
-	local var_30_0 = VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon
+	local var_30_0 = VersionActivityFixedHelper.getVersionActivityEnum(arg_30_0._bigVersion, arg_30_0._smallVersion).ActivityId.Dungeon
 	local var_30_1 = VersionActivityFixedDungeonModel.instance:isTipHardModeUnlockOpen(var_30_0)
 
 	gohelper.setActive(arg_30_0._hardModeUnlockvx, var_30_1)
@@ -371,7 +370,7 @@ function var_0_0._refreshHardModeVx(arg_30_0)
 end
 
 function var_0_0._unlockAniDone(arg_31_0)
-	local var_31_0 = VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon
+	local var_31_0 = VersionActivityFixedHelper.getVersionActivityEnum(arg_31_0._bigVersion, arg_31_0._smallVersion).ActivityId.Dungeon
 
 	if not VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(var_31_0) then
 		return

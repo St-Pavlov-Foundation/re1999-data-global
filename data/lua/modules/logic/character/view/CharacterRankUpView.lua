@@ -577,7 +577,7 @@ function var_0_0._getEffectTxt(arg_27_0, arg_27_1, arg_27_2)
 	if arg_27_1 == 1 then
 		local var_27_1 = {
 			arg_27_0.viewParam.config.name,
-			tostring(HeroConfig.instance:getShowLevel(tonumber(arg_27_2)))
+			HeroConfig.instance:getShowLevel(tonumber(arg_27_2))
 		}
 
 		var_27_0 = GameUtil.getSubPlaceholderLuaLang(luaLang("character_rankup_levellimit"), var_27_1)

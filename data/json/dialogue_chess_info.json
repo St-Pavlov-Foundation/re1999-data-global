@@ -874,5 +874,41 @@
     "id": 3,
     "res": "dialogue_role38_left",
     "pos": "420#0"
+  },
+  {
+    "dialogueId": 49,
+    "id": 1,
+    "res": "dialogue_gaosiniao_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 49,
+    "id": 2,
+    "res": "dialogue_npc13_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 50,
+    "id": 1,
+    "res": "dialogue_gaosiniao_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 50,
+    "id": 2,
+    "res": "dialogue_npc13_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 51,
+    "id": 1,
+    "res": "dialogue_npc14_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 51,
+    "id": 2,
+    "res": "dialogue_npc14_right",
+    "pos": "165#0"
   }
 ]

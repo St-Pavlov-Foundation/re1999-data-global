@@ -296,45 +296,19 @@ function var_0_0._onBuffUpdate(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4,
 end
 
 function var_0_0._isReplay(arg_16_0)
-	return FightReplayModel.instance:isReplay()
+	return FightDataHelper.stateMgr.isReplay
 end
 
 function var_0_0._onStartSequenceFinish(arg_17_0)
-	if arg_17_0:_isReplay() then
-		return
-	end
-
-	if ViewMgr.instance:isOpen(ViewName.FightSpecialTipView) then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_17_0._onCloseSpecialView, arg_17_0)
-
-		return
-	end
-
-	local var_17_0 = FightModel.instance:getCurRoundId()
-
-	arg_17_0:_checkShowDialog(var_0_0.Type.RoundStart, var_17_0)
+	return
 end
 
 function var_0_0._onCloseSpecialView(arg_18_0, arg_18_1)
-	if arg_18_1 == ViewName.FightSpecialTipView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_18_0._onCloseSpecialView, arg_18_0)
-
-		local var_18_0 = FightModel.instance:getCurRoundId()
-
-		arg_18_0:_checkShowDialog(var_0_0.Type.RoundStart, var_18_0)
-	end
+	return
 end
 
 function var_0_0._onRoundSequenceFinish(arg_19_0)
-	local var_19_0 = FightModel.instance:getCurStage()
-
-	if var_19_0 ~= FightEnum.Stage.Distribute and var_19_0 ~= FightEnum.Stage.Card then
-		return
-	end
-
-	local var_19_1 = FightModel.instance:getCurRoundId()
-
-	arg_19_0:_checkShowDialog(var_0_0.Type.RoundStart, var_19_1)
+	return
 end
 
 function var_0_0._onStartChangeEntity(arg_20_0, arg_20_1)
@@ -626,6 +600,8 @@ function var_0_0._onFightDialogCheck(arg_28_0, arg_28_1, arg_28_2, arg_28_3, arg
 		arg_28_0:_checkShowDialog(arg_28_1, nil, nil, arg_28_0._onCheckBeforeStartFightAndXXTimesEnterBattleId)
 	elseif arg_28_1 == var_0_0.Type.NoCondition then
 		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
+	elseif arg_28_1 == var_0_0.Type.RoundStart then
+		arg_28_0:_checkShowDialog(var_0_0.Type.RoundStart, arg_28_2)
 	end
 end
 

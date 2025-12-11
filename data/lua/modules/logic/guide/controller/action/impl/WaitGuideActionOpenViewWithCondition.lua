@@ -341,51 +341,23 @@ function var_0_0.commonCheck(arg_32_0)
 	end
 end
 
-function var_0_0.isMoLiDeErInEpisode(arg_33_0)
-	if string.nilorempty(arg_33_0) then
-		return false
-	end
-
-	local var_33_0 = tonumber(arg_33_0)
-
-	if not var_33_0 or var_33_0 == 0 then
-		return false
-	end
-
-	return var_33_0 == MoLiDeErModel.instance:getCurEpisodeId()
-end
-
-function var_0_0.isNuoDiKaEpisode(arg_34_0)
-	if string.nilorempty(arg_34_0) then
-		return false
-	end
-
-	local var_34_0 = tonumber(arg_34_0)
-
-	if not var_34_0 or var_34_0 == 0 then
-		return false
-	end
-
-	return var_34_0 == NuoDiKaModel.instance:getCurEpisode()
-end
-
 function var_0_0.checkOdysseyPlayerLevel()
-	local var_35_0 = OdysseyModel.instance:getHeroCurLevelAndExp()
-	local var_35_1 = OdysseyTalentModel.instance:getCurTalentPoint()
+	local var_33_0 = OdysseyModel.instance:getHeroCurLevelAndExp()
+	local var_33_1 = OdysseyTalentModel.instance:getCurTalentPoint()
 
-	return var_35_0 >= 2 and var_35_1 > 0
+	return var_33_0 >= 2 and var_33_1 > 0
 end
 
 function var_0_0.checkReligionUnlock()
-	local var_36_0 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.ReligionUnlock)
+	local var_34_0 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.ReligionUnlock)
 
-	return (OdysseyDungeonModel.instance:checkConditionCanUnlock(var_36_0.value))
+	return (OdysseyDungeonModel.instance:checkConditionCanUnlock(var_34_0.value))
 end
 
 function var_0_0.checkMercenaryUnlock()
-	local var_37_0 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MercenaryUnlock)
+	local var_35_0 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MercenaryUnlock)
 
-	return (OdysseyDungeonModel.instance:checkConditionCanUnlock(var_37_0.value))
+	return (OdysseyDungeonModel.instance:checkConditionCanUnlock(var_35_0.value))
 end
 
 function var_0_0.checkMythUnlock()
@@ -393,10 +365,38 @@ function var_0_0.checkMythUnlock()
 end
 
 function var_0_0.checkOpenConquerView()
-	local var_39_0 = OdysseyDungeonModel.instance:getCurInElementId()
-	local var_39_1 = OdysseyConfig.instance:getElementFightConfig(var_39_0)
+	local var_37_0 = OdysseyDungeonModel.instance:getCurInElementId()
+	local var_37_1 = OdysseyConfig.instance:getElementFightConfig(var_37_0)
 
-	return var_39_1 and var_39_1.type == OdysseyEnum.FightType.Conquer
+	return var_37_1 and var_37_1.type == OdysseyEnum.FightType.Conquer
+end
+
+function var_0_0.isMoLiDeErInEpisode(arg_38_0)
+	if string.nilorempty(arg_38_0) then
+		return false
+	end
+
+	local var_38_0 = tonumber(arg_38_0)
+
+	if not var_38_0 or var_38_0 == 0 then
+		return false
+	end
+
+	return var_38_0 == MoLiDeErModel.instance:getCurEpisodeId()
+end
+
+function var_0_0.isNuoDiKaEpisode(arg_39_0)
+	if string.nilorempty(arg_39_0) then
+		return false
+	end
+
+	local var_39_0 = tonumber(arg_39_0)
+
+	if not var_39_0 or var_39_0 == 0 then
+		return false
+	end
+
+	return var_39_0 == NuoDiKaModel.instance:getCurEpisode()
 end
 
 return var_0_0

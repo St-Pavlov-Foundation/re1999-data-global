@@ -1,0 +1,57 @@
+[
+  {
+    "gameId": 1000,
+    "mapId": "",
+    "battleGroup": 0,
+    "gameTarget": "",
+    "loseTarget": "",
+    "skill": "",
+    "battleTime": 0,
+    "battledesc": "",
+    "targetDesc": ""
+  },
+  {
+    "gameId": 1001,
+    "mapId": "",
+    "battleGroup": 0,
+    "gameTarget": "",
+    "loseTarget": "",
+    "skill": "",
+    "battleTime": 0,
+    "battledesc": "",
+    "targetDesc": ""
+  },
+  {
+    "gameId": 1002,
+    "mapId": "",
+    "battleGroup": 0,
+    "gameTarget": "",
+    "loseTarget": "",
+    "skill": "",
+    "battleTime": 0,
+    "battledesc": "",
+    "targetDesc": ""
+  },
+  {
+    "gameId": 1003,
+    "mapId": "",
+    "battleGroup": 0,
+    "gameTarget": "",
+    "loseTarget": "",
+    "skill": "",
+    "battleTime": 0,
+    "battledesc": "",
+    "targetDesc": ""
+  },
+  {
+    "gameId": 1004,
+    "mapId": "",
+    "battleGroup": 0,
+    "gameTarget": "",
+    "loseTarget": "",
+    "skill": "",
+    "battleTime": 0,
+    "battledesc": "",
+    "targetDesc": ""
+  }
+]

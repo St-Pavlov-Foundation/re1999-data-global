@@ -664,5 +664,23 @@
     "episodeId": 90100611,
     "bossLevel": 10,
     "firstReward": "1#620103#1|1#620102#20|1#620101#250|1#110203#2"
+  },
+  {
+    "towerId": 4,
+    "layerId": 13,
+    "preLayerId": 12,
+    "openRound": 4,
+    "episodeId": 90100413,
+    "bossLevel": 10,
+    "firstReward": "1#620103#1|1#620102#20|1#620101#250|1#110303#2"
+  },
+  {
+    "towerId": 5,
+    "layerId": 13,
+    "preLayerId": 12,
+    "openRound": 4,
+    "episodeId": 90100513,
+    "bossLevel": 10,
+    "firstReward": "1#620103#1|1#620102#20|1#620101#250|1#110403#2"
   }
 ]

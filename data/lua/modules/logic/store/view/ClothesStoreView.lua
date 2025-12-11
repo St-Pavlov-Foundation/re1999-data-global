@@ -3,14 +3,46 @@
 local var_0_0 = class("ClothesStoreView", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
 	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
-	arg_1_0._gostorecategoryitem = gohelper.findChild(arg_1_0.viewGO, "left/scroll_category/viewport/categorycontent/#go_storecategoryitem")
-	arg_1_0._scrollprop = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_prop")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_prop/viewport/content")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_has/character/#simage_title")
+	arg_1_0._simagelogo = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_has/character/#simage_logo")
+	arg_1_0._gohas = gohelper.findChild(arg_1_0.viewGO, "#go_has")
+	arg_1_0._goCharacter = gohelper.findChild(arg_1_0.viewGO, "#go_has/character")
+	arg_1_0._goBgRoot = gohelper.findChild(arg_1_0.viewGO, "#go_has/character/bg")
+	arg_1_0._goCharacterSpine = gohelper.findChild(arg_1_0.viewGO, "#go_has/character/bg/characterSpine")
+	arg_1_0._scrollprop = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_has/#scroll_skin")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_has/#scroll_skin/viewport/content")
 	arg_1_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_1_0._scrollprop.gameObject)
-	arg_1_0._godeduction = gohelper.findChild(arg_1_0.viewGO, "#go_deduction")
-	arg_1_0._txtdeduction = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_deduction/#txt_deadTime")
+	arg_1_0._gosmallspine = gohelper.findChild(arg_1_0.viewGO, "#go_has/LeftBtn/smalldynamiccontainer/#go_smallspine")
+	arg_1_0.btnHide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_has/LeftBtn/#btn_hide")
+	arg_1_0.btnPlay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_has/LeftBtn/#btn_play")
+	arg_1_0.btnSwitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_has/LeftBtn/#btn_switch")
+	arg_1_0.txtSwitch = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_has/LeftBtn/#btn_switch/#txt_switch")
+	arg_1_0.btnDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_has/RightBtn/#btn_detail")
+	arg_1_0.btnBuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_has/RightBtn/#btn_buy")
+	arg_1_0.goDiscount = gohelper.findChild(arg_1_0.viewGO, "#go_has/RightBtn/#btn_buy/#go_discount")
+	arg_1_0.txtDiscount = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_has/RightBtn/#btn_buy/#go_discount/#txt_discount")
+	arg_1_0.goCost = gohelper.findChild(arg_1_0.viewGO, "#go_has/RightBtn/#btn_buy/#go_cost")
+	arg_1_0.goCostCurrency1 = gohelper.findChild(arg_1_0.goCost, "currency1")
+	arg_1_0.txtPrice = gohelper.findChildTextMesh(arg_1_0.goCost, "currency1/txt_materialNum")
+	arg_1_0.txtOriginalPrice = gohelper.findChildTextMesh(arg_1_0.goCost, "currency1/#txt_original_price")
+	arg_1_0.imagematerial = gohelper.findChildImage(arg_1_0.goCost, "currency2/icon/simage_material")
+	arg_1_0.txtMaterialNum = gohelper.findChildTextMesh(arg_1_0.goCost, "currency2/txt_materialNum")
+	arg_1_0.goHasget = gohelper.findChild(arg_1_0.viewGO, "#go_has/RightBtn/#go_hasget")
+	arg_1_0.goSkinTips = gohelper.findChild(arg_1_0.viewGO, "#go_has/RightBtn/go_tips")
+	arg_1_0.txtPropNum = gohelper.findChildTextMesh(arg_1_0.goSkinTips, "#txt_Tips")
+	arg_1_0.goDeduction = gohelper.findChild(arg_1_0.viewGO, "#go_has/character/#go_deduction")
+	arg_1_0.txtDeduction = gohelper.findChildTextMesh(arg_1_0.goDeduction, "#txt_time")
+	arg_1_0.goCostDeduction = gohelper.findChild(arg_1_0.viewGO, "#go_has/RightBtn/#btn_buy/#go_deduction")
+	arg_1_0.txtCostDeduction = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_has/RightBtn/#btn_buy/#go_deduction/txt_materialNum")
+	arg_1_0.goVideo = gohelper.findChild(arg_1_0.viewGO, "#go_has/character/bg/video")
+	arg_1_0.videoRoot = gohelper.findChild(arg_1_0.viewGO, "#go_has/character/bg/video/videoRoot")
+	arg_1_0.goArrow = gohelper.findChild(arg_1_0.viewGO, "#go_has/#scroll_skin/arrow")
+	arg_1_0.btnArrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_has/#scroll_skin/arrow/ani/image")
+	arg_1_0._viewAnim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0.viewCanvasGroup = gohelper.onceAddComponent(arg_1_0.viewGO, typeof(UnityEngine.CanvasGroup))
+
+	StoreClothesGoodsItemListModel.instance:initViewParam()
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -20,25 +52,36 @@ end
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(StoreController.instance, StoreEvent.CheckSkinViewEmpty, arg_2_0._isSkinEmpty, arg_2_0)
 	arg_2_0:addEventCb(PayController.instance, PayEvent.PayFinished, arg_2_0._payFinished, arg_2_0)
+	arg_2_0:addEventCb(StoreController.instance, StoreEvent.SkinPreviewChanged, arg_2_0._onSkinPreviewChanged, arg_2_0)
 	arg_2_0._drag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
 	arg_2_0._drag:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
 	arg_2_0._scrollprop:AddOnValueChanged(arg_2_0._onDragging, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnHide, arg_2_0._onClickBtnHide, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnPlay, arg_2_0._onClickBtnPlay, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnSwitch, arg_2_0._onClickBtnSwitch, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnDetail, arg_2_0._onClickBtnDetail, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnBuy, arg_2_0._onClickBtnBuy, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnArrow, arg_2_0._onClickBtnArrow, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.CheckSkinViewEmpty, arg_3_0._isSkinEmpty, arg_3_0)
 	arg_3_0:removeEventCb(PayController.instance, PayEvent.PayFinished, arg_3_0._payFinished, arg_3_0)
+	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.SkinPreviewChanged, arg_3_0._onSkinPreviewChanged, arg_3_0)
 	arg_3_0._drag:RemoveDragBeginListener()
 	arg_3_0._drag:RemoveDragEndListener()
 	arg_3_0._scrollprop:RemoveOnValueChanged()
+	arg_3_0:removeClickCb(arg_3_0.btnHide)
+	arg_3_0:removeClickCb(arg_3_0.btnPlay)
+	arg_3_0:removeClickCb(arg_3_0.btnSwitch)
+	arg_3_0:removeClickCb(arg_3_0.btnDetail)
+	arg_3_0:removeClickCb(arg_3_0.btnBuy)
+	arg_3_0:removeClickCb(arg_3_0.btnArrow)
 end
 
 function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gostorecategoryitem, false)
-
 	arg_4_0._categoryItemContainer = {}
 
-	arg_4_0._simagebg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_shangpindiban"))
 	gohelper.setActive(arg_4_0._goempty, false)
 end
 
@@ -50,327 +93,583 @@ function var_0_0._payFinished(arg_6_0)
 	arg_6_0:_refreshGoods(true)
 end
 
-function var_0_0._onDragBegin(arg_7_0, arg_7_1, arg_7_2)
+function var_0_0._onSkinPreviewChanged(arg_7_0, arg_7_1)
+	StoreController.instance:dispatchEvent(StoreEvent.OnPlaySkinVideo)
+
+	if arg_7_1 then
+		arg_7_0:locationGoodsItem()
+	end
+
+	arg_7_0:refreshSkinPreview()
+end
+
+function var_0_0._onDragBegin(arg_8_0, arg_8_1, arg_8_2)
 	StoreController.instance:dispatchEvent(StoreEvent.DragSkinListBegin)
+	arg_8_0:refreshNewArrow()
 end
 
-function var_0_0._onDragging(arg_8_0)
+function var_0_0._onDragging(arg_9_0)
 	StoreController.instance:dispatchEvent(StoreEvent.DraggingSkinList)
+	arg_9_0:refreshNewArrow()
 end
 
-function var_0_0._onDragEnd(arg_9_0, arg_9_1, arg_9_2)
+function var_0_0._onDragEnd(arg_10_0, arg_10_1, arg_10_2)
 	StoreController.instance:dispatchEvent(StoreEvent.DragSkinListEnd)
+	arg_10_0:refreshNewArrow()
 end
 
-function var_0_0._refreshTabs(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0._selectSecondTabId
-	local var_10_1 = arg_10_0._selectThirdTabId
+function var_0_0._onClickBtnArrow(arg_11_0)
+	StoreClothesGoodsItemListModel.instance:moveToNewGoods()
+end
 
-	arg_10_0._selectSecondTabId = 0
-	arg_10_0._selectThirdTabId = 0
+function var_0_0._onClickBtnHide(arg_12_0)
+	arg_12_0:hideUI()
 
-	if not StoreModel.instance:isTabOpen(arg_10_1) then
-		arg_10_1 = arg_10_0.viewContainer:getSelectFirstTabId()
-	end
-
-	local var_10_2
-	local var_10_3
-
-	var_10_3, arg_10_0._selectSecondTabId, arg_10_0._selectThirdTabId = StoreModel.instance:jumpTabIdToSelectTabId(arg_10_1)
-
-	local var_10_4 = StoreConfig.instance:getTabConfig(arg_10_0._selectThirdTabId)
-	local var_10_5 = StoreConfig.instance:getTabConfig(arg_10_0._selectSecondTabId)
-	local var_10_6 = StoreConfig.instance:getTabConfig(arg_10_0.viewContainer:getSelectFirstTabId())
-	local var_10_7 = {}
-
-	if var_10_4 and not string.nilorempty(var_10_4.showCost) then
-		var_10_7 = string.splitToNumber(var_10_4.showCost, "#")
-	elseif var_10_5 and not string.nilorempty(var_10_5.showCost) then
-		var_10_7 = string.splitToNumber(var_10_5.showCost, "#")
-	elseif var_10_6 and not string.nilorempty(var_10_6.showCost) then
-		var_10_7 = string.splitToNumber(var_10_6.showCost, "#")
-	end
-
-	local var_10_8 = ItemModel.instance:getItemsBySubType(ItemEnum.SubType.SkinTicket)
-
-	if var_10_8[1] then
-		table.insert(var_10_7, {
-			isCurrencySprite = true,
-			type = MaterialEnum.MaterialType.Item,
-			id = var_10_8[1].id
+	if arg_12_0.skinId then
+		StatController.instance:track(StatEnum.EventName.ButtonClick, {
+			[StatEnum.EventProperties.skinId] = arg_12_0.skinId,
+			[StatEnum.EventProperties.ButtonName] = "_onClickBtnHide",
+			[StatEnum.EventProperties.ViewName] = arg_12_0.viewName
 		})
+	end
+end
 
-		local var_10_9 = 0
-		local var_10_10 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, var_10_8[1].id)
-
-		if var_10_10 and not string.nilorempty(var_10_10.expireTime) then
-			local var_10_11 = TimeUtil.stringToTimestamp(var_10_10.expireTime)
-			local var_10_12 = math.floor(var_10_11 - ServerTime.now())
-
-			if var_10_12 >= 0 and var_10_12 <= 259200 then
-				var_10_9 = math.floor(var_10_12 / 60 / 60)
-				var_10_9 = math.max(var_10_9, 1)
-			end
-		end
-
-		if var_10_9 > 0 then
-			gohelper.setActive(arg_10_0._godeduction, true)
-
-			arg_10_0._txtdeduction.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("bp_deduction_item_deadtime"), tostring(var_10_9))
-		else
-			gohelper.setActive(arg_10_0._godeduction, false)
-		end
+function var_0_0.hideUI(arg_13_0, arg_13_1)
+	if arg_13_1 then
+		StoreController.instance:dispatchEvent(StoreEvent.PlayHideStoreAnim)
+		arg_13_0:_startDefaultShowView()
 	else
-		gohelper.setActive(arg_10_0._godeduction, false)
+		arg_13_0._viewAnim:Play("hide", 0, 0)
+		StoreController.instance:dispatchEvent(StoreEvent.PlayHideStoreAnim)
+		TaskDispatcher.cancelTask(arg_13_0._startDefaultShowView, arg_13_0)
+		TaskDispatcher.runDelay(arg_13_0._startDefaultShowView, arg_13_0, 0.16)
+	end
+end
+
+function var_0_0._onClickBtnPlay(arg_14_0)
+	arg_14_0:playVideo()
+
+	if arg_14_0.skinId then
+		StatController.instance:track(StatEnum.EventName.ButtonClick, {
+			[StatEnum.EventProperties.skinId] = arg_14_0.skinId,
+			[StatEnum.EventProperties.ButtonName] = "_onClickBtnPlay",
+			[StatEnum.EventProperties.ViewName] = arg_14_0.viewName
+		})
+	end
+end
+
+function var_0_0.playVideo(arg_15_0)
+	local var_15_0 = arg_15_0.isFirstOpen
+
+	if var_15_0 then
+		arg_15_0.viewCanvasGroup.alpha = 0
 	end
 
-	arg_10_0.viewContainer:setCurrencyByParams(var_10_7)
+	local var_15_1 = StoreClothesGoodsItemListModel.instance:getSelectGoods()
 
-	if not arg_10_2 and var_10_0 == arg_10_0._selectSecondTabId and var_10_1 == arg_10_0._selectThirdTabId then
+	StoreController.instance:dispatchEvent(StoreEvent.OnPlaySkinVideo, var_15_1)
+	arg_15_0:hideUI(var_15_0)
+end
+
+function var_0_0._onClickBtnSwitch(arg_16_0)
+	StoreController.instance:dispatchEvent(StoreEvent.OnPlaySkinVideo)
+	StoreClothesGoodsItemListModel.instance:switchIsLive2d()
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_switch_skin_l2d)
+	arg_16_0._viewAnim:Play("switch", 0, 0)
+	arg_16_0:setShaderKeyWord(true)
+	arg_16_0:refreshSwitchBtn()
+	TaskDispatcher.runDelay(arg_16_0.refreshSkinPreview, arg_16_0, 0.23)
+	TaskDispatcher.runDelay(arg_16_0.onSwitchAnimDone, arg_16_0, 0.6)
+
+	if arg_16_0.skinId then
+		local var_16_0 = StoreClothesGoodsItemListModel.instance:getIsLive2d()
+
+		StatController.instance:track(StatEnum.EventName.ButtonClick, {
+			[StatEnum.EventProperties.skinId] = arg_16_0.skinId,
+			[StatEnum.EventProperties.ButtonName] = string.format("_onClickBtnSwitch_%s", tostring(var_16_0)),
+			[StatEnum.EventProperties.ViewName] = arg_16_0.viewName
+		})
+	end
+end
+
+function var_0_0._onClickBtnDetail(arg_17_0)
+	local var_17_0 = StoreClothesGoodsItemListModel.instance:getSelectGoods()
+
+	if not var_17_0 then
 		return
 	end
 
-	local var_10_13 = StoreModel.instance:getSecondTabs(arg_10_0._selectFirstTabId, true, true)
+	ViewMgr.instance:openView(ViewName.StoreSkinPreviewView, {
+		goodsMO = var_17_0
+	})
 
-	if var_10_13 and #var_10_13 > 0 then
-		for iter_10_0 = 1, #var_10_13 do
-			arg_10_0:_refreshSecondTabs(iter_10_0, var_10_13[iter_10_0])
-			gohelper.setActive(arg_10_0._categoryItemContainer[iter_10_0].go, true)
+	if arg_17_0.skinId then
+		StatController.instance:track(StatEnum.EventName.ButtonClick, {
+			[StatEnum.EventProperties.skinId] = arg_17_0.skinId,
+			[StatEnum.EventProperties.ButtonName] = "_onClickBtnDetail",
+			[StatEnum.EventProperties.ViewName] = arg_17_0.viewName
+		})
+	end
+end
+
+function var_0_0._onClickBtnBuy(arg_18_0)
+	local var_18_0 = StoreClothesGoodsItemListModel.instance:getSelectGoods()
+
+	if not var_18_0 then
+		return
+	end
+
+	ViewMgr.instance:openView(ViewName.StoreSkinGoodsView2, {
+		goodsMO = var_18_0
+	})
+end
+
+function var_0_0._startDefaultShowView(arg_19_0)
+	local var_19_0 = {
+		contentBg = arg_19_0._goBgRoot,
+		callback = arg_19_0._showHideCallback,
+		callbackObj = arg_19_0
+	}
+
+	ViewMgr.instance:openView(ViewName.StoreSkinDefaultShowView, var_19_0)
+end
+
+function var_0_0._showHideCallback(arg_20_0)
+	arg_20_0._viewAnim:Play("show", 0, 0)
+	arg_20_0._goBgRoot.transform:SetParent(arg_20_0._goCharacter.transform, false)
+	gohelper.setAsFirstSibling(arg_20_0._goBgRoot)
+	StoreController.instance:dispatchEvent(StoreEvent.PlayShowStoreAnim)
+end
+
+function var_0_0._refreshTabs(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = arg_21_0._selectSecondTabId
+	local var_21_1 = arg_21_0._selectThirdTabId
+
+	arg_21_0._selectSecondTabId = 0
+	arg_21_0._selectThirdTabId = 0
+
+	if not StoreModel.instance:isTabOpen(arg_21_1) then
+		arg_21_1 = arg_21_0.viewContainer:getSelectFirstTabId()
+	end
+
+	local var_21_2
+	local var_21_3
+
+	var_21_3, arg_21_0._selectSecondTabId, arg_21_0._selectThirdTabId = StoreModel.instance:jumpTabIdToSelectTabId(arg_21_1)
+
+	local var_21_4 = StoreConfig.instance:getTabConfig(arg_21_0._selectThirdTabId)
+	local var_21_5 = StoreConfig.instance:getTabConfig(arg_21_0._selectSecondTabId)
+	local var_21_6 = StoreConfig.instance:getTabConfig(arg_21_0.viewContainer:getSelectFirstTabId())
+	local var_21_7 = {}
+
+	if var_21_4 and not string.nilorempty(var_21_4.showCost) then
+		var_21_7 = string.splitToNumber(var_21_4.showCost, "#")
+	elseif var_21_5 and not string.nilorempty(var_21_5.showCost) then
+		var_21_7 = string.splitToNumber(var_21_5.showCost, "#")
+	elseif var_21_6 and not string.nilorempty(var_21_6.showCost) then
+		var_21_7 = string.splitToNumber(var_21_6.showCost, "#")
+	end
+
+	local var_21_8 = ItemModel.instance:getItemsBySubType(ItemEnum.SubType.SkinTicket)
+
+	if var_21_8[1] then
+		table.insert(var_21_7, {
+			isCurrencySprite = true,
+			type = MaterialEnum.MaterialType.Item,
+			id = var_21_8[1].id
+		})
+
+		local var_21_9 = 0
+		local var_21_10 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, var_21_8[1].id)
+
+		if var_21_10 and not string.nilorempty(var_21_10.expireTime) then
+			local var_21_11 = TimeUtil.stringToTimestamp(var_21_10.expireTime)
+			local var_21_12 = math.floor(var_21_11 - ServerTime.now())
+
+			if var_21_12 >= 0 and var_21_12 <= 259200 then
+				var_21_9 = math.floor(var_21_12 / 60 / 60)
+				var_21_9 = math.max(var_21_9, 1)
+			end
 		end
 
-		for iter_10_1 = #var_10_13 + 1, #arg_10_0._categoryItemContainer do
-			gohelper.setActive(arg_10_0._categoryItemContainer[iter_10_1].go, false)
+		if var_21_9 > 0 then
+			gohelper.setActive(arg_21_0.goDeduction, true)
+
+			arg_21_0.txtDeduction.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("bp_deduction_item_deadtime"), tostring(var_21_9))
+		else
+			gohelper.setActive(arg_21_0.goDeduction, false)
 		end
 	else
-		for iter_10_2 = 1, #arg_10_0._categoryItemContainer do
-			gohelper.setActive(arg_10_0._categoryItemContainer[iter_10_2].go, false)
-		end
+		gohelper.setActive(arg_21_0.goDeduction, false)
 	end
 
-	arg_10_0:_onRefreshRedDot()
-	arg_10_0:_refreshGoods(true)
+	arg_21_0.viewContainer:setCurrencyByParams(var_21_7)
 
-	arg_10_0._scrollprop.verticalNormalizedPosition = 1
-end
-
-function var_0_0._refreshSecondTabs(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0._categoryItemContainer[arg_11_1] or arg_11_0:initCategoryItemTable(arg_11_1)
-
-	var_11_0.tabId = arg_11_2.id
-	var_11_0.txt_itemcn1.text = arg_11_2.name
-	var_11_0.txt_itemcn2.text = arg_11_2.name
-	var_11_0.txt_itemen1.text = arg_11_2.nameEn
-	var_11_0.txt_itemen2.text = arg_11_2.nameEn
-
-	local var_11_1 = arg_11_0._selectSecondTabId == arg_11_2.id
-
-	gohelper.setActive(var_11_0.go_unselected, not var_11_1)
-	gohelper.setActive(var_11_0.go_selected, var_11_1)
-
-	local var_11_2 = StoreModel.instance:getThirdTabs(arg_11_2.id, true, true)
-
-	gohelper.setActive(var_11_0.go_line, var_11_1 and #var_11_2 > 0)
-
-	if var_11_1 and var_11_2 and #var_11_2 > 0 then
-		for iter_11_0 = 1, #var_11_2 do
-			arg_11_0:_refreshThirdTabs(var_11_0, iter_11_0, var_11_2[iter_11_0])
-			gohelper.setActive(var_11_0.childItemContainer[iter_11_0].go, true)
-		end
-
-		for iter_11_1 = #var_11_2 + 1, #var_11_0.childItemContainer do
-			gohelper.setActive(var_11_0.childItemContainer[iter_11_1].go, false)
-		end
-	else
-		for iter_11_2 = 1, #var_11_0.childItemContainer do
-			gohelper.setActive(var_11_0.childItemContainer[iter_11_2].go, false)
-		end
-	end
-end
-
-function var_0_0.initCategoryItemTable(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getUserDataTb_()
-
-	var_12_0.go = gohelper.cloneInPlace(arg_12_0._gostorecategoryitem, "item" .. arg_12_1)
-	var_12_0.go_unselected = gohelper.findChild(var_12_0.go, "go_unselected")
-	var_12_0.go_selected = gohelper.findChild(var_12_0.go, "go_selected")
-	var_12_0.go_line = gohelper.findChild(var_12_0.go, "go_line")
-	var_12_0.go_reddot = gohelper.findChild(var_12_0.go, "go_selected/txt_itemcn2/go_catereddot")
-	var_12_0.go_unselectreddot = gohelper.findChild(var_12_0.go, "go_unselected/txt_itemcn1/go_unselectreddot")
-	var_12_0.txt_itemcn1 = gohelper.findChildText(var_12_0.go, "go_unselected/txt_itemcn1")
-	var_12_0.txt_itemen1 = gohelper.findChildText(var_12_0.go, "go_unselected/txt_itemen1")
-	var_12_0.txt_itemcn2 = gohelper.findChildText(var_12_0.go, "go_selected/txt_itemcn2")
-	var_12_0.txt_itemen2 = gohelper.findChildText(var_12_0.go, "go_selected/txt_itemen2")
-	var_12_0.go_childcategory = gohelper.findChild(var_12_0.go, "go_childcategory")
-	var_12_0.go_childItem = gohelper.findChild(var_12_0.go, "go_childcategory/go_childitem")
-	var_12_0.childItemContainer = {}
-	var_12_0.btnGO = gohelper.findChild(var_12_0.go, "clickArea")
-	var_12_0.btn = gohelper.getClick(var_12_0.btnGO)
-	var_12_0.tabId = 0
-
-	var_12_0.btn:AddClickListener(function(arg_13_0)
-		local var_13_0 = arg_13_0.tabId
-
-		arg_12_0:_refreshTabs(var_13_0)
-		StoreController.instance:statSwitchStore(var_13_0)
-	end, var_12_0)
-	table.insert(arg_12_0._categoryItemContainer, var_12_0)
-	gohelper.setActive(var_12_0.go_childItem, false)
-
-	return var_12_0
-end
-
-function var_0_0._refreshThirdTabs(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = arg_14_1.childItemContainer[arg_14_2]
-
-	if not var_14_0 then
-		var_14_0 = arg_14_0:getUserDataTb_()
-		var_14_0.go = gohelper.cloneInPlace(arg_14_1.go_childItem, "item" .. arg_14_2)
-		var_14_0.go_unselected = gohelper.findChild(var_14_0.go, "go_unselected")
-		var_14_0.go_selected = gohelper.findChild(var_14_0.go, "go_selected")
-		var_14_0.go_subreddot1 = gohelper.findChild(var_14_0.go, "go_unselected/txt_itemcn1/go_subcatereddot")
-		var_14_0.go_subreddot2 = gohelper.findChild(var_14_0.go, "go_selected/txt_itemcn2/go_subcatereddot")
-		var_14_0.txt_itemcn1 = gohelper.findChildText(var_14_0.go, "go_unselected/txt_itemcn1")
-		var_14_0.txt_itemen1 = gohelper.findChildText(var_14_0.go, "go_unselected/txt_itemen1")
-		var_14_0.txt_itemcn2 = gohelper.findChildText(var_14_0.go, "go_selected/txt_itemcn2")
-		var_14_0.txt_itemen2 = gohelper.findChildText(var_14_0.go, "go_selected/txt_itemen2")
-		var_14_0.btnGO = gohelper.findChild(var_14_0.go, "clickArea")
-		var_14_0.btn = gohelper.getClick(var_14_0.btnGO)
-		var_14_0.tabId = 0
-
-		var_14_0.btn:AddClickListener(function(arg_15_0)
-			local var_15_0 = arg_15_0.tabId
-
-			arg_14_0:_refreshTabs(var_15_0, nil, true)
-			StoreController.instance:statSwitchStore(var_15_0)
-		end, var_14_0)
-		table.insert(arg_14_1.childItemContainer, var_14_0)
+	if not arg_21_2 and var_21_0 == arg_21_0._selectSecondTabId and var_21_1 == arg_21_0._selectThirdTabId then
+		return
 	end
 
-	var_14_0.tabId = arg_14_3.id
-	var_14_0.txt_itemcn1.text = arg_14_3.name
-	var_14_0.txt_itemcn2.text = arg_14_3.name
-	var_14_0.txt_itemen1.text = arg_14_3.nameEn
-	var_14_0.txt_itemen2.text = arg_14_3.nameEn
-
-	local var_14_1 = arg_14_0._selectThirdTabId == arg_14_3.id
-
-	gohelper.setActive(var_14_0.go_unselected, not var_14_1)
-	gohelper.setActive(var_14_0.go_selected, var_14_1)
+	arg_21_0:_onRefreshRedDot()
+	arg_21_0:_updateInfo()
 end
 
-function var_0_0._refreshGoods(arg_16_0, arg_16_1)
-	if arg_16_1 then
-		local var_16_0 = StoreConfig.instance:getTabConfig(arg_16_0._selectThirdTabId)
+function var_0_0._refreshGoods(arg_22_0, arg_22_1)
+	if arg_22_1 then
+		local var_22_0 = StoreConfig.instance:getTabConfig(arg_22_0._selectThirdTabId)
 
-		arg_16_0.storeId = var_16_0 and var_16_0.storeId or 0
+		arg_22_0.storeId = var_22_0 and var_22_0.storeId or 0
 
-		if arg_16_0.storeId == 0 then
-			local var_16_1 = StoreConfig.instance:getTabConfig(arg_16_0._selectSecondTabId)
+		if arg_22_0.storeId == 0 then
+			local var_22_1 = StoreConfig.instance:getTabConfig(arg_22_0._selectSecondTabId)
 
-			arg_16_0.storeId = var_16_1 and var_16_1.storeId or 0
+			arg_22_0.storeId = var_22_1 and var_22_1.storeId or 0
 		end
 
 		StoreRpc.instance:sendGetStoreInfosRequest({
-			arg_16_0.storeId
+			arg_22_0.storeId
 		})
 		ChargeRpc.instance:sendGetChargeInfoRequest()
 	end
 end
 
-function var_0_0._onRefreshRedDot(arg_17_0)
-	for iter_17_0, iter_17_1 in pairs(arg_17_0._categoryItemContainer) do
-		gohelper.setActive(iter_17_1.go_reddot, StoreModel.instance:isTabFirstRedDotShow(iter_17_1.tabId))
-		gohelper.setActive(iter_17_1.go_unselectreddot, StoreModel.instance:isTabFirstRedDotShow(iter_17_1.tabId))
+function var_0_0._onRefreshRedDot(arg_23_0)
+	for iter_23_0, iter_23_1 in pairs(arg_23_0._categoryItemContainer) do
+		gohelper.setActive(iter_23_1.go_reddot, StoreModel.instance:isTabFirstRedDotShow(iter_23_1.tabId))
+		gohelper.setActive(iter_23_1.go_unselectreddot, StoreModel.instance:isTabFirstRedDotShow(iter_23_1.tabId))
 
-		for iter_17_2, iter_17_3 in pairs(iter_17_1.childItemContainer) do
-			gohelper.setActive(iter_17_3.go_subreddot1, StoreModel.instance:isTabSecondRedDotShow(iter_17_3.tabId))
-			gohelper.setActive(iter_17_3.go_subreddot2, StoreModel.instance:isTabSecondRedDotShow(iter_17_3.tabId))
+		for iter_23_2, iter_23_3 in pairs(iter_23_1.childItemContainer) do
+			gohelper.setActive(iter_23_3.go_subreddot1, StoreModel.instance:isTabSecondRedDotShow(iter_23_3.tabId))
+			gohelper.setActive(iter_23_3.go_subreddot2, StoreModel.instance:isTabSecondRedDotShow(iter_23_3.tabId))
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_18_0)
-	arg_18_0._selectFirstTabId = arg_18_0.viewContainer:getSelectFirstTabId()
+function var_0_0.onOpen(arg_24_0)
+	arg_24_0.isFirstOpen = true
 
-	local var_18_0 = arg_18_0.viewContainer:getJumpTabId()
-	local var_18_1 = arg_18_0.viewContainer:getJumpGoodsId()
-	local var_18_2 = arg_18_0.viewContainer:isJumpFocus()
+	arg_24_0._viewAnim:Play("open", 0, 0)
 
-	arg_18_0:_refreshTabs(var_18_0, true)
-	arg_18_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_18_0._updateInfo, arg_18_0)
-	arg_18_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_18_0._updateInfo, arg_18_0)
-	arg_18_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_18_0._onRefreshRedDot, arg_18_0)
-	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, arg_18_0._updateItemList, arg_18_0)
+	arg_24_0._selectFirstTabId = arg_24_0.viewContainer:getSelectFirstTabId()
 
-	if var_18_1 then
-		if not var_18_2 then
+	local var_24_0 = arg_24_0.viewContainer:getJumpTabId()
+	local var_24_1 = arg_24_0.viewContainer:getJumpGoodsId()
+	local var_24_2 = arg_24_0.viewContainer:isJumpFocus()
+
+	arg_24_0:_refreshTabs(var_24_0, true)
+	arg_24_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_24_0._updateInfo, arg_24_0)
+	arg_24_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_24_0._updateInfo, arg_24_0)
+	arg_24_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_24_0._onRefreshRedDot, arg_24_0)
+	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, arg_24_0._updateItemList, arg_24_0)
+
+	if var_24_1 then
+		if not var_24_2 then
 			ViewMgr.instance:openView(ViewName.StoreSkinPreviewView, {
-				goodsMO = StoreModel.instance:getGoodsMO(tonumber(var_18_1))
+				goodsMO = StoreModel.instance:getGoodsMO(tonumber(var_24_1))
 			})
-
-			arg_18_0._scrollprop.horizontalNormalizedPosition = 0
-		else
-			local var_18_3 = StoreClothesGoodsItemListModel.instance:getGoodIndex(var_18_1)
-			local var_18_4, var_18_5 = transformhelper.getLocalPos(arg_18_0._gocontent.transform)
-			local var_18_6 = arg_18_0.viewContainer._ScrollViewSkinStore._param
-			local var_18_7 = -(var_18_6.cellWidth + var_18_6.cellSpaceH) * (var_18_3 - 1) - var_18_6.startSpace
-
-			transformhelper.setLocalPosXY(arg_18_0._gocontent.transform, var_18_7, var_18_5)
 		end
+
+		arg_24_0:locationGoodsItemByGoodsId(var_24_1)
+
+		local var_24_3 = StoreClothesGoodsItemListModel.instance:getGoodIndex(var_24_1)
+
+		StoreClothesGoodsItemListModel.instance:setSelectIndex(var_24_3)
 	end
 end
 
-function var_0_0._updateItemList(arg_19_0)
-	local var_19_0 = arg_19_0.viewContainer:getJumpTabId()
+function var_0_0.locationGoodsItem(arg_25_0, arg_25_1)
+	arg_25_1 = arg_25_1 or StoreClothesGoodsItemListModel.instance:getSelectGoods()
 
-	arg_19_0:_refreshTabs(var_19_0, true)
+	arg_25_0:locationGoodsItemByGoodsId(arg_25_1.goodsId)
 end
 
-function var_0_0._updateInfo(arg_20_0)
-	return
+function var_0_0.locationGoodsItemByGoodsId(arg_26_0, arg_26_1)
+	if not arg_26_1 then
+		return
+	end
+
+	local var_26_0 = StoreClothesGoodsItemListModel.instance:getGoodIndex(arg_26_1)
+
+	if not var_26_0 then
+		return
+	end
+
+	local var_26_1 = arg_26_0._gocontent.transform
+	local var_26_2 = transformhelper.getLocalPos(var_26_1)
+	local var_26_3 = arg_26_0.viewContainer._ScrollViewSkinStore._param
+	local var_26_4 = math.ceil(var_26_0 / 2)
+	local var_26_5 = (var_26_3.cellHeight + var_26_3.cellSpaceV) * (var_26_4 - 1) + var_26_3.startSpace
+	local var_26_6 = recthelper.getHeight(var_26_1) - recthelper.getHeight(arg_26_0._scrollprop.transform)
+	local var_26_7 = math.max(0, var_26_6)
+	local var_26_8 = math.min(var_26_7, var_26_5)
+
+	recthelper.setAnchorY(var_26_1, var_26_8)
 end
 
-function var_0_0.onClose(arg_21_0)
-	arg_21_0:removeEventCb(StoreController.instance, StoreEvent.CheckSkinViewEmpty, arg_21_0._isSkinEmpty, arg_21_0)
-	arg_21_0:removeEventCb(PayController.instance, PayEvent.PayFinished, arg_21_0._payFinished, arg_21_0)
-	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, arg_21_0._updateItemList, arg_21_0)
-	arg_21_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_21_0._updateInfo, arg_21_0)
-	arg_21_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_21_0._updateInfo, arg_21_0)
-	arg_21_0:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_21_0._onRefreshRedDot, arg_21_0)
-	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, arg_21_0._updateItemList, arg_21_0)
+function var_0_0._updateItemList(arg_27_0)
+	local var_27_0 = arg_27_0.viewContainer:getJumpTabId()
+
+	arg_27_0:_refreshTabs(var_27_0, true)
 end
 
-function var_0_0.onUpdateParam(arg_22_0)
-	arg_22_0._selectFirstTabId = arg_22_0.viewContainer:getSelectFirstTabId()
+function var_0_0._updateInfo(arg_28_0)
+	local var_28_0 = StoreClothesGoodsItemListModel.instance:getCount()
+	local var_28_1 = var_28_0 == 0
 
-	local var_22_0 = arg_22_0.viewContainer:getJumpTabId()
-	local var_22_1 = arg_22_0.viewContainer:getJumpGoodsId()
+	gohelper.setActive(arg_28_0._goempty, var_28_1)
+	gohelper.setActive(arg_28_0._gohas, not var_28_1)
 
-	arg_22_0:_refreshTabs(var_22_0)
+	if var_28_1 then
+		return
+	end
 
-	if var_22_1 then
+	local var_28_2 = 870
+
+	if var_28_0 <= 2 then
+		var_28_2 = 408
+	end
+
+	recthelper.setHeight(arg_28_0._scrollprop.transform, var_28_2)
+	arg_28_0:refreshSwitchBtn()
+	arg_28_0:refreshSkinPreview()
+end
+
+function var_0_0.onClose(arg_29_0)
+	arg_29_0:removeEventCb(StoreController.instance, StoreEvent.CheckSkinViewEmpty, arg_29_0._isSkinEmpty, arg_29_0)
+	arg_29_0:removeEventCb(PayController.instance, PayEvent.PayFinished, arg_29_0._payFinished, arg_29_0)
+	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, arg_29_0._updateItemList, arg_29_0)
+	arg_29_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_29_0._updateInfo, arg_29_0)
+	arg_29_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_29_0._updateInfo, arg_29_0)
+	arg_29_0:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_29_0._onRefreshRedDot, arg_29_0)
+	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, arg_29_0._updateItemList, arg_29_0)
+end
+
+function var_0_0.onUpdateParam(arg_30_0)
+	arg_30_0._selectFirstTabId = arg_30_0.viewContainer:getSelectFirstTabId()
+
+	local var_30_0 = arg_30_0.viewContainer:getJumpTabId()
+	local var_30_1 = arg_30_0.viewContainer:getJumpGoodsId()
+
+	arg_30_0:_refreshTabs(var_30_0)
+
+	if var_30_1 then
 		ViewMgr.instance:openView(ViewName.StoreSkinPreviewView, {
-			goodsMO = StoreModel.instance:getGoodsMO(tonumber(var_22_1))
+			goodsMO = StoreModel.instance:getGoodsMO(tonumber(var_30_1))
 		})
 	end
 end
 
-function var_0_0.onDestroyView(arg_23_0)
-	if arg_23_0._categoryItemContainer and #arg_23_0._categoryItemContainer > 0 then
-		for iter_23_0 = 1, #arg_23_0._categoryItemContainer do
-			local var_23_0 = arg_23_0._categoryItemContainer[iter_23_0]
+function var_0_0.refreshSwitchBtn(arg_31_0)
+	local var_31_0 = StoreClothesGoodsItemListModel.instance:getIsLive2d()
 
-			var_23_0.btn:RemoveClickListener()
+	arg_31_0.txtSwitch.text = var_31_0 and luaLang("storeskinpreviewview_btnswitch") or "L2D"
+end
 
-			if var_23_0.childItemContainer and #var_23_0.childItemContainer > 0 then
-				for iter_23_1 = 1, #var_23_0.childItemContainer do
-					var_23_0.childItemContainer[iter_23_1].btn:RemoveClickListener()
+function var_0_0.refreshSkinPreview(arg_32_0)
+	local var_32_0 = StoreClothesGoodsItemListModel.instance:getSelectGoods()
+
+	if not var_32_0 then
+		return
+	end
+
+	if not arg_32_0.previewComp then
+		arg_32_0.previewComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_32_0._goCharacter, ClothesStorePreviewSkinComp)
+
+		arg_32_0.previewComp:setSmallSpineGO(arg_32_0._gosmallspine)
+	end
+
+	arg_32_0.previewComp:setGoods(var_32_0)
+	arg_32_0:refreshSkinInfo(var_32_0)
+
+	if arg_32_0._goodsMo and arg_32_0._goodsMo ~= var_32_0 then
+		arg_32_0._viewAnim:Play("switchin", 0, 0)
+	end
+
+	arg_32_0._goodsMo = var_32_0
+
+	arg_32_0:refreshNewArrow()
+end
+
+function var_0_0.refreshSkinInfo(arg_33_0, arg_33_1)
+	if not arg_33_1 then
+		return
+	end
+
+	local var_33_0 = arg_33_1.config
+	local var_33_1 = var_33_0.product
+	local var_33_2 = string.splitToNumber(var_33_1, "#")[2]
+	local var_33_3 = SkinConfig.instance:getSkinCo(var_33_2)
+
+	arg_33_0.skinId = var_33_2
+
+	if string.nilorempty(var_33_3.subTitle) then
+		gohelper.setActive(arg_33_0._simagetitle.gameObject, false)
+	else
+		arg_33_0._simagetitle:LoadImage(var_33_3.subTitle, function()
+			ZProj.UGUIHelper.SetImageSize(arg_33_0._simagetitle.gameObject)
+		end)
+		gohelper.setActive(arg_33_0._simagetitle.gameObject, true)
+	end
+
+	if string.nilorempty(var_33_0.logoRoots) then
+		gohelper.setActive(arg_33_0._simagelogo.gameObject, false)
+	else
+		arg_33_0._simagelogo:LoadImage(var_33_0.logoRoots, function()
+			ZProj.UGUIHelper.SetImageSize(arg_33_0._simagelogo.gameObject)
+		end)
+		gohelper.setActive(arg_33_0._simagelogo.gameObject, true)
+	end
+
+	local var_33_4 = string.splitToNumber(var_33_0.cost, "#")
+	local var_33_5, var_33_6 = ItemModel.instance:getItemConfigAndIcon(var_33_4[1], var_33_4[2])
+	local var_33_7 = var_33_5.icon
+	local var_33_8 = string.format("%s_1", var_33_7)
+
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_33_0.imagematerial, var_33_8, true)
+
+	arg_33_0.txtMaterialNum.text = var_33_4[3]
+
+	gohelper.setActive(arg_33_0.goDiscount, var_33_0.originalCost > 0)
+
+	local var_33_9 = var_33_4[3] / var_33_0.originalCost
+	local var_33_10 = math.ceil(var_33_9 * 100)
+
+	arg_33_0.txtDiscount.text = string.format("-%d%%", 100 - var_33_10)
+
+	arg_33_0:refreshChargeInfo(arg_33_1, var_33_3)
+
+	local var_33_11 = lua_character_limited.configDict[var_33_2]
+	local var_33_12 = not VersionValidator.instance:isInReviewing()
+	local var_33_13 = var_33_11 and not string.nilorempty(var_33_11.entranceMv)
+	local var_33_14 = var_33_12 and var_33_13
+
+	gohelper.setActive(arg_33_0.btnPlay, var_33_14)
+
+	if arg_33_0._adjust then
+		return
+	end
+
+	if var_33_14 and arg_33_0:checkSkinVideoNotPlayed(var_33_2) then
+		arg_33_0:setSkinVideoPlayed(var_33_2)
+		arg_33_0:playVideo()
+	elseif arg_33_0:checkSkinVideoNotPlayed(0) then
+		arg_33_0:setSkinVideoPlayed(0)
+		arg_33_0:hideUI()
+	end
+
+	arg_33_0.isFirstOpen = false
+end
+
+function var_0_0.refreshChargeInfo(arg_36_0, arg_36_1, arg_36_2)
+	local var_36_0 = arg_36_2.id
+	local var_36_1
+	local var_36_2
+
+	if arg_36_2 and StoreModel.instance:isStoreSkinChargePackageValid(var_36_0) then
+		var_36_1, var_36_2 = StoreConfig.instance:getSkinChargePrice(var_36_0)
+	end
+
+	gohelper.setActive(arg_36_0.goCostCurrency1, var_36_1 ~= nil)
+
+	if var_36_1 then
+		local var_36_3 = string.format("%s%s", StoreModel.instance:getCostStr(var_36_1))
+
+		arg_36_0.txtPrice.text = var_36_3
+
+		if var_36_2 then
+			arg_36_0.txtOriginalPrice.text = var_36_2
+
+			local var_36_4 = StoreConfig.instance:getSkinChargeGoodsCfg(var_36_0)
+
+			if var_36_4 then
+				local var_36_5, var_36_6 = PayModel.instance:getProductOriginPriceNum(var_36_4.originalCostGoodsId)
+
+				arg_36_0.txtOriginalPrice.text = var_36_6
+			end
+		end
+
+		gohelper.setActive(arg_36_0.txtOriginalPrice, var_36_2 ~= nil)
+	end
+
+	local var_36_7 = StoreModel.instance:isSkinGoodsCanRepeatBuy(arg_36_1)
+	local var_36_8 = arg_36_1:alreadyHas() and not var_36_7
+
+	gohelper.setActive(arg_36_0.btnBuy, not var_36_8)
+	gohelper.setActive(arg_36_0.goHasget, var_36_8)
+	gohelper.setActive(arg_36_0.goSkinTips, var_36_7)
+
+	if var_36_7 then
+		gohelper.setActive(arg_36_0.goSkinTips, true)
+
+		local var_36_9 = string.splitToNumber(arg_36_2.compensate, "#")
+		local var_36_10 = luaLang("storeskinview_skintips")
+		local var_36_11 = string.format("<sprite=2>%s", var_36_9[3])
+
+		arg_36_0.txtPropNum.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_36_10, var_36_11)
+	end
+
+	local var_36_12 = 0
+
+	if not string.nilorempty(arg_36_1.config.deductionItem) then
+		local var_36_13 = GameUtil.splitString2(arg_36_1.config.deductionItem, true)
+
+		var_36_12 = ItemModel.instance:getItemCount(var_36_13[1][2])
+		arg_36_0.txtCostDeduction.text = -var_36_13[2][1]
+	end
+
+	gohelper.setActive(arg_36_0.goCostDeduction, var_36_12 > 0)
+end
+
+function var_0_0.refreshNewArrow(arg_37_0)
+	local var_37_0 = StoreClothesGoodsItemListModel.instance:findNewGoodsIndex()
+
+	gohelper.setActive(arg_37_0.goArrow, var_37_0 ~= nil)
+end
+
+function var_0_0.onSwitchAnimDone(arg_38_0)
+	arg_38_0:setShaderKeyWord(false)
+end
+
+function var_0_0.setShaderKeyWord(arg_39_0, arg_39_1)
+	if arg_39_1 then
+		UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
+	else
+		UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
+	end
+end
+
+function var_0_0.setSkinVideoPlayed(arg_40_0, arg_40_1)
+	local var_40_0 = PlayerPrefsKey.StoreSkinVideoPlayed .. arg_40_1
+
+	GameUtil.playerPrefsSetStringByUserId(var_40_0, arg_40_1)
+end
+
+function var_0_0.checkSkinVideoNotPlayed(arg_41_0, arg_41_1)
+	local var_41_0 = PlayerPrefsKey.StoreSkinVideoPlayed .. arg_41_1
+
+	return GameUtil.playerPrefsGetStringByUserId(var_41_0, nil) == nil
+end
+
+function var_0_0.onDestroyView(arg_42_0)
+	arg_42_0._simagetitle:UnLoadImage()
+	arg_42_0._simagelogo:UnLoadImage()
+
+	if arg_42_0._categoryItemContainer and #arg_42_0._categoryItemContainer > 0 then
+		for iter_42_0 = 1, #arg_42_0._categoryItemContainer do
+			local var_42_0 = arg_42_0._categoryItemContainer[iter_42_0]
+
+			var_42_0.btn:RemoveClickListener()
+
+			if var_42_0.childItemContainer and #var_42_0.childItemContainer > 0 then
+				for iter_42_1 = 1, #var_42_0.childItemContainer do
+					var_42_0.childItemContainer[iter_42_1].btn:RemoveClickListener()
 				end
 			end
 		end
 	end
 
-	arg_23_0._simagebg:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_42_0._startDefaultShowView, arg_42_0)
+	TaskDispatcher.cancelTask(arg_42_0.refreshSkinPreview, arg_42_0)
+	TaskDispatcher.cancelTask(arg_42_0.onSwitchAnimDone, arg_42_0)
 end
 
 return var_0_0

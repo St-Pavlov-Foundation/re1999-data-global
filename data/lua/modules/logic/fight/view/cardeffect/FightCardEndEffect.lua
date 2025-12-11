@@ -121,6 +121,7 @@ function var_0_0._playCardFlow(arg_5_0)
 
 	arg_5_0._playCardItemGOs = {}
 	arg_5_0._cloneItemGOs = {}
+	arg_5_0._cloneOperateItemList = {}
 
 	local var_5_4 = {}
 	local var_5_5 = FightDataHelper.operationDataMgr:getOpList()
@@ -135,10 +136,16 @@ function var_0_0._playCardFlow(arg_5_0)
 					local var_5_8 = var_5_7:getShowIndex(iter_5_1)
 
 					if var_5_8 then
-						var_5_4[var_5_8] = true
+						var_5_4[var_5_8] = {
+							skillId = iter_5_1.skillId,
+							entityId = iter_5_1.belongToEntityId
+						}
 
 						if iter_5_1:needCopyCard() then
-							var_5_4[var_5_8 + 1] = true
+							var_5_4[var_5_8 + 1] = {
+								skillId = iter_5_1.skillId,
+								entityId = iter_5_1.belongToEntityId
+							}
 						end
 					else
 						local var_5_9 = {}
@@ -181,77 +188,82 @@ function var_0_0._playCardFlow(arg_5_0)
 				gohelper.setActive(gohelper.findChild(var_5_14, "effect1"), false)
 				gohelper.setActive(gohelper.findChild(var_5_14, "effect2"), false)
 				gohelper.setActive(gohelper.findChild(var_5_12, "lock"), false)
+
+				local var_5_15 = FightViewTempOperateCardItem.New()
+
+				var_5_15:init(var_5_14, var_5_4[iter_5_6].skillId, var_5_4[iter_5_6].entityId)
+				table.insert(arg_5_0._cloneOperateItemList, var_5_15)
 			end
 		end
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.FixWaitingAreaItemCount, #arg_5_0._playCardItemGOs)
 
-	local var_5_15 = FightModel.instance:getVersion()
+	local var_5_16 = FightModel.instance:getVersion()
 
 	for iter_5_7, iter_5_8 in ipairs(arg_5_0._playCardItemGOs) do
-		local var_5_16 = arg_5_0._cloneItemGOs[iter_5_7].transform
-		local var_5_17 = gohelper.findChild(arg_5_0.context.waitCardContainer, "cardItem" .. #arg_5_0._playCardItemGOs - iter_5_7 + 1)
+		local var_5_17 = arg_5_0._cloneItemGOs[iter_5_7].transform
+		local var_5_18 = gohelper.findChild(arg_5_0.context.waitCardContainer, "cardItem" .. #arg_5_0._playCardItemGOs - iter_5_7 + 1)
 
-		if var_5_15 >= 1 then
-			var_5_17 = gohelper.findChild(arg_5_0.context.waitCardContainer, "cardItem" .. iter_5_7)
+		if var_5_16 >= 1 then
+			var_5_18 = gohelper.findChild(arg_5_0.context.waitCardContainer, "cardItem" .. iter_5_7)
 		end
 
-		local var_5_18 = recthelper.rectToRelativeAnchorPos(var_5_17.transform.position, var_5_16.parent)
-		local var_5_19 = FlowSequence.New()
-		local var_5_20 = 2
+		local var_5_19 = recthelper.rectToRelativeAnchorPos(var_5_18.transform.position, var_5_17.parent)
+		local var_5_20 = FlowSequence.New()
+		local var_5_21 = 2
 
-		var_5_19:addWork(WorkWaitSeconds.New(arg_5_0._dt * var_5_20 * iter_5_7))
-		var_5_19:addWork(FunctionWork.New(function()
+		var_5_20:addWork(WorkWaitSeconds.New(arg_5_0._dt * var_5_21 * iter_5_7))
+		var_5_20:addWork(FunctionWork.New(function()
 			gohelper.setActive(iter_5_8, false)
 		end))
 
-		local var_5_21 = FlowParallel.New()
-		local var_5_22 = 1.32
+		local var_5_22 = FlowParallel.New()
+		local var_5_23 = 1.32
 
-		var_5_21:addWork(TweenWork.New({
+		var_5_22:addWork(TweenWork.New({
 			type = "DOScale",
-			tr = var_5_16,
-			to = var_5_22,
+			tr = var_5_17,
+			to = var_5_23,
 			t = arg_5_0._dt * 5,
 			ease = EaseType.easeOutQuad
 		}))
 
-		local var_5_23 = 15
+		local var_5_24 = 15
 
-		var_5_21:addWork(TweenWork.New({
+		var_5_22:addWork(TweenWork.New({
 			type = "DORotate",
 			tox = 0,
 			toy = 0,
-			tr = var_5_16,
-			toz = var_5_23,
+			tr = var_5_17,
+			toz = var_5_24,
 			t = arg_5_0._dt * 5,
 			ease = EaseType.easeOutQuad
 		}))
-		var_5_19:addWork(var_5_21)
+		var_5_20:addWork(var_5_22)
 
-		local var_5_24 = FlowParallel.New()
-		local var_5_25 = -107
+		local var_5_25 = FlowParallel.New()
+		local var_5_26 = -107
 
-		var_5_24:addWork(TweenWork.New({
+		var_5_25:addWork(TweenWork.New({
 			type = "DOAnchorPos",
-			tr = var_5_16,
-			tox = var_5_18.x,
-			toy = var_5_18.y + var_5_25,
+			tr = var_5_17,
+			tox = var_5_19.x,
+			toy = var_5_19.y + var_5_26,
 			t = arg_5_0._dt * 10,
 			ease = EaseType.OutCubic
 		}))
-		var_5_24:addWork(TweenWork.New({
+		var_5_25:addWork(TweenWork.New({
 			toz = 0,
 			type = "DORotate",
 			tox = 0,
 			toy = 0,
-			tr = var_5_16,
+			tr = var_5_17,
 			t = arg_5_0._dt * 10,
 			ease = EaseType.OutCubic
 		}))
-		var_5_19:addWork(var_5_24)
-		var_5_1:addWork(var_5_19)
+		var_5_20:addWork(var_5_25)
+		var_5_1:addWork(var_5_20)
 	end
 
 	if GMFightShowState.cards then
@@ -266,6 +278,7 @@ function var_0_0._playCardFlow(arg_5_0)
 
 	var_5_0:addWork(var_5_1)
 	var_5_0:addWork(FightWork2Work.New(FightWorkDetectUseCardSkillId))
+	var_5_0:addWork(FightWork2Work.New(FightWorkPlayHideCardCloseAnim, arg_5_0))
 
 	return var_5_0
 end
@@ -297,8 +310,15 @@ function var_0_0._onWorkDone(arg_7_0)
 		end
 	end
 
+	if arg_7_0._cloneOperateItemList then
+		for iter_7_6, iter_7_7 in ipairs(arg_7_0._cloneOperateItemList) do
+			iter_7_7:onDispose()
+		end
+	end
+
 	arg_7_0._playCardItemGOs = nil
 	arg_7_0._cloneItemGOs = nil
+	arg_7_0._cloneOperateItemList = nil
 
 	arg_7_0:onDone(true)
 end

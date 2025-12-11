@@ -2,99 +2,100 @@
 
 local var_0_0 = class("Act191HeroGroupItem1", LuaCompBase)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.handleView = arg_1_1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.goEmpty = gohelper.findChild(arg_1_1, "go_Empty")
+	arg_1_0.goHero = gohelper.findChild(arg_1_1, "go_Hero")
+	arg_1_0.btnClick = gohelper.findChildButton(arg_1_1, "btn_Click")
+	arg_1_0.loader = PrefabInstantiate.Create(arg_1_0.goHero)
+
+	arg_1_0.loader:startLoad(Activity191Enum.PrefabPath.HeroHeadItem, arg_1_0.onLoadCallBack, arg_1_0)
+
+	arg_1_0.enableClick = true
+	arg_1_0.dragging = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.goEmpty = gohelper.findChild(arg_2_1, "go_Empty")
-	arg_2_0.goHero = gohelper.findChild(arg_2_1, "go_Hero")
-	arg_2_0.btnClick = gohelper.findChildButton(arg_2_1, "btn_Click")
-	arg_2_0.loader = PrefabInstantiate.Create(arg_2_0.goHero)
+function var_0_0.onLoadCallBack(arg_2_0)
+	local var_2_0 = arg_2_0.loader:getInstGO()
 
-	arg_2_0.loader:startLoad(Activity191Enum.PrefabPath.HeroHeadItem, arg_2_0.onLoadCallBack, arg_2_0)
-
-	arg_2_0.enableClick = true
-end
-
-function var_0_0.onLoadCallBack(arg_3_0)
-	local var_3_0 = arg_3_0.loader:getInstGO()
-
-	if var_3_0 then
-		arg_3_0.heroHeadItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_3_0, Act191HeroHeadItem, {
+	if var_2_0 then
+		arg_2_0.heroHeadItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_0, Act191HeroHeadItem, {
 			exSkill = true
 		})
 
-		if arg_3_0.needFresh then
-			arg_3_0.heroHeadItem:setData(arg_3_0.heroId)
+		if arg_2_0.needFresh then
+			arg_2_0.heroHeadItem:setData(arg_2_0.heroId)
 
-			arg_3_0.needFresh = false
+			arg_2_0.needFresh = false
 		end
 	end
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	if arg_4_0.btnClick then
-		arg_4_0:addClickCb(arg_4_0.btnClick, arg_4_0.onClick, arg_4_0)
+function var_0_0.addEventListeners(arg_3_0)
+	if arg_3_0.btnClick then
+		arg_3_0:addClickCb(arg_3_0.btnClick, arg_3_0.onClick, arg_3_0)
 	end
 end
 
-function var_0_0.setData(arg_5_0, arg_5_1)
-	arg_5_0.heroId = arg_5_1
+function var_0_0.setData(arg_4_0, arg_4_1)
+	arg_4_0.heroId = arg_4_1
 
-	if arg_5_1 and arg_5_1 ~= 0 then
-		if arg_5_0.heroHeadItem then
-			arg_5_0.heroHeadItem:setData(arg_5_1)
+	if arg_4_1 and arg_4_1 ~= 0 then
+		if arg_4_0.heroHeadItem then
+			arg_4_0.heroHeadItem:setData(arg_4_1)
 
-			arg_5_0.needFresh = false
+			arg_4_0.needFresh = false
 		else
-			arg_5_0.needFresh = true
+			arg_4_0.needFresh = true
 		end
 
-		gohelper.setActive(arg_5_0.goEmpty, false)
-		gohelper.setActive(arg_5_0.goHero, true)
+		gohelper.setActive(arg_4_0.goEmpty, false)
+		gohelper.setActive(arg_4_0.goHero, true)
 	else
-		gohelper.setActive(arg_5_0.goEmpty, true)
-		gohelper.setActive(arg_5_0.goHero, false)
+		gohelper.setActive(arg_4_0.goEmpty, true)
+		gohelper.setActive(arg_4_0.goHero, false)
 	end
 end
 
-function var_0_0.setIndex(arg_6_0, arg_6_1)
-	arg_6_0._index = arg_6_1
+function var_0_0.setIndex(arg_5_0, arg_5_1)
+	arg_5_0._index = arg_5_1
 end
 
-function var_0_0.setClickEnable(arg_7_0, arg_7_1)
-	arg_7_0.enableClick = arg_7_1
+function var_0_0.setClickEnable(arg_6_0, arg_6_1)
+	arg_6_0.enableClick = arg_6_1
 end
 
-function var_0_0.onClick(arg_8_0)
-	if not arg_8_0.enableClick or arg_8_0.handleView and arg_8_0.handleView._nowDragingIndex then
+function var_0_0.onClick(arg_7_0)
+	if not arg_7_0.enableClick or arg_7_0.dragging then
 		return
 	end
 
-	if arg_8_0.param then
-		local var_8_0 = ""
+	if arg_7_0.param then
+		local var_7_0 = ""
 
-		if arg_8_0.heroHeadItem and arg_8_0.heroHeadItem.config then
-			var_8_0 = arg_8_0.heroHeadItem.config.name
+		if arg_7_0.heroHeadItem and arg_7_0.heroHeadItem.config then
+			var_7_0 = arg_7_0.heroHeadItem.config.name
 		end
 
-		Act191StatController.instance:statButtonClick(arg_8_0.param.fromView, string.format("heroClick_%s_%s_%s", arg_8_0.param.type, arg_8_0._index, var_8_0))
+		Act191StatController.instance:statButtonClick(arg_7_0.param.fromView, string.format("heroClick_%s_%s_%s", arg_7_0.param.type, arg_7_0._index, var_7_0))
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	local var_8_1 = {
-		index = arg_8_0._index,
-		heroId = arg_8_0.heroId
+	local var_7_1 = {
+		index = arg_7_0._index,
+		heroId = arg_7_0.heroId
 	}
 
-	ViewMgr.instance:openView(ViewName.Act191HeroEditView, var_8_1)
+	ViewMgr.instance:openView(ViewName.Act191HeroEditView, var_7_1)
 end
 
-function var_0_0.setExtraParam(arg_9_0, arg_9_1)
-	arg_9_0.param = arg_9_1
+function var_0_0.setExtraParam(arg_8_0, arg_8_1)
+	arg_8_0.param = arg_8_1
+end
+
+function var_0_0.setDrag(arg_9_0, arg_9_1)
+	arg_9_0.dragging = arg_9_1
 end
 
 return var_0_0

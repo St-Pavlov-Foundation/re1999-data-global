@@ -25,6 +25,7 @@ function var_0_0.buildViews(arg_1_0)
 	end
 
 	table.insert(var_1_0, WeekWalkLayerRewardView.New())
+	table.insert(var_1_0, WeekWalkLayerRewardMenuView.New())
 	table.insert(var_1_0, LuaListScrollViewWithAnimator.New(WeekWalkTaskListModel.instance, var_1_1, var_1_2))
 
 	return var_1_0

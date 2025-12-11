@@ -2,21 +2,22 @@
 
 local var_0_0 = class("RoomBlockGiftController", BaseController)
 
-function var_0_0.openBlockView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.openBlockView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
 	if RoomBlockBuildingGiftModel.instance:isAllColloct(arg_1_1) then
 		GameFacade.showToast(ToastEnum.RoomBlockAllCollect)
 	else
 		RoomBlockBuildingGiftModel.instance:initBlockBuilding(arg_1_1)
 
 		local var_1_0 = {
-			itemId = arg_1_1
+			rare = arg_1_1,
+			id = arg_1_2
 		}
 
 		ViewMgr.instance:openView(ViewName.RoomBlockGiftChoiceView, var_1_0)
 	end
 
 	function arg_1_0._useGiftCallback()
-		arg_1_2(arg_1_3)
+		arg_1_3(arg_1_4)
 	end
 end
 

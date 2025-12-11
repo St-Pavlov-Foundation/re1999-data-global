@@ -15,6 +15,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._txtchapterNum = gohelper.findChildText(arg_1_0.viewGO, "anim/#go_lock/#txt_chapterNum")
 	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "anim/#go_reddot")
 	arg_1_0._gopreview = gohelper.findChild(arg_1_0.viewGO, "anim/#go_first")
+	arg_1_0._gostorytrace = gohelper.findChild(arg_1_0.viewGO, "anim/#go_trace")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -99,6 +100,7 @@ function var_0_0._editableAddEvents(arg_8_0)
 	DungeonController.instance:registerCallback(DungeonEvent.OnShowStoryView, arg_8_0._setEnterAnimState, arg_8_0)
 	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, arg_8_0._onUpdateDungeonInfo, arg_8_0)
 	arg_8_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_8_0.onRefreshActivity, arg_8_0)
+	arg_8_0:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_8_0._refreshTraced, arg_8_0)
 end
 
 function var_0_0._editableRemoveEvents(arg_9_0)
@@ -111,6 +113,7 @@ function var_0_0._editableRemoveEvents(arg_9_0)
 	DungeonController.instance:unregisterCallback(DungeonEvent.OnShowStoryView, arg_9_0._setEnterAnimState, arg_9_0)
 	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, arg_9_0._onUpdateDungeonInfo, arg_9_0)
 	arg_9_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_9_0.onRefreshActivity, arg_9_0)
+	arg_9_0:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_9_0._refreshTraced, arg_9_0)
 end
 
 function var_0_0._onStart(arg_10_0, arg_10_1)
@@ -172,6 +175,7 @@ function var_0_0.onUpdateMO(arg_14_0, arg_14_1)
 	arg_14_0:_updateMapTip()
 	arg_14_0:refreshRed()
 	arg_14_0:_updatePreviewFlag()
+	arg_14_0:_refreshTraced()
 end
 
 function var_0_0._updatePreviewFlag(arg_15_0)
@@ -392,15 +396,47 @@ function var_0_0.refreshRed(arg_39_0)
 	end
 end
 
-function var_0_0.onDestroyView(arg_40_0)
-	arg_40_0._simagechapterIcon:UnLoadImage()
-	arg_40_0._simagechapterIconLock:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_40_0._onEnterAnimFinished, arg_40_0)
-	TaskDispatcher.cancelTask(arg_40_0._onAnimFinished, arg_40_0)
-	TaskDispatcher.cancelTask(arg_40_0.showUnlockAnim, arg_40_0)
+function var_0_0._refreshTraced(arg_40_0)
+	arg_40_0:_refreshTracedIcon()
+end
 
-	if arg_40_0._startBlock then
-		arg_40_0:_endBlock()
+function var_0_0._refreshTracedIcon(arg_41_0)
+	if not arg_41_0._mo then
+		return
+	end
+
+	if DungeonModel.instance:chapterIsLock(arg_41_0._mo.id) then
+		return
+	end
+
+	local var_41_0 = CharacterRecommedModel.instance:isTradeChapter(arg_41_0._mo.id)
+
+	if var_41_0 then
+		local var_41_1 = CharacterRecommedController.instance:getTradeIcon()
+
+		if not var_41_1 then
+			return
+		end
+
+		if not arg_41_0._tracedIcon then
+			arg_41_0._tracedIcon = gohelper.clone(var_41_1, arg_41_0._gostorytrace)
+		end
+	end
+
+	if arg_41_0._tracedIcon then
+		gohelper.setActive(arg_41_0._tracedIcon, var_41_0)
+	end
+end
+
+function var_0_0.onDestroyView(arg_42_0)
+	arg_42_0._simagechapterIcon:UnLoadImage()
+	arg_42_0._simagechapterIconLock:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_42_0._onEnterAnimFinished, arg_42_0)
+	TaskDispatcher.cancelTask(arg_42_0._onAnimFinished, arg_42_0)
+	TaskDispatcher.cancelTask(arg_42_0.showUnlockAnim, arg_42_0)
+
+	if arg_42_0._startBlock then
+		arg_42_0:_endBlock()
 	end
 end
 

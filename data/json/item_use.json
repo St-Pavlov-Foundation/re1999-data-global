@@ -130,5 +130,11 @@
     "name": "language_10075765",
     "useType": 1,
     "use_max": 1
+  },
+  {
+    "id": 70,
+    "name": "language_10090767",
+    "useType": 6,
+    "use_max": 99
   }
 ]

@@ -579,6 +579,12 @@ function var_0_0._initFightGroupDrop(arg_37_0)
 		return
 	end
 
+	if HeroGroupModel.instance:getPresetHeroGroupType() then
+		arg_37_0._dropherogroup.dropDown.enabled = false
+
+		return
+	end
+
 	local var_37_0 = {}
 
 	for iter_37_0 = 1, 4 do

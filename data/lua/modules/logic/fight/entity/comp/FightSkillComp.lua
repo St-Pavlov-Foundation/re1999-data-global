@@ -59,6 +59,7 @@ var_0_0.FrameEventHandlerCls = {
 	FightTLEventALFCardEffect,
 	FightTLEventPlayEffectByOperation,
 	FightTLEventEffectVisible,
+	FightTLEvent500MMonsterRefreshHeadIcon,
 	[1001] = FightTLEventObjFly,
 	[1002] = FightTLEventSetSign
 }

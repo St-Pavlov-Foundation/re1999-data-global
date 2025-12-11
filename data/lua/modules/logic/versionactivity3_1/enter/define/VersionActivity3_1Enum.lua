@@ -6,7 +6,7 @@ var_0_0.ActivityId = {
 	YeShuMei = 13117,
 	TowerDeep = 13112,
 	DouQuQu3Store = 13115,
-	NationalGift = 13122,
+	NationalGift = 13316,
 	Survival = 13106,
 	RoleStory = 13107,
 	DouQuQu3 = 13105,
@@ -89,7 +89,9 @@ var_0_0.TabSetting = {
 		fontSize = 28,
 		cnColor = "#F4FDF8",
 		enFontSize = 16,
+		cnAlpha = 1,
 		enColor = "#C90F0D",
+		enAlpha = 1,
 		act2TabImg = {
 			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v3a1_mainactivity_singlebg/v3a1_enterview_itemtitleselected.png"
 		}
@@ -98,7 +100,9 @@ var_0_0.TabSetting = {
 		fontSize = 28,
 		cnColor = "#76877E",
 		enFontSize = 16,
+		cnAlpha = 1,
 		enColor = "#FFFFFF",
+		enAlpha = 0.3,
 		act2TabImg = {
 			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v3a1_mainactivity_singlebg/v3a1_enterview_itemtitleunselected.png"
 		}
@@ -106,5 +110,8 @@ var_0_0.TabSetting = {
 }
 var_0_0.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
 var_0_0.RedDotOffsetY = 56
+var_0_0.EnterLoopVideoName = "v3a1_kv_loop"
+var_0_0.EnterAnimVideoName = "v3a1_kv_open"
+var_0_0.EnterVideoDayKey = "v3a1_EnterVideoDayKey"
 
 return var_0_0

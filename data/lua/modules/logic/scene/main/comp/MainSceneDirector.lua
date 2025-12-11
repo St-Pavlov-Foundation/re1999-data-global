@@ -48,6 +48,7 @@ function var_0_0.onSceneClose(arg_8_0)
 	arg_8_0.switchSuccess = false
 
 	MainController.instance:dispatchEvent(MainEvent.OnSceneClose)
+	MainController.instance:clearOpenMainViewFlag()
 	ViewMgr.instance:closeAllPopupViews({
 		ViewName.SummonADView
 	})

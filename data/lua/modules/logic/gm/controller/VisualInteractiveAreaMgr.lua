@@ -31,9 +31,15 @@ end
 
 function var_0_0._onLoadCallback(arg_3_0, arg_3_1)
 	if arg_3_1.IsLoadSuccess then
+		local var_3_0 = arg_3_0.assetItem
+
 		arg_3_0.assetItem = arg_3_1
 
 		arg_3_0.assetItem:Retain()
+
+		if var_3_0 then
+			var_3_0:Release()
+		end
 
 		arg_3_0.maskItemGo = gohelper.clone(arg_3_0.assetItem:GetResource(var_0_0.maskItemPath), ViewMgr.instance:getUIRoot())
 

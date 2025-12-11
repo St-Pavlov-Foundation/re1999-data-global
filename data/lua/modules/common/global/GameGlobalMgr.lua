@@ -59,6 +59,10 @@ function var_0_0.playTouchEffect(arg_9_0, arg_9_1)
 	arg_9_0._screenTouch:playTouchEffect(arg_9_1)
 end
 
+function var_0_0.refreshTouchEffectSkin(arg_10_0)
+	arg_10_0._screenTouch:refreshEffect()
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

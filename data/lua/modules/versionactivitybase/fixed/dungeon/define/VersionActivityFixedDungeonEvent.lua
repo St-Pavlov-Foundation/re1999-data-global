@@ -11,7 +11,7 @@ var_0_0.OnRemoveElement = 6
 var_0_0.OnRecycleAllElement = 7
 var_0_0.ManualClickElement = 8
 var_0_0.GuideShowElement = 9
-var_0_0.OnClickAllTaskFinish = 98.3
+var_0_0.OnClickAllTaskFinish = 101
 var_0_0.SwitchBGM = 2701
 var_0_0.OpenFinishMapLevelView = 2702
 

@@ -6,12 +6,15 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._simagehuawen1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/tipbg/#simage_huawen1")
 	arg_1_0._simagehuawen2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/tipbg/#simage_huawen2")
 	arg_1_0._simagebeforeicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "cost/before/#simage_beforeicon")
-	arg_1_0._simageaftericon = gohelper.findChildSingleImage(arg_1_0.viewGO, "cost/after/#simage_aftericon")
 	arg_1_0._txtbeforequantity = gohelper.findChildText(arg_1_0.viewGO, "cost/before/numbg/#txt_beforequantity")
+	arg_1_0._simageaftericon = gohelper.findChildSingleImage(arg_1_0.viewGO, "cost/after/#simage_aftericon")
 	arg_1_0._txtafterquantity = gohelper.findChildText(arg_1_0.viewGO, "cost/after/numbg/#txt_afterquantity")
 	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
 	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_yes")
 	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_no")
+	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
+	arg_1_0._toggleoption = gohelper.findChildToggle(arg_1_0.viewGO, "#toggle_option")
+	arg_1_0._txtoption = gohelper.findChildText(arg_1_0.viewGO, "#toggle_option/#txt_option")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -21,18 +24,22 @@ end
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
 	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
+	arg_2_0._toggleoption:AddOnValueChanged(arg_2_0._toggleOptionOnClick, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btnyes:RemoveClickListener()
 	arg_3_0._btnno:RemoveClickListener()
+	arg_3_0._toggleoption:RemoveOnValueChanged()
 end
 
 function var_0_0._btnyesOnClick(arg_4_0)
 	arg_4_0._yes = true
 
-	if arg_4_0.viewParam.notEnough then
-		CurrencyController.instance:checkFreeDiamondEnough(arg_4_0.viewParam.cost_quantity, CurrencyEnum.PayDiamondExchangeSource.Summon, true, arg_4_0._callCheckWithParam, arg_4_0)
+	SummonMainController.instance:checkFreeDiamondEnough(arg_4_0.viewParam)
+
+	if arg_4_0._toggleoption.isOn then
+		arg_4_0:saveOptionData()
 	end
 
 	arg_4_0:closeThis()
@@ -40,6 +47,10 @@ end
 
 function var_0_0._btnnoOnClick(arg_5_0)
 	arg_5_0:closeThis()
+
+	if arg_5_0.viewParam.noCallback then
+		callWithCatch(arg_5_0.viewParam.noCallback, arg_5_0.viewParam.noCallbackObj)
+	end
 end
 
 function var_0_0._callCheckWithParam(arg_6_0)
@@ -51,6 +62,8 @@ function var_0_0._editableInitView(arg_7_0)
 	arg_7_0._simagehuawen2:LoadImage(ResUrl.getMessageIcon("huawen2_003"))
 	gohelper.addUIClickAudio(arg_7_0._btnyes.gameObject, AudioEnum.UI.UI_Common_Click)
 	gohelper.addUIClickAudio(arg_7_0._btnno.gameObject, AudioEnum.UI.UI_Common_Click)
+
+	arg_7_0._toggleoption.isOn = false
 end
 
 function var_0_0.onUpdateParam(arg_8_0)
@@ -109,23 +122,46 @@ function var_0_0.onOpen(arg_9_0)
 
 		arg_9_0._txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_confirm_desc"), var_9_7)
 	end
+
+	arg_9_0:refreshOptionUI()
 end
 
-function var_0_0.onClose(arg_10_0)
-	return
+function var_0_0.refreshOptionUI(arg_10_0)
+	gohelper.setActive(arg_10_0._toggleoption.gameObject, true)
+
+	arg_10_0.optionType = MsgBoxEnum.optionType.Daily
+	arg_10_0._txtoption.text = luaLang("p_summonConfirmView_auto_option")
 end
 
-function var_0_0.onCloseFinish(arg_11_0)
-	if arg_11_0._yes and not arg_11_0.viewParam.notEnough and arg_11_0._callback then
-		arg_11_0._callback(arg_11_0._callbackObj, arg_11_0.viewParam)
+function var_0_0.saveOptionData(arg_11_0)
+	if arg_11_0.optionType <= 0 or not arg_11_0._toggleoption.isOn then
+		return
+	end
+
+	local var_11_0 = SummonMainController.instance:getOptionLocalKey()
+
+	if arg_11_0.optionType == MsgBoxEnum.optionType.Daily then
+		TimeUtil.setDayFirstLoginRed(var_11_0)
 	end
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simagehuawen1:UnLoadImage()
-	arg_12_0._simagehuawen2:UnLoadImage()
-	arg_12_0._simagebeforeicon:UnLoadImage()
-	arg_12_0._simageaftericon:UnLoadImage()
+function var_0_0._toggleOptionOnClick(arg_12_0)
+	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
+end
+
+function var_0_0.onClose(arg_13_0)
+	return
+end
+
+function var_0_0.onCloseFinish(arg_14_0)
+	return
+end
+
+function var_0_0.onDestroyView(arg_15_0)
+	arg_15_0._simagehuawen1:UnLoadImage()
+	arg_15_0._simagehuawen2:UnLoadImage()
+	arg_15_0._simagebeforeicon:UnLoadImage()
+	arg_15_0._simageaftericon:UnLoadImage()
 end
 
 return var_0_0

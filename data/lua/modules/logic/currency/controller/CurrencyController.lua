@@ -128,7 +128,7 @@ function var_0_0.checkFreeDiamondEnough(arg_10_0, arg_10_1, arg_10_2, arg_10_3, 
 	end
 end
 
-function var_0_0.checkExchangeFreeDiamond(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6)
+function var_0_0.checkExchangeFreeDiamond(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6, arg_11_7, arg_11_8, arg_11_9, arg_11_10, arg_11_11)
 	local var_11_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Diamond)
 
 	if var_11_0 then
@@ -144,10 +144,14 @@ function var_0_0.checkExchangeFreeDiamond(arg_11_0, arg_11_1, arg_11_2, arg_11_3
 			local var_11_1 = arg_11_1 - var_11_0.quantity
 			local var_11_2 = {
 				isExchangeStep = false,
-				msg = MessageBoxConfig.instance:getMessage(MessageBoxIdDefine.PayDiamondNotEnough),
+				msg = arg_11_7 ~= nil and arg_11_7 or MessageBoxConfig.instance:getMessage(MessageBoxIdDefine.PayDiamondNotEnough),
 				needDiamond = var_11_1,
 				jumpCallBack = arg_11_5,
-				jumpCallbackObj = arg_11_6
+				jumpCallbackObj = arg_11_6,
+				extra = arg_11_8,
+				costData = arg_11_9,
+				noCallback = arg_11_10,
+				noCallbackObj = arg_11_11
 			}
 
 			ViewMgr.instance:openView(ViewName.CurrencyExchangeView, var_11_2)
@@ -226,6 +230,99 @@ function var_0_0._autoUseExpirePowerItem(arg_15_0)
 		ItemRpc.instance:sendAutoUseExpirePowerItemRequest()
 		TaskDispatcher.cancelTask(arg_15_0._autoUseExpirePowerItem, arg_15_0)
 	end
+end
+
+function var_0_0.checkFreeDiamondEnoughDaily(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5, arg_16_6, arg_16_7, arg_16_8, arg_16_9, arg_16_10, arg_16_11)
+	local var_16_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.FreeDiamondCoupon)
+
+	if var_16_0 then
+		if arg_16_1 <= var_16_0.quantity then
+			return true
+		else
+			local var_16_1 = arg_16_1 - var_16_0.quantity
+			local var_16_2 = MessageBoxConfig.instance:getMessage(MessageBoxIdDefine.FreeDiamondExchange)
+
+			if CurrencyEnum.PayDiamondExchangeSource.Summon then
+				var_16_2 = MessageBoxConfig.instance:getMessage(MessageBoxIdDefine.FreeDiamondNotEnough_Summon)
+			end
+
+			local var_16_3 = {
+				isShowDailySure = true,
+				isExchangeStep = true,
+				msg = var_16_2,
+				extra = {
+					arg_16_8,
+					var_16_1
+				},
+				needDiamond = var_16_1,
+				srcType = arg_16_2,
+				callback = arg_16_4,
+				callbackObj = arg_16_5,
+				jumpCallBack = arg_16_6,
+				jumpCallbackObj = arg_16_7,
+				costData = arg_16_9,
+				noCallback = arg_16_10,
+				noCallbackObj = arg_16_11
+			}
+			local var_16_4 = ViewMgr.instance:getSetting(ViewName.CurrencyExchangeView)
+
+			if arg_16_3 then
+				var_16_4.anim = nil
+			else
+				var_16_4.anim = ViewAnim.Default
+			end
+
+			arg_16_0:openCurrencyExchangeView(var_16_3)
+
+			return false
+		end
+	else
+		logError("can't find freeDiamond MO")
+
+		return false
+	end
+end
+
+function var_0_0.openCurrencyExchangeView(arg_17_0, arg_17_1)
+	if not arg_17_0:canShowCurrencyExchangeView(arg_17_1) then
+		arg_17_0:checkCurrencyExchange(arg_17_1)
+
+		return
+	end
+
+	ViewMgr.instance:openView(ViewName.CurrencyExchangeView, arg_17_1)
+end
+
+function var_0_0.canShowCurrencyExchangeView(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0:getOptionLocalKey(arg_18_1.srcType)
+
+	return (TimeUtil.getDayFirstLoginRed(var_18_0))
+end
+
+function var_0_0.getOptionLocalKey(arg_19_0, arg_19_1)
+	return string.format("SummonConfirmView#%s%s", tostring(PlayerModel.instance:getPlayinfo().userId), tostring(arg_19_1))
+end
+
+function var_0_0.checkCurrencyExchange(arg_20_0, arg_20_1)
+	local var_20_0 = false
+
+	if arg_20_1.isExchangeStep then
+		var_20_0 = var_0_0.instance:checkExchangeFreeDiamond(arg_20_1.needDiamond, arg_20_1.srcType, arg_20_1.callback, arg_20_1.callbackObj, arg_20_1.jumpCallBack, arg_20_1.jumpCallbackObj, MessageBoxConfig.instance:getMessage(MessageBoxIdDefine.PayDiamondNotEnough_Summon), {
+			arg_20_1.extra[1]
+		}, arg_20_1.costData, arg_20_1.noCallback, arg_20_1.noCallbackObj)
+	else
+		if arg_20_1.jumpCallBack then
+			arg_20_1.jumpCallBack(arg_20_1.jumpCallbackObj)
+		end
+
+		StoreController.instance:checkAndOpenStoreView(StoreEnum.ChargeStoreTabId)
+	end
+
+	if arg_20_1.yesCallback then
+		arg_20_1.yesCallback()
+	end
+
+	return var_20_0
 end
 
 var_0_0.instance = var_0_0.New()

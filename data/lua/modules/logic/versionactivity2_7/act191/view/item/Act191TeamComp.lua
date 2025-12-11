@@ -18,6 +18,10 @@ function var_0_0.init(arg_2_0, arg_2_1)
 	arg_2_0.btnSwitch = gohelper.findChildButtonWithAudio(arg_2_1, "switch/btn_Switch")
 	arg_2_0.scrollFetter = gohelper.findChildScrollRect(arg_2_1, "#scroll_Fetter")
 	arg_2_0.goFetterContent = gohelper.findChild(arg_2_1, "#scroll_Fetter/Viewport/#go_FetterContent")
+	arg_2_0.btnEnhance = gohelper.findChildButtonWithAudio(arg_2_1, "#btn_Enhance")
+
+	arg_2_0:addClickCb(arg_2_0.btnEnhance, arg_2_0._btnEnhanceOnClick, arg_2_0)
+
 	arg_2_0.groupItem1List = {}
 	arg_2_0.subGroupItem1List = {}
 	arg_2_0.groupItem2List = {}
@@ -82,6 +86,10 @@ end
 function var_0_0.onStart(arg_4_0)
 	arg_4_0:refreshTeam()
 	arg_4_0:refreshStatus()
+
+	local var_4_0 = #arg_4_0.gameInfo.warehouseInfo.enhanceId
+
+	gohelper.setActive(arg_4_0.btnEnhance, var_4_0 ~= 0)
 end
 
 function var_0_0.onDestroy(arg_5_0)
@@ -213,27 +221,25 @@ function var_0_0._checkDrag(arg_11_0, arg_11_1)
 end
 
 function var_0_0._onBeginDrag(arg_12_0, arg_12_1)
-	if arg_12_0._nowDragingIndex then
+	local var_12_0 = arg_12_0.groupItem1List[arg_12_1]
+
+	if not var_12_0 then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Team_raise)
-
-	arg_12_0._nowDragingIndex = arg_12_1
-
-	local var_12_0 = arg_12_0.groupItem1List[arg_12_1]
-
-	gohelper.setAsLastSibling(var_12_0.go)
+	var_12_0:setDrag(true)
 end
 
 function var_0_0._onEndDrag(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_0._nowDragingIndex ~= arg_13_1 then
+	local var_13_0 = arg_13_0.groupItem1List[arg_13_1]
+
+	if not var_13_0 then
 		return
 	end
 
-	arg_13_0._nowDragingIndex = nil
+	var_13_0:setDrag(false)
 
-	local var_13_0 = arg_13_0.groupItem1List[arg_13_1]
 	local var_13_1 = Activity191Helper.calcIndex(arg_13_2.position, arg_13_0.heroPosTrList)
 
 	CommonDragHelper.instance:setGlobalEnabled(false)
@@ -277,6 +283,14 @@ function var_0_0._setHeroItemPos(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_
 			arg_16_4(arg_16_5)
 		end
 	end
+end
+
+function var_0_0._btnEnhanceOnClick(arg_17_0)
+	Act191StatController.instance:statButtonClick(arg_17_0.handleViewName, "_btnEnhanceOnClick")
+	ViewMgr.instance:openView(ViewName.Act191EnhanceView, {
+		isDown = true,
+		pos = Vector2(380, -735)
+	})
 end
 
 return var_0_0

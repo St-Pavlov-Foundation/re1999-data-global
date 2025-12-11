@@ -59,7 +59,8 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		"nickname",
 		"propitem",
 		"textures",
-		"data_pic"
+		"data_pic",
+		"mainsceneswitch"
 	}
 	local var_1_1 = {
 		"",

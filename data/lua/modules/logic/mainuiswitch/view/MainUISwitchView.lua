@@ -46,8 +46,16 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._toSwitchTab(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 1 and arg_4_0.viewContainer:getClassify() == MainSwitchClassifyEnum.Classify.UI and arg_4_2 == MainEnum.SwitchType.Scene then
-		arg_4_0:onTabSwitchOpen()
+	if arg_4_1 == 1 then
+		if arg_4_0.viewContainer:getClassify() == MainSwitchClassifyEnum.Classify.UI then
+			if arg_4_2 == MainEnum.SwitchType.Scene then
+				arg_4_0:onTabSwitchOpen()
+			else
+				arg_4_0:onTabSwitchClose()
+			end
+		else
+			arg_4_0:onTabSwitchClose()
+		end
 	end
 end
 
@@ -102,6 +110,7 @@ end
 function var_0_0._editableInitView(arg_12_0)
 	arg_12_0._goshow = gohelper.findChild(arg_12_0.rootGO, "#btn_show")
 	arg_12_0._rootAnimator = arg_12_0.viewGO:GetComponent("Animator")
+	arg_12_0._useSingleMask = PostProcessingMgr.instance:getUnitPPValue("rolesStoryMaskActive")
 end
 
 function var_0_0.onUpdateParam(arg_13_0)
@@ -112,82 +121,97 @@ function var_0_0.onTabSwitchOpen(arg_14_0)
 	if arg_14_0._rootAnimator then
 		arg_14_0._rootAnimator:Play("open", 0, 0)
 	end
+
+	arg_14_0:_setrolesStoryMaskActive()
 end
 
-function var_0_0.onOpen(arg_15_0)
+function var_0_0.onTabSwitchClose(arg_15_0, arg_15_1)
+	arg_15_0:_resetrolesStoryMaskActive()
+end
+
+function var_0_0.onOpen(arg_16_0)
 	MainUISwitchListModel.instance:initList()
-	arg_15_0:_onSwitchUIVisible(true)
-	arg_15_0:_showUIInfo(MainUISwitchModel.instance:getCurUseUI())
+	arg_16_0:_onSwitchUIVisible(true)
+	arg_16_0:_showUIInfo(MainUISwitchModel.instance:getCurUseUI())
 
-	arg_15_0._showUI = true
+	arg_16_0._showUI = true
 
-	gohelper.setActive(arg_15_0._btnShow, false)
+	gohelper.setActive(arg_16_0._btnShow, false)
 
-	if not arg_15_0._goblurmask then
-		arg_15_0._goblurmask = arg_15_0:getResInst(arg_15_0.viewContainer:getSetting().otherRes[4], arg_15_0._gomiddle)
+	if not arg_16_0._goblurmask then
+		arg_16_0._goblurmask = arg_16_0:getResInst(arg_16_0.viewContainer:getSetting().otherRes[4], arg_16_0._gomiddle)
 	end
 
+	arg_16_0:_setrolesStoryMaskActive()
 	MainSceneSwitchDisplayController.instance:hideScene()
 	WeatherController.instance:onSceneShow()
-	arg_15_0._rootAnimator:Play("open", 0, 0)
+	arg_16_0._rootAnimator:Play("open", 0, 0)
 end
 
-function var_0_0._showUIInfo(arg_16_0, arg_16_1)
-	arg_16_0._selectSkinId = arg_16_1
+function var_0_0._setrolesStoryMaskActive(arg_17_0)
+	PostProcessingMgr.instance:setUnitPPValue("rolesStoryMaskActive", false)
+end
 
-	arg_16_0:_showBtnStatus(arg_16_1)
+function var_0_0._resetrolesStoryMaskActive(arg_18_0)
+	PostProcessingMgr.instance:setUnitPPValue("rolesStoryMaskActive", arg_18_0._useSingleMask)
+end
 
-	local var_16_0 = lua_scene_ui.configDict[arg_16_1]
+function var_0_0._showUIInfo(arg_19_0, arg_19_1)
+	arg_19_0._selectSkinId = arg_19_1
 
-	if var_16_0 then
-		arg_16_0:_updateInfo(var_16_0.itemId, var_16_0.defaultUnlock)
+	arg_19_0:_showBtnStatus(arg_19_1)
+
+	local var_19_0 = lua_scene_ui.configDict[arg_19_1]
+
+	if var_19_0 then
+		arg_19_0:_updateInfo(var_19_0.itemId, var_19_0.defaultUnlock)
 	end
 end
 
-function var_0_0._showBtnStatus(arg_17_0, arg_17_1)
-	local var_17_0 = MainUISwitchModel.getUIStatus(arg_17_1)
-	local var_17_1 = arg_17_1 == MainUISwitchModel.instance:getCurUseUI()
-	local var_17_2 = var_17_0 == MainSceneSwitchEnum.SceneStutas.Unlock
+function var_0_0._showBtnStatus(arg_20_0, arg_20_1)
+	local var_20_0 = MainUISwitchModel.getUIStatus(arg_20_1)
+	local var_20_1 = arg_20_1 == MainUISwitchModel.instance:getCurUseUI()
+	local var_20_2 = var_20_0 == MainSceneSwitchEnum.SceneStutas.Unlock
 
-	gohelper.setActive(arg_17_0._btnchange, not var_17_1 and var_17_2)
-	gohelper.setActive(arg_17_0._btnget, not var_17_1 and var_17_0 == MainSceneSwitchEnum.SceneStutas.LockCanGet)
-	gohelper.setActive(arg_17_0._goshowing, var_17_1 and var_17_2)
-	gohelper.setActive(arg_17_0._goLocked, not var_17_1 and var_17_0 == MainSceneSwitchEnum.SceneStutas.Lock)
+	gohelper.setActive(arg_20_0._btnchange, not var_20_1 and var_20_2)
+	gohelper.setActive(arg_20_0._btnget, not var_20_1 and var_20_0 == MainSceneSwitchEnum.SceneStutas.LockCanGet)
+	gohelper.setActive(arg_20_0._goshowing, var_20_1 and var_20_2)
+	gohelper.setActive(arg_20_0._goLocked, not var_20_1 and var_20_0 == MainSceneSwitchEnum.SceneStutas.Lock)
 end
 
-function var_0_0._updateInfo(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = lua_item.configDict[arg_18_1]
+function var_0_0._updateInfo(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = lua_item.configDict[arg_21_1]
 
-	if not var_18_0 then
+	if not var_21_0 then
 		return
 	end
 
-	arg_18_0._txtSceneName.text = var_18_0.name
-	arg_18_0._txtSceneDescr.text = var_18_0.desc
+	arg_21_0._txtSceneName.text = var_21_0.name
+	arg_21_0._txtSceneDescr.text = var_21_0.desc
 
-	if arg_18_2 == 1 then
-		local var_18_1 = PlayerModel.instance:getPlayinfo()
-		local var_18_2 = TimeUtil.timestampToString5(ServerTime.timeInLocal(var_18_1.registerTime / 1000))
+	if arg_21_2 == 1 then
+		local var_21_1 = PlayerModel.instance:getPlayinfo()
+		local var_21_2 = TimeUtil.timestampToString5(ServerTime.timeInLocal(var_21_1.registerTime / 1000))
 
-		arg_18_0._txtTime.text = string.format(luaLang("receive_time"), var_18_2)
+		arg_21_0._txtTime.text = string.format(luaLang("receive_time"), var_21_2)
 	else
-		local var_18_3 = ItemModel.instance:getById(arg_18_1)
+		local var_21_3 = ItemModel.instance:getById(arg_21_1)
 
-		if var_18_3 and var_18_3.quantity > 0 and var_18_3.lastUpdateTime then
-			local var_18_4 = TimeUtil.timestampToString5(ServerTime.timeInLocal(var_18_3.lastUpdateTime / 1000))
+		if var_21_3 and var_21_3.quantity > 0 and var_21_3.lastUpdateTime then
+			local var_21_4 = TimeUtil.timestampToString5(ServerTime.timeInLocal(var_21_3.lastUpdateTime / 1000))
 
-			arg_18_0._txtTime.text = string.format(luaLang("receive_time"), var_18_4)
+			arg_21_0._txtTime.text = string.format(luaLang("receive_time"), var_21_4)
 		else
-			arg_18_0._txtTime.text = ""
+			arg_21_0._txtTime.text = ""
 		end
 	end
 end
 
-function var_0_0.onClose(arg_19_0)
-	return
+function var_0_0.onClose(arg_22_0)
+	arg_22_0:_resetrolesStoryMaskActive()
 end
 
-function var_0_0.onDestroyView(arg_20_0)
+function var_0_0.onDestroyView(arg_23_0)
 	return
 end
 

@@ -91,12 +91,20 @@ end
 
 function var_0_0._playFollowBg(arg_5_0)
 	arg_5_0._bgGo = StoryViewMgr.instance:getStoryFrontBgGo()
+	arg_5_0._bgFrontGo = gohelper.findChild(arg_5_0._bgGo, "#simage_bgimg")
 
-	local var_5_0, var_5_1 = transformhelper.getLocalPos(arg_5_0._uieffectGo.transform)
+	local var_5_0, var_5_1 = transformhelper.getLocalPos(arg_5_0._bgFrontGo.transform)
 
-	arg_5_0._deltaPos = {
+	arg_5_0._initFrontPos = {
 		var_5_0,
 		var_5_1
+	}
+
+	local var_5_2, var_5_3 = transformhelper.getLocalPos(arg_5_0._uieffectGo.transform)
+
+	arg_5_0._deltaPos = {
+		var_5_2,
+		var_5_3
 	}
 
 	TaskDispatcher.runRepeat(arg_5_0._followBg, arg_5_0, 0.02)
@@ -104,8 +112,11 @@ end
 
 function var_0_0._followBg(arg_6_0)
 	local var_6_0, var_6_1 = transformhelper.getLocalScale(arg_6_0._bgGo.transform)
+	local var_6_2, var_6_3 = transformhelper.getLocalPos(arg_6_0._bgFrontGo.transform)
+	local var_6_4 = var_6_0 * (arg_6_0._deltaPos[1] + var_6_2 - arg_6_0._initFrontPos[1])
+	local var_6_5 = var_6_1 * (arg_6_0._deltaPos[2] + var_6_3 - arg_6_0._initFrontPos[2])
 
-	transformhelper.setLocalPosXY(arg_6_0._uieffectGo.transform, var_6_0 * arg_6_0._deltaPos[1], var_6_1 * arg_6_0._deltaPos[2])
+	transformhelper.setLocalPosXY(arg_6_0._uieffectGo.transform, var_6_4, var_6_5)
 	transformhelper.setLocalScale(arg_6_0._uieffectGo.transform, var_6_1, var_6_1, 1)
 end
 

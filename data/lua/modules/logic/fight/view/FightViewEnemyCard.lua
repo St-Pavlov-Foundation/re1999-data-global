@@ -15,7 +15,6 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._myActBreakFlow = FlowSequence.New()
 
 	arg_1_0._myActBreakFlow:addWork(FightMyActPointBreakEffect.New())
-	arg_1_0._myActBreakFlow:addWork(FightEnemyPlayCardOpInEffect.New())
 
 	arg_1_0._enemyActBreakFlow = FlowSequence.New()
 
@@ -60,8 +59,6 @@ function var_0_0.removeEvents(arg_4_0)
 end
 
 function var_0_0._onStartSequenceFinish(arg_5_0)
-	arg_5_0:_updateEnemyCardItems()
-
 	local var_5_0 = FightDataHelper.roundMgr:getRoundData()
 
 	arg_5_0._myActPoint = FightDataHelper.operationDataMgr.actPoint
@@ -87,8 +84,6 @@ function var_0_0._onRoundSequenceFinish(arg_7_0)
 		arg_7_0._enemyActBreakFlow:stop()
 		arg_7_0._enemyActBreakFlow:unregisterDoneListener(arg_7_0._onEnemyActBreakDone, arg_7_0)
 	end
-
-	arg_7_0:_updateEnemyCardItems()
 
 	local var_7_0 = FightDataHelper.roundMgr:getRoundData()
 	local var_7_1 = FightDataHelper.operationDataMgr.actPoint
@@ -144,8 +139,6 @@ function var_0_0._onSummon(arg_12_0, arg_12_1)
 	if not arg_12_1 or not arg_12_1:isEnemySide() then
 		return
 	end
-
-	arg_12_0:_updateEnemyCardItems()
 end
 
 function var_0_0._onEntityDead(arg_13_0, arg_13_1)
@@ -262,67 +255,21 @@ function var_0_0._onEnemyActBreakDone(arg_17_0)
 	gohelper.setActive(arg_17_0._opItemContainer, false)
 end
 
-function var_0_0._updateEnemyCardItems(arg_18_0)
-	local var_18_0 = FightDataHelper.roundMgr:getRoundData()
+function var_0_0._showEnemyCardTip(arg_18_0)
+	local var_18_0 = FightDataHelper.roundMgr:getRoundData():getAIUseCardMOList()
+	local var_18_1 = var_18_0 and #var_18_0 or 0
+	local var_18_2 = recthelper.getAnchorX(arg_18_0._opItemList[var_18_1].go.transform.parent)
+	local var_18_3 = recthelper.getAnchorY(arg_18_0._opItemList[var_18_1].go.transform.parent)
 
-	if not var_18_0 then
-		return
-	end
+	recthelper.setAnchor(arg_18_0._enemyCardTip.transform, var_18_2 + 31, var_18_3 + 7.5)
 
-	local var_18_1 = var_18_0:getAIUseCardMOList()
-	local var_18_2 = var_18_1 and #var_18_1 or 0
+	arg_18_0._txtActionCount.text = var_18_1
 
-	for iter_18_0 = 1, var_18_2 do
-		local var_18_3 = var_18_1[iter_18_0]
-		local var_18_4 = arg_18_0._opItemList[iter_18_0]
-
-		if not var_18_4 then
-			local var_18_5 = gohelper.cloneInPlace(arg_18_0._opItemGO, "item" .. iter_18_0)
-			local var_18_6 = gohelper.findChild(var_18_5, "op")
-
-			var_18_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_6, FightOpItem)
-
-			table.insert(arg_18_0._opItemList, var_18_4)
-		end
-
-		local var_18_7 = var_18_4.go.transform.parent.gameObject
-		local var_18_8 = {
-			longPress = SLFramework.UGUI.UILongPressListener.Get(var_18_7),
-			clickUp = SLFramework.UGUI.UIClickListener.Get(var_18_7)
-		}
-
-		var_18_8.longPress:AddLongPressListener(arg_18_0._showEnemyCardTip, arg_18_0)
-		var_18_8.clickUp:AddClickUpListener(arg_18_0._onEnemyCardClickUp, arg_18_0)
-
-		arg_18_0._longPressTab[iter_18_0] = var_18_8
-
-		gohelper.setActive(var_18_7, true)
-		var_18_4:updateCardInfoMO(var_18_3)
-		gohelper.setActive(var_18_4.go, false)
-	end
-
-	for iter_18_1 = var_18_2 + 1, #arg_18_0._opItemList do
-		local var_18_9 = arg_18_0._opItemList[iter_18_1].go.transform.parent.gameObject
-
-		gohelper.setActive(var_18_9, false)
-	end
+	gohelper.setActive(arg_18_0._enemyCardTip, true)
 end
 
-function var_0_0._showEnemyCardTip(arg_19_0)
-	local var_19_0 = FightDataHelper.roundMgr:getRoundData():getAIUseCardMOList()
-	local var_19_1 = var_19_0 and #var_19_0 or 0
-	local var_19_2 = recthelper.getAnchorX(arg_19_0._opItemList[var_19_1].go.transform.parent)
-	local var_19_3 = recthelper.getAnchorY(arg_19_0._opItemList[var_19_1].go.transform.parent)
-
-	recthelper.setAnchor(arg_19_0._enemyCardTip.transform, var_19_2 + 31, var_19_3 + 7.5)
-
-	arg_19_0._txtActionCount.text = var_19_1
-
-	gohelper.setActive(arg_19_0._enemyCardTip, true)
-end
-
-function var_0_0._onEnemyCardClickUp(arg_20_0)
-	gohelper.setActive(arg_20_0._enemyCardTip, false)
+function var_0_0._onEnemyCardClickUp(arg_19_0)
+	gohelper.setActive(arg_19_0._enemyCardTip, false)
 end
 
 return var_0_0

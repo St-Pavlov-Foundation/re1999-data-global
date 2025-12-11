@@ -5733,6 +5733,167 @@
     "animName": "idle_room"
   },
   {
+    "skinId": 311303,
+    "id": 131311301,
+    "point": "special3",
+    "effectRes": "v3a1_alf/v3a1_alf_interact3",
+    "animName": "interact"
+  },
+  {
+    "skinId": 311303,
+    "id": 131311302,
+    "point": "special2",
+    "effectRes": "v3a1_alf/v3a1_alf_idleroom2",
+    "animName": "idle_room"
+  },
+  {
+    "skinId": 312501,
+    "id": 131312501,
+    "point": "special2",
+    "effectRes": "v3a1_ysm/v3a1_ysm_interact2",
+    "animName": "interact"
+  },
+  {
+    "skinId": 312502,
+    "id": 131312502,
+    "point": "special2",
+    "effectRes": "v3a1_ysm/v3a1_ysm_interact2",
+    "animName": "interact"
+  },
+  {
+    "skinId": 312501,
+    "id": 131312503,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday_15zhen",
+    "animName": "idle_birthday_up"
+  },
+  {
+    "skinId": 312501,
+    "id": 131312504,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday",
+    "animName": "idle_birthday_loop"
+  },
+  {
+    "skinId": 312502,
+    "id": 131312505,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday_15zhen",
+    "animName": "idle_birthday_up"
+  },
+  {
+    "skinId": 312502,
+    "id": 131312506,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday",
+    "animName": "idle_birthday_loop"
+  },
+  {
+    "skinId": 313201,
+    "id": 131313201,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday_15zhen",
+    "animName": "idle_birthday_up"
+  },
+  {
+    "skinId": 313201,
+    "id": 131313202,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday",
+    "animName": "idle_birthday_loop"
+  },
+  {
+    "skinId": 313202,
+    "id": 131313203,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday_15zhen",
+    "animName": "idle_birthday_up"
+  },
+  {
+    "skinId": 313202,
+    "id": 131313204,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday",
+    "animName": "idle_birthday_loop"
+  },
+  {
+    "skinId": 307704,
+    "id": 131307701,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday_15zhen",
+    "animName": "idle_birthday_up"
+  },
+  {
+    "skinId": 307704,
+    "id": 131307702,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday",
+    "animName": "idle_birthday_loop"
+  },
+  {
+    "skinId": 311303,
+    "id": 131311303,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday_15zhen",
+    "animName": "idle_birthday_up"
+  },
+  {
+    "skinId": 311303,
+    "id": 131311304,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday",
+    "animName": "idle_birthday_loop"
+  },
+  {
+    "skinId": 300731,
+    "id": 131300701,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday_15zhen",
+    "animName": "idle_birthday_up"
+  },
+  {
+    "skinId": 300731,
+    "id": 131300702,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday",
+    "animName": "idle_birthday_loop"
+  },
+  {
+    "skinId": 303103,
+    "id": 131303101,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday_15zhen",
+    "animName": "idle_birthday_up"
+  },
+  {
+    "skinId": 303103,
+    "id": 131303102,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday",
+    "animName": "idle_birthday_loop"
+  },
+  {
+    "skinId": 309504,
+    "id": 133309501,
+    "point": "special2",
+    "effectRes": "v3a3_hzsx/v3a3_hzsx_idleroom2",
+    "animName": "idle_room"
+  },
+  {
+    "skinId": 309504,
+    "id": 133309502,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday_15zhen",
+    "animName": "idle_birthday_up"
+  },
+  {
+    "skinId": 309504,
+    "id": 133309503,
+    "point": "birthday",
+    "effectRes": "v1a9_birthday/juese_birthday",
+    "animName": "idle_birthday_loop"
+  },
+  {
     "skinId": 305601,
     "id": 116305601,
     "point": "birthday",

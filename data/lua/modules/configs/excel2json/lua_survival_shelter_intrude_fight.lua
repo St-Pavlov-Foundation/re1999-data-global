@@ -10,12 +10,14 @@ local var_0_1 = {
 	image = 5,
 	target = 2,
 	desc = 11,
-	saveMonster = 12,
-	destructionLevel = 13,
+	saveMonster = 13,
+	toward = 12,
 	model = 6,
-	drop = 14,
+	cleanpoint = 14,
 	id = 1,
-	scale = 7
+	destructionLevel = 15,
+	scale = 7,
+	drop = 16
 }
 local var_0_2 = {
 	"id"

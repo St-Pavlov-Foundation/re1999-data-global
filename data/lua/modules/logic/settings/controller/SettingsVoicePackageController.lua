@@ -100,7 +100,7 @@ function var_0_0.getLocalVersionInt(arg_6_0, arg_6_1)
 	return 0
 end
 
-function var_0_0.switchVoiceType(arg_7_0, arg_7_1, arg_7_2)
+function var_0_0.switchVoiceType(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
 	local var_7_0 = GameConfig:GetCurVoiceShortcut()
 	local var_7_1 = GameLanguageMgr.instance:getStoryIndexByShortCut(arg_7_1)
 
@@ -109,6 +109,11 @@ function var_0_0.switchVoiceType(arg_7_0, arg_7_1, arg_7_2)
 	PlayerPrefsHelper.setString(PlayerPrefsKey.VoiceTypeKey_Story, arg_7_1)
 	AudioMgr.instance:changeLang(arg_7_1)
 	GameConfig:SetCurVoiceType(arg_7_1)
+
+	if arg_7_3 then
+		return
+	end
+
 	arg_7_0:dispatchEvent(SettingsEvent.OnChangeVoiceType)
 
 	local var_7_2 = {

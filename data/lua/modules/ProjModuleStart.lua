@@ -86,7 +86,7 @@ function var_0_0.initFramework(arg_10_0)
 end
 
 function var_0_0.initModuleLogic(arg_11_0)
-	GameBranchMgr.instance:init(3, 0)
+	GameBranchMgr.instance:init()
 
 	local var_11_0 = addGlobalModule("modules.setting.module_mvc", "module_mvc")
 

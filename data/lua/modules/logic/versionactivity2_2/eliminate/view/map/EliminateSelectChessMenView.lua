@@ -14,7 +14,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goEmpty = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Empty")
 	arg_1_0._goDetail = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Detail")
 	arg_1_0._imageChessQualityBG = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_Detail/Info/#image_ChessQualityBG")
-	arg_1_0._imageChess = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_Detail/Info/#image_Chess")
+	arg_1_0._imageChess = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_Detail/Info/#image_Chess")
 	arg_1_0._goResource = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Detail/Info/#go_Resource")
 	arg_1_0._goResourceItem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Detail/Info/#go_Resource/#go_ResourceItem")
 	arg_1_0._imageResourceQuality = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_Detail/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality")
@@ -244,7 +244,7 @@ function var_0_0._onSelectChessMen(arg_19_0)
 	local var_19_3 = var_19_0.costList
 
 	gohelper.CreateObjList(arg_19_0, arg_19_0._onItemShow, var_19_3, arg_19_0._goResource, arg_19_0._goResourceItem)
-	UISpriteSetMgr.instance:setV2a2ChessSprite(arg_19_0._imageChess, var_19_1.resPic, false)
+	SurvivalUnitIconHelper.instance:setNpcIcon(arg_19_0._imageChess, var_19_1.resPic)
 	gohelper.setActive(arg_19_0._goStar1, false)
 end
 

@@ -2,11 +2,11 @@
 
 local var_0_0 = class("FightBuffAddCardContinueChannel")
 
-var_0_0.RecordCount2BuffEffect = {
+var_0_0.Count2BuffEffectName = {
 	nil,
-	"buff/alf_kpjp_2",
-	"buff/alf_kpjp_3",
-	"buff/alf_kpjp_4"
+	"effect2",
+	"effect3",
+	"effect4"
 }
 
 function var_0_0.onBuffStart(arg_1_0, arg_1_1, arg_1_2)
@@ -35,15 +35,9 @@ function var_0_0.getEffectRes(arg_2_0, arg_2_1)
 		end
 	end
 
-	local var_2_3 = var_0_0.RecordCount2BuffEffect[var_2_2]
+	local var_2_3 = arg_2_0.entity:getMO().skin
 
-	if not var_2_3 then
-		logError("阿莱夫 没有找到对应数量的特效 ： " .. tostring(var_2_2))
-
-		return var_0_0.RecordCount2BuffEffect[2], 2
-	end
-
-	return var_2_3, var_2_2
+	return (lua_fight_sp_effect_alf_record_buff_effect.configDict[var_2_3] or lua_fight_sp_effect_alf_record_buff_effect.configList[1])[var_0_0.Count2BuffEffectName[var_2_2]], var_2_2
 end
 
 function var_0_0.createEffect(arg_3_0, arg_3_1)

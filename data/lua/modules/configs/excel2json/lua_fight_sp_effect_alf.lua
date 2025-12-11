@@ -2,10 +2,11 @@
 
 local var_0_0 = {}
 local var_0_1 = {
+	pullOutRes = 4,
 	resName = 1,
-	residualRes = 2,
-	pullOutRes = 3,
-	audioId = 4
+	audioId = 5,
+	skinId = 2,
+	residualRes = 3
 }
 local var_0_2 = {
 	"resName"

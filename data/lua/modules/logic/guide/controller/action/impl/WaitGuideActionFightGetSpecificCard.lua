@@ -16,14 +16,12 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 end
 
 function var_0_0._onRoundStart(arg_3_0)
-	local var_3_0 = FightModel.instance:getCurStage()
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
+		local var_3_0 = FightDataHelper.handCardMgr.handCard
 
-	if var_3_0 == FightEnum.Stage.Card or var_3_0 == FightEnum.Stage.AutoCard then
-		local var_3_1 = FightDataHelper.handCardMgr.handCard
-
-		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+		for iter_3_0, iter_3_1 in ipairs(var_3_0) do
 			if arg_3_0._cardSkillId == iter_3_1.skillId then
-				if var_3_0 == FightEnum.Stage.AutoCard then
+				if FightDataHelper.stateMgr:getIsAuto() then
 					FightController.instance:dispatchEvent(FightEvent.OnGuideStopAutoFight)
 				end
 
@@ -36,12 +34,11 @@ function var_0_0._onRoundStart(arg_3_0)
 end
 
 function var_0_0._onDistributeCardDone(arg_4_0)
-	local var_4_0 = FightModel.instance:getCurStage()
-	local var_4_1 = FightDataHelper.handCardMgr.handCard
+	local var_4_0 = FightDataHelper.handCardMgr.handCard
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
 		if arg_4_0._cardSkillId == iter_4_1.skillId then
-			if FightModel.instance:isAuto() then
+			if FightDataHelper.stateMgr:getIsAuto() then
 				FightController.instance:dispatchEvent(FightEvent.OnGuideStopAutoFight)
 			end
 

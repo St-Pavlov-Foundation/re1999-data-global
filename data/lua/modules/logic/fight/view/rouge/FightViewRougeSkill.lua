@@ -44,7 +44,7 @@ function var_0_0.onInitView(arg_1_0)
 end
 
 function var_0_0.addEvents(arg_2_0)
-	if not FightReplayModel.instance:isReplay() then
+	if not FightDataHelper.stateMgr.isReplay then
 		arg_2_0._click:AddClickListener(arg_2_0._onClick, arg_2_0)
 		arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, arg_2_0._onTouch, arg_2_0)
 	end
@@ -199,7 +199,7 @@ function var_0_0._onUpdateSpeed(arg_18_0)
 end
 
 function var_0_0._checkStartReplay(arg_19_0)
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		arg_19_0._click:RemoveClickListener()
 
 		for iter_19_0, iter_19_1 in ipairs(arg_19_0._detailClick) do
@@ -368,18 +368,22 @@ function var_0_0._checkPlayPowerMaxAudio(arg_29_0)
 	arg_29_0._prevPower = var_29_4
 end
 
-function var_0_0._onClickSkillIcon(arg_30_0, arg_30_1)
+function var_0_0._onClickSkillIcon(arg_30_0, arg_30_1, arg_30_2)
+	if FightDataHelper.lockOperateMgr:isLock() and not arg_30_2 then
+		return
+	end
+
 	arg_30_0._hasClickDetailIcon = true
 
 	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 
-	if FightViewHandCard.blockOperate or FightModel.instance:isAuto() then
+	if FightViewHandCard.blockOperate or FightDataHelper.stateMgr:getIsAuto() then
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() ~= FightStageMgr.StageType.Operate then
 		return
 	end
 
@@ -477,7 +481,7 @@ function var_0_0._simulateClickClothSkillIcon(arg_36_0, arg_36_1)
 
 		for iter_36_0, iter_36_1 in ipairs(var_36_1) do
 			if iter_36_1.skillId == var_36_0 then
-				arg_36_0:_onClickSkillIcon(iter_36_0)
+				arg_36_0:_onClickSkillIcon(iter_36_0, true)
 
 				return
 			end

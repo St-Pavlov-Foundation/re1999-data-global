@@ -1325,6 +1325,15 @@ function var_0_0.getEasyCombineFormulaListAndCostItemList(arg_44_0, arg_44_1)
 		end
 
 		table.sort(var_44_11, function(arg_45_0, arg_45_1)
+			local var_45_0 = RoomConfig.instance:getFormulaConfig(arg_45_0.formulaId)
+			local var_45_1 = RoomConfig.instance:getFormulaConfig(arg_45_1.formulaId)
+			local var_45_2 = var_45_0 and var_45_0.rare
+			local var_45_3 = var_45_1 and var_45_1.rare
+
+			if var_45_2 ~= var_45_3 then
+				return var_45_2 < var_45_3
+			end
+
 			return var_44_2[arg_45_0.formulaId] < var_44_2[arg_45_1.formulaId]
 		end)
 

@@ -41,15 +41,15 @@ function var_0_0.updateData(arg_4_0, arg_4_1)
 		local var_4_1 = arg_4_1.icon
 
 		if not arg_4_1.isValid then
-			var_4_0 = SurvivalEnum.EventChoiceColor.Gray
+			var_4_0 = SurvivalConst.EventChoiceColor.Gray
 		end
 
 		var_4_1 = var_4_1 ~= SurvivalEnum.EventChoiceIcon.None and var_4_1 or SurvivalEnum.EventChoiceIcon.Return
 
-		gohelper.setActive(arg_4_0._gobgred, var_4_0 == SurvivalEnum.EventChoiceColor.Red)
-		gohelper.setActive(arg_4_0._gobgyellow, var_4_0 == SurvivalEnum.EventChoiceColor.Yellow)
-		gohelper.setActive(arg_4_0._gobggreen, var_4_0 == SurvivalEnum.EventChoiceColor.Green)
-		gohelper.setActive(arg_4_0._gobggray, var_4_0 == SurvivalEnum.EventChoiceColor.Gray)
+		gohelper.setActive(arg_4_0._gobgred, var_4_0 == SurvivalConst.EventChoiceColor.Red)
+		gohelper.setActive(arg_4_0._gobgyellow, var_4_0 == SurvivalConst.EventChoiceColor.Yellow)
+		gohelper.setActive(arg_4_0._gobggreen, var_4_0 == SurvivalConst.EventChoiceColor.Green)
+		gohelper.setActive(arg_4_0._gobggray, var_4_0 == SurvivalConst.EventChoiceColor.Gray)
 		gohelper.setActive(arg_4_0._gonormal, arg_4_1.exStr == nil)
 		gohelper.setActive(arg_4_0._txt_desc_unlock, arg_4_1.exStr and arg_4_1.isValid)
 		gohelper.setActive(arg_4_0._txt_desc_lock, arg_4_1.exStr and not arg_4_1.isValid)

@@ -1,0 +1,1019 @@
+[
+  {
+    "id": 3003,
+    "teamRec": "3003#3116#3065#3087",
+    "teamDisplay": 1,
+    "equipRec": "1503|1438",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3004,
+    "teamRec": "3004#3095#3105#3109|3004#3066#3105#3109",
+    "teamDisplay": 1,
+    "equipRec": "1521|1507",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3005,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1501|1502|1503",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3006,
+    "teamRec": "3006#3080#3097#3087",
+    "teamDisplay": 1,
+    "equipRec": "1429",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3007,
+    "teamRec": "3007#3062#3121#3109|3007#3062#3114#3087",
+    "teamDisplay": 1,
+    "equipRec": "1512|1514|1543",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3009,
+    "teamRec": "3009#3098#3056#3104",
+    "teamDisplay": 1,
+    "equipRec": "1438|1430",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3010,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1501|1502|1503",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3011,
+    "teamRec": "3011#3102#3084#3100",
+    "teamDisplay": 1,
+    "equipRec": "1509|1549",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3012,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1501|1502|1503",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3013,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1501|1502|1503",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3014,
+    "teamRec": "3014#3102#3084#3100",
+    "teamDisplay": 1,
+    "equipRec": "1501|1502|1503",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3015,
+    "teamRec": "3015#3102#3084#3100",
+    "teamDisplay": 1,
+    "equipRec": "1413|1509",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3016,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1501|1502|1503",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3017,
+    "teamRec": "3017#3080#3095#3087",
+    "teamDisplay": 1,
+    "equipRec": "1413|1507",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3018,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1414|1502|1503",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3020,
+    "teamRec": "3020#3102#3084#3100",
+    "teamDisplay": 1,
+    "equipRec": "1504|1509",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3022,
+    "teamRec": "3022#3102#3084#3100",
+    "teamDisplay": 1,
+    "equipRec": "1420",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3023,
+    "teamRec": "3023#3114#3063#3024",
+    "teamDisplay": 1,
+    "equipRec": "1411|1503",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3024,
+    "teamRec": "3024#3120#3126#3088",
+    "teamDisplay": 1,
+    "equipRec": "1528",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3025,
+    "teamRec": "3025#3108#3113#3117",
+    "teamDisplay": 1,
+    "equipRec": "1507|1524|1437",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3026,
+    "teamRec": "3026#3114#3063#3024",
+    "teamDisplay": 1,
+    "equipRec": "1509|1510",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3027,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3028,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3030,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1431|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3031,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3032,
+    "teamRec": "3032#3062#3121#3047|3032#3062#3084#3047",
+    "teamDisplay": 1,
+    "equipRec": "1524|1544",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3033,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3034,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3035,
+    "teamRec": "3035#3032#3084#3047",
+    "teamDisplay": 1,
+    "equipRec": "1503",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3036,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3037,
+    "teamRec": "3037#3114#3063#3024",
+    "teamDisplay": 1,
+    "equipRec": "1503",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3038,
+    "teamRec": "3038#3003#3056#3087",
+    "teamDisplay": 1,
+    "equipRec": "1504|1509",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3039,
+    "teamRec": "3039#3065#3097#3087|3039#3111#3116#3047",
+    "teamDisplay": 1,
+    "equipRec": "1438|1515",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3040,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3041,
+    "teamRec": "3041#3108#3113#3117|3041#3108#3048#3117",
+    "teamDisplay": 1,
+    "equipRec": "1540|1437",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3042,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3043,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1514|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3044,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3045,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1439|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3046,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3047,
+    "teamRec": "3047#3120#3088#3126",
+    "teamDisplay": 1,
+    "equipRec": "1541|1440|1431",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3048,
+    "teamRec": "3048#3108#3113#3117|3048#3108#3041#3117",
+    "teamDisplay": 1,
+    "equipRec": "1540|1437",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3049,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3050,
+    "teamRec": "3050#3102#3084#3100",
+    "teamDisplay": 1,
+    "equipRec": "1503",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3051,
+    "teamRec": "3051#3062#3121#3047|3051#3126#3088#3074",
+    "teamDisplay": 1,
+    "equipRec": "1528|1413|1426",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3052,
+    "teamRec": "3052#3094#3095#3105",
+    "teamDisplay": 1,
+    "equipRec": "1439|1529",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3053,
+    "teamRec": "3053#3066#3079#3083",
+    "teamDisplay": 1,
+    "equipRec": "1437|1511|1440",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3054,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3055,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3056,
+    "teamRec": "3056#3098#3104#3009",
+    "teamDisplay": 1,
+    "equipRec": "1504|1434",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3057,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1435",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3058,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3059,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3060,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1432",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3061,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3062,
+    "teamRec": "3062#3114#3121#3047",
+    "teamDisplay": 1,
+    "equipRec": "1509|1512|1549",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3063,
+    "teamRec": "3063#3083#3105#3109|3063#3114#3062#3047",
+    "teamDisplay": 1,
+    "equipRec": "1538|1523|1524",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3064,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1433",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3070,
+    "teamRec": "3070#3063#3105#3109",
+    "teamDisplay": 1,
+    "equipRec": "1513|1524|1539",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3071,
+    "teamRec": "3071#3098#3009#3056",
+    "teamDisplay": 1,
+    "equipRec": "1430",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3072,
+    "teamRec": "3072#3114#3062#3109",
+    "teamDisplay": 1,
+    "equipRec": "1512|1501|1524",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3066,
+    "teamRec": "3066#3079#3083#3053|3066#3110#3105#3109",
+    "teamDisplay": 1,
+    "equipRec": "1539|1434|1513",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3079,
+    "teamRec": "3079#3066#3083#3053",
+    "teamDisplay": 1,
+    "equipRec": "1514|1509",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3073,
+    "teamRec": "3073#3081#3062#3117",
+    "teamDisplay": 1,
+    "equipRec": "1515|1509|1546",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3074,
+    "teamRec": "3074#3120#3126#3088|3074#3086#3107#3128",
+    "teamDisplay": 1,
+    "equipRec": "1511|1440|1528",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3075,
+    "teamRec": "3075#3094#3052#3105|3075#3102#3100#3084",
+    "teamDisplay": 1,
+    "equipRec": "1549|1503",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3076,
+    "teamRec": "3076#3073#3081#3047",
+    "teamDisplay": 1,
+    "equipRec": "1503",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3082,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3083,
+    "teamRec": "3083#3063#3105#3109",
+    "teamDisplay": 1,
+    "equipRec": "1521|1534",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3084,
+    "teamRec": "3084#3032#3062#3047",
+    "teamDisplay": 1,
+    "equipRec": "1539|1537|1522",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3065,
+    "teamRec": "3065#3095#3097#3087|3065#3003#3116#3087",
+    "teamDisplay": 1,
+    "equipRec": "1524|1504",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3081,
+    "teamRec": "3081#3073#3095#3102|3081#3083#3066#3109",
+    "teamDisplay": 1,
+    "equipRec": "1523|1504",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3077,
+    "teamRec": "3077#3097#3105#3087|3077#3102#3105#3087",
+    "teamDisplay": 1,
+    "equipRec": "1526|1521|1504",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3078,
+    "teamRec": "3065#3078#3095#3087",
+    "teamDisplay": 1,
+    "equipRec": "1438|1503",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3087,
+    "teamRec": "3087#3065#3003#3116|3087#3077#3105#3097",
+    "teamDisplay": 1,
+    "equipRec": "1525|1440|1439",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3086,
+    "teamRec": "3086#3107#3128#3074",
+    "teamDisplay": 1,
+    "equipRec": "1527|1504",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3088,
+    "teamRec": "3088#3120#3126#3047",
+    "teamDisplay": 1,
+    "equipRec": "1537|1428|1530",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3080,
+    "teamRec": "3080#3065#3097#3095|3080#3077#3105#3087",
+    "teamDisplay": 1,
+    "equipRec": "1528",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3091,
+    "teamRec": "3091#3097#3065#3087",
+    "teamDisplay": 1,
+    "equipRec": "1535",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3094,
+    "teamRec": "3094#3052#3105#3095",
+    "teamDisplay": 1,
+    "equipRec": "1531|1549|1504",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3095,
+    "teamRec": "3095#3065#3087#3097|3095#3077#3105#3087",
+    "teamDisplay": 1,
+    "equipRec": "1436|1532",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3096,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3097,
+    "teamRec": "3097#3065#3087#3095|3097#3077#3105#3087",
+    "teamDisplay": 1,
+    "equipRec": "1534|1521|1507",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3098,
+    "teamRec": "3098#3104#3056#3009|3098#3104#3080#3009",
+    "teamDisplay": 1,
+    "equipRec": "1533|1436",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3099,
+    "teamRec": "3003#3004#3005#3006|3003#3004#3009#3010",
+    "teamDisplay": 0,
+    "equipRec": "1515|1420|1421",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3100,
+    "teamRec": "3100#3105#3095#3109|3100#3105#3066#3109",
+    "teamDisplay": 1,
+    "equipRec": "1536|1521|1504",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3101,
+    "teamRec": "3101#3100#3048#3020",
+    "teamDisplay": 1,
+    "equipRec": "1514",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3102,
+    "teamRec": "3102#3105#3110#3109|3102#3105#3083#3109",
+    "teamDisplay": 1,
+    "equipRec": "1537|1549|1534",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3103,
+    "teamRec": "3103#3094#3105#3052",
+    "teamDisplay": 1,
+    "equipRec": "1549",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3104,
+    "teamRec": "3104#3098#3056#3009|3104#3098#3080#3009",
+    "teamDisplay": 1,
+    "equipRec": "1538|1536",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3105,
+    "teamRec": "3105#3095#3110#3109|3105#3120#3088#3047",
+    "teamDisplay": 1,
+    "equipRec": "1539|1536|1547",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3106,
+    "teamRec": "3106#3083#3047#3105",
+    "teamDisplay": 1,
+    "equipRec": "1503",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3108,
+    "teamRec": "3108#3113#3048#3117|3108#3113#3025#3117",
+    "teamDisplay": 1,
+    "equipRec": "1540|1437",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3109,
+    "teamRec": "3109#3083#3063#3095|3109#3120#3088#3126",
+    "teamDisplay": 1,
+    "equipRec": "1541|1440",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3110,
+    "teamRec": "3110#3105#3095#3109|3110#3105#3066#3117",
+    "teamDisplay": 1,
+    "equipRec": "1542|1521|1539",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3111,
+    "teamRec": "3111#3062#3100#3112|3111#3062#3003#3112",
+    "teamDisplay": 1,
+    "equipRec": "1543|1504",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3112,
+    "teamRec": "3112#3062#3100#3111|3112#3098#3104#3056",
+    "teamDisplay": 1,
+    "equipRec": "1438",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3114,
+    "teamRec": "3114#3062#3121#3047|3114#3062#3102#3109",
+    "teamDisplay": 1,
+    "equipRec": "1544|1512",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3113,
+    "teamRec": "3113#3108#3048#3117|3113#3108#3025#3117",
+    "teamDisplay": 1,
+    "equipRec": "1545|1515",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3116,
+    "teamRec": "3116#3065#3003#3087",
+    "teamDisplay": 1,
+    "equipRec": "1546|1509",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3117,
+    "teamRec": "3117#3108#3113#3048|3117#3108#3113#3025",
+    "teamDisplay": 1,
+    "equipRec": "1547|1515",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3118,
+    "teamRec": "3118#3116#3062#3047",
+    "teamDisplay": 1,
+    "equipRec": "1503",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3107,
+    "teamRec": "3107#3086#3128#3074|3107#3128#3105#3074",
+    "teamDisplay": 1,
+    "equipRec": "1550|1539",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3115,
+    "teamRec": "3115#3084#3062#3047",
+    "teamDisplay": 1,
+    "equipRec": "1546|1438",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3120,
+    "teamRec": "3120#3126#3088#3074|3120#3105#3088#3109",
+    "teamDisplay": 1,
+    "equipRec": "1548",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3121,
+    "teamRec": "3121#3114#3062#3047|3121#3114#3062#3102",
+    "teamDisplay": 1,
+    "equipRec": "1549|1546",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3126,
+    "teamRec": "3126#3120#3088#3047|3126#3051#3088#3074",
+    "teamDisplay": 1,
+    "equipRec": "1553|1521",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3128,
+    "teamRec": "3128#3107#3086#3074|3128#3107#3105#3074",
+    "teamDisplay": 1,
+    "equipRec": "1554|1536|1539",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3125,
+    "teamRec": "3125#3120#3126#3088|3125#3051#3126#3088",
+    "teamDisplay": 1,
+    "equipRec": "1556",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3132,
+    "teamRec": "3132#3107#3128#3074|3132#3086#3107#3074",
+    "teamDisplay": 1,
+    "equipRec": "1557",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3122,
+    "teamRec": "3122#3123#3124#3109|3122#3062#3084#3109",
+    "teamDisplay": 1,
+    "equipRec": "1504",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3123,
+    "teamRec": "3123#3124#3105#3109|3123#3098#3105#3087",
+    "teamDisplay": 1,
+    "equipRec": "1551",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3124,
+    "teamRec": "3124#3123#3105#3109|3124#3123#3084#3047",
+    "teamDisplay": 1,
+    "equipRec": "1552",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  }
+]

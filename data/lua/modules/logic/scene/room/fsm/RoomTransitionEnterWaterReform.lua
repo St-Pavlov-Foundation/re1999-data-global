@@ -7,9 +7,10 @@ function var_0_0.start(arg_1_0)
 end
 
 function var_0_0.onStart(arg_2_0, arg_2_1)
-	RoomWaterReformListModel.instance:initShowBlock()
+	RoomMapController.instance:clearRoomShowBlockList()
 	RoomWaterReformModel.instance:initWaterArea()
 	RoomWaterReformModel.instance:setWaterReform(true)
+	RoomWaterReformController.instance:changeReformMode(RoomEnum.ReformMode.Block)
 	RoomWaterReformController.instance:refreshHighlightWaterBlock()
 	RoomMapController.instance:dispatchEvent(RoomEvent.SelectRoomViewBlockOpTab, RoomEnum.RoomViewBlockOpMode.WaterReform)
 	arg_2_0:onDone()

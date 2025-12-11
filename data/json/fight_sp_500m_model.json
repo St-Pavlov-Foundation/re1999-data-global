@@ -1,0 +1,82 @@
+[
+  {
+    "monsterId": 102311001,
+    "front": "v3a1_670407_msh500m/670407_msh500m_fight",
+    "center": "v3a1_670408_msh500m/670408_msh500m_fight",
+    "behind": "v3a1_670409_msh500m/670409_msh500m_fight",
+    "headIcon": "670408_msh500m/670408_msh500m2",
+    "headIconName": "6704071"
+  },
+  {
+    "monsterId": 102311002,
+    "front": "v3a1_670407_msh500m/670407_msh500m_fight",
+    "center": "v3a1_670408_msh500m/670408_msh500m_fight",
+    "behind": "v3a1_670409_msh500m/670409_msh500m_fight",
+    "headIcon": "670408_msh500m/670408_msh500m4",
+    "headIconName": "6704073"
+  },
+  {
+    "monsterId": 102311003,
+    "front": "v3a1_670407_msh500m/670407_msh500m_fight",
+    "center": "v3a1_670408_msh500m/670408_msh500m_fight",
+    "behind": "v3a1_670409_msh500m/670409_msh500m_fight",
+    "headIcon": "670408_msh500m/670408_msh500m3",
+    "headIconName": "6704074"
+  },
+  {
+    "monsterId": 102311004,
+    "front": "v3a1_670407_msh500m/670407_msh500m_fight",
+    "center": "v3a1_670408_msh500m/670408_msh500m_fight",
+    "behind": "v3a1_670409_msh500m/670409_msh500m_fight",
+    "headIcon": "670408_msh500m/670408_msh500m1",
+    "headIconName": "6704072"
+  },
+  {
+    "monsterId": 102311005,
+    "front": "v3a1_670407_msh500m/670407_msh500m_fight",
+    "center": "v3a1_670408_msh500m/670408_msh500m_fight",
+    "behind": "v3a1_670409_msh500m/670409_msh500m_fight",
+    "headIcon": "670408_msh500m/670408_msh500m",
+    "headIconName": "670407"
+  },
+  {
+    "monsterId": 102311006,
+    "front": "v3a1_670407_msh500m/670407_msh500m_fight",
+    "center": "v3a1_670408_msh500m/670408_msh500m_fight",
+    "behind": "v3a1_670409_msh500m/670409_msh500m_fight",
+    "headIcon": "670408_msh500m/670408_msh500m2",
+    "headIconName": "6704071"
+  },
+  {
+    "monsterId": 102311007,
+    "front": "v3a1_670407_msh500m/670407_msh500m_fight",
+    "center": "v3a1_670408_msh500m/670408_msh500m_fight",
+    "behind": "v3a1_670409_msh500m/670409_msh500m_fight",
+    "headIcon": "670408_msh500m/670408_msh500m4",
+    "headIconName": "6704073"
+  },
+  {
+    "monsterId": 102311008,
+    "front": "v3a1_670407_msh500m/670407_msh500m_fight",
+    "center": "v3a1_670408_msh500m/670408_msh500m_fight",
+    "behind": "v3a1_670409_msh500m/670409_msh500m_fight",
+    "headIcon": "670408_msh500m/670408_msh500m3",
+    "headIconName": "6704074"
+  },
+  {
+    "monsterId": 102311009,
+    "front": "v3a1_670407_msh500m/670407_msh500m_fight",
+    "center": "v3a1_670408_msh500m/670408_msh500m_fight",
+    "behind": "v3a1_670409_msh500m/670409_msh500m_fight",
+    "headIcon": "670408_msh500m/670408_msh500m1",
+    "headIconName": "6704072"
+  },
+  {
+    "monsterId": 102311010,
+    "front": "v3a1_670407_msh500m/670407_msh500m_fight",
+    "center": "v3a1_670408_msh500m/670408_msh500m_fight",
+    "behind": "v3a1_670409_msh500m/670409_msh500m_fight",
+    "headIcon": "670408_msh500m/670408_msh500m",
+    "headIconName": "670407"
+  }
+]

@@ -37,7 +37,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5002,
@@ -77,7 +78,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 5003,
@@ -117,7 +119,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 5004,
@@ -157,7 +160,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 5005,
@@ -197,7 +201,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5006,
@@ -237,7 +242,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5007,
@@ -277,7 +283,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 5008,
@@ -317,7 +324,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5009,
@@ -357,7 +365,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5010,
@@ -397,7 +406,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5011,
@@ -437,7 +447,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 5012,
@@ -477,7 +488,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 5013,
@@ -517,7 +529,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5014,
@@ -557,7 +570,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 5015,
@@ -597,7 +611,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 5016,
@@ -637,7 +652,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5017,
@@ -677,7 +693,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5018,
@@ -717,7 +734,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5019,
@@ -757,7 +775,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11301,
@@ -773,7 +792,7 @@
     "numLimit": 1,
     "nameEn": "Ancient Observatory",
     "sourcesType": "2",
-    "sources": "",
+    "sources": "10172",
     "buildingShowType": 2,
     "produceDesc": "language_10022721",
     "gatherDesc": "500",
@@ -797,7 +816,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11302,
@@ -837,7 +857,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11303,
@@ -877,7 +898,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11304,
@@ -917,7 +939,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11305,
@@ -957,7 +980,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11306,
@@ -997,7 +1021,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11311,
@@ -1037,7 +1062,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11312,
@@ -1077,7 +1103,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 5020,
@@ -1117,7 +1144,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5021,
@@ -1157,7 +1185,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5022,
@@ -1197,7 +1226,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 5023,
@@ -1237,7 +1267,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 5024,
@@ -1277,7 +1308,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11501,
@@ -1317,7 +1349,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11502,
@@ -1357,7 +1390,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11503,
@@ -1397,7 +1431,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11504,
@@ -1437,7 +1472,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11505,
@@ -1477,7 +1513,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11509,
@@ -1517,7 +1554,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11506,
@@ -1557,7 +1595,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11507,
@@ -1597,7 +1636,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11508,
@@ -1637,7 +1677,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11601,
@@ -1677,7 +1718,8 @@
     "linkBlock": "60009#60016#60017#60018#60024#60027#60028#60034#60039#60044#60051#60052#60054#60062#60064#60072#60075#60076#60083#60084#60085#60090#60091#60092#60095#60096#60098#60099#60100#60101#60112#60040#60097",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11602,
@@ -1717,7 +1759,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11603,
@@ -1757,7 +1800,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11604,
@@ -1797,7 +1841,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11605,
@@ -1837,7 +1882,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11606,
@@ -1877,7 +1923,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11607,
@@ -1917,7 +1964,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11608,
@@ -1957,7 +2005,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11609,
@@ -1997,7 +2046,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11611,
@@ -2013,7 +2063,7 @@
     "numLimit": 1,
     "nameEn": "Peach Garden",
     "sourcesType": "1",
-    "sources": "95",
+    "sources": "10178|95",
     "buildingShowType": 1,
     "produceDesc": "language_10022728",
     "gatherDesc": "500",
@@ -2037,7 +2087,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11612,
@@ -2053,7 +2104,7 @@
     "numLimit": 1,
     "nameEn": "Bronze Loong Fu",
     "sourcesType": "2",
-    "sources": "10011671",
+    "sources": "10177|10011671",
     "buildingShowType": 1,
     "produceDesc": "language_10022728",
     "gatherDesc": "500",
@@ -2077,7 +2128,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11701,
@@ -2117,7 +2169,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11702,
@@ -2157,7 +2210,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11703,
@@ -2197,7 +2251,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11704,
@@ -2237,7 +2292,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11705,
@@ -2277,7 +2333,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11706,
@@ -2317,7 +2374,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11707,
@@ -2357,7 +2415,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11711,
@@ -2373,7 +2432,7 @@
     "numLimit": 1,
     "nameEn": "Festive Stand",
     "sourcesType": "1",
-    "sources": "95",
+    "sources": "95|10176",
     "buildingShowType": 1,
     "produceDesc": "language_10022728",
     "gatherDesc": "500",
@@ -2397,7 +2456,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11712,
@@ -2413,7 +2473,7 @@
     "numLimit": 1,
     "nameEn": "Festive Fair",
     "sourcesType": "2",
-    "sources": "10011713",
+    "sources": "10011713|10176",
     "buildingShowType": 1,
     "produceDesc": "language_10022728",
     "gatherDesc": "500",
@@ -2437,7 +2497,8 @@
     "linkBlock": "",
     "reflerction": 1,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11801,
@@ -2477,7 +2538,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11802,
@@ -2517,7 +2579,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11803,
@@ -2557,7 +2620,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11804,
@@ -2597,7 +2661,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11805,
@@ -2637,7 +2702,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11806,
@@ -2677,7 +2743,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11811,
@@ -2717,7 +2784,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11812,
@@ -2757,7 +2825,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11831,
@@ -2797,7 +2866,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": true,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11901,
@@ -2837,7 +2907,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11902,
@@ -2877,7 +2948,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11903,
@@ -2917,7 +2989,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11904,
@@ -2957,7 +3030,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11905,
@@ -2997,7 +3071,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11906,
@@ -3037,7 +3112,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 11907,
@@ -3077,7 +3153,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11908,
@@ -3117,7 +3194,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11911,
@@ -3157,7 +3235,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11912,
@@ -3197,7 +3276,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 11921,
@@ -3237,7 +3317,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12001,
@@ -3277,7 +3358,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12002,
@@ -3317,7 +3399,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12003,
@@ -3357,7 +3440,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12004,
@@ -3397,7 +3481,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12005,
@@ -3437,7 +3522,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12006,
@@ -3477,7 +3563,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12011,
@@ -3517,7 +3604,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12012,
@@ -3557,7 +3645,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12021,
@@ -3597,7 +3686,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12101,
@@ -3637,7 +3727,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12102,
@@ -3677,7 +3768,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12103,
@@ -3717,7 +3809,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12104,
@@ -3757,7 +3850,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12105,
@@ -3797,7 +3891,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12106,
@@ -3837,7 +3932,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12111,
@@ -3877,7 +3973,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12112,
@@ -3917,7 +4014,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22001,
@@ -3957,7 +4055,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": true,
-    "isAreaMainBuilding": true
+    "isAreaMainBuilding": true,
+    "canExchange": false
   },
   {
     "id": 22002,
@@ -3997,7 +4096,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": true,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22003,
@@ -4037,7 +4137,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": true,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22004,
@@ -4077,7 +4178,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": true,
-    "isAreaMainBuilding": true
+    "isAreaMainBuilding": true,
+    "canExchange": false
   },
   {
     "id": 22005,
@@ -4117,7 +4219,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": true,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22006,
@@ -4157,7 +4260,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": true,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22007,
@@ -4197,7 +4301,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": true,
-    "isAreaMainBuilding": true
+    "isAreaMainBuilding": true,
+    "canExchange": false
   },
   {
     "id": 22008,
@@ -4237,7 +4342,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": true,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22009,
@@ -4277,7 +4383,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": true,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22101,
@@ -4317,7 +4424,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22102,
@@ -4357,7 +4465,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22103,
@@ -4397,7 +4506,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22104,
@@ -4437,7 +4547,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22201,
@@ -4477,7 +4588,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22202,
@@ -4517,7 +4629,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22203,
@@ -4557,7 +4670,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22204,
@@ -4597,7 +4711,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22301,
@@ -4637,7 +4752,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22302,
@@ -4677,7 +4793,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22303,
@@ -4717,7 +4834,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12201,
@@ -4757,7 +4875,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12202,
@@ -4797,7 +4916,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12203,
@@ -4837,7 +4957,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12204,
@@ -4877,7 +4998,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12205,
@@ -4917,7 +5039,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12206,
@@ -4957,7 +5080,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12211,
@@ -4997,7 +5121,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12212,
@@ -5037,7 +5162,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12301,
@@ -5077,7 +5203,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12302,
@@ -5117,7 +5244,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12303,
@@ -5157,7 +5285,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12304,
@@ -5197,7 +5326,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12305,
@@ -5237,7 +5367,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12306,
@@ -5277,7 +5408,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12321,
@@ -5317,7 +5449,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12322,
@@ -5357,7 +5490,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12401,
@@ -5397,7 +5531,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12402,
@@ -5437,7 +5572,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12403,
@@ -5477,7 +5613,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12404,
@@ -5517,7 +5654,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12405,
@@ -5557,7 +5695,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12406,
@@ -5597,7 +5736,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12411,
@@ -5637,7 +5777,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12412,
@@ -5677,7 +5818,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12501,
@@ -5717,7 +5859,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12502,
@@ -5757,7 +5900,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12503,
@@ -5797,7 +5941,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12504,
@@ -5837,7 +5982,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12505,
@@ -5877,7 +6023,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12506,
@@ -5917,7 +6064,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12507,
@@ -5957,7 +6105,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12511,
@@ -5997,7 +6146,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12512,
@@ -6037,7 +6187,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12513,
@@ -6077,7 +6228,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12514,
@@ -6117,7 +6269,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 22304,
@@ -6157,7 +6310,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12601,
@@ -6197,7 +6351,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12602,
@@ -6237,7 +6392,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12603,
@@ -6277,7 +6433,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12604,
@@ -6317,7 +6474,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12605,
@@ -6357,7 +6515,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12606,
@@ -6397,7 +6556,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12701,
@@ -6437,7 +6597,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12702,
@@ -6477,7 +6638,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12703,
@@ -6517,7 +6679,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12704,
@@ -6557,7 +6720,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12705,
@@ -6597,7 +6761,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12706,
@@ -6637,7 +6802,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12721,
@@ -6677,7 +6843,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12722,
@@ -6717,7 +6884,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12723,
@@ -6757,7 +6925,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12724,
@@ -6797,7 +6966,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12801,
@@ -6837,7 +7007,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12802,
@@ -6877,7 +7048,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 12803,
@@ -6917,7 +7089,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12811,
@@ -6957,7 +7130,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 12812,
@@ -6997,7 +7171,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 13001,
@@ -7037,7 +7212,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 13002,
@@ -7077,7 +7253,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": true
   },
   {
     "id": 13003,
@@ -7117,7 +7294,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 13011,
@@ -7157,7 +7335,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 13012,
@@ -7197,7 +7376,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 130501,
@@ -7237,7 +7417,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 130502,
@@ -7277,7 +7458,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 130503,
@@ -7317,7 +7499,131 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
+  },
+  {
+    "id": 13101,
+    "areaId": 701,
+    "center": "0#0",
+    "name": "language_10096627",
+    "useDesc": "language_10022695",
+    "desc": "language_10096628",
+    "buildingType": 0,
+    "icon": "13101",
+    "rewardIcon": "13101",
+    "rare": 5,
+    "numLimit": 1,
+    "nameEn": "",
+    "sourcesType": "2",
+    "sources": "10172",
+    "buildingShowType": 1,
+    "produceDesc": "language_10022728",
+    "gatherDesc": "500",
+    "rotate": 0,
+    "offset": "0#0#0",
+    "uiScale": 1200,
+    "dragUpHeight": 500,
+    "alphaThreshold": 250,
+    "path": "building/3_1/building_13101",
+    "sound": 0,
+    "placeAudio": 0,
+    "audioExtendType": 0,
+    "audioExtendIds": "",
+    "buildDegree": 135,
+    "costResource": "",
+    "crossload": 0,
+    "vehicleType": 0,
+    "vehicleId": 0,
+    "canPlaceBlock": "",
+    "replaceBlock": "",
+    "linkBlock": "",
+    "reflerction": 0,
+    "canLevelUp": false,
+    "isAreaMainBuilding": false,
+    "canExchange": false
+  },
+  {
+    "id": 13102,
+    "areaId": 302,
+    "center": "0#0",
+    "name": "language_10096629",
+    "useDesc": "language_10022695",
+    "desc": "language_10096630",
+    "buildingType": 0,
+    "icon": "13102",
+    "rewardIcon": "13102",
+    "rare": 5,
+    "numLimit": 1,
+    "nameEn": "",
+    "sourcesType": "2",
+    "sources": "10172",
+    "buildingShowType": 1,
+    "produceDesc": "language_10022728",
+    "gatherDesc": "500",
+    "rotate": 0,
+    "offset": "0#0#0",
+    "uiScale": 1200,
+    "dragUpHeight": 500,
+    "alphaThreshold": 250,
+    "path": "building/3_1/building_13102",
+    "sound": 0,
+    "placeAudio": 0,
+    "audioExtendType": 0,
+    "audioExtendIds": "",
+    "buildDegree": 105,
+    "costResource": "",
+    "crossload": 0,
+    "vehicleType": 0,
+    "vehicleId": 0,
+    "canPlaceBlock": "",
+    "replaceBlock": "",
+    "linkBlock": "",
+    "reflerction": 0,
+    "canLevelUp": false,
+    "isAreaMainBuilding": false,
+    "canExchange": false
+  },
+  {
+    "id": 13103,
+    "areaId": 401,
+    "center": "0#0",
+    "name": "language_10096631",
+    "useDesc": "language_10022695",
+    "desc": "language_10096632",
+    "buildingType": 0,
+    "icon": "13103",
+    "rewardIcon": "13103",
+    "rare": 3,
+    "numLimit": 1,
+    "nameEn": "",
+    "sourcesType": "3",
+    "sources": "94",
+    "buildingShowType": 1,
+    "produceDesc": "language_10022728",
+    "gatherDesc": "500",
+    "rotate": 0,
+    "offset": "0#0#0",
+    "uiScale": 1200,
+    "dragUpHeight": 500,
+    "alphaThreshold": 250,
+    "path": "building/3_1/building_13103",
+    "sound": 0,
+    "placeAudio": 0,
+    "audioExtendType": 0,
+    "audioExtendIds": "",
+    "buildDegree": 75,
+    "costResource": "",
+    "crossload": 0,
+    "vehicleType": 0,
+    "vehicleId": 0,
+    "canPlaceBlock": "",
+    "replaceBlock": "",
+    "linkBlock": "",
+    "reflerction": 0,
+    "canLevelUp": false,
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 13111,
@@ -7357,7 +7663,8 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
   },
   {
     "id": 13112,
@@ -7397,6 +7704,171 @@
     "linkBlock": "",
     "reflerction": 0,
     "canLevelUp": false,
-    "isAreaMainBuilding": false
+    "isAreaMainBuilding": false,
+    "canExchange": false
+  },
+  {
+    "id": 13120,
+    "areaId": 101,
+    "center": "0#0",
+    "name": "language_10093757",
+    "useDesc": "language_10096633",
+    "desc": "language_10096634",
+    "buildingType": 8,
+    "icon": "",
+    "rewardIcon": "",
+    "rare": 3,
+    "numLimit": 1,
+    "nameEn": "",
+    "sourcesType": "",
+    "sources": "",
+    "buildingShowType": 1,
+    "produceDesc": "language_10022728",
+    "gatherDesc": "500",
+    "rotate": 0,
+    "offset": "0#0#0",
+    "uiScale": 1200,
+    "dragUpHeight": 500,
+    "alphaThreshold": 250,
+    "path": "building/3_1/building_131501",
+    "sound": 0,
+    "placeAudio": 0,
+    "audioExtendType": 0,
+    "audioExtendIds": "",
+    "buildDegree": 0,
+    "costResource": "",
+    "crossload": 0,
+    "vehicleType": 0,
+    "vehicleId": 0,
+    "canPlaceBlock": "",
+    "replaceBlock": "",
+    "linkBlock": "",
+    "reflerction": 0,
+    "canLevelUp": false,
+    "isAreaMainBuilding": false,
+    "canExchange": false
+  },
+  {
+    "id": 13121,
+    "areaId": 401,
+    "center": "0#0",
+    "name": "language_10096635",
+    "useDesc": "",
+    "desc": "",
+    "buildingType": 9,
+    "icon": "",
+    "rewardIcon": "",
+    "rare": 3,
+    "numLimit": 1,
+    "nameEn": "",
+    "sourcesType": "",
+    "sources": "",
+    "buildingShowType": 1,
+    "produceDesc": "language_10022728",
+    "gatherDesc": "500",
+    "rotate": 0,
+    "offset": "0#0#0",
+    "uiScale": 1200,
+    "dragUpHeight": 500,
+    "alphaThreshold": 250,
+    "path": "building/3_1/building_131502",
+    "sound": 0,
+    "placeAudio": 0,
+    "audioExtendType": 0,
+    "audioExtendIds": "",
+    "buildDegree": 0,
+    "costResource": "",
+    "crossload": 0,
+    "vehicleType": 0,
+    "vehicleId": 0,
+    "canPlaceBlock": "",
+    "replaceBlock": "",
+    "linkBlock": "",
+    "reflerction": 0,
+    "canLevelUp": false,
+    "isAreaMainBuilding": false,
+    "canExchange": false
+  },
+  {
+    "id": 13311,
+    "areaId": 302,
+    "center": "0#0",
+    "name": "language_10097108",
+    "useDesc": "language_10022695",
+    "desc": "language_10097109",
+    "buildingType": 0,
+    "icon": "13311",
+    "rewardIcon": "13311",
+    "rare": 4,
+    "numLimit": 1,
+    "nameEn": "",
+    "sourcesType": "2",
+    "sources": "10013320",
+    "buildingShowType": 1,
+    "produceDesc": "language_10022728",
+    "gatherDesc": "500",
+    "rotate": 0,
+    "offset": "0#0#0",
+    "uiScale": 1200,
+    "dragUpHeight": 500,
+    "alphaThreshold": 250,
+    "path": "building/3_3/building_13311",
+    "sound": 0,
+    "placeAudio": 0,
+    "audioExtendType": 0,
+    "audioExtendIds": "",
+    "buildDegree": 85,
+    "costResource": "",
+    "crossload": 0,
+    "vehicleType": 0,
+    "vehicleId": 0,
+    "canPlaceBlock": "",
+    "replaceBlock": "",
+    "linkBlock": "",
+    "reflerction": 0,
+    "canLevelUp": false,
+    "isAreaMainBuilding": false,
+    "canExchange": false
+  },
+  {
+    "id": 13312,
+    "areaId": 302,
+    "center": "0#0",
+    "name": "language_10097110",
+    "useDesc": "language_10022695",
+    "desc": "language_10097111",
+    "buildingType": 0,
+    "icon": "13312",
+    "rewardIcon": "13312",
+    "rare": 4,
+    "numLimit": 1,
+    "nameEn": "",
+    "sourcesType": "2",
+    "sources": "10013319",
+    "buildingShowType": 1,
+    "produceDesc": "language_10022728",
+    "gatherDesc": "500",
+    "rotate": 0,
+    "offset": "0#0#0",
+    "uiScale": 1200,
+    "dragUpHeight": 500,
+    "alphaThreshold": 250,
+    "path": "building/3_3/building_13312",
+    "sound": 0,
+    "placeAudio": 0,
+    "audioExtendType": 0,
+    "audioExtendIds": "",
+    "buildDegree": 85,
+    "costResource": "",
+    "crossload": 0,
+    "vehicleType": 0,
+    "vehicleId": 0,
+    "canPlaceBlock": "",
+    "replaceBlock": "",
+    "linkBlock": "",
+    "reflerction": 0,
+    "canLevelUp": false,
+    "isAreaMainBuilding": false,
+    "canExchange": false
   }
 ]

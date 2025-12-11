@@ -7,6 +7,9 @@ function var_0_0.onStart(arg_1_0)
 
 	if var_1_0 and var_1_0.nameUI then
 		var_1_0.nameUI:setShield(0)
+	end
+
+	if var_1_0 then
 		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, var_1_0, 0)
 	end
 

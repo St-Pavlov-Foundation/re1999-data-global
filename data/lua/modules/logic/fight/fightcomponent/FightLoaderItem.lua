@@ -14,19 +14,25 @@ function var_0_0.startLoad(arg_2_0)
 end
 
 function var_0_0.onLoadCallback(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0.assetItem
+
 	arg_3_0.assetItem = arg_3_1
 
-	local var_3_0 = arg_3_1.ResPath
-	local var_3_1 = arg_3_1.IsLoadSuccess
+	local var_3_1 = arg_3_1.ResPath
+	local var_3_2 = arg_3_1.IsLoadSuccess
 
 	arg_3_1:Retain()
 
-	if not var_3_1 then
-		logError("资源加载失败,URL:" .. var_3_0)
+	if var_3_0 then
+		var_3_0:Release()
+	end
+
+	if not var_3_2 then
+		logError("资源加载失败,URL:" .. var_3_1)
 	end
 
 	if not arg_3_0.handle.IS_DISPOSED and arg_3_0.callback then
-		arg_3_0.callback(arg_3_0.handle, var_3_1, arg_3_1, arg_3_0.param)
+		arg_3_0.callback(arg_3_0.handle, var_3_2, arg_3_1, arg_3_0.param)
 	end
 end
 

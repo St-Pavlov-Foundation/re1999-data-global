@@ -209,13 +209,19 @@ end
 
 function var_0_0._onLoadCallback(arg_10_0, arg_10_1)
 	if arg_10_1.IsLoadSuccess then
+		local var_10_0 = arg_10_0._assetItem
+
 		arg_10_0._assetItem = arg_10_1
 
 		arg_10_1:Retain()
 
-		local var_10_0 = arg_10_1:GetResource(arg_10_0._texturePath)
+		if var_10_0 then
+			var_10_0:Release()
+		end
 
-		arg_10_0.entity.spineRenderer:getReplaceMat():SetTexture(var_0_1, var_10_0)
+		local var_10_1 = arg_10_1:GetResource(arg_10_0._texturePath)
+
+		arg_10_0.entity.spineRenderer:getReplaceMat():SetTexture(var_0_1, var_10_1)
 	end
 end
 

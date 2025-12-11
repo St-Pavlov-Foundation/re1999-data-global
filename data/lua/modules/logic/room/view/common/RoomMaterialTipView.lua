@@ -66,7 +66,7 @@ function var_0_0._editableInitView(arg_7_0)
 	gohelper.setActive(arg_7_0._gobuyContent, false)
 	gohelper.setActive(arg_7_0._gosource, true)
 
-	arg_7_0._jumpParentGo = gohelper.findChild(arg_7_0.viewGO, "right/#go_buyContent/scroll_blockpackage/viewport/content")
+	arg_7_0._jumpParentGo = gohelper.findChild(arg_7_0.viewGO, "right/#go_source/#scroll_jump/Viewport/Content")
 	arg_7_0.jumpItemGos = {}
 
 	arg_7_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))

@@ -24,7 +24,7 @@ end
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0:com_registClick(arg_2_0.btnAxe, arg_2_0.onAxeClick)
 	arg_2_0:com_registClick(arg_2_0.btnBow, arg_2_0.onBowClick)
-	arg_2_0:com_registFightEvent(FightEvent.EnterFightState, arg_2_0.onEnterFightState)
+	arg_2_0:com_registFightEvent(FightEvent.SetAutoState, arg_2_0.onSetAutoState)
 end
 
 function var_0_0.removeEvents(arg_3_0)
@@ -78,8 +78,8 @@ function var_0_0.afterCloseAni(arg_7_0)
 	arg_7_0.PARENT_VIEW:closeThis()
 end
 
-function var_0_0.onEnterFightState(arg_8_0, arg_8_1)
-	if arg_8_1 == FightStageMgr.FightStateType.Auto then
+function var_0_0.onSetAutoState(arg_8_0, arg_8_1)
+	if arg_8_1 then
 		arg_8_0:checkAuto()
 	end
 end
@@ -141,7 +141,7 @@ function var_0_0.onOpen(arg_11_0)
 		gohelper.setActive(arg_11_0.axeUpRoot, var_11_3)
 	end
 
-	if FightDataHelper.stageMgr:inAutoFightState() then
+	if FightDataHelper.stateMgr:getIsAuto() then
 		arg_11_0:checkAuto()
 	end
 end

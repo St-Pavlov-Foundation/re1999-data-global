@@ -49,6 +49,7 @@ function var_0_0.playStoryByStartStep(arg_5_0, arg_5_1, arg_5_2)
 	arg_5_0._mark = false
 	arg_5_0._curStoryId = arg_5_1
 
+	StoryModel.instance:setCurStoryId(arg_5_1)
 	arg_5_0:initStoryData(arg_5_1, function()
 		StoryModel.instance:setStoryFirstStep(arg_5_2)
 		arg_5_0:dispatchEvent(StoryEvent.Start, arg_5_1)
@@ -74,6 +75,9 @@ function var_0_0.playStory(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
 	end
 
 	arg_7_0._curStoryId = arg_7_1
+
+	StoryModel.instance:setCurStoryId(arg_7_1)
+
 	arg_7_0._finishCallback = arg_7_3
 	arg_7_0._callbackTarget = arg_7_4
 	arg_7_0._param = arg_7_5
@@ -171,7 +175,7 @@ function var_0_0._checkAudioStart(arg_12_0)
 end
 
 function var_0_0._checkAudioEnd(arg_13_0)
-	if StoryModel.instance:isTypeSkip(StoryEnum.SkipType.AudioFade, var_0_0.instance._curStoryId) then
+	if StoryModel.instance:isTypeSkip(StoryEnum.SkipType.AudioFade, arg_13_0._curStoryId) then
 		return
 	end
 
@@ -198,6 +202,8 @@ function var_0_0.playStep(arg_16_0, arg_16_1)
 	arg_16_0:statStepStory()
 
 	arg_16_0._curStepId = arg_16_1
+
+	StoryModel.instance:setCurStepId(arg_16_0._curStepId)
 
 	local var_16_0 = {
 		stepType = StoryEnum.StepType.Normal,
@@ -256,6 +262,15 @@ function var_0_0.enterNext(arg_18_0)
 	if #var_18_0 == 0 then
 		arg_18_0:playFinished()
 	elseif not (#StoryStepModel.instance:getStepListById(arg_18_0._curStepId).optList > 0) then
+		if arg_18_0:_isBgEffStack(var_18_0[1]) then
+			arg_18_0._curStepId = var_18_0[1]
+
+			StoryModel.instance:setCurStepId(arg_18_0._curStepId)
+			arg_18_0:enterNext()
+
+			return
+		end
+
 		local var_18_1 = arg_18_0:_isStepHasChapterEnd(var_18_0[1])
 
 		if not arg_18_0._isReplay and not arg_18_0._isLeMiTeActivityStory and var_18_1 then
@@ -268,12 +283,26 @@ function var_0_0.enterNext(arg_18_0)
 	end
 end
 
-function var_0_0._isStepHasChapterEnd(arg_19_0, arg_19_1)
+function var_0_0._isBgEffStack(arg_19_0, arg_19_1)
+	if not arg_19_1 then
+		return false
+	end
+
 	local var_19_0 = StoryStepModel.instance:getStepListById(arg_19_1)
 
-	if #var_19_0.navigateList > 0 then
-		for iter_19_0, iter_19_1 in pairs(var_19_0.navigateList) do
-			if (iter_19_1.navigateType == StoryEnum.NavigateType.ChapterEnd or iter_19_1.navigateType == StoryEnum.NavigateType.ActivityEnd) and StoryModel.instance:isTypeSkip(StoryEnum.SkipType.ChapterEnd, var_0_0.instance._curStoryId) then
+	if not var_19_0 then
+		return false
+	end
+
+	return var_19_0.conversation.type == StoryEnum.ConversationType.BgEffStack
+end
+
+function var_0_0._isStepHasChapterEnd(arg_20_0, arg_20_1)
+	local var_20_0 = StoryStepModel.instance:getStepListById(arg_20_1)
+
+	if #var_20_0.navigateList > 0 then
+		for iter_20_0, iter_20_1 in pairs(var_20_0.navigateList) do
+			if (iter_20_1.navigateType == StoryEnum.NavigateType.ChapterEnd or iter_20_1.navigateType == StoryEnum.NavigateType.ActivityEnd) and StoryModel.instance:isTypeSkip(StoryEnum.SkipType.ChapterEnd, arg_20_0._curStoryId) then
 				return true
 			end
 		end
@@ -282,25 +311,26 @@ function var_0_0._isStepHasChapterEnd(arg_19_0, arg_19_1)
 	return false
 end
 
-function var_0_0.skipAllStory(arg_20_0)
-	arg_20_0:statSkipStory()
-	StoryModel.instance:addSkipLog(arg_20_0._curStepId)
+function var_0_0.skipAllStory(arg_21_0)
+	arg_21_0:statSkipStory()
+	StoryModel.instance:addSkipLog(arg_21_0._curStepId)
 
-	if arg_20_0._param and arg_20_0._param.storyIds then
-		for iter_20_0 = 1, #arg_20_0._param.storyIds do
-			if arg_20_0._param.storyIds[iter_20_0] ~= arg_20_0._curStoryId then
-				arg_20_0._curStoryId = arg_20_0._param.storyIds[iter_20_0]
+	if arg_21_0._param and arg_21_0._param.storyIds then
+		for iter_21_0 = 1, #arg_21_0._param.storyIds do
+			if arg_21_0._param.storyIds[iter_21_0] ~= arg_21_0._curStoryId then
+				arg_21_0._curStoryId = arg_21_0._param.storyIds[iter_21_0]
 
-				for iter_20_1 = iter_20_0, 1, -1 do
-					table.remove(arg_20_0._param.storyIds, iter_20_1)
+				for iter_21_1 = iter_21_0, 1, -1 do
+					table.remove(arg_21_0._param.storyIds, iter_21_1)
 				end
 
-				arg_20_0:initStoryData(arg_20_0._curStoryId, function()
-					arg_20_0:statStartStory()
+				arg_21_0:initStoryData(arg_21_0._curStoryId, function()
+					arg_21_0:statStartStory()
 
-					arg_20_0._curStepId = StoryModel.instance:getStoryFirstSteps()[1]
+					arg_21_0._curStepId = StoryModel.instance:getStoryFirstSteps()[1]
 
-					arg_20_0:skipAllStory()
+					StoryModel.instance:setCurStepId(arg_21_0._curStepId)
+					arg_21_0:skipAllStory()
 				end)
 
 				return
@@ -308,243 +338,246 @@ function var_0_0.skipAllStory(arg_20_0)
 		end
 	end
 
-	arg_20_0:playFinished(true)
+	arg_21_0:playFinished(true)
 end
 
-function var_0_0.skipStory(arg_22_0)
-	arg_22_0:statSkipStory()
+function var_0_0.skipStory(arg_23_0)
+	arg_23_0:statSkipStory()
 
-	local var_22_0 = StoryModel.instance:getSkipStep(arg_22_0._curStoryId, arg_22_0._curStepId)
+	local var_23_0 = StoryModel.instance:getSkipStep(arg_23_0._curStoryId, arg_23_0._curStepId)
 
-	StoryModel.instance:addSkipLog(arg_22_0._curStepId)
+	StoryModel.instance:addSkipLog(arg_23_0._curStepId)
 
-	local var_22_1 = var_22_0 == arg_22_0._curStepId
+	local var_23_1 = var_23_0 == arg_23_0._curStepId
 
-	arg_22_0._curStepId = var_22_0
+	arg_23_0._curStepId = var_23_0
 
-	if #StoryModel.instance:getFollowSteps(var_22_0) == 0 then
-		local var_22_2 = StoryStepModel.instance:getStepListById(var_22_0).videoList
+	StoryModel.instance:setCurStepId(arg_23_0._curStepId)
 
-		if #var_22_2 > 0 then
-			local var_22_3 = false
+	if #StoryModel.instance:getFollowSteps(var_23_0) == 0 then
+		local var_23_2 = StoryStepModel.instance:getStepListById(var_23_0).videoList
 
-			for iter_22_0, iter_22_1 in ipairs(var_22_2) do
-				if iter_22_1.orderType == StoryEnum.VideoOrderType.Produce then
-					var_22_3 = true
+		if #var_23_2 > 0 then
+			local var_23_3 = false
+
+			for iter_23_0, iter_23_1 in ipairs(var_23_2) do
+				if iter_23_1.orderType == StoryEnum.VideoOrderType.Produce then
+					var_23_3 = true
 				end
 			end
 
-			if var_22_3 and not var_22_1 then
-				arg_22_0:playStep(arg_22_0._curStepId)
-				arg_22_0:playStepChoose(arg_22_0._curStepId)
+			if var_23_3 and not var_23_1 then
+				arg_23_0:playStep(arg_23_0._curStepId)
+				arg_23_0:playStepChoose(arg_23_0._curStepId)
 
 				return
 			end
 		end
 
-		if arg_22_0._isReplay or arg_22_0._isSeasonActivityStory then
-			if arg_22_0._param and arg_22_0._param.storyIds then
-				for iter_22_2 = 1, #arg_22_0._param.storyIds do
-					if arg_22_0._param.storyIds[iter_22_2] ~= arg_22_0._curStoryId then
-						arg_22_0._curStoryId = arg_22_0._param.storyIds[iter_22_2]
+		if arg_23_0._isReplay or arg_23_0._isSeasonActivityStory then
+			if arg_23_0._param and arg_23_0._param.storyIds then
+				for iter_23_2 = 1, #arg_23_0._param.storyIds do
+					if arg_23_0._param.storyIds[iter_23_2] ~= arg_23_0._curStoryId then
+						arg_23_0._curStoryId = arg_23_0._param.storyIds[iter_23_2]
 
-						for iter_22_3 = iter_22_2, 1, -1 do
-							table.remove(arg_22_0._param.storyIds, iter_22_3)
+						for iter_23_3 = iter_23_2, 1, -1 do
+							table.remove(arg_23_0._param.storyIds, iter_23_3)
 						end
 
-						arg_22_0:initStoryData(arg_22_0._curStoryId, function()
-							arg_22_0:statStartStory()
+						arg_23_0:initStoryData(arg_23_0._curStoryId, function()
+							arg_23_0:statStartStory()
 
-							arg_22_0._curStepId = StoryModel.instance:getStoryFirstSteps()[1]
+							arg_23_0._curStepId = StoryModel.instance:getStoryFirstSteps()[1]
 
-							arg_22_0:skipStory()
+							StoryModel.instance:setCurStepId(arg_23_0._curStepId)
+							arg_23_0:skipStory()
 						end)
 
 						return
 					end
 				end
 			end
-		elseif arg_22_0._param and arg_22_0._param.storyIds then
-			for iter_22_4 = 1, #arg_22_0._param.storyIds do
-				if arg_22_0._param.storyIds[iter_22_4] ~= arg_22_0._curStoryId then
-					arg_22_0:playFinished(true)
-					arg_22_0:_playNextStory(arg_22_0._param)
+		elseif arg_23_0._param and arg_23_0._param.storyIds then
+			for iter_23_4 = 1, #arg_23_0._param.storyIds do
+				if arg_23_0._param.storyIds[iter_23_4] ~= arg_23_0._curStoryId then
+					arg_23_0:playFinished(true)
+					arg_23_0:_playNextStory(arg_23_0._param)
 
 					return
 				end
 			end
 		end
 
-		arg_22_0:playFinished(true)
+		arg_23_0:playFinished(true)
 	else
-		arg_22_0:playStep(arg_22_0._curStepId)
-		arg_22_0:playStepChoose(arg_22_0._curStepId)
+		arg_23_0:playStep(arg_23_0._curStepId)
+		arg_23_0:playStepChoose(arg_23_0._curStepId)
 	end
 end
 
-function var_0_0.playFinished(arg_24_0, arg_24_1)
-	local var_24_0 = StoryModel.instance:needWaitStoryFinish()
-	local var_24_1 = not Activity114Model.instance:canFinishStory()
+function var_0_0.playFinished(arg_25_0, arg_25_1)
+	local var_25_0 = StoryModel.instance:needWaitStoryFinish()
+	local var_25_1 = not Activity114Model.instance:canFinishStory()
 
-	if var_24_0 or var_24_1 then
-		arg_24_0:playStep(arg_24_0._curStepId)
-		StoryRpc.instance:sendUpdateStoryRequest(arg_24_0._curStoryId, -1, 0)
-		arg_24_0:dispatchEvent(StoryEvent.DialogConFinished, arg_24_0._curStoryId)
-		arg_24_0:dispatchEvent(StoryEvent.HideTopBtns, true)
+	if var_25_0 or var_25_1 then
+		arg_25_0:playStep(arg_25_0._curStepId)
+		StoryRpc.instance:sendUpdateStoryRequest(arg_25_0._curStoryId, -1, 0)
+		arg_25_0:dispatchEvent(StoryEvent.DialogConFinished, arg_25_0._curStoryId)
+		arg_25_0:dispatchEvent(StoryEvent.HideTopBtns, true)
 
 		return
 	end
 
 	StoryModel.instance:setPlayFnished()
 
-	if arg_24_0._mark then
-		arg_24_0:setStoryFinished(arg_24_0._curStoryId)
-		StoryRpc.instance:sendUpdateStoryRequest(arg_24_0._curStoryId, -1, 0)
+	if arg_25_0._mark then
+		arg_25_0:setStoryFinished(arg_25_0._curStoryId)
+		StoryRpc.instance:sendUpdateStoryRequest(arg_25_0._curStoryId, -1, 0)
 	end
 
-	arg_24_0:dispatchEvent(StoryEvent.AllStepFinished, arg_24_1)
+	arg_25_0:dispatchEvent(StoryEvent.AllStepFinished, arg_25_1)
 end
 
-function var_0_0.setStoryFinished(arg_25_0, arg_25_1)
+function var_0_0.setStoryFinished(arg_26_0, arg_26_1)
 	DungeonController.instance:onStartLevelOrStoryChange()
-	StoryModel.instance:_setStoryFinished(arg_25_1)
+	StoryModel.instance:_setStoryFinished(arg_26_1)
 	DungeonController.instance:onEndLevelOrStoryChange()
 end
 
-function var_0_0.finished(arg_26_0, arg_26_1)
+function var_0_0.finished(arg_27_0, arg_27_1)
 	PostProcessingMgr.instance:setUIActive(false, true)
 
-	local var_26_0 = SettingsModel.instance:getModelTargetFrameRate()
+	local var_27_0 = SettingsModel.instance:getModelTargetFrameRate()
 
-	SettingsModel.instance:setTargetFrameRate(var_26_0)
+	SettingsModel.instance:setTargetFrameRate(var_27_0)
 	ViewMgr.instance:closeView(ViewName.StorySceneView)
 
 	if ViewMgr.instance:isOpen(ViewName.StoryLogView) then
 		ViewMgr.instance:closeView(ViewName.StoryLogView, true)
 	end
 
-	if not arg_26_1 then
-		arg_26_0:statFinishStory()
+	if not arg_27_1 then
+		arg_27_0:statFinishStory()
 	end
 
 	StoryModel.instance:resetStepClickTime()
 
-	local var_26_1 = {
+	local var_27_1 = {
 		100014
 	}
-	local var_26_2 = false
+	local var_27_2 = false
 
-	for iter_26_0, iter_26_1 in pairs(var_26_1) do
-		if arg_26_0._curStoryId == iter_26_1 then
-			var_26_2 = true
+	for iter_27_0, iter_27_1 in pairs(var_27_1) do
+		if arg_27_0._curStoryId == iter_27_1 then
+			var_27_2 = true
 		end
 	end
 
-	if not var_26_2 then
-		arg_26_0:_checkAudioEnd()
+	if not var_27_2 then
+		arg_27_0:_checkAudioEnd()
 	end
 
-	arg_26_0:dispatchEvent(StoryEvent.Finish, arg_26_0._curStoryId)
+	arg_27_0:dispatchEvent(StoryEvent.Finish, arg_27_0._curStoryId)
 
-	if arg_26_0._showBlur then
+	if arg_27_0._showBlur then
 		StoryModel.instance:setUIActive(false)
 	end
 
-	arg_26_0:playFinishCallback(arg_26_1)
+	arg_27_0:playFinishCallback(arg_27_1)
 end
 
-function var_0_0.playFinishCallback(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_0._finishCallback
+function var_0_0.playFinishCallback(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0._finishCallback
 
-	arg_27_0._finishCallback = nil
+	arg_28_0._finishCallback = nil
 
-	if var_27_0 then
-		var_27_0(arg_27_0._callbackTarget, arg_27_0._param, arg_27_1)
+	if var_28_0 then
+		var_28_0(arg_28_0._callbackTarget, arg_28_0._param, arg_28_1)
 	end
 end
 
-function var_0_0.closeStoryView(arg_28_0)
+function var_0_0.closeStoryView(arg_29_0)
 	PostProcessingMgr.instance:_refreshViewBlur()
 	ViewMgr.instance:closeView(ViewName.StoryBackgroundView, nil, false)
 end
 
-function var_0_0.statStartStory(arg_29_0)
-	arg_29_0._viewTime = ServerTime.now()
-	arg_29_0._lastStepTime = arg_29_0._viewTime
+function var_0_0.statStartStory(arg_30_0)
+	arg_30_0._viewTime = ServerTime.now()
+	arg_30_0._lastStepTime = arg_30_0._viewTime
 end
 
-function var_0_0.statStepStory(arg_30_0)
-	if not arg_30_0._lastStepTime then
+function var_0_0.statStepStory(arg_31_0)
+	if not arg_31_0._lastStepTime then
 		return
 	end
 
-	local var_30_0 = StoryModel.instance:getStepClickTime()
-	local var_30_1 = ServerTime.now() - arg_30_0._lastStepTime
+	local var_31_0 = StoryModel.instance:getStepClickTime()
+	local var_31_1 = ServerTime.now() - arg_31_0._lastStepTime
 
 	StatController.instance:track(StatEnum.EventName.StoryStepEnd, {
-		[StatEnum.EventProperties.StoryId] = tostring(arg_30_0._curStoryId or ""),
-		[StatEnum.EventProperties.StepId] = arg_30_0._curStepId or 0,
+		[StatEnum.EventProperties.StoryId] = tostring(arg_31_0._curStoryId or ""),
+		[StatEnum.EventProperties.StepId] = arg_31_0._curStepId or 0,
 		[StatEnum.EventProperties.IsAuto] = StoryModel.instance:isStoryAuto(),
-		[StatEnum.EventProperties.ClickTimes] = var_30_0,
-		[StatEnum.EventProperties.Time] = math.floor(1000 * var_30_1),
+		[StatEnum.EventProperties.ClickTimes] = var_31_0,
+		[StatEnum.EventProperties.Time] = math.floor(1000 * var_31_1),
 		[StatEnum.EventProperties.LanguageType] = LangSettings.shortcutTab[GameConfig:GetCurLangType()],
 		[StatEnum.EventProperties.VoiceType] = GameConfig:GetCurVoiceShortcut(),
 		[StatEnum.EventProperties.Volume] = SDKMgr.instance:getSystemMediaVolume()
 	})
 	StoryModel.instance:resetStepClickTime()
 
-	arg_30_0._lastStepTime = ServerTime.now()
+	arg_31_0._lastStepTime = ServerTime.now()
 end
 
-function var_0_0.statSkipStory(arg_31_0)
-	if not arg_31_0._viewTime then
+function var_0_0.statSkipStory(arg_32_0)
+	if not arg_32_0._viewTime then
 		return
 	end
 
-	local var_31_0 = arg_31_0._episodeId and DungeonConfig.instance:getEpisodeCO(arg_31_0._episodeId)
-	local var_31_1 = ServerTime.now() - arg_31_0._viewTime
+	local var_32_0 = arg_32_0._episodeId and DungeonConfig.instance:getEpisodeCO(arg_32_0._episodeId)
+	local var_32_1 = ServerTime.now() - arg_32_0._viewTime
 
 	StatController.instance:track(StatEnum.EventName.StorySkip, {
-		[StatEnum.EventProperties.ChapterId] = tostring(var_31_0 and var_31_0.chapterId or ""),
-		[StatEnum.EventProperties.EpisodeId] = tostring(var_31_0 and var_31_0.id or ""),
-		[StatEnum.EventProperties.StoryId] = tostring(arg_31_0._curStoryId or ""),
-		[StatEnum.EventProperties.Time] = var_31_1,
-		[StatEnum.EventProperties.Entrance] = arg_31_0._isReplay and luaLang("datatrack_entrance_handbook") or luaLang("datatrack_entrance_normal")
+		[StatEnum.EventProperties.ChapterId] = tostring(var_32_0 and var_32_0.chapterId or ""),
+		[StatEnum.EventProperties.EpisodeId] = tostring(var_32_0 and var_32_0.id or ""),
+		[StatEnum.EventProperties.StoryId] = tostring(arg_32_0._curStoryId or ""),
+		[StatEnum.EventProperties.Time] = var_32_1,
+		[StatEnum.EventProperties.Entrance] = arg_32_0._isReplay and luaLang("datatrack_entrance_handbook") or luaLang("datatrack_entrance_normal")
 	})
-
-	arg_31_0._viewTime = nil
-end
-
-function var_0_0.statFinishStory(arg_32_0)
-	if arg_32_0._viewTime then
-		local var_32_0 = ServerTime.now() - arg_32_0._viewTime
-		local var_32_1 = arg_32_0._episodeId and DungeonConfig.instance:getEpisodeCO(arg_32_0._episodeId)
-
-		StatController.instance:track(StatEnum.EventName.StoryEnd, {
-			[StatEnum.EventProperties.ChapterId] = tostring(var_32_1 and var_32_1.chapterId or ""),
-			[StatEnum.EventProperties.EpisodeId] = tostring(var_32_1 and var_32_1.id or ""),
-			[StatEnum.EventProperties.StoryId] = tostring(arg_32_0._curStoryId or ""),
-			[StatEnum.EventProperties.Time] = var_32_0,
-			[StatEnum.EventProperties.Entrance] = arg_32_0._isReplay and luaLang("datatrack_entrance_handbook") or luaLang("datatrack_entrance_normal")
-		})
-	end
 
 	arg_32_0._viewTime = nil
 end
 
-function var_0_0.openStoryLogView(arg_33_0)
+function var_0_0.statFinishStory(arg_33_0)
+	if arg_33_0._viewTime then
+		local var_33_0 = ServerTime.now() - arg_33_0._viewTime
+		local var_33_1 = arg_33_0._episodeId and DungeonConfig.instance:getEpisodeCO(arg_33_0._episodeId)
+
+		StatController.instance:track(StatEnum.EventName.StoryEnd, {
+			[StatEnum.EventProperties.ChapterId] = tostring(var_33_1 and var_33_1.chapterId or ""),
+			[StatEnum.EventProperties.EpisodeId] = tostring(var_33_1 and var_33_1.id or ""),
+			[StatEnum.EventProperties.StoryId] = tostring(arg_33_0._curStoryId or ""),
+			[StatEnum.EventProperties.Time] = var_33_0,
+			[StatEnum.EventProperties.Entrance] = arg_33_0._isReplay and luaLang("datatrack_entrance_handbook") or luaLang("datatrack_entrance_normal")
+		})
+	end
+
+	arg_33_0._viewTime = nil
+end
+
+function var_0_0.openStoryLogView(arg_34_0)
 	ViewMgr.instance:openView(ViewName.StoryLogView, nil, true)
 end
 
-function var_0_0.openStoryBranchView(arg_34_0, arg_34_1)
-	ViewMgr.instance:openView(ViewName.StoryBranchView, arg_34_1, true)
+function var_0_0.openStoryBranchView(arg_35_0, arg_35_1)
+	ViewMgr.instance:openView(ViewName.StoryBranchView, arg_35_1, true)
 end
 
-function var_0_0.openStoryPrologueSkipView(arg_35_0, arg_35_1)
-	ViewMgr.instance:openView(ViewName.StoryPrologueSkipView, arg_35_1)
+function var_0_0.openStoryPrologueSkipView(arg_36_0, arg_36_1)
+	ViewMgr.instance:openView(ViewName.StoryPrologueSkipView, arg_36_1)
 end
 
-function var_0_0.closeStoryBranchView(arg_36_0)
+function var_0_0.closeStoryBranchView(arg_37_0)
 	ViewMgr.instance:closeView(ViewName.StoryBranchView, true)
 end
 

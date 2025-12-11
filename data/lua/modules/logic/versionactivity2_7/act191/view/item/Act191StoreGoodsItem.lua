@@ -120,7 +120,7 @@ function var_0_0.refreshRemainBuyCount(arg_4_0)
 
 		arg_4_0.remainBuyCount = 9999
 	else
-		local var_4_0 = VersionActivity2_7Enum.ActivityId.Act191Store
+		local var_4_0 = VersionActivity3_1Enum.ActivityId.DouQuQu3Store
 
 		gohelper.setActive(arg_4_0.txtLimitBuy.gameObject, true)
 

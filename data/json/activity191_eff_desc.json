@@ -27,6 +27,56 @@
   {
     "id": 6,
     "name": "language_10017559",
-    "desc": "language_10073020"
+    "desc": "language_10090406"
+  },
+  {
+    "id": 7,
+    "name": "language_10090407",
+    "desc": "language_10090408"
+  },
+  {
+    "id": 8,
+    "name": "language_10090409",
+    "desc": "language_10090410"
+  },
+  {
+    "id": 9,
+    "name": "language_10090411",
+    "desc": "language_10090412"
+  },
+  {
+    "id": 10,
+    "name": "language_10043419",
+    "desc": "language_10090413"
+  },
+  {
+    "id": 11,
+    "name": "language_10090414",
+    "desc": "language_10090415"
+  },
+  {
+    "id": 13,
+    "name": "language_10090416",
+    "desc": "language_10090417"
+  },
+  {
+    "id": 14,
+    "name": "language_10090418",
+    "desc": "language_10090419"
+  },
+  {
+    "id": 15,
+    "name": "language_10090420",
+    "desc": "language_10090421"
+  },
+  {
+    "id": 16,
+    "name": "language_10090422",
+    "desc": "language_10090423"
+  },
+  {
+    "id": 17,
+    "name": "language_10090424",
+    "desc": "language_10090425"
   }
 ]

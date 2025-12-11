@@ -96,6 +96,7 @@ function var_0_0._onGetEntityInfo(arg_4_0, arg_4_1)
 	end
 
 	GMFightEntityModel.instance:onGetSingleEntityInfo(arg_4_1)
+	FightController.instance:dispatchEvent(FightEvent.CoverPerformanceEntityData, var_4_1)
 end
 
 function var_0_0.onContainerInit(arg_5_0)

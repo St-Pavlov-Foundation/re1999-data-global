@@ -5,6 +5,7 @@ local var_0_0 = FightDataClass("FightOperationItemData")
 function var_0_0.onConstructor(arg_1_0)
 	arg_1_0.costActPoint = 0
 	arg_1_0.cardColor = FightEnum.CardColor.None
+	arg_1_0.isUnlimitMoveOrExtraMove = nil
 end
 
 function var_0_0.setByProto(arg_2_0, arg_2_1)

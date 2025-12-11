@@ -302,9 +302,8 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 	end))
 
 	local var_1_28 = FightCardDataHelper.canCombineCardListForPerformance(var_1_1)
-	local var_1_29 = FightModel.instance:getCurStage()
 
-	if not (var_1_29 == FightEnum.Stage.Distribute or var_1_29 == FightEnum.Stage.FillCard) or var_1_28 then
+	if not FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DistributeCard) or var_1_28 then
 		arg_1_0._sequence:addWork(var_0_0.buildCombineEndFlow(var_1_2, var_1_2, #var_1_1, arg_1_1.handCardItemList))
 	end
 

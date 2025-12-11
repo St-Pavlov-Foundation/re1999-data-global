@@ -10,11 +10,11 @@ function var_0_0.onConstructor(arg_1_0)
 	arg_1_0.USER_DATA_LIST = nil
 end
 
-function var_0_0.onAwake(arg_2_0, ...)
+function var_0_0.onLogicEnter(arg_2_0, ...)
 	return
 end
 
-function var_0_0.releaseSelf(arg_3_0)
+function var_0_0.onLogicExit(arg_3_0)
 	return
 end
 

@@ -50,13 +50,21 @@ function var_0_0.onAfterAddUseCardOnContainer(arg_4_0, arg_4_1)
 		end
 	end
 
+	if var_4_0 < 1 then
+		return
+	end
+
 	local var_4_3
 
-	if var_4_0 == 2 then
+	if var_4_0 <= 2 then
 		var_4_3 = arg_4_0.alfTimeLineCo.timeline_2
 	elseif var_4_0 == 3 then
 		var_4_3 = arg_4_0.alfTimeLineCo.timeline_3
 	elseif var_4_0 == 4 then
+		var_4_3 = arg_4_0.alfTimeLineCo.timeline_4
+	else
+		logError("阿莱夫记忆牌大于4了？ count " .. tostring(var_4_0))
+
 		var_4_3 = arg_4_0.alfTimeLineCo.timeline_4
 	end
 

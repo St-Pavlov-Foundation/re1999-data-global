@@ -27,7 +27,7 @@ end
 
 function var_0_0._onReceiveBeforeStartBattleReply(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 	if arg_3_2 ~= 0 then
-		FightSystem.instance:restartFightFail()
+		FightGameMgr.restartMgr:restartFightFail()
 
 		return
 	end

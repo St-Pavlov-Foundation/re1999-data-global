@@ -45,7 +45,7 @@ end
 
 function var_0_0._getVoiceItemDataList(arg_4_0)
 	local var_4_0 = {}
-	local var_4_1 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
+	local var_4_1 = SettingsVoicePackageModel.instance:getSupportVoiceLangs()
 
 	for iter_4_0 = 1, #var_4_1 do
 		local var_4_2 = var_4_1[iter_4_0]
@@ -88,7 +88,15 @@ end
 
 function var_0_0._refreshLangMode_overseas(arg_8_0, arg_8_1)
 	for iter_8_0, iter_8_1 in ipairs(arg_8_0._voiceItemObjList or {}) do
-		iter_8_1:refreshLangMode(arg_8_1)
+		local var_8_0 = arg_8_0._selectedCharMos[1].heroId
+		local var_8_1 = SettingsRoleVoiceModel.instance:isHeroSp01(var_8_0)
+		local var_8_2 = true
+
+		if not var_8_1 and LangSettings.instance:isOverseas() == false and (iter_8_1:getLangId() == LangSettings.jp or iter_8_1:getLangId() == LangSettings.kr) then
+			var_8_2 = false
+		end
+
+		iter_8_1:refreshLangMode(arg_8_1, var_8_2)
 	end
 end
 
@@ -474,30 +482,44 @@ function var_0_0._playVoice(arg_32_0)
 		arg_32_0._voiceBnkName = AudioConfig.instance:getAudioCOById(arg_32_0._curVoiceCfg.audio).bankName
 		arg_32_0._voiceEnd = false
 
-		if GameConfig:GetCurVoiceShortcut() == LangSettings.shortcutTab[LangSettings.zh] then
-			ZProj.AudioManager.Instance:LoadBank(arg_32_0._voiceBnkName, var_32_0)
-			var_32_1:Emitter(arg_32_0._curVoiceCfg.audio, var_32_0, arg_32_0._onEmitterCallback, arg_32_0)
-			ZProj.AudioManager.Instance:UnloadBank(arg_32_0._voiceBnkName)
-		else
-			var_32_1:Emitter(arg_32_0._curVoiceCfg.audio, var_32_0, arg_32_0._onEmitterCallback, arg_32_0)
-		end
+		ZProj.AudioManager.Instance:LoadBank(arg_32_0._voiceBnkName, var_32_0)
+		var_32_1:Emitter(arg_32_0._curVoiceCfg.audio, var_32_0, arg_32_0._onEmitterCallback, arg_32_0)
+		ZProj.AudioManager.Instance:UnloadBank(arg_32_0._voiceBnkName)
 	end
 end
 
 function var_0_0._playGreetingVoice(arg_33_0)
 	if arg_33_0._selectedCharMos and #arg_33_0._selectedCharMos == 1 then
 		local var_33_0 = CharacterDataConfig.instance:getCharacterVoicesCo(arg_33_0._selectedCharMos[1].heroId)
-		local var_33_1
+		local var_33_1 = arg_33_0._selectedCharMos[1].skin
+		local var_33_2
+		local var_33_3
 
 		for iter_33_0, iter_33_1 in pairs(var_33_0) do
 			if iter_33_1.type == CharacterEnum.VoiceType.Greeting then
-				var_33_1 = iter_33_1
+				local var_33_4 = iter_33_1.skins
 
-				break
+				if not var_33_4 or string.nilorempty(var_33_4) then
+					var_33_3 = iter_33_1
+				else
+					local var_33_5 = string.splitToNumber(var_33_4, "#")
+
+					for iter_33_2, iter_33_3 in ipairs(var_33_5) do
+						if iter_33_3 == var_33_1 then
+							var_33_2 = iter_33_1
+
+							break
+						end
+					end
+				end
+
+				if var_33_2 then
+					break
+				end
 			end
 		end
 
-		arg_33_0._curVoiceCfg = var_33_1
+		arg_33_0._curVoiceCfg = var_33_2 and var_33_2 or var_33_3
 
 		arg_33_0:_playVoice()
 	end

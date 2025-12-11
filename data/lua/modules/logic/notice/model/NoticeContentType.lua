@@ -2,6 +2,7 @@
 
 local var_0_0 = _M
 
+var_0_0.LangType = 0
 var_0_0.TxtTopTitle = 1
 var_0_0.TxtContent = 3
 var_0_0.ImgInner = 4

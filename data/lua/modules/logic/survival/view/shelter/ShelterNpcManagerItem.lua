@@ -61,7 +61,7 @@ function var_0_0.getGridItem(arg_7_0, arg_7_1)
 		var_7_0.index = arg_7_1
 		var_7_0.go = gohelper.clone(arg_7_0.goSmallItem, arg_7_0.goGrid, tostring(arg_7_1))
 		var_7_0.imgQuality = gohelper.findChildImage(var_7_0.go, "#image_quality")
-		var_7_0.imgChess = gohelper.findChildImage(var_7_0.go, "#image_Chess")
+		var_7_0.imgChess = gohelper.findChildSingleImage(var_7_0.go, "#image_Chess")
 		var_7_0.txtName = gohelper.findChildTextMesh(var_7_0.go, "#txt_PartnerName")
 		var_7_0.goSelect = gohelper.findChild(var_7_0.go, "#go_Selected")
 		var_7_0.goOut = gohelper.findChild(var_7_0.go, "#go_Out")
@@ -107,7 +107,7 @@ function var_0_0.refreshGridItem(arg_8_0, arg_8_1, arg_8_2)
 
 	arg_8_1.txtName.text = arg_8_2.co.name
 
-	UISpriteSetMgr.instance:setV2a2ChessSprite(arg_8_1.imgChess, arg_8_2.co.headIcon)
+	SurvivalUnitIconHelper.instance:setNpcIcon(arg_8_1.imgChess, arg_8_2.co.headIcon)
 	UISpriteSetMgr.instance:setSurvivalSprite(arg_8_1.imgQuality, string.format("survival_bag_itemquality2_%s", arg_8_2.co.rare))
 end
 

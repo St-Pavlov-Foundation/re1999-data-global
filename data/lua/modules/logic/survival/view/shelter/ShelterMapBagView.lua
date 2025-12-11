@@ -17,7 +17,7 @@ function var_0_0.onOpen(arg_2_0)
 end
 
 function var_0_0.getBag(arg_3_0)
-	return SurvivalShelterModel.instance:getWeekInfo().bag
+	return SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Shelter)
 end
 
 return var_0_0

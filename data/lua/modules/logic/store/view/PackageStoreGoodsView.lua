@@ -217,11 +217,12 @@ function var_0_0.onOpen(arg_10_0)
 
 	gohelper.setActive(arg_10_0._gonewbiePick, var_10_4)
 	arg_10_0:refreshSkinTips(arg_10_0._mo)
-	gohelper.setActive(arg_10_0._gotxtv2a8_09, PackageStoreEnum.AnimHeadDict[arg_10_0._mo.goodsId])
 
 	if arg_10_0._btnoverview then
 		gohelper.setActive(arg_10_0._btnoverview, not string.nilorempty(arg_10_0._overviewJumpId))
 	end
+
+	gohelper.setActive(arg_10_0._gotxtv2a8_09, PackageStoreEnum.AnimHeadDict[arg_10_0._mo.goodsId])
 end
 
 function var_0_0._refreshPriceArea(arg_11_0)

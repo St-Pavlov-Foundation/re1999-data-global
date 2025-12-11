@@ -109,12 +109,13 @@ function var_0_0._onClickStart(arg_9_0)
 		return
 	end
 
-	FightModel.instance:setAuto(arg_9_0._toggleParallel.isOn)
+	FightDataHelper.stateMgr:setAutoState(arg_9_0._toggleParallel.isOn)
 
 	if arg_9_0._toggleNoSpeedUp.isOn then
 		-- block empty
 	else
-		FightReplayModel.instance:setReplay(true)
+		FightDataHelper.stateMgr.isReplay = true
+
 		FightModel.instance:setUserSpeed(FightModel.instance:getUserSpeed())
 		FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
 	end
@@ -221,7 +222,9 @@ end
 function var_0_0._onPlaySkillsEnd(arg_15_0)
 	arg_15_0._playSkillsFlow:unregisterDoneListener(arg_15_0._onPlaySkillsEnd, arg_15_0)
 	gohelper.setActive(arg_15_0.viewGO, true)
-	FightReplayModel.instance:setReplay(false)
+
+	FightDataHelper.stateMgr.isReplay = false
+
 	FightModel.instance:setUserSpeed(FightModel.instance:getUserSpeed())
 	FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
 	arg_15_0:showAllUI()

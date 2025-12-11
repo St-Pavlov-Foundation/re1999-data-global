@@ -89,7 +89,7 @@ function var_0_0._delayRelease(arg_6_0)
 	for iter_6_0, iter_6_1 in ipairs(arg_6_0._delayReleaseEntity) do
 		arg_6_0:_releaseEntity(iter_6_1.entity)
 
-		if iter_6_1.spineGO then
+		if not gohelper.isNil(iter_6_1.spineGO) then
 			transformhelper.setLocalPos(iter_6_1.spineGO.transform, 0, 0, 0)
 		end
 	end

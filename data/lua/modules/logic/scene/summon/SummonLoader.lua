@@ -10,6 +10,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._isLoading = false
 	arg_1_0._needSyncLoad = false
 	arg_1_0._assetItemDict = {}
+	arg_1_0._assetItemList = {}
 	arg_1_0._loadFrameBuffer = nil
 	arg_1_0._loadOneCallback = nil
 	arg_1_0._loadOneCallbackObj = nil
@@ -60,6 +61,7 @@ function var_0_0.onLoadCompletedSync(arg_5_0)
 	for iter_5_0, iter_5_1 in pairs(var_5_0) do
 		if arg_5_0._loadOneCallback then
 			iter_5_1:Retain()
+			table.insert(arg_5_0._assetItemList, iter_5_1)
 
 			arg_5_0._assetItemDict[iter_5_0] = iter_5_1
 
@@ -86,6 +88,7 @@ function var_0_0.onLoadCompletedAsync(arg_6_0)
 
 	for iter_6_0, iter_6_1 in pairs(var_6_0) do
 		iter_6_1:Retain()
+		table.insert(arg_6_0._assetItemList, iter_6_1)
 
 		arg_6_0._assetItemDict[iter_6_0] = iter_6_1
 
@@ -196,12 +199,11 @@ function var_0_0.dispose(arg_13_0)
 			arg_13_0._loader = nil
 		end
 
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._assetItemDict) do
+		for iter_13_0, iter_13_1 in ipairs(arg_13_0._assetItemList) do
 			iter_13_1:Release()
-
-			arg_13_0._assetItemDict[iter_13_0] = nil
 		end
 
+		arg_13_0._assetItemList = nil
 		arg_13_0._assetItemDict = nil
 	end
 end

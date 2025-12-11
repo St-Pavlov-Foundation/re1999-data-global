@@ -80,6 +80,7 @@ function var_0_0.onOpen(arg_2_0)
 	arg_2_0:com_registFightEvent(FightEvent.SetFakeNuoDiKaDamageShield, arg_2_0.onSetFakeNuoDiKaDamageShield)
 	arg_2_0:com_registFightEvent(FightEvent.AiJiAoFakeDecreaseHp, arg_2_0.onAiJiAoFakeDecreaseHp)
 	arg_2_0:com_registFightEvent(FightEvent.OnFightReconnectLastWork, arg_2_0.onFightReconnectLastWork)
+	arg_2_0:com_registFightEvent(FightEvent.MultiHpTypeChange, arg_2_0._detectBossMultiHp)
 
 	arg_2_0.sheildWidth = recthelper.getWidth(arg_2_0._goHpShield.transform)
 
@@ -537,8 +538,8 @@ function var_0_0._tweenFillAmount(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
 	ZProj.TweenHelper.KillByObj(arg_29_0._imgHpShield)
 	ZProj.TweenHelper.DOFillAmount(arg_29_0._imgHp, var_29_0, arg_29_1 / FightModel.instance:getUISpeed())
 	ZProj.TweenHelper.DOFillAmount(arg_29_0._imgHpShield, var_29_1, arg_29_1 / FightModel.instance:getUISpeed())
-	arg_29_0:refreshReduceHP()
 	arg_29_0:setAiJiAoFakeHp(var_29_2)
+	arg_29_0:refreshReduceHP()
 end
 
 function var_0_0.refreshReduceHP(arg_30_0)
@@ -578,19 +579,9 @@ function var_0_0._getFillAmount(arg_32_0, arg_32_1, arg_32_2)
 
 	local var_32_0 = arg_32_0._bossEntityMO
 	local var_32_1, var_32_2 = var_32_0:getHpAndShieldFillAmount(arg_32_1, arg_32_2)
-	local var_32_3 = var_32_0.attrMO and var_32_0.attrMO.hp > 0 and var_32_0.attrMO.hp or 1
-	local var_32_4 = var_32_0.attrMO and var_32_0.attrMO.original_max_hp or 1
 
-	if var_32_3 < var_32_4 then
-		local var_32_5 = var_32_4 - var_32_3
-
-		var_32_1 = var_32_1 * var_32_3 / var_32_4 + var_32_5 / var_32_4
-		var_32_2 = var_32_2 * var_32_3 / var_32_4 + var_32_5 / var_32_4
-		arg_32_0._hp_width = arg_32_0._hp_width or recthelper.getWidth(arg_32_0._hp_container_tran)
-
-		recthelper.setAnchorX(arg_32_0._hp_container_tran, 0 - arg_32_0._hp_width * (var_32_5 / var_32_4))
-	else
-		recthelper.setAnchorX(arg_32_0._hp_container_tran, 0)
+	if not var_32_0.attrMO or not (var_32_0.attrMO.hp > 0) or not var_32_0.attrMO.hp then
+		local var_32_3 = 1
 	end
 
 	return var_32_1, var_32_2

@@ -160,25 +160,35 @@ function var_0_0.exitFightScene(arg_8_0)
 		if var_8_2.chapterId == DungeonEnum.ChapterId.BossStory then
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.VersionActivity2_8BossStoryLoadingView)
 		end
+
+		if var_8_2.type == DungeonEnum.EpisodeType.TowerDeep then
+			local var_8_3, var_8_4 = TowerPermanentDeepModel.instance:checkCanShowResultView()
+
+			if not var_8_3 and var_8_4 == TowerDeepEnum.FightResult.NotFinish then
+				TowerController.instance:endFightEnterTowerDeepHeroGroup(var_8_2)
+
+				return
+			end
+		end
 	end
 
-	local var_8_3 = FightResultModel.instance.episodeId
-	local var_8_4 = DungeonConfig.instance:getEpisodeCO(var_8_3)
-	local var_8_5 = arg_8_0:isReplayMode(var_8_3)
-	local var_8_6 = GameSceneMgr.instance:getPreSceneType()
-	local var_8_7 = GameSceneMgr.instance:getPreSceneId()
-	local var_8_8 = GameSceneMgr.instance:getPreLevelId()
+	local var_8_5 = FightResultModel.instance.episodeId
+	local var_8_6 = DungeonConfig.instance:getEpisodeCO(var_8_5)
+	local var_8_7 = arg_8_0:isReplayMode(var_8_5)
+	local var_8_8 = GameSceneMgr.instance:getPreSceneType()
+	local var_8_9 = GameSceneMgr.instance:getPreSceneId()
+	local var_8_10 = GameSceneMgr.instance:getPreLevelId()
 
-	if var_8_5 then
+	if var_8_7 then
 		GameSceneMgr.instance:closeScene(nil, nil, nil, true)
-		GameSceneMgr.instance:setPrevScene(var_8_6, var_8_7, var_8_8)
-		DungeonFightController.instance:enterFight(var_8_4.chapterId, var_8_3, DungeonModel.instance.curSelectTicketId)
+		GameSceneMgr.instance:setPrevScene(var_8_8, var_8_9, var_8_10)
+		DungeonFightController.instance:enterFight(var_8_6.chapterId, var_8_5, DungeonModel.instance.curSelectTicketId)
 	else
-		GameSceneMgr.instance:startScene(var_8_6, var_8_7, var_8_8)
+		GameSceneMgr.instance:startScene(var_8_8, var_8_9, var_8_10)
 
 		if TeachNoteModel.instance:isJumpEnter() then
 			TeachNoteModel.instance:setJumpEnter(false)
-			TeachNoteController.instance:enterTeachNoteView(var_8_3, true)
+			TeachNoteController.instance:enterTeachNoteView(var_8_5, true)
 		end
 	end
 end
@@ -363,7 +373,7 @@ end
 
 function var_0_0._pushEndFight(arg_19_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight and not GameSceneMgr.instance:isLoading() then
-		FightSystem.instance:endFight()
+		FightGameMgr.playMgr:playEnd()
 	end
 end
 
@@ -374,9 +384,9 @@ function var_0_0._onFightSceneStart(arg_20_0, arg_20_1, arg_20_2)
 		end
 
 		if FightModel.instance.needFightReconnect then
-			FightSystem.instance:reconnectFight()
+			FightGameMgr.playMgr:playReconnect()
 		else
-			FightSystem.instance:startFight()
+			FightGameMgr.playMgr:playStart()
 		end
 	end
 end
@@ -384,19 +394,23 @@ end
 function var_0_0._onStartSequenceFinish(arg_21_0)
 	arg_21_0:_recordFreeTicket()
 	arg_21_0:beginWave()
+
+	if FightModel.instance:isFinish() then
+		logNormal("回合结束，战斗结束")
+
+		if FightDataHelper.fieldMgr:isDouQuQu() then
+			return
+		end
+
+		FightRpc.instance:sendEndFightRequest(false)
+	end
 end
 
-function var_0_0.setCurStage(arg_22_0, arg_22_1)
-	FightModel.instance:setCurStage(arg_22_1)
-	logNormal("当前阶段：" .. FightModel.instance:getCurStageDesc())
-	var_0_0.instance:dispatchEvent(FightEvent.OnStageChange, arg_22_1)
-end
-
-function var_0_0.beginWave(arg_23_0)
+function var_0_0.beginWave(arg_22_0)
 	var_0_0.instance:dispatchEvent(FightEvent.OnBeginWave)
 end
 
-function var_0_0._onRoundSequenceFinish(arg_24_0)
+function var_0_0._onRoundSequenceFinish(arg_23_0)
 	if FightModel.instance:isFinish() then
 		logNormal("回合结束，战斗结束")
 
@@ -408,7 +422,7 @@ function var_0_0._onRoundSequenceFinish(arg_24_0)
 	end
 end
 
-function var_0_0.onClothSkillRoundSequenceFinish(arg_25_0)
+function var_0_0.onClothSkillRoundSequenceFinish(arg_24_0)
 	if FightModel.instance:isFinish() then
 		logNormal("回合结束，战斗结束")
 
@@ -420,110 +434,144 @@ function var_0_0.onClothSkillRoundSequenceFinish(arg_25_0)
 	end
 end
 
-function var_0_0._onEndSequenceFinish(arg_26_0)
+function var_0_0._onEndSequenceFinish(arg_25_0)
 	return
 end
 
-function var_0_0.GuideFlowPauseAndContinue(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4, arg_27_5, arg_27_6, arg_27_7, arg_27_8)
-	local var_27_0 = FightModel.instance:getGuideParam()
+function var_0_0.GuideFlowPauseAndContinue(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4, arg_26_5, arg_26_6, arg_26_7, arg_26_8)
+	local var_26_0 = FightModel.instance:getGuideParam()
 
-	var_0_0.instance:dispatchEvent(arg_27_2, var_27_0, arg_27_6, arg_27_7, arg_27_8)
+	var_0_0.instance:dispatchEvent(arg_26_2, var_26_0, arg_26_6, arg_26_7, arg_26_8)
 
-	if var_27_0[arg_27_1] then
-		var_27_0[arg_27_1] = false
+	if var_26_0[arg_26_1] then
+		var_26_0[arg_26_1] = false
 
-		if arg_27_0._guideContinueEvent then
-			logError("guiding event: " .. arg_27_0._guideContinueEvent .. ", try to replase with: " .. arg_27_3)
-			var_0_0.instance:unregisterCallback(arg_27_0._guideContinueEvent, arg_27_0._continueCallback, arg_27_0)
+		if arg_26_0._guideContinueEvent then
+			logError("guiding event: " .. arg_26_0._guideContinueEvent .. ", try to replase with: " .. arg_26_3)
+			var_0_0.instance:unregisterCallback(arg_26_0._guideContinueEvent, arg_26_0._continueCallback, arg_26_0)
 		end
 
-		arg_27_0._guideContinueEvent = arg_27_3
-		arg_27_0._guideCallback = arg_27_4
-		arg_27_0._guideCallbackObj = arg_27_5
+		arg_26_0._guideContinueEvent = arg_26_3
+		arg_26_0._guideCallback = arg_26_4
+		arg_26_0._guideCallbackObj = arg_26_5
 
-		var_0_0.instance:registerCallback(arg_27_0._guideContinueEvent, arg_27_0._continueCallback, arg_27_0)
+		var_0_0.instance:registerCallback(arg_26_0._guideContinueEvent, arg_26_0._continueCallback, arg_26_0)
 
 		return true
 	else
-		arg_27_4(arg_27_5)
+		arg_26_4(arg_26_5)
 
-		if arg_27_0._guideContinueEvent == arg_27_2 then
-			var_0_0.instance:unregisterCallback(arg_27_0._guideContinueEvent, arg_27_0._continueCallback, arg_27_0)
+		if arg_26_0._guideContinueEvent == arg_26_2 then
+			var_0_0.instance:unregisterCallback(arg_26_0._guideContinueEvent, arg_26_0._continueCallback, arg_26_0)
 
-			arg_27_0._guideContinueEvent = nil
-			arg_27_0._guideCallback = nil
-			arg_27_0._guideCallbackObj = nil
+			arg_26_0._guideContinueEvent = nil
+			arg_26_0._guideCallback = nil
+			arg_26_0._guideCallbackObj = nil
 		end
 	end
 
 	return false
 end
 
-function var_0_0._continueCallback(arg_28_0)
-	if arg_28_0._guideContinueEvent then
-		var_0_0.instance:unregisterCallback(arg_28_0._guideContinueEvent, arg_28_0._continueCallback, arg_28_0)
+function var_0_0._continueCallback(arg_27_0)
+	if arg_27_0._guideContinueEvent then
+		var_0_0.instance:unregisterCallback(arg_27_0._guideContinueEvent, arg_27_0._continueCallback, arg_27_0)
 
-		local var_28_0 = arg_28_0._guideCallback
-		local var_28_1 = arg_28_0._guideCallbackObj
+		local var_27_0 = arg_27_0._guideCallback
+		local var_27_1 = arg_27_0._guideCallbackObj
 
-		arg_28_0._guideContinueEvent = nil
-		arg_28_0._guideCallback = nil
-		arg_28_0._guideCallbackObj = nil
+		arg_27_0._guideContinueEvent = nil
+		arg_27_0._guideCallback = nil
+		arg_27_0._guideCallbackObj = nil
 
-		var_28_0(var_28_1)
+		var_27_0(var_27_1)
 	end
 end
 
-function var_0_0.setNewBieFightParamByEpisodeId(arg_29_0, arg_29_1)
+function var_0_0.setNewBieFightParamByEpisodeId(arg_28_0, arg_28_1)
+	local var_28_0 = FightParam.New()
+
+	var_28_0:setEpisodeId(arg_28_1)
+	FightModel.instance:setFightParam(var_28_0)
+
+	return var_28_0
+end
+
+function var_0_0.setFightParamByEpisodeAndBattle(arg_29_0, arg_29_1, arg_29_2)
 	local var_29_0 = FightParam.New()
 
-	var_29_0:setEpisodeId(arg_29_1)
+	var_29_0:setEpisodeAndBattle(arg_29_1, arg_29_2)
 	FightModel.instance:setFightParam(var_29_0)
 
 	return var_29_0
 end
 
-function var_0_0.setFightParamByEpisodeAndBattle(arg_30_0, arg_30_1, arg_30_2)
+function var_0_0.setFightParamByEpisodeId(arg_30_0, arg_30_1, arg_30_2, arg_30_3, arg_30_4)
 	local var_30_0 = FightParam.New()
 
-	var_30_0:setEpisodeAndBattle(arg_30_1, arg_30_2)
+	var_30_0:setEpisodeId(arg_30_1, arg_30_4)
+
+	var_30_0.isReplay = arg_30_2
+	var_30_0.multiplication = arg_30_3
+
 	FightModel.instance:setFightParam(var_30_0)
 
 	return var_30_0
 end
 
-function var_0_0.setFightParamByEpisodeId(arg_31_0, arg_31_1, arg_31_2, arg_31_3, arg_31_4)
+function var_0_0.setFightParamByEpisodeBattleId(arg_31_0, arg_31_1, arg_31_2)
 	local var_31_0 = FightParam.New()
 
-	var_31_0:setEpisodeId(arg_31_1, arg_31_4)
-
-	var_31_0.isReplay = arg_31_2
-	var_31_0.multiplication = arg_31_3
-
+	var_31_0:setEpisodeId(arg_31_1, arg_31_2)
 	FightModel.instance:setFightParam(var_31_0)
 
 	return var_31_0
 end
 
-function var_0_0.setFightParamByEpisodeBattleId(arg_32_0, arg_32_1, arg_32_2)
+function var_0_0.setFightParamByBattleId(arg_32_0, arg_32_1)
 	local var_32_0 = FightParam.New()
 
-	var_32_0:setEpisodeId(arg_32_1, arg_32_2)
+	var_32_0:setBattleId(arg_32_1)
 	FightModel.instance:setFightParam(var_32_0)
 
 	return var_32_0
 end
 
-function var_0_0.setFightParamByBattleId(arg_33_0, arg_33_1)
-	local var_33_0 = FightParam.New()
+function var_0_0.setFightHeroGroup(arg_33_0)
+	local var_33_0 = FightModel.instance:getFightParam()
 
-	var_33_0:setBattleId(arg_33_1)
-	FightModel.instance:setFightParam(var_33_0)
+	if not var_33_0 then
+		return false
+	end
 
-	return var_33_0
+	local var_33_1 = HeroGroupModel.instance:getCurGroupMO()
+
+	if not var_33_1 then
+		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
+
+		return false
+	end
+
+	local var_33_2, var_33_3 = var_33_1:getMainList()
+	local var_33_4, var_33_5 = var_33_1:getSubList()
+
+	if (not var_33_1.aidDict or #var_33_1.aidDict <= 0) and var_33_3 + var_33_5 == 0 then
+		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
+
+		return false
+	end
+
+	local var_33_6 = var_33_0.battleId
+	local var_33_7 = var_33_6 and lua_battle.configDict[var_33_6]
+	local var_33_8 = var_33_7 and var_33_7.noClothSkill == 0 and var_33_1.clothId or 0
+	local var_33_9 = SeasonFightHandler.getSeasonEquips(var_33_1, var_33_0)
+
+	var_33_0:setMySide(var_33_8, var_33_2, var_33_1:getSubList(), var_33_1:getAllHeroEquips(), var_33_9, nil, nil, var_33_1:getAssistBossId())
+
+	return true
 end
 
-function var_0_0.setFightHeroGroup(arg_34_0)
+function var_0_0.setFightHeroSingleGroup(arg_34_0)
 	local var_34_0 = FightModel.instance:getFightParam()
 
 	if not var_34_0 then
@@ -540,6 +588,31 @@ function var_0_0.setFightHeroGroup(arg_34_0)
 
 	local var_34_2, var_34_3 = var_34_1:getMainList()
 	local var_34_4, var_34_5 = var_34_1:getSubList()
+	local var_34_6 = HeroSingleGroupModel.instance:getList()
+	local var_34_7 = var_34_1:getAllHeroEquips()
+	local var_34_8 = var_34_1:getAssistBossId()
+
+	for iter_34_0 = 1, #var_34_2 do
+		if var_34_2[iter_34_0] ~= var_34_6[iter_34_0].heroUid then
+			var_34_2[iter_34_0] = "0"
+			var_34_3 = var_34_3 - 1
+
+			if var_34_7[iter_34_0] then
+				var_34_7[iter_34_0].heroUid = "0"
+			end
+		end
+	end
+
+	for iter_34_1 = #var_34_2 + 1, math.min(#var_34_2 + #var_34_4, #var_34_6) do
+		if var_34_4[iter_34_1 - #var_34_2] ~= var_34_6[iter_34_1].heroUid then
+			var_34_4[iter_34_1 - #var_34_2] = "0"
+			var_34_5 = var_34_5 - 1
+
+			if var_34_7[iter_34_1] then
+				var_34_7[iter_34_1].heroUid = "0"
+			end
+		end
+	end
 
 	if (not var_34_1.aidDict or #var_34_1.aidDict <= 0) and var_34_3 + var_34_5 == 0 then
 		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
@@ -547,82 +620,23 @@ function var_0_0.setFightHeroGroup(arg_34_0)
 		return false
 	end
 
-	local var_34_6 = var_34_0.battleId
-	local var_34_7 = var_34_6 and lua_battle.configDict[var_34_6]
-	local var_34_8 = var_34_7 and var_34_7.noClothSkill == 0 and var_34_1.clothId or 0
 	local var_34_9 = SeasonFightHandler.getSeasonEquips(var_34_1, var_34_0)
+	local var_34_10 = var_34_0.battleId
+	local var_34_11 = var_34_10 and lua_battle.configDict[var_34_10]
+	local var_34_12 = var_34_11 and var_34_11.noClothSkill == 0 and var_34_1.clothId or 0
 
-	var_34_0:setMySide(var_34_8, var_34_2, var_34_1:getSubList(), var_34_1:getAllHeroEquips(), var_34_9, nil, nil, var_34_1:getAssistBossId())
-
-	return true
-end
-
-function var_0_0.setFightHeroSingleGroup(arg_35_0)
-	local var_35_0 = FightModel.instance:getFightParam()
-
-	if not var_35_0 then
-		return false
-	end
-
-	local var_35_1 = HeroGroupModel.instance:getCurGroupMO()
-
-	if not var_35_1 then
-		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
-
-		return false
-	end
-
-	local var_35_2, var_35_3 = var_35_1:getMainList()
-	local var_35_4, var_35_5 = var_35_1:getSubList()
-	local var_35_6 = HeroSingleGroupModel.instance:getList()
-	local var_35_7 = var_35_1:getAllHeroEquips()
-	local var_35_8 = var_35_1:getAssistBossId()
-
-	for iter_35_0 = 1, #var_35_2 do
-		if var_35_2[iter_35_0] ~= var_35_6[iter_35_0].heroUid then
-			var_35_2[iter_35_0] = "0"
-			var_35_3 = var_35_3 - 1
-
-			if var_35_7[iter_35_0] then
-				var_35_7[iter_35_0].heroUid = "0"
-			end
-		end
-	end
-
-	for iter_35_1 = #var_35_2 + 1, math.min(#var_35_2 + #var_35_4, #var_35_6) do
-		if var_35_4[iter_35_1 - #var_35_2] ~= var_35_6[iter_35_1].heroUid then
-			var_35_4[iter_35_1 - #var_35_2] = "0"
-			var_35_5 = var_35_5 - 1
-
-			if var_35_7[iter_35_1] then
-				var_35_7[iter_35_1].heroUid = "0"
-			end
-		end
-	end
-
-	if (not var_35_1.aidDict or #var_35_1.aidDict <= 0) and var_35_3 + var_35_5 == 0 then
-		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
-
-		return false
-	end
-
-	local var_35_9 = SeasonFightHandler.getSeasonEquips(var_35_1, var_35_0)
-	local var_35_10 = var_35_0.battleId
-	local var_35_11 = var_35_10 and lua_battle.configDict[var_35_10]
-	local var_35_12 = var_35_11 and var_35_11.noClothSkill == 0 and var_35_1.clothId or 0
-
-	var_35_0:setMySide(var_35_12, var_35_2, var_35_4, var_35_7, var_35_9, nil, nil, var_35_8)
+	var_34_0:setMySide(var_34_12, var_34_2, var_34_4, var_34_7, var_34_9, nil, nil, var_34_8)
 
 	return true
 end
 
-function var_0_0.openRoundView(arg_36_0)
-	if arg_36_0:canOpenRoundView() then
+function var_0_0.openRoundView(arg_35_0)
+	if arg_35_0:canOpenRoundView() then
 		ViewMgr.instance:openView(ViewName.FightRoundView)
 	end
 end
 
-function var_0_0.canOpenRoundView(arg_37_0)
+function var_0_0.canOpenRoundView(arg_36_0)
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
 		return
 	end
@@ -638,7 +652,30 @@ function var_0_0.canOpenRoundView(arg_37_0)
 	return not GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.FightForbidRoundView)
 end
 
-function var_0_0.getPlayerPrefKeyAuto(arg_38_0, arg_38_1)
+function var_0_0.getPlayerPrefKeyAuto(arg_37_0, arg_37_1)
+	if not arg_37_1 then
+		return
+	end
+
+	local var_37_0 = PlayerPrefsKey.FightAutoEpsodeIds .. PlayerModel.instance:getPlayinfo().userId
+	local var_37_1 = PlayerPrefsHelper.getString(var_37_0, "")
+
+	if string.nilorempty(var_37_1) then
+		return false
+	end
+
+	local var_37_2 = string.splitToNumber(var_37_1, "#")
+
+	for iter_37_0, iter_37_1 in ipairs(var_37_2) do
+		if iter_37_1 == arg_37_1 then
+			return true
+		end
+	end
+
+	return false
+end
+
+function var_0_0.setPlayerPrefKeyAuto(arg_38_0, arg_38_1, arg_38_2)
 	if not arg_38_1 then
 		return
 	end
@@ -647,77 +684,54 @@ function var_0_0.getPlayerPrefKeyAuto(arg_38_0, arg_38_1)
 	local var_38_1 = PlayerPrefsHelper.getString(var_38_0, "")
 
 	if string.nilorempty(var_38_1) then
-		return false
+		if arg_38_2 then
+			var_38_1 = tostring(arg_38_1)
+
+			PlayerPrefsHelper.setString(var_38_0, var_38_1)
+		end
+
+		return
 	end
 
-	local var_38_2 = string.splitToNumber(var_38_1, "#")
+	local var_38_2 = false
+	local var_38_3 = string.splitToNumber(var_38_1, "#")
 
-	for iter_38_0, iter_38_1 in ipairs(var_38_2) do
+	for iter_38_0, iter_38_1 in ipairs(var_38_3) do
 		if iter_38_1 == arg_38_1 then
-			return true
+			var_38_2 = true
 		end
 	end
 
-	return false
-end
-
-function var_0_0.setPlayerPrefKeyAuto(arg_39_0, arg_39_1, arg_39_2)
-	if not arg_39_1 then
-		return
-	end
-
-	local var_39_0 = PlayerPrefsKey.FightAutoEpsodeIds .. PlayerModel.instance:getPlayinfo().userId
-	local var_39_1 = PlayerPrefsHelper.getString(var_39_0, "")
-
-	if string.nilorempty(var_39_1) then
-		if arg_39_2 then
-			var_39_1 = tostring(arg_39_1)
-
-			PlayerPrefsHelper.setString(var_39_0, var_39_1)
-		end
-
-		return
-	end
-
-	local var_39_2 = false
-	local var_39_3 = string.splitToNumber(var_39_1, "#")
-
-	for iter_39_0, iter_39_1 in ipairs(var_39_3) do
-		if iter_39_1 == arg_39_1 then
-			var_39_2 = true
-		end
-	end
-
-	if not var_39_2 and arg_39_2 then
-		local var_39_4 = table.concat({
-			var_39_1,
+	if not var_38_2 and arg_38_2 then
+		local var_38_4 = table.concat({
+			var_38_1,
 			"#",
-			tostring(arg_39_1)
+			tostring(arg_38_1)
 		})
 
-		PlayerPrefsHelper.setString(var_39_0, var_39_4)
+		PlayerPrefsHelper.setString(var_38_0, var_38_4)
 
 		return
 	end
 
-	if var_39_2 and not arg_39_2 then
-		local var_39_5 = {}
+	if var_38_2 and not arg_38_2 then
+		local var_38_5 = {}
 
-		for iter_39_2, iter_39_3 in ipairs(var_39_3) do
-			if iter_39_3 ~= arg_39_1 then
-				table.insert(var_39_5, iter_39_3)
+		for iter_38_2, iter_38_3 in ipairs(var_38_3) do
+			if iter_38_3 ~= arg_38_1 then
+				table.insert(var_38_5, iter_38_3)
 			end
 		end
 
-		local var_39_6 = table.concat(var_39_5, "#")
+		local var_38_6 = table.concat(var_38_5, "#")
 
-		PlayerPrefsHelper.setString(var_39_0, var_39_6)
+		PlayerPrefsHelper.setString(var_38_0, var_38_6)
 
 		return
 	end
 end
 
-function var_0_0.checkFightQuitTipViewClose(arg_40_0)
+function var_0_0.checkFightQuitTipViewClose(arg_39_0)
 	if ViewMgr.instance:isOpen(ViewName.FightQuitTipView) then
 		ViewMgr.instance:closeView(ViewName.FightQuitTipView, nil)
 	end
@@ -725,16 +739,16 @@ function var_0_0.checkFightQuitTipViewClose(arg_40_0)
 	SeasonFightHandler.closeSeasonFightRuleTipView()
 end
 
-function var_0_0.openFightSpecialTipView(arg_41_0, arg_41_1)
-	if not arg_41_1 then
-		local var_41_0 = FightModel.instance:getFightParam()
+function var_0_0.openFightSpecialTipView(arg_40_0, arg_40_1)
+	if not arg_40_1 then
+		local var_40_0 = FightModel.instance:getFightParam()
 
-		if var_41_0 then
-			local var_41_1 = var_41_0.episodeId
-			local var_41_2 = DungeonConfig.instance:getEpisodeCO(var_41_1)
-			local var_41_3 = var_41_2 and var_41_2.type
+		if var_40_0 then
+			local var_40_1 = var_40_0.episodeId
+			local var_40_2 = DungeonConfig.instance:getEpisodeCO(var_40_1)
+			local var_40_3 = var_40_2 and var_40_2.type
 
-			if SeasonFightHandler.openSeasonFightRuleTipView(var_41_3) then
+			if SeasonFightHandler.openSeasonFightRuleTipView(var_40_3) then
 				return
 			end
 		end
@@ -743,48 +757,48 @@ function var_0_0.openFightSpecialTipView(arg_41_0, arg_41_1)
 	ViewMgr.instance:openView(ViewName.FightSpecialTipView)
 end
 
-function var_0_0.openFightTechniqueView(arg_42_0)
+function var_0_0.openFightTechniqueView(arg_41_0)
 	ViewMgr.instance:openView(ViewName.FightTechniqueView)
 end
 
-function var_0_0._recordFreeTicket(arg_43_0)
-	local var_43_0 = FightModel.instance:getFightParam()
-	local var_43_1 = var_43_0 and var_43_0.episodeId
-	local var_43_2 = var_43_1 and lua_episode.configDict[var_43_1]
+function var_0_0._recordFreeTicket(arg_42_0)
+	local var_42_0 = FightModel.instance:getFightParam()
+	local var_42_1 = var_42_0 and var_42_0.episodeId
+	local var_42_2 = var_42_1 and lua_episode.configDict[var_42_1]
 
-	if not var_43_2 then
+	if not var_42_2 then
 		return
 	end
 
-	local var_43_3 = DungeonConfig.instance:getChapterCO(var_43_2.chapterId)
+	local var_42_3 = DungeonConfig.instance:getChapterCO(var_42_2.chapterId)
 
-	arg_43_0.TEMP_equip_chapter_free_count = nil
+	arg_42_0.TEMP_equip_chapter_free_count = nil
 
-	if var_43_3.type == DungeonEnum.ChapterType.Equip then
-		arg_43_0.TEMP_equip_chapter_free_count = DungeonModel.instance:getChapterRemainingNum(var_43_3.type)
+	if var_42_3.type == DungeonEnum.ChapterType.Equip then
+		arg_42_0.TEMP_equip_chapter_free_count = DungeonModel.instance:getChapterRemainingNum(var_42_3.type)
 	end
 end
 
 function var_0_0.onResultViewClose()
-	local var_44_0 = {}
+	local var_43_0 = {}
 
-	var_0_0.instance:dispatchEvent(FightEvent.OnBreakResultViewClose, var_44_0)
+	var_0_0.instance:dispatchEvent(FightEvent.OnBreakResultViewClose, var_43_0)
 
-	if var_44_0.isBreak then
+	if var_43_0.isBreak then
 		return
 	end
 
 	var_0_0.instance:dispatchEvent(FightEvent.OnResultViewClose)
 end
 
-function var_0_0.errorAndEnterMainScene(arg_45_0)
+function var_0_0.errorAndEnterMainScene(arg_44_0)
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	arg_45_0:clearFightData()
+	arg_44_0:clearFightData()
 	MainController.instance:enterMainScene(true)
 end
 
-function var_0_0.clearFightData(arg_46_0)
+function var_0_0.clearFightData(arg_45_0)
 	FightModel.instance.needFightReconnect = false
 
 	FightModel.instance:onEndFight()

@@ -99,7 +99,17 @@ function var_0_0._btngetOnClick(arg_8_0)
 end
 
 function var_0_0._editableInitView(arg_9_0)
-	return
+	arg_9_0._goKeywordParent = gohelper.findChild(arg_9_0.viewGO, "Root/stone/#go_keyword")
+	arg_9_0._keywordItemList = {}
+
+	local var_9_0 = arg_9_0._goKeywordParent.transform.childCount
+
+	for iter_9_0 = 1, var_9_0 do
+		local var_9_1 = arg_9_0._goKeywordParent.transform:GetChild(iter_9_0 - 1)
+		local var_9_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1.gameObject, VersionActivity2_3NewCultivationKeywordItem)
+
+		table.insert(arg_9_0._keywordItemList, var_9_2)
+	end
 end
 
 function var_0_0.onUpdateParam(arg_10_0)
@@ -118,7 +128,7 @@ function var_0_0.onOpen(arg_11_0)
 	Activity125Controller.instance:getAct125InfoFromServer(var_11_1)
 end
 
-function var_0_0._refreshUI(arg_12_0)
+function var_0_0.onEpisodeFinished(arg_12_0)
 	local var_12_0 = Activity125Model.instance:getById(arg_12_0._actId)
 
 	if var_12_0 == nil then
@@ -131,15 +141,11 @@ function var_0_0._refreshUI(arg_12_0)
 		return
 	end
 
-	local var_12_2 = var_12_1[1].id
-	local var_12_3 = var_12_0:isEpisodeFinished(var_12_2)
-
-	gohelper.setActive(arg_12_0._btnget, not var_12_3)
-	gohelper.setActive(arg_12_0._gohasget, var_12_3)
-	arg_12_0:refreshRemainTime()
+	logNormal(string.format("onEpisodeFinished actId: %s", tostring(arg_12_0._actId)))
+	arg_12_0:_refreshUI()
 end
 
-function var_0_0.onEpisodeFinished(arg_13_0)
+function var_0_0._refreshUI(arg_13_0)
 	local var_13_0 = Activity125Model.instance:getById(arg_13_0._actId)
 
 	if var_13_0 == nil then
@@ -152,30 +158,69 @@ function var_0_0.onEpisodeFinished(arg_13_0)
 		return
 	end
 
-	logNormal(string.format("onEpisodeFinished actId: %s", tostring(arg_13_0._actId)))
-	arg_13_0:_refreshUI()
+	local var_13_2 = var_13_1[1].id
+	local var_13_3 = var_13_0:isEpisodeFinished(var_13_2)
+
+	gohelper.setActive(arg_13_0._btnget, not var_13_3)
+	gohelper.setActive(arg_13_0._gohasget, var_13_3)
+	arg_13_0:refreshRemainTime()
+	arg_13_0:_refreshKeyword()
 end
 
-function var_0_0.refreshRemainTime(arg_14_0)
-	local var_14_0 = ActivityModel.instance:getActMO(arg_14_0._actId):getRealEndTimeStamp()
-	local var_14_1 = ServerTime.now()
+function var_0_0._refreshKeyword(arg_14_0)
+	local var_14_0 = ActivityConfig.instance:getActivityCo(arg_14_0._actId).param
+	local var_14_1 = string.nilorempty(var_14_0)
 
-	if var_14_0 <= var_14_1 then
-		arg_14_0._txtLimitTime.text = luaLang("ended")
+	gohelper.setActive(arg_14_0._goKeywordParent, not var_14_1)
+
+	if var_14_1 then
+		return
+	end
+
+	local var_14_2 = string.splitToNumber(var_14_0, "#")
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_2) do
+		local var_14_3 = arg_14_0._keywordItemList[iter_14_0]
+
+		if not var_14_3 then
+			logError("狂想预热数量超过上限")
+		else
+			local var_14_4 = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(iter_14_1)
+
+			var_14_3:refreshKeyword(var_14_4.keyword)
+		end
+	end
+
+	local var_14_5 = #arg_14_0._keywordItemList
+	local var_14_6 = #var_14_2
+
+	if var_14_6 < var_14_5 then
+		for iter_14_2 = var_14_6 + 1, var_14_5 do
+			arg_14_0._keywordItemList[iter_14_2]:refreshKeyword(nil)
+		end
+	end
+end
+
+function var_0_0.refreshRemainTime(arg_15_0)
+	local var_15_0 = ActivityModel.instance:getActMO(arg_15_0._actId):getRealEndTimeStamp()
+	local var_15_1 = ServerTime.now()
+
+	if var_15_0 <= var_15_1 then
+		arg_15_0._txtLimitTime.text = luaLang("ended")
 
 		return
 	end
 
-	local var_14_2 = TimeUtil.SecondToActivityTimeFormat(var_14_0 - var_14_1)
+	local var_15_2 = TimeUtil.SecondToActivityTimeFormat(var_15_0 - var_15_1)
 
-	arg_14_0._txtLimitTime.text = var_14_2
+	arg_15_0._txtLimitTime.text = var_15_2
 end
 
-function var_0_0.onClose(arg_15_0)
+function var_0_0.onClose(arg_16_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function var_0_0.onDestroyView(arg_17_0)
 	return
 end
 

@@ -38,6 +38,7 @@ function var_0_0.init(arg_2_0, arg_2_1)
 
 	arg_2_0.goMaxRare = gohelper.findChild(arg_2_1, "go_normal/hero/Rare_effect")
 	arg_2_0.fetterItemList = {}
+	arg_2_0.extraEffect = gohelper.findChild(arg_2_1, "effect")
 end
 
 function var_0_0.addEventListeners(arg_3_0)
@@ -146,6 +147,10 @@ end
 
 function var_0_0.setPreview(arg_10_0)
 	arg_10_0.preview = true
+end
+
+function var_0_0.setExtraEffect(arg_11_0, arg_11_1)
+	gohelper.setActive(arg_11_0.extraEffect, arg_11_1)
 end
 
 return var_0_0

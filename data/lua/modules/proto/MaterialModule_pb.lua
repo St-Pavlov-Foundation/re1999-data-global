@@ -12,7 +12,8 @@ local var_0_1 = {
 	MATERIALDATAQUANTITYFIELD = var_0_0.FieldDescriptor(),
 	M2QENTRY_MSG = var_0_0.Descriptor(),
 	M2QENTRYMATERIALIDFIELD = var_0_0.FieldDescriptor(),
-	M2QENTRYQUANTITYFIELD = var_0_0.FieldDescriptor()
+	M2QENTRYQUANTITYFIELD = var_0_0.FieldDescriptor(),
+	M2QENTRYTIMEFIELD = var_0_0.FieldDescriptor()
 }
 
 var_0_1.MATERIALCHANGEPUSHDATALISTFIELD.name = "dataList"
@@ -100,13 +101,23 @@ var_0_1.M2QENTRYQUANTITYFIELD.has_default_value = false
 var_0_1.M2QENTRYQUANTITYFIELD.default_value = 0
 var_0_1.M2QENTRYQUANTITYFIELD.type = 5
 var_0_1.M2QENTRYQUANTITYFIELD.cpp_type = 1
+var_0_1.M2QENTRYTIMEFIELD.name = "time"
+var_0_1.M2QENTRYTIMEFIELD.full_name = ".M2QEntry.time"
+var_0_1.M2QENTRYTIMEFIELD.number = 3
+var_0_1.M2QENTRYTIMEFIELD.index = 2
+var_0_1.M2QENTRYTIMEFIELD.label = 1
+var_0_1.M2QENTRYTIMEFIELD.has_default_value = false
+var_0_1.M2QENTRYTIMEFIELD.default_value = 0
+var_0_1.M2QENTRYTIMEFIELD.type = 3
+var_0_1.M2QENTRYTIMEFIELD.cpp_type = 2
 var_0_1.M2QENTRY_MSG.name = "M2QEntry"
 var_0_1.M2QENTRY_MSG.full_name = ".M2QEntry"
 var_0_1.M2QENTRY_MSG.nested_types = {}
 var_0_1.M2QENTRY_MSG.enum_types = {}
 var_0_1.M2QENTRY_MSG.fields = {
 	var_0_1.M2QENTRYMATERIALIDFIELD,
-	var_0_1.M2QENTRYQUANTITYFIELD
+	var_0_1.M2QENTRYQUANTITYFIELD,
+	var_0_1.M2QENTRYTIMEFIELD
 }
 var_0_1.M2QENTRY_MSG.is_extendable = false
 var_0_1.M2QENTRY_MSG.extensions = {}

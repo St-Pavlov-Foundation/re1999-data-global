@@ -25,7 +25,7 @@ function var_0_0.Create(arg_1_0, arg_1_1)
 end
 
 function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0._blockCo = arg_2_1
+	arg_2_0._data = arg_2_1
 end
 
 local var_0_2 = 9
@@ -49,11 +49,7 @@ function var_0_0.init(arg_3_0, arg_3_1)
 		return
 	end
 
-	local var_3_3 = SurvivalMapModel.instance:getSceneMo()
-	local var_3_4 = var_3_3.exitPos
-
-	arg_3_0._isInRain = SurvivalHelper.instance:getDistance(arg_3_0._blockCo.pos, var_3_4) > var_3_3.circle
-	arg_3_0._isInFog = SurvivalMapModel.instance:isInFog(arg_3_0._blockCo.pos)
+	arg_3_0._isInFog = SurvivalMapModel.instance:isInFog(arg_3_0._data.pos)
 
 	for iter_3_1, iter_3_2 in pairs(arg_3_0._terrainMRs) do
 		SurvivalMapHelper.instance:getSceneFogComp():setBlockStatu(iter_3_2, arg_3_0._isInFog, arg_3_0._isInRain)
@@ -72,27 +68,23 @@ function var_0_0.onStart(arg_6_0)
 	arg_6_0.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
 end
 
-function var_0_0._onCircleUpdate(arg_7_0)
-	return
-end
-
-function var_0_0._onFogUpdate(arg_8_0)
-	if not arg_8_0._terrainMRs[1] then
+function var_0_0._onFogUpdate(arg_7_0)
+	if not arg_7_0._terrainMRs[1] then
 		return
 	end
 
-	local var_8_0 = SurvivalMapModel.instance:isInFog(arg_8_0._blockCo.pos)
+	local var_7_0 = SurvivalMapModel.instance:isInFog(arg_7_0._data.pos)
 
-	if var_8_0 ~= arg_8_0._isInFog then
-		arg_8_0._isInFog = var_8_0
+	if var_7_0 ~= arg_7_0._isInFog then
+		arg_7_0._isInFog = var_7_0
 
-		for iter_8_0, iter_8_1 in pairs(arg_8_0._terrainMRs) do
-			SurvivalMapHelper.instance:getSceneFogComp():setBlockStatu(iter_8_1, var_8_0)
+		for iter_7_0, iter_7_1 in pairs(arg_7_0._terrainMRs) do
+			SurvivalMapHelper.instance:getSceneFogComp():setBlockStatu(iter_7_1, var_7_0)
 		end
 	end
 end
 
-function var_0_0.onDestroy(arg_9_0)
+function var_0_0.onDestroy(arg_8_0)
 	return
 end
 

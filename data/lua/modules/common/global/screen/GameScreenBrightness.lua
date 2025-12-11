@@ -53,8 +53,12 @@ function var_0_0._refreshAutoState(arg_5_0)
 
 	local var_5_0 = false
 
-	if arg_5_0._stepCo and (arg_5_0._stepCo.conversation.type == StoryEnum.ConversationType.None or arg_5_0._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog or arg_5_0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract) then
-		var_5_0 = true
+	if arg_5_0._stepCo then
+		local var_5_1 = StoryModel.instance:isLimitNoInteractLock(arg_5_0._stepCo)
+
+		if arg_5_0._stepCo.conversation.type == StoryEnum.ConversationType.None or arg_5_0._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog or arg_5_0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract or var_5_1 then
+			var_5_0 = true
+		end
 	end
 
 	arg_5_0:_setScreenLightingOff(var_5_0)

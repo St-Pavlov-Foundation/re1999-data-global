@@ -16,14 +16,18 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0.viewContainer:registerCallback(ViewEvent.ToSwitchTab, arg_2_0._toSwitchTab, arg_2_0)
 	arg_2_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SceneSwitchUIVisible, arg_2_0._onSwitchUIVisible, arg_2_0)
 	arg_2_0:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, arg_2_0._onSwitchUIVisible, arg_2_0)
+	arg_2_0:addEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.SwitchVisible, arg_2_0._onSwitchUIVisible, arg_2_0)
 	arg_2_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.ForceShowSceneTab, arg_2_0._onForceShowSceneTab, arg_2_0)
+	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0.refreshReddot, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, arg_3_0._toSwitchTab, arg_3_0)
 	arg_3_0:removeEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SceneSwitchUIVisible, arg_3_0._onSwitchUIVisible, arg_3_0)
 	arg_3_0:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, arg_3_0._onSwitchUIVisible, arg_3_0)
+	arg_3_0:removeEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.SwitchVisible, arg_3_0._onSwitchUIVisible, arg_3_0)
 	arg_3_0:removeEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.ForceShowSceneTab, arg_3_0._onForceShowSceneTab, arg_3_0)
+	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0.refreshReddot, arg_3_0)
 end
 
 function var_0_0._onForceShowSceneTab(arg_4_0)
@@ -76,6 +80,10 @@ end
 function var_0_0._clearScene(arg_14_0)
 	WeatherController.instance:FakeShowScene(true)
 	MainHeroView.setPostProcessBlur()
+end
+
+function var_0_0.refreshReddot(arg_15_0)
+	MainSwitchClassifyListModel.instance:onModelUpdate()
 end
 
 return var_0_0

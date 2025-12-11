@@ -103,6 +103,7 @@ function var_0_0.onOpen(arg_8_0)
 
 	arg_8_0:_refreshPriceArea()
 	arg_8_0:_updateNormal()
+	StoreController.instance:statOpenChargeGoods(arg_8_0._mo.belongStoreId, arg_8_0._mo.config)
 end
 
 function var_0_0.onClose(arg_9_0)

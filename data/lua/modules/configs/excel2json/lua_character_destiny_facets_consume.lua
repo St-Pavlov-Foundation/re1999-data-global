@@ -7,12 +7,14 @@ local var_0_1 = {
 	consume = 3,
 	facetsId = 1,
 	facetsSort = 6,
-	icon = 5
+	icon = 5,
+	keyword = 7
 }
 local var_0_2 = {
 	"facetsId"
 }
 local var_0_3 = {
+	keyword = 2,
 	name = 1
 }
 

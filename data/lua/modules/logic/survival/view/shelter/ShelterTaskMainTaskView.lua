@@ -278,25 +278,7 @@ function var_0_0.getIconInstance(arg_16_0, arg_16_1)
 end
 
 function var_0_0.refreshTalent(arg_17_0)
-	local var_17_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_17_1 = var_17_0 and var_17_0.talentBox
-	local var_17_2 = var_17_1 and var_17_1.groupId or 0
-	local var_17_3 = lua_survival_talent_group.configDict[var_17_2]
-
-	if not var_17_3 then
-		gohelper.setActive(arg_17_0.collectionGO, false)
-
-		return
-	end
-
-	gohelper.setActive(arg_17_0.collectionGO, true)
-
-	arg_17_0.txtCollection.text = formatLuaLang("survivaltaskview_collection_txt", var_17_3.name)
-
-	arg_17_0.simageCollection:LoadImage(ResUrl.getSurvivalTalentIcon(var_17_3.icon))
-
-	arg_17_0.txtChoice.text = var_17_3.name
-	arg_17_0.txtBase.text = string.format(luaLang("ShelterTaskMainTaskView_refreshTalent_txtBase"), var_17_3.name, var_17_3.desc)
+	gohelper.setActive(arg_17_0.collectionGO, false)
 end
 
 function var_0_0.onClicRewardItem(arg_18_0, arg_18_1)

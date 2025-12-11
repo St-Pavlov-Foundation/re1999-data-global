@@ -24,7 +24,7 @@ function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
 
 		SurvivalMapHelper.instance:addEntity(iter_1_0, arg_1_0._allUnits[iter_1_0])
 
-		local var_1_1 = arg_1_0:getWarmingRange(iter_1_1)
+		local var_1_1 = iter_1_1:getWarmingRange()
 
 		if var_1_1 then
 			arg_1_0:_showEffect(iter_1_1.id, iter_1_1.pos, var_1_1)
@@ -38,6 +38,7 @@ function var_0_0.addEvents(arg_2_0)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitChange, arg_2_0._onUnitChange, arg_2_0)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitDel, arg_2_0._onUnitDel, arg_2_0)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnAttrUpdate, arg_2_0._onAttrUpdate, arg_2_0)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapDestoryPosAdd, arg_2_0.onMapDestoryPosAdd, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
@@ -46,6 +47,7 @@ function var_0_0.removeEvents(arg_3_0)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitChange, arg_3_0._onUnitChange, arg_3_0)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitDel, arg_3_0._onUnitDel, arg_3_0)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnAttrUpdate, arg_3_0._onAttrUpdate, arg_3_0)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapDestoryPosAdd, arg_3_0.onMapDestoryPosAdd, arg_3_0)
 end
 
 function var_0_0._onAttrUpdate(arg_4_0, arg_4_1)
@@ -57,38 +59,32 @@ function var_0_0._onAttrUpdate(arg_4_0, arg_4_1)
 		end
 
 		for iter_4_0, iter_4_1 in pairs(var_4_0.unitsById) do
-			if not arg_4_0:getWarmingRange(iter_4_1) then
+			if not iter_4_1:getWarmingRange() then
 				SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(iter_4_1.id)
 			end
 		end
 	end
 end
 
-function var_0_0.getWarmingRange(arg_5_0, arg_5_1)
-	if not arg_5_1.co or arg_5_1.unitType ~= SurvivalEnum.UnitType.Battle then
-		return false
-	end
-
-	local var_5_0 = SurvivalShelterModel.instance:getWeekInfo()
+function var_0_0.onMapDestoryPosAdd(arg_5_0)
+	local var_5_0 = SurvivalMapModel.instance:getSceneMo()
 
 	if not var_5_0 then
-		return false
+		return
 	end
 
-	if arg_5_1.co.skip == 1 and arg_5_1.co.fightLevel <= var_5_0:getAttr(SurvivalEnum.AttrType.HeroFightLevel) then
-		return false
-	end
+	for iter_5_0, iter_5_1 in pairs(var_5_0.unitsById) do
+		local var_5_1 = iter_5_1:getWarmingRange()
 
-	local var_5_1 = arg_5_1:getWarmingRange()
-
-	if var_5_1 > 0 and arg_5_1.visionVal ~= 8 then
-		return var_5_1
+		if var_5_1 then
+			arg_5_0:_showEffect(iter_5_1.id, iter_5_1.pos, var_5_1)
+		end
 	end
 end
 
 function var_0_0._onUnitDel(arg_6_0, arg_6_1, arg_6_2)
 	if arg_6_0._allUnits[arg_6_1.id] then
-		if arg_6_1:getWarmingRange() > 0 then
+		if arg_6_1:getWarmingRange() then
 			SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(arg_6_1.id)
 		end
 
@@ -100,7 +96,7 @@ end
 
 function var_0_0._onUnitAdd(arg_7_0, arg_7_1)
 	if not arg_7_0._allUnits[arg_7_1.id] then
-		local var_7_0 = arg_7_0:getWarmingRange(arg_7_1)
+		local var_7_0 = arg_7_1:getWarmingRange()
 
 		if var_7_0 then
 			arg_7_0:_showEffect(arg_7_1.id, arg_7_1.pos, var_7_0)
@@ -117,7 +113,7 @@ function var_0_0._onUnitPosChange(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
 		return
 	end
 
-	local var_8_0 = arg_8_0:getWarmingRange(arg_8_2)
+	local var_8_0 = arg_8_2:getWarmingRange()
 
 	if var_8_0 then
 		SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(arg_8_2.id)
@@ -132,14 +128,12 @@ function var_0_0._onUnitChange(arg_9_0, arg_9_1)
 		return
 	end
 
-	local var_9_1 = arg_9_0:getWarmingRange(var_9_0)
+	SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(arg_9_1)
 
-	if var_9_1 then
-		SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(var_9_0.id)
+	local var_9_1 = var_9_0:getWarmingRange()
 
-		if var_9_0.visionVal ~= 8 then
-			arg_9_0:_showEffect(var_9_0.id, var_9_0.pos, var_9_1)
-		end
+	if var_9_1 and var_9_0.visionVal ~= 8 then
+		arg_9_0:_showEffect(var_9_0.id, var_9_0.pos, var_9_1)
 	end
 end
 
@@ -147,7 +141,7 @@ function var_0_0._showEffect(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
 	local var_10_0 = SurvivalMapModel.instance:getCurMapCo().walkables
 
 	for iter_10_0, iter_10_1 in ipairs(SurvivalHelper.instance:getAllPointsByDis(arg_10_2, arg_10_3)) do
-		if SurvivalHelper.instance:isHaveNode(var_10_0, iter_10_1) then
+		if SurvivalHelper.instance:getValueFromDict(var_10_0, iter_10_1) then
 			SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(arg_10_1, iter_10_1.q, iter_10_1.r, 1)
 		end
 	end

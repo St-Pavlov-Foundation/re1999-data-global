@@ -12,17 +12,18 @@ function var_0_0.buildViews(arg_1_0)
 end
 
 function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = {
+	local var_2_0 = arg_2_0.viewParam and arg_2_0.viewParam.PowerId or MaterialEnum.PowerId.ActPowerId
+	local var_2_1 = {
 		CurrencyEnum.CurrencyType.Power,
 		{
 			isCurrencySprite = true,
 			type = MaterialEnum.MaterialType.PowerPotion,
-			id = MaterialEnum.PowerId.ActPowerId
+			id = var_2_0
 		}
 	}
 
 	return {
-		CurrencyView.New(var_2_0)
+		CurrencyView.New(var_2_1)
 	}
 end
 

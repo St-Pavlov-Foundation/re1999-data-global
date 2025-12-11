@@ -780,697 +780,744 @@ function var_0_0.onReceiveSetWaterTypeReply(arg_91_0, arg_91_1, arg_91_2)
 
 	GameFacade.showToast(ToastEnum.WaterReformSuccess)
 	RoomWaterReformController.instance:refreshSelectWaterBlockEntity()
-	RoomWaterReformController.instance:dispatchEvent(RoomEvent.WaterReformChangeWaterType)
+	RoomWaterReformController.instance:dispatchEvent(RoomEvent.OnRoomBlockReform)
 end
 
-function var_0_0.sendSetRoomSkinRequest(arg_92_0, arg_92_1, arg_92_2, arg_92_3, arg_92_4)
-	if not arg_92_1 or not arg_92_2 then
+function var_0_0.sendSetBlockColorRequest(arg_92_0, arg_92_1, arg_92_2, arg_92_3)
+	if not arg_92_1 then
 		return
 	end
 
-	local var_92_0 = RoomModule_pb.SetRoomSkinRequest()
+	local var_92_0 = RoomModule_pb.SetBlockColorRequest()
 
-	var_92_0.id = arg_92_1
-	var_92_0.skinId = arg_92_2
+	for iter_92_0, iter_92_1 in pairs(arg_92_1) do
+		local var_92_1 = RoomModule_pb.BlockColorInfo()
 
-	arg_92_0:sendMsg(var_92_0, arg_92_3, arg_92_4)
+		var_92_1.blockId = iter_92_0
+		var_92_1.blockColor = iter_92_1
+
+		table.insert(var_92_0.blockColorInfos, var_92_1)
+	end
+
+	arg_92_0:sendMsg(var_92_0, arg_92_2, arg_92_3)
 end
 
-function var_0_0.onReceiveSetRoomSkinReply(arg_93_0, arg_93_1, arg_93_2)
+function var_0_0.onReceiveSetBlockColorReply(arg_93_0, arg_93_1, arg_93_2)
 	if arg_93_1 ~= 0 then
 		return
 	end
 
-	local var_93_0 = arg_93_2.skin.id
-	local var_93_1 = arg_93_2.skin.skinId
+	local var_93_0 = {}
+	local var_93_1 = RoomMapBlockModel.instance:getBlockMODict()
 
-	RoomSkinModel.instance:setRoomSkinEquipped(var_93_0, var_93_1)
-	RoomSkinController.instance:dispatchEvent(RoomSkinEvent.ChangeEquipRoomSkin)
+	for iter_93_0, iter_93_1 in pairs(var_93_1) do
+		for iter_93_2, iter_93_3 in pairs(iter_93_1) do
+			var_93_0[iter_93_3.id] = iter_93_3
+		end
+	end
+
+	for iter_93_4, iter_93_5 in ipairs(arg_93_2.infos) do
+		local var_93_2 = var_93_0[iter_93_5.blockId]
+
+		if var_93_2 then
+			var_93_2:setBlockColorType(iter_93_5.blockColor)
+			var_93_2:setTempBlockColorType()
+		end
+	end
+
+	GameFacade.showToast(ToastEnum.WaterReformSuccess)
+	RoomWaterReformController.instance:refreshSelectedBlockEntity()
+	RoomWaterReformController.instance:dispatchEvent(RoomEvent.OnRoomBlockReform)
 end
 
-function var_0_0.sendReadRoomSkinRequest(arg_94_0, arg_94_1, arg_94_2, arg_94_3)
-	if not arg_94_1 then
+function var_0_0.sendSetRoomSkinRequest(arg_94_0, arg_94_1, arg_94_2, arg_94_3, arg_94_4)
+	if not arg_94_1 or not arg_94_2 then
 		return
 	end
 
-	local var_94_0 = RoomModule_pb.ReadRoomSkinRequest()
+	local var_94_0 = RoomModule_pb.SetRoomSkinRequest()
 
-	var_94_0.skinId = arg_94_1
+	var_94_0.id = arg_94_1
+	var_94_0.skinId = arg_94_2
 
-	arg_94_0:sendMsg(var_94_0, arg_94_2, arg_94_3)
+	arg_94_0:sendMsg(var_94_0, arg_94_3, arg_94_4)
 end
 
-function var_0_0.onReceiveReadRoomSkinReply(arg_95_0, arg_95_1, arg_95_2)
+function var_0_0.onReceiveSetRoomSkinReply(arg_95_0, arg_95_1, arg_95_2)
 	if arg_95_1 ~= 0 then
+		return
+	end
+
+	local var_95_0 = arg_95_2.skin.id
+	local var_95_1 = arg_95_2.skin.skinId
+
+	RoomSkinModel.instance:setRoomSkinEquipped(var_95_0, var_95_1)
+	RoomSkinController.instance:dispatchEvent(RoomSkinEvent.ChangeEquipRoomSkin)
+end
+
+function var_0_0.sendReadRoomSkinRequest(arg_96_0, arg_96_1, arg_96_2, arg_96_3)
+	if not arg_96_1 then
+		return
+	end
+
+	local var_96_0 = RoomModule_pb.ReadRoomSkinRequest()
+
+	var_96_0.skinId = arg_96_1
+
+	arg_96_0:sendMsg(var_96_0, arg_96_2, arg_96_3)
+end
+
+function var_0_0.onReceiveReadRoomSkinReply(arg_97_0, arg_97_1, arg_97_2)
+	if arg_97_1 ~= 0 then
 		return
 	end
 
 	RoomSkinController.instance:dispatchEvent(RoomSkinEvent.RoomSkinMarkUpdate)
 end
 
-function var_0_0.sendBuyManufactureBuildingRequest(arg_96_0, arg_96_1, arg_96_2, arg_96_3)
-	local var_96_0 = RoomModule_pb.BuyManufactureBuildingRequest()
+function var_0_0.sendBuyManufactureBuildingRequest(arg_98_0, arg_98_1, arg_98_2, arg_98_3)
+	local var_98_0 = RoomModule_pb.BuyManufactureBuildingRequest()
 
-	var_96_0.buildingId = arg_96_1
+	var_98_0.buildingId = arg_98_1
 
-	arg_96_0:sendMsg(var_96_0, arg_96_2, arg_96_3)
+	arg_98_0:sendMsg(var_98_0, arg_98_2, arg_98_3)
 end
 
-function var_0_0.onReceiveBuyManufactureBuildingInfoReply(arg_97_0, arg_97_1, arg_97_2)
-	if arg_97_1 == 0 then
-		RoomBuildingController.instance:buyManufactureBuildingInfoReply(arg_97_2)
-	end
-end
-
-function var_0_0.sendGenerateRoadRequest(arg_98_0, arg_98_1, arg_98_2, arg_98_3, arg_98_4)
-	local var_98_0 = RoomModule_pb.GenerateRoadRequest()
-
-	for iter_98_0, iter_98_1 in ipairs(arg_98_1) do
-		local var_98_1 = RoomModule_pb.RoadInfo()
-
-		var_98_1.id = iter_98_1.id > 0 and iter_98_1.id or 0
-		var_98_1.fromType = iter_98_1.fromType
-		var_98_1.toType = iter_98_1.toType
-		var_98_1.critterUid = iter_98_1.critterUid or 0
-		var_98_1.buildingUid = iter_98_1.buildingUid or 0
-		var_98_1.blockCleanType = iter_98_1.blockCleanType or 0
-
-		local var_98_2 = iter_98_1:getHexPointList()
-
-		for iter_98_2, iter_98_3 in ipairs(var_98_2) do
-			local var_98_3 = RoomModule_pb.RoadPoint()
-
-			var_98_3.x = iter_98_3.x
-			var_98_3.y = iter_98_3.y
-
-			table.insert(var_98_1.roadPoints, var_98_3)
-		end
-
-		table.insert(var_98_0.roadInfos, var_98_1)
-	end
-
-	if arg_98_2 then
-		for iter_98_4, iter_98_5 in ipairs(arg_98_2) do
-			table.insert(var_98_0.ids, iter_98_5)
-		end
-	end
-
-	arg_98_0:sendMsg(var_98_0, arg_98_3, arg_98_4)
-end
-
-function var_0_0.onReceiveGenerateRoadReply(arg_99_0, arg_99_1, arg_99_2)
+function var_0_0.onReceiveBuyManufactureBuildingInfoReply(arg_99_0, arg_99_1, arg_99_2)
 	if arg_99_1 == 0 then
-		RoomModel.instance:setRoadInfoListByMode(arg_99_2.validRoadInfos, RoomEnum.GameMode.Edit)
+		RoomBuildingController.instance:buyManufactureBuildingInfoReply(arg_99_2)
 	end
 end
 
-function var_0_0.sendDeleteRoadRequest(arg_100_0, arg_100_1, arg_100_2, arg_100_3)
-	local var_100_0 = RoomModule_pb.DeleteRoadRequest()
+function var_0_0.sendGenerateRoadRequest(arg_100_0, arg_100_1, arg_100_2, arg_100_3, arg_100_4)
+	local var_100_0 = RoomModule_pb.GenerateRoadRequest()
 
 	for iter_100_0, iter_100_1 in ipairs(arg_100_1) do
-		table.insert(var_100_0.ids, iter_100_1)
+		local var_100_1 = RoomModule_pb.RoadInfo()
+
+		var_100_1.id = iter_100_1.id > 0 and iter_100_1.id or 0
+		var_100_1.fromType = iter_100_1.fromType
+		var_100_1.toType = iter_100_1.toType
+		var_100_1.critterUid = iter_100_1.critterUid or 0
+		var_100_1.buildingUid = iter_100_1.buildingUid or 0
+		var_100_1.blockCleanType = iter_100_1.blockCleanType or 0
+
+		local var_100_2 = iter_100_1:getHexPointList()
+
+		for iter_100_2, iter_100_3 in ipairs(var_100_2) do
+			local var_100_3 = RoomModule_pb.RoadPoint()
+
+			var_100_3.x = iter_100_3.x
+			var_100_3.y = iter_100_3.y
+
+			table.insert(var_100_1.roadPoints, var_100_3)
+		end
+
+		table.insert(var_100_0.roadInfos, var_100_1)
 	end
 
-	arg_100_0:sendMsg(var_100_0, arg_100_2, arg_100_3)
+	if arg_100_2 then
+		for iter_100_4, iter_100_5 in ipairs(arg_100_2) do
+			table.insert(var_100_0.ids, iter_100_5)
+		end
+	end
+
+	arg_100_0:sendMsg(var_100_0, arg_100_3, arg_100_4)
 end
 
-function var_0_0.onReceiveDeleteRoadReply(arg_101_0, arg_101_1, arg_101_2)
+function var_0_0.onReceiveGenerateRoadReply(arg_101_0, arg_101_1, arg_101_2)
 	if arg_101_1 == 0 then
-		local var_101_0 = {}
-
-		tabletool.addValues(var_101_0, arg_101_2.ids)
-		RoomModel.instance:removeRoadInfoByIdsMode(var_101_0, RoomEnum.GameMode.Edit)
-		RoomTransportController.instance:deleteRoadReply(arg_101_2)
+		RoomModel.instance:setRoadInfoListByMode(arg_101_2.validRoadInfos, RoomEnum.GameMode.Edit)
 	end
 end
 
-function var_0_0.sendAllotCritterRequestt(arg_102_0, arg_102_1, arg_102_2, arg_102_3, arg_102_4)
-	local var_102_0 = RoomModule_pb.AllotCritterRequest()
+function var_0_0.sendDeleteRoadRequest(arg_102_0, arg_102_1, arg_102_2, arg_102_3)
+	local var_102_0 = RoomModule_pb.DeleteRoadRequest()
 
-	var_102_0.id = arg_102_1
-	var_102_0.critterUid = arg_102_2
+	for iter_102_0, iter_102_1 in ipairs(arg_102_1) do
+		table.insert(var_102_0.ids, iter_102_1)
+	end
 
-	arg_102_0:sendMsg(var_102_0, arg_102_3, arg_102_4)
+	arg_102_0:sendMsg(var_102_0, arg_102_2, arg_102_3)
 end
 
-function var_0_0.onReceiveAllotCritterReply(arg_103_0, arg_103_1, arg_103_2)
+function var_0_0.onReceiveDeleteRoadReply(arg_103_0, arg_103_1, arg_103_2)
 	if arg_103_1 == 0 then
-		RoomTransportController.instance:allotCritterReply(arg_103_2)
+		local var_103_0 = {}
 
-		local var_103_0 = {
-			arg_103_2.critterUid
-		}
-		local var_103_1 = {
-			[arg_103_2.id] = var_103_0
-		}
-
-		ManufactureController.instance:removeRestingCritterList(var_103_0)
-		CritterController.instance:dispatchEvent(CritterEvent.PlayAddCritterEff, var_103_1, true)
+		tabletool.addValues(var_103_0, arg_103_2.ids)
+		RoomModel.instance:removeRoadInfoByIdsMode(var_103_0, RoomEnum.GameMode.Edit)
+		RoomTransportController.instance:deleteRoadReply(arg_103_2)
 	end
 end
 
-function var_0_0.sendAllotVehicleRequest(arg_104_0, arg_104_1, arg_104_2, arg_104_3, arg_104_4, arg_104_5)
-	local var_104_0 = RoomModule_pb.AllotVehicleRequest()
+function var_0_0.sendAllotCritterRequestt(arg_104_0, arg_104_1, arg_104_2, arg_104_3, arg_104_4)
+	local var_104_0 = RoomModule_pb.AllotCritterRequest()
 
 	var_104_0.id = arg_104_1
-	var_104_0.buildingUid = arg_104_2
-	var_104_0.skinId = arg_104_3
+	var_104_0.critterUid = arg_104_2
 
-	arg_104_0:sendMsg(var_104_0, arg_104_4, arg_104_5)
+	arg_104_0:sendMsg(var_104_0, arg_104_3, arg_104_4)
 end
 
-function var_0_0.onReceiveAllotVehicleReply(arg_105_0, arg_105_1, arg_105_2)
+function var_0_0.onReceiveAllotCritterReply(arg_105_0, arg_105_1, arg_105_2)
 	if arg_105_1 == 0 then
-		RoomTransportController.instance:allotVehicleReply(arg_105_2)
+		RoomTransportController.instance:allotCritterReply(arg_105_2)
+
+		local var_105_0 = {
+			arg_105_2.critterUid
+		}
+		local var_105_1 = {
+			[arg_105_2.id] = var_105_0
+		}
+
+		ManufactureController.instance:removeRestingCritterList(var_105_0)
+		CritterController.instance:dispatchEvent(CritterEvent.PlayAddCritterEff, var_105_1, true)
 	end
 end
 
-function var_0_0.sendGetManufactureInfoRequest(arg_106_0, arg_106_1, arg_106_2)
-	local var_106_0 = RoomModule_pb.GetManufactureInfoRequest()
+function var_0_0.sendAllotVehicleRequest(arg_106_0, arg_106_1, arg_106_2, arg_106_3, arg_106_4, arg_106_5)
+	local var_106_0 = RoomModule_pb.AllotVehicleRequest()
 
-	arg_106_0:sendMsg(var_106_0, arg_106_1, arg_106_2)
+	var_106_0.id = arg_106_1
+	var_106_0.buildingUid = arg_106_2
+	var_106_0.skinId = arg_106_3
+
+	arg_106_0:sendMsg(var_106_0, arg_106_4, arg_106_5)
 end
 
-function var_0_0.onReceiveGetManufactureInfoReply(arg_107_0, arg_107_1, arg_107_2)
-	if arg_107_1 ~= 0 then
+function var_0_0.onReceiveAllotVehicleReply(arg_107_0, arg_107_1, arg_107_2)
+	if arg_107_1 == 0 then
+		RoomTransportController.instance:allotVehicleReply(arg_107_2)
+	end
+end
+
+function var_0_0.sendGetManufactureInfoRequest(arg_108_0, arg_108_1, arg_108_2)
+	local var_108_0 = RoomModule_pb.GetManufactureInfoRequest()
+
+	arg_108_0:sendMsg(var_108_0, arg_108_1, arg_108_2)
+end
+
+function var_0_0.onReceiveGetManufactureInfoReply(arg_109_0, arg_109_1, arg_109_2)
+	if arg_109_1 ~= 0 then
 		return
 	end
 
-	ManufactureController.instance:updateManufactureInfo(arg_107_2)
+	ManufactureController.instance:updateManufactureInfo(arg_109_2)
 end
 
-function var_0_0.onReceiveManuBuildingInfoPush(arg_108_0, arg_108_1, arg_108_2)
-	if arg_108_1 ~= 0 then
-		return
-	end
-
-	ManufactureController.instance:updateFrozenItem(arg_108_2.frozenItems2Count)
-	ManufactureController.instance:updateManuBuildingInfoList(arg_108_2.manuBuildingInfos)
-
-	local var_108_0 = ManufactureController.instance:getPlayAddEffDict(arg_108_2.manuBuildingInfos)
-
-	ManufactureController.instance:dispatchEvent(ManufactureEvent.PlayAddManufactureItemEff, var_108_0)
-end
-
-function var_0_0.sendManuBuildingUpgradeRequest(arg_109_0, arg_109_1, arg_109_2, arg_109_3)
-	local var_109_0 = RoomModule_pb.ManuBuildingUpgradeRequest()
-
-	var_109_0.uid = arg_109_1
-
-	arg_109_0:sendMsg(var_109_0, arg_109_2, arg_109_3)
-end
-
-function var_0_0.onReceiveManuBuildingUpgradeReply(arg_110_0, arg_110_1, arg_110_2)
+function var_0_0.onReceiveManuBuildingInfoPush(arg_110_0, arg_110_1, arg_110_2)
 	if arg_110_1 ~= 0 then
 		return
 	end
 
-	local var_110_0 = arg_110_2.manuBuildingInfo
+	ManufactureController.instance:updateFrozenItem(arg_110_2.frozenItems2Count)
+	ManufactureController.instance:updateManuBuildingInfoList(arg_110_2.manuBuildingInfos)
 
-	ManufactureController.instance:updateManuBuildingInfo(var_110_0)
+	local var_110_0 = ManufactureController.instance:getPlayAddEffDict(arg_110_2.manuBuildingInfos)
+
+	ManufactureController.instance:dispatchEvent(ManufactureEvent.PlayAddManufactureItemEff, var_110_0)
 end
 
-function var_0_0.sendSelectSlotProductionPlanRequest(arg_111_0, arg_111_1, arg_111_2)
-	local var_111_0 = RoomModule_pb.SelectSlotProductionPlanRequest()
+function var_0_0.sendManuBuildingUpgradeRequest(arg_111_0, arg_111_1, arg_111_2, arg_111_3)
+	local var_111_0 = RoomModule_pb.ManuBuildingUpgradeRequest()
 
 	var_111_0.uid = arg_111_1
 
-	for iter_111_0, iter_111_1 in ipairs(arg_111_2) do
-		local var_111_1 = RoomModule_pb.OperationInfo()
-
-		var_111_1.slotId = iter_111_1.slotId
-		var_111_1.operation = iter_111_1.operation
-		var_111_1.productionId = iter_111_1.productionId
-		var_111_1.priority = iter_111_1.priority
-
-		table.insert(var_111_0.operationInfos, var_111_1)
-	end
-
-	arg_111_0:sendMsg(var_111_0)
+	arg_111_0:sendMsg(var_111_0, arg_111_2, arg_111_3)
 end
 
-function var_0_0.onReceiveSelectSlotProductionPlanReply(arg_112_0, arg_112_1, arg_112_2)
+function var_0_0.onReceiveManuBuildingUpgradeReply(arg_112_0, arg_112_1, arg_112_2)
 	if arg_112_1 ~= 0 then
 		return
 	end
 
-	ManufactureController.instance:updateManuBuildingInfoList(arg_112_2.manuBuildingInfos, true)
+	local var_112_0 = arg_112_2.manuBuildingInfo
 
-	local var_112_0 = ManufactureController.instance:getPlayAddEffDict(arg_112_2.manuBuildingInfos)
-
-	ManufactureController.instance:dispatchEvent(ManufactureEvent.PlayAddManufactureItemEff, var_112_0)
+	ManufactureController.instance:updateManuBuildingInfo(var_112_0)
 end
 
-function var_0_0.sendManufactureAccelerateRequest(arg_113_0, arg_113_1, arg_113_2, arg_113_3)
-	local var_113_0 = RoomModule_pb.ManufactureAccelerateRequest()
+function var_0_0.sendSelectSlotProductionPlanRequest(arg_113_0, arg_113_1, arg_113_2)
+	local var_113_0 = RoomModule_pb.SelectSlotProductionPlanRequest()
 
 	var_113_0.uid = arg_113_1
-	var_113_0.slotId = arg_113_3
-	var_113_0.useItemData.materilType = arg_113_2.type
-	var_113_0.useItemData.materilId = arg_113_2.id
-	var_113_0.useItemData.quantity = arg_113_2.quantity
+
+	for iter_113_0, iter_113_1 in ipairs(arg_113_2) do
+		local var_113_1 = RoomModule_pb.OperationInfo()
+
+		var_113_1.slotId = iter_113_1.slotId
+		var_113_1.operation = iter_113_1.operation
+		var_113_1.productionId = iter_113_1.productionId
+		var_113_1.priority = iter_113_1.priority
+
+		table.insert(var_113_0.operationInfos, var_113_1)
+	end
 
 	arg_113_0:sendMsg(var_113_0)
 end
 
-function var_0_0.onReceiveManufactureAccelerateReply(arg_114_0, arg_114_1, arg_114_2)
+function var_0_0.onReceiveSelectSlotProductionPlanReply(arg_114_0, arg_114_1, arg_114_2)
 	if arg_114_1 ~= 0 then
 		return
 	end
 
 	ManufactureController.instance:updateManuBuildingInfoList(arg_114_2.manuBuildingInfos, true)
+
+	local var_114_0 = ManufactureController.instance:getPlayAddEffDict(arg_114_2.manuBuildingInfos)
+
+	ManufactureController.instance:dispatchEvent(ManufactureEvent.PlayAddManufactureItemEff, var_114_0)
 end
 
-function var_0_0.sendReapFinishSlotRequest(arg_115_0, arg_115_1)
-	local var_115_0 = RoomModule_pb.ReapFinishSlotRequest()
+function var_0_0.sendManufactureAccelerateRequest(arg_115_0, arg_115_1, arg_115_2, arg_115_3)
+	local var_115_0 = RoomModule_pb.ManufactureAccelerateRequest()
 
-	var_115_0.buildingUid = arg_115_1
+	var_115_0.uid = arg_115_1
+	var_115_0.slotId = arg_115_3
+	var_115_0.useItemData.materilType = arg_115_2.type
+	var_115_0.useItemData.materilId = arg_115_2.id
+	var_115_0.useItemData.quantity = arg_115_2.quantity
 
 	arg_115_0:sendMsg(var_115_0)
 end
 
-function var_0_0.onReceiveReapFinishSlotReply(arg_116_0, arg_116_1, arg_116_2)
+function var_0_0.onReceiveManufactureAccelerateReply(arg_116_0, arg_116_1, arg_116_2)
 	if arg_116_1 ~= 0 then
 		return
-	end
-
-	local var_116_0 = {}
-
-	for iter_116_0, iter_116_1 in ipairs(arg_116_2.normalReapItem) do
-		local var_116_1 = MaterialDataMO.New()
-
-		var_116_1:init(iter_116_1)
-		table.insert(var_116_0, var_116_1)
-	end
-
-	for iter_116_2, iter_116_3 in ipairs(arg_116_2.criReapItem) do
-		local var_116_2 = MaterialDataMO.New()
-
-		var_116_2:init(iter_116_3)
-
-		var_116_2.isShowExtra = true
-
-		table.insert(var_116_0, var_116_2)
-	end
-
-	local var_116_3 = {}
-
-	for iter_116_4, iter_116_5 in ipairs(arg_116_2.occupiedCriItem) do
-		local var_116_4 = MaterialDataMO.New()
-
-		var_116_4:init(iter_116_5)
-		table.insert(var_116_3, var_116_4)
-	end
-
-	if next(var_116_0) or next(var_116_3) then
-		ViewMgr.instance:openView(ViewName.RoomManufactureGetView, {
-			normalList = var_116_0,
-			usedList = var_116_3
-		})
-	else
-		GameFacade.showToast(ToastEnum.RoomNoManufactureItemGet)
 	end
 
 	ManufactureController.instance:updateManuBuildingInfoList(arg_116_2.manuBuildingInfos, true)
 end
 
-function var_0_0.sendDispatchCritterRequest(arg_117_0, arg_117_1, arg_117_2, arg_117_3)
-	local var_117_0 = RoomModule_pb.DispatchCritterRequest()
+function var_0_0.sendReapFinishSlotRequest(arg_117_0, arg_117_1)
+	local var_117_0 = RoomModule_pb.ReapFinishSlotRequest()
 
 	var_117_0.buildingUid = arg_117_1
-	var_117_0.critterUid = arg_117_2
-	var_117_0.critterSlotId = arg_117_3
 
 	arg_117_0:sendMsg(var_117_0)
 end
 
-function var_0_0.onReceiveDispatchCritterReply(arg_118_0, arg_118_1, arg_118_2)
+function var_0_0.onReceiveReapFinishSlotReply(arg_118_0, arg_118_1, arg_118_2)
 	if arg_118_1 ~= 0 then
 		return
 	end
 
-	ManufactureController.instance:updateWorkCritterInfo(arg_118_2.buildingUid)
+	local var_118_0 = {}
 
-	if arg_118_2.putSlotId then
-		local var_118_0 = {
-			[arg_118_2.buildingUid] = {
-				[arg_118_2.putSlotId] = arg_118_2.critterUid
-			}
-		}
+	for iter_118_0, iter_118_1 in ipairs(arg_118_2.normalReapItem) do
+		local var_118_1 = MaterialDataMO.New()
 
-		CritterController.instance:dispatchEvent(CritterEvent.PlayAddCritterEff, var_118_0)
+		var_118_1:init(iter_118_1)
+		table.insert(var_118_0, var_118_1)
 	end
 
-	if arg_118_2.infos then
-		for iter_118_0, iter_118_1 in ipairs(arg_118_2.infos) do
-			RoomTransportController.instance:allotCritterReply(iter_118_1)
-		end
+	for iter_118_2, iter_118_3 in ipairs(arg_118_2.criReapItem) do
+		local var_118_2 = MaterialDataMO.New()
+
+		var_118_2:init(iter_118_3)
+
+		var_118_2.isShowExtra = true
+
+		table.insert(var_118_0, var_118_2)
 	end
+
+	local var_118_3 = {}
+
+	for iter_118_4, iter_118_5 in ipairs(arg_118_2.occupiedCriItem) do
+		local var_118_4 = MaterialDataMO.New()
+
+		var_118_4:init(iter_118_5)
+		table.insert(var_118_3, var_118_4)
+	end
+
+	if next(var_118_0) or next(var_118_3) then
+		ViewMgr.instance:openView(ViewName.RoomManufactureGetView, {
+			normalList = var_118_0,
+			usedList = var_118_3
+		})
+	else
+		GameFacade.showToast(ToastEnum.RoomNoManufactureItemGet)
+	end
+
+	ManufactureController.instance:updateManuBuildingInfoList(arg_118_2.manuBuildingInfos, true)
 end
 
-function var_0_0.sendBuyRestSlotRequest(arg_119_0, arg_119_1, arg_119_2)
-	local var_119_0 = RoomModule_pb.BuyRestSlotRequest()
+function var_0_0.sendDispatchCritterRequest(arg_119_0, arg_119_1, arg_119_2, arg_119_3)
+	local var_119_0 = RoomModule_pb.DispatchCritterRequest()
 
 	var_119_0.buildingUid = arg_119_1
-	var_119_0.buySlotId = arg_119_2
+	var_119_0.critterUid = arg_119_2
+	var_119_0.critterSlotId = arg_119_3
 
 	arg_119_0:sendMsg(var_119_0)
 end
 
-function var_0_0.onReceiveBuyRestSlotReply(arg_120_0, arg_120_1, arg_120_2)
+function var_0_0.onReceiveDispatchCritterReply(arg_120_0, arg_120_1, arg_120_2)
 	if arg_120_1 ~= 0 then
 		return
 	end
 
-	CritterController.instance:buySeatSlotCb(arg_120_2.buildingUid, arg_120_2.buySlotId)
+	ManufactureController.instance:updateWorkCritterInfo(arg_120_2.buildingUid)
+
+	if arg_120_2.putSlotId then
+		local var_120_0 = {
+			[arg_120_2.buildingUid] = {
+				[arg_120_2.putSlotId] = arg_120_2.critterUid
+			}
+		}
+
+		CritterController.instance:dispatchEvent(CritterEvent.PlayAddCritterEff, var_120_0)
+	end
+
+	if arg_120_2.infos then
+		for iter_120_0, iter_120_1 in ipairs(arg_120_2.infos) do
+			RoomTransportController.instance:allotCritterReply(iter_120_1)
+		end
+	end
 end
 
-function var_0_0.sendChangeRestCritterRequest(arg_121_0, arg_121_1, arg_121_2, arg_121_3, arg_121_4, arg_121_5, arg_121_6, arg_121_7)
-	local var_121_0 = RoomModule_pb.ChangeRestCritterRequest()
+function var_0_0.sendBuyRestSlotRequest(arg_121_0, arg_121_1, arg_121_2)
+	local var_121_0 = RoomModule_pb.BuyRestSlotRequest()
 
 	var_121_0.buildingUid = arg_121_1
-	var_121_0.operation = arg_121_2
-	var_121_0.slotId1 = arg_121_3
-	var_121_0.critterUid = arg_121_4
-	var_121_0.slotId2 = arg_121_5
+	var_121_0.buySlotId = arg_121_2
 
-	arg_121_0:sendMsg(var_121_0, arg_121_6, arg_121_7)
+	arg_121_0:sendMsg(var_121_0)
 end
 
-function var_0_0.onReceiveChangeRestCritterReply(arg_122_0, arg_122_1, arg_122_2)
+function var_0_0.onReceiveBuyRestSlotReply(arg_122_0, arg_122_1, arg_122_2)
 	if arg_122_1 ~= 0 then
 		return
 	end
+
+	CritterController.instance:buySeatSlotCb(arg_122_2.buildingUid, arg_122_2.buySlotId)
 end
 
-function var_0_0.onReceiveRestBuildingInfoPush(arg_123_0, arg_123_1, arg_123_2)
-	if arg_123_1 ~= 0 then
-		return
-	end
+function var_0_0.sendChangeRestCritterRequest(arg_123_0, arg_123_1, arg_123_2, arg_123_3, arg_123_4, arg_123_5, arg_123_6, arg_123_7)
+	local var_123_0 = RoomModule_pb.ChangeRestCritterRequest()
 
-	CritterController.instance:setCritterBuildingInfoList(arg_123_2.restBuildingInfos)
+	var_123_0.buildingUid = arg_123_1
+	var_123_0.operation = arg_123_2
+	var_123_0.slotId1 = arg_123_3
+	var_123_0.critterUid = arg_123_4
+	var_123_0.slotId2 = arg_123_5
+
+	arg_123_0:sendMsg(var_123_0, arg_123_6, arg_123_7)
 end
 
-function var_0_0.onReceiveRoadInfoPush(arg_124_0, arg_124_1, arg_124_2)
+function var_0_0.onReceiveChangeRestCritterReply(arg_124_0, arg_124_1, arg_124_2)
 	if arg_124_1 ~= 0 then
 		return
 	end
-
-	RoomTransportController.instance:batchCritterReply(arg_124_2.roadInfos)
 end
 
-function var_0_0.sendFeedCritterRequest(arg_125_0, arg_125_1, arg_125_2, arg_125_3, arg_125_4)
-	local var_125_0 = RoomModule_pb.FeedCritterRequest()
+function var_0_0.onReceiveRestBuildingInfoPush(arg_125_0, arg_125_1, arg_125_2)
+	if arg_125_1 ~= 0 then
+		return
+	end
 
-	var_125_0.critterUid = arg_125_1
-	var_125_0.useFoodData.materilType = arg_125_2.type
-	var_125_0.useFoodData.materilId = arg_125_2.id
-	var_125_0.useFoodData.quantity = arg_125_2.quantity
-
-	arg_125_0:sendMsg(var_125_0, arg_125_3, arg_125_4)
+	CritterController.instance:setCritterBuildingInfoList(arg_125_2.restBuildingInfos)
 end
 
-function var_0_0.onReceiveFeedCritterReply(arg_126_0, arg_126_1, arg_126_2)
+function var_0_0.onReceiveRoadInfoPush(arg_126_0, arg_126_1, arg_126_2)
 	if arg_126_1 ~= 0 then
 		return
 	end
+
+	RoomTransportController.instance:batchCritterReply(arg_126_2.roadInfos)
 end
 
-function var_0_0.sendBatchDispatchCrittersRequest(arg_127_0, arg_127_1)
-	local var_127_0 = RoomModule_pb.BatchDispatchCrittersRequest()
+function var_0_0.sendFeedCritterRequest(arg_127_0, arg_127_1, arg_127_2, arg_127_3, arg_127_4)
+	local var_127_0 = RoomModule_pb.FeedCritterRequest()
 
-	var_127_0.type = arg_127_1
+	var_127_0.critterUid = arg_127_1
+	var_127_0.useFoodData.materilType = arg_127_2.type
+	var_127_0.useFoodData.materilId = arg_127_2.id
+	var_127_0.useFoodData.quantity = arg_127_2.quantity
 
-	arg_127_0:sendMsg(var_127_0)
+	arg_127_0:sendMsg(var_127_0, arg_127_3, arg_127_4)
 end
 
-function var_0_0.onReceiveBatchDispatchCrittersReply(arg_128_0, arg_128_1, arg_128_2)
+function var_0_0.onReceiveFeedCritterReply(arg_128_0, arg_128_1, arg_128_2)
 	if arg_128_1 ~= 0 then
 		return
 	end
-
-	ManufactureController.instance:openRouseCritterView(arg_128_2)
 end
 
-function var_0_0.sendRouseCrittersRequest(arg_129_0, arg_129_1, arg_129_2)
-	local var_129_0 = RoomModule_pb.RouseCrittersRequest()
+function var_0_0.sendBatchDispatchCrittersRequest(arg_129_0, arg_129_1)
+	local var_129_0 = RoomModule_pb.BatchDispatchCrittersRequest()
 
 	var_129_0.type = arg_129_1
-
-	for iter_129_0, iter_129_1 in ipairs(arg_129_2) do
-		local var_129_1 = RoomModule_pb.BatchDispatchInfo()
-
-		var_129_1.buildingUid = iter_129_1.buildingUid
-		var_129_1.roadId = iter_129_1.roadId
-
-		for iter_129_2, iter_129_3 in ipairs(iter_129_1.critterUids) do
-			table.insert(var_129_1.critterUids, iter_129_3)
-		end
-
-		table.insert(var_129_0.infos, var_129_1)
-	end
 
 	arg_129_0:sendMsg(var_129_0)
 end
 
-function var_0_0.onReceiveRouseCrittersReply(arg_130_0, arg_130_1, arg_130_2)
+function var_0_0.onReceiveBatchDispatchCrittersReply(arg_130_0, arg_130_1, arg_130_2)
 	if arg_130_1 ~= 0 then
 		return
 	end
 
-	local var_130_0 = {}
-	local var_130_1 = arg_130_2.type == CritterEnum.OneKeyType.Transport
+	ManufactureController.instance:openRouseCritterView(arg_130_2)
+end
 
-	if var_130_1 then
-		RoomTransportController.instance:batchCritterReply(arg_130_2.roadInfos)
+function var_0_0.sendRouseCrittersRequest(arg_131_0, arg_131_1, arg_131_2)
+	local var_131_0 = RoomModule_pb.RouseCrittersRequest()
+
+	var_131_0.type = arg_131_1
+
+	for iter_131_0, iter_131_1 in ipairs(arg_131_2) do
+		local var_131_1 = RoomModule_pb.BatchDispatchInfo()
+
+		var_131_1.buildingUid = iter_131_1.buildingUid
+		var_131_1.roadId = iter_131_1.roadId
+
+		for iter_131_2, iter_131_3 in ipairs(iter_131_1.critterUids) do
+			table.insert(var_131_1.critterUids, iter_131_3)
+		end
+
+		table.insert(var_131_0.infos, var_131_1)
 	end
 
-	local var_130_2 = {}
+	arg_131_0:sendMsg(var_131_0)
+end
 
-	if arg_130_2.validInfos then
-		for iter_130_0, iter_130_1 in ipairs(arg_130_2.validInfos) do
-			local var_130_3 = var_130_1 and iter_130_1.roadId or iter_130_1.buildingUid
+function var_0_0.onReceiveRouseCrittersReply(arg_132_0, arg_132_1, arg_132_2)
+	if arg_132_1 ~= 0 then
+		return
+	end
 
-			var_130_0[var_130_3] = var_130_0[var_130_3] or {}
+	local var_132_0 = {}
+	local var_132_1 = arg_132_2.type == CritterEnum.OneKeyType.Transport
 
-			for iter_130_2, iter_130_3 in ipairs(iter_130_1.infos) do
-				local var_130_4 = iter_130_3.critterUid
+	if var_132_1 then
+		RoomTransportController.instance:batchCritterReply(arg_132_2.roadInfos)
+	end
 
-				var_130_0[var_130_3][iter_130_3.slotId] = var_130_4
-				var_130_2[#var_130_2 + 1] = var_130_4
+	local var_132_2 = {}
+
+	if arg_132_2.validInfos then
+		for iter_132_0, iter_132_1 in ipairs(arg_132_2.validInfos) do
+			local var_132_3 = var_132_1 and iter_132_1.roadId or iter_132_1.buildingUid
+
+			var_132_0[var_132_3] = var_132_0[var_132_3] or {}
+
+			for iter_132_2, iter_132_3 in ipairs(iter_132_1.infos) do
+				local var_132_4 = iter_132_3.critterUid
+
+				var_132_0[var_132_3][iter_132_3.slotId] = var_132_4
+				var_132_2[#var_132_2 + 1] = var_132_4
 			end
 		end
 	end
 
-	ManufactureController.instance:removeRestingCritterList(var_130_2)
-	CritterController.instance:dispatchEvent(CritterEvent.PlayAddCritterEff, var_130_0, var_130_1)
+	ManufactureController.instance:removeRestingCritterList(var_132_2)
+	CritterController.instance:dispatchEvent(CritterEvent.PlayAddCritterEff, var_132_0, var_132_1)
 end
 
-function var_0_0.sendBatchAddProctionsRequest(arg_131_0, arg_131_1, arg_131_2, arg_131_3, arg_131_4, arg_131_5)
-	local var_131_0 = RoomModule_pb.BatchAddProctionsRequest()
+function var_0_0.sendBatchAddProctionsRequest(arg_133_0, arg_133_1, arg_133_2, arg_133_3, arg_133_4, arg_133_5)
+	local var_133_0 = RoomModule_pb.BatchAddProctionsRequest()
 
-	var_131_0.type = arg_131_1
-	var_131_0.freeInfo.buildingType = arg_131_2 or 0
-	var_131_0.freeInfo.buildingDefineId = arg_131_3 or 0
+	var_133_0.type = arg_133_1
+	var_133_0.freeInfo.buildingType = arg_133_2 or 0
+	var_133_0.freeInfo.buildingDefineId = arg_133_3 or 0
 
-	local var_131_1 = MaterialModule_pb.M2QEntry()
+	local var_133_1 = MaterialModule_pb.M2QEntry()
 
-	var_131_1.materialId = arg_131_4 or 0
-	var_131_1.quantity = arg_131_5 or 0
+	var_133_1.materialId = arg_133_4 or 0
+	var_133_1.quantity = arg_133_5 or 0
 
-	table.insert(var_131_0.freeInfo.item2Count, var_131_1)
-	arg_131_0:sendMsg(var_131_0)
-end
-
-function var_0_0.onReceiveBatchAddProctionsReply(arg_132_0, arg_132_1, arg_132_2)
-	if arg_132_1 ~= 0 then
-		return
-	end
-end
-
-function var_0_0.sendGetFrozenItemInfoRequest(arg_133_0)
-	local var_133_0 = RoomModule_pb.GetFrozenItemInfoRequest()
-
+	table.insert(var_133_0.freeInfo.item2Count, var_133_1)
 	arg_133_0:sendMsg(var_133_0)
 end
 
-function var_0_0.onReceiveGetFrozenItemInfoReply(arg_134_0, arg_134_1, arg_134_2)
+function var_0_0.onReceiveBatchAddProctionsReply(arg_134_0, arg_134_1, arg_134_2)
 	if arg_134_1 ~= 0 then
 		return
 	end
-
-	ManufactureController.instance:updateFrozenItem(arg_134_2.frozenItems2Count)
 end
 
-function var_0_0.sendGetOrderInfoRequest(arg_135_0, arg_135_1, arg_135_2)
-	local var_135_0 = RoomModule_pb.GetOrderInfoRequest()
+function var_0_0.sendGetFrozenItemInfoRequest(arg_135_0)
+	local var_135_0 = RoomModule_pb.GetFrozenItemInfoRequest()
 
-	arg_135_0:sendMsg(var_135_0, arg_135_1, arg_135_2)
+	arg_135_0:sendMsg(var_135_0)
 end
 
-function var_0_0.onReceiveGetOrderInfoReply(arg_136_0, arg_136_1, arg_136_2)
+function var_0_0.onReceiveGetFrozenItemInfoReply(arg_136_0, arg_136_1, arg_136_2)
 	if arg_136_1 ~= 0 then
 		return
 	end
 
-	RoomTradeModel.instance:onGetOrderInfo(arg_136_2)
-	RoomTradeController.instance:dispatchEvent(RoomTradeEvent.OnGetTradeOrderInfo)
+	ManufactureController.instance:updateFrozenItem(arg_136_2.frozenItems2Count)
 end
 
-function var_0_0.sendFinishOrderRequest(arg_137_0, arg_137_1, arg_137_2, arg_137_3)
-	local var_137_0 = RoomModule_pb.FinishOrderRequest()
+function var_0_0.sendGetOrderInfoRequest(arg_137_0, arg_137_1, arg_137_2)
+	local var_137_0 = RoomModule_pb.GetOrderInfoRequest()
 
-	var_137_0.orderType = arg_137_1
-	var_137_0.orderId = arg_137_2
-
-	if arg_137_3 then
-		var_137_0.sellCount = arg_137_3
-	end
-
-	arg_137_0:sendMsg(var_137_0)
+	arg_137_0:sendMsg(var_137_0, arg_137_1, arg_137_2)
 end
 
-function var_0_0.onReceiveFinishOrderReply(arg_138_0, arg_138_1, arg_138_2)
+function var_0_0.onReceiveGetOrderInfoReply(arg_138_0, arg_138_1, arg_138_2)
 	if arg_138_1 ~= 0 then
 		return
 	end
 
-	RoomTradeController.instance:onFinishOrderReply(arg_138_2)
+	RoomTradeModel.instance:onGetOrderInfo(arg_138_2)
+	RoomTradeController.instance:dispatchEvent(RoomTradeEvent.OnGetTradeOrderInfo)
 end
 
-function var_0_0.sendRefreshPurchaseOrderRequest(arg_139_0, arg_139_1, arg_139_2, arg_139_3, arg_139_4, arg_139_5)
-	local var_139_0 = RoomModule_pb.RefreshPurchaseOrderRequest()
+function var_0_0.sendFinishOrderRequest(arg_139_0, arg_139_1, arg_139_2, arg_139_3)
+	local var_139_0 = RoomModule_pb.FinishOrderRequest()
 
-	var_139_0.orderId = arg_139_1
-	var_139_0.guideId = arg_139_2 or 0
-	var_139_0.step = arg_139_3 or 0
+	var_139_0.orderType = arg_139_1
+	var_139_0.orderId = arg_139_2
 
-	arg_139_0:sendMsg(var_139_0, arg_139_4, arg_139_5)
+	if arg_139_3 then
+		var_139_0.sellCount = arg_139_3
+	end
+
+	arg_139_0:sendMsg(var_139_0)
 end
 
-function var_0_0.onReceiveRefreshPurchaseOrderReply(arg_140_0, arg_140_1, arg_140_2)
+function var_0_0.onReceiveFinishOrderReply(arg_140_0, arg_140_1, arg_140_2)
 	if arg_140_1 ~= 0 then
 		return
 	end
 
-	RoomTradeController.instance:onRefreshDailyOrderReply(arg_140_2)
+	RoomTradeController.instance:onFinishOrderReply(arg_140_2)
 end
 
-function var_0_0.sendChangePurchaseOrderTraceStateRequest(arg_141_0, arg_141_1, arg_141_2)
-	local var_141_0 = RoomModule_pb.ChangePurchaseOrderTraceStateRequest()
+function var_0_0.sendRefreshPurchaseOrderRequest(arg_141_0, arg_141_1, arg_141_2, arg_141_3, arg_141_4, arg_141_5)
+	local var_141_0 = RoomModule_pb.RefreshPurchaseOrderRequest()
 
 	var_141_0.orderId = arg_141_1
-	var_141_0.isTrace = arg_141_2
+	var_141_0.guideId = arg_141_2 or 0
+	var_141_0.step = arg_141_3 or 0
 
-	arg_141_0:sendMsg(var_141_0)
+	arg_141_0:sendMsg(var_141_0, arg_141_4, arg_141_5)
 end
 
-function var_0_0.onReceiveChangePurchaseOrderTraceStateReply(arg_142_0, arg_142_1, arg_142_2)
+function var_0_0.onReceiveRefreshPurchaseOrderReply(arg_142_0, arg_142_1, arg_142_2)
 	if arg_142_1 ~= 0 then
 		return
 	end
 
-	RoomTradeController.instance:onTracedDailyOrderReply(arg_142_2)
+	RoomTradeController.instance:onRefreshDailyOrderReply(arg_142_2)
 end
 
-function var_0_0.sendLockOrderRequest(arg_143_0, arg_143_1, arg_143_2)
-	local var_143_0 = RoomModule_pb.LockOrderRequest()
+function var_0_0.sendChangePurchaseOrderTraceStateRequest(arg_143_0, arg_143_1, arg_143_2)
+	local var_143_0 = RoomModule_pb.ChangePurchaseOrderTraceStateRequest()
 
 	var_143_0.orderId = arg_143_1
-	var_143_0.operation = arg_143_2 and 1 or 2
+	var_143_0.isTrace = arg_143_2
 
 	arg_143_0:sendMsg(var_143_0)
 end
 
-function var_0_0.onReceiveLockOrderReply(arg_144_0, arg_144_1, arg_144_2)
+function var_0_0.onReceiveChangePurchaseOrderTraceStateReply(arg_144_0, arg_144_1, arg_144_2)
 	if arg_144_1 ~= 0 then
 		return
 	end
 
-	RoomTradeController.instance:onLockedDailyOrderReply(arg_144_2)
+	RoomTradeController.instance:onTracedDailyOrderReply(arg_144_2)
 end
 
-function var_0_0.sendGetTradeTaskInfoRequest(arg_145_0, arg_145_1, arg_145_2)
-	local var_145_0 = RoomModule_pb.GetTradeTaskInfoRequest()
+function var_0_0.sendLockOrderRequest(arg_145_0, arg_145_1, arg_145_2)
+	local var_145_0 = RoomModule_pb.LockOrderRequest()
 
-	arg_145_0:sendMsg(var_145_0, arg_145_1, arg_145_2)
+	var_145_0.orderId = arg_145_1
+	var_145_0.operation = arg_145_2 and 1 or 2
+
+	arg_145_0:sendMsg(var_145_0)
 end
 
-function var_0_0.onReceiveGetTradeTaskInfoReply(arg_146_0, arg_146_1, arg_146_2)
+function var_0_0.onReceiveLockOrderReply(arg_146_0, arg_146_1, arg_146_2)
 	if arg_146_1 ~= 0 then
 		return
 	end
 
-	RoomTradeTaskModel.instance:onGetTradeTaskInfo(arg_146_2)
+	RoomTradeController.instance:onLockedDailyOrderReply(arg_146_2)
 end
 
-function var_0_0.sendReadNewTradeTaskRequest(arg_147_0, arg_147_1)
-	local var_147_0 = RoomModule_pb.ReadNewTradeTaskRequest()
+function var_0_0.sendGetTradeTaskInfoRequest(arg_147_0, arg_147_1, arg_147_2)
+	local var_147_0 = RoomModule_pb.GetTradeTaskInfoRequest()
 
-	for iter_147_0, iter_147_1 in pairs(arg_147_1) do
-		var_147_0.ids:append(iter_147_1)
-	end
-
-	arg_147_0:sendMsg(var_147_0)
+	arg_147_0:sendMsg(var_147_0, arg_147_1, arg_147_2)
 end
 
-function var_0_0.onReceiveReadNewTradeTaskReply(arg_148_0, arg_148_1, arg_148_2)
+function var_0_0.onReceiveGetTradeTaskInfoReply(arg_148_0, arg_148_1, arg_148_2)
 	if arg_148_1 ~= 0 then
 		return
 	end
 
-	RoomTradeTaskModel.instance:onReadNewTradeTask(arg_148_2.ids)
+	RoomTradeTaskModel.instance:onGetTradeTaskInfo(arg_148_2)
 end
 
-function var_0_0.sendGetTradeSupportBonusRequest(arg_149_0, arg_149_1)
-	local var_149_0 = RoomModule_pb.GetTradeSupportBonusRequest()
+function var_0_0.sendReadNewTradeTaskRequest(arg_149_0, arg_149_1)
+	local var_149_0 = RoomModule_pb.ReadNewTradeTaskRequest()
 
-	var_149_0.id = arg_149_1
+	for iter_149_0, iter_149_1 in pairs(arg_149_1) do
+		var_149_0.ids:append(iter_149_1)
+	end
 
 	arg_149_0:sendMsg(var_149_0)
 end
 
-function var_0_0.onReceiveGetTradeSupportBonusReply(arg_150_0, arg_150_1, arg_150_2)
+function var_0_0.onReceiveReadNewTradeTaskReply(arg_150_0, arg_150_1, arg_150_2)
 	if arg_150_1 ~= 0 then
 		return
 	end
 
-	RoomTradeTaskModel.instance:onGetLevelBonus(arg_150_2.id)
-	RoomTradeController.instance:dispatchEvent(RoomTradeEvent.OnGetTradeSupportBonusReply)
+	RoomTradeTaskModel.instance:onReadNewTradeTask(arg_150_2.ids)
 end
 
-function var_0_0.sendTradeLevelUpRequest(arg_151_0)
-	local var_151_0 = RoomModule_pb.TradeLevelUpRequest()
+function var_0_0.sendGetTradeSupportBonusRequest(arg_151_0, arg_151_1)
+	local var_151_0 = RoomModule_pb.GetTradeSupportBonusRequest()
+
+	var_151_0.id = arg_151_1
 
 	arg_151_0:sendMsg(var_151_0)
 end
 
-function var_0_0.onReceiveTradeLevelUpReply(arg_152_0, arg_152_1, arg_152_2)
+function var_0_0.onReceiveGetTradeSupportBonusReply(arg_152_0, arg_152_1, arg_152_2)
 	if arg_152_1 ~= 0 then
 		return
 	end
 
-	ManufactureModel.instance:setTradeLevel(arg_152_2.level)
-	RoomTradeController.instance:dispatchEvent(RoomTradeEvent.OnTradeLevelUpReply, arg_152_2.level)
+	RoomTradeTaskModel.instance:onGetLevelBonus(arg_152_2.id)
+	RoomTradeController.instance:dispatchEvent(RoomTradeEvent.OnGetTradeSupportBonusReply)
 end
 
-function var_0_0.onReceiveTradeTaskPush(arg_153_0, arg_153_1, arg_153_2)
-	if arg_153_1 ~= 0 then
+function var_0_0.sendTradeLevelUpRequest(arg_153_0)
+	local var_153_0 = RoomModule_pb.TradeLevelUpRequest()
+
+	arg_153_0:sendMsg(var_153_0)
+end
+
+function var_0_0.onReceiveTradeLevelUpReply(arg_154_0, arg_154_1, arg_154_2)
+	if arg_154_1 ~= 0 then
 		return
 	end
 
-	RoomTradeTaskModel.instance:onRefeshTaskMo(arg_153_2.infos)
-	arg_153_0:sendGetTradeTaskInfoRequest()
+	ManufactureModel.instance:setTradeLevel(arg_154_2.level)
+	RoomTradeController.instance:dispatchEvent(RoomTradeEvent.OnTradeLevelUpReply, arg_154_2.level)
 end
 
-function var_0_0.sendGetTradeTaskExtraBonusRequest(arg_154_0)
-	local var_154_0 = RoomModule_pb.GetTradeTaskExtraBonusRequest()
-
-	arg_154_0:sendMsg(var_154_0)
-end
-
-function var_0_0.onReceiveGetTradeTaskExtraBonusReply(arg_155_0, arg_155_1, arg_155_2)
+function var_0_0.onReceiveTradeTaskPush(arg_155_0, arg_155_1, arg_155_2)
 	if arg_155_1 ~= 0 then
+		return
+	end
+
+	RoomTradeTaskModel.instance:onRefeshTaskMo(arg_155_2.infos)
+	arg_155_0:sendGetTradeTaskInfoRequest()
+end
+
+function var_0_0.sendGetTradeTaskExtraBonusRequest(arg_156_0)
+	local var_156_0 = RoomModule_pb.GetTradeTaskExtraBonusRequest()
+
+	arg_156_0:sendMsg(var_156_0)
+end
+
+function var_0_0.onReceiveGetTradeTaskExtraBonusReply(arg_157_0, arg_157_1, arg_157_2)
+	if arg_157_1 ~= 0 then
 		return
 	end
 
@@ -1478,51 +1525,34 @@ function var_0_0.onReceiveGetTradeTaskExtraBonusReply(arg_155_0, arg_155_1, arg_
 	RoomTradeController.instance:dispatchEvent(RoomTradeEvent.OnGetTradeTaskExtraBonusReply)
 end
 
-function var_0_0.sendGetRoomLogRequest(arg_156_0)
-	local var_156_0 = RoomModule_pb.GetRoomLogRequest()
-
-	arg_156_0:sendMsg(var_156_0)
-end
-
-function var_0_0.onReceiveGetRoomLogReply(arg_157_0, arg_157_1, arg_157_2)
-	if arg_157_1 ~= 0 then
-		return
-	end
-
-	RoomLogModel.instance:setInfos(arg_157_2.infos)
-end
-
-function var_0_0.sendReadRoomLogNewRequest(arg_158_0, arg_158_1)
-	local var_158_0 = RoomModule_pb.ReadRoomLogNewRequest()
+function var_0_0.sendGetRoomLogRequest(arg_158_0)
+	local var_158_0 = RoomModule_pb.GetRoomLogRequest()
 
 	arg_158_0:sendMsg(var_158_0)
 end
 
-function var_0_0.onReceiveReadRoomLogNewReply(arg_159_0, arg_159_1, arg_159_2)
+function var_0_0.onReceiveGetRoomLogReply(arg_159_0, arg_159_1, arg_159_2)
 	if arg_159_1 ~= 0 then
 		return
 	end
+
+	RoomLogModel.instance:setInfos(arg_159_2.infos)
 end
 
-function var_0_0.sendGainGuideBuildingRequest(arg_160_0, arg_160_1, arg_160_2)
-	local var_160_0 = RoomModule_pb.GainGuideBuildingRequest()
-
-	var_160_0.guideId = arg_160_1
-	var_160_0.step = arg_160_2
+function var_0_0.sendReadRoomLogNewRequest(arg_160_0, arg_160_1)
+	local var_160_0 = RoomModule_pb.ReadRoomLogNewRequest()
 
 	arg_160_0:sendMsg(var_160_0)
 end
 
-function var_0_0.onReceiveGainGuideBuildingReply(arg_161_0, arg_161_1, arg_161_2)
+function var_0_0.onReceiveReadRoomLogNewReply(arg_161_0, arg_161_1, arg_161_2)
 	if arg_161_1 ~= 0 then
 		return
 	end
-
-	RoomController.instance:dispatchEvent(RoomEvent.GetGuideBuilding, arg_161_2)
 end
 
-function var_0_0.sendAccelerateGuidePlanRequest(arg_162_0, arg_162_1, arg_162_2)
-	local var_162_0 = RoomModule_pb.AccelerateGuidePlanRequest()
+function var_0_0.sendGainGuideBuildingRequest(arg_162_0, arg_162_1, arg_162_2)
+	local var_162_0 = RoomModule_pb.GainGuideBuildingRequest()
 
 	var_162_0.guideId = arg_162_1
 	var_162_0.step = arg_162_2
@@ -1530,36 +1560,75 @@ function var_0_0.sendAccelerateGuidePlanRequest(arg_162_0, arg_162_1, arg_162_2)
 	arg_162_0:sendMsg(var_162_0)
 end
 
-function var_0_0.onReceiveAccelerateGuidePlanReply(arg_163_0, arg_163_1, arg_163_2)
+function var_0_0.onReceiveGainGuideBuildingReply(arg_163_0, arg_163_1, arg_163_2)
 	if arg_163_1 ~= 0 then
 		return
 	end
 
-	RoomController.instance:dispatchEvent(RoomEvent.AccelerateGuidePlan, arg_163_2)
+	RoomController.instance:dispatchEvent(RoomEvent.GetGuideBuilding, arg_163_2)
 end
 
-function var_0_0.sendUnloadRestBuildingCrittersRequest(arg_164_0, arg_164_1, arg_164_2, arg_164_3)
-	local var_164_0 = RoomModule_pb.UnloadRestBuildingCrittersRequest()
+function var_0_0.sendAccelerateGuidePlanRequest(arg_164_0, arg_164_1, arg_164_2)
+	local var_164_0 = RoomModule_pb.AccelerateGuidePlanRequest()
 
-	var_164_0.buildingUid = arg_164_1
+	var_164_0.guideId = arg_164_1
+	var_164_0.step = arg_164_2
 
-	arg_164_0:sendMsg(var_164_0, arg_164_2, arg_164_3)
+	arg_164_0:sendMsg(var_164_0)
 end
 
-function var_0_0.onReceiveUnloadRestBuildingCrittersReply(arg_165_0, arg_165_1, arg_165_2)
-	return
+function var_0_0.onReceiveAccelerateGuidePlanReply(arg_165_0, arg_165_1, arg_165_2)
+	if arg_165_1 ~= 0 then
+		return
+	end
+
+	RoomController.instance:dispatchEvent(RoomEvent.AccelerateGuidePlan, arg_165_2)
 end
 
-function var_0_0.sendReplaceRestBuildingCrittersRequest(arg_166_0, arg_166_1, arg_166_2, arg_166_3)
-	local var_166_0 = RoomModule_pb.ReplaceRestBuildingCrittersRequest()
+function var_0_0.sendUnloadRestBuildingCrittersRequest(arg_166_0, arg_166_1, arg_166_2, arg_166_3)
+	local var_166_0 = RoomModule_pb.UnloadRestBuildingCrittersRequest()
 
 	var_166_0.buildingUid = arg_166_1
 
 	arg_166_0:sendMsg(var_166_0, arg_166_2, arg_166_3)
 end
 
-function var_0_0.onReceiveReplaceRestBuildingCrittersReply(arg_167_0, arg_167_1, arg_167_2)
+function var_0_0.onReceiveUnloadRestBuildingCrittersReply(arg_167_0, arg_167_1, arg_167_2)
 	return
+end
+
+function var_0_0.sendReplaceRestBuildingCrittersRequest(arg_168_0, arg_168_1, arg_168_2, arg_168_3)
+	local var_168_0 = RoomModule_pb.ReplaceRestBuildingCrittersRequest()
+
+	var_168_0.buildingUid = arg_168_1
+
+	arg_168_0:sendMsg(var_168_0, arg_168_2, arg_168_3)
+end
+
+function var_0_0.onReceiveReplaceRestBuildingCrittersReply(arg_169_0, arg_169_1, arg_169_2)
+	return
+end
+
+function var_0_0.sendGetBlockPermanentInfoRequest(arg_170_0, arg_170_1, arg_170_2, arg_170_3)
+	if not arg_170_1 or #arg_170_1 < 0 then
+		return
+	end
+
+	local var_170_0 = RoomModule_pb.GetBlockPermanentInfoRequest()
+
+	for iter_170_0, iter_170_1 in ipairs(arg_170_1) do
+		table.insert(var_170_0.blockIds, iter_170_1)
+	end
+
+	arg_170_0:sendMsg(var_170_0, arg_170_2, arg_170_3)
+end
+
+function var_0_0.onReceiveGetBlockPermanentInfoReply(arg_171_0, arg_171_1, arg_171_2)
+	if arg_171_1 ~= 0 then
+		return
+	end
+
+	RoomWaterReformController.instance:onGetBlockReformPermanentInfo(arg_171_2.permanentInfos)
 end
 
 var_0_0.instance = var_0_0.New()

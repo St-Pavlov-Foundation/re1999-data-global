@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "startHighDeep": 500,
+    "endHighDeep": 599,
+    "bossId": 102311001
+  },
+  {
+    "id": 2,
+    "startHighDeep": 600,
+    "endHighDeep": 699,
+    "bossId": 102311002
+  },
+  {
+    "id": 3,
+    "startHighDeep": 700,
+    "endHighDeep": 799,
+    "bossId": 102311003
+  },
+  {
+    "id": 4,
+    "startHighDeep": 800,
+    "endHighDeep": 899,
+    "bossId": 102311004
+  },
+  {
+    "id": 5,
+    "startHighDeep": 899,
+    "endHighDeep": 99999999,
+    "bossId": 102311005
+  }
+]

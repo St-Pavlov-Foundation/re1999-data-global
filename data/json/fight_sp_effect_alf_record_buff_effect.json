@@ -1,0 +1,20 @@
+[
+  {
+    "skinId": 311301,
+    "effect2": "buff/alf_kpjp_2",
+    "effect3": "buff/alf_kpjp_3",
+    "effect4": "buff/alf_kpjp_4"
+  },
+  {
+    "skinId": 311302,
+    "effect2": "buff/alf_kpjp_2",
+    "effect3": "buff/alf_kpjp_3",
+    "effect4": "buff/alf_kpjp_4"
+  },
+  {
+    "skinId": 311303,
+    "effect2": "buff/v3a1_alf_kpjp_2",
+    "effect3": "buff/v3a1_alf_kpjp_3",
+    "effect4": "buff/v3a1_alf_kpjp_4"
+  }
+]

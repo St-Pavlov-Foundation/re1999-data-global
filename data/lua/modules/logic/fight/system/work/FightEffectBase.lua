@@ -6,8 +6,8 @@ function var_0_0.onConstructor(arg_1_0)
 	arg_1_0.skipAutoPlayData = false
 end
 
-function var_0_0.onAwake(arg_2_0, arg_2_1, arg_2_2)
-	var_0_0.super.onAwake(arg_2_0, arg_2_1, arg_2_2)
+function var_0_0.onLogicEnter(arg_2_0, arg_2_1, arg_2_2)
+	var_0_0.super.onLogicEnter(arg_2_0, arg_2_1, arg_2_2)
 
 	arg_2_0.fightStepData = arg_2_1
 	arg_2_0.actEffectData = arg_2_2

@@ -6,12 +6,13 @@ local var_0_2 = 382.32
 local var_0_3 = 300
 
 local function var_0_4(arg_1_0, arg_1_1)
-	local var_1_0 = VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.DungeonStore
-	local var_1_1 = arg_1_0.maxBuyCount ~= 0 and arg_1_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(var_1_0, arg_1_0.id) <= 0
-	local var_1_2 = arg_1_1.maxBuyCount ~= 0 and arg_1_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(var_1_0, arg_1_1.id) <= 0
+	local var_1_0, var_1_1 = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	local var_1_2 = VersionActivityFixedHelper.getVersionActivityEnum(var_1_0, var_1_1).ActivityId.DungeonStore
+	local var_1_3 = arg_1_0.maxBuyCount ~= 0 and arg_1_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(var_1_2, arg_1_0.id) <= 0
+	local var_1_4 = arg_1_1.maxBuyCount ~= 0 and arg_1_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(var_1_2, arg_1_1.id) <= 0
 
-	if var_1_1 ~= var_1_2 then
-		return var_1_2
+	if var_1_3 ~= var_1_4 then
+		return var_1_4
 	end
 
 	return arg_1_0.id < arg_1_1.id
@@ -34,6 +35,8 @@ function var_0_0.onInitView(arg_2_0, arg_2_1)
 	arg_2_0.goodsItemList = arg_2_0:getUserDataTb_()
 
 	arg_2_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_2_0.onBuyGoodsSuccess, arg_2_0)
+
+	arg_2_0._bigVersion, arg_2_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 end
 
 function var_0_0.onBuyGoodsSuccess(arg_3_0)
@@ -98,7 +101,7 @@ function var_0_0.refreshGoods(arg_8_0)
 		if not var_8_1 then
 			local var_8_2 = gohelper.cloneInPlace(arg_8_0.goStoreGoodsItem)
 
-			var_8_1 = VersionActivityFixedHelper.getVersionActivityStoreGoodsItem().New()
+			var_8_1 = VersionActivityFixedHelper.getVersionActivityStoreGoodsItem(arg_8_0._bigVersion, arg_8_0._smallVersion).New()
 
 			var_8_1:onInitView(var_8_2)
 			table.insert(arg_8_0.goodsItemList, var_8_1)

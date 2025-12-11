@@ -135,7 +135,7 @@ end
 function var_0_0.getNeedVoiceLangList(arg_16_0, arg_16_1)
 	arg_16_1 = arg_16_1 or GameConfig:GetCurVoiceShortcut()
 
-	return arg_16_0._voiceLangsDict[arg_16_1]
+	return arg_16_0._voiceLangsDict[arg_16_1] or arg_16_0._voiceLangsDict[GameConfig:GetDefaultVoiceShortcut()]
 end
 
 function var_0_0.addLocalPackSetName(arg_17_0, arg_17_1)

@@ -75,8 +75,10 @@ function var_0_0.refreshUI(arg_8_0)
 			var_8_4 = Activity191Helper.getNodeIcon(var_8_5.type)
 		end
 
-		UISpriteSetMgr.instance:setAct174Sprite(var_8_2.imageNode, var_8_4)
-		UISpriteSetMgr.instance:setAct174Sprite(var_8_2.imageNodeS, var_8_4 .. "_light")
+		if var_8_4 then
+			UISpriteSetMgr.instance:setAct174Sprite(var_8_2.imageNode, var_8_4)
+			UISpriteSetMgr.instance:setAct174Sprite(var_8_2.imageNodeS, var_8_4 .. "_light")
+		end
 
 		if iter_8_1.nodeId == arg_8_0.gameInfo.curNode then
 			if iter_8_0 == 1 and arg_8_0.gameInfo.curNode ~= 1 then

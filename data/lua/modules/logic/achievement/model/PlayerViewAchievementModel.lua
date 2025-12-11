@@ -35,9 +35,30 @@ end
 
 function var_0_0.getShowAchievements(arg_2_0, arg_2_1)
 	local var_2_0, var_2_1 = arg_2_0:decodeShowAchievement(arg_2_1)
-	local var_2_2 = var_2_1 and tabletool.len(var_2_1) > 0
+	local var_2_2 = arg_2_0:checkIsNamePlate(var_2_0)
+	local var_2_3 = var_2_1 and tabletool.len(var_2_1) > 0
 
-	return var_2_2, var_2_2 and var_2_1 or var_2_0
+	return var_2_3, var_2_3 and var_2_1 or var_2_0, var_2_2
+end
+
+function var_0_0.checkIsNamePlate(arg_3_0, arg_3_1)
+	if not arg_3_1 then
+		return false
+	end
+
+	if arg_3_1 and #arg_3_1 == 1 then
+		local var_3_0 = AchievementConfig.instance:getTask(arg_3_1[1])
+
+		if var_3_0 then
+			local var_3_1 = AchievementConfig.instance:getAchievement(var_3_0.achievementId)
+
+			if var_3_1 and var_3_1.category == AchievementEnum.Type.NamePlate then
+				return true
+			end
+		end
+	end
+
+	return false
 end
 
 var_0_0.instance = var_0_0.New()

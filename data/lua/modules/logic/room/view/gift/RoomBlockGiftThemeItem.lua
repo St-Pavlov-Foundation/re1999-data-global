@@ -56,7 +56,7 @@ function var_0_0.onUpdateMO(arg_5_0, arg_5_1, arg_5_2)
 
 			var_5_10:onUpdateMO(iter_5_1)
 
-			local var_5_11 = RoomBlockBuildingGiftModel.instance:isSelect(iter_5_1)
+			local var_5_11 = iter_5_1.isSelect
 
 			var_5_10:onSelect(var_5_11)
 		end
@@ -129,7 +129,7 @@ function var_0_0._refreshSelect(arg_9_0)
 	if arg_9_0.moList then
 		for iter_9_0, iter_9_1 in ipairs(arg_9_0.moList) do
 			local var_9_0 = arg_9_0:_isBuilding(arg_9_0.subType) and arg_9_0:_getBuildingItem(iter_9_0) or arg_9_0:_getBlockItem(iter_9_0)
-			local var_9_1 = RoomBlockBuildingGiftModel.instance:isSelect(iter_9_1)
+			local var_9_1 = iter_9_1.isSelect
 
 			var_9_0:onSelect(var_9_1)
 		end

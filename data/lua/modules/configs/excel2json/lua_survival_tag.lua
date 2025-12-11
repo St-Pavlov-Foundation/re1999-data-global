@@ -7,6 +7,7 @@ local var_0_1 = {
 	effect = 6,
 	color = 7,
 	id = 1,
+	suggestMap = 8,
 	beHidden = 4,
 	desc = 3
 }

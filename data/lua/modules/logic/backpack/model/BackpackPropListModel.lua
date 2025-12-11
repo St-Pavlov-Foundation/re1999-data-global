@@ -51,6 +51,10 @@ function var_0_0._sortProp(arg_4_0, arg_4_1)
 		var_4_0 = -2
 	elseif var_4_0 == MaterialEnum.MaterialType.PowerPotion then
 		var_4_0 = -1
+
+		if arg_4_0.id ~= arg_4_1.id and arg_4_0.id == MaterialEnum.PowerId.OverflowPowerId then
+			return false
+		end
 	end
 
 	local var_4_1 = arg_4_1.type
@@ -61,6 +65,10 @@ function var_0_0._sortProp(arg_4_0, arg_4_1)
 		var_4_1 = -2
 	elseif var_4_1 == MaterialEnum.MaterialType.PowerPotion then
 		var_4_1 = -1
+
+		if arg_4_0.id ~= arg_4_1.id and arg_4_1.id == MaterialEnum.PowerId.OverflowPowerId then
+			return true
+		end
 	end
 
 	if var_4_0 ~= var_4_1 then

@@ -26,6 +26,7 @@ var_0_0.PlayFullTextLineShow = 2008
 var_0_0.FullTextLineShowFinished = 2009
 var_0_0.StoryFrontViewDestroy = 2010
 var_0_0.PlayIrregularShakeText = 2011
+var_0_0.PlayFullBlurOut = 2012
 var_0_0.RefreshStep = 3001
 var_0_0.RefreshBackground = 3002
 var_0_0.RefreshView = 3003

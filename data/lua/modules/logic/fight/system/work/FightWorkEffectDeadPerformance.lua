@@ -2,7 +2,7 @@
 
 local var_0_0 = class("FightWorkEffectDeadPerformance", FightEffectBase)
 
-function var_0_0.onAwake(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onLogicEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0.fightStepData = arg_1_1
 	arg_1_0.actEffectData = arg_1_2
 	arg_1_0._waitForLastHit = arg_1_3

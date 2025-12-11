@@ -31,7 +31,7 @@ function var_0_0._editableInitView(arg_4_0)
 end
 
 function var_0_0._ontBtnClick(arg_5_0)
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 

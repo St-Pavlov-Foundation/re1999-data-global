@@ -28,6 +28,8 @@ function var_0_0.onReceiveGetCommandPostInfoReply(arg_2_0, arg_2_1, arg_2_2)
 	CommandStationModel.instance.gainBonus = {
 		unpack(var_2_3)
 	}
+
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.OnGetCommandPostInfo)
 end
 
 function var_0_0.sendFinishCommandPostEventRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)

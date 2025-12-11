@@ -6,6 +6,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
 	arg_1_0._gochessTip = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip")
 	arg_1_0._imageRoleSkill = gohelper.findChildImage(arg_1_0.viewGO, "#go_chessTip/Info/image/#image_RoleSkill")
+	arg_1_0._simageRoleSkill = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_chessTip/Info/image/#image_RoleSkill")
 	arg_1_0._goSkillEnergyBG = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip/Info/#go_SkillEnergyBG")
 	arg_1_0._txtRoleCostNum = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip/Info/#go_SkillEnergyBG/#txt_RoleCostNum")
 	arg_1_0._txtSkillName = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip/Info/#txt_SkillName")
@@ -13,7 +14,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnclick2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click_2")
 	arg_1_0._gochessTip2 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip_2")
 	arg_1_0._imageChessQualityBG = gohelper.findChildImage(arg_1_0.viewGO, "#go_chessTip_2/Info/#image_ChessQualityBG")
-	arg_1_0._imageChess = gohelper.findChildImage(arg_1_0.viewGO, "#go_chessTip_2/Info/#image_Chess")
+	arg_1_0._imageChess = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_chessTip_2/Info/#image_Chess")
 	arg_1_0._goResource = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip_2/Info/#go_Resource")
 	arg_1_0._goResourceItem = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip_2/Info/#go_Resource/#go_ResourceItem")
 	arg_1_0._imageResourceQuality = gohelper.findChildImage(arg_1_0.viewGO, "#go_chessTip_2/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality")
@@ -113,7 +114,7 @@ function var_0_0.setForecastChess(arg_11_0, arg_11_1)
 	local var_11_3 = var_11_2 and var_11_2.resPic or ""
 
 	if not string.nilorempty(var_11_3) then
-		UISpriteSetMgr.instance:setV2a2ChessSprite(arg_11_0._imageRoleSkill, var_11_3, false)
+		SurvivalUnitIconHelper.instance:setNpcIcon(arg_11_0._simageRoleSkill, var_11_3)
 		gohelper.setActive(arg_11_0._goEnemySkill, true)
 	end
 
@@ -169,7 +170,7 @@ function var_0_0.showSoliderInfoByClick(arg_17_0, arg_17_1)
 		return
 	end
 
-	UISpriteSetMgr.instance:setV2a2ChessSprite(arg_17_0._imageChess, var_17_0.resPic, false)
+	SurvivalUnitIconHelper.instance:setNpcIcon(arg_17_0._imageChess, var_17_0.resPic)
 	UISpriteSetMgr.instance:setV2a2EliminateSprite(arg_17_0._imageChessQualityBG, "v2a2_eliminate_infochess_qualitybg_0" .. var_17_0.level, false)
 
 	arg_17_0._txtFireNum.text = var_17_0.defaultPower

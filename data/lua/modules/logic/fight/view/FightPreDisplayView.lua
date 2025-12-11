@@ -17,7 +17,7 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, arg_2_0._onCameraFocusChanged, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.AddPlayOperationData, arg_2_0._onAddPlayOperationData, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.OnResetCard, arg_2_0._onResetCard, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnStageChange, arg_2_0._onStageChange, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_2_0.onStageChange, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.OnClothSkillExpand, arg_2_0._onClothSkillExpand, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.OnClothSkillShrink, arg_2_0._onClothSkillShrink, arg_2_0)
 	arg_2_0:addClickCb(arg_2_0._btn, arg_2_0._onBtnClick, arg_2_0)
@@ -123,8 +123,8 @@ function var_0_0._onCameraFocusChanged(arg_15_0, arg_15_1)
 	end
 end
 
-function var_0_0._onStageChange(arg_16_0, arg_16_1)
-	if arg_16_1 ~= FightEnum.Stage.Card then
+function var_0_0.onStageChange(arg_16_0, arg_16_1)
+	if arg_16_1 == FightStageMgr.StageType.Play then
 		gohelper.setActive(arg_16_0._obj, false)
 
 		arg_16_0._isVisible = false

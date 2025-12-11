@@ -21,7 +21,7 @@ function var_0_0.onStart(arg_2_0)
 		FightController.instance:dispatchEvent(FightEvent.OnExPointChange, arg_2_0._entityId, arg_2_0._oldValue, arg_2_0._newValue)
 
 		if FightModel.instance:getVersion() < 1 and arg_2_0._newValue < arg_2_0._oldValue then
-			if FightModel.instance:getCurStage() == FightEnum.Stage.StartRound then
+			if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Enter) then
 				arg_2_0:onDone(true)
 
 				return

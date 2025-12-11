@@ -466,44 +466,53 @@ function var_0_0._waitHeroSpineLoaded(arg_21_0)
 	local var_21_0 = StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(arg_21_0._heroCo.heroIndex)
 
 	if var_21_0.hideNodes ~= "" then
-		local var_21_1 = string.split(var_21_0.hideNodes, "|")
+		if string.find(var_21_0.hideNodes, StoryEnum.HeroEffect.SetSkin) then
+			local var_21_1 = string.split(var_21_0.hideNodes, "#")
+			local var_21_2 = arg_21_0._heroSpine:getSkeletonGraphic()
 
-		for iter_21_0, iter_21_1 in pairs(var_21_1) do
-			local var_21_2 = gohelper.findChild(arg_21_0._heroSpineGo, iter_21_1)
+			var_21_2.initialSkinName = var_21_1[2]
 
-			gohelper.setActive(var_21_2, false)
+			var_21_2:Initialize(true)
+		else
+			local var_21_3 = string.split(var_21_0.hideNodes, "|")
+
+			for iter_21_0, iter_21_1 in pairs(var_21_3) do
+				local var_21_4 = gohelper.findChild(arg_21_0._heroSpineGo, iter_21_1)
+
+				gohelper.setActive(var_21_4, false)
+			end
 		end
 	end
 
 	arg_21_0:_grayUpdate(0)
 	TaskDispatcher.cancelTask(arg_21_0._waitHeroSpineLoaded, arg_21_0)
 
-	local var_21_3 = arg_21_0._heroCo.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
-	local var_21_4 = true
-	local var_21_5 = "flag_skipvoicestop|"
+	local var_21_5 = arg_21_0._heroCo.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	local var_21_6 = true
+	local var_21_7 = "flag_skipvoicestop|"
 
-	if string.find(var_21_3, var_21_5) then
-		var_21_4 = false
-		var_21_3 = string.gsub(var_21_3, var_21_5, "")
+	if string.find(var_21_5, var_21_7) then
+		var_21_6 = false
+		var_21_5 = string.gsub(var_21_5, var_21_7, "")
 	end
 
-	if var_21_4 and not arg_21_0._noChangeBody then
+	if var_21_6 and not arg_21_0._noChangeBody then
 		arg_21_0._heroSpine:stopVoice()
 	end
 
-	local var_21_6 = {
-		motion = var_21_3,
+	local var_21_8 = {
+		motion = var_21_5,
 		face = arg_21_0._heroCo.expressions[GameLanguageMgr.instance:getVoiceTypeStoryIndex()],
 		mouth = arg_21_0._heroCo.mouses[GameLanguageMgr.instance:getVoiceTypeStoryIndex()],
 		storyAudioId = arg_21_0._conAudioId,
 		storyHeroIndex = arg_21_0._heroCo.heroIndex,
 		noChangeBody = arg_21_0._noChangeBody
 	}
-	local var_21_7 = arg_21_0._heroSpine:getSpineVoice()
+	local var_21_9 = arg_21_0._heroSpine:getSpineVoice()
 
-	var_21_7:setDiffFaceBiYan(true)
-	var_21_7:setInStory()
-	arg_21_0._heroSpine:playVoice(var_21_6)
+	var_21_9:setDiffFaceBiYan(true)
+	var_21_9:setInStory()
+	arg_21_0._heroSpine:playVoice(var_21_8)
 
 	if arg_21_0._heroCo.effs[GameLanguageMgr.instance:getLanguageTypeStoryIndex()] ~= "" then
 		arg_21_0:_playHeroEffect()

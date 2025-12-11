@@ -15,6 +15,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 1
   },
   {
@@ -33,6 +34,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 1
   },
   {
@@ -51,6 +53,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 2
   },
   {
@@ -69,6 +72,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 2
   },
   {
@@ -87,6 +91,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 3
   },
   {
@@ -105,6 +110,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 3
   },
   {
@@ -123,6 +129,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 4
   },
   {
@@ -141,6 +148,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 4
   },
   {
@@ -159,6 +167,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 5
   },
   {
@@ -177,6 +186,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 5
   },
   {
@@ -195,6 +205,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 6
   },
   {
@@ -213,6 +224,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 6
   },
   {
@@ -231,6 +243,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 7
   },
   {
@@ -249,6 +262,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 7
   },
   {
@@ -267,6 +281,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 8
   },
   {
@@ -285,6 +300,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 8
   },
   {
@@ -303,6 +319,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 9
   },
   {
@@ -321,6 +338,7 @@
     "collection3": "",
     "collection4": "20007",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 9
   },
   {
@@ -339,6 +357,7 @@
     "collection3": "",
     "collection4": "20007",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 9
   },
   {
@@ -357,6 +376,7 @@
     "collection3": "",
     "collection4": "20007",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 9
   },
   {
@@ -375,6 +395,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 10
   },
   {
@@ -393,6 +414,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 10
   },
   {
@@ -411,6 +433,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "110015",
+    "powerInitial": 0,
     "rank": 10
   },
   {
@@ -429,6 +452,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "110014",
+    "powerInitial": 0,
     "rank": 10
   },
   {
@@ -447,6 +471,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 11
   },
   {
@@ -465,6 +490,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 11
   },
   {
@@ -483,6 +509,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "110006",
+    "powerInitial": 0,
     "rank": 11
   },
   {
@@ -501,6 +528,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 11
   },
   {
@@ -519,6 +547,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "110015",
+    "powerInitial": 0,
     "rank": 12
   },
   {
@@ -537,6 +566,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "110004",
+    "powerInitial": 0,
     "rank": 12
   },
   {
@@ -555,6 +585,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 12
   },
   {
@@ -573,6 +604,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "110015",
+    "powerInitial": 0,
     "rank": 12
   },
   {
@@ -591,6 +623,7 @@
     "collection3": "",
     "collection4": "20007",
     "enhance": "110015",
+    "powerInitial": 0,
     "rank": 13
   },
   {
@@ -609,6 +642,7 @@
     "collection3": "",
     "collection4": "20007",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 13
   },
   {
@@ -627,6 +661,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "110006",
+    "powerInitial": 0,
     "rank": 13
   },
   {
@@ -645,6 +680,7 @@
     "collection3": "",
     "collection4": "20007",
     "enhance": "110015",
+    "powerInitial": 0,
     "rank": 13
   },
   {
@@ -663,6 +699,7 @@
     "collection3": "",
     "collection4": "20007",
     "enhance": "110006",
+    "powerInitial": 0,
     "rank": 14
   },
   {
@@ -681,6 +718,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "110006",
+    "powerInitial": 0,
     "rank": 14
   },
   {
@@ -699,6 +737,7 @@
     "collection3": "",
     "collection4": "20007",
     "enhance": "110004",
+    "powerInitial": 0,
     "rank": 14
   },
   {
@@ -717,6 +756,7 @@
     "collection3": "",
     "collection4": "20007",
     "enhance": "110004",
+    "powerInitial": 0,
     "rank": 14
   },
   {
@@ -735,6 +775,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 14
   },
   {
@@ -753,6 +794,7 @@
     "collection3": "",
     "collection4": "",
     "enhance": "",
+    "powerInitial": 0,
     "rank": 14
   },
   {
@@ -771,6 +813,577 @@
     "collection3": "",
     "collection4": "20007",
     "enhance": "110027",
+    "powerInitial": 0,
+    "rank": 14
+  },
+  {
+    "id": 102001,
+    "activityId": 13105,
+    "role1": 20071,
+    "role2": 20291,
+    "role3": 20021,
+    "role4": 20101,
+    "prepareRole1": 0,
+    "prepareRole2": 0,
+    "prepareRole3": 0,
+    "prepareRole4": 0,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 1
+  },
+  {
+    "id": 102002,
+    "activityId": 13105,
+    "role1": 20331,
+    "role2": 20091,
+    "role3": 20081,
+    "role4": 20191,
+    "prepareRole1": 0,
+    "prepareRole2": 0,
+    "prepareRole3": 0,
+    "prepareRole4": 0,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 1
+  },
+  {
+    "id": 102003,
+    "activityId": 13105,
+    "role1": 20201,
+    "role2": 20061,
+    "role3": 20031,
+    "role4": 20131,
+    "prepareRole1": 0,
+    "prepareRole2": 0,
+    "prepareRole3": 0,
+    "prepareRole4": 0,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 2
+  },
+  {
+    "id": 102004,
+    "activityId": 13105,
+    "role1": 20281,
+    "role2": 20451,
+    "role3": 20111,
+    "role4": 20141,
+    "prepareRole1": 0,
+    "prepareRole2": 0,
+    "prepareRole3": 0,
+    "prepareRole4": 0,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 2
+  },
+  {
+    "id": 102005,
+    "activityId": 13105,
+    "role1": 20241,
+    "role2": 20191,
+    "role3": 20061,
+    "role4": 20131,
+    "prepareRole1": 20021,
+    "prepareRole2": 20101,
+    "prepareRole3": 0,
+    "prepareRole4": 0,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 3
+  },
+  {
+    "id": 102006,
+    "activityId": 13105,
+    "role1": 20491,
+    "role2": 20431,
+    "role3": 20171,
+    "role4": 20041,
+    "prepareRole1": 20081,
+    "prepareRole2": 20091,
+    "prepareRole3": 0,
+    "prepareRole4": 0,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 3
+  },
+  {
+    "id": 102007,
+    "activityId": 13105,
+    "role1": 20071,
+    "role2": 20451,
+    "role3": 20281,
+    "role4": 20161,
+    "prepareRole1": 20111,
+    "prepareRole2": 20141,
+    "prepareRole3": 0,
+    "prepareRole4": 0,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 4
+  },
+  {
+    "id": 102008,
+    "activityId": 13105,
+    "role1": 20331,
+    "role2": 20091,
+    "role3": 20271,
+    "role4": 20211,
+    "prepareRole1": 20081,
+    "prepareRole2": 20191,
+    "prepareRole3": 0,
+    "prepareRole4": 0,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 4
+  },
+  {
+    "id": 102009,
+    "activityId": 13105,
+    "role1": 20161,
+    "role2": 20131,
+    "role3": 20421,
+    "role4": 20211,
+    "prepareRole1": 20081,
+    "prepareRole2": 20181,
+    "prepareRole3": 20271,
+    "prepareRole4": 20431,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 5
+  },
+  {
+    "id": 102010,
+    "activityId": 13105,
+    "role1": 20421,
+    "role2": 20191,
+    "role3": 20491,
+    "role4": 20021,
+    "prepareRole1": 20081,
+    "prepareRole2": 20181,
+    "prepareRole3": 20271,
+    "prepareRole4": 20431,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 5
+  },
+  {
+    "id": 102011,
+    "activityId": 13105,
+    "role1": 20441,
+    "role2": 20481,
+    "role3": 20221,
+    "role4": 20511,
+    "prepareRole1": 20081,
+    "prepareRole2": 20091,
+    "prepareRole3": 20271,
+    "prepareRole4": 20431,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 6
+  },
+  {
+    "id": 102012,
+    "activityId": 13105,
+    "role1": 20651,
+    "role2": 20311,
+    "role3": 20341,
+    "role4": 20211,
+    "prepareRole1": 20021,
+    "prepareRole2": 20101,
+    "prepareRole3": 20181,
+    "prepareRole4": 20271,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 6
+  },
+  {
+    "id": 102013,
+    "activityId": 13105,
+    "role1": 20392,
+    "role2": 20132,
+    "role3": 20242,
+    "role4": 20212,
+    "prepareRole1": 20082,
+    "prepareRole2": 20092,
+    "prepareRole3": 20272,
+    "prepareRole4": 20432,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 7
+  },
+  {
+    "id": 102014,
+    "activityId": 13105,
+    "role1": 20442,
+    "role2": 20482,
+    "role3": 20602,
+    "role4": 20402,
+    "prepareRole1": 20082,
+    "prepareRole2": 20182,
+    "prepareRole3": 20272,
+    "prepareRole4": 20102,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 7
+  },
+  {
+    "id": 102015,
+    "activityId": 13105,
+    "role1": 20652,
+    "role2": 20632,
+    "role3": 20182,
+    "role4": 20312,
+    "prepareRole1": 20082,
+    "prepareRole2": 20092,
+    "prepareRole3": 20272,
+    "prepareRole4": 20432,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 8
+  },
+  {
+    "id": 102016,
+    "activityId": 13105,
+    "role1": 20342,
+    "role2": 20262,
+    "role3": 20422,
+    "role4": 20532,
+    "prepareRole1": 20022,
+    "prepareRole2": 20102,
+    "prepareRole3": 20142,
+    "prepareRole4": 20182,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 50,
+    "rank": 8
+  },
+  {
+    "id": 102017,
+    "activityId": 13105,
+    "role1": 20773,
+    "role2": 20163,
+    "role3": 20133,
+    "role4": 20123,
+    "prepareRole1": 20023,
+    "prepareRole2": 20143,
+    "prepareRole3": 20083,
+    "prepareRole4": 20193,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 9
+  },
+  {
+    "id": 102018,
+    "activityId": 13105,
+    "role1": 20443,
+    "role2": 20483,
+    "role3": 20783,
+    "role4": 20053,
+    "prepareRole1": 20013,
+    "prepareRole2": 20033,
+    "prepareRole3": 20283,
+    "prepareRole4": 20063,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 9
+  },
+  {
+    "id": 102019,
+    "activityId": 13105,
+    "role1": 20553,
+    "role2": 20473,
+    "role3": 20243,
+    "role4": 20093,
+    "prepareRole1": 20083,
+    "prepareRole2": 20143,
+    "prepareRole3": 20093,
+    "prepareRole4": 20363,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 10
+  },
+  {
+    "id": 102020,
+    "activityId": 13105,
+    "role1": 20343,
+    "role2": 20853,
+    "role3": 20263,
+    "role4": 20153,
+    "prepareRole1": 20863,
+    "prepareRole2": 20143,
+    "prepareRole3": 20083,
+    "prepareRole4": 20193,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 200,
+    "rank": 10
+  },
+  {
+    "id": 102021,
+    "activityId": 13105,
+    "role1": 20374,
+    "role2": 20614,
+    "role3": 20504,
+    "role4": 20684,
+    "prepareRole1": 20204,
+    "prepareRole2": 20104,
+    "prepareRole3": 20094,
+    "prepareRole4": 20434,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 11
+  },
+  {
+    "id": 102022,
+    "activityId": 13105,
+    "role1": 20444,
+    "role2": 20484,
+    "role3": 20754,
+    "role4": 20784,
+    "prepareRole1": 20084,
+    "prepareRole2": 20094,
+    "prepareRole3": 20184,
+    "prepareRole4": 20434,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 11
+  },
+  {
+    "id": 102023,
+    "activityId": 13105,
+    "role1": 20554,
+    "role2": 20474,
+    "role3": 20674,
+    "role4": 20364,
+    "prepareRole1": 20084,
+    "prepareRole2": 20434,
+    "prepareRole3": 20094,
+    "prepareRole4": 20194,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 12
+  },
+  {
+    "id": 102024,
+    "activityId": 13105,
+    "role1": 20564,
+    "role2": 20654,
+    "role3": 20634,
+    "role4": 20314,
+    "prepareRole1": 20324,
+    "prepareRole2": 20104,
+    "prepareRole3": 20254,
+    "prepareRole4": 20184,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 12
+  },
+  {
+    "id": 102025,
+    "activityId": 13105,
+    "role1": 20714,
+    "role2": 20444,
+    "role3": 20484,
+    "role4": 20784,
+    "prepareRole1": 20084,
+    "prepareRole2": 20144,
+    "prepareRole3": 20184,
+    "prepareRole4": 20804,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 13
+  },
+  {
+    "id": 102026,
+    "activityId": 13105,
+    "role1": 20644,
+    "role2": 20474,
+    "role3": 20674,
+    "role4": 20344,
+    "prepareRole1": 20304,
+    "prepareRole2": 20464,
+    "prepareRole3": 20094,
+    "prepareRole4": 20194,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 13
+  },
+  {
+    "id": 102027,
+    "activityId": 13105,
+    "role1": 20824,
+    "role2": 20344,
+    "role3": 20264,
+    "role4": 20834,
+    "prepareRole1": 20844,
+    "prepareRole2": 20224,
+    "prepareRole3": 20084,
+    "prepareRole4": 20194,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 500,
+    "rank": 20
+  },
+  {
+    "id": 102028,
+    "activityId": 13105,
+    "role1": 20584,
+    "role2": 20774,
+    "role3": 20164,
+    "role4": 20744,
+    "prepareRole1": 20134,
+    "prepareRole2": 20464,
+    "prepareRole3": 20094,
+    "prepareRole4": 20194,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 14
+  },
+  {
+    "id": 102029,
+    "activityId": 13105,
+    "role1": 20564,
+    "role2": 20654,
+    "role3": 20634,
+    "role4": 20594,
+    "prepareRole1": 20134,
+    "prepareRole2": 20214,
+    "prepareRole3": 20314,
+    "prepareRole4": 20624,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 0,
+    "rank": 14
+  },
+  {
+    "id": 102030,
+    "activityId": 13105,
+    "role1": 20374,
+    "role2": 20684,
+    "role3": 20504,
+    "role4": 20814,
+    "prepareRole1": 20204,
+    "prepareRole2": 20104,
+    "prepareRole3": 20494,
+    "prepareRole4": 20614,
+    "collection1": "",
+    "collection2": "",
+    "collection3": "",
+    "collection4": "",
+    "enhance": "",
+    "powerInitial": 600,
     "rank": 14
   }
 ]

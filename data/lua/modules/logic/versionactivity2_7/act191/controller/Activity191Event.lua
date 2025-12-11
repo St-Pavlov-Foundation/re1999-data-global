@@ -7,7 +7,11 @@ var_0_0.UpdateGameInfo = var_0_1()
 var_0_0.UpdateBadgeMo = var_0_1()
 var_0_0.EndGame = var_0_1()
 var_0_0.UpdateTeamInfo = var_0_1()
-var_0_0.OnClickHeroEditItem = var_0_1()
-var_0_0.OnClickCollectionGroupItem = var_0_1()
+var_0_0.ClickHeroEditItem = var_0_1()
+var_0_0.ClickCollectionItem = var_0_1()
+var_0_0.ZTrigger31501 = var_0_1()
+var_0_0.ZTrigger31502 = var_0_1()
+var_0_0.ZTrigger31503 = var_0_1()
+var_0_0.ZTrigger31504 = var_0_1()
 
 return var_0_0

@@ -5,6 +5,10 @@ local var_0_0 = class("GMFightEntityBuffView", BaseView)
 var_0_0.ClickSearchItem = "ClickSearchItem"
 
 function var_0_0.onInitView(arg_1_0)
+	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "buff")
+
+	gohelper.setActive(var_1_0, true)
+
 	arg_1_0._maskGO = gohelper.findChild(arg_1_0.viewGO, "buff/searchList")
 	arg_1_0._scrollTr = gohelper.findChild(arg_1_0.viewGO, "buff/searchList/scroll").transform
 	arg_1_0._input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "buff/add/input")
@@ -72,7 +76,6 @@ function var_0_0._onGetEntityInfo(arg_6_0, arg_6_1)
 			local var_6_1 = FightHelper.getEntity(var_6_0.id)
 
 			if var_6_1 and var_6_1.buff then
-				var_6_1.buff:addBuff(iter_6_1, false, 0)
 				FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_6_0.id, FightEnum.EffectType.BUFFADD, iter_6_1.buffId, iter_6_1.uid, 0)
 			end
 		else

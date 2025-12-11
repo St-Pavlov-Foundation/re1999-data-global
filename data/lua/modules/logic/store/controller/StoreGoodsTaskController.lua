@@ -64,7 +64,7 @@ function var_0_0._onUpdateTaskList(arg_8_0, arg_8_1)
 				if arg_8_0._waitRewardtaskIdList == nil then
 					arg_8_0._waitRewardtaskIdList = {}
 
-					TaskDispatcher.runDelay(arg_8_0._onRunwaitRewardTask, arg_8_0, 0.3)
+					TaskDispatcher.runDelay(arg_8_0._onRunwaitRewardTask, arg_8_0, 0.1)
 				end
 
 				if not tabletool.indexOf(arg_8_0._waitRewardtaskIdList) then

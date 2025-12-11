@@ -35,16 +35,19 @@ function var_0_0.skipOpenGetLuckyBag(arg_2_0, arg_2_1, arg_2_2)
 	end
 
 	local var_2_0 = {
-		luckyBagId = arg_2_1,
+		arg_2_1
+	}
+	local var_2_1 = {
+		luckyBagIdList = var_2_0,
 		poolId = arg_2_2
 	}
-	local var_2_1 = SummonConfig.instance:getSummonPool(arg_2_2)
+	local var_2_2 = SummonConfig.instance:getSummonPool(arg_2_2)
 
-	if var_2_1 and var_2_1.ticketId ~= 0 then
-		var_2_0.summonTicketId = var_2_1.ticketId
+	if var_2_2 and var_2_2.ticketId ~= 0 then
+		var_2_1.summonTicketId = var_2_2.ticketId
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonGetLuckyBag, var_2_0)
+	ViewMgr.instance:openView(ViewName.SummonGetLuckyBag, var_2_1)
 end
 
 var_0_0.instance = var_0_0.New()

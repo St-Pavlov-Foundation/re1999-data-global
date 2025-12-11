@@ -51,6 +51,8 @@ function var_0_0.onReceiveBuyGoodsReply(arg_4_0, arg_4_1, arg_4_2)
 			[RedDotEnum.DotNode.StoreBtn] = true
 		})
 	end
+
+	ChargePushStatController.instance:statBuyFinished(arg_4_1, arg_4_2)
 end
 
 function var_0_0.sendReadStoreNewRequest(arg_5_0, arg_5_1)

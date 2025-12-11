@@ -294,6 +294,10 @@ function var_0_0.statOpenGoods(arg_24_0, arg_24_1, arg_24_2)
 		return
 	end
 
+	if ChargePushStatController.instance:statClick(arg_24_2.id) then
+		return
+	end
+
 	arg_24_0._lastViewGoodsId = arg_24_2.id
 	arg_24_0._goodsTime = ServerTime.now()
 
@@ -317,6 +321,10 @@ function var_0_0.statOpenChargeGoods(arg_25_0, arg_25_1, arg_25_2)
 		return
 	end
 
+	if ChargePushStatController.instance:statClick(arg_25_2.id) then
+		return
+	end
+
 	arg_25_0._lastViewGoodsId = arg_25_2.id
 	arg_25_0._goodsTime = ServerTime.now()
 
@@ -334,8 +342,6 @@ function var_0_0.statCloseGoods(arg_26_0, arg_26_1)
 	end
 
 	if arg_26_0._lastViewGoodsId ~= arg_26_1.id then
-		logError("打开和关闭时商品不一致， 不应该发生")
-
 		return
 	end
 
@@ -620,6 +626,23 @@ function var_0_0.statOnClickPowerPotionJump(arg_41_0, arg_41_1, arg_41_2)
 		[StatEnum.EventProperties.WindowName] = arg_41_1,
 		[StatEnum.EventProperties.JumpName] = arg_41_2
 	})
+end
+
+function var_0_0.needHideHome(arg_42_0)
+	if arg_42_0._needHideBackHomeViews == nil then
+		arg_42_0._needHideBackHomeViews = {
+			ViewName.SummonResultView,
+			ViewName.SummonADView
+		}
+	end
+
+	for iter_42_0 = 1, #arg_42_0._needHideBackHomeViews do
+		if ViewMgr.instance:isOpen(arg_42_0._needHideBackHomeViews[iter_42_0]) then
+			return true
+		end
+	end
+
+	return false
 end
 
 var_0_0.instance = var_0_0.New()

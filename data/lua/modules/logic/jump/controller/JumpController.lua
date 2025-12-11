@@ -76,6 +76,7 @@ function var_0_0.initJumpViewBelongScene(arg_7_0)
 		[JumpEnum.JumpView.SummonView] = SceneType.Main,
 		[JumpEnum.JumpView.V1a5Dungeon] = SceneType.Main,
 		[JumpEnum.JumpView.RoomView] = SceneType.Room,
+		[JumpEnum.JumpView.RoomFishing] = SceneType.Room,
 		[JumpEnum.JumpView.PushBox] = SceneType.PushBox,
 		[JumpEnum.JumpView.ShelterBuilding] = SceneType.SurvivalShelter
 	}
@@ -304,7 +305,13 @@ function var_0_0.jumpTo(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
 		if var_15_2 == SceneType.Main then
 			MainController.instance:enterMainScene(true)
 		elseif var_15_2 == SceneType.Room then
-			RoomController.instance:enterRoom(RoomEnum.GameMode.Ob, nil, nil, nil, nil, true)
+			local var_15_3 = RoomEnum.GameMode.Ob
+
+			if var_15_0 == JumpEnum.JumpView.RoomFishing then
+				var_15_3 = RoomEnum.GameMode.Fishing
+			end
+
+			RoomController.instance:enterRoom(var_15_3, nil, nil, nil, nil, true)
 		elseif var_15_2 == SceneType.PushBox then
 			PushBoxController.instance:enterPushBoxGame()
 		else
@@ -329,9 +336,9 @@ function var_0_0.jumpTo(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
 	arg_15_0.remainViewNames = {}
 	arg_15_0.closeViewNames = {}
 
-	local var_15_3 = var_0_0.JumpViewToHandleFunc[var_15_0]
+	local var_15_4 = var_0_0.JumpViewToHandleFunc[var_15_0]
 
-	if not var_15_3 then
+	if not var_15_4 then
 		logError("跳转参数错误: " .. arg_15_1)
 		arg_15_0:reInit()
 
@@ -340,14 +347,14 @@ function var_0_0.jumpTo(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
 
 	arg_15_0.canDispatchCallback = false
 
-	local var_15_4 = var_15_3(arg_15_0, arg_15_1)
+	local var_15_5 = var_15_4(arg_15_0, arg_15_1)
 
 	arg_15_0.canDispatchCallback = true
 
-	if var_15_4 ~= JumpEnum.JumpResult.Success then
+	if var_15_5 ~= JumpEnum.JumpResult.Success then
 		arg_15_0:reInit()
 
-		return var_15_4
+		return var_15_5
 	end
 
 	table.insert(arg_15_0.closeViewNames, ViewName.NormalStoreGoodsView)
@@ -369,7 +376,7 @@ function var_0_0.jumpTo(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
 	arg_15_0:removeOpenedView()
 	arg_15_0:dispatchCallback()
 
-	return var_15_4
+	return var_15_5
 end
 
 function var_0_0._checkNeedSwitchScene(arg_17_0, arg_17_1)
@@ -521,6 +528,7 @@ function var_0_0.getCurrentOpenedView(arg_26_0, arg_26_1)
 			[Season123Controller.instance:getHeroGroupFightViewName()] = true,
 			[Season123Controller.instance:getHeroGroupEditViewName()] = true,
 			[ViewName.TowerHeroGroupFightView] = true,
+			[ViewName.TowerDeepHeroGroupFightView] = true,
 			[ViewName.CommandStationDispatchEventMainView] = true
 		}
 	end
@@ -564,8 +572,8 @@ function var_0_0._notAllowJumpViewNames_RoleSignPanelView(arg_28_0)
 
 	var_0_2 = true
 
-	local var_28_0 = GameBranchMgr.instance:Vxax_ViewName("Role_PanelSignView_Part1", ViewName.V2a5_Role_PanelSignView_Part1)
-	local var_28_1 = GameBranchMgr.instance:Vxax_ViewName("Role_PanelSignView_Part2", ViewName.V2a5_Role_PanelSignView_Part2)
+	local var_28_0 = GameBranchMgr.instance:Vxax_ViewName("Role_PanelSignView_Part1", ViewName.Role_PanelSignView_Part1)
+	local var_28_1 = GameBranchMgr.instance:Vxax_ViewName("Role_PanelSignView_Part2", ViewName.Role_PanelSignView_Part2)
 
 	table.insert(var_0_1, var_28_0)
 	table.insert(var_0_1, var_28_1)

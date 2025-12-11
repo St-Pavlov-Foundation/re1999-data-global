@@ -38,46 +38,49 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		arg_1_0:_hideEffect(var_1_2)
 
 		local var_1_3 = var_1_2:GetComponentsInChildren(gohelper.Type_Image, false)
+		local var_1_4 = {}
 
 		for iter_1_2 = 0, var_1_3.Length - 1 do
-			local var_1_4 = var_1_3[iter_1_2]
+			local var_1_5 = var_1_3[iter_1_2]
 
-			var_1_4.color.a = 1
-			var_1_4.enabled = false
+			var_1_5.color.a = 1
+			var_1_5.enabled = false
 
-			if var_1_4.material == var_1_4.defaultMaterial then
-				var_1_4.material = var_1_1
+			if var_1_5.material == var_1_5.defaultMaterial then
+				var_1_5.material = var_1_1
+
+				table.insert(var_1_4, var_1_5)
 			end
 		end
 
-		local var_1_5 = var_1_2:GetComponentsInChildren(gohelper.Type_TextMesh, false)
+		local var_1_6 = var_1_2:GetComponentsInChildren(gohelper.Type_TextMesh, false)
 
-		for iter_1_3 = 0, var_1_5.Length - 1 do
-			local var_1_6 = var_1_5[iter_1_3]
+		for iter_1_3 = 0, var_1_6.Length - 1 do
+			local var_1_7 = var_1_6[iter_1_3]
 
-			table.insert(arg_1_0._txtList, var_1_6)
+			table.insert(arg_1_0._txtList, var_1_7)
 		end
 
-		local var_1_7 = var_1_2:GetComponentsInChildren(gohelper.Type_Text, false)
+		local var_1_8 = var_1_2:GetComponentsInChildren(gohelper.Type_Text, false)
 
-		for iter_1_4 = 0, var_1_7.Length - 1 do
-			local var_1_8 = var_1_7[iter_1_4]
+		for iter_1_4 = 0, var_1_8.Length - 1 do
+			local var_1_9 = var_1_8[iter_1_4]
 
-			table.insert(arg_1_0._txtList, var_1_8)
+			table.insert(arg_1_0._txtList, var_1_9)
 		end
 
-		local var_1_9 = arg_1_0:_setupMesh(var_1_3, var_1_0)
+		local var_1_10 = arg_1_0:_setupMesh(var_1_4, var_1_0)
 
-		table.insert(arg_1_0._meshGOs, var_1_9)
+		table.insert(arg_1_0._meshGOs, var_1_10)
 
-		local var_1_10 = var_1_9:GetComponentsInChildren(typeof(UnityEngine.Renderer), false)
+		local var_1_11 = var_1_10:GetComponentsInChildren(typeof(UnityEngine.Renderer), false)
 
-		for iter_1_5 = 0, var_1_10.Length - 1 do
-			local var_1_11 = var_1_10[iter_1_5].material
+		for iter_1_5 = 0, var_1_11.Length - 1 do
+			local var_1_12 = var_1_11[iter_1_5].material
 
-			table.insert(arg_1_0._mats, var_1_11)
-			var_1_11:EnableKeyword(var_0_5)
-			var_1_11:SetFloat(var_0_6, 1)
+			table.insert(arg_1_0._mats, var_1_12)
+			var_1_12:EnableKeyword(var_0_5)
+			var_1_12:SetFloat(var_0_6, 1)
 		end
 	end
 
@@ -128,7 +131,7 @@ function var_0_0._setupMesh(arg_3_0, arg_3_1, arg_3_2)
 	var_3_8.name = var_0_3
 	var_3_8.transform.parent = var_3_0.transform
 
-	for iter_3_0 = 0, arg_3_1.Length - 1 do
+	for iter_3_0 = 1, #arg_3_1 do
 		local var_3_9 = arg_3_1[iter_3_0]
 		local var_3_10 = var_3_9.transform
 		local var_3_11 = UnityEngine.GameObject.Instantiate(var_3_9.material)
@@ -137,41 +140,44 @@ function var_0_0._setupMesh(arg_3_0, arg_3_1, arg_3_2)
 
 		var_3_11.name = var_3_9.material.name .. "_clone"
 
-		if not gohelper.isNil(var_3_9.sprite) and not gohelper.isNil(var_3_9.sprite.texture) then
+		local var_3_12 = var_3_9.sprite
+		local var_3_13 = var_3_12 and var_3_12.texture
+
+		if not gohelper.isNil(var_3_13) then
 			var_3_11:SetTexture(var_0_4, var_3_9.sprite.texture)
 
-			local var_3_12 = Vector2.New(var_3_9.sprite.texture.width, var_3_9.sprite.texture.height)
-			local var_3_13 = var_3_9.sprite.textureRect.min
-			local var_3_14 = var_3_9.sprite.textureRect.size
-			local var_3_15 = Vector2.New(var_3_14.x / var_3_12.x, var_3_14.y / var_3_12.y)
-			local var_3_16 = Vector2.New(var_3_13.x / var_3_12.x, var_3_13.y / var_3_12.y)
+			local var_3_14 = Vector2.New(var_3_9.sprite.texture.width, var_3_9.sprite.texture.height)
+			local var_3_15 = var_3_9.sprite.textureRect.min
+			local var_3_16 = var_3_9.sprite.textureRect.size
+			local var_3_17 = Vector2.New(var_3_16.x / var_3_14.x, var_3_16.y / var_3_14.y)
+			local var_3_18 = Vector2.New(var_3_15.x / var_3_14.x, var_3_15.y / var_3_14.y)
 
-			var_3_11:SetTextureOffset(var_0_4, var_3_16)
-			var_3_11:SetTextureScale(var_0_4, var_3_15)
+			var_3_11:SetTextureOffset(var_0_4, var_3_18)
+			var_3_11:SetTextureScale(var_0_4, var_3_17)
+
+			local var_3_19 = gohelper.clone(arg_3_2, var_3_8, var_3_9.name)
+			local var_3_20 = var_3_19.transform
+
+			gohelper.setLayer(var_3_19, UnityLayer.Unit, true)
+
+			local var_3_21 = var_3_19:GetComponent(typeof(UnityEngine.Renderer))
+
+			var_3_21.sortingOrder = var_3_21.sortingOrder + iter_3_0
+			var_3_21.sharedMaterial = var_3_11
+
+			table.insert(arg_3_0._renderers, var_3_21)
+
+			local var_3_22 = var_3_1:WorldToScreenPoint(var_3_10.position)
+			local var_3_23 = (UnityEngine.Screen.width - var_3_22.x * 2) * var_3_5
+			local var_3_24 = (UnityEngine.Screen.height - var_3_22.y * 2) * var_3_5
+			local var_3_25 = var_3_6 * var_3_10.sizeDelta.x * (arg_3_0.context.dissolveScale or 1)
+			local var_3_26 = var_3_7 * var_3_10.sizeDelta.y * (arg_3_0.context.dissolveScale or 1)
+			local var_3_27 = Vector3.New(-var_3_23, -var_3_24, var_3_3) * 0.5
+
+			var_3_20.localScale = Vector3.New(var_3_25, var_3_26, 1)
+			var_3_20.rotation = var_3_2
+			var_3_20.position = var_3_0.transform:TransformPoint(var_3_27)
 		end
-
-		local var_3_17 = gohelper.clone(arg_3_2, var_3_8, var_3_9.name)
-		local var_3_18 = var_3_17.transform
-
-		gohelper.setLayer(var_3_17, UnityLayer.Unit, true)
-
-		local var_3_19 = var_3_17:GetComponent(typeof(UnityEngine.Renderer))
-
-		var_3_19.sortingOrder = var_3_19.sortingOrder + iter_3_0
-		var_3_19.sharedMaterial = var_3_11
-
-		table.insert(arg_3_0._renderers, var_3_19)
-
-		local var_3_20 = var_3_1:WorldToScreenPoint(var_3_10.position)
-		local var_3_21 = (UnityEngine.Screen.width - var_3_20.x * 2) * var_3_5
-		local var_3_22 = (UnityEngine.Screen.height - var_3_20.y * 2) * var_3_5
-		local var_3_23 = var_3_6 * var_3_10.sizeDelta.x * (arg_3_0.context.dissolveScale or 1)
-		local var_3_24 = var_3_7 * var_3_10.sizeDelta.y * (arg_3_0.context.dissolveScale or 1)
-		local var_3_25 = Vector3.New(-var_3_21, -var_3_22, var_3_3) * 0.5
-
-		var_3_18.localScale = Vector3.New(var_3_23, var_3_24, 1)
-		var_3_18.rotation = var_3_2
-		var_3_18.position = var_3_0.transform:TransformPoint(var_3_25)
 	end
 
 	return var_3_8

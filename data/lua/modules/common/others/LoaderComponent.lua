@@ -8,6 +8,7 @@ function var_0_0.ctor(arg_1_0)
 	arg_1_0._urlDic = {}
 	arg_1_0._callback = {}
 	arg_1_0._assetDic = arg_1_0:getUserDataTb_()
+	arg_1_0._assetList = arg_1_0:getUserDataTb_()
 	arg_1_0._failedDic = {}
 	arg_1_0._listLoadCallback = {}
 end
@@ -123,6 +124,8 @@ function var_0_0._onLoadCallback(arg_6_0, arg_6_1)
 	local var_6_1 = arg_6_1.IsLoadSuccess
 
 	if var_6_1 then
+		table.insert(arg_6_0._assetList, arg_6_1)
+
 		arg_6_0._assetDic[var_6_0] = arg_6_1
 
 		arg_6_1:Retain()
@@ -158,8 +161,12 @@ function var_0_0.releaseSelf(arg_7_0)
 		removeAssetLoadCb(iter_7_0, arg_7_0._onLoadCallback, arg_7_0)
 	end
 
-	for iter_7_2, iter_7_3 in pairs(arg_7_0._assetDic) do
-		iter_7_3:Release()
+	if arg_7_0._assetList then
+		for iter_7_2, iter_7_3 in ipairs(arg_7_0._assetList) do
+			iter_7_3:Release()
+		end
+
+		arg_7_0._assetList = nil
 	end
 
 	arg_7_0._urlDic = nil

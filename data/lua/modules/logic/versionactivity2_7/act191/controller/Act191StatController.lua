@@ -9,7 +9,7 @@ end
 function var_0_0.reInit(arg_2_0)
 	arg_2_0.viewOpenTimeMap = {}
 	arg_2_0.startTime = nil
-	arg_2_0.actId = VersionActivity2_7Enum.ActivityId.Act191
+	arg_2_0.actId = VersionActivity3_1Enum.ActivityId.DouQuQu3
 end
 
 function var_0_0.setActInfo(arg_3_0, arg_3_1, arg_3_2)

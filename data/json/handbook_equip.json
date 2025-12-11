@@ -700,5 +700,23 @@
     "order": 0,
     "equipId": 1555,
     "desc": "language_10008268"
+  },
+  {
+    "id": 5056,
+    "order": 0,
+    "equipId": 1556,
+    "desc": "language_10090171"
+  },
+  {
+    "id": 5057,
+    "order": 0,
+    "equipId": 1557,
+    "desc": "language_10090170"
+  },
+  {
+    "id": 4043,
+    "order": 0,
+    "equipId": 1443,
+    "desc": "language_10017913"
   }
 ]

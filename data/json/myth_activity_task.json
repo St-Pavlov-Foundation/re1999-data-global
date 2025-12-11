@@ -1,0 +1,62 @@
+[
+  {
+    "id": 10001,
+    "activityId": 13112,
+    "isOnline": 1,
+    "minType": "迷思无尽时",
+    "name": "迷思无尽时",
+    "desc": "登录游戏",
+    "prepose": "",
+    "listenerType": "LoginDays",
+    "listenerParam": "",
+    "maxProgress": 1,
+    "episodeId": 0,
+    "jumpId": 0,
+    "bonus": "2#4#10000"
+  },
+  {
+    "id": 10002,
+    "activityId": 13112,
+    "isOnline": 1,
+    "minType": "迷思无尽时",
+    "name": "迷思无尽时",
+    "desc": "进行%s次迷思海挑战",
+    "prepose": "",
+    "listenerType": "",
+    "listenerParam": "",
+    "maxProgress": 0,
+    "episodeId": 0,
+    "jumpId": 0,
+    "bonus": "10#10#1"
+  },
+  {
+    "id": 10003,
+    "activityId": 13112,
+    "isOnline": 1,
+    "minType": "迷思无尽时",
+    "name": "迷思无尽时",
+    "desc": "世界最高下潜深度达%sM",
+    "prepose": "",
+    "listenerType": "Act209GlobalTowerLayer",
+    "listenerParam": "13112",
+    "maxProgress": 500,
+    "episodeId": 0,
+    "jumpId": 0,
+    "bonus": "1#491007#1"
+  },
+  {
+    "id": 10004,
+    "activityId": 13112,
+    "isOnline": 1,
+    "minType": "迷思无尽时",
+    "name": "迷思无尽时",
+    "desc": "世界最高下潜深度达%sM",
+    "prepose": "10003",
+    "listenerType": "Act209GlobalTowerLayer",
+    "listenerParam": "13112",
+    "maxProgress": 1000,
+    "episodeId": 0,
+    "jumpId": 0,
+    "bonus": "1#491010#1"
+  }
+]

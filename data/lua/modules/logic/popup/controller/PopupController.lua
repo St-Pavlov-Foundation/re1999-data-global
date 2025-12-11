@@ -90,6 +90,7 @@ function var_0_0._showPopupView(arg_13_0)
 	if arg_13_0._locked or arg_13_0._popupList:getSize() == 0 then
 		if arg_13_0._popupList:getSize() == 0 then
 			arg_13_0:_resetSubPriority()
+			arg_13_0:dispatchEvent(PopupEvent.OnPopupFinish)
 		end
 
 		return
@@ -182,6 +183,20 @@ function var_0_0.havePopupView(arg_19_0, arg_19_1)
 	end
 
 	return false
+end
+
+function var_0_0.endPopupView(arg_20_0)
+	arg_20_0._locked = false
+
+	if arg_20_0._addEvents then
+		arg_20_0._addEvents = nil
+
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_20_0._onCloseViewFinish, arg_20_0)
+	end
+end
+
+function var_0_0.showPopupView(arg_21_0)
+	arg_21_0:_showPopupView()
 end
 
 var_0_0.instance = var_0_0.New()

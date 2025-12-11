@@ -21,5 +21,6 @@ var_0_0.OnViewOpenFinish = 107
 var_0_0.BonusAnimEnd = 108
 var_0_0.ForcePlayBonusAnim = 109
 var_0_0.TaskTabChange = 110
+var_0_0.OnLevelUp = 111
 
 return var_0_0

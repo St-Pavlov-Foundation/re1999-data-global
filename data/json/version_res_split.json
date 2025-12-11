@@ -94,7 +94,8 @@
       "ui/viewres/meilanni",
       "ui/viewres/versionactivity"
     ],
-    "uiPath": []
+    "uiPath": [],
+    "packName": "opveract"
   },
   {
     "id": 12,
@@ -295,7 +296,8 @@
       "ui/viewres/versionactivity_1_2/yaxian",
       "ui/viewres/versionactivity_1_2/map"
     ],
-    "uiPath": []
+    "uiPath": [],
+    "packName": "opveract"
   },
   {
     "id": 13,
@@ -457,7 +459,8 @@
       "ui/viewres/versionactivity_1_3/v1a3_jialabona",
       "ui/viewres/versionactivity_1_3/v1a3_role2"
     ],
-    "uiPath": []
+    "uiPath": [],
+    "packName": "opveract"
   },
   {
     "id": 14,
@@ -503,7 +506,8 @@
       "ui/viewres/versionactivity_1_4/v1a4_6role",
       "ui/viewres/versionactivity_1_4/v1a4_37role"
     ],
-    "uiPath": []
+    "uiPath": [],
+    "packName": "opveract"
   },
   {
     "id": 15,
@@ -558,39 +562,20 @@
       307301
     ],
     "folderPath": [],
-    "videoPath": [],
-    "path": [
-      "videos/1_5_activity_01.mp4",
-      "videos/1_5_activity_02.mp4",
-      "videos/1_5_activity_03.mp4",
-      "videos/1_5_activity_04.mp4",
-      "videos/Android/1_5_activity_01.mp4",
-      "videos/Android/1_5_activity_02.mp4",
-      "videos/Android/1_5_activity_03.mp4",
-      "videos/Android/1_5_activity_04.mp4",
-      "videos/en/1_5_opening_1.mp4",
-      "videos/en/1_5_pv.mp4",
-      "videos/Android/en/1_5_opening_1.mp4",
-      "videos/Android/en/1_5_pv.mp4",
-      "videos/zh/1_5_opening_1.mp4",
-      "videos/zh/1_5_pv.mp4",
-      "videos/Android/zh/1_5_opening_1.mp4",
-      "videos/Android/zh/1_5_pv.mp4",
-      "videos/jp/1_5_opening_1.mp4",
-      "videos/jp/1_5_pv.mp4",
-      "videos/Android/jp/1_5_opening_1.mp4",
-      "videos/Android/jp/1_5_pv.mp4",
-      "videos/kr/1_5_opening_1.mp4",
-      "videos/kr/1_5_pv.mp4",
-      "videos/Android/kr/1_5_opening_1.mp4",
-      "videos/Android/kr/1_5_pv.mp4"
+    "videoPath": [
+      "1_5_activity_01",
+      "1_5_activity_02",
+      "1_5_activity_03",
+      "1_5_activity_04"
     ],
+    "path": [],
     "uiFolder": [
       "ui/viewres/versionactivity_1_5/dungeon",
       "ui/viewres/versionactivity_1_5/v1a5_aizila",
       "ui/viewres/versionactivity_1_5/v1a5_kerandian"
     ],
-    "uiPath": []
+    "uiPath": [],
+    "packName": "opveract"
   },
   {
     "id": 16,
@@ -630,7 +615,8 @@
       "ui/viewres/versionactivity_1_7/v1a7_isolde",
       "ui/viewres/versionactivity_1_7/v1a7_marcus"
     ],
-    "uiPath": []
+    "uiPath": [],
+    "packName": "opveract"
   },
   {
     "id": 17,
@@ -672,7 +658,8 @@
       "ui/viewres/versionactivity_1_8/v1a8_weila",
       "ui/viewres/versionactivity_1_8/v1a8_windsong"
     ],
-    "uiPath": []
+    "uiPath": [],
+    "packName": "opveract"
   },
   {
     "id": 18,
@@ -735,7 +722,8 @@
       "ui/viewres/versionactivity_1_6/v1a6_activityboss",
       "ui/viewres/versionactivity_1_6/v1a6_talent"
     ],
-    "uiPath": []
+    "uiPath": [],
+    "packName": "opveract"
   },
   {
     "id": 19,
@@ -776,7 +764,8 @@
       "ui/viewres/versionactivity_1_9/v1a9_kakania",
       "ui/viewres/versionactivity_1_9/v1a9_lucy"
     ],
-    "uiPath": []
+    "uiPath": [],
+    "packName": "opveract"
   },
   {
     "id": 20,
@@ -826,7 +815,8 @@
       "ui/viewres/versionactivity_2_0/v2a0_joe",
       "ui/viewres/versionactivity_2_0/v2a0_mercuria"
     ],
-    "uiPath": []
+    "uiPath": [],
+    "packName": "opveract"
   },
   {
     "id": 21,
@@ -895,7 +885,8 @@
       "ui/viewres/versionactivity_2_1/v2a1_aergusi",
       "ui/viewres/versionactivity_2_1/v2a1_tuesday"
     ],
-    "uiPath": []
+    "uiPath": [],
+    "packName": "opveract"
   },
   {
     "id": 23,
@@ -907,6 +898,7 @@
     "videoPath": [],
     "path": [],
     "uiFolder": [],
-    "uiPath": []
+    "uiPath": [],
+    "packName": ""
   }
 ]

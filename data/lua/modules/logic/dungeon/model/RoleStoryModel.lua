@@ -389,6 +389,22 @@ function var_0_0.setPlayDungeonUnlockAnimFlag(arg_42_0, arg_42_1)
 	PlayerPrefsHelper.setNumber(var_42_0, 1)
 end
 
+function var_0_0.isCGUnlock(arg_43_0, arg_43_1)
+	local var_43_0 = RoleStoryConfig.instance:getStoryById(arg_43_1)
+	local var_43_1 = var_43_0.cgUnlockEpisodeId
+	local var_43_2 = var_43_0.cgUnlockStoryId
+
+	if var_43_1 == 0 and var_43_2 == 0 then
+		return true
+	end
+
+	if var_43_1 ~= 0 then
+		return DungeonModel.instance:hasPassLevel(var_43_1)
+	end
+
+	return NecrologistStoryModel.instance:getGameMO(arg_43_1):isStoryFinish(var_43_2)
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

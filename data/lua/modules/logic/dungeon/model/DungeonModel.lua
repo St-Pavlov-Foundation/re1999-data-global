@@ -698,15 +698,16 @@ local var_0_1 = {
 	[DungeonEnum.EpisodeType.TowerBoss] = true,
 	[DungeonEnum.EpisodeType.TowerLimited] = true,
 	[DungeonEnum.EpisodeType.TowerBossTeach] = true,
+	[DungeonEnum.EpisodeType.TowerDeep] = true,
 	[DungeonEnum.EpisodeType.Act183] = true,
 	[DungeonEnum.EpisodeType.Act191] = true,
+	[DungeonEnum.EpisodeType.Odyssey] = true,
+	[DungeonEnum.EpisodeType.Assassin2Outside] = true,
 	[DungeonEnum.EpisodeType.Survival] = true,
 	[DungeonEnum.EpisodeType.Shelter] = true,
 	[DungeonEnum.EpisodeType.V2_8Boss] = true,
 	[DungeonEnum.EpisodeType.V2_8BossAct] = true,
-	[DungeonEnum.EpisodeType.GameJumpFight] = true,
-	[DungeonEnum.EpisodeType.Odyssey] = true,
-	[DungeonEnum.EpisodeType.Assassin2Outside] = true
+	[DungeonEnum.EpisodeType.GameJumpFight] = true
 }
 
 function var_0_0.isBattleEpisode(arg_31_0)

@@ -76,6 +76,13 @@ function var_0_0.openAct191EnemyInfoView(arg_9_0, arg_9_1)
 	})
 end
 
+function var_0_0.openTowerDeepEnemyInfoView(arg_10_0, arg_10_1)
+	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
+		battleId = arg_10_1,
+		tabEnum = EnemyInfoEnum.TabEnum.TowerDeep
+	})
+end
+
 var_0_0.instance = var_0_0.New()
 
 LuaEventSystem.addEventMechanism(var_0_0.instance)

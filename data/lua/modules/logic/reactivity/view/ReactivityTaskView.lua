@@ -10,7 +10,7 @@ function var_0_0.refreshRemainTime_overseas(arg_1_0)
 end
 
 function var_0_0.onInitView(arg_2_0)
-	arg_2_0.txtTime = gohelper.findChildTextMesh(arg_2_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	arg_2_0.txtTime = gohelper.findChildTextMesh(arg_2_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_time")
 	arg_2_0._btnactivitystore = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "Left/Prop/#btn_shop")
 	arg_2_0._txtstorenum = gohelper.findChildTextMesh(arg_2_0.viewGO, "Left/Prop/txt_PropName/#txt_PropNum")
 

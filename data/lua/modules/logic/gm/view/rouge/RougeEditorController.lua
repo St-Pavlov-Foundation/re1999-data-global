@@ -125,9 +125,15 @@ var_0_0.TextPath = "ui/viewres/gm/rouge/gm_rouge_text.prefab"
 
 function var_0_0._onLoadTextCallback(arg_8_0, arg_8_1)
 	if arg_8_1.IsLoadSuccess then
+		local var_8_0 = arg_8_0._assetItem
+
 		arg_8_0._assetItem = arg_8_1
 
 		arg_8_0._assetItem:Retain()
+
+		if var_8_0 then
+			var_8_0:Release()
+		end
 
 		arg_8_0.textGo = arg_8_0._assetItem:GetResource(var_0_0.TextPath)
 		arg_8_0.loadingText = false

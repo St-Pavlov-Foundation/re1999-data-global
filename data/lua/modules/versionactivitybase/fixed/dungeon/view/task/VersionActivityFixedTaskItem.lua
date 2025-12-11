@@ -34,14 +34,14 @@ function var_0_0.addEventListeners(arg_2_0)
 	arg_2_0.btnNotFinish:AddClickListener(arg_2_0._btnNotFinishOnClick, arg_2_0)
 	arg_2_0.btnFinish:AddClickListener(arg_2_0._btnFinishOnClick, arg_2_0)
 	arg_2_0.btnFinishAll:AddClickListener(arg_2_0._btnFinishAllOnClick, arg_2_0)
-	arg_2_0:addEventCb(VersionActivityFixedHelper.getVersionActivityDungeonController().instance, VersionActivityFixedDungeonEvent.OnClickAllTaskFinish, arg_2_0._OnClickAllTaskFinish, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityFixedHelper.getVersionActivityDungeonController(arg_2_0._bigVersion, arg_2_0._smallVersion).instance, VersionActivityFixedDungeonEvent.OnClickAllTaskFinish, arg_2_0._OnClickAllTaskFinish, arg_2_0)
 end
 
 function var_0_0.removeEventListeners(arg_3_0)
 	arg_3_0.btnNotFinish:RemoveClickListener()
 	arg_3_0.btnFinish:RemoveClickListener()
 	arg_3_0.btnFinishAll:RemoveClickListener()
-	arg_3_0:removeEventCb(VersionActivityFixedHelper.getVersionActivityDungeonController().instance, VersionActivityFixedDungeonEvent.OnClickAllTaskFinish, arg_3_0._OnClickAllTaskFinish, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivityFixedHelper.getVersionActivityDungeonController(arg_3_0._bigVersion, arg_3_0._smallVersion).instance, VersionActivityFixedDungeonEvent.OnClickAllTaskFinish, arg_3_0._OnClickAllTaskFinish, arg_3_0)
 end
 
 function var_0_0._btnNotFinishOnClick(arg_4_0)
@@ -49,13 +49,13 @@ function var_0_0._btnNotFinishOnClick(arg_4_0)
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_resources_open)
 
 		if GameFacade.jump(arg_4_0.co.jumpId) then
-			ViewMgr.instance:closeView(VersionActivityFixedHelper.getVersionActivityTaskViewName())
+			ViewMgr.instance:closeView(VersionActivityFixedHelper.getVersionActivityTaskViewName(arg_4_0._bigVersion, arg_4_0._smallVersion))
 		end
 	end
 end
 
 function var_0_0._btnFinishAllOnClick(arg_5_0)
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnClickAllTaskFinish)
+	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnClickAllTaskFinish)
 end
 
 var_0_0.FinishKey = "VersionActivityFixedTaskItem FinishKey"
@@ -94,6 +94,7 @@ function var_0_0.secondAnimationDone(arg_9_0)
 end
 
 function var_0_0._editableInitView(arg_10_0)
+	arg_10_0._bigVersion, arg_10_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 	arg_10_0.rewardItemList = {}
 end
 

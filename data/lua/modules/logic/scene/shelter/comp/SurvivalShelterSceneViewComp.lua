@@ -5,11 +5,15 @@ local var_0_0 = class("SurvivalShelterSceneViewComp", BaseSceneComp)
 function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0._beginDt = ServerTime.now()
 
-	ViewMgr.instance:openView(ViewName.SurvivalMainView)
-
 	local var_1_0 = SurvivalShelterModel.instance:getWeekInfo()
 
-	SurvivalMapHelper.instance:tryShowServerPanel(var_1_0.panel)
+	if var_1_0:getBag(SurvivalEnum.ItemSource.Shelter):haveReputationItem() and not var_1_0:isAllReputationShopMaxLevel() then
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SurvivalReputationSelectView)
+	end
+
+	local var_1_1 = SurvivalShelterModel.instance:getWeekInfo()
+
+	SurvivalMapHelper.instance:tryShowServerPanel(var_1_1.panel)
 
 	if SurvivalShelterModel.instance:getNeedShowBossInvade() then
 		SurvivalShelterModel.instance:setNeedShowBossInvade()
@@ -20,8 +24,14 @@ function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
 end
 
 function var_0_0._delayProcessGuideEvent(arg_2_0)
-	if SurvivalShelterModel.instance:getWeekInfo().day > 1 then
+	local var_2_0 = SurvivalShelterModel.instance:getWeekInfo()
+
+	if var_2_0.day > 1 then
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitWeekDay)
+	end
+
+	if var_2_0.difficulty == 3 or var_2_0.difficulty == 4 then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideShelterHard)
 	end
 end
 

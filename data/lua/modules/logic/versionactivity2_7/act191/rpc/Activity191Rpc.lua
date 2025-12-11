@@ -235,20 +235,20 @@ function var_0_0.onReceiveChangeAct191TeamReply(arg_22_0, arg_22_1, arg_22_2)
 	local var_22_0 = arg_22_2.activityId
 	local var_22_1 = arg_22_2.curTeamIndex
 	local var_22_2 = arg_22_2.teamInfo
-	local var_22_3
+	local var_22_3 = arg_22_2.rank
+	local var_22_4 = Activity191Model.instance:getActInfo(var_22_0):getGameInfo()
 
-	var_22_3.rank, var_22_3 = arg_22_2.rank, Activity191Model.instance:getActInfo(var_22_0):getGameInfo()
-
-	var_22_3:updateTeamInfo(var_22_1, var_22_2)
+	var_22_4:updateRank(var_22_3)
+	var_22_4:updateTeamInfo(var_22_1, var_22_2)
 	Activity191Controller.instance:dispatchEvent(Activity191Event.UpdateTeamInfo)
 end
 
-function var_0_0.sendEndAct191GameRequest(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+function var_0_0.sendEndAct191GameRequest(arg_23_0, arg_23_1)
 	local var_23_0 = Activity191Module_pb.EndAct191GameRequest()
 
 	var_23_0.activityId = arg_23_1
 
-	arg_23_0:sendMsg(var_23_0, arg_23_2, arg_23_3)
+	arg_23_0:sendMsg(var_23_0)
 end
 
 function var_0_0.onReceiveEndAct191GameReply(arg_24_0, arg_24_1, arg_24_2)
@@ -285,6 +285,81 @@ function var_0_0.onReceiveAct191TriggerEffectPush(arg_26_0, arg_26_1, arg_26_2)
 	local var_26_0 = arg_26_2.activityId
 
 	Activity191Model.instance:getActInfo(var_26_0):triggerEffectPush(arg_26_2)
+end
+
+function var_0_0.sendSelect191ReplaceEventRequest(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4)
+	local var_27_0 = Activity191Module_pb.Select191ReplaceEventRequest()
+
+	var_27_0.activityId = arg_27_1
+
+	for iter_27_0, iter_27_1 in ipairs(arg_27_2) do
+		table.insert(var_27_0.itemUid, iter_27_1)
+	end
+
+	arg_27_0:sendMsg(var_27_0, arg_27_3, arg_27_4)
+end
+
+function var_0_0.onReceiveSelect191ReplaceEventReply(arg_28_0, arg_28_1, arg_28_2)
+	if arg_28_1 ~= 0 then
+		return
+	end
+
+	Activity191Model.instance:getActInfo(arg_28_2.activityId):updateGameInfo(arg_28_2.gameInfo)
+end
+
+function var_0_0.sendEnd191ReplaceEventRequest(arg_29_0, arg_29_1)
+	local var_29_0 = Activity191Module_pb.End191ReplaceEventRequest()
+
+	var_29_0.activityId = arg_29_1
+
+	arg_29_0:sendMsg(var_29_0)
+end
+
+function var_0_0.onReceiveEnd191ReplaceEventReply(arg_30_0, arg_30_1, arg_30_2)
+	if arg_30_1 ~= 0 then
+		return
+	end
+
+	Activity191Model.instance:getActInfo(arg_30_2.activityId):updateGameInfo(arg_30_2.gameInfo)
+	Activity191Controller.instance:nextStep()
+end
+
+function var_0_0.sendSelect191UpgradeEventRequest(arg_31_0, arg_31_1, arg_31_2, arg_31_3, arg_31_4)
+	local var_31_0 = Activity191Module_pb.Select191UpgradeEventRequest()
+
+	var_31_0.activityId = arg_31_1
+
+	for iter_31_0, iter_31_1 in ipairs(arg_31_2) do
+		table.insert(var_31_0.itemUid, iter_31_1)
+	end
+
+	arg_31_0:sendMsg(var_31_0, arg_31_3, arg_31_4)
+end
+
+function var_0_0.onReceiveSelect191UpgradeEventReply(arg_32_0, arg_32_1, arg_32_2)
+	if arg_32_1 ~= 0 then
+		return
+	end
+
+	Activity191Model.instance:getActInfo(arg_32_2.activityId):updateGameInfo(arg_32_2.gameInfo)
+end
+
+function var_0_0.sendSelect191UseHeroFacetsIdRequest(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4, arg_33_5)
+	local var_33_0 = Activity191Module_pb.Select191UseHeroFacetsIdRequest()
+
+	var_33_0.activityId = arg_33_1
+	var_33_0.roleId = arg_33_2
+	var_33_0.facetsId = arg_33_3
+
+	arg_33_0:sendMsg(var_33_0, arg_33_4, arg_33_5)
+end
+
+function var_0_0.onReceiveSelect191UseHeroFacetsIdReply(arg_34_0, arg_34_1, arg_34_2)
+	if arg_34_1 ~= 0 then
+		return
+	end
+
+	Activity191Model.instance:getActInfo(arg_34_2.activityId):getGameInfo():updateStoneId(arg_34_2.roleId, arg_34_2.facetsId)
 end
 
 var_0_0.instance = var_0_0.New()

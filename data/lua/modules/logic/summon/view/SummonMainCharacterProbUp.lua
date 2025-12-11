@@ -241,7 +241,7 @@ function var_0_0._btnsummon1OnClick_2(arg_15_0)
 		var_15_4.miss_quantity = 1
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_15_4)
+	SummonMainController.instance:openSummonConfirmView(var_15_4)
 end
 
 function var_0_0._summon1Confirm(arg_16_0)
@@ -315,7 +315,7 @@ function var_0_0._btnsummon10OnClick_2(arg_18_0)
 		var_18_5.miss_quantity = var_18_9
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_18_5)
+	SummonMainController.instance:openSummonConfirmView(var_18_5)
 end
 
 function var_0_0._summon10Confirm(arg_19_0)

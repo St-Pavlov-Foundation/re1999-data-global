@@ -73,33 +73,33 @@ function var_0_0.initViewContent(arg_2_0)
 	arg_2_0._isInit = true
 end
 
-function var_0_0.onClickSendFightLogBtn(arg_3_0)
-	SendWeWorkFileHelper.sendFightLogFile()
+function var_0_0.onGMAiJiAoQteAutoSequence(arg_3_0, arg_3_1)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMAiJiAoQteAutoSequence, arg_3_1)
 end
 
-function var_0_0.onGMAiJiAoQteAutoSequence(arg_4_0, arg_4_1)
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMAiJiAoQteAutoSequence, arg_4_1)
-end
+function var_0_0.onClickSetAiJiAoAutoSequence(arg_4_0)
+	local var_4_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.GMAiJiAoQteAutoSequence, "")
+	local var_4_1 = FightDataModel.instance:initAiJiAoAutoSequenceForGM()
 
-function var_0_0.onClickSetAiJiAoAutoSequence(arg_5_0)
-	local var_5_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.GMAiJiAoQteAutoSequence, "")
-	local var_5_1 = FightDataModel.instance:initAiJiAoAutoSequenceForGM()
+	var_4_1.autoSequence = {}
+	var_4_1.index = 0
 
-	var_5_1.autoSequence = {}
-	var_5_1.index = 0
+	for iter_4_0 = 1, #var_4_0 do
+		local var_4_2 = string.sub(var_4_0, iter_4_0, iter_4_0)
+		local var_4_3 = tonumber(var_4_2)
 
-	for iter_5_0 = 1, #var_5_0 do
-		local var_5_2 = string.sub(var_5_0, iter_5_0, iter_5_0)
-		local var_5_3 = tonumber(var_5_2)
-
-		if var_5_3 then
-			table.insert(var_5_1.autoSequence, var_5_3)
+		if var_4_3 then
+			table.insert(var_4_1.autoSequence, var_4_3)
 		end
 	end
 end
 
-function var_0_0.onClickRemoveAiJiAoAutoSequence(arg_6_0)
+function var_0_0.onClickRemoveAiJiAoAutoSequence(arg_5_0)
 	FightDataModel.instance.aiJiAoAutoSequenceForGM = nil
+end
+
+function var_0_0.onClickSendFightLogBtn(arg_6_0)
+	SendWeWorkFileHelper.sendFightLogFile()
 end
 
 function var_0_0.onClickShowRightElements(arg_7_0)

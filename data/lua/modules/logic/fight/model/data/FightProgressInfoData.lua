@@ -15,4 +15,16 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 	end
 end
 
+function var_0_0.getDataByShowId(arg_2_0, arg_2_1)
+	if not arg_2_1 then
+		return
+	end
+
+	for iter_2_0, iter_2_1 in pairs(arg_2_0) do
+		if iter_2_1.showId == arg_2_1 then
+			return iter_2_1
+		end
+	end
+end
+
 return var_0_0

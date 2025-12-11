@@ -291,97 +291,107 @@ function var_0_0.tweenToAnchorPos(arg_36_0, arg_36_1, arg_36_2, arg_36_3, arg_36
 	end
 end
 
-function var_0_0.tweenToScreenPos(arg_37_0, arg_37_1, arg_37_2, arg_37_3, arg_37_4, arg_37_5)
+function var_0_0.screenPosV2ToAnchorPosV2(arg_37_0, arg_37_1, arg_37_2)
 	arg_37_1 = arg_37_1 or arg_37_0._transform
 	arg_37_2 = arg_37_2 or arg_37_0._dragInfo.screenPos
 
-	local var_37_0 = recthelper.screenPosToAnchorPos(arg_37_2, arg_37_1.parent)
-
-	arg_37_0:tweenToAnchorPos(arg_37_1, var_37_0, arg_37_3, arg_37_4, arg_37_5)
+	return (recthelper.screenPosToAnchorPos(arg_37_2, arg_37_1.parent))
 end
 
-function var_0_0.tweenToMousePos(arg_38_0)
-	local var_38_0 = arg_38_0._dragInfo
+function var_0_0.tweenToScreenPos(arg_38_0, arg_38_1, arg_38_2, arg_38_3, arg_38_4, arg_38_5)
+	local var_38_0 = arg_38_0:screenPosV2ToAnchorPosV2(arg_38_1, arg_38_2)
 
-	arg_38_0:tweenToScreenPos(arg_38_0._transform, var_38_0.screenPos)
+	arg_38_0:tweenToAnchorPos(arg_38_1, var_38_0, arg_38_3, arg_38_4, arg_38_5)
 end
 
-function var_0_0.tweenToMousePosWithConstrainedDirV2(arg_39_0, arg_39_1, arg_39_2)
-	assert(tonumber(arg_39_1.x) ~= nil and tonumber(arg_39_1.y) ~= nil)
+function var_0_0.tweenToMousePos(arg_39_0)
+	local var_39_0 = arg_39_0._dragInfo
 
-	local var_39_0 = arg_39_0._transform
-	local var_39_1 = arg_39_0._dragInfo
-	local var_39_2 = recthelper.screenPosToAnchorPos(var_39_1.screenPos, var_39_0.parent)
-	local var_39_3, var_39_4 = recthelper.getAnchor(var_39_0)
-	local var_39_5 = Vector2.New(var_39_3, var_39_4)
-	local var_39_6 = var_39_2 - var_39_5
-	local var_39_7 = var_0_13(var_39_6, arg_39_1)
+	arg_39_0:tweenToScreenPos(arg_39_0._transform, var_39_0.screenPos)
+end
 
-	var_39_2.x = var_39_5.x + arg_39_1.x * var_39_7
-	var_39_2.y = var_39_5.y + arg_39_1.y * var_39_7
+function var_0_0.tweenToMousePosWithConstrainedDirV2(arg_40_0, arg_40_1, arg_40_2)
+	assert(tonumber(arg_40_1.x) ~= nil and tonumber(arg_40_1.y) ~= nil)
 
-	if arg_39_2 then
-		local var_39_8 = recthelper.rectToRelativeAnchorPos(arg_39_2.position, var_39_0.parent)
-		local var_39_9 = Vector2.Distance(var_39_8, var_39_5)
+	local var_40_0 = arg_40_0._transform
+	local var_40_1 = arg_40_0._dragInfo
+	local var_40_2 = recthelper.screenPosToAnchorPos(var_40_1.screenPos, var_40_0.parent)
+	local var_40_3, var_40_4 = recthelper.getAnchor(var_40_0)
+	local var_40_5 = Vector2.New(var_40_3, var_40_4)
+	local var_40_6 = var_40_2 - var_40_5
+	local var_40_7 = var_0_13(var_40_6, arg_40_1)
 
-		var_39_2 = Vector2.MoveTowards(var_39_5, var_39_2, var_39_9)
+	var_40_2.x = var_40_5.x + arg_40_1.x * var_40_7
+	var_40_2.y = var_40_5.y + arg_40_1.y * var_40_7
+
+	if arg_40_2 then
+		local var_40_8 = recthelper.rectToRelativeAnchorPos(arg_40_2.position, var_40_0.parent)
+		local var_40_9 = Vector2.Distance(var_40_8, var_40_5)
+
+		var_40_2 = Vector2.MoveTowards(var_40_5, var_40_2, var_40_9)
 	end
 
-	arg_39_0:tweenToAnchorPos(var_39_0, var_39_2)
+	arg_40_0:tweenToAnchorPos(var_40_0, var_40_2)
 end
 
-function var_0_0.quaternionToMouse(arg_40_0, arg_40_1, arg_40_2)
-	arg_40_2 = arg_40_2 or recthelper.uiPosToScreenPos(arg_40_1)
+function var_0_0.quaternionToMouse(arg_41_0, arg_41_1, arg_41_2)
+	arg_41_2 = arg_41_2 or recthelper.uiPosToScreenPos(arg_41_1)
 
-	local var_40_0 = arg_40_0._dragInfo
-	local var_40_1 = var_40_0.screenPos
-	local var_40_2 = var_40_1 - var_40_0.delta - arg_40_2
-	local var_40_3 = var_40_1 - arg_40_2
-	local var_40_4 = Vector3.New(var_40_2.x, var_40_2.y, 0)
-	local var_40_5 = Vector3.New(var_40_3.x, var_40_3.y, 0)
-	local var_40_6 = Quaternion.FromToRotation(var_40_4, var_40_5)
-	local var_40_7, var_40_8 = var_40_6:ToAngleAxis()
-	local var_40_9 = var_40_8.z
-	local var_40_10
+	local var_41_0 = arg_41_0._dragInfo
+	local var_41_1 = var_41_0.screenPos
+	local var_41_2 = var_41_1 - var_41_0.delta - arg_41_2
+	local var_41_3 = var_41_1 - arg_41_2
+	local var_41_4 = Vector3.New(var_41_2.x, var_41_2.y, 0)
+	local var_41_5 = Vector3.New(var_41_3.x, var_41_3.y, 0)
+	local var_41_6 = Quaternion.FromToRotation(var_41_4, var_41_5)
+	local var_41_7, var_41_8 = var_41_6:ToAngleAxis()
+	local var_41_9 = var_41_8.z
+	local var_41_10
 
-	if var_40_9 < 0 then
-		var_40_10 = true
-	elseif var_40_9 > 0 then
-		var_40_10 = false
+	if var_41_9 < 0 then
+		var_41_10 = true
+	elseif var_41_9 > 0 then
+		var_41_10 = false
 	end
 
-	return var_40_6, var_40_7, var_40_10
+	return var_41_6, var_41_7, var_41_10
 end
 
-function var_0_0.rotateZToMousePos(arg_41_0, arg_41_1, arg_41_2)
-	local var_41_0, var_41_1, var_41_2 = arg_41_0:quaternionToMouse(arg_41_1, arg_41_2)
+function var_0_0.rotateZToMousePos(arg_42_0, arg_42_1, arg_42_2)
+	local var_42_0, var_42_1, var_42_2 = arg_42_0:quaternionToMouse(arg_42_1, arg_42_2)
 
-	arg_41_1.rotation = arg_41_1.rotation * var_41_0
+	arg_42_1.rotation = arg_42_1.rotation * var_42_0
 
-	return var_41_0, var_41_1, var_41_2
+	return var_42_0, var_42_1, var_42_2
 end
 
-function var_0_0.rotateZToMousePosWithCenterTrans(arg_42_0, arg_42_1, arg_42_2)
-	local var_42_0 = recthelper.uiPosToScreenPos(arg_42_2)
+function var_0_0.rotateZToMousePosWithCenterTrans(arg_43_0, arg_43_1, arg_43_2)
+	local var_43_0 = recthelper.uiPosToScreenPos(arg_43_2)
 
-	arg_42_0:rotateZToMousePos(arg_42_1, var_42_0)
+	arg_43_0:rotateZToMousePos(arg_43_1, var_43_0)
 end
 
-function var_0_0.degreesFromBeginDrag(arg_43_0, arg_43_1, arg_43_2)
-	local var_43_0 = arg_43_0._dragInfo
+function var_0_0.degreesFromBeginDrag(arg_44_0, arg_44_1, arg_44_2)
+	local var_44_0 = arg_44_0._dragInfo
 
-	if not var_43_0.screenPos_st then
+	if not var_44_0.screenPos_st then
 		return 0
 	end
 
-	arg_43_1 = arg_43_1 or arg_43_0:transform()
-	arg_43_2 = arg_43_2 or recthelper.uiPosToScreenPos(arg_43_1)
+	arg_44_1 = arg_44_1 or arg_44_0:transform()
+	arg_44_2 = arg_44_2 or recthelper.uiPosToScreenPos(arg_44_1)
 
-	local var_43_1 = var_43_0.screenPos
-	local var_43_2 = var_43_0.screenPos_st - arg_43_2
-	local var_43_3 = var_43_1 - arg_43_2
+	local var_44_1 = var_44_0.screenPos
+	local var_44_2 = var_44_0.screenPos_st - arg_44_2
+	local var_44_3 = var_44_1 - arg_44_2
 
-	return var_0_11(var_0_16(var_43_2, var_43_3))
+	return var_0_11(var_0_16(var_44_2, var_44_3))
+end
+
+function var_0_0.setAnchorByMousePos(arg_45_0, arg_45_1)
+	local var_45_0 = arg_45_0:screenPosV2ToAnchorPosV2(arg_45_1)
+
+	recthelper.setAnchor(arg_45_1, var_45_0)
 end
 
 return var_0_0

@@ -25,8 +25,14 @@ function var_0_0.getRemainDay(arg_3_0)
 	end
 end
 
-function var_0_0.hasExpired(arg_4_0)
-	return arg_4_0.expiredTime < ServerTime.now()
+function var_0_0.getRemainDay2(arg_4_0)
+	local var_4_0 = arg_4_0.expiredTime - ServerTime.now()
+
+	return math.ceil(var_4_0 / TimeUtil.OneDaySecond)
+end
+
+function var_0_0.hasExpired(arg_5_0)
+	return arg_5_0.expiredTime < ServerTime.now()
 end
 
 return var_0_0

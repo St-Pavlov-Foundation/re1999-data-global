@@ -44,7 +44,7 @@ function var_0_0.tryRestartCachot()
 		local var_3_2 = lua_rogue_difficulty.configDict[var_3_1].retries - var_3_0:getRetries() + 1
 
 		if var_3_2 > 0 then
-			MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.V1a6CachotMsgBox05, MsgBoxEnum.BoxType.Yes_No, luaLang("cachot_continue_fight"), "RE CHALLENGE", luaLang("cachot_abort_fight"), "QUIT", FightSystem._onRestart, FightSystem.onExitCachot, nil, FightSystem.instance, nil, nil, var_3_2)
+			MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.V1a6CachotMsgBox05, MsgBoxEnum.BoxType.Yes_No, luaLang("cachot_continue_fight"), "RE CHALLENGE", luaLang("cachot_abort_fight"), "QUIT", FightRestartMgr.fastRestart, var_0_0.onExitCachot, nil, FightGameMgr.restartMgr, nil, nil, var_3_2)
 
 			return true
 		end
@@ -55,7 +55,7 @@ end
 
 function var_0_0.onExitCachot()
 	RogueRpc.instance:sendAbortRogueRequest(V1a6_CachotEnum.ActivityId)
-	FightSystem.instance:_onEndFight()
+	FightGameMgr.playMgr:_PlayEnd()
 end
 
 function var_0_0.tryRestartRouge()
@@ -87,14 +87,14 @@ function var_0_0.tryRestartRouge()
 		return false
 	end
 
-	MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.RougeFightFailConfirm, MsgBoxEnum.BoxType.Yes_No, luaLang("cachot_continue_fight"), "RE CHALLENGE", luaLang("cachot_abort_fight"), "QUIT", FightSystem._onRestart, var_0_0.onExitFight, nil, FightSystem.instance, nil, nil, var_5_1 - var_5_0.retryNum + 1)
+	MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.RougeFightFailConfirm, MsgBoxEnum.BoxType.Yes_No, luaLang("cachot_continue_fight"), "RE CHALLENGE", luaLang("cachot_abort_fight"), "QUIT", FightRestartMgr.fastRestart, var_0_0.onExitFight, nil, FightGameMgr.restartMgr, nil, nil, var_5_1 - var_5_0.retryNum + 1)
 
 	return true
 end
 
 function var_0_0.onExitFight()
 	RougeRpc.instance:sendRougeAbortRequest(RougeModel.instance:getSeason() or 1)
-	FightSystem.instance:_onEndFight()
+	FightGameMgr.playMgr:_PlayEnd()
 end
 
 return var_0_0

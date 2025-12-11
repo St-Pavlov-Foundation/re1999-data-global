@@ -7225,5 +7225,194 @@
     "effectRemoveTime": 0.0,
     "audioId": 431160392,
     "dieAnim": ""
+  },
+  {
+    "skinId": 307704,
+    "actionName": "born",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 430770491,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 307704,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 430770492,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 311303,
+    "actionName": "born",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431130391,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 311303,
+    "actionName": "die",
+    "effect": "v3a1_alf/alf_die",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431130392,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 300731,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a1_wxk_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 430073191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 300731,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 430070143,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 640147,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 464014792,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 640148,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 464014892,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 670145,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 441220192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 670146,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 441220192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 670148,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 464014892,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 670147,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 464014792,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 670149,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 467020992,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 640150,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 465010792,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 640149,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 465010592,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 312501,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a1_ysm_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431250191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 312501,
+    "actionName": "die",
+    "effect": "v3a1_ysm/v3a1_ysm_die",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431250192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 313201,
+    "actionName": "born",
+    "effect": "buff/born/pre_gsn_born_01",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431320191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 313201,
+    "actionName": "die",
+    "effect": "v3a1_gsn/gsn_die_01",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431320192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 309504,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a3_hzsx_born",
+    "effectHangPoint": "special1",
+    "effectRemoveTime": 0.0,
+    "audioId": 430950491,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 309504,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 430950492,
+    "dieAnim": ""
   }
 ]

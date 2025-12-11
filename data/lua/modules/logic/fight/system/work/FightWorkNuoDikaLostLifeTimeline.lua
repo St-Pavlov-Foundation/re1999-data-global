@@ -61,6 +61,8 @@ function var_0_0.onStart(arg_2_0)
 
 	local var_2_9 = var_2_4.skill:registTimelineWork(arg_2_0.timelineName, var_2_8)
 
+	var_2_9.CALLBACK_EVEN_IF_UNFINISHED = true
+
 	arg_2_0:playWorkAndDone(var_2_9)
 end
 

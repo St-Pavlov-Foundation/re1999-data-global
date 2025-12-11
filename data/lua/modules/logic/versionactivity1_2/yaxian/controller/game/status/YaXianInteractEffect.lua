@@ -124,6 +124,14 @@ function var_0_0.dispose(arg_10_0)
 		removeAssetLoadCb(var_0_0.EffectPath[iter_10_1], arg_10_0._onLoadCallback, arg_10_0)
 	end
 
+	if arg_10_0.assetItemList then
+		for iter_10_2, iter_10_3 in ipairs(arg_10_0.assetItemList) do
+			iter_10_3:Release()
+		end
+
+		arg_10_0.assetItemList = nil
+	end
+
 	arg_10_0:cancelTask()
 	arg_10_0:__onDispose()
 end

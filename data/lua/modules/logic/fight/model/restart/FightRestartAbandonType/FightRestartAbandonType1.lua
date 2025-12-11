@@ -24,7 +24,7 @@ function var_0_0._startRequestFight(arg_4_0, arg_4_1)
 	DungeonFightController.instance:unregisterCallback(DungeonEvent.OnEndDungeonReply, arg_4_0._startRequestFight, arg_4_0)
 
 	if arg_4_1 ~= 0 then
-		FightSystem.instance:restartFightFail()
+		FightGameMgr.restartMgr:restartFightFail()
 
 		return
 	end

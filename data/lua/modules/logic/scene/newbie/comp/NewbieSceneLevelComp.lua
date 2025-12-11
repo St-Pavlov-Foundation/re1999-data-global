@@ -33,13 +33,19 @@ end
 
 function var_0_0._onLoadCallback(arg_5_0, arg_5_1)
 	if arg_5_1.IsLoadSuccess then
+		local var_5_0 = arg_5_0._assetItem
+
 		arg_5_0._assetItem = arg_5_1
 
 		arg_5_0._assetItem:Retain()
 
-		local var_5_0 = GameSceneMgr.instance:getScene(SceneType.Main):getSceneContainerGO()
+		if var_5_0 then
+			var_5_0:Release()
+		end
 
-		arg_5_0._instGO = gohelper.clone(arg_5_0._assetItem:GetResource(arg_5_0._resPath), var_5_0)
+		local var_5_1 = GameSceneMgr.instance:getScene(SceneType.Main):getSceneContainerGO()
+
+		arg_5_0._instGO = gohelper.clone(arg_5_0._assetItem:GetResource(arg_5_0._resPath), var_5_1)
 
 		WeatherController.instance:initSceneGo(arg_5_0._instGO, arg_5_0._onSwitchResLoaded, arg_5_0)
 		arg_5_0._scene.yearAnimation:initAnimationCurve(arg_5_0._onAnimationCurveLoaded, arg_5_0)

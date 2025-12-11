@@ -92,7 +92,7 @@ function var_0_0.getEffectTagIDsFromDescNotRecursion(arg_12_0, arg_12_1)
 
 	for iter_12_0 in string.gmatch(arg_12_1, "%[(.-)%]") do
 		if string.nilorempty(iter_12_0) or arg_12_0._skillTagInfos[iter_12_0] == nil then
-			logError(string.format(" '%s' 技能描述中， '%s' tag 不存在", arg_12_1, iter_12_0))
+			logError(string.format("技能描述中 '%s' tag 不存在", iter_12_0))
 		else
 			table.insert(var_12_0, arg_12_0._skillTagInfos[iter_12_0].id)
 		end

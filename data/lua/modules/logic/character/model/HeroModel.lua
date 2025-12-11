@@ -216,15 +216,17 @@ function var_0_0.getHeroAllVoice(arg_17_0, arg_17_1, arg_17_2)
 			if iter_17_1.type == CharacterEnum.VoiceType.GetSkin and string.nilorempty(iter_17_1.unlockCondition) and not string.nilorempty(iter_17_1.param) then
 				local var_17_4 = tonumber(iter_17_1.param)
 
-				for iter_17_2, iter_17_3 in ipairs(var_17_2.skinInfoList) do
-					if iter_17_3.skin == var_17_4 then
-						var_17_0[var_17_3] = iter_17_1
+				if var_17_2 then
+					for iter_17_2, iter_17_3 in ipairs(var_17_2.skinInfoList) do
+						if iter_17_3.skin == var_17_4 then
+							var_17_0[var_17_3] = iter_17_1
 
-						break
+							break
+						end
 					end
 				end
 			elseif iter_17_1.type == CharacterEnum.VoiceType.BreakThrough and string.nilorempty(iter_17_1.unlockCondition) then
-				if var_17_2.rank >= 2 then
+				if var_17_2 and var_17_2.rank >= 2 then
 					var_17_0[var_17_3] = iter_17_1
 				end
 			elseif arg_17_0:_cleckCondition(iter_17_1.unlockCondition, arg_17_1) then
@@ -233,14 +235,16 @@ function var_0_0.getHeroAllVoice(arg_17_0, arg_17_1, arg_17_2)
 		end
 	end
 
-	local var_17_5 = var_17_2.voice
+	if var_17_2 then
+		local var_17_5 = var_17_2.voice
 
-	for iter_17_4, iter_17_5 in pairs(var_17_5) do
-		if not var_17_0[iter_17_5] then
-			local var_17_6 = CharacterDataConfig.instance:getCharacterVoiceCO(arg_17_1, iter_17_5)
+		for iter_17_4, iter_17_5 in pairs(var_17_5) do
+			if not var_17_0[iter_17_5] then
+				local var_17_6 = CharacterDataConfig.instance:getCharacterVoiceCO(arg_17_1, iter_17_5)
 
-			if arg_17_0:_checkSkin(var_17_2, var_17_6, arg_17_2) then
-				var_17_0[iter_17_5] = var_17_6
+				if arg_17_0:_checkSkin(var_17_2, var_17_6, arg_17_2) then
+					var_17_0[iter_17_5] = var_17_6
+				end
 			end
 		end
 	end
@@ -274,12 +278,13 @@ function var_0_0._cleckCondition(arg_19_0, arg_19_1, arg_19_2)
 		return true
 	end
 
-	local var_19_0 = arg_19_0:getByHeroId(arg_19_2).faith
-	local var_19_1 = HeroConfig.instance:getFaithPercent(var_19_0)[1]
-	local var_19_2 = string.split(arg_19_1, "#")
+	local var_19_0 = arg_19_0:getByHeroId(arg_19_2)
+	local var_19_1 = var_19_0 and var_19_0.faith or 0
+	local var_19_2 = HeroConfig.instance:getFaithPercent(var_19_1)[1]
+	local var_19_3 = string.split(arg_19_1, "#")
 
-	if tonumber(var_19_2[1]) == 1 then
-		return tonumber(var_19_2[2]) <= var_19_1 * 100
+	if tonumber(var_19_3[1]) == 1 then
+		return tonumber(var_19_3[2]) <= var_19_2 * 100
 	end
 
 	return true

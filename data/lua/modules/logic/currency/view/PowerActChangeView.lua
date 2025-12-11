@@ -6,6 +6,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "decorate/#simage_rightbg")
 	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "decorate/#simage_leftbg")
 	arg_1_0._txtleftproductname = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_leftproductname")
+	arg_1_0._simageleftproduct = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/leftproduct_icon")
 	arg_1_0._txtrightproductname = gohelper.findChildText(arg_1_0.viewGO, "right/#txt_rightproductname")
 	arg_1_0._gobuy = gohelper.findChild(arg_1_0.viewGO, "#go_buy")
 	arg_1_0._inputvalue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_buy/valuebg/#input_value")
@@ -14,7 +15,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_add")
 	arg_1_0._btnmax = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_max")
 	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_buy")
-	arg_1_0._simagecosticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_buy/cost/#simage_costicon")
+	arg_1_0._imagecosticon = gohelper.findChildImage(arg_1_0.viewGO, "#go_buy/cost/#simage_costicon")
 	arg_1_0._txtoriginalCost = gohelper.findChildText(arg_1_0.viewGO, "#go_buy/cost/#txt_originalCost")
 	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
@@ -66,10 +67,14 @@ function var_0_0._btnmaxOnClick(arg_7_0)
 end
 
 function var_0_0._btnbuyOnClick(arg_8_0)
-	local var_8_0 = ItemPowerModel.instance:getUsePower(MaterialEnum.PowerId.ActPowerId, arg_8_0.buyCount)
+	local var_8_0 = ItemPowerModel.instance:getUsePower(arg_8_0._powerId, arg_8_0.buyCount)
 
 	ItemRpc.instance:sendUsePowerItemListRequest(var_8_0)
 	BackpackController.instance:dispatchEvent(BackpackEvent.BeforeUsePowerPotionList)
+
+	if arg_8_0._powerId == MaterialEnum.PowerId.OverflowPowerId then
+		ItemRpc.instance:sendGetPowerMakerInfoRequest()
+	end
 end
 
 function var_0_0.changeUseCount(arg_9_0, arg_9_1)
@@ -124,10 +129,15 @@ function var_0_0._editableInitView(arg_13_0)
 end
 
 function var_0_0.onOpen(arg_14_0)
-	arg_14_0.actPowerConfig = ItemConfig.instance:getPowerItemCo(MaterialEnum.PowerId.ActPowerId)
+	arg_14_0._powerId = arg_14_0.viewParam and arg_14_0.viewParam.PowerId or MaterialEnum.PowerId.ActPowerId
+	arg_14_0.actPowerConfig = ItemConfig.instance:getPowerItemCo(arg_14_0._powerId)
 	arg_14_0.powerConfig = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
 	arg_14_0.currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Power)
 	arg_14_0.oneActPowerEffect = arg_14_0.actPowerConfig.effect
+
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_14_0._imagecosticon, arg_14_0._powerId .. "_1")
+	arg_14_0._simageleftproduct:LoadImage(ResUrl.getPropItemIcon(arg_14_0.actPowerConfig.icon))
+
 	arg_14_0.buyCount = 1
 
 	arg_14_0:updateMaxBuyCount()
@@ -139,7 +149,7 @@ function var_0_0.updateMaxBuyCount(arg_15_0)
 	local var_15_0 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power).maxLimit - arg_15_0.currencyMO.quantity
 	local var_15_1 = math.floor(var_15_0 / arg_15_0.oneActPowerEffect)
 
-	arg_15_0.maxBuyCount = math.min(var_15_1, ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.ActPowerId))
+	arg_15_0.maxBuyCount = math.min(var_15_1, ItemPowerModel.instance:getPowerCount(arg_15_0._powerId))
 end
 
 function var_0_0.refreshUI(arg_16_0)
@@ -185,7 +195,7 @@ function var_0_0.onRefreshActivity(arg_21_0, arg_21_1)
 	end
 
 	local var_21_0 = ActivityHelper.getActivityStatus(arg_21_1)
-	local var_21_1 = ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.ActPowerId)
+	local var_21_1 = ItemPowerModel.instance:getPowerCount(arg_21_0._powerId)
 
 	if var_21_0 ~= ActivityEnum.ActivityStatus.Normal then
 		if var_21_1 < 1 then
@@ -194,7 +204,7 @@ function var_0_0.onRefreshActivity(arg_21_0, arg_21_1)
 			return
 		end
 
-		if ItemPowerModel.instance:getPowerMinExpireTimeOffset(MaterialEnum.PowerId.ActPowerId) <= 0 then
+		if ItemPowerModel.instance:getPowerMinExpireTimeOffset(arg_21_0._powerId) <= 0 then
 			arg_21_0:closeThis()
 		end
 	end
@@ -211,6 +221,7 @@ end
 function var_0_0.onDestroyView(arg_24_0)
 	arg_24_0._simagerightbg:UnLoadImage()
 	arg_24_0._simageleftbg:UnLoadImage()
+	arg_24_0._simageleftproduct:UnLoadImage()
 	arg_24_0._inputvalue:RemoveOnValueChanged()
 end
 

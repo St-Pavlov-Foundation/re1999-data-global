@@ -135,12 +135,6 @@ end
 function var_0_0.jumpTo130508(arg_18_0)
 	local var_18_0 = VersionActivity3_0Enum.ActivityId.Reactivity
 
-	if GameBranchMgr.instance:isOnVer(3, 0) and SettingsModel.instance:isOverseas() then
-		VersionActivityFixedHelper.getVersionActivityEnterController(3, 0).instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_3DungeonController.openStoreView, VersionActivity2_3DungeonController.instance, var_18_0, true)
-
-		return JumpEnum.JumpResult.Success
-	end
-
 	if GameBranchMgr.instance:isOnVer(2, 9) then
 		if not ViewMgr.instance:isOpen(ViewName.V2a3_ReactivityEnterview) then
 			ViewMgr.instance:openView(ViewName.V2a3_ReactivityEnterview)

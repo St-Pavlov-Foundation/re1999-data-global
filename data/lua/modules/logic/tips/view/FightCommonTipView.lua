@@ -38,8 +38,8 @@ function var_0_0.onOpen(arg_5_0)
 	arg_5_0.rootRect.pivot = arg_5_0.viewParam.pivot
 	arg_5_0.rootRect.offsetMin = arg_5_0.viewParam.offsetAnchor
 	arg_5_0.rootRect.offsetMax = arg_5_0.viewParam.offsetAnchor
-	arg_5_0.offsetPosX = arg_5_0.viewParam.offsetPosX or 0
-	arg_5_0.offsetPosY = arg_5_0.viewParam.offsetPosY or 0
+	arg_5_0.offsetPosX = arg_5_0.viewParam.offsetPosX
+	arg_5_0.offsetPosY = arg_5_0.viewParam.offsetPosY
 
 	recthelper.setWidth(arg_5_0.rootRect, var_5_0)
 	arg_5_0:setPos()

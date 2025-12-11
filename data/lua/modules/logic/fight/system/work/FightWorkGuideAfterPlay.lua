@@ -9,13 +9,13 @@ function var_0_0.onStart(arg_1_0)
 		return
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		arg_1_0:onDone(true)
 
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card and FightModel.instance:getCurStage() ~= FightEnum.Stage.AutoCard then
+	if FightGameMgr.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		arg_1_0:onDone(true)
 
 		return

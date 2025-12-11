@@ -568,7 +568,7 @@
   },
   {
     "id": 312301,
-    "effect": "Drawables/bone16/effect-Bone/roleeffect_aja_xj16|Drawables/bone17/effect-Bone/roleeffect_aja_xj17/root",
+    "effect": "Drawables/bone16/effect-Bone/roleeffect_aja_xj16/root|Drawables/bone17/effect-Bone/roleeffect_aja_xj17/root",
     "scale": 1.0,
     "changeVisible": 0,
     "delayVisible": 0,
@@ -577,7 +577,7 @@
   },
   {
     "id": 312302,
-    "effect": "Drawables/bone16/effect-Bone/roleeffect_aja_xj16|Drawables/bone17/effect-Bone/roleeffect_aja_xj17/root",
+    "effect": "Drawables/bone16/effect-Bone/roleeffect_aja_xj16/root|Drawables/bone17/effect-Bone/roleeffect_aja_xj17/root",
     "scale": 1.0,
     "changeVisible": 0,
     "delayVisible": 0,

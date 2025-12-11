@@ -184,6 +184,24 @@ function var_0_0.refreshListView(arg_10_0, arg_10_1)
 	arg_10_0:setList(var_10_0)
 end
 
+function var_0_0.isLoopTypeTaskAllFinished(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0.serverTaskModel:getList()
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		local var_11_1 = iter_11_1.config.loopType
+
+		if var_11_1 == 5 then
+			var_11_1 = 3
+		end
+
+		if iter_11_1.config.bpId == BpModel.instance.id and var_11_1 == arg_11_1 and iter_11_1.finishCount < 1 then
+			return false
+		end
+	end
+
+	return true
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

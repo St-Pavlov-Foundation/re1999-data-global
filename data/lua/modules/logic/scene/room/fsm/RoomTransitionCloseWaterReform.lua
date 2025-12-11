@@ -7,10 +7,18 @@ function var_0_0.start(arg_1_0)
 end
 
 function var_0_0.onStart(arg_2_0, arg_2_1)
+	local var_2_0 = GameSceneMgr.instance:getCurScene()
+
+	if var_2_0 and var_2_0.inventorymgr then
+		var_2_0.inventorymgr:removeAllBlockEntity()
+	end
+
 	RoomWaterReformListModel.instance:clear()
 	RoomWaterReformController.instance:clearSelectWater()
+	RoomWaterReformController.instance:clearSelectBlock()
 	RoomWaterReformModel.instance:clear()
 	RoomWaterReformController.instance:refreshHighlightWaterBlock()
+	RoomMapController.instance:setRoomShowBlockList()
 	arg_2_0:onDone()
 end
 

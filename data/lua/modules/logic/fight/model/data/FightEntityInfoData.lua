@@ -17,7 +17,7 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 	arg_1_0.buffs = {}
 
 	for iter_1_0, iter_1_1 in ipairs(arg_1_1.buffs) do
-		table.insert(arg_1_0.buffs, FightBuffInfoData.New(iter_1_1))
+		table.insert(arg_1_0.buffs, FightBuffInfoData.New(iter_1_1, arg_1_0.id))
 	end
 
 	arg_1_0.skillGroup1 = {}

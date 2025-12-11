@@ -2,8 +2,8 @@
 
 local var_0_0 = class("VersionActivityFixedHelper")
 local var_0_1 = {
-	big = 2,
-	small = 9
+	big = 3,
+	small = 1
 }
 local var_0_2
 local var_0_3 = "%s_%s"
@@ -189,13 +189,13 @@ end
 function var_0_0.getVersionActivityDungeonTaskReddotId(arg_14_0, arg_14_1)
 	arg_14_0, arg_14_1 = var_0_6(arg_14_0, arg_14_1)
 
-	local var_14_0 = var_0_8(arg_14_0, arg_14_1)._DungeonEnter
+	local var_14_0 = var_0_8(arg_14_0, arg_14_1)._DungeonTask
 
 	if not var_14_0 then
 		local var_14_1 = var_0_7("%sDungeonTask", var_0_4, arg_14_0, arg_14_1)
 
 		var_14_0 = RedDotEnum.DotNode[var_14_1]
-		var_0_2[arg_14_0][arg_14_1]._DungeonEnter = var_14_0
+		var_0_2[arg_14_0][arg_14_1]._DungeonTask = var_14_0
 	end
 
 	return var_14_0

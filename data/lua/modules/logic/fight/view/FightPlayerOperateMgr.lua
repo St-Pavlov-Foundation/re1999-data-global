@@ -7,9 +7,7 @@ function var_0_0.onInitView(arg_1_0)
 end
 
 function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_2_0._onRoundSequenceFinish, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0._onClothSkillRoundSequenceFinish, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_2_0._onStartSequenceFinish, arg_2_0, LuaEventSystem.Low)
+	return
 end
 
 function var_0_0.removeEvents(arg_3_0)
@@ -92,15 +90,15 @@ function var_0_0._checkHeroUpgrade(arg_10_0)
 		return
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		return
 	end
 
-	if FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard then
+	if FightDataHelper.stateMgr:getIsAuto() then
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -181,7 +179,7 @@ function var_0_0._checkChangeHeroNeedUseSkill(arg_12_0)
 		return
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		return
 	end
 
@@ -189,11 +187,11 @@ function var_0_0._checkChangeHeroNeedUseSkill(arg_12_0)
 		return
 	end
 
-	if FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard then
+	if FightDataHelper.stateMgr:getIsAuto() then
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -245,15 +243,15 @@ function var_0_0._checkBindContract(arg_13_0)
 		return
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		return
 	end
 
-	if FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard then
+	if FightDataHelper.stateMgr:getIsAuto() then
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -298,11 +296,11 @@ function var_0_0.checkAiJiAoQte(arg_14_0)
 		return
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card and FightModel.instance:getCurStage() ~= FightEnum.Stage.AutoCard then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -320,7 +318,7 @@ function var_0_0.checkAiJiAoQte(arg_14_0)
 
 	local var_14_0 = FightDataHelper.entityMgr.entityDataDic
 	local var_14_1 = FightEnum.BuffFeature.EzioBigSkill
-	local var_14_2 = FightDataHelper.stageMgr:inAutoFightState()
+	local var_14_2 = FightDataHelper.stateMgr:getIsAuto()
 
 	for iter_14_0, iter_14_1 in pairs(var_14_0) do
 		if iter_14_1.side == FightEnum.EntitySide.MySide then

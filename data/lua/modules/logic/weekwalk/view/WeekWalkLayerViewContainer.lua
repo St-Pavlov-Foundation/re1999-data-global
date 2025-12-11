@@ -14,7 +14,7 @@ end
 function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	arg_2_0._navigateButtonView = NavigateButtonsView.New({
 		true,
-		true,
+		false,
 		true
 	}, HelpEnum.HelpId.WeekWalk)
 

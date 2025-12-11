@@ -164,7 +164,7 @@ function var_0_0.onOpen(arg_11_0)
 end
 
 function var_0_0.onUpdate(arg_12_0)
-	if FightModel.instance:isAuto() or FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr:getIsAuto() or FightDataHelper.stateMgr.isReplay then
 		arg_12_0:onBtnClick()
 	end
 end

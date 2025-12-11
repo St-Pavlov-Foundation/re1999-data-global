@@ -2,6 +2,8 @@
 
 local var_0_0 = class("FightViewSurvivalBossHp", FightViewBossHp)
 
+var_0_0.DefaultOneMaxHp = 10000
+
 function var_0_0.onInitView(arg_1_0)
 	var_0_0.super.onInitView(arg_1_0)
 
@@ -26,6 +28,13 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0.tweenShieldHp = 0
 	arg_1_0.targetHp = 0
 	arg_1_0.targetShieldHp = 0
+
+	local var_1_0 = FightDataHelper.fieldMgr.battleId
+	local var_1_1 = lua_battle.configDict[var_1_0]
+	local var_1_2 = var_1_1 and var_1_1.bossHpType
+	local var_1_3 = not string.nilorempty(var_1_2) and FightStrUtil.instance:getSplitCache(var_1_2, "#")
+
+	arg_1_0.oneMaxHp = var_1_3 and tonumber(var_1_3[2]) or var_0_0.DefaultOneMaxHp
 end
 
 function var_0_0._updateUI(arg_2_0)
@@ -137,10 +146,6 @@ function var_0_0.onHpTweenDone(arg_9_0)
 end
 
 function var_0_0._onShieldChange(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_2 == 0 then
-		return
-	end
-
 	if not arg_10_0._bossEntityMO then
 		return
 	end
@@ -162,7 +167,7 @@ function var_0_0.frameSetShield(arg_11_0, arg_11_1)
 end
 
 function var_0_0.onShieldTweenDone(arg_12_0)
-	arg_12_0.tweenShieldHp = arg_12_0.targetHp
+	arg_12_0.tweenShieldHp = arg_12_0.targetShieldHp
 
 	arg_12_0:refreshHpAndShield()
 end
@@ -179,14 +184,12 @@ function var_0_0.refreshHpAndShield(arg_13_0)
 	arg_13_0:refreshReduceHP()
 end
 
-var_0_0.OneMaxHp = 10000
-
 function var_0_0._getFillAmount(arg_14_0)
 	if not arg_14_0._bossEntityMO then
 		return 0, 0
 	end
 
-	local var_14_0 = var_0_0.OneMaxHp
+	local var_14_0 = arg_14_0.oneMaxHp
 	local var_14_1 = arg_14_0.tweenHp % var_14_0
 
 	if var_14_1 == 0 and arg_14_0.tweenHp > 0 then
@@ -209,19 +212,28 @@ function var_0_0._getFillAmount(arg_14_0)
 	return var_14_2, var_14_3
 end
 
+var_0_0.HpCountColor = {
+	Shield = "#1A1A1A",
+	Normal = "#FFFFFF"
+}
+
 function var_0_0.refreshHpCount(arg_15_0)
 	local var_15_0 = arg_15_0.tweenHp
-	local var_15_1 = math.ceil(var_15_0 / var_0_0.OneMaxHp)
+	local var_15_1 = math.ceil(var_15_0 / arg_15_0.oneMaxHp)
 
 	arg_15_0.txtSurvivalHpCount.text = "×" .. tostring(var_15_1)
+
+	local var_15_2 = arg_15_0.tweenShieldHp > 0 and var_0_0.HpCountColor.Shield or var_0_0.HpCountColor.Normal
+
+	SLFramework.UGUI.GuiHelper.SetColor(arg_15_0.txtSurvivalHpCount, var_15_2)
 end
 
-var_0_0.Threshold = {
+local var_0_1 = {
 	0.3333333333333333,
 	0.6666666666666666,
 	1
 }
-var_0_0.Color = {
+local var_0_2 = {
 	{
 		"#B33E2D",
 		"#6F2216"
@@ -237,34 +249,42 @@ var_0_0.Color = {
 }
 
 function var_0_0.refreshHpColor(arg_16_0)
+	if not arg_16_0._bossEntityMO then
+		return
+	end
+
 	local var_16_0 = arg_16_0._bossEntityMO
 	local var_16_1 = var_16_0.attrMO and var_16_0.attrMO.hp > 0 and var_16_0.attrMO.hp or 1
 	local var_16_2 = arg_16_0.tweenHp
+	local var_16_3 = arg_16_0:getColor()
 
-	if var_16_2 <= arg_16_0.OneMaxHp then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_16_0.hp, var_0_0.Color[1][1])
+	if var_16_2 <= arg_16_0.oneMaxHp then
+		SLFramework.UGUI.GuiHelper.SetColor(arg_16_0.hp, var_16_3[1][1])
 		gohelper.setActive(arg_16_0.bgHpGo, false)
 
 		return
 	end
 
-	local var_16_3 = var_16_2 / var_16_1
-	local var_16_4 = 1
+	local var_16_4 = var_16_2 / var_16_1
+	local var_16_5 = 1
+	local var_16_6 = arg_16_0:getThreshold()
 
-	for iter_16_0, iter_16_1 in ipairs(var_0_0.Threshold) do
-		if var_16_3 <= iter_16_1 then
-			var_16_4 = iter_16_0
+	for iter_16_0, iter_16_1 in ipairs(var_16_6) do
+		if var_16_4 <= iter_16_1 then
+			var_16_5 = iter_16_0
 
 			break
 		end
 	end
 
+	local var_16_7 = arg_16_0:getColor()
+
 	gohelper.setActive(arg_16_0.bgHpGo, true)
 
-	local var_16_5 = var_0_0.Color[var_16_4]
+	local var_16_8 = var_16_7[var_16_5]
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_16_0.hp, var_16_5[1])
-	SLFramework.UGUI.GuiHelper.SetColor(arg_16_0.bgHp, var_16_5[2])
+	SLFramework.UGUI.GuiHelper.SetColor(arg_16_0.hp, var_16_8[1])
+	SLFramework.UGUI.GuiHelper.SetColor(arg_16_0.bgHp, var_16_8[2])
 end
 
 function var_0_0.clearHpTween(arg_17_0)
@@ -283,10 +303,27 @@ function var_0_0.clearShieldTween(arg_18_0)
 	end
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	arg_19_0:clearShieldTween()
-	arg_19_0:clearHpTween()
-	var_0_0.super.onDestroyView(arg_19_0)
+function var_0_0.getThreshold(arg_19_0)
+	return var_0_1
+end
+
+function var_0_0.getColor(arg_20_0)
+	return var_0_2
+end
+
+function var_0_0._checkBossAndUpdate(arg_21_0)
+	var_0_0.super._checkBossAndUpdate(arg_21_0)
+
+	if not arg_21_0._bossEntityMO then
+		arg_21_0:clearShieldTween()
+		arg_21_0:clearHpTween()
+	end
+end
+
+function var_0_0.onDestroyView(arg_22_0)
+	arg_22_0:clearShieldTween()
+	arg_22_0:clearHpTween()
+	var_0_0.super.onDestroyView(arg_22_0)
 end
 
 return var_0_0

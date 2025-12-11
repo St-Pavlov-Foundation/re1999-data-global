@@ -50,13 +50,14 @@ end
 function var_0_0.getElementCoList(arg_12_0, arg_12_1)
 	local var_12_0 = {}
 	local var_12_1 = DungeonMapModel.instance:getAllElements()
+	local var_12_2, var_12_3 = VersionActivityFixedDungeonController.instance:getEnterVerison()
 
 	for iter_12_0, iter_12_1 in pairs(var_12_1) do
-		local var_12_2 = DungeonConfig.instance:getChapterMapElement(iter_12_1)
-		local var_12_3 = var_12_2 and lua_chapter_map.configDict[var_12_2.mapId]
+		local var_12_4 = DungeonConfig.instance:getChapterMapElement(iter_12_1)
+		local var_12_5 = var_12_4 and lua_chapter_map.configDict[var_12_4.mapId]
 
-		if var_12_3 and var_12_3.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonChapterId.Story and arg_12_1 == var_12_2.mapId then
-			table.insert(var_12_0, var_12_2)
+		if var_12_5 and var_12_5.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum(var_12_2, var_12_3).DungeonChapterId.Story and arg_12_1 == var_12_4.mapId then
+			table.insert(var_12_0, var_12_4)
 		end
 	end
 
@@ -66,16 +67,17 @@ end
 function var_0_0.getElementCoListWithFinish(arg_13_0, arg_13_1)
 	local var_13_0 = {}
 	local var_13_1 = arg_13_0:getAllNormalElementCoList(arg_13_1)
+	local var_13_2, var_13_3 = VersionActivityFixedDungeonController.instance:getEnterVerison()
 
 	for iter_13_0, iter_13_1 in pairs(var_13_1) do
-		local var_13_2 = iter_13_1.id
-		local var_13_3 = lua_chapter_map.configDict[iter_13_1.mapId]
+		local var_13_4 = iter_13_1.id
+		local var_13_5 = lua_chapter_map.configDict[iter_13_1.mapId]
 
-		if var_13_3 and var_13_3.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonChapterId.Story then
-			local var_13_4 = DungeonMapModel.instance:elementIsFinished(var_13_2)
-			local var_13_5 = DungeonMapModel.instance:getElementById(var_13_2)
+		if var_13_5 and var_13_5.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum(var_13_2, var_13_3).DungeonChapterId.Story then
+			local var_13_6 = DungeonMapModel.instance:elementIsFinished(var_13_4)
+			local var_13_7 = DungeonMapModel.instance:getElementById(var_13_4)
 
-			if arg_13_1 == iter_13_1.mapId and var_13_4 and not var_13_5 then
+			if arg_13_1 == iter_13_1.mapId and var_13_6 and not var_13_7 then
 				table.insert(var_13_0, iter_13_1)
 			end
 		end
@@ -106,65 +108,71 @@ function var_0_0.getDungeonBaseMo(arg_16_0)
 end
 
 function var_0_0.getInitEpisodeId(arg_17_0)
-	local var_17_0 = VersionActivityFixedHelper.getVersionActivityDungeonEnum()
-	local var_17_1 = DungeonConfig.instance:getChapterEpisodeCOList(var_17_0.DungeonChapterId.Story)
-	local var_17_2 = 0
-	local var_17_3 = 0
+	local var_17_0, var_17_1 = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	local var_17_2 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(var_17_0, var_17_1)
+	local var_17_3 = DungeonConfig.instance:getChapterEpisodeCOList(var_17_2.DungeonChapterId.Story)
+	local var_17_4 = 0
+	local var_17_5 = 0
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
-		local var_17_4 = DungeonModel.instance:isUnlock(iter_17_1)
+	for iter_17_0, iter_17_1 in ipairs(var_17_3) do
+		local var_17_6 = DungeonModel.instance:isUnlock(iter_17_1)
 
 		if DungeonModel.instance.isBattleEpisode(iter_17_1) then
-			var_17_3 = var_17_3 > iter_17_1.id and var_17_3 or iter_17_1.id
+			var_17_5 = var_17_5 > iter_17_1.id and var_17_5 or iter_17_1.id
 		end
 
-		if var_17_4 and var_17_2 < iter_17_1.id then
-			var_17_2 = iter_17_1.id
+		if var_17_6 and var_17_4 < iter_17_1.id then
+			var_17_4 = iter_17_1.id
 		end
 	end
 
-	if DungeonModel.instance:chapterIsPass(var_17_0.DungeonChapterId.Story) then
-		var_17_2 = var_17_3
+	if DungeonModel.instance:chapterIsPass(var_17_2.DungeonChapterId.Story) then
+		var_17_4 = var_17_5
 	end
 
-	return var_17_2
+	return var_17_4
 end
 
 local var_0_1 = 1
 local var_0_2 = 0
 
 function var_0_0.isNeedPlayHardModeUnlockAnimation(arg_18_0, arg_18_1)
-	local var_18_0 = VersionActivityFixedHelper.getVersionActivityDungeonEnum().PlayerPrefsKey.HasPlayedUnlockHardModeBtnAnim
+	local var_18_0, var_18_1 = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	local var_18_2 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(var_18_0, var_18_1).PlayerPrefsKey.HasPlayedUnlockHardModeBtnAnim
 
-	if VersionActivityFixedHelper.getVersionActivityDungeonController().instance:getPlayerPrefs(var_18_0, var_0_2) ~= var_0_1 then
-		local var_18_1 = arg_18_1 or VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon
+	if VersionActivityFixedHelper.getVersionActivityDungeonController(var_18_0, var_18_1).instance:getPlayerPrefs(var_18_2, var_0_2) ~= var_0_1 then
+		local var_18_3 = arg_18_1 or VersionActivityFixedHelper.getVersionActivityEnum(var_18_0, var_18_1).ActivityId.Dungeon
 
-		return (VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(var_18_1))
+		return (VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(var_18_3))
 	end
 end
 
 function var_0_0.savePlayerPrefsPlayHardModeUnlockAnimation(arg_19_0)
-	local var_19_0 = VersionActivityFixedHelper.getVersionActivityDungeonEnum().PlayerPrefsKey.HasPlayedUnlockHardModeBtnAnim
+	local var_19_0, var_19_1 = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	local var_19_2 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(var_19_0, var_19_1).PlayerPrefsKey.HasPlayedUnlockHardModeBtnAnim
 
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:savePlayerPrefs(var_19_0, var_0_1)
+	VersionActivityFixedHelper.getVersionActivityDungeonController(var_19_0, var_19_1).instance:savePlayerPrefs(var_19_2, var_0_1)
 end
 
 function var_0_0.isTipHardModeUnlockOpen(arg_20_0, arg_20_1)
-	if arg_20_1 ~= VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon then
+	local var_20_0, var_20_1 = VersionActivityFixedDungeonController.instance:getEnterVerison()
+
+	if arg_20_1 ~= VersionActivityFixedHelper.getVersionActivityEnum(var_20_0, var_20_1).ActivityId.Dungeon then
 		return
 	end
 
-	local var_20_0 = VersionActivityFixedHelper.getVersionActivityDungeonEnum().PlayerPrefsKey.OpenHardModeUnlockTip
+	local var_20_2 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(var_20_0, var_20_1).PlayerPrefsKey.OpenHardModeUnlockTip
 
-	if VersionActivityFixedHelper.getVersionActivityDungeonController().instance:getPlayerPrefs(var_20_0, var_0_2) ~= var_0_1 then
+	if VersionActivityFixedHelper.getVersionActivityDungeonController(var_20_0, var_20_1).instance:getPlayerPrefs(var_20_2, var_0_2) ~= var_0_1 then
 		return (VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(arg_20_1))
 	end
 end
 
 function var_0_0.setTipHardModeUnlockOpen(arg_21_0)
-	local var_21_0 = VersionActivityFixedHelper.getVersionActivityDungeonEnum().PlayerPrefsKey.OpenHardModeUnlockTip
+	local var_21_0, var_21_1 = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	local var_21_2 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(var_21_0, var_21_1).PlayerPrefsKey.OpenHardModeUnlockTip
 
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:savePlayerPrefs(var_21_0, var_0_1)
+	VersionActivityFixedHelper.getVersionActivityDungeonController(var_21_0, var_21_1).instance:savePlayerPrefs(var_21_2, var_0_1)
 	arg_21_0:refreshVersionActivityEnterRedDot()
 end
 

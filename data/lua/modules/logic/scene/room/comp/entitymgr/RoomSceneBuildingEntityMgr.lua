@@ -26,6 +26,10 @@ function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
 end
 
 function var_0_0._spawnInitBuilding(arg_3_0)
+	if FishingModel.instance:isInFishing() then
+		return
+	end
+
 	local var_3_0 = arg_3_0:getUnit(SceneTag.RoomInitBuilding, 0)
 
 	if not var_3_0 then
@@ -46,6 +50,10 @@ function var_0_0._spawnInitBuilding(arg_3_0)
 end
 
 function var_0_0._spawnPartBuilding(arg_4_0)
+	if FishingModel.instance:isInFishing() then
+		return
+	end
+
 	arg_4_0._partBuildingGODict = arg_4_0._partBuildingGODict or {}
 
 	for iter_4_0, iter_4_1 in ipairs(lua_production_part.configList) do
@@ -133,66 +141,86 @@ function var_0_0.onSwitchMode(arg_7_0)
 			arg_7_0:removeUnit(var_7_2, var_7_3[iter_7_2])
 		end
 	end
+
+	if FishingModel.instance:isInFishing() then
+		arg_7_0:removeUnits(SceneTag.RoomInitBuilding)
+		arg_7_0:removeUnits(SceneTag.RoomPartBuilding)
+	end
 end
 
 function var_0_0.getBuildingOccupy(arg_8_0, arg_8_1)
 	return arg_8_0:getUnit(RoomBuildingOccupyEntity:getTag(), arg_8_1)
 end
 
-function var_0_0.moveTo(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = HexMath.hexToPosition(arg_9_2, RoomBlockEnum.BlockSize)
+function var_0_0.refreshAllBlockEntity(arg_9_0)
+	local var_9_0 = arg_9_0:getTagUnitDict(SceneTag.RoomBuilding)
 
-	arg_9_1:setLocalPos(var_9_0.x, 0, var_9_0.y)
-end
+	if var_9_0 then
+		for iter_9_0, iter_9_1 in pairs(var_9_0) do
+			local var_9_1 = iter_9_1:getMO()
+			local var_9_2 = HexMath.hexToPosition(var_9_1.hexPoint, RoomBlockEnum.BlockSize)
 
-function var_0_0.destroyBuilding(arg_10_0, arg_10_1)
-	arg_10_0:removeUnit(arg_10_1:getTag(), arg_10_1.id)
-end
-
-function var_0_0.getBuildingEntity(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = (not arg_11_2 or arg_11_2 == SceneTag.RoomBuilding) and arg_11_0:getTagUnitDict(SceneTag.RoomBuilding)
-
-	return var_11_0 and var_11_0[arg_11_1]
-end
-
-function var_0_0.changeBuildingEntityId(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 and arg_12_1 ~= arg_12_2 then
-		local var_12_0 = arg_12_0:getMapBuildingEntityDict()
-
-		if var_12_0 and var_12_0[arg_12_1] and not var_12_0[arg_12_2] then
-			local var_12_1 = var_12_0[arg_12_1]
-
-			var_12_0[arg_12_2] = var_12_1
-			var_12_0[arg_12_1] = nil
-
-			var_12_1:setEntityId(arg_12_2)
+			iter_9_1:setLocalPos(var_9_2.x, 0, var_9_2.y)
+			iter_9_1:refreshBuilding()
+			iter_9_1:refreshRotation()
 		end
 	end
 end
 
-function var_0_0.getMapBuildingEntityDict(arg_13_0)
-	return arg_13_0._tagUnitDict[SceneTag.RoomBuilding]
+function var_0_0.moveTo(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = HexMath.hexToPosition(arg_10_2, RoomBlockEnum.BlockSize)
+
+	arg_10_1:setLocalPos(var_10_0.x, 0, var_10_0.y)
 end
 
-function var_0_0.getInitBuildingGO(arg_14_0)
-	return arg_14_0._initBuildingGO
+function var_0_0.destroyBuilding(arg_11_0, arg_11_1)
+	arg_11_0:removeUnit(arg_11_1:getTag(), arg_11_1.id)
 end
 
-function var_0_0.getPartBuildingGO(arg_15_0, arg_15_1)
-	return arg_15_0._partBuildingGODict and arg_15_0._partBuildingGODict[arg_15_1]
+function var_0_0.getBuildingEntity(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = (not arg_12_2 or arg_12_2 == SceneTag.RoomBuilding) and arg_12_0:getTagUnitDict(SceneTag.RoomBuilding)
+
+	return var_12_0 and var_12_0[arg_12_1]
 end
 
-function var_0_0.getPartContainerGO(arg_16_0, arg_16_1)
-	if arg_16_0._scene then
-		return arg_16_0._scene.go:getPartGOById(arg_16_1)
+function var_0_0.changeBuildingEntityId(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_1 and arg_13_1 ~= arg_13_2 then
+		local var_13_0 = arg_13_0:getMapBuildingEntityDict()
+
+		if var_13_0 and var_13_0[arg_13_1] and not var_13_0[arg_13_2] then
+			local var_13_1 = var_13_0[arg_13_1]
+
+			var_13_0[arg_13_2] = var_13_1
+			var_13_0[arg_13_1] = nil
+
+			var_13_1:setEntityId(arg_13_2)
+		end
 	end
 end
 
-function var_0_0.onSceneClose(arg_17_0)
-	var_0_0.super.onSceneClose(arg_17_0)
+function var_0_0.getMapBuildingEntityDict(arg_14_0)
+	return arg_14_0._tagUnitDict[SceneTag.RoomBuilding]
+end
 
-	arg_17_0._initBuildingGO = nil
-	arg_17_0._partBuildingGODict = nil
+function var_0_0.getInitBuildingGO(arg_15_0)
+	return arg_15_0._initBuildingGO
+end
+
+function var_0_0.getPartBuildingGO(arg_16_0, arg_16_1)
+	return arg_16_0._partBuildingGODict and arg_16_0._partBuildingGODict[arg_16_1]
+end
+
+function var_0_0.getPartContainerGO(arg_17_0, arg_17_1)
+	if arg_17_0._scene then
+		return arg_17_0._scene.go:getPartGOById(arg_17_1)
+	end
+end
+
+function var_0_0.onSceneClose(arg_18_0)
+	var_0_0.super.onSceneClose(arg_18_0)
+
+	arg_18_0._initBuildingGO = nil
+	arg_18_0._partBuildingGODict = nil
 end
 
 return var_0_0

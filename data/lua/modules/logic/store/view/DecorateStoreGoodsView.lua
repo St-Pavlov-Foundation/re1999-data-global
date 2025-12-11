@@ -438,6 +438,7 @@ function var_0_0.onOpen(arg_17_0)
 	arg_17_0:_setCurrency()
 	arg_17_0:_refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_mail_open)
+	StoreController.instance:statOpenChargeGoods(arg_17_0._mo.belongStoreId, arg_17_0._mo.config)
 end
 
 function var_0_0._setCurrency(arg_18_0)

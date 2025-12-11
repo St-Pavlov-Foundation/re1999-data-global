@@ -338,139 +338,145 @@ function var_0_0.setQuantityColor(arg_39_0, arg_39_1)
 	end
 end
 
-function var_0_0.setItemColor(arg_40_0, arg_40_1)
+function var_0_0.setQuantityText(arg_40_0, arg_40_1)
 	if arg_40_0._itemIcon then
-		arg_40_0._itemIcon:setItemColor(arg_40_1)
-	end
-
-	if arg_40_0._equipIcon then
-		arg_40_0._equipIcon:setItemColor(arg_40_1)
+		arg_40_0._itemIcon:setQuantityText(arg_40_1)
 	end
 end
 
-function var_0_0.showStackableNum2(arg_41_0, arg_41_1, arg_41_2)
-	if arg_41_0._itemIcon and arg_41_0._itemIcon.showStackableNum2 then
-		arg_41_0._itemIcon:showStackableNum2(arg_41_1, arg_41_2)
+function var_0_0.setItemColor(arg_41_0, arg_41_1)
+	if arg_41_0._itemIcon then
+		arg_41_0._itemIcon:setItemColor(arg_41_1)
+	end
+
+	if arg_41_0._equipIcon then
+		arg_41_0._equipIcon:setItemColor(arg_41_1)
 	end
 end
 
-function var_0_0.setCountText(arg_42_0, arg_42_1)
-	if arg_42_0._itemIcon then
-		arg_42_0._itemIcon:setCountText(arg_42_1)
+function var_0_0.showStackableNum2(arg_42_0, arg_42_1, arg_42_2)
+	if arg_42_0._itemIcon and arg_42_0._itemIcon.showStackableNum2 then
+		arg_42_0._itemIcon:showStackableNum2(arg_42_1, arg_42_2)
 	end
 end
 
-function var_0_0.getItemIcon(arg_43_0)
-	return arg_43_0._isEquip and arg_43_0._equipIcon or arg_43_0._itemIcon
-end
-
-function var_0_0.isEquipIcon(arg_44_0)
-	return arg_44_0._isEquip
-end
-
-function var_0_0.setCountFontSize(arg_45_0, arg_45_1)
-	if arg_45_0._equipIcon and arg_45_0._isEquip then
-		arg_45_0._equipIcon:setCountFontSize(arg_45_1)
-	else
-		arg_45_0._itemIcon:setCountFontSize(arg_45_1)
+function var_0_0.setCountText(arg_43_0, arg_43_1)
+	if arg_43_0._itemIcon then
+		arg_43_0._itemIcon:setCountText(arg_43_1)
 	end
 end
 
-function var_0_0.setEquipLevelScaleAndColor(arg_46_0, arg_46_1, arg_46_2)
+function var_0_0.getItemIcon(arg_44_0)
+	return arg_44_0._isEquip and arg_44_0._equipIcon or arg_44_0._itemIcon
+end
+
+function var_0_0.isEquipIcon(arg_45_0)
+	return arg_45_0._isEquip
+end
+
+function var_0_0.setCountFontSize(arg_46_0, arg_46_1)
 	if arg_46_0._equipIcon and arg_46_0._isEquip then
-		arg_46_0._equipIcon:setLevelScaleAndColor(arg_46_1, arg_46_2)
+		arg_46_0._equipIcon:setCountFontSize(arg_46_1)
+	else
+		arg_46_0._itemIcon:setCountFontSize(arg_46_1)
 	end
 end
 
-function var_0_0.setCarrerIconAndRefineVisible(arg_47_0, arg_47_1)
+function var_0_0.setEquipLevelScaleAndColor(arg_47_0, arg_47_1, arg_47_2)
 	if arg_47_0._equipIcon and arg_47_0._isEquip then
-		arg_47_0._equipIcon:setCarrerIconAndRefineVisible(arg_47_1)
+		arg_47_0._equipIcon:setLevelScaleAndColor(arg_47_1, arg_47_2)
 	end
 end
 
-function var_0_0.playAnimation(arg_48_0)
-	if arg_48_0._itemIcon then
-		arg_48_0._itemIcon:playAnimation()
+function var_0_0.setCarrerIconAndRefineVisible(arg_48_0, arg_48_1)
+	if arg_48_0._equipIcon and arg_48_0._isEquip then
+		arg_48_0._equipIcon:setCarrerIconAndRefineVisible(arg_48_1)
 	end
 end
 
-function var_0_0.setAutoPlay(arg_49_0, arg_49_1)
+function var_0_0.playAnimation(arg_49_0)
 	if arg_49_0._itemIcon then
-		arg_49_0._itemIcon:setAutoPlay(arg_49_1)
+		arg_49_0._itemIcon:playAnimation()
 	end
 end
 
-function var_0_0.setConsume(arg_50_0, arg_50_1)
+function var_0_0.setAutoPlay(arg_50_0, arg_50_1)
 	if arg_50_0._itemIcon then
-		arg_50_0._itemIcon:setConsume(arg_50_1)
+		arg_50_0._itemIcon:setAutoPlay(arg_50_1)
 	end
 end
 
-function var_0_0.isShowEquipRefineLv(arg_51_0, arg_51_1)
-	if arg_51_0._isEquip then
-		arg_51_0._equipIcon:isShowRefineLv(arg_51_1)
+function var_0_0.setConsume(arg_51_0, arg_51_1)
+	if arg_51_0._itemIcon then
+		arg_51_0._itemIcon:setConsume(arg_51_1)
 	end
 end
 
-function var_0_0.SetCountLocalY(arg_52_0, arg_52_1)
-	if arg_52_0._itemIcon and arg_52_0._itemIcon._txtQuantity then
-		recthelper.setAnchorY(arg_52_0._itemIcon._txtQuantity.transform, arg_52_1)
-	end
-
-	if arg_52_0._equipIcon and arg_52_0._equipIcon._txtnum then
-		recthelper.setAnchorY(arg_52_0._equipIcon._txtnum.transform, arg_52_1 - 39.6)
+function var_0_0.isShowEquipRefineLv(arg_52_0, arg_52_1)
+	if arg_52_0._isEquip then
+		arg_52_0._equipIcon:isShowRefineLv(arg_52_1)
 	end
 end
 
-function var_0_0.SetCountBgHeight(arg_53_0, arg_53_1)
-	if arg_53_0._itemIcon and arg_53_0._itemIcon._countbg then
-		recthelper.setHeight(arg_53_0._itemIcon._countbg.transform, arg_53_1)
+function var_0_0.SetCountLocalY(arg_53_0, arg_53_1)
+	if arg_53_0._itemIcon and arg_53_0._itemIcon._txtQuantity then
+		recthelper.setAnchorY(arg_53_0._itemIcon._txtQuantity.transform, arg_53_1)
 	end
 
-	if arg_53_0._equipIcon and arg_53_0._equipIcon._countbg then
-		recthelper.setHeight(arg_53_0._equipIcon._countbg.transform, arg_53_1)
+	if arg_53_0._equipIcon and arg_53_0._equipIcon._txtnum then
+		recthelper.setAnchorY(arg_53_0._equipIcon._txtnum.transform, arg_53_1 - 39.6)
 	end
 end
 
-function var_0_0.SetCountBgScale(arg_54_0, arg_54_1, arg_54_2, arg_54_3)
+function var_0_0.SetCountBgHeight(arg_54_0, arg_54_1)
 	if arg_54_0._itemIcon and arg_54_0._itemIcon._countbg then
-		transformhelper.setLocalScale(arg_54_0._itemIcon._countbg.transform, arg_54_1, arg_54_2, arg_54_3)
+		recthelper.setHeight(arg_54_0._itemIcon._countbg.transform, arg_54_1)
 	end
 
 	if arg_54_0._equipIcon and arg_54_0._equipIcon._countbg then
-		transformhelper.setLocalScale(arg_54_0._equipIcon._countbg.transform, arg_54_1, arg_54_2, arg_54_3)
+		recthelper.setHeight(arg_54_0._equipIcon._countbg.transform, arg_54_1)
 	end
 end
 
-function var_0_0.setGetMask(arg_55_0, arg_55_1)
-	if arg_55_0._itemIcon then
-		arg_55_0._itemIcon:setGetMask(arg_55_1)
+function var_0_0.SetCountBgScale(arg_55_0, arg_55_1, arg_55_2, arg_55_3)
+	if arg_55_0._itemIcon and arg_55_0._itemIcon._countbg then
+		transformhelper.setLocalScale(arg_55_0._itemIcon._countbg.transform, arg_55_1, arg_55_2, arg_55_3)
 	end
 
-	if arg_55_0._equipIcon then
-		arg_55_0._equipIcon:setGetMask(arg_55_1)
+	if arg_55_0._equipIcon and arg_55_0._equipIcon._countbg then
+		transformhelper.setLocalScale(arg_55_0._equipIcon._countbg.transform, arg_55_1, arg_55_2, arg_55_3)
 	end
 end
 
-function var_0_0.setIconBg(arg_56_0, arg_56_1)
+function var_0_0.setGetMask(arg_56_0, arg_56_1)
 	if arg_56_0._itemIcon then
-		arg_56_0._itemIcon:setIconBg(arg_56_1)
+		arg_56_0._itemIcon:setGetMask(arg_56_1)
+	end
+
+	if arg_56_0._equipIcon then
+		arg_56_0._equipIcon:setGetMask(arg_56_1)
 	end
 end
 
-function var_0_0.setCanShowDeadLine(arg_57_0, arg_57_1)
+function var_0_0.setIconBg(arg_57_0, arg_57_1)
 	if arg_57_0._itemIcon then
-		arg_57_0._itemIcon:setCanShowDeadLine(arg_57_1)
+		arg_57_0._itemIcon:setIconBg(arg_57_1)
 	end
 end
 
-function var_0_0.isExpiredItem(arg_58_0)
+function var_0_0.setCanShowDeadLine(arg_58_0, arg_58_1)
 	if arg_58_0._itemIcon then
-		return arg_58_0._itemIcon:isExpiredItem()
+		arg_58_0._itemIcon:setCanShowDeadLine(arg_58_1)
+	end
+end
+
+function var_0_0.isExpiredItem(arg_59_0)
+	if arg_59_0._itemIcon then
+		return arg_59_0._itemIcon:isExpiredItem()
 	end
 
-	if arg_58_0._equipIcon then
-		return arg_58_0._equipIcon:isExpiredItem()
+	if arg_59_0._equipIcon then
+		return arg_59_0._equipIcon:isExpiredItem()
 	end
 end
 

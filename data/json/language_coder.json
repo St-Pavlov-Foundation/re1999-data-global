@@ -6213,7 +6213,7 @@
   },
   {
     "id": "survival_log_removecurrency_shelter",
-    "lang": "language_10082578"
+    "lang": "language_10093633"
   },
   {
     "id": "survival_log_addheart",
@@ -6273,15 +6273,15 @@
   },
   {
     "id": "survival_mainview_beginshrink",
-    "lang": "language_10082592"
+    "lang": "language_10093634"
   },
   {
     "id": "survival_mainview_endshrink",
-    "lang": "language_10082593"
+    "lang": "language_10093635"
   },
   {
     "id": "survival_mainview_lastshrink",
-    "lang": "language_10082594"
+    "lang": "language_10093636"
   },
   {
     "id": "survival_mainview_useitem_tips",
@@ -6297,7 +6297,7 @@
   },
   {
     "id": "survival_resultview_loss",
-    "lang": "language_10082597"
+    "lang": "language_10093637"
   },
   {
     "id": "survival_eventview_commititem",
@@ -6681,7 +6681,7 @@
   },
   {
     "id": "commandstation_paper_canget",
-    "lang": "language_10089044"
+    "lang": "language_10093638"
   },
   {
     "id": "commandstation_map_character",
@@ -7148,12 +7148,296 @@
     "lang": "language_10029702"
   },
   {
-    "id": "Season3_0FightRuleView_txtEffectDesc",
-    "lang": "language_10090095"
+    "id": "character_develop_goals_title_1",
+    "lang": "language_10093639"
+  },
+  {
+    "id": "character_develop_goals_title_2",
+    "lang": "language_10093640"
+  },
+  {
+    "id": "character_develop_goals_title_3",
+    "lang": "language_10093641"
+  },
+  {
+    "id": "survival_spequip_tag",
+    "lang": "language_10093642"
+  },
+  {
+    "id": "survival_mapblockname",
+    "lang": "language_10093643"
+  },
+  {
+    "id": "v3a1_necrologiststory_target_txt",
+    "lang": "language_10093644"
+  },
+  {
+    "id": "SurvivalRewardInheritView_1",
+    "lang": "language_10093645"
+  },
+  {
+    "id": "SurvivalRewardInheritView_2",
+    "lang": "language_10093646"
+  },
+  {
+    "id": "SurvivalBossInvasionView_1",
+    "lang": "language_10093647"
+  },
+  {
+    "id": "SurvivalBossInvasionView_2",
+    "lang": "language_10093648"
+  },
+  {
+    "id": "PowerMakerPatFaceView_desc_1",
+    "lang": "language_10093649"
+  },
+  {
+    "id": "PowerMakerPatFaceView_desc_2",
+    "lang": "language_10093650"
+  },
+  {
+    "id": "SurvivalSummaryActView_1",
+    "lang": "language_10093651"
+  },
+  {
+    "id": "191collectionchangeview_title1",
+    "lang": "language_10093652"
+  },
+  {
+    "id": "191collectionchangeview_title2",
+    "lang": "language_10093653"
+  },
+  {
+    "id": "191collectionchangeview_addtip1",
+    "lang": "language_10093654"
+  },
+  {
+    "id": "191collectionchangeview_addtip2",
+    "lang": "language_10093655"
+  },
+  {
+    "id": "191collectiontipview_addchange",
+    "lang": "language_10090427"
+  },
+  {
+    "id": "191collectiontipview_addupgrade",
+    "lang": "language_10090428"
+  },
+  {
+    "id": "main_switch_classify_title_3",
+    "lang": "language_10093656"
+  },
+  {
+    "id": "SurvivalShopView_1",
+    "lang": "language_10093657"
+  },
+  {
+    "id": "SurvivalShopView_2",
+    "lang": "language_10029602"
+  },
+  {
+    "id": "SurvivalShopView_3",
+    "lang": "language_10093658"
+  },
+  {
+    "id": "TowerDeep_normalNotFight",
+    "lang": "language_10093659"
+  },
+  {
+    "id": "TowerDeep_normalFight",
+    "lang": "language_10093659"
+  },
+  {
+    "id": "TowerDeep_endlessNotFight",
+    "lang": "language_10093660"
+  },
+  {
+    "id": "TowerDeep_endlessFight",
+    "lang": "language_10093660"
+  },
+  {
+    "id": "TowerDeep_normalNotFightEn",
+    "lang": "language_10093661"
+  },
+  {
+    "id": "TowerDeep_normalFightEn",
+    "lang": "language_10093661"
+  },
+  {
+    "id": "TowerDeep_endlessNotFightEn",
+    "lang": "language_10093662"
+  },
+  {
+    "id": "TowerDeep_endlessFightEn",
+    "lang": "language_10093662"
+  },
+  {
+    "id": "TowerDeep_curDeepHigh",
+    "lang": "language_10093663"
+  },
+  {
+    "id": "TowerDeep_teamSave_save",
+    "lang": "language_10093664"
+  },
+  {
+    "id": "TowerDeep_teamSave_load",
+    "lang": "language_10093665"
+  },
+  {
+    "id": "TowerDeep_teamSave_round",
+    "lang": "language_10093666"
+  },
+  {
+    "id": "RoomFishing_times",
+    "lang": "language_10093667"
+  },
+  {
+    "id": "RoomFishing_StoreItem",
+    "lang": "language_10093668"
+  },
+  {
+    "id": "RoomFishing_reward_tips",
+    "lang": "language_10093669"
+  },
+  {
+    "id": "RoomFishing_other_reward_tips",
+    "lang": "language_10093670"
+  },
+  {
+    "id": "RoomFishing_refresh_time",
+    "lang": "language_10093671"
+  },
+  {
+    "id": "RoomFishing_fishing_time",
+    "lang": "language_10093672"
+  },
+  {
+    "id": "Room_block_reform_select_all",
+    "lang": "language_10030317"
+  },
+  {
+    "id": "Room_block_reform_select_single",
+    "lang": "language_10093673"
+  },
+  {
+    "id": "Room_block_reform_select_multiple",
+    "lang": "language_10093674"
+  },
+  {
+    "id": "c_optionpackage_downloadsize_txt_opveract",
+    "lang": "language_10093675"
+  },
+  {
+    "id": "c_optionpackage_downloadsize_txt_opexplore",
+    "lang": "language_10093676"
+  },
+  {
+    "id": "c_optionpackage_download_btn_yes",
+    "lang": "language_10093677"
+  },
+  {
+    "id": "c_optionpackage_download_btn_no",
+    "lang": "language_10029731"
+  },
+  {
+    "id": "storeskinview_skintips",
+    "lang": "language_10093678"
+  },
+  {
+    "id": "storeskingoodsview2_storeskin_txt_tips",
+    "lang": "language_10093679"
   },
   {
     "id": "skinhandbook_lock_suit",
     "lang": "language_10090101"
+  },
+  {
+    "id": "towermain_deeplayer",
+    "lang": "language_10093680"
+  },
+  {
+    "id": "buy_limit_time",
+    "lang": "language_10082678"
+  },
+  {
+    "id": "receive_limit_time",
+    "lang": "language_10082679"
+  },
+  {
+    "id": "v3a1_bpoperactshowview_txt_MAX",
+    "lang": "language_10093681"
+  },
+  {
+    "id": "v3a1_bpoperactshowview_txt_finish",
+    "lang": "language_10093682"
+  },
+  {
+    "id": "Survival_HandBookTitle_StateAbnormal",
+    "lang": "language_10017339"
+  },
+  {
+    "id": "SurvivalBubble_1",
+    "lang": "language_10093683"
+  },
+  {
+    "id": "achievement_category_nameplate",
+    "lang": "language_10093684"
+  },
+  {
+    "id": "SurvivalSummaryActReputationItem_1",
+    "lang": "language_10093685"
+  },
+  {
+    "id": "SurvivalSummaryActReputationItem_2",
+    "lang": "language_10093686"
+  },
+  {
+    "id": "SurvivalSelectTalentTreeView_1",
+    "lang": "language_10093687"
+  },
+  {
+    "id": "SurvivalRewardSelectView_1",
+    "lang": "language_10093688"
+  },
+  {
+    "id": "SurvivalRewardSelectView_2",
+    "lang": "language_10093689"
+  },
+  {
+    "id": "SurvivalDecreeSelectView_1",
+    "lang": "language_10093690"
+  },
+  {
+    "id": "pata_500M_pogress_title",
+    "lang": "language_10092481"
+  },
+  {
+    "id": "pata_500M_pogress_desc",
+    "lang": "language_10093691"
+  },
+  {
+    "id": "SettingsGraphicsView_videoMode_0",
+    "lang": "language_10047747"
+  },
+  {
+    "id": "SettingsGraphicsView_videoMode_1",
+    "lang": "language_10097064"
+  },
+  {
+    "id": "SettingsGraphicsView_videoMode_2",
+    "lang": "language_10097065"
+  },
+  {
+    "id": "SettingsGraphicsView_videoMode_tips",
+    "lang": "language_10097066"
+  },
+  {
+    "id": "summonluckybag_remain_count",
+    "lang": "language_10097142"
+  },
+  {
+    "id": "Season3_0FightRuleView_txtEffectDesc",
+    "lang": "language_10090095"
   },
   {
     "id": "CommandStationEnterView_showMap_txtmapname",
@@ -7174,14 +7458,6 @@
   {
     "id": "SurvivalDecreeSelectItem_descItem_txtDesc",
     "lang": "language_10082677"
-  },
-  {
-    "id": "buy_limit_time",
-    "lang": "language_10082678"
-  },
-  {
-    "id": "receive_limit_time",
-    "lang": "language_10082679"
   },
   {
     "id": "CharacterBackpackEquipView_showEquipBackpackNum",

@@ -173,5 +173,26 @@
     "icon": "1028",
     "desc": "language_10077952",
     "rules": "1#8291204"
+  },
+  {
+    "id": 2028,
+    "name": "language_10093958",
+    "icon": "1029",
+    "desc": "language_10090998",
+    "rules": "1#104311449"
+  },
+  {
+    "id": 2029,
+    "name": "language_10093959",
+    "icon": "1030",
+    "desc": "language_10092950",
+    "rules": "1#104311450"
+  },
+  {
+    "id": 2030,
+    "name": "language_10093960",
+    "icon": "1031",
+    "desc": "language_10091000",
+    "rules": "1#104311451"
   }
 ]

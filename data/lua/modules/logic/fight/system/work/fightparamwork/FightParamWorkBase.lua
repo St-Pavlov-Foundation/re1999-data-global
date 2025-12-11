@@ -2,7 +2,7 @@
 
 local var_0_0 = class("FightParamWorkBase", FightWorkItem)
 
-function var_0_0.onAwake(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+function var_0_0.onLogicEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
 	arg_1_0.keyId = arg_1_1
 	arg_1_0.oldValue = arg_1_2
 	arg_1_0.currValue = arg_1_3

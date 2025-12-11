@@ -4,8 +4,9 @@ local var_0_0 = _M
 
 var_0_0.Type = {
 	GamePlay = 3,
-	Story = 1,
 	Activity = 4,
+	Story = 1,
+	NamePlate = 5,
 	Normal = 2
 }
 var_0_0.AchievementType = {
@@ -44,13 +45,15 @@ var_0_0.TypeName = {
 	[var_0_0.Type.Normal] = "achievement_category_normal",
 	[var_0_0.Type.GamePlay] = "achievement_category_play",
 	[var_0_0.Type.Story] = "achievement_category_story",
-	[var_0_0.Type.Activity] = "achievement_category_action"
+	[var_0_0.Type.Activity] = "achievement_category_action",
+	[var_0_0.Type.NamePlate] = "achievement_category_nameplate"
 }
 var_0_0.TypeNameEn = {
 	[var_0_0.Type.Normal] = "LOG",
 	[var_0_0.Type.GamePlay] = "CHALLENGE",
 	[var_0_0.Type.Story] = "REVIEW",
-	[var_0_0.Type.Activity] = "BROCHURE"
+	[var_0_0.Type.Activity] = "BROCHURE",
+	[var_0_0.Type.NamePlate] = "Plates"
 }
 var_0_0.GroupParamType = {
 	Player = 1,
@@ -72,6 +75,9 @@ var_0_0.SpGroupNameLangId = {
 	[var_0_0.SpGroupType.BossRush] = "achievementmainview_spgroup_bossrush",
 	[var_0_0.SpGroupType.Tower] = "achievementmainview_spgroup_tower"
 }
+var_0_0.SourceType = {
+	Tower = 1
+}
 var_0_0.MainTileGroupItemHeight = 460
 var_0_0.MainTileLineItemHeight = 300
 var_0_0.SpGroupTitleBarHeight = 74
@@ -79,6 +85,7 @@ var_0_0.MainSpGroupLineCount = 5
 var_0_0.MainListLineCount = 5
 var_0_0.ShowMaxSingleCount = 6
 var_0_0.ShowMaxGroupCount = 1
+var_0_0.ShowMaxNamePlateCount = 1
 var_0_0.ShowMaxToastCount = 10
 var_0_0.MainIconPath = "ui/viewres/achievement/achievementmainicon.prefab"
 var_0_0.AchievementToastPath = "ui/viewres/achievement/achievementtoastitem.prefab"

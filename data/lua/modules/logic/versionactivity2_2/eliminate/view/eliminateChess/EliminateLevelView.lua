@@ -58,7 +58,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goEnemySkill = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill")
 	arg_1_0._goEnemySkillBG = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#go_EnemySkillBG")
 	arg_1_0._goEnemySkillBGDisable = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#go_EnemySkillBGDisable")
-	arg_1_0._imageEnemySkill = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/image/#image_EnemySkill")
+	arg_1_0._imageEnemySkill = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/image/#image_EnemySkill")
 	arg_1_0._imageenemySkillFG = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#image_enemySkillFG")
 	arg_1_0._imageEnemyskillfgeff2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#image_enemySkillFG/#image_Enemyskillfg_eff2")
 	arg_1_0._goEnemySkillFull = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#go_EnemySkillFull")
@@ -483,7 +483,7 @@ function var_0_0.updateEnemyForecastChess(arg_27_0)
 		local var_27_5 = var_27_2 and var_27_2.resPic or ""
 
 		if not string.nilorempty(var_27_5) then
-			UISpriteSetMgr.instance:setV2a2ChessSprite(arg_27_0._imageEnemySkill, var_27_5, false)
+			SurvivalUnitIconHelper.instance:setNpcIcon(arg_27_0._imageEnemySkill, var_27_5)
 			gohelper.setActive(arg_27_0._goEnemySkill, true)
 		end
 

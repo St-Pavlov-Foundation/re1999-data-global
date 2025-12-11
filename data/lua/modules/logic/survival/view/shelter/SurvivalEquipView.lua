@@ -6,7 +6,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnAttr = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Overview")
 	arg_1_0._animscore = gohelper.findChildAnim(arg_1_0.viewGO, "Left/Assess")
 	arg_1_0._txtTotalScore = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/Assess/image_NumBG/#txt_Num")
-	arg_1_0._imageScore = gohelper.findChildImage(arg_1_0.viewGO, "Left/Assess/txt_Assess/image_AssessIon")
+	arg_1_0._imageScore = gohelper.findChildImage(arg_1_0.viewGO, "Left/Assess/image_NumBG/#txt_Num/txt_Assess/image_AssessIon")
 	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_collection")
 	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_collection/Viewport/Content")
 	arg_1_0._goinfoview = gohelper.findChild(arg_1_0.viewGO, "#go_infoview")
@@ -14,6 +14,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goplan = gohelper.findChild(arg_1_0.viewGO, "Left/plans")
 	arg_1_0._goplanitem = gohelper.findChild(arg_1_0.viewGO, "Left/plans/item")
 	arg_1_0._goequipitem = gohelper.findChild(arg_1_0.viewGO, "Left/equips/item")
+	arg_1_0._gospequipitem = gohelper.findChild(arg_1_0.viewGO, "Left/equips/#go_sppos/item_sppos")
 	arg_1_0._animskill = gohelper.findChildAnim(arg_1_0.viewGO, "Left/equips/Middle")
 	arg_1_0._btnEquipSkill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/equips/Middle/#btn_click")
 	arg_1_0._gohas = gohelper.findChild(arg_1_0.viewGO, "Left/equips/Middle/#go_Has")
@@ -85,6 +86,11 @@ function var_0_0.onOpen(arg_4_0)
 	gohelper.setActive(arg_4_0._item, false)
 
 	local var_4_2 = arg_4_0:getResInst(var_4_1, arg_4_0.viewGO)
+	local var_4_3 = gohelper.findChildAnim(var_4_2, "")
+
+	if var_4_3 then
+		var_4_3.enabled = false
+	end
 
 	arg_4_0._dragItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_2, SurvivalBagItem)
 
@@ -93,49 +99,48 @@ function var_0_0.onOpen(arg_4_0)
 
 	arg_4_0._equipItems = {}
 
-	local var_4_3 = #arg_4_0._equipBox.slots
-	local var_4_4 = 1
-
-	if var_4_3 == 7 then
-		var_4_4 = 2
-	elseif var_4_3 == 6 then
-		var_4_4 = 3
-	end
-
-	local var_4_5
-
-	for iter_4_0 = 1, 3 do
-		local var_4_6 = gohelper.findChild(arg_4_0.viewGO, "Left/equips/#go_Pos" .. iter_4_0)
-
-		gohelper.setActive(var_4_6, var_4_4 == iter_4_0)
-
-		if var_4_4 == iter_4_0 then
-			var_4_5 = var_4_6
-		end
-	end
+	local var_4_4 = #arg_4_0._equipBox.slots
+	local var_4_5 = gohelper.findChild(arg_4_0.viewGO, "Left/equips/#go_Pos1")
 
 	arg_4_0._gopos = arg_4_0:getUserDataTb_()
 
-	for iter_4_1 = 1, var_4_3 do
-		local var_4_7 = gohelper.findChild(var_4_5, "pos" .. iter_4_1)
-		local var_4_8 = gohelper.clone(arg_4_0._goequipitem, var_4_7)
-		local var_4_9 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_8, SurvivalEquipItem)
+	for iter_4_0 = 1, var_4_4 do
+		local var_4_6 = gohelper.findChild(var_4_5, "pos" .. iter_4_0)
+		local var_4_7 = gohelper.clone(arg_4_0._goequipitem, var_4_6)
+		local var_4_8 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_7, SurvivalEquipItem)
 
-		var_4_9:initIndex(iter_4_1)
-		var_4_9:setIsSelect(iter_4_1 == 1)
-		var_4_9:setParentView(arg_4_0)
-		var_4_9:setItemRes(arg_4_0._item)
-		var_4_9:setClickCallback(arg_4_0._onClickEquipItem, arg_4_0)
-		var_4_9:setParentRoot(arg_4_0.viewGO.transform)
+		var_4_8:initIndex(iter_4_0)
+		var_4_8:setParentView(arg_4_0)
+		var_4_8:setItemRes(arg_4_0._item)
+		var_4_8:setClickCallback(arg_4_0._onClickEquipItem, arg_4_0)
+		var_4_8:setParentRoot(arg_4_0.viewGO.transform)
 
-		arg_4_0._equipItems[iter_4_1] = var_4_9
-		arg_4_0._gopos[iter_4_1] = var_4_7
+		arg_4_0._equipItems[iter_4_0] = var_4_8
+		arg_4_0._gopos[iter_4_0] = var_4_6
+	end
+
+	arg_4_0._spEquipItems = {}
+	arg_4_0._spGoPos = {}
+
+	for iter_4_1 = 1, 3 do
+		local var_4_9 = gohelper.findChild(arg_4_0.viewGO, "Left/equips/#go_sppos/#go_pos" .. iter_4_1)
+		local var_4_10 = gohelper.clone(arg_4_0._gospequipitem, var_4_9)
+		local var_4_11 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_10, SurvivalSpEquipItem)
+
+		var_4_11:initIndex(iter_4_1)
+		var_4_11:setParentView(arg_4_0)
+		var_4_11:setClickCallback(arg_4_0._onClickEquipItem2, arg_4_0)
+		var_4_11:setParentRoot(arg_4_0.viewGO.transform)
+
+		arg_4_0._spEquipItems[iter_4_1] = var_4_11
+		arg_4_0._spGoPos[iter_4_1] = var_4_9
 	end
 
 	gohelper.setActive(arg_4_0._goequipitem, false)
+	gohelper.setActive(arg_4_0._gospequipitem, false)
 
-	local var_4_10 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._gosort, SurvivalSortAndFilterPart)
-	local var_4_11 = {
+	local var_4_12 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._gosort, SurvivalSortAndFilterPart)
+	local var_4_13 = {
 		{
 			desc = luaLang("survival_sort_time"),
 			type = SurvivalEnum.ItemSortType.Time
@@ -153,36 +158,33 @@ function var_0_0.onOpen(arg_4_0)
 			type = SurvivalEnum.ItemSortType.Type
 		}
 	}
-	local var_4_12 = {}
+	local var_4_14 = {}
 
 	for iter_4_2, iter_4_3 in ipairs(lua_survival_equip_found.configList) do
-		table.insert(var_4_12, {
+		table.insert(var_4_14, {
 			desc = iter_4_3.name,
 			type = iter_4_3.id
 		})
 	end
 
-	arg_4_0._curSort = var_4_11[1]
+	arg_4_0._curSort = var_4_13[1]
 	arg_4_0._isDec = true
 	arg_4_0._filterList = {}
 
-	var_4_10:setOptions(var_4_11, var_4_12, arg_4_0._curSort, arg_4_0._isDec)
-	var_4_10:setOptionChangeCallback(arg_4_0._onSortChange, arg_4_0)
+	var_4_12:setOptions(var_4_13, var_4_14, arg_4_0._curSort, arg_4_0._isDec)
+	var_4_12:setOptionChangeCallback(arg_4_0._onSortChange, arg_4_0)
 
-	local var_4_13 = arg_4_0.viewContainer._viewSetting.otherRes.infoView
-	local var_4_14 = arg_4_0:getResInst(var_4_13, arg_4_0._goinfoview)
+	local var_4_15 = arg_4_0.viewContainer._viewSetting.otherRes.infoView
+	local var_4_16 = arg_4_0:getResInst(var_4_15, arg_4_0._goinfoview)
 
-	arg_4_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_14, SurvivalBagInfoPart)
-	arg_4_0._curSelectSlotId = 1
+	arg_4_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_16, SurvivalBagInfoPart)
 
-	arg_4_0._infoPanel:setCurEquipSlot(arg_4_0._curSelectSlotId)
-
-	local var_4_15 = {
+	local var_4_17 = {
 		[SurvivalEnum.ItemSource.Map] = SurvivalEnum.ItemSource.EquipBag,
 		[SurvivalEnum.ItemSource.Shelter] = SurvivalEnum.ItemSource.EquipBag
 	}
 
-	arg_4_0._infoPanel:setChangeSource(var_4_15)
+	arg_4_0._infoPanel:setChangeSource(var_4_17)
 	arg_4_0._infoPanel:setCloseShow(true, arg_4_0._onTipsClose, arg_4_0)
 
 	arg_4_0._simpleList = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._goscroll, SurvivalSimpleListPart)
@@ -193,18 +195,26 @@ function var_0_0.onOpen(arg_4_0)
 
 	arg_4_0._equipTagRed = arg_4_0:getUserDataTb_()
 
-	gohelper.CreateObjList(arg_4_0, arg_4_0._createOneKeyEquipItem, var_4_12, nil, arg_4_0._goonekeyEquipTipsItem, nil, nil, nil, 1)
+	gohelper.CreateObjList(arg_4_0, arg_4_0._createOneKeyEquipItem, var_4_14, nil, arg_4_0._goonekeyEquipTipsItem, nil, nil, nil, 1)
 	arg_4_0:updateRed()
 end
 
-function var_0_0.getDragIndex(arg_5_0, arg_5_1)
+function var_0_0.getDragIndex(arg_5_0, arg_5_1, arg_5_2)
 	if gohelper.isMouseOverGo(arg_5_0._goscroll) then
 		return -1
 	end
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._gopos) do
-		if gohelper.isMouseOverGo(iter_5_1, arg_5_1) then
-			return iter_5_0, arg_5_0._equipItems[iter_5_0]
+	if arg_5_2 then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0._spGoPos) do
+			if gohelper.isMouseOverGo(iter_5_1, arg_5_1) then
+				return iter_5_0, arg_5_0._spEquipItems[iter_5_0]
+			end
+		end
+	else
+		for iter_5_2, iter_5_3 in ipairs(arg_5_0._gopos) do
+			if gohelper.isMouseOverGo(iter_5_3, arg_5_1) then
+				return iter_5_2, arg_5_0._equipItems[iter_5_2]
+			end
 		end
 	end
 end
@@ -312,6 +322,14 @@ function var_0_0.onChangePlan(arg_16_0, arg_16_1)
 		end
 
 		arg_16_0._equipItems[iter_16_2]:initData(arg_16_0._equipBox.slots[iter_16_2], arg_16_1)
+	end
+
+	for iter_16_3 = 1, #arg_16_0._spEquipItems do
+		if arg_16_0._equipBox.jewelrySlots[iter_16_3] then
+			var_16_0 = var_16_0 + arg_16_0._equipBox.jewelrySlots[iter_16_3]:getScore()
+		end
+
+		arg_16_0._spEquipItems[iter_16_3]:initData(arg_16_0._equipBox.jewelrySlots[iter_16_3], arg_16_1)
 	end
 
 	if arg_16_0._tweenId then
@@ -466,15 +484,6 @@ function var_0_0._delayShowLevelAnim(arg_21_0)
 end
 
 function var_0_0._onClickEquipItem(arg_22_0, arg_22_1)
-	if arg_22_1 ~= arg_22_0._curSelectSlotId then
-		arg_22_0._equipItems[arg_22_0._curSelectSlotId]:setIsSelect(false)
-
-		arg_22_0._curSelectSlotId = arg_22_1
-
-		arg_22_0._equipItems[arg_22_0._curSelectSlotId]:setIsSelect(true)
-		arg_22_0._infoPanel:setCurEquipSlot(arg_22_1)
-	end
-
 	local var_22_0 = arg_22_0._equipItems[arg_22_1].mo.item
 
 	if not var_22_0:isEmpty() then
@@ -483,121 +492,130 @@ function var_0_0._onClickEquipItem(arg_22_0, arg_22_1)
 	end
 end
 
-function var_0_0._onSortChange(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	arg_23_0._curSort = arg_23_1
-	arg_23_0._isDec = arg_23_2
-	arg_23_0._filterList = arg_23_3
+function var_0_0._onClickEquipItem2(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0._spEquipItems[arg_23_1].mo.item
 
-	arg_23_0:_refreshBag()
+	if not var_23_0:isEmpty() then
+		gohelper.setActive(arg_23_0._btncloseinfoview, true)
+		arg_23_0._infoPanel:updateMo(var_23_0)
+	end
 end
 
-function var_0_0.isInSurvival(arg_24_0)
+function var_0_0._onSortChange(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	arg_24_0._curSort = arg_24_1
+	arg_24_0._isDec = arg_24_2
+	arg_24_0._filterList = arg_24_3
+
+	arg_24_0:_refreshBag()
+end
+
+function var_0_0.isInSurvival(arg_25_0)
 	return SurvivalShelterModel.instance:getWeekInfo().inSurvival
 end
 
-function var_0_0.getBag(arg_25_0)
-	local var_25_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_25_1 = var_25_0.bag
-	local var_25_2
+function var_0_0.getBag(arg_26_0)
+	local var_26_0 = SurvivalShelterModel.instance:getWeekInfo()
+	local var_26_1 = var_26_0:getBag(SurvivalEnum.ItemSource.Shelter)
+	local var_26_2
 
-	if var_25_0.inSurvival then
-		var_25_2 = SurvivalMapModel.instance:getSceneMo().bag
+	if var_26_0.inSurvival then
+		var_26_2 = var_26_0:getBag(SurvivalEnum.ItemSource.Map)
 	end
 
-	return var_25_1, var_25_2
+	return var_26_1, var_26_2
 end
 
-function var_0_0._refreshBag(arg_26_0)
-	local var_26_0, var_26_1 = arg_26_0:getBag()
-	local var_26_2 = {}
-	local var_26_3
+function var_0_0._refreshBag(arg_27_0)
+	local var_27_0, var_27_1 = arg_27_0:getBag()
+	local var_27_2 = {}
+	local var_27_3
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_0.items) do
-		if iter_26_1.co.type == SurvivalEnum.ItemType.Equip and SurvivalBagSortHelper.filterEquipMo(arg_26_0._filterList, iter_26_1) then
-			table.insert(var_26_2, iter_26_1)
+	for iter_27_0, iter_27_1 in ipairs(var_27_0.items) do
+		if iter_27_1.co.type == SurvivalEnum.ItemType.Equip and SurvivalBagSortHelper.filterEquipMo(arg_27_0._filterList, iter_27_1) then
+			table.insert(var_27_2, iter_27_1)
 
-			if arg_26_0._preSelectUid == iter_26_1.uid then
-				var_26_3 = iter_26_1.uid
+			if arg_27_0._preSelectUid == iter_27_1.uid then
+				var_27_3 = iter_27_1.uid
 			end
 		end
 	end
 
-	if var_26_1 then
-		for iter_26_2, iter_26_3 in ipairs(var_26_1.items) do
-			if iter_26_3.co.type == SurvivalEnum.ItemType.Equip and SurvivalBagSortHelper.filterEquipMo(arg_26_0._filterList, iter_26_3) then
-				table.insert(var_26_2, iter_26_3)
+	if var_27_1 then
+		for iter_27_2, iter_27_3 in ipairs(var_27_1.items) do
+			if iter_27_3.co.type == SurvivalEnum.ItemType.Equip and SurvivalBagSortHelper.filterEquipMo(arg_27_0._filterList, iter_27_3) then
+				table.insert(var_27_2, iter_27_3)
 
-				if arg_26_0._preSelectUid == iter_26_3.uid then
-					var_26_3 = iter_26_3.uid
+				if arg_27_0._preSelectUid == iter_27_3.uid then
+					var_27_3 = iter_27_3.uid
 				end
 			end
 		end
 	end
 
-	SurvivalBagSortHelper.sortItems(var_26_2, arg_26_0._curSort.type, arg_26_0._isDec)
-	SurvivalHelper.instance:makeArrFull(var_26_2, SurvivalBagItemMo.Empty, 5, 4)
+	SurvivalBagSortHelper.sortItems(var_27_2, arg_27_0._curSort.type, arg_27_0._isDec)
+	SurvivalHelper.instance:makeArrFull(var_27_2, SurvivalBagItemMo.Empty, 5, 4)
 
-	arg_26_0._preSelectUid = var_26_3
+	arg_27_0._preSelectUid = var_27_3
 
-	arg_26_0._simpleList:setList(var_26_2)
-	arg_26_0:_refreshInfo()
+	arg_27_0._simpleList:setList(var_27_2)
+	arg_27_0:_refreshInfo()
 end
 
-function var_0_0._createItem(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	arg_27_1:updateMo(arg_27_2)
-	arg_27_1:setClickCallback(arg_27_0._onItemClick, arg_27_0)
+function var_0_0._createItem(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	arg_28_1:updateMo(arg_28_2)
+	arg_28_1:setClickCallback(arg_28_0._onItemClick, arg_28_0)
 
-	if arg_27_2.uid == arg_27_0._preSelectUid and arg_27_0._preSelectUid then
-		arg_27_1:setIsSelect(true)
+	if arg_28_2.uid == arg_28_0._preSelectUid and arg_28_0._preSelectUid then
+		arg_28_1:setIsSelect(true)
 	end
 end
 
-function var_0_0._onItemClick(arg_28_0, arg_28_1)
-	if arg_28_1._mo:isEmpty() then
+function var_0_0._onItemClick(arg_29_0, arg_29_1)
+	if arg_29_1._mo:isEmpty() then
 		return
 	end
 
-	arg_28_0._preSelectUid = arg_28_1._mo.uid
-
-	for iter_28_0 in pairs(arg_28_0._simpleList:getAllComps()) do
-		iter_28_0:setIsSelect(arg_28_0._preSelectUid and iter_28_0._mo.uid == arg_28_0._preSelectUid)
-	end
-
-	arg_28_0:_refreshInfo()
-end
-
-function var_0_0._onTipsClose(arg_29_0)
-	arg_29_0._preSelectUid = nil
+	arg_29_0._preSelectUid = arg_29_1._mo.uid
 
 	for iter_29_0 in pairs(arg_29_0._simpleList:getAllComps()) do
-		iter_29_0:setIsSelect(false)
+		iter_29_0:setIsSelect(arg_29_0._preSelectUid and iter_29_0._mo.uid == arg_29_0._preSelectUid)
+	end
+
+	arg_29_0:_refreshInfo()
+end
+
+function var_0_0._onTipsClose(arg_30_0)
+	arg_30_0._preSelectUid = nil
+
+	for iter_30_0 in pairs(arg_30_0._simpleList:getAllComps()) do
+		iter_30_0:setIsSelect(false)
 	end
 end
 
-function var_0_0._refreshInfo(arg_30_0)
-	local var_30_0, var_30_1 = arg_30_0:getBag()
-	local var_30_2 = arg_30_0._preSelectUid and (var_30_0.itemsByUid[arg_30_0._preSelectUid] or var_30_1 and var_30_1.itemsByUid[arg_30_0._preSelectUid])
+function var_0_0._refreshInfo(arg_31_0)
+	local var_31_0, var_31_1 = arg_31_0:getBag()
+	local var_31_2 = arg_31_0._preSelectUid and (var_31_0.itemsByUid[arg_31_0._preSelectUid] or var_31_1 and var_31_1.itemsByUid[arg_31_0._preSelectUid])
 
-	arg_30_0._infoPanel:updateMo(var_30_2)
+	arg_31_0._infoPanel:updateMo(var_31_2)
 end
 
-function var_0_0.onTouchScreen(arg_31_0)
-	if arg_31_0._goonekeyEquipTips.activeSelf then
-		if gohelper.isMouseOverGo(arg_31_0._goonekeyEquipTips) or gohelper.isMouseOverGo(arg_31_0._btn_onekeyEquip) then
+function var_0_0.onTouchScreen(arg_32_0)
+	if arg_32_0._goonekeyEquipTips.activeSelf then
+		if gohelper.isMouseOverGo(arg_32_0._goonekeyEquipTips) or gohelper.isMouseOverGo(arg_32_0._btn_onekeyEquip) then
 			return
 		end
 
-		gohelper.setActive(arg_31_0._goonekeyEquipTips, false)
+		gohelper.setActive(arg_32_0._goonekeyEquipTips, false)
 	end
 end
 
-function var_0_0._beginDrag(arg_32_0, arg_32_1, arg_32_2)
-	ZProj.UGUIHelper.PassEvent(arg_32_0._goscroll, arg_32_2, 4)
+function var_0_0._beginDrag(arg_33_0, arg_33_1, arg_33_2)
+	ZProj.UGUIHelper.PassEvent(arg_33_0._goscroll, arg_33_2, 4)
 
-	for iter_32_0 in pairs(arg_32_0._simpleList:getAllComps()) do
-		if gohelper.isMouseOverGo(iter_32_0.go) then
-			if not iter_32_0._mo:isEmpty() then
-				arg_32_0._curPressItem = iter_32_0
+	for iter_33_0 in pairs(arg_33_0._simpleList:getAllComps()) do
+		if gohelper.isMouseOverGo(iter_33_0.go) then
+			if not iter_33_0._mo:isEmpty() then
+				arg_33_0._curPressItem = iter_33_0
 			end
 
 			break
@@ -605,106 +623,112 @@ function var_0_0._beginDrag(arg_32_0, arg_32_1, arg_32_2)
 	end
 end
 
-function var_0_0._onDrag(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0
+function var_0_0._onDrag(arg_34_0, arg_34_1, arg_34_2)
+	local var_34_0
 
-	if not arg_33_0._isDragOut then
-		ZProj.UGUIHelper.PassEvent(arg_33_0._goscroll, arg_33_2, 5)
+	if not arg_34_0._isDragOut then
+		ZProj.UGUIHelper.PassEvent(arg_34_0._goscroll, arg_34_2, 5)
 
-		if arg_33_0._curPressItem and arg_33_2.position.x - arg_33_2.pressPosition.x < -100 then
-			arg_33_0._isDragOut = true
+		if arg_34_0._curPressItem and arg_34_2.position.x - arg_34_2.pressPosition.x < -100 then
+			arg_34_0._isDragOut = true
 
-			arg_33_0._dragItem:updateMo(arg_33_0._curPressItem._mo)
-			gohelper.setActive(arg_33_0._dragItem.go, true)
+			arg_34_0._dragItem:updateMo(arg_34_0._curPressItem._mo)
+			gohelper.setActive(arg_34_0._dragItem.go, true)
 
-			var_33_0 = true
+			var_34_0 = true
 
-			ZProj.UGUIHelper.PassEvent(arg_33_0._goscroll, arg_33_2, 6)
+			ZProj.UGUIHelper.PassEvent(arg_34_0._goscroll, arg_34_2, 6)
 		end
 	end
 
-	if arg_33_0._isDragOut then
-		local var_33_1 = recthelper.screenPosToAnchorPos(arg_33_2.position, arg_33_0.viewGO.transform)
-		local var_33_2 = arg_33_0._dragItem.go.transform
-		local var_33_3, var_33_4 = recthelper.getAnchor(var_33_2)
+	if arg_34_0._isDragOut then
+		local var_34_1 = recthelper.screenPosToAnchorPos(arg_34_2.position, arg_34_0.viewGO.transform)
+		local var_34_2 = arg_34_0._dragItem.go.transform
+		local var_34_3, var_34_4 = recthelper.getAnchor(var_34_2)
 
-		if not var_33_0 and (math.abs(var_33_3 - var_33_1.x) > 10 or math.abs(var_33_4 - var_33_1.y) > 10) then
-			ZProj.TweenHelper.DOAnchorPos(var_33_2, var_33_1.x, var_33_1.y, 0.2)
+		if not var_34_0 and (math.abs(var_34_3 - var_34_1.x) > 10 or math.abs(var_34_4 - var_34_1.y) > 10) then
+			ZProj.TweenHelper.DOAnchorPos(var_34_2, var_34_1.x, var_34_1.y, 0.2)
 		else
-			recthelper.setAnchor(var_33_2, var_33_1.x, var_33_1.y)
+			recthelper.setAnchor(var_34_2, var_34_1.x, var_34_1.y)
 		end
 
-		local var_33_5, var_33_6 = arg_33_0:getDragIndex(arg_33_2.position)
+		local var_34_5 = arg_34_0._curPressItem._mo.equipCo.equipType == 1
+		local var_34_6, var_34_7 = arg_34_0:getDragIndex(arg_34_2.position, var_34_5)
 
-		if var_33_6 ~= arg_33_0._curOverEquip then
-			if arg_33_0._curOverEquip then
-				arg_33_0._curOverEquip:setLightActive(false)
+		if var_34_7 ~= arg_34_0._curOverEquip then
+			if arg_34_0._curOverEquip then
+				arg_34_0._curOverEquip:setLightActive(false)
 			end
 
-			arg_33_0._curOverEquip = var_33_6
+			arg_34_0._curOverEquip = var_34_7
 
-			if arg_33_0._curOverEquip then
-				arg_33_0._curOverEquip:setLightActive(true)
+			if arg_34_0._curOverEquip then
+				arg_34_0._curOverEquip:setLightActive(true)
 			end
 		end
 	end
 end
 
-function var_0_0._endDrag(arg_34_0, arg_34_1, arg_34_2)
-	if arg_34_0._curOverEquip then
-		arg_34_0._curOverEquip:setLightActive(false)
+function var_0_0._endDrag(arg_35_0, arg_35_1, arg_35_2)
+	if arg_35_0._curOverEquip then
+		arg_35_0._curOverEquip:setLightActive(false)
 
-		arg_34_0._curOverEquip = nil
+		arg_35_0._curOverEquip = nil
 	end
 
-	if arg_34_0._isDragOut then
-		arg_34_0._isDragOut = nil
+	if arg_35_0._isDragOut then
+		arg_35_0._isDragOut = nil
 
-		gohelper.setActive(arg_34_0._dragItem.go, false)
+		gohelper.setActive(arg_35_0._dragItem.go, false)
 
-		local var_34_0 = arg_34_0._curPressItem._mo
+		local var_35_0 = arg_35_0._curPressItem._mo
+		local var_35_1 = var_35_0.equipCo.equipType == 1
 
-		arg_34_0._curPressItem = nil
+		arg_35_0._curPressItem = nil
 
-		local var_34_1 = arg_34_0:getDragIndex(arg_34_2.position)
+		local var_35_2 = arg_35_0:getDragIndex(arg_35_2.position, var_35_1)
 
-		if var_34_1 and var_34_1 > 0 then
-			local var_34_2 = arg_34_0._equipBox.slots
+		if var_35_2 and var_35_2 > 0 then
+			local var_35_3 = var_35_1 and arg_35_0._equipBox.jewelrySlots or arg_35_0._equipBox.slots
 
-			if not var_34_2[var_34_1] then
+			if not var_35_3[var_35_2] then
 				return
 			end
 
-			if not var_34_2[var_34_1].unlock then
+			if not var_35_3[var_35_2].unlock then
 				GameFacade.showToast(ToastEnum.SurvivalEquipLock)
 
 				return
 			end
 
-			if var_34_0.equipLevel > var_34_2[var_34_1].level then
+			if var_35_0.equipLevel > var_35_3[var_35_2].level then
 				GameFacade.showToast(ToastEnum.SurvivalEquipLevelLimit)
 
 				return false
 			end
 
-			SurvivalWeekRpc.instance:sendSurvivalEquipWear(var_34_1, var_34_0.uid)
+			if var_35_1 then
+				SurvivalWeekRpc.instance:sendSurvivalJewelryEquipWear(var_35_2, var_35_0.uid)
+			else
+				SurvivalWeekRpc.instance:sendSurvivalEquipWear(var_35_2, var_35_0.uid)
+			end
 		end
 	else
-		arg_34_0._curPressItem = nil
+		arg_35_0._curPressItem = nil
 
-		ZProj.UGUIHelper.PassEvent(arg_34_0._goscroll, arg_34_2, 6)
+		ZProj.UGUIHelper.PassEvent(arg_35_0._goscroll, arg_35_2, 6)
 	end
 end
 
-function var_0_0.onClose(arg_35_0)
-	if arg_35_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_35_0._tweenId)
+function var_0_0.onClose(arg_36_0)
+	if arg_36_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_36_0._tweenId)
 
-		arg_35_0._tweenId = nil
+		arg_36_0._tweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_35_0.onChangePlanBySwitch, arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0._delayShowTagCo, arg_35_0)
+	TaskDispatcher.cancelTask(arg_36_0.onChangePlanBySwitch, arg_36_0)
+	TaskDispatcher.cancelTask(arg_36_0._delayShowTagCo, arg_36_0)
 end
 
 return var_0_0

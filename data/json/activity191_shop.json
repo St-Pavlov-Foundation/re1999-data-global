@@ -108,5 +108,115 @@
     "position": 3,
     "name": "language_10072679",
     "desc": "language_10072678"
+  },
+  {
+    "activityId": 13105,
+    "id": 1,
+    "type": "mixtureShop",
+    "level": 1,
+    "stage": 101,
+    "position": 6,
+    "name": "language_10072673",
+    "desc": "language_10072674"
+  },
+  {
+    "activityId": 13105,
+    "id": 2,
+    "type": "roleShop",
+    "level": 1,
+    "stage": 101,
+    "position": 6,
+    "name": "language_10072673",
+    "desc": "language_10072675"
+  },
+  {
+    "activityId": 13105,
+    "id": 3,
+    "type": "collectionShop",
+    "level": 1,
+    "stage": 101,
+    "position": 6,
+    "name": "language_10072673",
+    "desc": "language_10072676"
+  },
+  {
+    "activityId": 13105,
+    "id": 4,
+    "type": "mixtureShop",
+    "level": 2,
+    "stage": 102,
+    "position": 6,
+    "name": "language_10072677",
+    "desc": "language_10072674"
+  },
+  {
+    "activityId": 13105,
+    "id": 5,
+    "type": "roleShop",
+    "level": 2,
+    "stage": 102,
+    "position": 6,
+    "name": "language_10072677",
+    "desc": "language_10072675"
+  },
+  {
+    "activityId": 13105,
+    "id": 6,
+    "type": "collectionShop",
+    "level": 2,
+    "stage": 102,
+    "position": 6,
+    "name": "language_10072677",
+    "desc": "language_10072676"
+  },
+  {
+    "activityId": 13105,
+    "id": 7,
+    "type": "tagShop",
+    "level": 2,
+    "stage": 102,
+    "position": 3,
+    "name": "language_10072677",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13105,
+    "id": 8,
+    "type": "mixtureShop",
+    "level": 3,
+    "stage": 103,
+    "position": 6,
+    "name": "language_10072679",
+    "desc": "language_10072674"
+  },
+  {
+    "activityId": 13105,
+    "id": 9,
+    "type": "roleShop",
+    "level": 3,
+    "stage": 103,
+    "position": 6,
+    "name": "language_10072679",
+    "desc": "language_10072675"
+  },
+  {
+    "activityId": 13105,
+    "id": 10,
+    "type": "collectionShop",
+    "level": 3,
+    "stage": 103,
+    "position": 6,
+    "name": "language_10072679",
+    "desc": "language_10072676"
+  },
+  {
+    "activityId": 13105,
+    "id": 11,
+    "type": "tagShop",
+    "level": 3,
+    "stage": 103,
+    "position": 3,
+    "name": "language_10072679",
+    "desc": "language_10072678"
   }
 ]

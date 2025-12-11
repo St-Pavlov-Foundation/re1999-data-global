@@ -200,6 +200,22 @@
     "view_CharacterDataView": 1
   },
   {
+    "id": 312202,
+    "view_CharacterDataView": 1
+  },
+  {
+    "id": 312301,
+    "view_CharacterDataView": 1
+  },
+  {
+    "id": 312302,
+    "view_CharacterDataView": 1
+  },
+  {
+    "id": 312402,
+    "view_CharacterDataView": 1
+  },
+  {
     "id": 306504,
     "view_CharacterDataView": 1
   },
@@ -220,19 +236,27 @@
     "view_CharacterDataView": 1
   },
   {
-    "id": 312202,
+    "id": 300731,
     "view_CharacterDataView": 1
   },
   {
-    "id": 312301,
+    "id": 307704,
     "view_CharacterDataView": 1
   },
   {
-    "id": 312302,
+    "id": 313201,
     "view_CharacterDataView": 1
   },
   {
-    "id": 312402,
+    "id": 311303,
+    "view_CharacterDataView": 1
+  },
+  {
+    "id": 312502,
+    "view_CharacterDataView": 1
+  },
+  {
+    "id": 313202,
     "view_CharacterDataView": 1
   }
 ]

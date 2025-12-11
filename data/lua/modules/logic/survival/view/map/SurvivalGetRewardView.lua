@@ -60,4 +60,8 @@ function var_0_0._createRewardItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
 	MonoHelper.addNoUpdateLuaComOnceToGo(var_7_2, SurvivalBagInfoPart):updateMo(arg_7_2)
 end
 
+function var_0_0.onClickModalMask(arg_8_0)
+	arg_8_0:closeThis()
+end
+
 return var_0_0

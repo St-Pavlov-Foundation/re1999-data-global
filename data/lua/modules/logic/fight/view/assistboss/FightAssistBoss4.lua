@@ -215,7 +215,7 @@ function var_0_0.onSkillPlayFinish(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_1
 end
 
 function var_0_0.stageChange(arg_20_0)
-	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Normal then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
 		arg_20_0:refreshSpecialPoint()
 	end
 end

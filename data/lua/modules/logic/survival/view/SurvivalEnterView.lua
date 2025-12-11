@@ -44,13 +44,13 @@ function var_0_0._refreshRed(arg_5_0, arg_5_1)
 end
 
 function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.config = ActivityConfig.instance:getActivityCo(VersionActivity2_8Enum.ActivityId.Survival)
+	arg_6_0.config = ActivityConfig.instance:getActivityCo(VersionActivity3_1Enum.ActivityId.Survival)
 	arg_6_0._txtDescr.text = arg_6_0.config.actDesc
 end
 
 function var_0_0._onEnterClick(arg_7_0)
 	SurvivalStatHelper.instance:statBtnClick("_onEnterClick", "SurvivalEnterView")
-	ViewMgr.instance:openView(ViewName.SurvivalView)
+	SurvivalController.instance:openSurvivalView(nil)
 end
 
 function var_0_0._btnAchievementOnClick(arg_8_0)
@@ -61,7 +61,7 @@ function var_0_0._btnAchievementOnClick(arg_8_0)
 end
 
 function var_0_0.everySecondCall(arg_9_0)
-	arg_9_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity2_8Enum.ActivityId.Survival)
+	arg_9_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity3_1Enum.ActivityId.Survival)
 end
 
 function var_0_0._onRewardClick(arg_10_0)

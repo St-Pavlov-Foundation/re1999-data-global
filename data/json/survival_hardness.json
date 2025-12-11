@@ -12,7 +12,8 @@
     "titile": "视线遮蔽Ⅰ",
     "desc": "language_10086001",
     "scoreRate": 150,
-    "lockDesc": "language_10087174"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 21012,
@@ -27,7 +28,8 @@
     "titile": "视线遮蔽Ⅱ",
     "desc": "language_10086002",
     "scoreRate": 250,
-    "lockDesc": "language_10087175"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087198"
   },
   {
     "id": 21013,
@@ -42,6 +44,7 @@
     "titile": "视线遮蔽Ⅲ",
     "desc": "language_10086003",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -57,6 +60,7 @@
     "titile": "视线遮蔽Ⅳ",
     "desc": "language_10086004",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -72,6 +76,7 @@
     "titile": "视线遮蔽Ⅴ",
     "desc": "language_10086005",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -81,12 +86,13 @@
     "type": 1,
     "subtype": 2,
     "level": 1,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "21021",
     "titile": "污染崩溃Ⅰ",
     "desc": "language_10084706",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -96,13 +102,14 @@
     "type": 1,
     "subtype": 2,
     "level": 3,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "21023",
     "titile": "污染崩溃Ⅱ",
     "desc": "language_10084707",
     "scoreRate": 150,
-    "lockDesc": "language_10087176"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 21025,
@@ -111,13 +118,14 @@
     "type": 1,
     "subtype": 2,
     "level": 5,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "21025",
     "titile": "污染崩溃Ⅲ",
     "desc": "language_10084708",
     "scoreRate": 250,
-    "lockDesc": "language_10087177"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 21031,
@@ -132,6 +140,7 @@
     "titile": "垃圾成山Ⅰ",
     "desc": "language_10086006",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -147,6 +156,7 @@
     "titile": "垃圾成山Ⅱ",
     "desc": "language_10086007",
     "scoreRate": 100,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -162,7 +172,8 @@
     "titile": "垃圾成山Ⅲ",
     "desc": "language_10086008",
     "scoreRate": 150,
-    "lockDesc": "language_10087178"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087174"
   },
   {
     "id": 21034,
@@ -177,7 +188,8 @@
     "titile": "垃圾成山Ⅳ",
     "desc": "language_10086009",
     "scoreRate": 200,
-    "lockDesc": "language_10087179"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087206"
   },
   {
     "id": 21035,
@@ -192,7 +204,8 @@
     "titile": "垃圾成山Ⅴ",
     "desc": "language_10086010",
     "scoreRate": 250,
-    "lockDesc": "language_10087180"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087185"
   },
   {
     "id": 21041,
@@ -200,13 +213,14 @@
     "seasons": "",
     "type": 1,
     "subtype": 4,
-    "level": 1,
-    "optional": 1,
+    "level": 0,
+    "optional": 0,
     "isShow": 0,
     "icon": "21041",
     "titile": "腐坏Ⅰ",
     "desc": "language_10084716",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -215,13 +229,14 @@
     "seasons": "",
     "type": 1,
     "subtype": 4,
-    "level": 2,
-    "optional": 1,
+    "level": 0,
+    "optional": 0,
     "isShow": 0,
     "icon": "21042",
     "titile": "腐坏Ⅱ",
     "desc": "language_10084717",
     "scoreRate": 100,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -230,14 +245,15 @@
     "seasons": "",
     "type": 1,
     "subtype": 4,
-    "level": 3,
-    "optional": 1,
+    "level": 0,
+    "optional": 0,
     "isShow": 0,
     "icon": "21043",
     "titile": "腐坏Ⅲ",
     "desc": "language_10084718",
     "scoreRate": 150,
-    "lockDesc": "language_10087181"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 21044,
@@ -245,14 +261,15 @@
     "seasons": "",
     "type": 1,
     "subtype": 4,
-    "level": 4,
-    "optional": 1,
+    "level": 0,
+    "optional": 0,
     "isShow": 0,
     "icon": "21044",
     "titile": "腐坏Ⅳ",
     "desc": "language_10084719",
     "scoreRate": 200,
-    "lockDesc": "language_10087182"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 21045,
@@ -260,14 +277,15 @@
     "seasons": "",
     "type": 1,
     "subtype": 4,
-    "level": 5,
-    "optional": 1,
+    "level": 0,
+    "optional": 0,
     "isShow": 0,
     "icon": "21045",
     "titile": "腐坏Ⅴ",
     "desc": "language_10084720",
     "scoreRate": 250,
-    "lockDesc": "language_10087183"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 21051,
@@ -282,6 +300,7 @@
     "titile": "雨浸Ⅰ",
     "desc": "language_10086011",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -297,7 +316,8 @@
     "titile": "雨浸Ⅱ",
     "desc": "language_10086012",
     "scoreRate": 150,
-    "lockDesc": "language_10087184"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 21055,
@@ -312,7 +332,8 @@
     "titile": "雨浸Ⅲ",
     "desc": "language_10086013",
     "scoreRate": 250,
-    "lockDesc": "language_10087185"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 21065,
@@ -325,9 +346,10 @@
     "isShow": 0,
     "icon": "21065",
     "titile": "败者无获",
-    "desc": "language_10086014",
+    "desc": "language_10096557",
     "scoreRate": 250,
-    "lockDesc": "language_10087186"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087205"
   },
   {
     "id": 21071,
@@ -342,6 +364,7 @@
     "titile": "搜刮迟滞Ⅰ",
     "desc": "language_10086015",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -357,7 +380,8 @@
     "titile": "搜刮迟滞Ⅱ",
     "desc": "language_10086016",
     "scoreRate": 150,
-    "lockDesc": "language_10087187"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 21075,
@@ -372,7 +396,8 @@
     "titile": "搜刮迟滞Ⅲ",
     "desc": "language_10086017",
     "scoreRate": 250,
-    "lockDesc": "language_10087188"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087201"
   },
   {
     "id": 21081,
@@ -381,12 +406,13 @@
     "type": 1,
     "subtype": 8,
     "level": 1,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "21081",
     "titile": "携量削减Ⅰ",
     "desc": "language_10086018",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -396,13 +422,14 @@
     "type": 1,
     "subtype": 8,
     "level": 3,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "21083",
     "titile": "携量削减Ⅱ",
     "desc": "language_10086019",
     "scoreRate": 150,
-    "lockDesc": "language_10087189"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 21085,
@@ -411,13 +438,14 @@
     "type": 1,
     "subtype": 8,
     "level": 5,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "21085",
     "titile": "携量削减Ⅲ",
     "desc": "language_10086020",
     "scoreRate": 250,
-    "lockDesc": "language_10087190"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 22011,
@@ -426,12 +454,13 @@
     "type": 2,
     "subtype": 1,
     "level": 1,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22011",
     "titile": "慢性侵蚀Ⅰ",
     "desc": "language_10086021",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -441,13 +470,14 @@
     "type": 2,
     "subtype": 1,
     "level": 3,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22013",
     "titile": "慢性侵蚀Ⅱ",
     "desc": "language_10086022",
     "scoreRate": 150,
-    "lockDesc": "language_10087191"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 22015,
@@ -456,13 +486,14 @@
     "type": 2,
     "subtype": 1,
     "level": 5,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22015",
     "titile": "慢性侵蚀Ⅲ",
     "desc": "language_10086023",
     "scoreRate": 250,
-    "lockDesc": "language_10087192"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 22021,
@@ -471,12 +502,13 @@
     "type": 2,
     "subtype": 2,
     "level": 1,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22021",
     "titile": "狂暴肆虐Ⅰ",
     "desc": "language_10086024",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -486,13 +518,14 @@
     "type": 2,
     "subtype": 2,
     "level": 3,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22023",
     "titile": "狂暴肆虐Ⅱ",
     "desc": "language_10086025",
     "scoreRate": 150,
-    "lockDesc": "language_10087193"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 22025,
@@ -501,13 +534,14 @@
     "type": 2,
     "subtype": 2,
     "level": 5,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22025",
     "titile": "狂暴肆虐Ⅲ",
     "desc": "language_10086026",
     "scoreRate": 250,
-    "lockDesc": "language_10087194"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 22031,
@@ -516,12 +550,13 @@
     "type": 2,
     "subtype": 3,
     "level": 1,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22031",
     "titile": "死神窥视Ⅰ",
     "desc": "language_10086027",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -531,12 +566,13 @@
     "type": 2,
     "subtype": 3,
     "level": 3,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22033",
     "titile": "死神窥视Ⅱ",
     "desc": "language_10086028",
     "scoreRate": 150,
+    "extendScoreFix": 0,
     "lockDesc": "language_10087195"
   },
   {
@@ -546,12 +582,13 @@
     "type": 2,
     "subtype": 3,
     "level": 5,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22035",
     "titile": "死神窥视Ⅲ",
     "desc": "language_10086029",
     "scoreRate": 250,
+    "extendScoreFix": 0,
     "lockDesc": "language_10087196"
   },
   {
@@ -565,8 +602,9 @@
     "isShow": 0,
     "icon": "22041",
     "titile": "终末之刻",
-    "desc": "language_10086030",
+    "desc": "language_10096558",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -582,6 +620,7 @@
     "titile": "终末之刻Ⅰ",
     "desc": "language_10086031",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -597,6 +636,7 @@
     "titile": "终末之刻Ⅱ",
     "desc": "language_10086032",
     "scoreRate": 100,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -612,7 +652,8 @@
     "titile": "终末之刻Ⅲ",
     "desc": "language_10086033",
     "scoreRate": 150,
-    "lockDesc": "language_10087197"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 22044,
@@ -627,7 +668,8 @@
     "titile": "终末之刻Ⅳ",
     "desc": "language_10086034",
     "scoreRate": 200,
-    "lockDesc": "language_10087198"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087193"
   },
   {
     "id": 22045,
@@ -642,7 +684,8 @@
     "titile": "终末之刻Ⅴ",
     "desc": "language_10086035",
     "scoreRate": 250,
-    "lockDesc": "language_10087199"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087208"
   },
   {
     "id": 22051,
@@ -657,6 +700,7 @@
     "titile": "秽蚀翻涌Ⅰ",
     "desc": "language_10086036",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -672,6 +716,7 @@
     "titile": "秽蚀翻涌Ⅱ",
     "desc": "language_10086037",
     "scoreRate": 100,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -687,7 +732,8 @@
     "titile": "秽蚀翻涌Ⅲ",
     "desc": "language_10086038",
     "scoreRate": 150,
-    "lockDesc": "language_10087200"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 22054,
@@ -702,7 +748,8 @@
     "titile": "秽蚀翻涌Ⅳ",
     "desc": "language_10086039",
     "scoreRate": 200,
-    "lockDesc": "language_10087201"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087195"
   },
   {
     "id": 22055,
@@ -717,7 +764,8 @@
     "titile": "秽蚀翻涌Ⅴ",
     "desc": "language_10086040",
     "scoreRate": 250,
-    "lockDesc": "language_10087202"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087210"
   },
   {
     "id": 22061,
@@ -726,12 +774,13 @@
     "type": 2,
     "subtype": 6,
     "level": 1,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22061",
     "titile": "恶敌横行Ⅰ",
     "desc": "language_10086041",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -741,12 +790,13 @@
     "type": 2,
     "subtype": 6,
     "level": 3,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22063",
     "titile": "恶敌横行Ⅱ",
     "desc": "language_10086042",
     "scoreRate": 150,
+    "extendScoreFix": 0,
     "lockDesc": "language_10087203"
   },
   {
@@ -756,12 +806,13 @@
     "type": 2,
     "subtype": 6,
     "level": 5,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22065",
     "titile": "恶敌横行Ⅲ",
     "desc": "language_10086043",
     "scoreRate": 250,
+    "extendScoreFix": 0,
     "lockDesc": "language_10087204"
   },
   {
@@ -777,7 +828,8 @@
     "titile": "敌速激增Ⅰ",
     "desc": "language_10084764",
     "scoreRate": 150,
-    "lockDesc": "language_10087205"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 22073,
@@ -792,7 +844,8 @@
     "titile": "敌速激增Ⅱ",
     "desc": "language_10084765",
     "scoreRate": 250,
-    "lockDesc": "language_10087204"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087212"
   },
   {
     "id": 22083,
@@ -801,13 +854,14 @@
     "type": 2,
     "subtype": 8,
     "level": 3,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22083",
     "titile": "抗性瓦解Ⅰ",
     "desc": "language_10084767",
     "scoreRate": 150,
-    "lockDesc": "language_10087206"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 22085,
@@ -816,13 +870,14 @@
     "type": 2,
     "subtype": 8,
     "level": 5,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "22085",
     "titile": "抗性瓦解Ⅱ",
     "desc": "language_10084768",
     "scoreRate": 250,
-    "lockDesc": "language_10087204"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 23012,
@@ -831,12 +886,13 @@
     "type": 3,
     "subtype": 1,
     "level": 2,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "23012",
     "titile": "饥荒迫近Ⅰ",
     "desc": "language_10084770",
     "scoreRate": 100,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -846,13 +902,14 @@
     "type": 3,
     "subtype": 1,
     "level": 3,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "23013",
     "titile": "饥荒迫近Ⅱ",
     "desc": "language_10084771",
     "scoreRate": 150,
-    "lockDesc": "language_10087207"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 23014,
@@ -861,13 +918,14 @@
     "type": 3,
     "subtype": 1,
     "level": 4,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "23014",
     "titile": "饥荒迫近Ⅲ",
     "desc": "language_10084772",
     "scoreRate": 200,
-    "lockDesc": "language_10087208"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 23015,
@@ -876,13 +934,14 @@
     "type": 3,
     "subtype": 1,
     "level": 5,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "23015",
     "titile": "饥荒迫近Ⅳ",
     "desc": "language_10084773",
     "scoreRate": 250,
-    "lockDesc": "language_10087204"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 23022,
@@ -890,13 +949,14 @@
     "seasons": "",
     "type": 3,
     "subtype": 2,
-    "level": 2,
-    "optional": 1,
+    "level": 0,
+    "optional": 0,
     "isShow": 0,
     "icon": "23022",
     "titile": "筑费攀升Ⅰ",
     "desc": "language_10086044",
     "scoreRate": 100,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -905,14 +965,15 @@
     "seasons": "",
     "type": 3,
     "subtype": 2,
-    "level": 3,
-    "optional": 1,
+    "level": 0,
+    "optional": 0,
     "isShow": 0,
     "icon": "23023",
     "titile": "筑费攀升Ⅱ",
     "desc": "language_10086045",
     "scoreRate": 150,
-    "lockDesc": "language_10087209"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 23024,
@@ -920,14 +981,15 @@
     "seasons": "",
     "type": 3,
     "subtype": 2,
-    "level": 4,
-    "optional": 1,
+    "level": 0,
+    "optional": 0,
     "isShow": 0,
     "icon": "23024",
     "titile": "筑费攀升Ⅲ",
     "desc": "language_10086046",
     "scoreRate": 200,
-    "lockDesc": "language_10087210"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 23025,
@@ -935,14 +997,15 @@
     "seasons": "",
     "type": 3,
     "subtype": 2,
-    "level": 5,
-    "optional": 1,
+    "level": 0,
+    "optional": 0,
     "isShow": 0,
     "icon": "23025",
     "titile": "筑费攀升Ⅳ",
     "desc": "language_10086047",
     "scoreRate": 250,
-    "lockDesc": "language_10087204"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 23031,
@@ -955,8 +1018,9 @@
     "isShow": 0,
     "icon": "23031",
     "titile": "物价飞涨Ⅰ",
-    "desc": "language_10086048",
+    "desc": "language_10095076",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -970,8 +1034,9 @@
     "isShow": 0,
     "icon": "23032",
     "titile": "物价飞涨Ⅱ",
-    "desc": "language_10086049",
+    "desc": "language_10086048",
     "scoreRate": 100,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -985,9 +1050,10 @@
     "isShow": 0,
     "icon": "23033",
     "titile": "物价飞涨Ⅲ",
-    "desc": "language_10086050",
+    "desc": "language_10095077",
     "scoreRate": 150,
-    "lockDesc": "language_10087211"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 23034,
@@ -1000,9 +1066,10 @@
     "isShow": 0,
     "icon": "23034",
     "titile": "物价飞涨Ⅳ",
-    "desc": "language_10086051",
+    "desc": "language_10086049",
     "scoreRate": 200,
-    "lockDesc": "language_10087212"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087197"
   },
   {
     "id": 23035,
@@ -1015,9 +1082,10 @@
     "isShow": 0,
     "icon": "23035",
     "titile": "物价飞涨Ⅴ",
-    "desc": "language_10086052",
+    "desc": "language_10095078",
     "scoreRate": 250,
-    "lockDesc": "language_10087204"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087214"
   },
   {
     "id": 23041,
@@ -1026,12 +1094,13 @@
     "type": 3,
     "subtype": 4,
     "level": 1,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "23041",
     "titile": "贱价抛售Ⅰ",
     "desc": "language_10086053",
     "scoreRate": 50,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1041,12 +1110,13 @@
     "type": 3,
     "subtype": 4,
     "level": 2,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "23042",
     "titile": "贱价抛售Ⅱ",
     "desc": "language_10086054",
     "scoreRate": 100,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1056,13 +1126,14 @@
     "type": 3,
     "subtype": 4,
     "level": 3,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "23043",
     "titile": "贱价抛售Ⅲ",
     "desc": "language_10086055",
     "scoreRate": 150,
-    "lockDesc": "language_10087213"
+    "extendScoreFix": 0,
+    "lockDesc": ""
   },
   {
     "id": 23044,
@@ -1071,13 +1142,14 @@
     "type": 3,
     "subtype": 4,
     "level": 4,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "23044",
     "titile": "贱价抛售Ⅳ",
     "desc": "language_10086056",
     "scoreRate": 200,
-    "lockDesc": "language_10087214"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087200"
   },
   {
     "id": 23045,
@@ -1086,13 +1158,14 @@
     "type": 3,
     "subtype": 4,
     "level": 5,
-    "optional": 1,
+    "optional": 0,
     "isShow": 0,
     "icon": "23045",
     "titile": "贱价抛售Ⅴ",
     "desc": "language_10086057",
     "scoreRate": 250,
-    "lockDesc": "language_10087204"
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087175"
   },
   {
     "id": 24010,
@@ -1107,6 +1180,7 @@
     "titile": "",
     "desc": "language_10086058",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1122,6 +1196,7 @@
     "titile": "",
     "desc": "language_10086059",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1137,6 +1212,7 @@
     "titile": "",
     "desc": "language_10084794",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1150,8 +1226,9 @@
     "isShow": 1,
     "icon": "",
     "titile": "",
-    "desc": "language_10086060",
+    "desc": "language_10096559",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1165,8 +1242,9 @@
     "isShow": 1,
     "icon": "",
     "titile": "",
-    "desc": "language_10084805",
+    "desc": "language_10095087",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1180,8 +1258,9 @@
     "isShow": 1,
     "icon": "",
     "titile": "",
-    "desc": "language_10086061",
+    "desc": "language_10096560",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1197,6 +1276,7 @@
     "titile": "",
     "desc": "language_10086062",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1212,6 +1292,7 @@
     "titile": "",
     "desc": "language_10086063",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1227,6 +1308,7 @@
     "titile": "",
     "desc": "language_10086064",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1242,6 +1324,7 @@
     "titile": "",
     "desc": "language_10086065",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1257,6 +1340,7 @@
     "titile": "终末之刻Ⅰ",
     "desc": "language_10084745",
     "scoreRate": 100,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1272,6 +1356,7 @@
     "titile": "搜刮迟滞Ⅰ",
     "desc": "language_10086015",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1287,6 +1372,7 @@
     "titile": "狂暴肆虐Ⅰ",
     "desc": "language_10086024",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1302,6 +1388,7 @@
     "titile": "终末之刻Ⅱ",
     "desc": "language_10084746",
     "scoreRate": 250,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1311,12 +1398,13 @@
     "type": 1,
     "subtype": 71,
     "level": 3,
-    "optional": 3,
+    "optional": 0,
     "isShow": 0,
     "icon": "21073",
     "titile": "搜刮迟滞Ⅱ",
     "desc": "language_10086016",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1326,12 +1414,13 @@
     "type": 2,
     "subtype": 21,
     "level": 3,
-    "optional": 3,
+    "optional": 0,
     "isShow": 0,
     "icon": "22023",
     "titile": "狂暴肆虐Ⅱ",
     "desc": "language_10086025",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1341,12 +1430,13 @@
     "type": 2,
     "subtype": 51,
     "level": 2,
-    "optional": 2,
+    "optional": 0,
     "isShow": 0,
     "icon": "22052",
     "titile": "秽蚀翻涌Ⅱ",
     "desc": "language_10086037",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1362,6 +1452,7 @@
     "titile": "终末之刻Ⅲ",
     "desc": "language_10084747",
     "scoreRate": 350,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1371,12 +1462,13 @@
     "type": 1,
     "subtype": 71,
     "level": 5,
-    "optional": 5,
+    "optional": 0,
     "isShow": 0,
     "icon": "21075",
     "titile": "搜刮迟滞Ⅲ",
     "desc": "language_10086017",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1386,12 +1478,13 @@
     "type": 2,
     "subtype": 21,
     "level": 5,
-    "optional": 5,
+    "optional": 0,
     "isShow": 0,
     "icon": "22025",
     "titile": "狂暴肆虐Ⅲ",
     "desc": "language_10086026",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1401,12 +1494,13 @@
     "type": 2,
     "subtype": 51,
     "level": 3,
-    "optional": 3,
+    "optional": 0,
     "isShow": 0,
     "icon": "22053",
     "titile": "秽蚀翻涌Ⅲ",
     "desc": "language_10086038",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1416,12 +1510,13 @@
     "type": 1,
     "subtype": 11,
     "level": 3,
-    "optional": 3,
+    "optional": 0,
     "isShow": 0,
     "icon": "21011",
     "titile": "视线遮蔽Ⅰ",
     "desc": "language_10086001",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1437,6 +1532,7 @@
     "titile": "终末之刻Ⅲ",
     "desc": "language_10084748",
     "scoreRate": 500,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1446,12 +1542,13 @@
     "type": 1,
     "subtype": 71,
     "level": 5,
-    "optional": 5,
+    "optional": 0,
     "isShow": 0,
     "icon": "21075",
     "titile": "搜刮迟滞Ⅲ",
     "desc": "language_10086017",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1461,12 +1558,13 @@
     "type": 2,
     "subtype": 21,
     "level": 5,
-    "optional": 5,
+    "optional": 0,
     "isShow": 0,
     "icon": "22025",
     "titile": "狂暴肆虐Ⅲ",
     "desc": "language_10086026",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1476,12 +1574,13 @@
     "type": 2,
     "subtype": 51,
     "level": 5,
-    "optional": 5,
+    "optional": 0,
     "isShow": 0,
     "icon": "22055",
     "titile": "秽蚀翻涌Ⅴ",
     "desc": "language_10086040",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1491,12 +1590,13 @@
     "type": 1,
     "subtype": 11,
     "level": 5,
-    "optional": 5,
+    "optional": 0,
     "isShow": 0,
     "icon": "21012",
     "titile": "视线遮蔽Ⅱ",
     "desc": "language_10086002",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1512,6 +1612,7 @@
     "titile": "污染崩溃Ⅰ",
     "desc": "language_10084706",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1527,6 +1628,7 @@
     "titile": "",
     "desc": "language_10086066",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1542,6 +1644,7 @@
     "titile": "",
     "desc": "language_10086067",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1557,6 +1660,7 @@
     "titile": "",
     "desc": "language_10086068",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1572,6 +1676,7 @@
     "titile": "",
     "desc": "language_10086069",
     "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   },
   {
@@ -1587,6 +1692,1303 @@
     "titile": "",
     "desc": "language_10086070",
     "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110011,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 101,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21011",
+    "titile": "近视",
+    "desc": "language_10095333",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110021,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 102,
+    "level": 5,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "22085",
+    "titile": "一次人生",
+    "desc": "language_10095335",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087177"
+  },
+  {
+    "id": 3110031,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 103,
+    "level": 1,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "21051",
+    "titile": "虚弱体质Ⅰ",
+    "desc": "language_10095337",
+    "scoreRate": 50,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110032,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 103,
+    "level": 2,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "21052",
+    "titile": "虚弱体质Ⅱ",
+    "desc": "language_10095339",
+    "scoreRate": 100,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110033,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 103,
+    "level": 3,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "21053",
+    "titile": "虚弱体质Ⅲ",
+    "desc": "language_10095341",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110034,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 103,
+    "level": 4,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "21054",
+    "titile": "虚弱体质Ⅳ",
+    "desc": "language_10095343",
+    "scoreRate": 200,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087203"
+  },
+  {
+    "id": 3110035,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 103,
+    "level": 5,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "21055",
+    "titile": "虚弱体质Ⅴ",
+    "desc": "language_10095345",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087180"
+  },
+  {
+    "id": 3110041,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 104,
+    "level": 1,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21031",
+    "titile": "带病探索Ⅰ",
+    "desc": "language_10095347",
+    "scoreRate": 50,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110042,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 104,
+    "level": 2,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21032",
+    "titile": "带病探索Ⅱ",
+    "desc": "language_10095349",
+    "scoreRate": 100,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110043,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 104,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21033",
+    "titile": "带病探索Ⅲ",
+    "desc": "language_10095351",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110044,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 104,
+    "level": 4,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21034",
+    "titile": "带病探索Ⅳ",
+    "desc": "language_10095353",
+    "scoreRate": 200,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110045,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 104,
+    "level": 5,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21035",
+    "titile": "带病探索Ⅴ",
+    "desc": "language_10095355",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110051,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 105,
+    "level": 1,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21061",
+    "titile": "肌无力Ⅰ",
+    "desc": "language_10095357",
+    "scoreRate": 50,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110052,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 105,
+    "level": 2,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21062",
+    "titile": "肌无力Ⅱ",
+    "desc": "language_10095359",
+    "scoreRate": 100,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110053,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 105,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21063",
+    "titile": "肌无力Ⅲ",
+    "desc": "language_10095361",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087174"
+  },
+  {
+    "id": 3110054,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 105,
+    "level": 4,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21064",
+    "titile": "肌无力Ⅳ",
+    "desc": "language_10095363",
+    "scoreRate": 200,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087206"
+  },
+  {
+    "id": 3110055,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 105,
+    "level": 5,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21065",
+    "titile": "肌无力Ⅴ",
+    "desc": "language_10095365",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087185"
+  },
+  {
+    "id": 3110061,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 106,
+    "level": 1,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21081",
+    "titile": "笨手笨脚Ⅰ",
+    "desc": "language_10095367",
+    "scoreRate": 50,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110062,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 106,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21083",
+    "titile": "笨手笨脚Ⅱ",
+    "desc": "language_10095369",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110063,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 106,
+    "level": 5,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21085",
+    "titile": "笨手笨脚Ⅲ",
+    "desc": "language_10095371",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110071,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 107,
+    "level": 5,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "21025",
+    "titile": "恶土厄运",
+    "desc": "language_10095373",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087186"
+  },
+  {
+    "id": 3110081,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 101,
+    "level": 3,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "22023",
+    "titile": "巢穴Ⅰ",
+    "desc": "language_10096561",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087176"
+  },
+  {
+    "id": 3110082,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 101,
+    "level": 4,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "22024",
+    "titile": "巢穴Ⅱ",
+    "desc": "language_10095375",
+    "scoreRate": 200,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087207"
+  },
+  {
+    "id": 3110083,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 101,
+    "level": 5,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "22025",
+    "titile": "巢穴Ⅲ",
+    "desc": "language_10096562",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087188"
+  },
+  {
+    "id": 3110091,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 102,
+    "level": 1,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22031",
+    "titile": "苦战Ⅰ",
+    "desc": "language_10095377",
+    "scoreRate": 50,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110092,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 102,
+    "level": 2,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22032",
+    "titile": "苦战Ⅱ",
+    "desc": "language_10095379",
+    "scoreRate": 100,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110093,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 102,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22033",
+    "titile": "苦战Ⅲ",
+    "desc": "language_10095381",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110101,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 103,
+    "level": 5,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "22075",
+    "titile": "警惕Ⅰ",
+    "desc": "language_10095383",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087190"
+  },
+  {
+    "id": 3110102,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 103,
+    "level": 1,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22075",
+    "titile": "警惕Ⅱ",
+    "desc": "language_10095385",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110111,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 104,
+    "level": 3,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "22033",
+    "titile": "狂暴Ⅰ",
+    "desc": "language_10095387",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087178"
+  },
+  {
+    "id": 3110112,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 104,
+    "level": 4,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "22034",
+    "titile": "狂暴Ⅱ",
+    "desc": "language_10095389",
+    "scoreRate": 200,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087209"
+  },
+  {
+    "id": 3110113,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 104,
+    "level": 5,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "22035",
+    "titile": "狂暴Ⅲ",
+    "desc": "language_10095391",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087192"
+  },
+  {
+    "id": 3110121,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 105,
+    "level": 3,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "22053",
+    "titile": "应激Ⅰ",
+    "desc": "language_10095393",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087181"
+  },
+  {
+    "id": 3110122,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 105,
+    "level": 4,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "22054",
+    "titile": "应激Ⅱ",
+    "desc": "language_10095395",
+    "scoreRate": 200,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087211"
+  },
+  {
+    "id": 3110123,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 105,
+    "level": 5,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "22055",
+    "titile": "应激Ⅲ",
+    "desc": "language_10095397",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087194"
+  },
+  {
+    "id": 3110131,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 106,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22061",
+    "titile": "再生Ⅰ",
+    "desc": "language_10095399",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110132,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 106,
+    "level": 4,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22062",
+    "titile": "再生Ⅱ",
+    "desc": "language_10095401",
+    "scoreRate": 200,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110133,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 106,
+    "level": 5,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22063",
+    "titile": "再生Ⅲ",
+    "desc": "language_10095403",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110141,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 101,
+    "level": 5,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "21015",
+    "titile": "遮天蔽日Ⅰ",
+    "desc": "language_10095405",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087184"
+  },
+  {
+    "id": 3110142,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 101,
+    "level": 1,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21014",
+    "titile": "遮天蔽日Ⅱ",
+    "desc": "language_10095407",
+    "scoreRate": 200,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087213"
+  },
+  {
+    "id": 3110143,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 101,
+    "level": 2,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21015",
+    "titile": "遮天蔽日Ⅲ",
+    "desc": "language_10095409",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087196"
+  },
+  {
+    "id": 3110151,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 102,
+    "level": 1,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "21021",
+    "titile": "贫瘠恶土Ⅰ",
+    "desc": "language_10095411",
+    "scoreRate": 50,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110152,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 102,
+    "level": 3,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "21023",
+    "titile": "贫瘠恶土Ⅱ",
+    "desc": "language_10095413",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087187"
+  },
+  {
+    "id": 3110153,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 102,
+    "level": 5,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "21025",
+    "titile": "贫瘠恶土Ⅲ",
+    "desc": "language_10095415",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087199"
+  },
+  {
+    "id": 3110161,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 103,
+    "level": 1,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21071",
+    "titile": "坐地起价Ⅰ",
+    "desc": "language_10095417",
+    "scoreRate": 50,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110162,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 103,
+    "level": 2,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21072",
+    "titile": "坐地起价Ⅱ",
+    "desc": "language_10095419",
+    "scoreRate": 100,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110163,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 103,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21073",
+    "titile": "坐地起价Ⅲ",
+    "desc": "language_10095421",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110164,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 103,
+    "level": 4,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21074",
+    "titile": "坐地起价Ⅳ",
+    "desc": "language_10095423",
+    "scoreRate": 200,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110165,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 103,
+    "level": 5,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21075",
+    "titile": "坐地起价Ⅴ",
+    "desc": "language_10095425",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110171,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 104,
+    "level": 1,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21081",
+    "titile": "手忙脚乱Ⅰ",
+    "desc": "language_10095427",
+    "scoreRate": 50,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110172,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 104,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21083",
+    "titile": "手忙脚乱Ⅱ",
+    "desc": "language_10095429",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110173,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 104,
+    "level": 5,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21085",
+    "titile": "手忙脚乱Ⅲ",
+    "desc": "language_10095431",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110181,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 105,
+    "level": 1,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "23031",
+    "titile": "精简开局Ⅰ",
+    "desc": "language_10096563",
+    "scoreRate": 50,
+    "extendScoreFix": -250,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110182,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 105,
+    "level": 2,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "23032",
+    "titile": "精简开局Ⅱ",
+    "desc": "language_10096564",
+    "scoreRate": 100,
+    "extendScoreFix": -500,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110183,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 105,
+    "level": 3,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "23033",
+    "titile": "精简开局Ⅲ",
+    "desc": "language_10096565",
+    "scoreRate": 150,
+    "extendScoreFix": -750,
+    "lockDesc": "language_10087189"
+  },
+  {
+    "id": 3110184,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 105,
+    "level": 4,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "23034",
+    "titile": "精简开局Ⅳ",
+    "desc": "language_10096566",
+    "scoreRate": 200,
+    "extendScoreFix": -1000,
+    "lockDesc": "language_10087179"
+  },
+  {
+    "id": 3110185,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 105,
+    "level": 5,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "23035",
+    "titile": "精简开局Ⅴ",
+    "desc": "language_10096567",
+    "scoreRate": 250,
+    "extendScoreFix": -1200,
+    "lockDesc": "language_10087202"
+  },
+  {
+    "id": 3110191,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 106,
+    "level": 2,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "23042",
+    "titile": "提前量Ⅰ",
+    "desc": "language_10095443",
+    "scoreRate": 100,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3110192,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 106,
+    "level": 3,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "23043",
+    "titile": "提前量Ⅱ",
+    "desc": "language_10095445",
+    "scoreRate": 150,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087191"
+  },
+  {
+    "id": 3110193,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 106,
+    "level": 4,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "23044",
+    "titile": "提前量Ⅲ",
+    "desc": "language_10095447",
+    "scoreRate": 200,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087182"
+  },
+  {
+    "id": 3110194,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 106,
+    "level": 5,
+    "optional": 1,
+    "isShow": 0,
+    "icon": "23045",
+    "titile": "提前量Ⅳ",
+    "desc": "language_10095449",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": "language_10087204"
+  },
+  {
+    "id": 3124101,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 41,
+    "level": 2,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22041",
+    "titile": "终末之刻Ⅰ",
+    "desc": "language_10084745",
+    "scoreRate": 100,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124102,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 1051,
+    "level": 2,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21032",
+    "titile": "垃圾成山Ⅱ",
+    "desc": "language_10086007",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124103,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 1031,
+    "level": 2,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21052",
+    "titile": "虚弱体质Ⅱ",
+    "desc": "language_10095339",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124201,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 41,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22042",
+    "titile": "终末之刻Ⅱ",
+    "desc": "language_10084746",
+    "scoreRate": 250,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124202,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 1051,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21033",
+    "titile": "垃圾成山Ⅲ",
+    "desc": "language_10086008",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124203,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 1031,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21053",
+    "titile": "虚弱体质Ⅲ",
+    "desc": "language_10095341",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124204,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 1061,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "23043",
+    "titile": "提前量Ⅱ",
+    "desc": "language_10095445",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124301,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 41,
+    "level": 4,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22043",
+    "titile": "终末之刻Ⅲ",
+    "desc": "language_10084747",
+    "scoreRate": 350,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124302,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 1051,
+    "level": 4,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21034",
+    "titile": "垃圾成山Ⅳ",
+    "desc": "language_10086009",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124303,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 1031,
+    "level": 4,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21054",
+    "titile": "虚弱体质Ⅳ",
+    "desc": "language_10095343",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124304,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 1061,
+    "level": 4,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "23044",
+    "titile": "提前量Ⅲ",
+    "desc": "language_10095447",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124305,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 1031,
+    "level": 3,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22073",
+    "titile": "警惕Ⅰ",
+    "desc": "language_10095383",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124401,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 41,
+    "level": 5,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22043",
+    "titile": "终末之刻Ⅲ",
+    "desc": "language_10084748",
+    "scoreRate": 500,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124402,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 1051,
+    "level": 5,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21035",
+    "titile": "垃圾成山Ⅴ",
+    "desc": "language_10086010",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124403,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 1031,
+    "level": 5,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21055",
+    "titile": "虚弱体质Ⅴ",
+    "desc": "language_10095345",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124404,
+    "versions": "",
+    "seasons": "",
+    "type": 3,
+    "subtype": 1061,
+    "level": 5,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "23045",
+    "titile": "提前量Ⅳ",
+    "desc": "language_10095449",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124405,
+    "versions": "",
+    "seasons": "",
+    "type": 2,
+    "subtype": 1031,
+    "level": 5,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "22075",
+    "titile": "警惕Ⅰ",
+    "desc": "language_10095383",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3124406,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 1071,
+    "level": 5,
+    "optional": 0,
+    "isShow": 0,
+    "icon": "21025",
+    "titile": "恶土厄运",
+    "desc": "language_10095373",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3129901,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 2001,
+    "level": 0,
+    "optional": 0,
+    "isShow": 1,
+    "icon": "21025",
+    "titile": "难度3，4，自定义",
+    "desc": "language_10096568",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
+    "lockDesc": ""
+  },
+  {
+    "id": 3129902,
+    "versions": "",
+    "seasons": "",
+    "type": 1,
+    "subtype": 2002,
+    "level": 0,
+    "optional": 0,
+    "isShow": 1,
+    "icon": "21025",
+    "titile": "难度1，2，自定义",
+    "desc": "language_10096569",
+    "scoreRate": 0,
+    "extendScoreFix": 0,
     "lockDesc": ""
   }
 ]

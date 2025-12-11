@@ -6,7 +6,7 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 	local var_1_0 = FightModel.instance:getFightParam()
 
 	if var_1_0 and var_1_0.isReplay then
-		if FightReplayModel.instance:isReplay() then
+		if FightDataHelper.stateMgr.isReplay then
 			arg_1_0:onDone(true)
 		else
 			FightController.instance:registerCallback(FightEvent.StartReplay, arg_1_0._onStartReplay, arg_1_0)

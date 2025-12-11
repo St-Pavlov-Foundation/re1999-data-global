@@ -157,7 +157,7 @@ function var_0_0.hide(arg_11_0)
 	gohelper.setActive(arg_11_0._gointeractitem, false)
 	gohelper.setActive(arg_11_0._gointeractroot, false)
 	TaskDispatcher.cancelTask(arg_11_0.everySecondCall, arg_11_0)
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnHideInteractUI)
+	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnHideInteractUI)
 end
 
 function var_0_0.refreshUI(arg_12_0)

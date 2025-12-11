@@ -27,7 +27,7 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
 	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
 	arg_2_0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, arg_2_0.onActivityDungeonMoChange, arg_2_0)
-	arg_2_0:addEventCb(VersionActivityFixedHelper.getVersionActivityDungeonController().instance, VersionActivityFixedDungeonEvent.GuideShowElement, arg_2_0._GuideShowElement, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityFixedHelper.getVersionActivityDungeonController(arg_2_0._bigVersion, arg_2_0._smallVersion).instance, VersionActivityFixedDungeonEvent.GuideShowElement, arg_2_0._GuideShowElement, arg_2_0)
 
 	if GamepadController.instance:isOpen() then
 		arg_2_0:addEventCb(GamepadController.instance, GamepadEvent.KeyUp, arg_2_0._onGamepadKeyUp, arg_2_0)
@@ -41,18 +41,18 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, arg_3_0.onActivityDungeonMoChange, arg_3_0)
 	arg_3_0:removeEventCb(GamepadController.instance, GamepadEvent.KeyUp, arg_3_0._onGamepadKeyUp, arg_3_0)
 	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnChangeFocusEpisodeItem, arg_3_0._onChangeFocusEpisodeItem, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivityFixedHelper.getVersionActivityDungeonController().instance, VersionActivityFixedDungeonEvent.GuideShowElement, arg_3_0._GuideShowElement, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivityFixedHelper.getVersionActivityDungeonController(arg_3_0._bigVersion, arg_3_0._smallVersion).instance, VersionActivityFixedDungeonEvent.GuideShowElement, arg_3_0._GuideShowElement, arg_3_0)
 end
 
 function var_0_0._onOpenView(arg_4_0, arg_4_1)
-	if arg_4_1 == VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName() then
+	if arg_4_1 == VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(arg_4_0._bigVersion, arg_4_0._smallVersion) then
 		arg_4_0._timelineAnimation:Play("timeline_mask")
 		arg_4_0:setSelectEpisodeItem(arg_4_0._episodeItemDict[arg_4_0.activityDungeonMo.episodeId])
 	end
 end
 
 function var_0_0._onCloseView(arg_5_0, arg_5_1)
-	if arg_5_1 == VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName() then
+	if arg_5_1 == VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(arg_5_0._bigVersion, arg_5_0._smallVersion) then
 		arg_5_0._timelineAnimation:Play("timeline_reset")
 		arg_5_0:setSelectEpisodeItem(nil)
 	end
@@ -73,7 +73,7 @@ function var_0_0._onGamepadKeyUp(arg_8_0, arg_8_1)
 	local var_8_0 = ViewMgr.instance:getOpenViewNameList()
 	local var_8_1 = var_8_0[#var_8_0]
 
-	if var_8_1 ~= VersionActivityFixedHelper.getVersionActivityDungeonMapViewName() and var_8_1 ~= VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName() then
+	if var_8_1 ~= VersionActivityFixedHelper.getVersionActivityDungeonMapViewName(arg_8_0._bigVersion, arg_8_0._smallVersion) and var_8_1 ~= VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(arg_8_0._bigVersion, arg_8_0._smallVersion) then
 		return
 	end
 
@@ -130,8 +130,9 @@ function var_0_0._editableInitView(arg_10_0)
 	arg_10_0._constDungeonNormalPosX = var_10_2 - arg_10_0._offsetX
 	arg_10_0._constDungeonNormalPosY = CommonConfig.instance:getConstNum(ConstEnum.DungeonNormalPosY)
 	arg_10_0._constDungeonNormalDeltaX = var_0_3
+	arg_10_0._bigVersion, arg_10_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 
-	if ViewMgr.instance:isOpening(VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName()) then
+	if ViewMgr.instance:isOpening(VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(arg_10_0._bigVersion, arg_10_0._smallVersion)) then
 		arg_10_0._timelineAnimation:Play("timeline_mask")
 	end
 end
@@ -331,7 +332,7 @@ function var_0_0._GuideShowElement(arg_24_0, arg_24_1)
 			arg_24_0:setSelectEpisodeItem(var_24_3)
 		end
 
-		VersionActivityFixedHelper.getVersionActivityDungeonController().instance:dispatchEvent(VersionActivityFixedDungeonEvent.FocusElement, var_24_0)
+		VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.FocusElement, var_24_0)
 	end
 end
 

@@ -20,6 +20,9 @@ function var_0_0.init(arg_1_0, arg_1_1)
 
 		arg_1_0.matchInfo:init(var_1_0.matchInfo)
 	end
+
+	arg_1_0.replaceNum = var_1_0.replaceNum
+	arg_1_0.changeItemList = var_1_0.changeItemList
 end
 
 return var_0_0

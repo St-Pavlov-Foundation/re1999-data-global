@@ -495,7 +495,7 @@ function var_0_0.getHeroEquipMoListWithTrial(arg_22_0)
 	return var_22_0, var_22_1
 end
 
-function var_0_0.initTowerFightGroup(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5, arg_23_6)
+function var_0_0.initTowerFightGroup(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5, arg_23_6, arg_23_7)
 	if arg_23_1 then
 		arg_23_0.clothId = arg_23_1
 	end
@@ -513,6 +513,8 @@ function var_0_0.initTowerFightGroup(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg
 					local var_23_1 = var_23_0.trialCo.id > 0 and tostring(-var_23_0.trialCo.id) or "0"
 
 					table.insert(arg_23_0.heroList, var_23_1)
+				elseif arg_23_7 then
+					table.insert(arg_23_0.heroList, iter_23_1)
 				end
 			else
 				table.insert(arg_23_0.heroList, iter_23_1)

@@ -21,6 +21,10 @@ local var_0_3 = 2
 local var_0_4 = 3
 
 function var_0_0.ctor(arg_2_0)
+	if not LangSettings.instance:isOverseas() then
+		return
+	end
+
 	arg_2_0._hasInit = true
 	arg_2_0._loadStatus = var_0_2
 	arg_2_0._SettingStatus = var_0_2

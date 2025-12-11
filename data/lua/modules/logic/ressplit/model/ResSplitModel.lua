@@ -16,6 +16,8 @@ function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_
 	arg_1_0.includeSeasonDic = arg_1_8
 	arg_1_0._innerBGMWenDic = {}
 
+	var_0_0.instance:setExclude(ResSplitEnum.Folder, "effects/prefabs", false)
+
 	for iter_1_0, iter_1_1 in pairs(arg_1_6) do
 		var_0_0.instance:setExclude(ResSplitEnum.Video, iter_1_0, false)
 	end

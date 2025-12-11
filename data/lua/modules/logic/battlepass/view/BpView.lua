@@ -236,7 +236,7 @@ function var_0_0._updateLevelScore(arg_18_0, arg_18_1)
 		arg_18_0._addScoreTween = ZProj.TweenHelper.DOTweenFloat(var_18_6, var_18_5, BpEnum.AddScoreTime, arg_18_0.setSliderValue, nil, arg_18_0, nil, EaseType.OutQuart)
 	end
 
-	local var_18_7 = math.floor(BpModel.instance.score / var_18_0) >= #BpConfig.instance:getBonusCOList(BpModel.instance.id)
+	local var_18_7 = BpModel.instance:isMaxLevel()
 
 	gohelper.setActive(arg_18_0._btnUpgrade.gameObject, not var_18_7)
 	gohelper.setActive(arg_18_0._gomax, var_18_7)

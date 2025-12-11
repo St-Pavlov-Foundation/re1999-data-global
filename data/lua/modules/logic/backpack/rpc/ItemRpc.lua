@@ -92,6 +92,14 @@ function var_0_0.onReceiveUsePowerItemListReply(arg_9_0, arg_9_1, arg_9_2)
 end
 
 function var_0_0.sendAutoUseExpirePowerItemRequest(arg_10_0, arg_10_1)
+	if arg_10_0._autoUsePowerTime and ServerTime.now() - arg_10_0._autoUsePowerTime < 1 then
+		arg_10_0._autoUsePowerTime = ServerTime.now()
+
+		return
+	end
+
+	arg_10_0._autoUsePowerTime = ServerTime.now()
+
 	local var_10_0 = ItemModule_pb.AutoUseExpirePowerItemRequest()
 
 	return arg_10_0:sendMsg(var_10_0, arg_10_1)
@@ -162,6 +170,39 @@ function var_0_0.simpleSendUseItemRequest(arg_16_0, arg_16_1, arg_16_2, arg_16_3
 			quantity = arg_16_2
 		}
 	}, arg_16_3 or 0, arg_16_4, arg_16_5)
+end
+
+function var_0_0.sendGetPowerMakerInfoRequest(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
+	local var_17_0 = ItemModule_pb.GetPowerMakerInfoRequest()
+
+	var_17_0.isAutoUse = arg_17_1 or false
+	var_17_0.isLogin = arg_17_2 or false
+
+	arg_17_0:sendMsg(var_17_0, arg_17_3, arg_17_4)
+end
+
+function var_0_0.onReceiveGetPowerMakerInfoReply(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_1 ~= 0 then
+		return
+	end
+
+	ItemPowerModel.instance:onGetPowerMakerInfo(arg_18_2)
+	CurrencyController.instance:dispatchEvent(CurrencyEvent.RefreshPowerMakerInfo)
+end
+
+function var_0_0.autoUseExpirePowerItem(arg_19_0)
+	if arg_19_0.isAutoUseExpirePowerItem then
+		return
+	end
+
+	arg_19_0:sendGetPowerMakerInfoRequest(false, false, function()
+		var_0_0.instance:sendGetItemListRequest(function()
+			arg_19_0.isAutoUseExpirePowerItem = nil
+		end)
+		var_0_0.instance:sendAutoUseExpirePowerItemRequest()
+	end)
+
+	arg_19_0.isAutoUseExpirePowerItem = true
 end
 
 var_0_0.instance = var_0_0.New()

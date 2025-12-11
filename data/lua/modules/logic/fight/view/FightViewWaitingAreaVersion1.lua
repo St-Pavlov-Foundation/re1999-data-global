@@ -11,6 +11,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._skillTipsGO = gohelper.findChild(arg_1_0.viewGO, "root/waitingArea/inner/skill")
 	arg_1_0._txtCardTitle = gohelper.findChildText(arg_1_0._skillTipsGO, "txtTips/txtTitle")
 	arg_1_0._txtCardDesc = gohelper.findChildText(arg_1_0._skillTipsGO, "txtTips")
+	arg_1_0._rectTrCardDesc = arg_1_0._txtCardDesc:GetComponent(gohelper.Type_RectTransform)
 	arg_1_0._cardItemList = {}
 	arg_1_0._cardItemGOList = arg_1_0:getUserDataTb_()
 	arg_1_0._cardObjModel = gohelper.findChild(arg_1_0._waitingAreaGO, "cardItemModel")
@@ -234,243 +235,232 @@ function var_0_0._beforePlaySkill(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
 
 	FightPlayCardModel.instance:playCard(arg_20_3.cardIndex)
 
-	if FightModel.instance:getCurStage() == FightEnum.Stage.Play then
-		local var_20_0 = lua_skill.configDict[arg_20_2]
-		local var_20_1 = FightConfig.instance:getEntitySkillDesc(arg_20_1.id, var_20_0)
-		local var_20_2 = GameUtil.getTextHeightByLine(arg_20_0._txtCardDesc, var_20_1, 38) + 83
-
-		recthelper.setHeight(arg_20_0._skillTipsGO.transform, var_20_2)
-
-		arg_20_0._txtCardTitle.text = var_20_0 and var_20_0.name or ""
-		arg_20_0._txtCardDesc.text = var_20_0 and HeroSkillModel.instance:skillDesToSpot(var_20_1) or ""
-
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
+		arg_20_0:refreshSkillText(arg_20_2, arg_20_1.id)
 		arg_20_0:_displayFlow(arg_20_1.id, arg_20_2, FightPlayCardModel.instance:getCurIndex())
 	end
 end
 
-function var_0_0._displayFlow(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	if not arg_21_0._cardItemList[arg_21_3] then
-		return
-	end
+function var_0_0.refreshSkillText(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = lua_skill.configDict[arg_21_1]
+	local var_21_1 = FightConfig.instance:getEntitySkillDesc(arg_21_2, var_21_0)
 
-	for iter_21_0 = 1, arg_21_3 - 1 do
-		arg_21_0._cardItemList[iter_21_0]:releaseEffectFlow()
-		gohelper.setActive(arg_21_0._cardItemList[iter_21_0].go, false)
+	arg_21_0._txtCardDesc.text = var_21_0 and HeroSkillModel.instance:skillDesToSpot(var_21_1) or ""
+	arg_21_0._txtCardTitle.text = var_21_0 and var_21_0.name or ""
 
-		local var_21_0 = gohelper.findChild(arg_21_0._cardItemList[iter_21_0].tr.parent.gameObject, "lock")
+	arg_21_0._txtCardDesc:ForceMeshUpdate(true, true)
 
-		gohelper.setActive(var_21_0, false)
-	end
+	local var_21_2 = arg_21_0._txtCardDesc:GetRenderedValues().y
+	local var_21_3 = var_21_2 + 83
 
-	arg_21_0._cardItemList[arg_21_3]:playUsedCardDisplay(arg_21_0._skillTipsGO)
+	recthelper.setHeight(arg_21_0._rectTrCardDesc, var_21_2)
+	recthelper.setHeight(arg_21_0._skillTipsGO.transform, var_21_3)
 end
 
-function var_0_0._onSkillPlayFinish(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	if not FightHelper.isPlayerCardSkill(arg_22_3) then
+function var_0_0._displayFlow(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	if not arg_22_0._cardItemList[arg_22_3] then
 		return
 	end
 
-	if not arg_22_0._cardItemList[arg_22_3.cardIndex] then
-		return
+	for iter_22_0 = 1, arg_22_3 - 1 do
+		arg_22_0._cardItemList[iter_22_0]:releaseEffectFlow()
+		gohelper.setActive(arg_22_0._cardItemList[iter_22_0].go, false)
+
+		local var_22_0 = gohelper.findChild(arg_22_0._cardItemList[iter_22_0].tr.parent.gameObject, "lock")
+
+		gohelper.setActive(var_22_0, false)
 	end
 
-	arg_22_0._cardItemList[arg_22_3.cardIndex]:playUsedCardFinish(arg_22_0._skillTipsGO, arg_22_0._waitingAreaGO)
+	arg_22_0._cardItemList[arg_22_3]:playUsedCardDisplay(arg_22_0._skillTipsGO)
 end
 
-function var_0_0.onASFDStart(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	if arg_23_3.cardIndex <= FightPlayCardModel.instance:getCurIndex() then
+function var_0_0._onSkillPlayFinish(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	if not FightHelper.isPlayerCardSkill(arg_23_3) then
 		return
 	end
 
-	FightPlayCardModel.instance:playCard(arg_23_3.cardIndex)
+	if not arg_23_0._cardItemList[arg_23_3.cardIndex] then
+		return
+	end
 
-	if FightModel.instance:getCurStage() == FightEnum.Stage.Play then
-		local var_23_0 = lua_skill.configDict[arg_23_2]
-		local var_23_1 = FightConfig.instance:getEntitySkillDesc(arg_23_1.id, var_23_0)
-		local var_23_2 = GameUtil.getTextHeightByLine(arg_23_0._txtCardDesc, var_23_1, 38) + 83
+	arg_23_0._cardItemList[arg_23_3.cardIndex]:playUsedCardFinish(arg_23_0._skillTipsGO, arg_23_0._waitingAreaGO)
+end
 
-		recthelper.setHeight(arg_23_0._skillTipsGO.transform, var_23_2)
+function var_0_0.onASFDStart(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	if arg_24_3.cardIndex <= FightPlayCardModel.instance:getCurIndex() then
+		return
+	end
 
-		arg_23_0._txtCardTitle.text = var_23_0 and var_23_0.name or ""
-		arg_23_0._txtCardDesc.text = var_23_0 and HeroSkillModel.instance:skillDesToSpot(var_23_1) or ""
+	FightPlayCardModel.instance:playCard(arg_24_3.cardIndex)
 
-		arg_23_0:_displayFlow(arg_23_1.id, arg_23_2, FightPlayCardModel.instance:getCurIndex())
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
+		arg_24_0:refreshSkillText(arg_24_2, arg_24_1.id)
+		arg_24_0:_displayFlow(arg_24_1.id, arg_24_2, FightPlayCardModel.instance:getCurIndex())
 	end
 end
 
-function var_0_0.onASFDDone(arg_24_0, arg_24_1)
-	if not arg_24_0._cardItemList[arg_24_1] then
+function var_0_0.onASFDDone(arg_25_0, arg_25_1)
+	if not arg_25_0._cardItemList[arg_25_1] then
 		return
 	end
 
-	arg_24_0._cardItemList[arg_24_1]:playUsedCardFinish(arg_24_0._skillTipsGO, arg_24_0._waitingAreaGO)
+	arg_25_0._cardItemList[arg_25_1]:playUsedCardFinish(arg_25_0._skillTipsGO, arg_25_0._waitingAreaGO)
 end
 
-function var_0_0._onBuffUpdate(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	local var_25_0 = FightDataHelper.entityMgr:getById(arg_25_1)
+function var_0_0._onBuffUpdate(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	local var_26_0 = FightDataHelper.entityMgr:getById(arg_26_1)
 
-	if not var_25_0 or var_25_0.side ~= FightEnum.EntitySide.MySide then
+	if not var_26_0 or var_26_0.side ~= FightEnum.EntitySide.MySide then
 		return
 	end
 
-	local var_25_1 = FightPlayCardModel.instance:getUsedCards()
-	local var_25_2 = FightPlayCardModel.instance:getCurIndex()
-	local var_25_3 = false
+	local var_26_1 = FightPlayCardModel.instance:getUsedCards()
+	local var_26_2 = FightPlayCardModel.instance:getCurIndex()
+	local var_26_3 = false
 
-	if FightConfig.instance:hasBuffFeature(arg_25_3, FightEnum.BuffFeature.SkillLevelJudgeAdd) then
-		var_25_3 = true
+	if FightConfig.instance:hasBuffFeature(arg_26_3, FightEnum.BuffFeature.SkillLevelJudgeAdd) then
+		var_26_3 = true
 	end
 
-	for iter_25_0 = var_25_2 + 1, #var_25_1 do
-		local var_25_4 = arg_25_0._cardItemList[iter_25_0]
+	for iter_26_0 = var_26_2 + 1, #var_26_1 do
+		local var_26_4 = arg_26_0._cardItemList[iter_26_0]
 
-		if var_25_4 then
-			local var_25_5 = var_25_1[iter_25_0]
-			local var_25_6 = var_25_5.clientData.custom_lock
-			local var_25_7 = not FightViewHandCardItemLock.canUseCardSkill(var_25_5.uid, var_25_5.skillId)
+		if var_26_4 then
+			local var_26_5 = var_26_1[iter_26_0]
+			local var_26_6 = var_26_5.clientData.custom_lock
+			local var_26_7 = not FightViewHandCardItemLock.canUseCardSkill(var_26_5.uid, var_26_5.skillId)
 
-			if var_25_6 ~= var_25_7 then
-				local var_25_8 = gohelper.findChild(var_25_4.tr.parent.gameObject, "lock")
+			if var_26_6 ~= var_26_7 then
+				local var_26_8 = gohelper.findChild(var_26_4.tr.parent.gameObject, "lock")
 
-				var_25_5.clientData.custom_lock = var_25_7
+				var_26_5.clientData.custom_lock = var_26_7
 
-				if var_25_7 then
-					FightViewHandCardItemLock.setCardLock(var_25_5.uid, var_25_5.skillId, var_25_8, false)
+				if var_26_7 then
+					FightViewHandCardItemLock.setCardLock(var_26_5.uid, var_26_5.skillId, var_26_8, false)
 				else
-					gohelper.setActive(var_25_8, false)
+					gohelper.setActive(var_26_8, false)
 				end
 			end
 
-			if var_25_3 then
-				var_25_4:detectShowBlueStar()
+			if var_26_3 then
+				var_26_4:detectShowBlueStar()
 			end
 		end
 	end
 end
 
-function var_0_0._makeTipsOutofSight(arg_26_0)
-	local var_26_0 = arg_26_0._skillTipsGO.transform
+function var_0_0._makeTipsOutofSight(arg_27_0)
+	local var_27_0 = arg_27_0._skillTipsGO.transform
 
-	recthelper.setAnchorX(var_26_0, 9999999)
+	recthelper.setAnchorX(var_27_0, 9999999)
 end
 
-function var_0_0._updateView(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0 = arg_27_1 or FightPlayCardModel.instance:getUsedCards()
-	local var_27_1 = arg_27_2 or FightPlayCardModel.instance:getCurIndex()
-	local var_27_2 = #var_27_0
+function var_0_0._updateView(arg_28_0, arg_28_1, arg_28_2)
+	local var_28_0 = arg_28_1 or FightPlayCardModel.instance:getUsedCards()
+	local var_28_1 = arg_28_2 or FightPlayCardModel.instance:getCurIndex()
+	local var_28_2 = #var_28_0
 
-	gohelper.setActive(arg_27_0._waitingAreaGO, var_27_2 > 0)
+	gohelper.setActive(arg_28_0._waitingAreaGO, var_28_2 > 0)
 
-	for iter_27_0 = 1, var_27_2 do
-		local var_27_3 = var_27_0[iter_27_0]
-		local var_27_4 = var_27_3.uid
-		local var_27_5 = var_27_3.skillId
-		local var_27_6 = arg_27_0._cardItemList[iter_27_0]
+	for iter_28_0 = 1, var_28_2 do
+		local var_28_3 = var_28_0[iter_28_0]
+		local var_28_4 = var_28_3.uid
+		local var_28_5 = var_28_3.skillId
+		local var_28_6 = arg_28_0._cardItemList[iter_28_0]
 
-		if not var_27_6 then
-			local var_27_7 = gohelper.findChild(arg_27_0._waitingAreaGO, "cardItem" .. iter_27_0) or gohelper.cloneInPlace(arg_27_0._cardObjModel, "cardItem" .. iter_27_0)
-			local var_27_8 = arg_27_0.viewContainer:getSetting().otherRes[1]
-			local var_27_9 = arg_27_0:getResInst(var_27_8, var_27_7, "card")
+		if not var_28_6 then
+			local var_28_7 = gohelper.findChild(arg_28_0._waitingAreaGO, "cardItem" .. iter_28_0) or gohelper.cloneInPlace(arg_28_0._cardObjModel, "cardItem" .. iter_28_0)
+			local var_28_8 = arg_28_0.viewContainer:getSetting().otherRes[1]
+			local var_28_9 = arg_28_0:getResInst(var_28_8, var_28_7, "card")
 
-			gohelper.setAsFirstSibling(var_27_9)
+			gohelper.setAsFirstSibling(var_28_9)
 
-			var_27_6 = MonoHelper.addNoUpdateLuaComOnceToGo(var_27_9, FightViewCardItem, FightEnum.CardShowType.PlayCard)
+			var_28_6 = MonoHelper.addNoUpdateLuaComOnceToGo(var_28_9, FightViewCardItem, FightEnum.CardShowType.PlayCard)
 
 			if FightCardDataHelper.getCardSkin() == 672801 then
-				FightViewHandCardItem.replaceLockBg(gohelper.findChild(var_27_6.tr.parent.gameObject, "lock"))
+				FightViewHandCardItem.replaceLockBg(gohelper.findChild(var_28_6.tr.parent.gameObject, "lock"))
 			end
 
-			table.insert(arg_27_0._cardItemList, var_27_6)
+			table.insert(arg_28_0._cardItemList, var_28_6)
 		end
 
-		transformhelper.setLocalScale(var_27_6.tr, 1, 1, 1)
-		recthelper.setAnchor(var_27_6.tr, 0, 0)
+		transformhelper.setLocalScale(var_28_6.tr, 1, 1, 1)
+		recthelper.setAnchor(var_28_6.tr, 0, 0)
 
-		gohelper.onceAddComponent(var_27_6.go, typeof(UnityEngine.CanvasGroup)).alpha = 1
+		gohelper.onceAddComponent(var_28_6.go, typeof(UnityEngine.CanvasGroup)).alpha = 1
 
-		gohelper.setActive(var_27_6.go, true)
+		gohelper.setActive(var_28_6.go, true)
 
-		var_27_3.clientData.custom_playedCard = true
+		var_28_3.clientData.custom_playedCard = true
 
-		var_27_6:updateItem(var_27_4, var_27_5, var_27_3)
-		var_27_6:detectShowBlueStar()
-		arg_27_0:refreshCardRedAndBlue(var_27_6, var_27_3)
-		gohelper.setActive(var_27_6.go, var_27_1 < iter_27_0)
+		var_28_6:updateItem(var_28_4, var_28_5, var_28_3)
+		var_28_6:detectShowBlueStar()
+		arg_28_0:refreshCardRedAndBlue(var_28_6, var_28_3)
+		gohelper.setActive(var_28_6.go, var_28_1 < iter_28_0)
 	end
 
-	for iter_27_1 = var_27_2 + 1, #arg_27_0._cardItemList do
-		local var_27_10 = arg_27_0._cardItemList[iter_27_1]
-		local var_27_11 = gohelper.findChild(var_27_10.tr.parent.gameObject, "lock")
+	for iter_28_1 = var_28_2 + 1, #arg_28_0._cardItemList do
+		local var_28_10 = arg_28_0._cardItemList[iter_28_1]
+		local var_28_11 = gohelper.findChild(var_28_10.tr.parent.gameObject, "lock")
 
-		gohelper.setActive(var_27_11, false)
-		gohelper.setActive(var_27_10.go, false)
+		gohelper.setActive(var_28_11, false)
+		gohelper.setActive(var_28_10.go, false)
 	end
 
-	arg_27_0:playScaleTween(var_27_2)
-	arg_27_0:refreshLYCard(var_27_0)
+	arg_28_0:playScaleTween(var_28_2)
+	arg_28_0:refreshLYCard(var_28_0)
 end
 
-function var_0_0.refreshCardRedAndBlue(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = arg_28_2 and arg_28_2.areaRedOrBlue
+function var_0_0.refreshCardRedAndBlue(arg_29_0, arg_29_1, arg_29_2)
+	local var_29_0 = arg_29_2 and arg_29_2.areaRedOrBlue
 
-	arg_28_1:setActiveRed(var_28_0 == FightEnum.CardColor.Red)
-	arg_28_1:setActiveBlue(var_28_0 == FightEnum.CardColor.Blue)
-	arg_28_1:setActiveBoth(var_28_0 == FightEnum.CardColor.Both)
+	arg_29_1:setActiveRed(var_29_0 == FightEnum.CardColor.Red)
+	arg_29_1:setActiveBlue(var_29_0 == FightEnum.CardColor.Blue)
+	arg_29_1:setActiveBoth(var_29_0 == FightEnum.CardColor.Both)
 end
 
-function var_0_0.refreshLYCard(arg_29_0, arg_29_1)
+function var_0_0.refreshLYCard(arg_30_0, arg_30_1)
 	if FightDataHelper.LYDataMgr:hasCountBuff() then
-		arg_29_0.LYCard = arg_29_0.LYCard or FightLYWaitAreaCard.Create(arg_29_0._waitingAreaGO)
+		arg_30_0.LYCard = arg_30_0.LYCard or FightLYWaitAreaCard.Create(arg_30_0._waitingAreaGO)
 
-		arg_29_0.LYCard:setScale(FightEnum.LYCardWaitAreaScale)
+		arg_30_0.LYCard:setScale(FightEnum.LYCardWaitAreaScale)
 	end
 
-	if arg_29_0.LYCard then
-		arg_29_0.LYCard:refreshLYCard()
+	if arg_30_0.LYCard then
+		arg_30_0.LYCard:refreshLYCard()
 
-		local var_29_0 = arg_29_1 and #arg_29_1 or 0
-		local var_29_1 = var_0_0.getCardPos(var_29_0 + 1, var_29_0)
+		local var_30_0 = arg_30_1 and #arg_30_1 or 0
+		local var_30_1 = var_0_0.getCardPos(var_30_0 + 1, var_30_0)
 
-		arg_29_0.LYCard:setAnchorX(var_29_1)
-	end
-end
-
-function var_0_0.playScaleTween(arg_30_0, arg_30_1)
-	arg_30_0:_releaseScalseTween()
-
-	local var_30_0 = arg_30_1 > 7 and 1 - (arg_30_1 - 7) * 0.12 or 1
-
-	if var_30_0 < 0 then
-		var_30_0 = 0.5
-	end
-
-	local var_30_1 = 1 / var_30_0
-
-	transformhelper.setLocalScale(arg_30_0._skillTipsGO.transform, var_30_1, var_30_1, var_30_1)
-
-	arg_30_0._tweenScale = ZProj.TweenHelper.DOScale(arg_30_0._waitingAreaTran, var_30_0, var_30_0, var_30_0, 0.1)
-end
-
-function var_0_0._releaseScalseTween(arg_31_0)
-	if arg_31_0._tweenScale then
-		ZProj.TweenHelper.KillById(arg_31_0._tweenScale)
-
-		arg_31_0._tweenScale = nil
+		arg_30_0.LYCard:setAnchorX(var_30_1)
 	end
 end
 
-function var_0_0._onPlayCardAroundUpRank(arg_32_0, arg_32_1, arg_32_2)
-	local var_32_0 = arg_32_0._cardItemList[arg_32_1]
+function var_0_0.playScaleTween(arg_31_0, arg_31_1)
+	arg_31_0:_releaseScalseTween()
 
-	if var_32_0 then
-		local var_32_1 = gohelper.findChild(var_32_0.tr.parent.gameObject, "lock")
+	local var_31_0 = arg_31_1 > 7 and 1 - (arg_31_1 - 7) * 0.12 or 1
 
-		gohelper.setActive(var_32_1, false)
-		var_32_0:playCardLevelChange(nil, arg_32_2)
+	if var_31_0 < 0 then
+		var_31_0 = 0.5
+	end
+
+	local var_31_1 = 1 / var_31_0
+
+	transformhelper.setLocalScale(arg_31_0._skillTipsGO.transform, var_31_1, var_31_1, var_31_1)
+
+	arg_31_0._tweenScale = ZProj.TweenHelper.DOScale(arg_31_0._waitingAreaTran, var_31_0, var_31_0, var_31_0, 0.1)
+end
+
+function var_0_0._releaseScalseTween(arg_32_0)
+	if arg_32_0._tweenScale then
+		ZProj.TweenHelper.KillById(arg_32_0._tweenScale)
+
+		arg_32_0._tweenScale = nil
 	end
 end
 
-function var_0_0._onPlayCardAroundDownRank(arg_33_0, arg_33_1, arg_33_2)
+function var_0_0._onPlayCardAroundUpRank(arg_33_0, arg_33_1, arg_33_2)
 	local var_33_0 = arg_33_0._cardItemList[arg_33_1]
 
 	if var_33_0 then
@@ -481,13 +471,24 @@ function var_0_0._onPlayCardAroundDownRank(arg_33_0, arg_33_1, arg_33_2)
 	end
 end
 
-function var_0_0._onCardLevelChangeDone(arg_34_0, arg_34_1)
-	if arg_34_0._cardItemList then
-		for iter_34_0, iter_34_1 in ipairs(arg_34_0._cardItemList) do
-			if iter_34_1._cardInfoMO == arg_34_1 and iter_34_0 > FightPlayCardModel.instance:getCurIndex() then
-				local var_34_0 = gohelper.findChild(iter_34_1.tr.parent.gameObject, "lock")
+function var_0_0._onPlayCardAroundDownRank(arg_34_0, arg_34_1, arg_34_2)
+	local var_34_0 = arg_34_0._cardItemList[arg_34_1]
 
-				FightViewHandCardItemLock.setCardLock(arg_34_1.uid, arg_34_1.skillId, var_34_0, false)
+	if var_34_0 then
+		local var_34_1 = gohelper.findChild(var_34_0.tr.parent.gameObject, "lock")
+
+		gohelper.setActive(var_34_1, false)
+		var_34_0:playCardLevelChange(nil, arg_34_2)
+	end
+end
+
+function var_0_0._onCardLevelChangeDone(arg_35_0, arg_35_1)
+	if arg_35_0._cardItemList then
+		for iter_35_0, iter_35_1 in ipairs(arg_35_0._cardItemList) do
+			if iter_35_1._cardInfoMO == arg_35_1 and iter_35_0 > FightPlayCardModel.instance:getCurIndex() then
+				local var_35_0 = gohelper.findChild(iter_35_1.tr.parent.gameObject, "lock")
+
+				FightViewHandCardItemLock.setCardLock(arg_35_1.uid, arg_35_1.skillId, var_35_0, false)
 
 				break
 			end
@@ -495,11 +496,11 @@ function var_0_0._onCardLevelChangeDone(arg_34_0, arg_34_1)
 	end
 end
 
-function var_0_0._onPlayCardAroundSetGray(arg_35_0, arg_35_1)
-	local var_35_0 = arg_35_0._cardItemList[arg_35_1]
+function var_0_0._onPlayCardAroundSetGray(arg_36_0, arg_36_1)
+	local var_36_0 = arg_36_0._cardItemList[arg_36_1]
 
-	if var_35_0 then
-		var_35_0:playCardAroundSetGray()
+	if var_36_0 then
+		var_36_0:playCardAroundSetGray()
 	end
 end
 

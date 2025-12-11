@@ -17,6 +17,8 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._bigVersion, arg_4_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+
 	arg_4_0:initActHandle()
 end
 
@@ -33,7 +35,7 @@ function var_0_0.onOpen(arg_6_0)
 	local var_6_1 = var_6_0[VersionActivityEnterHelper.getTabIndex(var_6_0, arg_6_0.viewParam.jumpActId)]
 	local var_6_2 = VersionActivityEnterHelper.getActId(var_6_1)
 
-	arg_6_0._isFirstOpenMainAct = var_6_2 == VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon
+	arg_6_0._isFirstOpenMainAct = var_6_2 == VersionActivityFixedHelper.getVersionActivityEnum(arg_6_0._bigVersion, arg_6_0._smallVersion).ActivityId.Dungeon
 
 	if not arg_6_0.viewParam.isExitFight then
 		arg_6_0:modifyBgm(var_6_2)

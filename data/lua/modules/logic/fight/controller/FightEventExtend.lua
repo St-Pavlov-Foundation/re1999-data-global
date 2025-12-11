@@ -3,11 +3,11 @@
 local var_0_0 = class("FightEventExtend")
 
 function var_0_0.addConstEvents(arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnStageChange, arg_1_0._onStageChange, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.StageChanged, arg_1_0.onStageChange, arg_1_0)
 end
 
-function var_0_0._onStageChange(arg_2_0, arg_2_1)
-	if arg_2_1 ~= FightEnum.Stage.Card then
+function var_0_0.onStageChange(arg_2_0, arg_2_1)
+	if arg_2_1 ~= FightStageMgr.StageType.Operate then
 		return
 	end
 

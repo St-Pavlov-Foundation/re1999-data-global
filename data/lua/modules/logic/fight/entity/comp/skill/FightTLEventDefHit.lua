@@ -326,7 +326,7 @@ function var_0_0._playDefHit(arg_7_0, arg_7_1, arg_7_2)
 	local var_7_9 = (arg_7_2.effectType == FightEnum.EffectType.NUODIKARANDOMATTACK or arg_7_2.effectType == FightEnum.EffectType.NUODIKATEAMATTACK) and arg_7_2.effectNum1 == FightEnum.EffectType.DAMAGE
 	local var_7_10 = (arg_7_2.effectType == FightEnum.EffectType.NUODIKARANDOMATTACK or arg_7_2.effectType == FightEnum.EffectType.NUODIKATEAMATTACK) and arg_7_2.effectNum1 == FightEnum.EffectType.CRIT
 
-	if arg_7_2.effectType == FightEnum.EffectType.DAMAGE or arg_7_2.effectType == -666 or var_7_9 then
+	if arg_7_2.effectType == FightEnum.EffectType.DAMAGE or var_7_9 then
 		local var_7_11 = true
 
 		if arg_7_0.ezioDamage == arg_7_2.configEffect then

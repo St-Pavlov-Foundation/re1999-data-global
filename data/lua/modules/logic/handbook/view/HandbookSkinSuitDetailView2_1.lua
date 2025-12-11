@@ -1,7 +1,6 @@
 ﻿module("modules.logic.handbook.view.HandbookSkinSuitDetailView2_1", package.seeall)
 
 local var_0_0 = class("HandbookSkinSuitDetailView2_1", HandbookSkinSuitDetailViewBase)
-local var_0_1 = 20011
 
 function var_0_0.onInitView(arg_1_0)
 	HandbookSkinSuitDetailViewBase.onInitView(arg_1_0)
@@ -25,24 +24,8 @@ function var_0_0.onOpen(arg_3_0)
 	arg_3_0:_refreshBg()
 end
 
-function var_0_0.refreshUI(arg_4_0)
-	return
-end
-
-function var_0_0.refreshBtnStatus(arg_5_0)
-	return
-end
-
-function var_0_0._refreshDesc(arg_6_0)
-	arg_6_0._textSkinThemeDescr.text = arg_6_0._skinSuitCfg.des
-end
-
-function var_0_0._refreshBg(arg_7_0)
-	return
-end
-
-function var_0_0.onDestroyView(arg_8_0)
-	return
+function var_0_0._refreshDesc(arg_4_0)
+	arg_4_0._textSkinThemeDescr.text = arg_4_0._skinSuitCfg.des
 end
 
 return var_0_0

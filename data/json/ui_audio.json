@@ -12160,6 +12160,131 @@
     "bankName": "ui_activity_s01_cikexia_yure"
   },
   {
+    "id": 310001,
+    "eventName": "play_ui_tili_candy",
+    "bankName": "ui_tili_3_1"
+  },
+  {
+    "id": 310002,
+    "eventName": "play_ui_fight_blood_lock",
+    "bankName": "fight_ui_sfx_pataux_3_1"
+  },
+  {
+    "id": 310003,
+    "eventName": "play_ui_fight_blood_unlock",
+    "bankName": "fight_ui_sfx_pataux_3_1"
+  },
+  {
+    "id": 310004,
+    "eventName": "play_ui_fight_combat_forced",
+    "bankName": "fight_ui_sfx_pataux_3_1"
+  },
+  {
+    "id": 310005,
+    "eventName": "play_ui_fight_masking_trigger",
+    "bankName": "fight_ui_sfx_pataux_3_1"
+  },
+  {
+    "id": 310006,
+    "eventName": "play_ui_fight_masking_disarm",
+    "bankName": "fight_ui_sfx_pataux_3_1"
+  },
+  {
+    "id": 310007,
+    "eventName": "play_ui_fight_action_decrease",
+    "bankName": "fight_ui_sfx_pataux_3_1"
+  },
+  {
+    "id": 310008,
+    "eventName": "play_ui_fight_depth_flushed",
+    "bankName": "fight_ui_sfx_pataux_3_1"
+  },
+  {
+    "id": 310009,
+    "eventName": "play_ui_fight_stage_switch",
+    "bankName": "fight_ui_sfx_pataux_3_1"
+  },
+  {
+    "id": 310010,
+    "eventName": "play_ui_fight_charge_stage",
+    "bankName": "fight_ui_sfx_pataux_3_1"
+  },
+  {
+    "id": 310021,
+    "eventName": "play_ui_leimi_celebrity_get",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 310022,
+    "eventName": "play_ui_mln_day_night",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 310023,
+    "eventName": "play_ui_poltsfx_landmark",
+    "bankName": "ui_poltsfx"
+  },
+  {
+    "id": 310024,
+    "eventName": "play_ui_qiutu_award_all",
+    "bankName": "ui_activity_1_4_qiutu"
+  },
+  {
+    "id": 310025,
+    "eventName": "play_ui_feichi_spray_loop",
+    "bankName": "ui_activity_2_0_feichi"
+  },
+  {
+    "id": 310026,
+    "eventName": "stop_ui_feichi_spray_loop",
+    "bankName": "ui_activity_2_0_feichi"
+  },
+  {
+    "id": 310027,
+    "eventName": "play_ui_qiutu_list_maintain",
+    "bankName": "ui_activity_1_4_qiutu"
+  },
+  {
+    "id": 310028,
+    "eventName": "play_ui_wulu_paiqian_open",
+    "bankName": "ui_activity_1_5_wulu"
+  },
+  {
+    "id": 310029,
+    "eventName": "play_ui_qiutu_revelation_open",
+    "bankName": "ui_activity_1_4_qiutu"
+  },
+  {
+    "id": 310030,
+    "eventName": "play_ui_wulu_build",
+    "bankName": "ui_activity_1_5_wulu"
+  },
+  {
+    "id": 310031,
+    "eventName": "play_ui_shuori_start_1",
+    "bankName": "ui_activity_1_6_shuori"
+  },
+  {
+    "id": 310032,
+    "eventName": "play_ui_tangren_win1",
+    "bankName": "ui_activity_2_5_tangren_tiaozhan"
+  },
+  {
+    "id": 310033,
+    "eventName": "play_ui_activity_meeting_book_open",
+    "bankName": "ui_activity_lvhu"
+  },
+  {
+    "id": 310034,
+    "eventName": "play_ui_mingdi_yunying_bp",
+    "bankName": "ui_activity_3_1_mingdi_yunying"
+  },
+  {
+    "id": 310035,
+    "eventName": "play_ui_mingdi_aperture_shrink",
+    "bankName": "ui_activity_3_1_mingdi_dqq"
+  },
+  {
     "id": 310036,
     "eventName": "play_ui_leimi_souvenir_open",
     "bankName": "ui_activity"
@@ -12168,5 +12293,250 @@
     "id": 310037,
     "eventName": "play_ui_mln_page_turn",
     "bankName": "ui_activity"
+  },
+  {
+    "id": 310038,
+    "eventName": "play_ui_home_mingdi_tan",
+    "bankName": "ui_home_bulao_3_1"
+  },
+  {
+    "id": 310039,
+    "eventName": "play_ui_home_mingdi_dalao",
+    "bankName": "ui_home_bulao_3_1"
+  },
+  {
+    "id": 310040,
+    "eventName": "play_ui_home_mingdi_jihuan",
+    "bankName": "ui_home_bulao_3_1"
+  },
+  {
+    "id": 310041,
+    "eventName": "play_ui_home_mingdi_huoqu1",
+    "bankName": "ui_home_bulao_3_1"
+  },
+  {
+    "id": 310042,
+    "eventName": "play_ui_home_mingdi_huoqu2",
+    "bankName": "ui_home_bulao_3_1"
+  },
+  {
+    "id": 310043,
+    "eventName": "play_ui_mingdi_success_unlock",
+    "bankName": "ui_activity_3_1_mingdi_pata"
+  },
+  {
+    "id": 310044,
+    "eventName": "play_ui_mingdi_h5_open",
+    "bankName": "ui_activity_3_1_mingdi_h5yure"
+  },
+  {
+    "id": 311001,
+    "eventName": "play_ui_mingdi_tansuo_waterspout_loop",
+    "bankName": "ui_activity_3_1_mingdi_tansuo"
+  },
+  {
+    "id": 311002,
+    "eventName": "stop_ui_mingdi_tansuo_waterspout_loop",
+    "bankName": "ui_activity_3_1_mingdi_tansuo"
+  },
+  {
+    "id": 311003,
+    "eventName": "play_ui_mingdi_tansuo_flame",
+    "bankName": "ui_activity_3_1_mingdi_tansuo"
+  },
+  {
+    "id": 311004,
+    "eventName": "play_ui_mingdi_tansuo_flame_loop",
+    "bankName": "ui_activity_3_1_mingdi_tansuo"
+  },
+  {
+    "id": 311005,
+    "eventName": "stop_ui_mingdi_tansuo_flame_loop",
+    "bankName": "ui_activity_3_1_mingdi_tansuo"
+  },
+  {
+    "id": 311006,
+    "eventName": "play_ui_mingdi_tansuo_explode",
+    "bankName": "ui_activity_3_1_mingdi_tansuo"
+  },
+  {
+    "id": 311007,
+    "eventName": "play_ui_mingdi_tansuo_bianshen",
+    "bankName": "ui_activity_3_1_mingdi_tansuo"
+  },
+  {
+    "id": 311008,
+    "eventName": "play_ui_mingdi_tansuo_boat",
+    "bankName": "ui_activity_3_1_mingdi_tansuo"
+  },
+  {
+    "id": 311009,
+    "eventName": "play_ui_mingdi_tansuo_car",
+    "bankName": "ui_activity_3_1_mingdi_tansuo"
+  },
+  {
+    "id": 311010,
+    "eventName": "play_ui_mingdi_tansuo_talks_eject",
+    "bankName": "ui_activity_3_1_mingdi_tansuo"
+  },
+  {
+    "id": 311011,
+    "eventName": "play_ui_mingdi_tansuo_bubble_eject",
+    "bankName": "ui_activity_3_1_mingdi_tansuo"
+  },
+  {
+    "id": 312001,
+    "eventName": "play_ui_mission_open",
+    "bankName": "ui_mission"
+  },
+  {
+    "id": 312002,
+    "eventName": "play_ui_mingdi_boss_enter",
+    "bankName": "ui_activity_3_1_mingdi_pata"
+  },
+  {
+    "id": 312003,
+    "eventName": "play_ui_fight_passion_get",
+    "bankName": "fight_ui_sfx2_1"
+  },
+  {
+    "id": 312004,
+    "eventName": "play_ui_mingdi_boss_clearing",
+    "bankName": "ui_activity_3_1_mingdi_pata"
+  },
+  {
+    "id": 312005,
+    "eventName": "play_ui_role_cover_open_2",
+    "bankName": "ui_role"
+  },
+  {
+    "id": 313001,
+    "eventName": "play_ui_mingdi_gsn_open",
+    "bankName": "ui_activity_3_1_mingdi_gaosiniao"
+  },
+  {
+    "id": 313002,
+    "eventName": "play_ui_mingdi_gsn_open2",
+    "bankName": "ui_activity_3_1_mingdi_gaosiniao"
+  },
+  {
+    "id": 313003,
+    "eventName": "play_ui_mingdi_gsn_anzhu",
+    "bankName": "ui_activity_3_1_mingdi_gaosiniao"
+  },
+  {
+    "id": 313004,
+    "eventName": "play_ui_mingdi_gsn_fang",
+    "bankName": "ui_activity_3_1_mingdi_gaosiniao"
+  },
+  {
+    "id": 313005,
+    "eventName": "play_ui_mingdi_gsn_win",
+    "bankName": "ui_activity_3_1_mingdi_gaosiniao"
+  },
+  {
+    "id": 313006,
+    "eventName": "play_ui_mingdi_gsn_win2",
+    "bankName": "ui_activity_3_1_mingdi_gaosiniao"
+  },
+  {
+    "id": 313007,
+    "eventName": "play_ui_mingdi_gsn_send",
+    "bankName": "ui_activity_3_1_mingdi_gaosiniao"
+  },
+  {
+    "id": 313008,
+    "eventName": "play_ui_mingdi_gsn_reset",
+    "bankName": "ui_activity_3_1_mingdi_gaosiniao"
+  },
+  {
+    "id": 313009,
+    "eventName": "play_ui_mingdi_gsn_level",
+    "bankName": "ui_activity_3_1_mingdi_gaosiniao"
+  },
+  {
+    "id": 313010,
+    "eventName": "play_ui_mingdi_gsn_lock",
+    "bankName": "ui_activity_3_1_mingdi_gaosiniao"
+  },
+  {
+    "id": 313011,
+    "eventName": "play_ui_mingdi_gsn_fenghe",
+    "bankName": "ui_activity_3_1_mingdi_gaosiniao"
+  },
+  {
+    "id": 313012,
+    "eventName": "play_ui_fight_alaifuskin_card",
+    "bankName": "fight_ui_sfx_alaifuskin_3_1"
+  },
+  {
+    "id": 314001,
+    "eventName": "play_ui_home_mingdi_harvest",
+    "bankName": "ui_home_bulao_3_1"
+  },
+  {
+    "id": 314002,
+    "eventName": "play_ui_home_mingdi_shou",
+    "bankName": "ui_home_bulao_3_1"
+  },
+  {
+    "id": 20310011,
+    "eventName": "play_replay_music_theme_3_1",
+    "bankName": "ui_replay_mainmusic3_1"
+  },
+  {
+    "id": 20310012,
+    "eventName": "play_replay_music_huixie_3_1",
+    "bankName": "ui_replay_mainmusic3_1"
+  },
+  {
+    "id": 315001,
+    "eventName": "play_ui_mingdi_video",
+    "bankName": "ui_activity_3_1_mingdi"
+  },
+  {
+    "id": 315002,
+    "eventName": "play_ui_mingdi_entrance",
+    "bankName": "ui_activity_3_1_mingdi"
+  },
+  {
+    "id": 316001,
+    "eventName": "play_ui_mingdi_ysm_jiesuo",
+    "bankName": "ui_activity_3_1_mingdi_yeshumei"
+  },
+  {
+    "id": 316002,
+    "eventName": "play_ui_mingdi_ysm_mubiao",
+    "bankName": "ui_activity_3_1_mingdi_yeshumei"
+  },
+  {
+    "id": 316003,
+    "eventName": "play_ui_mingdi_ysm_dian",
+    "bankName": "ui_activity_3_1_mingdi_yeshumei"
+  },
+  {
+    "id": 316004,
+    "eventName": "play_ui_mingdi_ysm_right",
+    "bankName": "ui_activity_3_1_mingdi_yeshumei"
+  },
+  {
+    "id": 316005,
+    "eventName": "play_ui_mingdi_ysm_wrong",
+    "bankName": "ui_activity_3_1_mingdi_yeshumei"
+  },
+  {
+    "id": 316006,
+    "eventName": "play_ui_mingdi_ysm_shadow",
+    "bankName": "ui_activity_3_1_mingdi_yeshumei"
+  },
+  {
+    "id": 316007,
+    "eventName": "play_ui_mingdi_ysm_wipe",
+    "bankName": "ui_activity_3_1_mingdi_yeshumei"
+  },
+  {
+    "id": 316008,
+    "eventName": "play_ui_mingdi_ysm_finish",
+    "bankName": "ui_activity_3_1_mingdi_yeshumei"
   }
 ]

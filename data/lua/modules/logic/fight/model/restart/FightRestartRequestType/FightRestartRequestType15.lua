@@ -26,7 +26,7 @@ end
 
 function var_0_0.enterFightAgainRpcCallback(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 	if arg_2_2 ~= 0 then
-		FightSystem.instance:restartFightFail()
+		FightGameMgr.restartMgr:restartFightFail()
 
 		return
 	end

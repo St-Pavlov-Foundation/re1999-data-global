@@ -3,9 +3,9 @@
 local var_0_0 = class("DungeonViewPointReward", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btntipreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_story/#btn_tipreward")
-	arg_1_0._txtrewardprogress = gohelper.findChildText(arg_1_0.viewGO, "#go_story/#btn_tipreward/#txt_rewardprogress")
-	arg_1_0._gorewardredpoint = gohelper.findChild(arg_1_0.viewGO, "#go_story/#btn_tipreward/#go_rewardredpoint")
+	arg_1_0._btntipreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_story/layout/#btn_tipreward")
+	arg_1_0._txtrewardprogress = gohelper.findChildText(arg_1_0.viewGO, "#go_story/layout/#btn_tipreward/#txt_rewardprogress")
+	arg_1_0._gorewardredpoint = gohelper.findChild(arg_1_0.viewGO, "#go_story/layout/#btn_tipreward/#go_rewardredpoint")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()

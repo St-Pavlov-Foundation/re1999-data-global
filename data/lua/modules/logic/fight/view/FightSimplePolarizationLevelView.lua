@@ -28,7 +28,7 @@ function var_0_0._onBtnClose(arg_4_0)
 end
 
 function var_0_0._onClick(arg_5_0)
-	if FightDataHelper.stageMgr:inReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		return
 	end
 

@@ -620,7 +620,7 @@ function var_0_0.directSetCameraRotate(arg_47_0, arg_47_1, arg_47_2, arg_47_3)
 	local var_47_0 = Time.deltaTime * VersionActivity2_7DungeonEnum.DragSpeed
 
 	transformhelper.setLocalRotationLerp(arg_47_0._mainRoot.transform, arg_47_1, arg_47_2, arg_47_3, var_47_0)
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnMapPosChanged, arg_47_0._scenePos, arg_47_0.needTween)
+	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnMapPosChanged, arg_47_0._scenePos, arg_47_0.needTween)
 	arg_47_0:_updateElementArrow()
 end
 

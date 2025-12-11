@@ -73,7 +73,7 @@ end
 local var_0_1 = 100004
 
 function var_0_0.onPlayHandCard(arg_10_0, arg_10_1)
-	if FightDataHelper.stageMgr:getCurStage() ~= FightStageMgr.StageType.Normal then
+	if FightDataHelper.stageMgr:getCurStage() ~= FightStageMgr.StageType.Operate then
 		return
 	end
 

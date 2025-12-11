@@ -2,7 +2,7 @@
 
 local var_0_0 = class("FightEntitySummonedItem", FightBaseClass)
 
-function var_0_0.onAwake(arg_1_0, arg_1_1, arg_1_2)
+function var_0_0.onLogicEnter(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0._entity = arg_1_1
 	arg_1_0._data = arg_1_2
 	arg_1_0._uid = arg_1_2.uid
@@ -226,7 +226,7 @@ function var_0_0._releaseEffect(arg_20_0, arg_20_1)
 	arg_20_0._entity.effect:removeEffect(arg_20_1)
 end
 
-function var_0_0.releaseSelf(arg_21_0)
+function var_0_0.onLogicExit(arg_21_0)
 	for iter_21_0, iter_21_1 in pairs(arg_21_0._effectDic) do
 		arg_21_0:_releaseEffect(iter_21_1)
 	end

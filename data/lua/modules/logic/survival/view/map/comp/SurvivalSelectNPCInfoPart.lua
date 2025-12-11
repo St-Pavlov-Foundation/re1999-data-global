@@ -41,7 +41,7 @@ function var_0_0.updateMo(arg_4_0, arg_4_1, arg_4_2)
 	local var_4_0 = SurvivalMapModel.instance:getInitGroup()
 	local var_4_1 = tabletool.indexOf(var_4_0.allSelectNpcs, arg_4_1)
 	local var_4_2 = tabletool.len(var_4_0.allSelectNpcs) == var_4_0:getCarryNPCCount()
-	local var_4_3 = arg_4_1:getShelterNpcStatus() == SurvivalEnum.ShelterNpcStatus.InBuild
+	local var_4_3 = true
 
 	gohelper.setActive(arg_4_0.btnInTeam, var_4_3 and not var_4_2 and not var_4_1)
 	gohelper.setActive(arg_4_0.btnOutTeam, var_4_3 and var_4_1)

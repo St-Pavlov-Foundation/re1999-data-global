@@ -67,7 +67,7 @@ function var_0_0.loadLevelNoEffect(arg_5_0, arg_5_1)
 		return
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		TaskDispatcher.runRepeat(arg_5_0._tick, arg_5_0, 1, 10)
 	end
 
@@ -109,7 +109,7 @@ function var_0_0.loadLevelWithSwitchEffect(arg_7_0, arg_7_1)
 		return
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		TaskDispatcher.runRepeat(arg_7_0._tick, arg_7_0, 1, 10)
 	end
 
@@ -137,23 +137,33 @@ end
 
 function var_0_0._onSwitchResLoadCallback(arg_9_0, arg_9_1)
 	local var_9_0 = arg_9_0:getCurScene():getSceneContainerGO()
+	local var_9_1 = arg_9_0._switchAssetItem
 
 	arg_9_0._switchAssetItem = arg_9_0._multiLoader:getAssetItem(var_0_1)
 
 	arg_9_0._switchAssetItem:Retain()
 
+	if var_9_1 then
+		var_9_1:Release()
+	end
+
 	arg_9_0._switchGO = gohelper.clone(arg_9_0._switchAssetItem:GetResource(var_0_1), var_9_0)
 
-	local var_9_1 = gohelper.findChild(arg_9_0._switchGO, "scene_former")
-	local var_9_2 = gohelper.findChild(arg_9_0._switchGO, "scene_latter")
+	local var_9_2 = gohelper.findChild(arg_9_0._switchGO, "scene_former")
+	local var_9_3 = gohelper.findChild(arg_9_0._switchGO, "scene_latter")
+	local var_9_4 = arg_9_0._assetItem
 
 	arg_9_0._assetItem = arg_9_0._multiLoader:getAssetItem(arg_9_0._resPath)
 
 	arg_9_0._assetItem:Retain()
 
-	arg_9_0._instGO = gohelper.clone(arg_9_0._assetItem:GetResource(arg_9_0._resPath), var_9_1)
+	if var_9_4 then
+		var_9_4:Release()
+	end
 
-	gohelper.addChild(var_9_2, arg_9_0._oldInstGO)
+	arg_9_0._instGO = gohelper.clone(arg_9_0._assetItem:GetResource(arg_9_0._resPath), var_9_2)
+
+	gohelper.addChild(var_9_3, arg_9_0._oldInstGO)
 	TaskDispatcher.runDelay(arg_9_0._onSwitchSceneFinish, arg_9_0, var_0_2)
 	arg_9_0._multiLoader:dispose()
 
@@ -247,7 +257,11 @@ function var_0_0._frameCallback(arg_13_0, arg_13_1)
 	end
 
 	for iter_13_0, iter_13_1 in ipairs(arg_13_0._frontRendererList) do
-		iter_13_1.material:SetFloat(ShaderPropertyId.FrontSceneAlpha, arg_13_1)
+		local var_13_0 = iter_13_1.material
+
+		if not gohelper.isNil(var_13_0) then
+			var_13_0:SetFloat(ShaderPropertyId.FrontSceneAlpha, arg_13_1)
+		end
 	end
 end
 

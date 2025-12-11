@@ -19,6 +19,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._heroItem:_setTranScale("_nameEnTxt", 1.25, 1.25)
 	arg_1_0._heroItem:_setTranScale("_lvObj", 1.25, 1.25)
 	arg_1_0._heroItem:_setTranScale("_rankObj", 0.22, 0.22)
+	arg_1_0._heroItem:setStyle_SurvivalHeroGroupEdit()
 	gohelper.setActive(arg_1_0._goorderbg, false)
 	gohelper.setActive(arg_1_0._goframe, false)
 end

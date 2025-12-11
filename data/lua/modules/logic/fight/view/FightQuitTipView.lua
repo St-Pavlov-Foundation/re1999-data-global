@@ -78,19 +78,17 @@ function var_0_0._btnyesOnClick(arg_5_0)
 end
 
 function var_0_0._btnRestart(arg_6_0)
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		return false
 	end
 
-	local var_6_0 = FightModel.instance:getCurStage()
-
-	if var_6_0 == FightEnum.Stage.EndRound or var_6_0 == FightEnum.Stage.End then
+	if FightDataHelper.stateMgr.isFinish then
 		ToastController.instance:showToast(-80)
 
 		return
 	end
 
-	FightSystem.instance:restartFight()
+	FightGameMgr.restartMgr:restart()
 end
 
 function var_0_0._setQuitText(arg_7_0)
@@ -113,10 +111,6 @@ function var_0_0._setQuitText(arg_7_0)
 			return
 		elseif var_7_0.type == DungeonEnum.EpisodeType.Rouge then
 			arg_7_0._descTxt.text = luaLang("rouge_quit_fight_confirm")
-
-			return
-		elseif var_7_0.type == DungeonEnum.EpisodeType.Shelter then
-			arg_7_0._descTxt.text = luaLang("survival_shelter_quit_fight_confirm")
 
 			return
 		end
@@ -166,9 +160,7 @@ function var_0_0._btnsureOnClick(arg_9_0)
 		return
 	end
 
-	local var_9_0 = FightModel.instance:getCurStage()
-
-	if var_9_0 ~= FightEnum.Stage.EndRound and var_9_0 ~= FightEnum.Stage.End then
+	if not FightDataHelper.stateMgr.isFinish then
 		if not FightModel.instance:getFightParam().isTestFight then
 			DungeonFightController.instance:sendEndFightRequest(true)
 		else
@@ -251,7 +243,7 @@ function var_0_0.onOpen(arg_17_0)
 	if arg_17_0:episodeNeedHideRestart() then
 		gohelper.setActive(arg_17_0._btnrestart.gameObject, false)
 	else
-		gohelper.setActive(arg_17_0._btnrestart.gameObject, not FightReplayModel.instance:isReplay())
+		gohelper.setActive(arg_17_0._btnrestart.gameObject, not FightDataHelper.stateMgr.isReplay)
 	end
 
 	arg_17_0.status = var_0_1.Tip

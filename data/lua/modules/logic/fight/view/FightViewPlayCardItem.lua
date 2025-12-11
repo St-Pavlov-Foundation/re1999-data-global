@@ -275,11 +275,15 @@ end
 local var_0_3 = {}
 
 function var_0_0._onClickThis(arg_21_0)
-	if FightViewHandCard.blockOperate or FightModel.instance:isAuto() then
+	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightViewHandCard.blockOperate or FightDataHelper.stateMgr:getIsAuto() then
+		return
+	end
+
+	if FightDataHelper.stateMgr.isReplay then
 		return
 	end
 

@@ -39,7 +39,7 @@ function var_0_0.isSkillFocus(arg_5_0, arg_5_1)
 		return
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		return
 	end
 

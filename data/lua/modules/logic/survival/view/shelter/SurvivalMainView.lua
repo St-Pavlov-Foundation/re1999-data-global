@@ -12,6 +12,12 @@ function var_0_0.onInitView(arg_1_0)
 		ViewName.GuideStepEditor,
 		ViewName.GMGuideStatusView
 	}
+	arg_1_0.BossInvasionContainer = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/Right/BossInvasionContainer")
+
+	local var_1_0 = arg_1_0.viewContainer:getSetting().otherRes.survivalbossinvasionview
+	local var_1_1 = arg_1_0:getResInst(var_1_0, arg_1_0.BossInvasionContainer)
+
+	arg_1_0.survivalBossInvasionView = MonoHelper.addNoUpdateLuaComOnceToGo(var_1_1, SurvivalBossInvasionView, 1)
 end
 
 function var_0_0.addEvents(arg_2_0)
@@ -25,14 +31,14 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0.calcSceneBoard(arg_4_0)
-	local var_4_0 = SurvivalConfig.instance:getShelterMapCo()
+	local var_4_0 = SurvivalMapHelper.instance:getSceneCameraComp()
 
-	arg_4_0._mapMinX = var_4_0.minX + 2
-	arg_4_0._mapMaxX = var_4_0.maxX - 2
-	arg_4_0._mapMinY = var_4_0.minY
-	arg_4_0._mapMaxY = var_4_0.maxY - 2
-	arg_4_0._maxDis = 10
-	arg_4_0._minDis = 4.5
+	arg_4_0._mapMinX = var_4_0.mapMinX
+	arg_4_0._mapMaxX = var_4_0.mapMaxX
+	arg_4_0._mapMinY = var_4_0.mapMinY
+	arg_4_0._mapMaxY = var_4_0.mapMaxY
+	arg_4_0._maxDis = var_4_0.maxDis
+	arg_4_0._minDis = var_4_0.minDis
 	arg_4_0._mapMaxPitch = 60
 	arg_4_0._mapMinPitch = 45
 	arg_4_0._mapYaw = 0
@@ -60,6 +66,8 @@ function var_0_0.onClickScene(arg_6_0, arg_6_1, arg_6_2)
 		return
 	end
 
+	arg_6_0.viewContainer:dispatchEvent(SurvivalEvent.OnClickShelterScene)
+
 	local var_6_0 = SurvivalMapHelper.instance:getScene()
 
 	if not var_6_0 then
@@ -71,6 +79,10 @@ function var_0_0.onClickScene(arg_6_0, arg_6_1, arg_6_2)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_qiutu_general_click)
+
+	if SurvivalMapHelper.instance:getSurvivalBubbleComp():isPlayerBubbleIntercept() then
+		return
+	end
 
 	if var_6_0.unit:checkClickUnit(arg_6_2) then
 		return
@@ -100,8 +112,15 @@ end
 
 function var_0_0.setScenePosSafety(arg_8_0, arg_8_1)
 	var_0_0.super.setScenePosSafety(arg_8_0, arg_8_1)
-	SurvivalMapHelper.instance:getSceneFogComp():updateCenterPos(arg_8_1)
-	SurvivalMapHelper.instance:getSceneFogComp():updateTexture()
+
+	local var_8_0 = SurvivalMapHelper.instance:getSceneFogComp()
+
+	if not var_8_0 then
+		return
+	end
+
+	var_8_0:updateCenterPos(arg_8_1)
+	var_8_0:updateTexture()
 end
 
 function var_0_0.onSceneScaleChange(arg_9_0)

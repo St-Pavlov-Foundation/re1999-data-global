@@ -78,7 +78,7 @@ function var_0_0._editableInitView(arg_4_0)
 end
 
 function var_0_0.onStageChange(arg_5_0)
-	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Normal then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
 		FightDataHelper.LYDataMgr:refreshPointList(true)
 
 		return arg_5_0:refreshLYCard()

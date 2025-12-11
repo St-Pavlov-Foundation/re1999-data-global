@@ -12,12 +12,14 @@ function var_0_0.initBadgeInfo(arg_2_0, arg_2_1)
 
 	local var_2_0 = lua_activity191_badge.configDict[arg_2_1]
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		local var_2_1 = Act191BadgeMO.New()
+	if var_2_0 then
+		for iter_2_0, iter_2_1 in pairs(var_2_0) do
+			local var_2_1 = Act191BadgeMO.New()
 
-		var_2_1:init(iter_2_1)
+			var_2_1:init(iter_2_1)
 
-		arg_2_0.badgeMoDic[iter_2_0] = var_2_1
+			arg_2_0.badgeMoDic[iter_2_0] = var_2_1
+		end
 	end
 end
 

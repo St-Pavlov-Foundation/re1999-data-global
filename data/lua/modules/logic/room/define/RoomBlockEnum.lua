@@ -52,5 +52,6 @@ var_0_0.EmptyDefineId = 1
 var_0_0.PlaceEffectAnimatorCloseTime = 0.16666666666666666
 var_0_0.InitBlockDegreeValue = 48
 var_0_0.WaterReformCommonDefineId = 292
+var_0_0.BlockColorReformCommonDefineId = 6
 
 return var_0_0

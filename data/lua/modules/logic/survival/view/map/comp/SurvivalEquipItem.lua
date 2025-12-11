@@ -7,7 +7,6 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._golight = gohelper.findChild(arg_1_1, "#light")
 	arg_1_0._godrag = gohelper.findChild(arg_1_1, "#go_drag")
 	arg_1_0._goitem = gohelper.findChild(arg_1_1, "#go_drag/item")
-	arg_1_0._goselect = gohelper.findChild(arg_1_1, "#go_select")
 	arg_1_0._goempty = gohelper.findChild(arg_1_1, "#go_drag/empty")
 	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_1, "#btn_click")
 	arg_1_0._golock = gohelper.findChild(arg_1_1, "#go_lock")
@@ -32,89 +31,93 @@ function var_0_0.initIndex(arg_4_0, arg_4_1)
 	arg_4_0._index = arg_4_1
 end
 
-function var_0_0.setIsSelect(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0._goselect, arg_5_1)
+function var_0_0.setClickCallback(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._callback = arg_5_1
+	arg_5_0._callobj = arg_5_2
 end
 
-function var_0_0.setClickCallback(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._callback = arg_6_1
-	arg_6_0._callobj = arg_6_2
-end
-
-function var_0_0._onClick(arg_7_0)
-	if not arg_7_0.mo then
+function var_0_0._onClick(arg_6_0)
+	if not arg_6_0.mo then
 		return
 	end
 
-	if not arg_7_0.mo.unlock then
+	if not arg_6_0.mo.unlock then
 		GameFacade.showToast(ToastEnum.SurvivalEquipLock)
 
 		return
 	end
 
-	if arg_7_0.mo.newFlag then
+	if arg_6_0.mo.newFlag then
 		SurvivalWeekRpc.instance:sendSurvivalEquipSetNewFlagRequest({
-			arg_7_0.mo.slotId
+			arg_6_0.mo.slotId
 		})
 
-		arg_7_0.mo.newFlag = false
+		arg_6_0.mo.newFlag = false
 
-		gohelper.setActive(arg_7_0._gonew, false)
+		gohelper.setActive(arg_6_0._gonew, false)
 	end
 
-	arg_7_0._callback(arg_7_0._callobj, arg_7_0._index)
+	arg_6_0._callback(arg_6_0._callobj, arg_6_0._index)
 end
 
-function var_0_0.setItemRes(arg_8_0, arg_8_1)
-	local var_8_0 = gohelper.clone(arg_8_1, arg_8_0._goitem)
+function var_0_0.setItemRes(arg_7_0, arg_7_1)
+	local var_7_0 = gohelper.clone(arg_7_1, arg_7_0._goitem)
 
-	gohelper.setActive(var_8_0, true)
+	gohelper.setActive(var_7_0, true)
 
-	arg_8_0._item = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_0, SurvivalBagItem)
+	arg_7_0._item = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0, SurvivalBagItem)
 end
 
-function var_0_0.initData(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = false
+function var_0_0.initData(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = false
 
-	if not arg_9_2 and arg_9_0.mo and arg_9_1 and not arg_9_1.item:isEmpty() and arg_9_0.mo.item.uid ~= arg_9_1.item.uid then
-		var_9_0 = true
+	if not arg_8_2 and arg_8_0.mo and arg_8_1 and not arg_8_1.item:isEmpty() and arg_8_0.mo.item.uid ~= arg_8_1.item.uid then
+		var_8_0 = true
 	end
 
-	arg_9_0.mo = arg_9_1
+	arg_8_0.mo = arg_8_1
 
-	gohelper.setActive(arg_9_0.go, arg_9_1)
+	gohelper.setActive(arg_8_0.go, arg_8_1)
 
-	local var_9_1 = not arg_9_1 or arg_9_1.item:isEmpty()
-	local var_9_2 = arg_9_1 and arg_9_1.unlock
+	local var_8_1 = not arg_8_1 or arg_8_1.item:isEmpty()
+	local var_8_2 = arg_8_1 and arg_8_1.unlock
 
-	gohelper.setActive(arg_9_0._goitem, not var_9_1 and var_9_2)
-	gohelper.setActive(arg_9_0._goempty, var_9_1 and var_9_2)
-	gohelper.setActive(arg_9_0._golock, not var_9_2)
-	gohelper.setActive(arg_9_0._goFrequency, false)
+	gohelper.setActive(arg_8_0._goitem, not var_8_1 and var_8_2)
+	gohelper.setActive(arg_8_0._goempty, var_8_1 and var_8_2)
+	gohelper.setActive(arg_8_0._golock, not var_8_2)
+	gohelper.setActive(arg_8_0._goFrequency, false)
 
-	if not var_9_1 then
-		arg_9_0._item:updateMo(arg_9_1.item)
+	if not var_8_1 then
+		arg_8_0._isSp = arg_8_0.mo.item.equipCo.equipType == 1
 
-		local var_9_3 = arg_9_1.parent.maxTagId
-		local var_9_4 = lua_survival_equip_found.configDict[var_9_3]
+		arg_8_0:updateItemMo()
 
-		if var_9_4 then
-			gohelper.setActive(arg_9_0._goFrequency, true)
-			UISpriteSetMgr.instance:setSurvivalSprite(arg_9_0._imageFrequency, var_9_4.value)
+		if arg_8_0._goFrequency then
+			local var_8_3 = arg_8_1.parent.maxTagId
+			local var_8_4 = lua_survival_equip_found.configDict[var_8_3]
 
-			arg_9_0._txtFrequency.text = arg_9_0.mo.values[var_9_4.value] or 0
+			if var_8_4 then
+				gohelper.setActive(arg_8_0._goFrequency, true)
+				UISpriteSetMgr.instance:setSurvivalSprite(arg_8_0._imageFrequency, var_8_4.value)
+
+				arg_8_0._txtFrequency.text = arg_8_0.mo.values[var_8_4.value] or 0
+			end
 		end
 	end
 
-	if arg_9_1 then
-		gohelper.setActive(arg_9_0._gonew, arg_9_1.newFlag)
+	if arg_8_1 then
+		gohelper.setActive(arg_8_0._gonew, arg_8_1.newFlag)
 	end
 
-	if var_9_0 then
+	if var_8_0 then
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_put_2)
-		gohelper.setActive(arg_9_0._goput, false)
-		gohelper.setActive(arg_9_0._goput, true)
+		gohelper.setActive(arg_8_0._goput, false)
+		gohelper.setActive(arg_8_0._goput, true)
 	end
+end
+
+function var_0_0.updateItemMo(arg_9_0)
+	arg_9_0._item:updateMo(arg_9_0.mo.item)
 end
 
 function var_0_0.setParentRoot(arg_10_0, arg_10_1)
@@ -138,7 +141,7 @@ function var_0_0._onDrag(arg_12_0, arg_12_1, arg_12_2)
 		recthelper.setAnchor(var_12_2, var_12_1.x, var_12_1.y)
 	end
 
-	local var_12_5, var_12_6 = arg_12_0._parentView:getDragIndex(arg_12_2.position)
+	local var_12_5, var_12_6 = arg_12_0._parentView:getDragIndex(arg_12_2.position, arg_12_0._isSp)
 
 	if var_12_6 ~= arg_12_0 and var_12_6 ~= arg_12_0._curOverEquip then
 		if arg_12_0._curOverEquip then
@@ -168,13 +171,18 @@ function var_0_0._onEndDrag(arg_14_0, arg_14_1, arg_14_2)
 		arg_14_0._curOverEquip = nil
 	end
 
-	local var_14_0, var_14_1 = arg_14_0._parentView:getDragIndex(arg_14_2.position)
+	local var_14_0, var_14_1 = arg_14_0._parentView:getDragIndex(arg_14_2.position, arg_14_0._isSp)
 
 	if var_14_0 == -1 then
 		local var_14_2 = arg_14_0._godrag.transform
 
 		ZProj.TweenHelper.DOAnchorPos(var_14_2, 0, 0, 0.2)
-		SurvivalWeekRpc.instance:sendSurvivalEquipDemount(arg_14_0._index)
+
+		if not arg_14_0._isSp then
+			SurvivalWeekRpc.instance:sendSurvivalEquipDemount(arg_14_0._index)
+		else
+			SurvivalWeekRpc.instance:sendSurvivalJewelryEquipDemount(arg_14_0._index)
+		end
 	elseif not var_14_0 or var_14_0 == arg_14_0._index or not arg_14_0:canMoveToIndex(var_14_0) then
 		local var_14_3 = arg_14_0._godrag.transform
 
@@ -200,7 +208,11 @@ function var_0_0.moveTo(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
 end
 
 function var_0_0.moveEnd(arg_16_0)
-	SurvivalWeekRpc.instance:sendSurvivalEquipWear(arg_16_0._tweenToIndex, arg_16_0.mo.item.uid, arg_16_0._onRecvMsg, arg_16_0)
+	if arg_16_0._isSp then
+		SurvivalWeekRpc.instance:sendSurvivalJewelryEquipWear(arg_16_0._tweenToIndex, arg_16_0.mo.item.uid, arg_16_0._onRecvMsg, arg_16_0)
+	else
+		SurvivalWeekRpc.instance:sendSurvivalEquipWear(arg_16_0._tweenToIndex, arg_16_0.mo.item.uid, arg_16_0._onRecvMsg, arg_16_0)
+	end
 end
 
 function var_0_0._onRecvMsg(arg_17_0)

@@ -22,7 +22,7 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnTeachNote:AddClickListener(arg_2_0._onClickTeachNote, arg_2_0)
 	arg_2_0._btnTeachNoteSkip:AddClickListener(arg_2_0._onClickTeachNoteSkip, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.PushEndFight, arg_2_0._pushEndFight, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnStageChange, arg_2_0._delayCheckShowAnim, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_2_0._delayCheckShowAnim, arg_2_0)
 	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
 	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._delayCheckShowAnim, arg_2_0)
 end
@@ -31,7 +31,7 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btnTeachNote:RemoveClickListener()
 	arg_3_0._btnTeachNoteSkip:RemoveClickListener()
 	arg_3_0:removeEventCb(FightController.instance, FightEvent.PushEndFight, arg_3_0._pushEndFight, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnStageChange, arg_3_0._delayCheckShowAnim, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.StageChanged, arg_3_0._delayCheckShowAnim, arg_3_0)
 	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
 	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._delayCheckShowAnim, arg_3_0)
 	TaskDispatcher.cancelTask(arg_3_0._checkShowAnim, arg_3_0)
@@ -81,7 +81,7 @@ function var_0_0._checkShowAnim(arg_7_0)
 		return
 	end
 
-	if arg_7_0.viewContainer.fightViewHandCard:isPlayCardFlow() then
+	if FightWorkPlayHandCard.playing > 0 then
 		return
 	end
 
@@ -93,7 +93,7 @@ function var_0_0._checkShowAnim(arg_7_0)
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -101,12 +101,12 @@ function var_0_0._checkShowAnim(arg_7_0)
 		return
 	end
 
-	local var_7_0 = arg_7_0.viewContainer.fightViewHandCard:isPlayCardFlow()
+	local var_7_0 = FightWorkPlayHandCard.playing > 0
 	local var_7_1 = arg_7_0.viewContainer.fightViewHandCard:isMoveCardFlow()
 	local var_7_2 = arg_7_0.viewContainer.fightViewHandCard:isCombineCardFlow()
 	local var_7_3 = var_7_0 or var_7_1 or var_7_2
 	local var_7_4 = ViewMgr.instance:isOpen(ViewName.GuideView)
-	local var_7_5 = FightModel.instance:getCurStage() == FightEnum.Stage.Card
+	local var_7_5 = FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate
 
 	if not var_7_3 and not var_7_4 and var_7_5 and var_0_2 > 0 then
 		arg_7_0._teachNoteAnimator.enabled = true
@@ -149,9 +149,7 @@ function var_0_0._pushEndFight(arg_9_0)
 end
 
 function var_0_0._onClickTeachNote(arg_10_0)
-	local var_10_0 = FightModel.instance:getCurStage()
-
-	if var_10_0 == FightEnum.Stage.StartRound or var_10_0 == FightEnum.Stage.Distribute then
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Enter) or FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DistributeCard) then
 		return
 	end
 
@@ -159,16 +157,16 @@ function var_0_0._onClickTeachNote(arg_10_0)
 		return
 	end
 
-	local var_10_1 = arg_10_0:_getGuideId()
+	local var_10_0 = arg_10_0:_getGuideId()
 
-	if var_10_1 then
-		local var_10_2 = {
+	if var_10_0 then
+		local var_10_1 = {
 			id = HelpEnum.HelpId.Fight,
 			viewParam = HelpEnum.HelpId.Fight,
-			guideId = var_10_1
+			guideId = var_10_0
 		}
 
-		ViewMgr.instance:openView(ViewName.HelpView, var_10_2)
+		ViewMgr.instance:openView(ViewName.HelpView, var_10_1)
 	else
 		logError("没有正在执行的教学笔记引导，无法打开帮助说明界面")
 	end

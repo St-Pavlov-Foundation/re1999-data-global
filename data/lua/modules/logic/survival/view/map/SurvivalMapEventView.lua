@@ -147,7 +147,7 @@ function var_0_0.refreshView(arg_10_0)
 end
 
 function var_0_0.getChoiceDataSearch(arg_11_0)
-	local var_11_0 = arg_11_0._curMo.extraParam == "true"
+	local var_11_0 = arg_11_0._curMo:isSearched()
 	local var_11_1 = arg_11_0:getChoiceDataDefault()
 
 	if var_11_1[1] then
@@ -332,14 +332,8 @@ function var_0_0.nextStep(arg_16_0)
 
 	local var_16_0 = arg_16_0._curStepCo and arg_16_0._curStepCo.animType or 0
 
-	if arg_16_0._curHeroPath then
-		if var_16_0 == 0 then
-			arg_16_0._modelComp:playAnim(arg_16_0._curHeroPath, "idle")
-		elseif var_16_0 == 1 then
-			arg_16_0._modelComp:playAnim(arg_16_0._curHeroPath, "jump")
-		elseif var_16_0 == 2 then
-			arg_16_0._modelComp:playAnim(arg_16_0._curHeroPath, "jump2")
-		end
+	if arg_16_0._modelComp then
+		arg_16_0._modelComp:playNextAnim(var_16_0)
 	end
 end
 
@@ -395,7 +389,7 @@ function var_0_0._createItem(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
 	var_19_3:setShowNum(false)
 	var_19_3:setClickCallback(arg_19_0._onClickItem, arg_19_0)
 
-	local var_19_5 = SurvivalMapModel.instance:getSceneMo().bag:getItemCountPlus(arg_19_2.id)
+	local var_19_5 = SurvivalMapHelper.instance:getBagMo():getItemCountPlus(arg_19_2.id)
 
 	gohelper.setActive(var_19_2, var_19_5 < arg_19_2.count)
 
@@ -511,75 +505,33 @@ function var_0_0.onClickBogusBtn(arg_26_0, arg_26_1, arg_26_2)
 end
 
 function var_0_0.initCamera(arg_27_0)
+	local var_27_0 = SurvivalMapModel.instance:getCurMapCo()
+	local var_27_1, var_27_2, var_27_3 = SurvivalHelper.instance:hexPointToWorldPoint(var_27_0.exitPos.q, var_27_0.exitPos.r)
+	local var_27_4 = Vector3(var_27_1, -1000, var_27_3)
+
 	arg_27_0._modelComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_27_0._imageModel, Survival3DModelComp, {
-		xOffset = 8000
+		customPos = var_27_4
 	})
-
-	local var_27_0 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes)
-
-	arg_27_0._allResGo = arg_27_0:getUserDataTb_()
-	arg_27_0._allResGo["node1/role"] = arg_27_0._modelComp:addModel("node1/role", var_27_0)
-	arg_27_0._allResGo["node2/role"] = arg_27_0._modelComp:addModel("node2/role", var_27_0)
-
-	arg_27_0:hideOtherModel()
 end
 
-function var_0_0.hideOtherModel(arg_28_0)
-	for iter_28_0, iter_28_1 in pairs(arg_28_0._allResGo) do
-		gohelper.setActive(iter_28_1, iter_28_0 == arg_28_0._curHeroPath or iter_28_0 == arg_28_0._curUnitPath)
-	end
-end
+function var_0_0.setUnitMo(arg_28_0, arg_28_1)
+	gohelper.setActive(arg_28_0._btnNpc, arg_28_1.unitType == SurvivalEnum.UnitType.NPC)
 
-function var_0_0.setUnitMo(arg_29_0, arg_29_1)
-	gohelper.setActive(arg_29_0._btnNpc, arg_29_1.unitType == SurvivalEnum.UnitType.NPC)
+	if arg_28_1.unitType == SurvivalEnum.UnitType.NPC then
+		arg_28_0._npcItemMo = SurvivalBagItemMo.New()
 
-	if arg_29_1.unitType == SurvivalEnum.UnitType.NPC then
-		arg_29_0._npcItemMo = SurvivalBagItemMo.New()
+		local var_28_0 = SurvivalConfig.instance.npcIdToItemCo[arg_28_1.cfgId]
 
-		local var_29_0 = SurvivalConfig.instance.npcIdToItemCo[arg_29_1.cfgId]
-
-		arg_29_0._npcItemMo:init({
+		arg_28_0._npcItemMo:init({
 			count = 1,
-			id = var_29_0 and var_29_0.id or 0
+			id = var_28_0 and var_28_0.id or 0
 		})
 	end
 
-	local var_29_1 = arg_29_1:getResPath()
-	local var_29_2 = arg_29_1.unitType == SurvivalEnum.UnitType.Search
+	local var_28_1 = Survival3DModelMO.New()
 
-	arg_29_0._curHeroPath = nil
-	arg_29_0._curUnitPath = nil
-
-	if string.find(var_29_1, "^survival/buiding") then
-		if arg_29_1.co.camera == 2 then
-			arg_29_0._curUnitPath = "node4/buiding3"
-		elseif arg_29_1.co.camera == 3 then
-			arg_29_0._curUnitPath = "node5/buiding4"
-		elseif next(arg_29_1.exPoints) or arg_29_1.co.camera == 1 then
-			arg_29_0._curUnitPath = "node3/buiding2"
-		else
-			arg_29_0._curUnitPath = "node2/buiding1"
-			arg_29_0._curHeroPath = "node2/role"
-		end
-	else
-		arg_29_0._curHeroPath = "node1/role"
-		arg_29_0._curUnitPath = "node1/npc"
-	end
-
-	if arg_29_0._curUnitPath then
-		arg_29_0._allResGo[arg_29_0._curUnitPath] = arg_29_0._modelComp:addModel(arg_29_0._curUnitPath, var_29_1)
-	end
-
-	if arg_29_0._curUnitPath then
-		arg_29_0._allResGo[arg_29_0._curUnitPath] = arg_29_0._modelComp:addModel(arg_29_0._curUnitPath, var_29_1)
-	end
-
-	if arg_29_0._curHeroPath then
-		arg_29_0._modelComp:setModelPathActive(arg_29_0._curHeroPath, "#go_effect", var_29_2)
-		arg_29_0._modelComp:playAnim(arg_29_0._curHeroPath, var_29_2 and "search" or "idle")
-	end
-
-	arg_29_0:hideOtherModel()
+	var_28_1:setDataByUnitMo(arg_28_1)
+	arg_28_0._modelComp:setSurvival3DModelMO(var_28_1)
 end
 
 return var_0_0

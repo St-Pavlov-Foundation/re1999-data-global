@@ -1447,5 +1447,194 @@
     "season": 23,
     "episodeId": 90202333,
     "entrance": 3
+  },
+  {
+    "layerId": 2401,
+    "difficulty": 1,
+    "season": 24,
+    "episodeId": 90202411,
+    "entrance": 1
+  },
+  {
+    "layerId": 2401,
+    "difficulty": 2,
+    "season": 24,
+    "episodeId": 90202412,
+    "entrance": 1
+  },
+  {
+    "layerId": 2401,
+    "difficulty": 3,
+    "season": 24,
+    "episodeId": 90202413,
+    "entrance": 1
+  },
+  {
+    "layerId": 2402,
+    "difficulty": 1,
+    "season": 24,
+    "episodeId": 90202421,
+    "entrance": 2
+  },
+  {
+    "layerId": 2402,
+    "difficulty": 2,
+    "season": 24,
+    "episodeId": 90202422,
+    "entrance": 2
+  },
+  {
+    "layerId": 2402,
+    "difficulty": 3,
+    "season": 24,
+    "episodeId": 90202423,
+    "entrance": 2
+  },
+  {
+    "layerId": 2403,
+    "difficulty": 1,
+    "season": 24,
+    "episodeId": 90202431,
+    "entrance": 3
+  },
+  {
+    "layerId": 2403,
+    "difficulty": 2,
+    "season": 24,
+    "episodeId": 90202432,
+    "entrance": 3
+  },
+  {
+    "layerId": 2403,
+    "difficulty": 3,
+    "season": 24,
+    "episodeId": 90202433,
+    "entrance": 3
+  },
+  {
+    "layerId": 2501,
+    "difficulty": 1,
+    "season": 25,
+    "episodeId": 90202511,
+    "entrance": 1
+  },
+  {
+    "layerId": 2501,
+    "difficulty": 2,
+    "season": 25,
+    "episodeId": 90202512,
+    "entrance": 1
+  },
+  {
+    "layerId": 2501,
+    "difficulty": 3,
+    "season": 25,
+    "episodeId": 90202513,
+    "entrance": 1
+  },
+  {
+    "layerId": 2502,
+    "difficulty": 1,
+    "season": 25,
+    "episodeId": 90202521,
+    "entrance": 2
+  },
+  {
+    "layerId": 2502,
+    "difficulty": 2,
+    "season": 25,
+    "episodeId": 90202522,
+    "entrance": 2
+  },
+  {
+    "layerId": 2502,
+    "difficulty": 3,
+    "season": 25,
+    "episodeId": 90202523,
+    "entrance": 2
+  },
+  {
+    "layerId": 2503,
+    "difficulty": 1,
+    "season": 25,
+    "episodeId": 90202531,
+    "entrance": 3
+  },
+  {
+    "layerId": 2503,
+    "difficulty": 2,
+    "season": 25,
+    "episodeId": 90202532,
+    "entrance": 3
+  },
+  {
+    "layerId": 2503,
+    "difficulty": 3,
+    "season": 25,
+    "episodeId": 90202533,
+    "entrance": 3
+  },
+  {
+    "layerId": 2601,
+    "difficulty": 1,
+    "season": 26,
+    "episodeId": 90202611,
+    "entrance": 1
+  },
+  {
+    "layerId": 2601,
+    "difficulty": 2,
+    "season": 26,
+    "episodeId": 90202612,
+    "entrance": 1
+  },
+  {
+    "layerId": 2601,
+    "difficulty": 3,
+    "season": 26,
+    "episodeId": 90202613,
+    "entrance": 1
+  },
+  {
+    "layerId": 2602,
+    "difficulty": 1,
+    "season": 26,
+    "episodeId": 90202621,
+    "entrance": 2
+  },
+  {
+    "layerId": 2602,
+    "difficulty": 2,
+    "season": 26,
+    "episodeId": 90202622,
+    "entrance": 2
+  },
+  {
+    "layerId": 2602,
+    "difficulty": 3,
+    "season": 26,
+    "episodeId": 90202623,
+    "entrance": 2
+  },
+  {
+    "layerId": 2603,
+    "difficulty": 1,
+    "season": 26,
+    "episodeId": 90202631,
+    "entrance": 3
+  },
+  {
+    "layerId": 2603,
+    "difficulty": 2,
+    "season": 26,
+    "episodeId": 90202632,
+    "entrance": 3
+  },
+  {
+    "layerId": 2603,
+    "difficulty": 3,
+    "season": 26,
+    "episodeId": 90202633,
+    "entrance": 3
   }
 ]

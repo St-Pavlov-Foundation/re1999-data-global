@@ -61,11 +61,11 @@ function var_0_0.onOpen(arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.EnterOperateState, arg_4_0._onEnterOperateState, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.ExitOperateState, arg_4_0._onExitOperateState, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.HidePlayCardAllCard, arg_4_0._onHidePlayCardAllCard, arg_4_0)
-	arg_4_0:addEventCb(FightController.instance, FightEvent.EnterStage, arg_4_0._onEnterStage, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_4_0.onStageChanged, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.BeforeCancelOperation, arg_4_0.onBeforeCancelOperation, arg_4_0)
 end
 
-function var_0_0._onEnterStage(arg_5_0, arg_5_1)
+function var_0_0.onStageChanged(arg_5_0, arg_5_1)
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
 		return
 	end
@@ -389,10 +389,14 @@ function var_0_0._refreshItemData(arg_25_0, arg_25_1, arg_25_2)
 	end
 
 	if not var_25_0 then
-		local var_25_1 = string.format("刷新出牌区出错,想要刷新下标:%d,但是当前总可用牌区点数为:%d", arg_25_1, var_0_0.getMaxItemCount())
+		local var_25_1 = var_0_0.getMaxItemCount()
+		local var_25_2 = string.format("刷新出牌区出错,想要刷新下标:%d,但是当前总可用牌区点数为:%d", arg_25_1, var_25_1)
 
-		logError(var_25_1)
-		arg_25_0:_refreshAllItemData()
+		logError(var_25_2)
+
+		if arg_25_1 <= var_25_1 then
+			arg_25_0:_refreshAllItemData()
+		end
 
 		return
 	end
@@ -404,11 +408,11 @@ function var_0_0._refreshItemData(arg_25_0, arg_25_1, arg_25_2)
 	if arg_25_2 and arg_25_2:needCopyCard() then
 		arg_25_0:_onCorrectPlayCardObjList()
 
-		local var_25_2 = arg_25_0._playCardItemList[arg_25_1 + 1]
+		local var_25_3 = arg_25_0._playCardItemList[arg_25_1 + 1]
 
-		gohelper.setActive(var_25_2.go, true)
-		var_25_2:updateItem(arg_25_2)
-		var_25_2:setCopyCard()
+		gohelper.setActive(var_25_3.go, true)
+		var_25_3:updateItem(arg_25_2)
+		var_25_3:setCopyCard()
 		arg_25_0:_refreshItemAni(arg_25_1 + 1, arg_25_2)
 	end
 end

@@ -57,13 +57,23 @@ end
 function var_0_0.showDice(arg_4_0)
 	gohelper.setActiveCanvasGroup(arg_4_0._movieGO, true)
 	gohelper.setActiveCanvasGroup(arg_4_0._resultGO, true)
-	FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, FightRightElementEnum.Elements.Dice)
+
+	if FightDataHelper.tempMgr.douQuQuDice then
+		FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, FightRightElementEnum.Elements.DouQuQuDice)
+	else
+		FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, FightRightElementEnum.Elements.Dice)
+	end
 end
 
 function var_0_0.hideDice(arg_5_0)
 	gohelper.setActiveCanvasGroup(arg_5_0._movieGO, false)
 	gohelper.setActiveCanvasGroup(arg_5_0._resultGO, false)
-	FightController.instance:dispatchEvent(FightEvent.RightElements_HideElement, FightRightElementEnum.Elements.Dice)
+
+	if FightDataHelper.tempMgr.douQuQuDice then
+		FightController.instance:dispatchEvent(FightEvent.RightElements_HideElement, FightRightElementEnum.Elements.DouQuQuDice)
+	else
+		FightController.instance:dispatchEvent(FightEvent.RightElements_HideElement, FightRightElementEnum.Elements.Dice)
+	end
 end
 
 function var_0_0._onOpenView(arg_6_0, arg_6_1)
@@ -113,15 +123,22 @@ function var_0_0._setDiceInfo(arg_13_0)
 	for iter_13_0, iter_13_1 in ipairs(arg_13_0.viewParam) do
 		local var_13_4 = iter_13_1[1]
 		local var_13_5 = iter_13_1[2]
-		local var_13_6 = var_13_5.effectNum % 10
-		local var_13_7 = lua_skill.configDict[var_13_5.effectNum]
+		local var_13_6 = var_13_5.effectNum
+		local var_13_7 = var_13_6 % 10
+
+		if var_13_5.effectType == FightEnum.EffectType.RANDOMDICEUSESKILL then
+			var_13_7 = var_13_5.effectNum
+			var_13_6 = var_13_5.effectNum1
+		end
+
+		local var_13_8 = lua_skill.configDict[var_13_6]
 
 		if var_13_4.fromId == FightEntityScene.MySideId then
-			var_13_1 = var_13_6
-			var_13_3 = FightConfig.instance:getSkillEffectDesc(nil, var_13_7)
+			var_13_1 = var_13_7
+			var_13_3 = FightConfig.instance:getSkillEffectDesc(nil, var_13_8)
 		elseif var_13_4.fromId == FightEntityScene.EnemySideId then
-			var_13_0 = var_13_6
-			var_13_2 = FightConfig.instance:getSkillEffectDesc(nil, var_13_7)
+			var_13_0 = var_13_7
+			var_13_2 = FightConfig.instance:getSkillEffectDesc(nil, var_13_8)
 		end
 	end
 
@@ -174,18 +191,28 @@ function var_0_0._nextFrameShow(arg_15_0)
 end
 
 function var_0_0.moveFriendGo(arg_16_0)
-	local var_16_0 = ViewMgr.instance:getContainer(ViewName.FightView).rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.Dice)
+	local var_16_0 = ViewMgr.instance:getContainer(ViewName.FightView).rightElementLayoutView
+	local var_16_1 = var_16_0:getElementContainer(FightRightElementEnum.Elements.Dice)
 
-	gohelper.addChild(var_16_0, arg_16_0._resultFriendGO)
+	if FightDataHelper.tempMgr.douQuQuDice then
+		var_16_1 = var_16_0:getElementContainer(FightRightElementEnum.Elements.DouQuQuDice)
+	end
 
-	local var_16_1 = arg_16_0._resultFriendGO:GetComponent(gohelper.Type_RectTransform)
+	gohelper.addChild(var_16_1, arg_16_0._resultFriendGO)
 
-	var_16_1.pivot = Vector2(1, 1)
-	var_16_1.anchorMin = Vector2(1, 1)
-	var_16_1.anchorMax = Vector2(1, 1)
+	local var_16_2 = arg_16_0._resultFriendGO:GetComponent(gohelper.Type_RectTransform)
 
-	recthelper.setAnchor(var_16_1, -40, 0)
-	FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, FightRightElementEnum.Elements.Dice)
+	var_16_2.pivot = Vector2(1, 1)
+	var_16_2.anchorMin = Vector2(1, 1)
+	var_16_2.anchorMax = Vector2(1, 1)
+
+	recthelper.setAnchor(var_16_2, -40, 0)
+
+	if FightDataHelper.tempMgr.douQuQuDice then
+		FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, FightRightElementEnum.Elements.DouQuQuDice)
+	else
+		FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, FightRightElementEnum.Elements.Dice)
+	end
 end
 
 function var_0_0._delayFirstRoundDone(arg_17_0)

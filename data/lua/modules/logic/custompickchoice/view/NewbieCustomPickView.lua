@@ -127,6 +127,7 @@ function var_0_0.getOrCreateItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
 		local var_11_0 = IconMgr.instance:getCommonHeroItem(arg_11_3)
 
 		var_11_0:addClickListener(arg_11_0._onItemClick, arg_11_0)
+		var_11_0:setStyle_CharacterBackpack()
 		var_11_0:setLevelContentShow(false)
 		var_11_0:setExSkillActive(true)
 

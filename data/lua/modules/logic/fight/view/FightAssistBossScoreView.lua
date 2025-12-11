@@ -17,10 +17,16 @@ end
 
 function var_0_0.onLoadCallback(arg_2_0, arg_2_1)
 	if arg_2_1.IsLoadSuccess then
+		local var_2_0 = arg_2_0._assetItem
+
 		arg_2_0.loadDone = true
 		arg_2_0._assetItem = arg_2_1
 
 		arg_2_0._assetItem:Retain()
+
+		if var_2_0 then
+			var_2_0:Release()
+		end
 
 		arg_2_0.instanceGo = gohelper.clone(arg_2_0._assetItem:GetResource(var_0_1), arg_2_0.goAssistBossContainer)
 

@@ -222,7 +222,7 @@ function var_0_0.refreshTagList(arg_15_0, arg_15_1, arg_15_2)
 		if var_15_7 then
 			var_15_5.txtType.text = var_15_7.name
 
-			local var_15_8 = SurvivalEnum.ShelterTagColor[var_15_7.color]
+			local var_15_8 = SurvivalConst.ShelterTagColor[var_15_7.color]
 
 			if var_15_8 then
 				SLFramework.UGUI.GuiHelper.SetColor(var_15_5.imageType, var_15_8)

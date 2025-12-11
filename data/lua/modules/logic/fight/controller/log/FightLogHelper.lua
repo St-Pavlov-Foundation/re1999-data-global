@@ -309,7 +309,7 @@ function var_0_0.getFightBuffString(arg_14_0, arg_14_1, arg_14_2)
 	arg_14_1 = arg_14_1 or 0
 
 	local var_14_0 = var_0_0.getPrefix(arg_14_1)
-	local var_14_1 = var_0_0.buildClassNameByIndex("FightBuffMO", arg_14_2)
+	local var_14_1 = var_0_0.buildClassNameByIndex("FightBuffInfoData", arg_14_2)
 
 	if not arg_14_0 then
 		return string.format("%s %s : nil", var_14_0, var_14_1)
@@ -871,7 +871,14 @@ var_0_0.EffectTypeNameDict = {
 	[FightEnum.EffectType.BUFFACTINFOUPDATE] = "buffActInfo更新",
 	[FightEnum.EffectType.REALDAMAGEKILL] = "斩杀伤害",
 	[FightEnum.EffectType.BUFFDELREASON] = "buff删除原因",
-	[FightEnum.EffectType.TRIGGER] = "触发器"
+	[FightEnum.EffectType.RANDOMDICEUSESKILL] = "骰子表现随机释放技能",
+	[FightEnum.EffectType.TOWERDEEPCHANGE] = "爬塔深度变化",
+	[FightEnum.EffectType.FIGHTHURTDETAIL] = "战斗伤害通用信息结构",
+	[FightEnum.EffectType.TRIGGER] = "触发器",
+	[FightEnum.EffectType.EZIOBIGSKILLDAMAGE] = "EZIO大招伤害",
+	[FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE] = "EZIO大招本源创伤",
+	[FightEnum.EffectType.UPDATEITEMPLAYERSKILL] = "更新道具主角技能",
+	[FightEnum.EffectType.EZIOBIGSKILLEXIT] = "EZIO大招意外退出"
 }
 
 function var_0_0.getEffectTypeName(arg_29_0)

@@ -2,12 +2,8 @@
 
 local var_0_0 = class("TaskConfigGetDefine", BaseConfig)
 
-function var_0_0._getActivity189(arg_1_0)
-	return Activity189Config.instance:getTaskCO(arg_1_0)
-end
-
-function var_0_0.ctor(arg_2_0)
-	arg_2_0._defineList = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._defineList = {
 		[TaskEnum.TaskType.Activity189] = var_0_0._getActivity189,
 		[TaskEnum.TaskType.Daily] = var_0_0._getDaily,
 		[TaskEnum.TaskType.Weekly] = var_0_0._getWeekly,
@@ -25,7 +21,11 @@ function var_0_0.ctor(arg_2_0)
 		[TaskEnum.TaskType.Activity183] = var_0_0._getAct183Task,
 		[TaskEnum.TaskType.Activity189] = var_0_0._getActivity189,
 		[TaskEnum.TaskType.AssassinOutside] = var_0_0._getAssassinOutside,
-		[TaskEnum.TaskType.StoreLinkPackage] = var_0_0._getStoreLinkPackage
+		[TaskEnum.TaskType.StoreLinkPackage] = var_0_0._getStoreLinkPackage,
+		[TaskEnum.TaskType.NecrologistStory] = var_0_0._getNecrologistStory,
+		[TaskEnum.TaskType.Activity210] = function(arg_2_0)
+			return lua_activity210_task.configDict[arg_2_0]
+		end
 	}
 end
 
@@ -101,6 +101,10 @@ end
 
 function var_0_0._getStoreLinkPackage(arg_20_0)
 	return StoreConfig.instance:getChargeConditionalConfig(arg_20_0)
+end
+
+function var_0_0._getNecrologistStory(arg_21_0)
+	return NecrologistStoryConfig.instance:getTaskCo(arg_21_0)
 end
 
 var_0_0.instance = var_0_0.New()

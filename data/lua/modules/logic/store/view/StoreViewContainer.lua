@@ -18,9 +18,11 @@ end
 
 function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	if arg_2_1 == 1 then
+		local var_2_0 = StoreController.instance:needHideHome()
+
 		arg_2_0.navigationView = NavigateButtonsView.New({
 			true,
-			true,
+			not var_2_0,
 			false
 		})
 
@@ -34,67 +36,68 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 			arg_2_0._currencyView
 		}
 	elseif arg_2_1 == 3 then
-		local var_2_0 = ListScrollParam.New()
-
-		var_2_0.scrollGOPath = "#scroll_prop"
-		var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-		var_2_0.cellClass = NormalStoreGoodsItem
-		var_2_0.scrollDir = ScrollEnum.ScrollDirV
-		var_2_0.lineCount = 4
-		var_2_0.cellWidth = 332
-		var_2_0.cellHeight = 355
-		var_2_0.cellSpaceH = 29
-		var_2_0.cellSpaceV = 37
-		var_2_0.startSpace = 31
-
 		local var_2_1 = ListScrollParam.New()
 
 		var_2_1.scrollGOPath = "#scroll_prop"
 		var_2_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_1.prefabUrl = arg_2_0._viewSetting.otherRes[2]
-		var_2_1.cellClass = ChargeStoreGoodsItem
+		var_2_1.prefabUrl = arg_2_0._viewSetting.otherRes[1]
+		var_2_1.cellClass = NormalStoreGoodsItem
 		var_2_1.scrollDir = ScrollEnum.ScrollDirV
-		var_2_1.lineCount = 3
-		var_2_1.cellWidth = 446
-		var_2_1.cellHeight = 406
-		var_2_1.cellSpaceH = 38
-		var_2_1.cellSpaceV = 35
-		var_2_1.startSpace = 0
+		var_2_1.lineCount = 4
+		var_2_1.cellWidth = 332
+		var_2_1.cellHeight = 355
+		var_2_1.cellSpaceH = 29
+		var_2_1.cellSpaceV = 37
+		var_2_1.startSpace = 31
 
 		local var_2_2 = ListScrollParam.New()
 
 		var_2_2.scrollGOPath = "#scroll_prop"
 		var_2_2.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_2.prefabUrl = arg_2_0._viewSetting.otherRes[3]
-		var_2_2.cellClass = StoreSkinGoodsItem
-		var_2_2.scrollDir = ScrollEnum.ScrollDirH
-		var_2_2.lineCount = 1
-		var_2_2.cellWidth = 374
-		var_2_2.cellHeight = 955
-		var_2_2.cellSpaceH = 31
-		var_2_2.cellSpaceV = 0
-		var_2_2.startSpace = 7
+		var_2_2.prefabUrl = arg_2_0._viewSetting.otherRes[2]
+		var_2_2.cellClass = ChargeStoreGoodsItem
+		var_2_2.scrollDir = ScrollEnum.ScrollDirV
+		var_2_2.lineCount = 3
+		var_2_2.cellWidth = 446
+		var_2_2.cellHeight = 406
+		var_2_2.cellSpaceH = 38
+		var_2_2.cellSpaceV = 35
+		var_2_2.startSpace = 0
 
 		local var_2_3 = ListScrollParam.New()
 
-		var_2_3.scrollGOPath = "#scroll_prop"
+		var_2_3.scrollGOPath = "#go_has/#scroll_skin"
 		var_2_3.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_3.prefabUrl = arg_2_0._viewSetting.otherRes[4]
-		var_2_3.cellClass = PackageStoreGoodsItem
-		var_2_3.scrollDir = ScrollEnum.ScrollDirH
-		var_2_3.lineCount = 1
-		var_2_3.cellWidth = 340
-		var_2_3.cellHeight = 770
-		var_2_3.cellSpaceH = 29.5
+		var_2_3.prefabUrl = arg_2_0._viewSetting.otherRes[3]
+		var_2_3.cellClass = StoreSkinGoodsItem
+		var_2_3.scrollDir = ScrollEnum.ScrollDirV
+		var_2_3.lineCount = 2
+		var_2_3.cellWidth = 260
+		var_2_3.cellHeight = 408
+		var_2_3.cellSpaceH = 0
 		var_2_3.cellSpaceV = 0
-		var_2_3.startSpace = 8
+		var_2_3.startSpace = 0
+		var_2_3.notPlayAnimation = true
 
-		local var_2_4 = TreeScrollParam.New()
+		local var_2_4 = ListScrollParam.New()
 
 		var_2_4.scrollGOPath = "#scroll_prop"
-		var_2_4.prefabType = ScrollEnum.ScrollPrefabFromView
-		var_2_4.prefabUrls = {
+		var_2_4.prefabType = ScrollEnum.ScrollPrefabFromRes
+		var_2_4.prefabUrl = arg_2_0._viewSetting.otherRes[4]
+		var_2_4.cellClass = PackageStoreGoodsItem
+		var_2_4.scrollDir = ScrollEnum.ScrollDirH
+		var_2_4.lineCount = 1
+		var_2_4.cellWidth = 340
+		var_2_4.cellHeight = 770
+		var_2_4.cellSpaceH = 29.5
+		var_2_4.cellSpaceV = 0
+		var_2_4.startSpace = 8
+
+		local var_2_5 = TreeScrollParam.New()
+
+		var_2_5.scrollGOPath = "#scroll_prop"
+		var_2_5.prefabType = ScrollEnum.ScrollPrefabFromView
+		var_2_5.prefabUrls = {
 			"roomstoreitem/root",
 			"roomstoreitem/node",
 			"roomstoreitem/node",
@@ -102,35 +105,35 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 			"roomstoreitem/node",
 			"roomstoreitem/node"
 		}
-		var_2_4.cellClass = StoreRoomTreeItem
-		var_2_4.scrollDir = ScrollEnum.ScrollDirV
-
-		local var_2_5 = {}
-
-		for iter_2_0 = 1, 12 do
-			var_2_5[iter_2_0] = math.floor((iter_2_0 - 1) / 4) * 0.07
-		end
+		var_2_5.cellClass = StoreRoomTreeItem
+		var_2_5.scrollDir = ScrollEnum.ScrollDirV
 
 		local var_2_6 = {}
 
-		for iter_2_1 = 1, 9 do
-			var_2_6[iter_2_1] = math.floor((iter_2_1 - 1) / 3) * 0.07
+		for iter_2_0 = 1, 12 do
+			var_2_6[iter_2_0] = math.floor((iter_2_0 - 1) / 4) * 0.07
 		end
 
 		local var_2_7 = {}
-		local var_2_8 = {
+
+		for iter_2_1 = 1, 9 do
+			var_2_7[iter_2_1] = math.floor((iter_2_1 - 1) / 3) * 0.07
+		end
+
+		local var_2_8 = {}
+		local var_2_9 = {
 			__index = function(arg_3_0, arg_3_1)
 				return (arg_3_1 - 1) * 0.07
 			end
 		}
 
-		setmetatable(var_2_7, var_2_8)
+		setmetatable(var_2_8, var_2_9)
 
-		arg_2_0._ScrollViewNormalStore = LuaListScrollViewWithAnimator.New(StoreNormalGoodsItemListModel.instance, var_2_0, var_2_5)
-		arg_2_0._ScrollViewChargeStore = LuaListScrollViewWithAnimator.New(StoreChargeGoodsItemListModel.instance, var_2_1, var_2_6)
-		arg_2_0._ScrollViewPackageStore = LuaListScrollViewWithAnimator.New(StorePackageGoodsItemListModel.instance, var_2_3, var_2_7)
-		arg_2_0._ScrollViewSkinStore = LuaListScrollViewWithAnimator.New(StoreClothesGoodsItemListModel.instance, var_2_2, var_2_7)
-		arg_2_0._ScrollViewRoomStore = LuaTreeScrollView.New(StoreRoomGoodsItemListModel.instance, var_2_4)
+		arg_2_0._ScrollViewNormalStore = LuaListScrollViewWithAnimator.New(StoreNormalGoodsItemListModel.instance, var_2_1, var_2_6)
+		arg_2_0._ScrollViewChargeStore = LuaListScrollViewWithAnimator.New(StoreChargeGoodsItemListModel.instance, var_2_2, var_2_7)
+		arg_2_0._ScrollViewPackageStore = LuaListScrollViewWithAnimator.New(StorePackageGoodsItemListModel.instance, var_2_4, var_2_8)
+		arg_2_0._ScrollViewSkinStore = LuaListScrollViewWithAnimator.New(StoreClothesGoodsItemListModel.instance, var_2_3)
+		arg_2_0._ScrollViewRoomStore = LuaTreeScrollView.New(StoreRoomGoodsItemListModel.instance, var_2_5)
 		arg_2_0._RecommendStoreView = RecommendStoreView.New()
 
 		return {
@@ -144,8 +147,10 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 				arg_2_0._ScrollViewChargeStore
 			}),
 			MultiView.New({
+				arg_2_0._ScrollViewSkinStore,
 				ClothesStoreView.New(),
-				arg_2_0._ScrollViewSkinStore
+				ClothesStoreVideoView.New(),
+				ClothesStoreDragView.New()
 			}),
 			MultiView.New({
 				PackageStoreView.New(),
@@ -177,27 +182,27 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 			StoreSkinBagView.New()
 		}
 	elseif arg_2_1 == 5 then
-		local var_2_9 = ListScrollParam.New()
+		local var_2_10 = ListScrollParam.New()
 
-		var_2_9.scrollGOPath = "#scroll_goods"
-		var_2_9.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_9.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-		var_2_9.cellClass = RoomStoreGoodsItem
-		var_2_9.scrollDir = ScrollEnum.ScrollDirV
-		var_2_9.lineCount = 4
-		var_2_9.cellWidth = 332
-		var_2_9.cellHeight = 355
-		var_2_9.cellSpaceH = 29
-		var_2_9.cellSpaceV = 37
-		var_2_9.startSpace = 31
+		var_2_10.scrollGOPath = "#scroll_goods"
+		var_2_10.prefabType = ScrollEnum.ScrollPrefabFromRes
+		var_2_10.prefabUrl = arg_2_0._viewSetting.otherRes[1]
+		var_2_10.cellClass = RoomStoreGoodsItem
+		var_2_10.scrollDir = ScrollEnum.ScrollDirV
+		var_2_10.lineCount = 4
+		var_2_10.cellWidth = 332
+		var_2_10.cellHeight = 355
+		var_2_10.cellSpaceH = 29
+		var_2_10.cellSpaceV = 37
+		var_2_10.startSpace = 31
 
-		local var_2_10 = {}
+		local var_2_11 = {}
 
 		for iter_2_2 = 1, 12 do
-			var_2_10[iter_2_2] = math.floor((iter_2_2 - 1) / 4) * 0.07
+			var_2_11[iter_2_2] = math.floor((iter_2_2 - 1) / 4) * 0.07
 		end
 
-		arg_2_0._ScrollViewRoomCritterStore = LuaListScrollViewWithAnimator.New(StoreCritterGoodsItemListModel.instance, var_2_9, var_2_10)
+		arg_2_0._ScrollViewRoomCritterStore = LuaListScrollViewWithAnimator.New(StoreCritterGoodsItemListModel.instance, var_2_10, var_2_11)
 
 		return {
 			MultiView.New({
@@ -206,27 +211,27 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 			})
 		}
 	elseif arg_2_1 == 6 then
-		local var_2_11 = ListScrollParam.New()
+		local var_2_12 = ListScrollParam.New()
 
-		var_2_11.scrollGOPath = "#scroll_prop"
-		var_2_11.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_11.prefabUrl = arg_2_0._viewSetting.otherRes[5]
-		var_2_11.cellClass = SummonStoreGoodsItem
-		var_2_11.scrollDir = ScrollEnum.ScrollDirV
-		var_2_11.lineCount = 4
-		var_2_11.cellWidth = 332
-		var_2_11.cellHeight = 355
-		var_2_11.cellSpaceH = 29
-		var_2_11.cellSpaceV = 37
-		var_2_11.startSpace = 31
+		var_2_12.scrollGOPath = "#scroll_prop"
+		var_2_12.prefabType = ScrollEnum.ScrollPrefabFromRes
+		var_2_12.prefabUrl = arg_2_0._viewSetting.otherRes[5]
+		var_2_12.cellClass = SummonStoreGoodsItem
+		var_2_12.scrollDir = ScrollEnum.ScrollDirV
+		var_2_12.lineCount = 4
+		var_2_12.cellWidth = 332
+		var_2_12.cellHeight = 355
+		var_2_12.cellSpaceH = 29
+		var_2_12.cellSpaceV = 37
+		var_2_12.startSpace = 31
 
-		local var_2_12 = {}
+		local var_2_13 = {}
 
 		for iter_2_3 = 1, 12 do
-			var_2_12[iter_2_3] = math.floor((iter_2_3 - 1) / 4) * 0.07
+			var_2_13[iter_2_3] = math.floor((iter_2_3 - 1) / 4) * 0.07
 		end
 
-		arg_2_0._ScrollViewSummonStore = LuaListScrollViewWithAnimator.New(StoreNormalGoodsItemListModel.instance, var_2_11, var_2_12)
+		arg_2_0._ScrollViewSummonStore = LuaListScrollViewWithAnimator.New(StoreNormalGoodsItemListModel.instance, var_2_12, var_2_13)
 
 		return {
 			MultiView.New({

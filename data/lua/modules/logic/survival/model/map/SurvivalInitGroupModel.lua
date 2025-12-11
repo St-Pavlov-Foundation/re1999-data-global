@@ -6,54 +6,46 @@ function var_0_0.init(arg_1_0)
 	arg_1_0.allSelectHeroMos = {}
 	arg_1_0.assistHeroMo = nil
 	arg_1_0.allSelectNpcs = {}
-
-	local var_1_0 = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.SurvivalMapSelect, "1")
-	local var_1_1 = tonumber(var_1_0) or 1
-
-	arg_1_0.selectCopyIndex = var_1_1
+	arg_1_0.selectMapIndex = 0
 	arg_1_0.curClickHeroIndex = 1
 
-	local var_1_2 = SurvivalShelterModel.instance:getWeekInfo()
+	local var_1_0 = SurvivalShelterModel.instance:getWeekInfo()
 
-	if var_1_2 then
-		if not var_1_2.copyIds[var_1_1] then
-			arg_1_0.selectCopyIndex = 1
-		end
+	if var_1_0 then
+		local var_1_1 = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.SurvivalTeamSave, "")
 
-		local var_1_3 = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.SurvivalTeamSave, "")
+		if not string.nilorempty(var_1_1) then
+			local var_1_2 = GameUtil.splitString2(var_1_1)
+			local var_1_3 = var_1_2[1] or {}
+			local var_1_4 = var_1_2[2] or {}
+			local var_1_5 = arg_1_0:getCarryHeroCount()
+			local var_1_6 = arg_1_0:getCarryNPCCount()
 
-		if not string.nilorempty(var_1_3) then
-			local var_1_4 = GameUtil.splitString2(var_1_3)
-			local var_1_5 = var_1_4[1] or {}
-			local var_1_6 = var_1_4[2] or {}
-			local var_1_7 = arg_1_0:getCarryHeroCount()
-			local var_1_8 = arg_1_0:getCarryNPCCount()
-
-			for iter_1_0, iter_1_1 in ipairs(var_1_5) do
-				if var_1_7 <= 0 then
+			for iter_1_0, iter_1_1 in ipairs(var_1_3) do
+				if var_1_5 <= 0 then
 					break
 				end
 
-				local var_1_9 = HeroModel.instance:getById(iter_1_1)
+				local var_1_7 = HeroModel.instance:getById(iter_1_1)
 
-				if var_1_9 and var_1_2:getHeroMo(var_1_9.heroId).health > 0 then
-					table.insert(arg_1_0.allSelectHeroMos, var_1_9)
+				if var_1_7 and var_1_0:getHeroMo(var_1_7.heroId).health > 0 then
+					table.insert(arg_1_0.allSelectHeroMos, var_1_7)
 
-					var_1_7 = var_1_7 - 1
+					var_1_5 = var_1_5 - 1
 				end
 			end
 
-			for iter_1_2, iter_1_3 in ipairs(var_1_6) do
-				if var_1_8 <= 0 then
+			for iter_1_2, iter_1_3 in ipairs(var_1_4) do
+				if var_1_6 <= 0 then
 					break
 				end
 
-				local var_1_10 = var_1_2.npcDict[tonumber(iter_1_3)]
+				local var_1_8 = var_1_0.npcDict[tonumber(iter_1_3)]
 
-				if var_1_10 and var_1_10:getShelterNpcStatus() == SurvivalEnum.ShelterNpcStatus.InBuild then
-					table.insert(arg_1_0.allSelectNpcs, var_1_10)
+				if var_1_8 then
+					table.insert(arg_1_0.allSelectNpcs, var_1_8)
 
-					var_1_8 = var_1_8 - 1
+					var_1_6 = var_1_6 - 1
 				end
 			end
 		end

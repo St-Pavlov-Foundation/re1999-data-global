@@ -1,0 +1,134 @@
+[
+  {
+    "goodpushsId": 31613001,
+    "listenerType": "1",
+    "listenerParam": "1,7",
+    "typeId": 1,
+    "gapHours": 999999,
+    "className": 1,
+    "desc": "language_10097051",
+    "containedgoodsId": "",
+    "levelLimits": ""
+  },
+  {
+    "goodpushsId": 31613002,
+    "listenerType": "2",
+    "listenerParam": "0,7",
+    "typeId": 1,
+    "gapHours": 999999,
+    "className": 1,
+    "desc": "language_10097052",
+    "containedgoodsId": "",
+    "levelLimits": ""
+  },
+  {
+    "goodpushsId": 31613003,
+    "listenerType": "2",
+    "listenerParam": "8,42",
+    "typeId": 1,
+    "gapHours": 999999,
+    "className": 1,
+    "desc": "language_10097052",
+    "containedgoodsId": "",
+    "levelLimits": ""
+  },
+  {
+    "goodpushsId": 31613004,
+    "listenerType": "3",
+    "listenerParam": "5",
+    "typeId": 2,
+    "gapHours": 0,
+    "className": 2,
+    "desc": "language_10097053",
+    "containedgoodsId": "6100011#6100012",
+    "levelLimits": "5#9"
+  },
+  {
+    "goodpushsId": 31613005,
+    "listenerType": "3",
+    "listenerParam": "10",
+    "typeId": 2,
+    "gapHours": 0,
+    "className": 2,
+    "desc": "language_10097054",
+    "containedgoodsId": "6100011#6100012#6100001#6100002",
+    "levelLimits": "10#19"
+  },
+  {
+    "goodpushsId": 31613006,
+    "listenerType": "3",
+    "listenerParam": "20",
+    "typeId": 2,
+    "gapHours": 0,
+    "className": 2,
+    "desc": "language_10097055",
+    "containedgoodsId": "6100011#6100012#6100001#6100002#6100003#6100004",
+    "levelLimits": "20#29"
+  },
+  {
+    "goodpushsId": 31613007,
+    "listenerType": "3",
+    "listenerParam": "30",
+    "typeId": 2,
+    "gapHours": 0,
+    "className": 2,
+    "desc": "language_10097056",
+    "containedgoodsId": "6100011#6100012#6100001#6100002#6100003#6100004#6100005#6100006",
+    "levelLimits": "30#39"
+  },
+  {
+    "goodpushsId": 31613008,
+    "listenerType": "3",
+    "listenerParam": "40",
+    "typeId": 2,
+    "gapHours": 0,
+    "className": 2,
+    "desc": "language_10097057",
+    "containedgoodsId": "6100011#6100012#6100001#6100002#6100003#6100004#6100005#6100006#6100007#6100008",
+    "levelLimits": "40#49"
+  },
+  {
+    "goodpushsId": 31613009,
+    "listenerType": "3",
+    "listenerParam": "50",
+    "typeId": 2,
+    "gapHours": 0,
+    "className": 2,
+    "desc": "language_10097058",
+    "containedgoodsId": "6100011#6100012#6100001#6100002#6100003#6100004#6100005#6100006#6100007#6100008#6100009#6100010",
+    "levelLimits": "50#59"
+  },
+  {
+    "goodpushsId": 31613010,
+    "listenerType": "3",
+    "listenerParam": "60",
+    "typeId": 2,
+    "gapHours": 0,
+    "className": 2,
+    "desc": "language_10097059",
+    "containedgoodsId": "6100011#6100012#6100001#6100002#6100003#6100004#6100005#6100006#6100007#6100008#6100009#6100010#6100021#6100022",
+    "levelLimits": "60#69"
+  },
+  {
+    "goodpushsId": 31613011,
+    "listenerType": "3",
+    "listenerParam": "70",
+    "typeId": 2,
+    "gapHours": 0,
+    "className": 2,
+    "desc": "language_10097060",
+    "containedgoodsId": "6100011#6100012#6100001#6100002#6100003#6100004#6100005#6100006#6100007#6100008#6100009#6100010#6100021#6100022#6100023#6100024",
+    "levelLimits": "70#79"
+  },
+  {
+    "goodpushsId": 31613012,
+    "listenerType": "3",
+    "listenerParam": "80",
+    "typeId": 2,
+    "gapHours": 0,
+    "className": 2,
+    "desc": "language_10097061",
+    "containedgoodsId": "6100011#6100012#6100001#6100002#6100003#6100004#6100005#6100006#6100007#6100008#6100009#6100010#6100021#6100022#6100023#6100024#6100025#6100026",
+    "levelLimits": ""
+  }
+]

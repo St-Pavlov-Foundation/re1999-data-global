@@ -23,6 +23,8 @@ function var_0_0.onInitView(arg_1_0, arg_1_1)
 	arg_1_0.goSoldout = gohelper.findChild(arg_1_0.go, "go_soldout")
 
 	arg_1_0.goClick:AddClickListener(arg_1_0.onClick, arg_1_0)
+
+	arg_1_0._bigVersion, arg_1_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 end
 
 function var_0_0.onClick(arg_2_0)
@@ -52,9 +54,9 @@ function var_0_0.updateInfo(arg_3_0, arg_3_1)
 		logWarn("material type : %s, material id : %s not had rare attribute")
 	end
 
-	local var_3_6 = VersionActivityFixedHelper.getVersionActivityStoreRareIcon() .. var_3_5
+	local var_3_6 = VersionActivityFixedHelper.getVersionActivityStoreRareIcon(arg_3_0._bigVersion, arg_3_0._smallVersion) .. var_3_5
 
-	VersionActivityFixedHelper.setMainActivitySprite(arg_3_0.imageRare, var_3_6)
+	VersionActivityFixedHelper.setMainActivitySprite(arg_3_0.imageRare, var_3_6, true, arg_3_0._bigVersion, arg_3_0._smallVersion)
 	gohelper.setActive(arg_3_0.goMaxRareEffect, var_3_5 >= MaterialEnum.ItemRareSSR)
 
 	if var_3_0 == MaterialEnum.MaterialType.Equip then
@@ -105,7 +107,7 @@ function var_0_0.refreshRemainBuyCount(arg_4_0)
 
 		arg_4_0.remainBuyCount = 9999
 	else
-		local var_4_0 = VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.DungeonStore
+		local var_4_0 = VersionActivityFixedHelper.getVersionActivityEnum(arg_4_0._bigVersion, arg_4_0._smallVersion).ActivityId.DungeonStore
 
 		gohelper.setActive(arg_4_0.txtLimitBuy.gameObject, true)
 

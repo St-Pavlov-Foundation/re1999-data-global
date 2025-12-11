@@ -62,7 +62,7 @@ function var_0_0.onClickTalent(arg_5_0)
 		return
 	end
 
-	if FightDataMgr.instance.stageMgr:getCurStage() ~= FightStageMgr.StageType.Normal then
+	if FightDataMgr.instance.stageMgr:getCurStage() ~= FightStageMgr.StageType.Operate then
 		return
 	end
 
@@ -129,7 +129,7 @@ function var_0_0._playSkill(arg_6_0, arg_6_1)
 end
 
 function var_0_0.onLongPressTalent(arg_7_0)
-	if FightDataMgr.instance.stageMgr:getCurStage() ~= FightStageMgr.StageType.Normal then
+	if FightDataMgr.instance.stageMgr:getCurStage() ~= FightStageMgr.StageType.Operate then
 		return
 	end
 
@@ -211,7 +211,6 @@ function var_0_0.initData(arg_11_0)
 	end
 
 	arg_11_0.talentGroupId = var_11_0.talentGroupId
-	arg_11_0.talentGroupCo = arg_11_0.talentGroupId and lua_survival_talent_group.configDict[arg_11_0.talentGroupId]
 
 	local var_11_1 = FightDataHelper.fieldMgr.playerFinisherInfo
 	local var_11_2 = var_11_1 and var_11_1.skills[1]
@@ -225,16 +224,7 @@ function var_0_0.initData(arg_11_0)
 end
 
 function var_0_0.updateTalentIcon(arg_12_0)
-	local var_12_0 = SurvivalShelterModel.instance:getWeekInfo()
-
-	if not var_12_0 then
-		return
-	end
-
-	local var_12_1 = var_12_0.talentBox.groupId
-	local var_12_2 = lua_survival_talent_group.configDict[var_12_1]
-
-	arg_12_0.iconImage:LoadImage(ResUrl.getSurvivalTalentIcon(var_12_2.folder .. "/icon_1"))
+	return
 end
 
 function var_0_0.onDestroyView(arg_13_0)

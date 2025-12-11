@@ -134,7 +134,7 @@ function var_0_0._getLangVersions(arg_8_0)
 	local var_8_0 = SLFramework.GameUpdate.OptionalUpdate.Instance
 	local var_8_1 = {}
 	local var_8_2 = {}
-	local var_8_3 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
+	local var_8_3 = SettingsVoicePackageModel.instance:getSupportVoiceLangs()
 
 	table.insert(var_8_3, "res-HD")
 

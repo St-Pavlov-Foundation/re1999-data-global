@@ -3406,5 +3406,477 @@
     "titleEn": "Au revoir, chers amis",
     "labelRes": "8",
     "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 1,
+    "title": "language_10075492",
+    "titleEn": "Particles of Chaos",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 2,
+    "title": "language_10075493",
+    "titleEn": "\"Knightly Virtues\"",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 3,
+    "title": "language_10075494",
+    "titleEn": "Free Falling",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 4,
+    "title": "language_10075495",
+    "titleEn": "The Dark of the Arno",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 5,
+    "title": "language_10075496",
+    "titleEn": "Practical Geometry",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 6,
+    "title": "language_10075497",
+    "titleEn": "Chirps and Chatter",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 7,
+    "title": "language_10075498",
+    "titleEn": "Agnus Dei",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 8,
+    "title": "language_10075499",
+    "titleEn": "Bestiary",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 9,
+    "title": "language_10075500",
+    "titleEn": "A Deadly Dusk",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 10,
+    "title": "language_10075501",
+    "titleEn": "Creed",
+    "labelRes": "10",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 11,
+    "title": "language_10075502",
+    "titleEn": "Primavera",
+    "labelRes": "11",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 12,
+    "title": "language_10036491",
+    "titleEn": "A Moment of Peace",
+    "labelRes": "12",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 1,
+    "title": "language_10075503",
+    "titleEn": "In the Ancient City",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 2,
+    "title": "language_10075504",
+    "titleEn": "Life and Tragedies",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 3,
+    "title": "language_10075505",
+    "titleEn": "The Sweetest Fruit",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 4,
+    "title": "language_10075506",
+    "titleEn": "Prometheus Bound",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 5,
+    "title": "language_10075507",
+    "titleEn": "Adventure on the Roofs",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 6,
+    "title": "language_10075508",
+    "titleEn": "\"Blessed\" by the Muses",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 7,
+    "title": "language_10075509",
+    "titleEn": "Above Suspicion",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 8,
+    "title": "language_10021961",
+    "titleEn": "The Code Breaker",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 9,
+    "title": "language_10075510",
+    "titleEn": "A Day in Athens",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 10,
+    "title": "language_10075511",
+    "titleEn": "Ode to the Golden Apple",
+    "labelRes": "10",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 1,
+    "title": "language_10090771",
+    "titleEn": "Travel Notice",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 2,
+    "title": "language_10090773",
+    "titleEn": "Catgut",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 3,
+    "title": "language_10090775",
+    "titleEn": "Bon Appétit",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 4,
+    "title": "language_10090777",
+    "titleEn": "The Midnight Piercer",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 5,
+    "title": "language_10090779",
+    "titleEn": "Four and a Half Friends",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 6,
+    "title": "language_10090781",
+    "titleEn": "The Suspect's Testimony",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 7,
+    "title": "language_10090507",
+    "titleEn": "The Danube Dawn",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 8,
+    "title": "language_10090784",
+    "titleEn": "The Railway Cat",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 9,
+    "title": "language_10090786",
+    "titleEn": "Do Not Enter",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 10,
+    "title": "language_10090788",
+    "titleEn": "Among the Dead",
+    "labelRes": "10",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 11,
+    "title": "language_10090790",
+    "titleEn": "Carriage No. 13",
+    "labelRes": "11",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 12,
+    "title": "language_10090792",
+    "titleEn": "Kreynero",
+    "labelRes": "12",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 13,
+    "title": "language_10090794",
+    "titleEn": "The Non-Returnees",
+    "labelRes": "13",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 14,
+    "title": "language_10090796",
+    "titleEn": "The Conqueror Worm",
+    "labelRes": "14",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 15,
+    "title": "language_10090798",
+    "titleEn": "Lark Cake",
+    "labelRes": "15",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 16,
+    "title": "language_10090800",
+    "titleEn": "Winter Fright Night",
+    "labelRes": "16",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 17,
+    "title": "language_10090802",
+    "titleEn": "Friends in Need",
+    "labelRes": "17",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 18,
+    "title": "language_10090804",
+    "titleEn": "Blood of My Blood",
+    "labelRes": "18",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 19,
+    "title": "language_10037534",
+    "titleEn": "Here, Together",
+    "labelRes": "19",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 20,
+    "title": "language_10009908",
+    "titleEn": "Comes the Dawning Light",
+    "labelRes": "20",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 21,
+    "title": "language_10090808",
+    "titleEn": "A Land Under the Sun",
+    "labelRes": "21",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 22,
+    "title": "language_10096603",
+    "titleEn": "Stewardess-in-Training",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 23,
+    "title": "language_10096604",
+    "titleEn": "Fate's Bitter Beans",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 24,
+    "title": "language_10096605",
+    "titleEn": "Dancing with Darkness",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 25,
+    "title": "language_10096606",
+    "titleEn": "Shadow Theater",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 26,
+    "title": "language_10096607",
+    "titleEn": "What Was Lost Is Found",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 27,
+    "title": "language_10096608",
+    "titleEn": "The Night It Burned",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 28,
+    "title": "language_10096609",
+    "titleEn": "\"Resurrection\"",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 29,
+    "title": "language_10096610",
+    "titleEn": "By Blood I Swear",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 30,
+    "title": "language_10096611",
+    "titleEn": "A Leaf on Blood-Stained Water",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 31,
+    "title": "language_10096612",
+    "titleEn": "The Sutures",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 32,
+    "title": "language_10096613",
+    "titleEn": "Christmas Eve",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 33,
+    "title": "language_10096614",
+    "titleEn": "Square One",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 34,
+    "title": "language_10096615",
+    "titleEn": "Return to the Battlefield",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 35,
+    "title": "language_10096616",
+    "titleEn": "Together, We Stand",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 36,
+    "title": "language_10039758",
+    "titleEn": "Thus the Decision Is Made",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 31,
+    "part": 37,
+    "title": "language_10096617",
+    "titleEn": "A New Dawn",
+    "labelRes": "8",
+    "storyBg": ""
   }
 ]

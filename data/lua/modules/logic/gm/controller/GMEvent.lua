@@ -45,5 +45,9 @@ var_0_2("SummonHeroDetailView_ShowAllTabIdUpdate")
 var_0_2("MailView_ShowAllTabIdUpdate")
 var_0_2("ActivityBeginnerView_ShowAllTabIdUpdate")
 var_0_2("ActivityWelfareView_ShowAllTabIdUpdate")
+var_0_2("V3a1_GaoSiNiao_LevelView_ShowAllTabIdUpdate")
+var_0_2("V3a1_GaoSiNiao_LevelView_EnableEditModeOnSelect")
+var_0_2("V3a1_GaoSiNiao_GameView_ShowAllTabIdUpdate")
+var_0_2("V3a1_GaoSiNiao_GameView_OnClickSwitchMode")
 
 return var_0_0

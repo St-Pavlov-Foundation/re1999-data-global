@@ -13,6 +13,7 @@ var_0_0.StorePackageShowCoBradedTagGoodIds = 2303
 var_0_0.MailMaxCount = 1
 var_0_0.RoleRandomSignature = 6
 var_0_0.PlayerViewSpine = 7
+var_0_0.PlayerDefaultIcon = 8
 var_0_0.PlayerENameLimit = 9
 var_0_0.CharacterNameLimit = 10
 var_0_0.PlayerMaxLev = 11
@@ -132,7 +133,7 @@ var_0_0.S01SpRole = 30503
 var_0_0.TowerDeepTip = 31001
 var_0_0.PowerMakerPatFaceTime = 305
 var_0_0.BPOperActTitle = 3103
-var_0_0.FBPOperActDesc = 3104
+var_0_0.BPOperActDesc = 3104
 var_0_0.NationalGiftDesc = 3105
 var_0_0.SurvivalOperActItem = 31002
 

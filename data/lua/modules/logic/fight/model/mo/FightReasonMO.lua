@@ -42,6 +42,9 @@ function var_0_0._parseData(arg_2_0)
 		local var_2_4 = string.splitToNumber(arg_2_0.data, "#")
 
 		TowerModel.instance:setRecordFightParam(var_2_4[1], var_2_4[2], var_2_4[3], var_2_4[4], var_2_4[5])
+	elseif var_2_0.type == DungeonEnum.EpisodeType.TowerDeep then
+		TowerDeepRpc.instance:sendTowerDeepGetInfoRequest()
+		TowerModel.instance:setRecordFightParam(nil, nil, nil, nil, arg_2_0.episodeId)
 	elseif var_2_0.type == DungeonEnum.EpisodeType.Season166Base or var_2_0.type == DungeonEnum.EpisodeType.Season166Train then
 		Season166Model.instance:unpackFightReconnectData(arg_2_0.data)
 	elseif var_2_0.type == DungeonEnum.EpisodeType.Act183 then

@@ -110,75 +110,118 @@ function var_0_0.transform(arg_19_0)
 	return arg_19_0._trans
 end
 
-function var_0_0.setAsLastSibling(arg_20_0)
-	arg_20_0._trans:SetAsLastSibling()
+function var_0_0.pivot(arg_20_0)
+	return arg_20_0._trans.pivot
 end
 
-function var_0_0.setAsFirstSibling(arg_21_0)
-	arg_21_0._trans:SetAsFirstSibling()
+function var_0_0.rect(arg_21_0)
+	return arg_21_0._trans.rect
 end
 
-function var_0_0.setSiblingIndex(arg_22_0, arg_22_1)
-	arg_22_0._trans:SetSiblingIndex(arg_22_1)
+function var_0_0.setAsLastSibling(arg_22_0)
+	arg_22_0._trans:SetAsLastSibling()
 end
 
-function var_0_0._onSetScrollParentGameObject(arg_23_0, arg_23_1)
-	if gohelper.isNil(arg_23_1) then
+function var_0_0.setAsFirstSibling(arg_23_0)
+	arg_23_0._trans:SetAsFirstSibling()
+end
+
+function var_0_0.setSiblingIndex(arg_24_0, arg_24_1)
+	arg_24_0._trans:SetSiblingIndex(arg_24_1)
+end
+
+function var_0_0.setParent(arg_25_0, arg_25_1, arg_25_2)
+	arg_25_0._trans:SetParent(arg_25_1, arg_25_2 and true or false)
+end
+
+function var_0_0.setParentAndResetPosZero(arg_26_0, arg_26_1)
+	arg_26_0:setParent(arg_26_1, false)
+end
+
+function var_0_0.localRotateZ(arg_27_0, arg_27_1, arg_27_2)
+	transformhelper.setLocalRotation(arg_27_2 or arg_27_0._trans, 0, 0, arg_27_1)
+end
+
+function var_0_0._onSetScrollParentGameObject(arg_28_0, arg_28_1)
+	if gohelper.isNil(arg_28_1) then
 		return
 	end
 
-	local var_23_0 = arg_23_0:baseViewContainer()
+	local var_28_0 = arg_28_0:baseViewContainer()
 
-	if not var_23_0 then
+	if not var_28_0 then
 		return
 	end
 
-	local var_23_1 = var_23_0:getScrollViewGo()
+	local var_28_1 = var_28_0:getScrollViewGo()
 
-	if gohelper.isNil(var_23_1) then
+	if gohelper.isNil(var_28_1) then
 		return
 	end
 
-	arg_23_1.parentGameObject = var_23_1
+	arg_28_1.parentGameObject = var_28_1
 end
 
-function var_0_0._fillUserDataTb(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = 1
-	local var_24_1 = arg_24_0[arg_24_1 .. var_24_0]
+function var_0_0._fillUserDataTb(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
+	local var_29_0 = 1
+	local var_29_1 = arg_29_0[arg_29_1 .. var_29_0]
 
-	while not gohelper.isNil(var_24_1) do
-		if arg_24_2 then
-			var_0_1(arg_24_2, var_24_1.gameObject)
+	while not gohelper.isNil(var_29_1) do
+		if arg_29_2 then
+			var_0_1(arg_29_2, var_29_1.gameObject)
 		end
 
-		if arg_24_3 then
-			var_0_1(arg_24_3, var_24_1)
+		if arg_29_3 then
+			var_0_1(arg_29_3, var_29_1)
 		end
 
-		var_24_0 = var_24_0 + 1
-		var_24_1 = arg_24_0[arg_24_1 .. var_24_0]
+		var_29_0 = var_29_0 + 1
+		var_29_1 = arg_29_0[arg_29_1 .. var_29_0]
 	end
 end
 
-function var_0_0._editableInitView(arg_25_0)
-	arg_25_0._trans = arg_25_0.viewGO.transform
+function var_0_0._getRef_ctorParam(arg_30_0)
+	if not arg_30_0.__child_ctorParam then
+		arg_30_0.__child_ctorParam = {
+			parent = arg_30_0,
+			baseViewContainer = arg_30_0:baseViewContainer()
+		}
+	end
+
+	return arg_30_0.__child_ctorParam
 end
 
-function var_0_0.setData(arg_26_0, arg_26_1)
-	arg_26_0._mo = arg_26_1
+function var_0_0.newObject(arg_31_0, arg_31_1)
+	if isDebugBuild then
+		assert(isTypeOf(arg_31_1, var_0_0), debug.traceback())
+	end
+
+	return arg_31_1.New(arg_31_0:_getRef_ctorParam())
 end
 
-function var_0_0.refresh(arg_27_0)
-	arg_27_0:onUpdateMO(arg_27_0._mo)
+function var_0_0.childCount(arg_32_0)
+	return arg_32_0._trans and arg_32_0._trans.childCount or 0
 end
 
-function var_0_0.onDestroyView(arg_28_0)
-	arg_28_0:removeEventListeners()
-	var_0_0.super.onDestroyView(arg_28_0)
+function var_0_0._editableInitView(arg_33_0)
+	arg_33_0._trans = arg_33_0.viewGO.transform
 end
 
-function var_0_0.setGrayscale(arg_29_0, arg_29_1, arg_29_2)
-	var_0_2.SetGrayscale(arg_29_1, arg_29_2)
+function var_0_0.setData(arg_34_0, arg_34_1)
+	arg_34_0._mo = arg_34_1
+end
+
+function var_0_0.refresh(arg_35_0)
+	arg_35_0:onUpdateMO(arg_35_0._mo)
+end
+
+function var_0_0.onDestroyView(arg_36_0)
+	arg_36_0:removeEventListeners()
+	var_0_0.super.onDestroyView(arg_36_0)
+end
+
+function var_0_0.setGrayscale(arg_37_0, arg_37_1, arg_37_2)
+	var_0_2.SetGrayscale(arg_37_1, arg_37_2)
 end
 
 return var_0_0

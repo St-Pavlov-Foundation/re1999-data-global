@@ -20,6 +20,10 @@ function var_0_0.addWork(arg_3_0, arg_3_1)
 		return
 	end
 
+	if not arg_3_1.IS_FIGHT_WORK then
+		arg_3_1 = FightWorkPlayNormalWork.New(arg_3_1)
+	end
+
 	arg_3_1:registFinishCallback(arg_3_0.onWorkItemDone, arg_3_0, arg_3_1)
 	table.insert(arg_3_0._workList, arg_3_1)
 end

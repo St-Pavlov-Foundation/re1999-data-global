@@ -4,12 +4,14 @@ local var_0_0 = {}
 local var_0_1 = {
 	id = 1,
 	name = 2,
-	flag = 3
+	flag = 3,
+	desc = 4
 }
 local var_0_2 = {
 	"id"
 }
 local var_0_3 = {
+	desc = 2,
 	name = 1
 }
 

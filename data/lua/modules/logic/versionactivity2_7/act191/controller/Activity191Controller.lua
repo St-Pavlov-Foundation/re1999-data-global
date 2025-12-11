@@ -79,7 +79,7 @@ function var_0_0.nextStep(arg_17_0)
 	local var_17_1 = Activity191Model.instance:getActInfo():getGameInfo()
 
 	if var_17_1.state == Activity191Enum.GameState.None then
-		Activity191Rpc.instance:sendStart191GameRequest(var_17_0, arg_17_0.startReply, arg_17_0)
+		logError("游戏数据异常,GameInfo的State为None")
 	elseif var_17_1.state == Activity191Enum.GameState.Normal then
 		if var_17_1.curStage == 0 and var_17_1.curNode == 0 then
 			ViewMgr.instance:openView(ViewName.Act191InitBuildView)
@@ -98,7 +98,7 @@ function var_0_0.nextStep(arg_17_0)
 				var_17_3:init(var_17_2.nodeStr)
 
 				if Activity191Helper.isShopNode(var_17_3.type) then
-					ViewMgr.instance:openView(ViewName.Act191ShopView, var_17_3)
+					ViewMgr.instance:openView(ViewName.Act191ShopView)
 				elseif var_17_3.type == Activity191Enum.NodeType.Enhance then
 					ViewMgr.instance:openView(ViewName.Act191EnhancePickView, var_17_3)
 				elseif var_17_3.type == Activity191Enum.NodeType.RewardEvent then
@@ -109,6 +109,8 @@ function var_0_0.nextStep(arg_17_0)
 					arg_17_0:enterFightScene(var_17_3)
 				elseif Activity191Helper.isPvpBattle(var_17_3.type) then
 					arg_17_0:enterFightScene(var_17_3)
+				elseif var_17_3.type == Activity191Enum.NodeType.ReplaceEvent or var_17_3.type == Activity191Enum.NodeType.UpgradeEvent then
+					ViewMgr.instance:openView(ViewName.Act191CollectionChangeView)
 				end
 			end
 		end
@@ -117,50 +119,44 @@ function var_0_0.nextStep(arg_17_0)
 	end
 end
 
-function var_0_0.startReply(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_2 == 0 then
-		arg_18_0:nextStep()
-	end
-end
+function var_0_0.enterFightScene(arg_18_0, arg_18_1)
+	local var_18_0
 
-function var_0_0.enterFightScene(arg_19_0, arg_19_1)
-	local var_19_0
+	if Activity191Helper.isPveBattle(arg_18_1.type) or arg_18_1.type == Activity191Enum.NodeType.BattleEvent then
+		local var_18_1 = arg_18_1.fightEventId
 
-	if Activity191Helper.isPveBattle(arg_19_1.type) or arg_19_1.type == Activity191Enum.NodeType.BattleEvent then
-		local var_19_1 = arg_19_1.fightEventId
-
-		var_19_0 = lua_activity191_fight_event.configDict[var_19_1].episodeId
-	elseif Activity191Helper.isPvpBattle(arg_19_1.type) then
-		var_19_0 = tonumber(lua_activity191_const.configDict[Activity191Enum.ConstKey.PvpBattleEpisodeId].value)
+		var_18_0 = lua_activity191_fight_event.configDict[var_18_1].episodeId
+	elseif Activity191Helper.isPvpBattle(arg_18_1.type) then
+		var_18_0 = tonumber(lua_activity191_const.configDict[Activity191Enum.ConstKey.PvpBattleEpisodeId].value)
 	end
 
-	local var_19_2 = DungeonConfig.instance:getEpisodeCO(var_19_0)
-	local var_19_3 = var_19_2.chapterId
+	local var_18_2 = DungeonConfig.instance:getEpisodeCO(var_18_0)
+	local var_18_3 = var_18_2.chapterId
 
-	DungeonModel.instance:SetSendChapterEpisodeId(var_19_3, var_19_0)
-	FightController.instance:setFightParamByEpisodeAndBattle(var_19_0, var_19_2.battleId):setPreload()
+	DungeonModel.instance:SetSendChapterEpisodeId(var_18_3, var_18_0)
+	FightController.instance:setFightParamByEpisodeAndBattle(var_18_0, var_18_2.battleId):setPreload()
 	FightController.instance:enterFightScene()
 end
 
-function var_0_0.checkOpenGetView(arg_20_0)
-	local var_20_0 = Activity191Model.instance:getActInfo()
-	local var_20_1 = false
+function var_0_0.checkOpenGetView(arg_19_0)
+	local var_19_0 = Activity191Model.instance:getActInfo()
+	local var_19_1 = false
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_0.triggerEffectPushList) do
-		if not string.nilorempty(iter_20_1.param) then
-			var_20_1 = true
+	for iter_19_0, iter_19_1 in ipairs(var_19_0.triggerEffectPushList) do
+		if not string.nilorempty(iter_19_1.param) then
+			var_19_1 = true
 
 			break
 		end
 	end
 
-	if var_20_1 then
+	if var_19_1 then
 		ViewMgr.instance:openView(ViewName.Act191GetView)
 
 		return true
 	end
 
-	var_20_0:clearTriggerEffectPush()
+	var_19_0:clearTriggerEffectPush()
 
 	return false
 end

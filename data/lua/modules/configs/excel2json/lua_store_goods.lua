@@ -26,6 +26,7 @@ local var_0_1 = {
 	refreshTime = 20,
 	needEpisodeId = 22,
 	bindgoodid = 28,
+	logoRoots = 38,
 	isAdvancedSkin = 30,
 	cost2 = 5,
 	originalCost = 12,

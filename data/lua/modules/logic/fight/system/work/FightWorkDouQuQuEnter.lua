@@ -2,7 +2,7 @@
 
 local var_0_0 = class("FightWorkDouQuQuEnter", FightWorkItem)
 
-function var_0_0.onAwake(arg_1_0, arg_1_1, arg_1_2)
+function var_0_0.onLogicEnter(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0._index = arg_1_1
 	arg_1_0._needClearFight = arg_1_2
 end
@@ -47,7 +47,7 @@ function var_0_0._onFightAct174Reply(arg_4_0, arg_4_1)
 end
 
 function var_0_0._onFightSceneStart(arg_5_0)
-	FightSystem.instance:startFight()
+	FightGameMgr.playMgr:playStart()
 end
 
 function var_0_0._onStartSequenceFinish(arg_6_0)

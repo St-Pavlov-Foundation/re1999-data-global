@@ -51,7 +51,7 @@ end
 function var_0_0.onOpen(arg_6_0)
 	var_0_0.super.onOpen(arg_6_0)
 
-	if arg_6_0.viewContainer.notPlayAnimation then
+	if arg_6_0.viewContainer.notPlayAnimation or arg_6_0._param and arg_6_0._param.notPlayAnimation then
 		return
 	end
 

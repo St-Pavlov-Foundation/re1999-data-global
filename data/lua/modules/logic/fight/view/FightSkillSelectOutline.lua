@@ -14,7 +14,7 @@ function var_0_0.onOpen(arg_2_0)
 end
 
 function var_0_0.addEvents(arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnStageChange, arg_3_0._onStageChange, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_3_0.onStageChange, arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.AutoToSelectSkillTarget, arg_3_0._hideOutlineEffect, arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.SelectSkillTarget, arg_3_0._onSelectSkillTarget, arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.BeforeEntityDestroy, arg_3_0._beforeEntityDestroy, arg_3_0)
@@ -25,7 +25,7 @@ function var_0_0.addEvents(arg_3_0)
 end
 
 function var_0_0.removeEvents(arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnStageChange, arg_4_0._onStageChange, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.StageChanged, arg_4_0.onStageChange, arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.AutoToSelectSkillTarget, arg_4_0._hideOutlineEffect, arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.SelectSkillTarget, arg_4_0._onSelectSkillTarget, arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.BeforeEntityDestroy, arg_4_0._beforeEntityDestroy, arg_4_0)
@@ -39,12 +39,8 @@ function var_0_0.onDestroyView(arg_5_0)
 	return
 end
 
-function var_0_0._onStageChange(arg_6_0, arg_6_1)
-	if arg_6_1 == FightEnum.Stage.ClothSkill then
-		return
-	end
-
-	if arg_6_1 ~= FightEnum.Stage.Card then
+function var_0_0.onStageChange(arg_6_0, arg_6_1)
+	if arg_6_1 == FightStageMgr.StageType.Play then
 		arg_6_0:_hideOutlineEffect()
 	end
 end
@@ -94,11 +90,11 @@ function var_0_0._hideOutlineEffect(arg_12_0)
 end
 
 function var_0_0._onSelectSkillTarget(arg_13_0, arg_13_1)
-	if FightModel.instance:isAuto() then
+	if FightDataHelper.stateMgr:getIsAuto() then
 		return
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		return
 	end
 

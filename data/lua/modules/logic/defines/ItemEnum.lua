@@ -36,6 +36,7 @@ var_0_0.SubType = {
 	RoomManufactureItem = 25,
 	RoomBlockGiftNew = 69,
 	CritterFood = 27,
+	RoomBlockColorGift = 70,
 	CritterSummon = 29,
 	MainUISkin = 35,
 	DestinyStoneUp = 64

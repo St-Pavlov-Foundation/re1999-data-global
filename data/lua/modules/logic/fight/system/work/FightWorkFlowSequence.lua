@@ -26,6 +26,10 @@ function var_0_0.addWork(arg_4_0, arg_4_1)
 		return
 	end
 
+	if not arg_4_1.IS_FIGHT_WORK then
+		arg_4_1 = FightWorkPlayNormalWork.New(arg_4_1)
+	end
+
 	arg_4_0:addWorkAtIndex(#arg_4_0._workList + 1, arg_4_1)
 end
 

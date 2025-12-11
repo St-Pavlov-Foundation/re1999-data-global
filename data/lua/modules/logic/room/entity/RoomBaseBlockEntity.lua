@@ -26,6 +26,7 @@ end
 
 function var_0_0.initComponents(arg_3_0)
 	arg_3_0:addComp("effect", RoomEffectComp)
+	arg_3_0:addComp("changeColorComp", RoomBlockChangeColorComp)
 end
 
 function var_0_0.removeParamsAndPlayAnimator(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
@@ -56,33 +57,36 @@ function var_0_0.refreshLand(arg_7_0)
 	local var_7_0 = arg_7_0:getMO()
 	local var_7_1 = var_7_0:getDefineId()
 	local var_7_2 = var_7_0:getDefineWaterType()
-	local var_7_3 = arg_7_0:checkBlockLandShow(var_7_0) ~= false
-	local var_7_4 = var_7_1 ~= arg_7_0._refreshLandLastDefineId or var_7_3 ~= arg_7_0._lastShowLand
-	local var_7_5 = var_7_2 ~= arg_7_0._lastWaterType
+	local var_7_3 = var_7_0:getDefineBlockType()
+	local var_7_4 = arg_7_0:checkBlockLandShow(var_7_0) ~= false
+	local var_7_5 = var_7_1 ~= arg_7_0._refreshLandLastDefineId or var_7_4 ~= arg_7_0._lastShowLand or var_7_3 ~= arg_7_0._lastBlockType
+	local var_7_6 = var_7_2 ~= arg_7_0._lastWaterType
 
 	arg_7_0._refreshLandLastDefineId = var_7_1
 	arg_7_0._lastWaterType = var_7_2
-	arg_7_0._lastShowLand = var_7_3
+	arg_7_0._lastShowLand = var_7_4
+	arg_7_0._lastBlockType = var_7_3
 
-	if var_7_4 then
-		local var_7_6
+	if var_7_5 then
 		local var_7_7
+		local var_7_8
 
-		if var_7_3 then
-			var_7_6 = RoomResHelper.getBlockPath(var_7_1)
-			var_7_7 = RoomResHelper.getBlockABPath(var_7_1)
+		if var_7_4 then
+			var_7_7 = RoomResHelper.getBlockPath(var_7_1)
+			var_7_8 = RoomResHelper.getBlockABPath(var_7_1)
 		end
 
-		arg_7_0:_refreshParams(RoomEnum.EffectKey.BlockLandKey, var_7_6, nil, "0", var_7_7)
+		arg_7_0:_refreshParams(RoomEnum.EffectKey.BlockLandKey, var_7_7, nil, "0", var_7_8)
 	end
 
-	if var_7_4 or var_7_5 then
+	if var_7_5 or var_7_6 then
 		arg_7_0:_refreshRiver(var_7_0)
 	end
 
 	arg_7_0:_refreshFullRiver(var_7_0)
 	arg_7_0:_refreshWaterGradient(var_7_0)
 	arg_7_0:_refreshEffect()
+	arg_7_0.changeColorComp:refreshLand()
 end
 
 function var_0_0.checkBlockLandShow(arg_8_0, arg_8_1)
@@ -132,7 +136,7 @@ function var_0_0._refreshRiver(arg_11_0, arg_11_1)
 		if not var_11_0:isFullWater() then
 			var_11_1, var_11_5, var_11_2, var_11_3, var_11_4 = RoomRiverBlockHelper.getRiverBlockTypeByMO(var_11_0)
 		end
-	elseif var_11_0.blockId > 0 then
+	elseif var_11_0.blockId > 0 or arg_11_0.isWaterReform then
 		var_11_1, var_11_3 = arg_11_0:_getRiverEffectRes(var_11_0:getDefineBlockType(), arg_11_0:checkSideShow())
 	else
 		var_11_1, var_11_3 = RoomScenePreloader.InitLand, RoomScenePreloader.InitLand

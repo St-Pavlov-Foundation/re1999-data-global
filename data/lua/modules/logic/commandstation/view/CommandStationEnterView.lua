@@ -92,10 +92,11 @@ function var_0_0._delayPlayIdleAnim(arg_8_0)
 end
 
 function var_0_0._btnmapOnClick(arg_9_0)
-	if arg_9_0._preloadLoader then
-		arg_9_0._preloadLoader:dispose()
+	local var_9_0 = CommandStationMapModel.instance:getPreloadSceneLoader()
 
-		arg_9_0._preloadLoader = nil
+	if var_9_0 then
+		var_9_0:dispose()
+		CommandStationMapModel.instance:setPreloadScene()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum3_0.CommandStationMap.play_ui_lushang_zhihuibu_shapan)
@@ -120,8 +121,7 @@ function var_0_0._preloadDone(arg_13_0)
 		local var_13_2 = "ui/viewres/commandstation/commandstation_mapview.prefab"
 		local var_13_3 = MultiAbLoader.New()
 
-		arg_13_0._preloadLoader = var_13_3
-
+		CommandStationMapModel.instance:setPreloadScene(var_13_3)
 		var_13_3:addPath(var_13_1)
 		var_13_3:addPath(var_13_2)
 		var_13_3:startLoad(function()
@@ -303,6 +303,8 @@ function var_0_0._updateBoxAnim(arg_30_0)
 end
 
 function var_0_0._afterBoxClose(arg_31_0, arg_31_1)
+	arg_31_0._viewIsClose = true
+
 	GameGCMgr.instance:dispatchEvent(GameGCEvent.SetBanGc, "commandstation_playvideo", true)
 
 	if not arg_31_0._openBox then
@@ -385,7 +387,6 @@ function var_0_0.onOpen(arg_38_0)
 	arg_38_0:_startIdleDialogue()
 	arg_38_0:_showEpisodeInfo()
 	arg_38_0:_initSpine()
-	arg_38_0:_updateActBtn()
 	arg_38_0:_checkRed()
 	arg_38_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_38_0._onRefreshActivity, arg_38_0)
 	arg_38_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, arg_38_0._onUpdateDungeonInfo, arg_38_0)
@@ -404,306 +405,323 @@ function var_0_0.onOpen(arg_38_0)
 		TaskDispatcher.runRepeat(arg_38_0._openPostProcess, arg_38_0, 0)
 	end
 
-	arg_38_0:_updatePaper()
+	if ViewMgr.instance:isOpen(ViewName.CommandStationEnterAnimView) then
+		TaskDispatcher.runDelay(arg_38_0._delayUpdatePaper, arg_38_0, 0)
+		TaskDispatcher.runDelay(arg_38_0._delayUpdateActBtn, arg_38_0, 0.5)
+	else
+		arg_38_0:_updatePaper()
+		arg_38_0:_updateActBtn()
+	end
 end
 
-function var_0_0._onPaperUpdate(arg_39_0)
+function var_0_0._delayUpdatePaper(arg_39_0)
 	arg_39_0:_updatePaper()
 end
 
-function var_0_0._updatePaper(arg_40_0)
-	local var_40_0 = CommandStationModel.instance.paper or 0
-	local var_40_1 = Mathf.Clamp(var_40_0, 0, 9)
-	local var_40_2 = var_40_1 == 0 and "commandstation_box_empty" or "commandstation_box_0" .. tostring(var_40_1)
-
-	UISpriteSetMgr.instance:setCommandStationSprite(arg_40_0._imagebox, var_40_2)
+function var_0_0._delayUpdateActBtn(arg_40_0)
+	arg_40_0:_updateActBtn()
 end
 
-function var_0_0._hideMainScene(arg_41_0)
-	local var_41_0 = GameSceneMgr.instance:getCurScene():getSceneContainerGO()
-
-	gohelper.setActive(var_41_0, false)
+function var_0_0._onPaperUpdate(arg_41_0)
+	arg_41_0:_updatePaper()
 end
 
-function var_0_0._onVideoStarted(arg_42_0, arg_42_1)
-	if arg_42_1 == arg_42_0._toMapVedioPath then
-		TaskDispatcher.cancelTask(arg_42_0._delayHideSelf, arg_42_0)
-		TaskDispatcher.runDelay(arg_42_0._delayHideSelf, arg_42_0, 0)
+function var_0_0._updatePaper(arg_42_0)
+	local var_42_0 = CommandStationModel.instance.paper or 0
+	local var_42_1 = Mathf.Clamp(var_42_0, 0, 9)
+	local var_42_2 = var_42_1 == 0 and "commandstation_box_empty" or "commandstation_box_0" .. tostring(var_42_1)
+
+	UISpriteSetMgr.instance:setCommandStationSprite(arg_42_0._imagebox, var_42_2)
+end
+
+function var_0_0._hideMainScene(arg_43_0)
+	local var_43_0 = GameSceneMgr.instance:getCurScene():getSceneContainerGO()
+
+	gohelper.setActive(var_43_0, false)
+end
+
+function var_0_0._onVideoStarted(arg_44_0, arg_44_1)
+	if arg_44_1 == arg_44_0._toMapVedioPath then
+		TaskDispatcher.cancelTask(arg_44_0._delayHideSelf, arg_44_0)
+		TaskDispatcher.runDelay(arg_44_0._delayHideSelf, arg_44_0, 0)
 	end
 
-	if arg_42_1 == arg_42_0._toPaperVedioPath then
+	if arg_44_1 == arg_44_0._toPaperVedioPath then
 		CommandStationController.instance:openCommandStationPaperView()
-		VideoController.instance:openFullScreenVideoView(arg_42_0._toPaperVedioPath, nil, 5, arg_42_0._realOpenPaperView, arg_42_0, ViewName.CommandStationPaperView, true)
+		VideoController.instance:openFullScreenVideoView(arg_44_0._toPaperVedioPath, nil, 5, arg_44_0._realOpenPaperView, arg_44_0, ViewName.CommandStationPaperView, true)
 	end
 end
 
-function var_0_0._onVideoFirstFrameReady(arg_43_0, arg_43_1)
+function var_0_0._onVideoFirstFrameReady(arg_45_0, arg_45_1)
 	return
 end
 
-function var_0_0._delayHideSelf(arg_44_0)
-	arg_44_0.viewContainer:setVisibleInternal(false)
-	TaskDispatcher.cancelTask(arg_44_0._delayOpenMapView, arg_44_0)
-	TaskDispatcher.runDelay(arg_44_0._delayOpenMapView, arg_44_0, 0.85)
+function var_0_0._delayHideSelf(arg_46_0)
+	arg_46_0.viewContainer:setVisibleInternal(false)
+	TaskDispatcher.cancelTask(arg_46_0._delayOpenMapView, arg_46_0)
+	TaskDispatcher.runDelay(arg_46_0._delayOpenMapView, arg_46_0, 0.85)
 end
 
-function var_0_0._openPostProcess(arg_45_0)
+function var_0_0._openPostProcess(arg_47_0)
 	PostProcessingMgr.instance:setUIActive(true)
 end
 
-function var_0_0._resetLayer(arg_46_0)
-	local var_46_0 = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
+function var_0_0._resetLayer(arg_48_0)
+	local var_48_0 = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
 
-	gohelper.addChild(var_46_0, arg_46_0.viewGO)
+	gohelper.addChild(var_48_0, arg_48_0.viewGO)
 end
 
-function var_0_0._checkRed(arg_47_0)
-	gohelper.setActive(arg_47_0._gotaskred, RedDotModel.instance:isDotShow(RedDotEnum.DotNode.CommandStationPaper))
-	gohelper.setActive(arg_47_0._goActivityRedDot, RedDotModel.instance:isDotShow(RedDotEnum.DotNode.VersionActivityEnterRedDot))
+function var_0_0._checkRed(arg_49_0)
+	gohelper.setActive(arg_49_0._gotaskred, RedDotModel.instance:isDotShow(RedDotEnum.DotNode.CommandStationPaper))
+	gohelper.setActive(arg_49_0._goActivityRedDot, RedDotModel.instance:isDotShow(RedDotEnum.DotNode.VersionActivityEnterRedDot))
 end
 
-function var_0_0._OnOpenView(arg_48_0, arg_48_1)
-	if arg_48_1 == ViewName.CommandStationMapView or arg_48_1 == ViewName.CommandStationPaperView then
+function var_0_0._OnOpenView(arg_50_0, arg_50_1)
+	if arg_50_1 == ViewName.CommandStationMapView or arg_50_1 == ViewName.CommandStationPaperView then
 		UIBlockMgrExtend.setNeedCircleMv(true)
-		arg_48_0.viewContainer:setVisibleInternal(false)
+		arg_50_0.viewContainer:setVisibleInternal(false)
 		GameGCMgr.instance:dispatchEvent(GameGCEvent.SetBanGc, "commandstation_playvideo", false)
 	end
 
-	if arg_48_0._changeVideoViewLayer and arg_48_1 == ViewName.FullScreenVideoView then
-		arg_48_0._changeVideoViewLayer = false
+	if arg_50_0._changeVideoViewLayer and arg_50_1 == ViewName.FullScreenVideoView then
+		arg_50_0._changeVideoViewLayer = false
 
-		local var_48_0 = ViewMgr.instance:getContainer(ViewName.FullScreenVideoView)
+		local var_50_0 = ViewMgr.instance:getContainer(ViewName.FullScreenVideoView)
 
-		if var_48_0 and not gohelper.isNil(var_48_0.viewGO) then
-			local var_48_1 = ViewMgr.instance:getUILayer("HUD")
+		if var_50_0 and not gohelper.isNil(var_50_0.viewGO) then
+			local var_50_1 = ViewMgr.instance:getUILayer("HUD")
 
-			gohelper.addChild(var_48_1, var_48_0.viewGO)
+			gohelper.addChild(var_50_1, var_50_0.viewGO)
 		end
 	end
 
-	if arg_48_1 == ViewName.CommandStationPaperView and ViewMgr.instance:isOpen(ViewName.FullScreenVideoView) then
-		local var_48_2 = ViewMgr.instance:getContainer(ViewName.CommandStationPaperView)
+	if arg_50_1 == ViewName.CommandStationPaperView and ViewMgr.instance:isOpen(ViewName.FullScreenVideoView) then
+		local var_50_2 = ViewMgr.instance:getContainer(ViewName.CommandStationPaperView)
 
-		if var_48_2 and not gohelper.isNil(var_48_2.viewGO) then
-			var_48_2:setVisibleInternal(false)
+		if var_50_2 and not gohelper.isNil(var_50_2.viewGO) then
+			var_50_2:setVisibleInternal(false)
 		end
 	end
 end
 
-function var_0_0._OnCloseViewFinish(arg_49_0, arg_49_1)
-	if not ViewHelper.instance:checkViewOnTheTop(arg_49_0.viewName) then
+function var_0_0._OnCloseViewFinish(arg_51_0, arg_51_1)
+	if not ViewHelper.instance:checkViewOnTheTop(arg_51_0.viewName) then
 		return
 	end
 
-	if arg_49_1 == ViewName.CommandStationPaperView then
+	if arg_51_1 == ViewName.CommandStationPaperView then
 		AudioMgr.instance:trigger(AudioEnum3_0.CommandStationPaper.play_ui_lushang_zhihuibu_fanhui)
 	end
 
-	if arg_49_1 == ViewName.CommandStationMapView or arg_49_1 == ViewName.DungeonMapView or arg_49_1 == ViewName.CommandStationPaperView then
-		arg_49_0.viewContainer:setVisibleInternal(true)
-		arg_49_0._viewAnimatorPlayer:Play("open2", arg_49_0._animDone, arg_49_0)
+	if arg_51_1 == ViewName.CommandStationMapView or arg_51_1 == ViewName.DungeonMapView or arg_51_1 == ViewName.CommandStationPaperView or arg_51_0._viewIsClose then
+		arg_51_0.viewContainer:setVisibleInternal(true)
+		arg_51_0._viewAnimatorPlayer:Play("open2", arg_51_0._animDone, arg_51_0)
 
-		arg_49_0._openBox = true
+		arg_51_0._viewIsClose = false
+		arg_51_0._openBox = true
 
-		arg_49_0:_updateBoxAnim()
+		arg_51_0:_updateBoxAnim()
 	end
 end
 
-function var_0_0.onUpdateParam(arg_50_0)
-	arg_50_0.viewContainer:setVisibleInternal(true)
-	arg_50_0._viewAnimatorPlayer:Play("open2", arg_50_0._animDone, arg_50_0)
+function var_0_0.onUpdateParam(arg_52_0)
+	arg_52_0.viewContainer:setVisibleInternal(true)
+	arg_52_0._viewAnimatorPlayer:Play("open2", arg_52_0._animDone, arg_52_0)
 end
 
-function var_0_0._OnCloseFullView(arg_51_0, arg_51_1)
-	if arg_51_1 == ViewName.CommandStationMapView or arg_51_1 == ViewName.DungeonMapView then
-		arg_51_0.viewContainer:setVisibleInternal(false)
+function var_0_0._OnCloseFullView(arg_53_0, arg_53_1)
+	if arg_53_1 == ViewName.CommandStationMapView or arg_53_1 == ViewName.DungeonMapView then
+		arg_53_0.viewContainer:setVisibleInternal(false)
 	end
 end
 
-function var_0_0._animDone(arg_52_0)
+function var_0_0._animDone(arg_54_0)
 	return
 end
 
-function var_0_0._onUpdateDungeonInfo(arg_53_0)
-	arg_53_0:_showEpisodeInfo()
+function var_0_0._onUpdateDungeonInfo(arg_55_0)
+	arg_55_0:_showEpisodeInfo()
 end
 
-function var_0_0._onRefreshActivity(arg_54_0)
-	arg_54_0:_updateActBtn()
+function var_0_0._onRefreshActivity(arg_56_0)
+	arg_56_0:_updateActBtn()
 end
 
-function var_0_0._updateActBtn(arg_55_0)
-	local var_55_0, var_55_1 = arg_55_0:_isShowActivity()
+function var_0_0._updateActBtn(arg_57_0)
+	local var_57_0, var_57_1 = arg_57_0:_isShowActivity()
 
-	gohelper.setActive(arg_55_0._btnactivity, var_55_0)
-	gohelper.setActive(arg_55_0._goActivityBg, var_55_0)
+	gohelper.setActive(arg_57_0._btnactivity, var_57_0)
+	gohelper.setActive(arg_57_0._goActivityBg, var_57_0)
 
-	if var_55_0 then
-		arg_55_0._actImage:LoadImage(var_55_1)
+	if var_57_0 then
+		arg_57_0._actImage:LoadImage(var_57_1)
 	end
 end
 
-function var_0_0._isShowActivity(arg_56_0)
-	if arg_56_0._constActParamConfig2 then
-		local var_56_0 = arg_56_0._constActParamConfig2.value
-		local var_56_1 = (var_56_0 > 0 and ActivityHelper.getActivityStatus(var_56_0)) == ActivityEnum.ActivityStatus.Normal
+function var_0_0._isShowActivity(arg_58_0)
+	if arg_58_0._constActParamConfig2 then
+		local var_58_0 = arg_58_0._constActParamConfig2.value
+		local var_58_1 = (var_58_0 > 0 and ActivityHelper.getActivityStatus(var_58_0)) == ActivityEnum.ActivityStatus.Normal
 
-		if var_56_1 then
-			return var_56_1, arg_56_0._constActParamConfig2.value3
+		if var_58_1 then
+			return var_58_1, arg_58_0._constActParamConfig2.value3
 		end
 	end
 
-	if arg_56_0._constActParamConfig then
-		local var_56_2 = arg_56_0._constActParamConfig.value
-		local var_56_3 = ActivityHelper.getActivityStatus(var_56_2) == ActivityEnum.ActivityStatus.Normal
+	if arg_58_0._constActParamConfig then
+		local var_58_2 = arg_58_0._constActParamConfig.value
+		local var_58_3 = ActivityHelper.getActivityStatus(var_58_2) == ActivityEnum.ActivityStatus.Normal
 
-		if var_56_3 then
-			return var_56_3, arg_56_0._constActParamConfig.value3
+		if var_58_3 then
+			return var_58_3, arg_58_0._constActParamConfig.value3
 		end
 	end
 end
 
-function var_0_0.onOpenFinish(arg_57_0)
-	arg_57_0:_resetLayer()
+function var_0_0.onOpenFinish(arg_59_0)
+	arg_59_0:_resetLayer()
 	PostProcessingMgr.instance:setUIActive(false)
-	TaskDispatcher.cancelTask(arg_57_0._openPostProcess, arg_57_0)
-	arg_57_0:_showEnterDialogue()
-	arg_57_0:_showMap()
-	arg_57_0:_preloadVideos()
+	TaskDispatcher.cancelTask(arg_59_0._openPostProcess, arg_59_0)
+	arg_59_0:_showEnterDialogue()
+	arg_59_0:_showMap()
+	arg_59_0:_preloadVideos()
 end
 
-function var_0_0._preloadVideos(arg_58_0)
-	arg_58_0._toMapVedioPath = "videos/commandstation_tomap.mp4"
-	arg_58_0._toPaperVedioPath = "videos/commandstation_tocode.mp4"
-	arg_58_0._paperVideoNode, arg_58_0._paperVideoPlayer, arg_58_0._paperDisplayUGUI, arg_58_0._paperVideoGo = arg_58_0:_addCacheVideo("paperVideo", arg_58_0._toPaperVedioPath)
-	arg_58_0._mapVideoNode, arg_58_0._mapVideoPlayer, arg_58_0._mapDisplayUGUI, arg_58_0._mapVideoGo = arg_58_0:_addCacheVideo("mapVideo", arg_58_0._toMapVedioPath)
+function var_0_0._preloadVideos(arg_60_0)
+	arg_60_0._toMapVedioPath = "videos/commandstation_tomap.mp4"
+	arg_60_0._toPaperVedioPath = "videos/commandstation_tocode.mp4"
+	arg_60_0._paperVideoNode, arg_60_0._paperVideoPlayer, arg_60_0._paperDisplayUGUI, arg_60_0._paperVideoGo = arg_60_0:_addCacheVideo("paperVideo", arg_60_0._toPaperVedioPath)
+	arg_60_0._mapVideoNode, arg_60_0._mapVideoPlayer, arg_60_0._mapDisplayUGUI, arg_60_0._mapVideoGo = arg_60_0:_addCacheVideo("mapVideo", arg_60_0._toMapVedioPath)
 end
 
-function var_0_0._showEpisodeInfo(arg_59_0)
-	gohelper.setActive(arg_59_0._btnmap, DungeonModel.instance:hasPassLevelAndStory(CommandStationEnum.FirstEpisodeId))
+function var_0_0._showEpisodeInfo(arg_61_0)
+	gohelper.setActive(arg_61_0._btnmap, DungeonModel.instance:hasPassLevelAndStory(CommandStationEnum.FirstEpisodeId))
 
-	if not arg_59_0._chapterList then
+	if not arg_61_0._chapterList then
 		return
 	end
 
-	local var_59_0 = arg_59_0:_getLastEpisodeConfig()
-	local var_59_1 = DungeonConfig.instance:getEpisodeLevelIndex(var_59_0)
-	local var_59_2 = DungeonConfig.instance:getChapterCO(var_59_0.chapterId)
+	local var_61_0 = arg_61_0:_getLastEpisodeConfig()
+	local var_61_1 = DungeonConfig.instance:getEpisodeLevelIndex(var_61_0)
+	local var_61_2 = DungeonConfig.instance:getChapterCO(var_61_0.chapterId)
 
-	if LuaUtil.containChinese(var_59_0.name) then
-		local var_59_3 = LuaUtil.getCharNum(var_59_0.name)
-		local var_59_4 = 8
+	if LuaUtil.containChinese(var_61_0.name) then
+		local var_61_3 = LuaUtil.getCharNum(var_61_0.name)
+		local var_61_4 = 8
 
-		if var_59_4 < var_59_3 then
-			arg_59_0._txtName.text = LuaUtil.subString(var_59_0.name, 1, var_59_4) .. "..."
+		if var_61_4 < var_61_3 then
+			arg_61_0._txtName.text = LuaUtil.subString(var_61_0.name, 1, var_61_4) .. "..."
 		else
-			arg_59_0._txtName.text = var_59_0.name
+			arg_61_0._txtName.text = var_61_0.name
 		end
 	else
-		arg_59_0._txtName.text = var_59_0.name
+		arg_61_0._txtName.text = var_61_0.name
 	end
 
-	arg_59_0._txtNum.text = string.format("%s-%s", var_59_2.chapterIndex, var_59_1)
-	arg_59_0._showEpisodeId = var_59_0.id
+	arg_61_0._txtNum.text = string.format("%s-%s", var_61_2.chapterIndex, var_61_1)
+	arg_61_0._showEpisodeId = var_61_0.id
 end
 
-function var_0_0._startIdleDialogue(arg_60_0)
-	TaskDispatcher.cancelTask(arg_60_0._playIdleDialogue, arg_60_0)
-	TaskDispatcher.runDelay(arg_60_0._playIdleDialogue, arg_60_0, arg_60_0._idleConfig.time)
+function var_0_0._startIdleDialogue(arg_62_0)
+	TaskDispatcher.cancelTask(arg_62_0._playIdleDialogue, arg_62_0)
+	TaskDispatcher.runDelay(arg_62_0._playIdleDialogue, arg_62_0, arg_62_0._idleConfig.time)
 end
 
-function var_0_0._playIdleDialogue(arg_61_0)
-	local var_61_0 = CommandStationConfig.instance:getRandomDialogTextId(CommandStationEnum.DialogueType.Idle)
+function var_0_0._playIdleDialogue(arg_63_0)
+	local var_63_0 = CommandStationConfig.instance:getRandomDialogTextId(CommandStationEnum.DialogueType.Idle)
 
-	arg_61_0:_showDialogue(var_61_0)
+	arg_63_0:_showDialogue(var_63_0)
 end
 
-function var_0_0._showEnterDialogue(arg_62_0)
-	local var_62_0 = CommandStationConfig.instance:getRandomDialogTextId(CommandStationEnum.DialogueType.Enter)
+function var_0_0._showEnterDialogue(arg_64_0)
+	local var_64_0 = CommandStationConfig.instance:getRandomDialogTextId(CommandStationEnum.DialogueType.Enter)
 
-	arg_62_0:_showDialogue(var_62_0)
+	arg_64_0:_showDialogue(var_64_0)
 end
 
-function var_0_0._showDialogue(arg_63_0, arg_63_1)
-	if not arg_63_1 then
+function var_0_0._showDialogue(arg_65_0, arg_65_1)
+	if not arg_65_1 then
 		logError("_showDialogue textId is nil")
 
 		return
 	end
 
-	local var_63_0 = lua_copost_npc_text.configDict[arg_63_1]
+	local var_65_0 = lua_copost_npc_text.configDict[arg_65_1]
 
-	if not var_63_0 then
-		logError(string.format("CommandStationEnterView _showDialogue textId:%s config is nil", arg_63_1))
+	if not var_65_0 then
+		logError(string.format("CommandStationEnterView _showDialogue textId:%s config is nil", arg_65_1))
 
 		return
 	end
 
-	TaskDispatcher.cancelTask(arg_63_0._playIdleDialogue, arg_63_0)
-	TaskDispatcher.cancelTask(arg_63_0._hideDialogue, arg_63_0)
-	TaskDispatcher.runDelay(arg_63_0._hideDialogue, arg_63_0, 5)
-	arg_63_0._bottomAnimator:Play("in", 0, 0)
-	gohelper.setActive(arg_63_0._gobottom, true)
+	TaskDispatcher.cancelTask(arg_65_0._playIdleDialogue, arg_65_0)
+	TaskDispatcher.cancelTask(arg_65_0._hideDialogue, arg_65_0)
+	TaskDispatcher.runDelay(arg_65_0._hideDialogue, arg_65_0, 5)
+	arg_65_0._bottomAnimator:Play("in", 0, 0)
+	gohelper.setActive(arg_65_0._gobottom, true)
 
-	arg_63_0._txtanacn.text = var_63_0.text
+	arg_65_0._txtanacn.text = var_65_0.text
 
 	if LangSettings.instance:isCn() then
-		arg_63_0._txtanaen.text = var_63_0.engtext
+		arg_65_0._txtanaen.text = var_65_0.engtext
 	else
-		arg_63_0._txtanaen.text = ""
+		arg_65_0._txtanaen.text = ""
 	end
 end
 
-function var_0_0._hideDialogue(arg_64_0)
-	arg_64_0._bottomAnimator:Play("out", 0, 0)
-	arg_64_0:_startIdleDialogue()
+function var_0_0._hideDialogue(arg_66_0)
+	arg_66_0._bottomAnimator:Play("out", 0, 0)
+	arg_66_0:_startIdleDialogue()
 end
 
-function var_0_0._showMap(arg_65_0)
-	local var_65_0 = string.format("%s_%s", CommandStationEnum.PrefsKey.NewMapTip, CommandStationConfig.instance:getCurVersionId())
+function var_0_0._showMap(arg_67_0)
+	local var_67_0 = string.format("%s_%s", CommandStationEnum.PrefsKey.NewMapTip, CommandStationConfig.instance:getCurVersionId())
 
-	if CommandStationController.hasOnceActionKey(var_65_0) then
+	if CommandStationController.hasOnceActionKey(var_67_0) then
 		return
 	end
 
-	CommandStationController.setOnceActionKey(var_65_0)
+	CommandStationController.setOnceActionKey(var_67_0)
 
 	if CommandStationConfig.instance:getConstConfig(CommandStationEnum.ConstId.VersionName) then
-		arg_65_0._txtmapname.text = luaLang("CommandStationEnterView_showMap_txtmapname")
+		arg_67_0._txtmapname.text = luaLang("CommandStationEnterView_showMap_txtmapname")
 	end
 
-	gohelper.setActive(arg_65_0._gomap, true)
+	gohelper.setActive(arg_67_0._gomap, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Story_Map_In)
-	arg_65_0._mapAnimator:Play("go_mapname_in")
-	TaskDispatcher.cancelTask(arg_65_0._mapOut, arg_65_0)
-	TaskDispatcher.runDelay(arg_65_0._mapOut, arg_65_0, 3)
-end
-
-function var_0_0._mapOut(arg_66_0)
-	arg_66_0._mapAnimator:Play("go_mapname_out")
-end
-
-function var_0_0.onClose(arg_67_0)
-	TaskDispatcher.cancelTask(arg_67_0._hideDialogue, arg_67_0)
-	TaskDispatcher.cancelTask(arg_67_0._playIdleDialogue, arg_67_0)
+	arg_67_0._mapAnimator:Play("go_mapname_in")
 	TaskDispatcher.cancelTask(arg_67_0._mapOut, arg_67_0)
-	TaskDispatcher.cancelTask(arg_67_0._openPostProcess, arg_67_0)
-	TaskDispatcher.cancelTask(arg_67_0._delayPlayIdleAnim, arg_67_0)
-	TaskDispatcher.cancelTask(arg_67_0._delayOpenMapView, arg_67_0)
-	TaskDispatcher.cancelTask(arg_67_0._delayHideSelf, arg_67_0)
-	TaskDispatcher.cancelTask(arg_67_0._boxCloseDone, arg_67_0)
-	CommandStationController.StatCommandStationViewClose(arg_67_0.viewName, Time.realtimeSinceStartup - arg_67_0._viewOpenTime)
+	TaskDispatcher.runDelay(arg_67_0._mapOut, arg_67_0, 3)
+end
+
+function var_0_0._mapOut(arg_68_0)
+	arg_68_0._mapAnimator:Play("go_mapname_out")
+end
+
+function var_0_0.onClose(arg_69_0)
+	TaskDispatcher.cancelTask(arg_69_0._hideDialogue, arg_69_0)
+	TaskDispatcher.cancelTask(arg_69_0._playIdleDialogue, arg_69_0)
+	TaskDispatcher.cancelTask(arg_69_0._mapOut, arg_69_0)
+	TaskDispatcher.cancelTask(arg_69_0._openPostProcess, arg_69_0)
+	TaskDispatcher.cancelTask(arg_69_0._delayPlayIdleAnim, arg_69_0)
+	TaskDispatcher.cancelTask(arg_69_0._delayOpenMapView, arg_69_0)
+	TaskDispatcher.cancelTask(arg_69_0._delayHideSelf, arg_69_0)
+	TaskDispatcher.cancelTask(arg_69_0._boxCloseDone, arg_69_0)
+	TaskDispatcher.cancelTask(arg_69_0._delayUpdatePaper, arg_69_0)
+	TaskDispatcher.cancelTask(arg_69_0._delayUpdateActBtn, arg_69_0)
+	CommandStationController.StatCommandStationViewClose(arg_69_0.viewName, Time.realtimeSinceStartup - arg_69_0._viewOpenTime)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 	GameGCMgr.instance:dispatchEvent(GameGCEvent.SetBanGc, "commandstation_playvideo", false)
-	CommandStationMapModel.instance:setPreloadScene()
 	CommandStationMapModel.instance:setPreloadView()
 end
 
-function var_0_0.onDestroyView(arg_68_0)
-	if arg_68_0._preloadLoader then
-		arg_68_0._preloadLoader:dispose()
+function var_0_0.onDestroyView(arg_70_0)
+	local var_70_0 = CommandStationMapModel.instance:getPreloadSceneLoader()
 
-		arg_68_0._preloadLoader = nil
+	if var_70_0 then
+		var_70_0:dispose()
+		CommandStationMapModel.instance:setPreloadScene()
 	end
 end
 

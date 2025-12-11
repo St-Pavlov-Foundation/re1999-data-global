@@ -50,7 +50,7 @@ function var_0_0.onReceiveGetBuyPowerInfoReply(arg_6_0, arg_6_1, arg_6_2)
 
 	CurrencyModel.instance.powerCanBuyCount = var_6_0
 
-	CurrencyController.instance:dispatchEvent(CurrencyEvent.PowerBuyCountChange)
+	CurrencyController.instance:dispatchEvent(CurrencyEvent.PowerBuyCountChange, false)
 end
 
 function var_0_0.sendBuyPowerRequest(arg_7_0)
@@ -69,7 +69,7 @@ function var_0_0.onReceiveBuyPowerReply(arg_8_0, arg_8_1, arg_8_2)
 	CurrencyModel.instance.powerCanBuyCount = var_8_0
 
 	SDKChannelEventModel.instance:firstBuyPower()
-	CurrencyController.instance:dispatchEvent(CurrencyEvent.PowerBuyCountChange)
+	CurrencyController.instance:dispatchEvent(CurrencyEvent.PowerBuyCountChange, true)
 end
 
 function var_0_0.sendExchangeDiamondRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
@@ -87,9 +87,16 @@ function var_0_0.onReceiveExchangeDiamondReply(arg_10_0, arg_10_1, arg_10_2)
 	end
 
 	SDKChannelEventModel.instance:firstExchangeDiamond()
+
+	local var_10_0 = arg_10_2.opType
+
+	if var_10_0 == CurrencyEnum.PayDiamondExchangeSource.Summon then
+		return
+	end
+
 	GameFacade.showToast(ToastEnum.ExchangeDiamond)
 
-	if arg_10_2.opType == CurrencyEnum.PayDiamondExchangeSource.SkinStore then
+	if var_10_0 == CurrencyEnum.PayDiamondExchangeSource.SkinStore then
 		StoreController.instance:recordExchangeSkinDiamond(arg_10_2.exchangeDiamond)
 	end
 end

@@ -11,7 +11,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._goEmptyAdd = gohelper.findChild(arg_1_1, "#go_Empty/image_Add")
 	arg_1_0._clickThis = gohelper.getClick(arg_1_1)
 	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0._goHaveNpc, "#txt_PartnerName")
-	arg_1_0._imagechess = gohelper.findChildImage(arg_1_0._goHaveNpc, "#image_Chess")
+	arg_1_0._imagechess = gohelper.findChildSingleImage(arg_1_0._goHaveNpc, "#image_Chess")
 end
 
 function var_0_0.setIndex(arg_2_0, arg_2_1)
@@ -69,7 +69,7 @@ function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
 
 		arg_9_0._txtname.text = var_9_1.name
 
-		UISpriteSetMgr.instance:setV2a2ChessSprite(arg_9_0._imagechess, var_9_1.headIcon, false)
+		SurvivalUnitIconHelper.instance:setNpcIcon(arg_9_0._imagechess, var_9_1.headIcon)
 	end
 end
 

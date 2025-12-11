@@ -25,6 +25,7 @@ var_0_0.OnUpdateMapElementState = 109
 var_0_0.OnAddSmokeMask = 110
 var_0_0.OnRemoveSmokeMask = 111
 var_0_0.OnGetTaskReward = 112
+var_0_0.OnChangeLayerRewardMapId = 113
 var_0_0.OnSelectLevel = 201
 var_0_0.OnGetInfo = 202
 var_0_0.OnQuestionReply = 203

@@ -14,8 +14,12 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_cancel")
 	arg_1_0._btnclear = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_clear")
 	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_empty")
+	arg_1_0._goscrollcontent = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_content")
+	arg_1_0._goscrollnameplate = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_content_misihai")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_empty")
 	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
 	arg_1_0._simageBottomBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_BottomBG")
+	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -76,28 +80,40 @@ function var_0_0.refreshUI(arg_8_0)
 	local var_8_0 = AchievementSelectListModel.instance.isGroup
 	local var_8_1 = AchievementSelectListModel.instance:getCount()
 	local var_8_2 = AchievementSelectListModel.instance:getSelectCount()
+	local var_8_3 = AchievementSelectListModel.instance:checkIsNamePlate()
+	local var_8_4 = var_8_1 <= 0
 
 	gohelper.setActive(arg_8_0._goselectgroup, var_8_0)
 	gohelper.setActive(arg_8_0._gounselectsingle, var_8_0)
 	gohelper.setActive(arg_8_0._goselectsingle, not var_8_0)
 	gohelper.setActive(arg_8_0._gounselectgroup, not var_8_0)
-	gohelper.setActive(arg_8_0._goempty, var_8_1 <= 0)
+	gohelper.setActive(arg_8_0._golefttop, not var_8_3)
+	gohelper.setActive(arg_8_0._goempty, var_8_4)
+	gohelper.setActive(arg_8_0._goscrollcontent, not var_8_4 and not var_8_3)
+	gohelper.setActive(arg_8_0._goscrollnameplate, not var_8_4 and var_8_3)
 	gohelper.setActive(arg_8_0._btnclear.gameObject, var_8_2 > 0)
 
-	if var_8_0 then
-		local var_8_3 = {
+	if var_8_3 then
+		local var_8_5 = {
+			AchievementSelectListModel.instance:getSingleSelectedCount(),
+			AchievementEnum.ShowMaxNamePlateCount
+		}
+
+		arg_8_0._txtselectnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementselectview_selectsingle"), var_8_5)
+	elseif var_8_0 then
+		local var_8_6 = {
 			AchievementSelectListModel.instance:getGroupSelectedCount(),
 			AchievementEnum.ShowMaxGroupCount
 		}
 
-		arg_8_0._txtselectnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementselectview_selectgroup"), var_8_3)
+		arg_8_0._txtselectnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementselectview_selectgroup"), var_8_6)
 	else
-		local var_8_4 = {
+		local var_8_7 = {
 			AchievementSelectListModel.instance:getSingleSelectedCount(),
 			AchievementEnum.ShowMaxSingleCount
 		}
 
-		arg_8_0._txtselectnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementselectview_selectsingle"), var_8_4)
+		arg_8_0._txtselectnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementselectview_selectsingle"), var_8_7)
 	end
 
 	arg_8_0:refreshCategory()
@@ -125,7 +141,8 @@ function var_0_0.initCategory(arg_10_0)
 		AchievementEnum.Type.Story,
 		AchievementEnum.Type.Normal,
 		AchievementEnum.Type.GamePlay,
-		AchievementEnum.Type.Activity
+		AchievementEnum.Type.Activity,
+		AchievementEnum.Type.NamePlate
 	}
 	arg_10_0._categoryItems = {}
 

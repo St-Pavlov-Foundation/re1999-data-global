@@ -78,9 +78,9 @@ end
 
 function var_0_0._refreshQuickItems(arg_5_0)
 	local var_5_0 = {}
-	local var_5_1 = SurvivalMapModel.instance:getSceneMo()
+	local var_5_1 = SurvivalMapHelper.instance:getBagMo()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_1.bag.items) do
+	for iter_5_0, iter_5_1 in ipairs(var_5_1.items) do
 		if iter_5_1.co.type == SurvivalEnum.ItemType.Quick then
 			table.insert(var_5_0, iter_5_1)
 		end
@@ -107,6 +107,7 @@ function var_0_0._refreshQuickItems(arg_5_0)
 
 	arg_5_0:onViewPortScroll()
 	arg_5_0:showGoNum(arg_5_0._curCenterIndex)
+	arg_5_0._infoPanel:updateMo()
 end
 
 function var_0_0._onBeginDrag(arg_6_0, arg_6_1, arg_6_2)
@@ -353,37 +354,38 @@ end
 function var_0_0._onUseQuickItem(arg_21_0, arg_21_1)
 	local var_21_0 = SurvivalMapModel.instance:getCurMapCo().walkables
 	local var_21_1 = SurvivalMapModel.instance:getSceneMo().player.pos
+	local var_21_2 = arg_21_1.co.effect
 
 	if arg_21_1.co.subType == SurvivalEnum.ItemSubType.Quick_Fly then
-		local var_21_2 = (string.splitToNumber(arg_21_1.co.effect, "#") or {})[1] or 0
-		local var_21_3 = SurvivalHelper.instance:getAllPointsByDis(var_21_1, var_21_2)
+		local var_21_3 = (string.splitToNumber(var_21_2, "#") or {})[1] or 0
 
-		for iter_21_0 = #var_21_3, 1, -1 do
-			if var_21_3[iter_21_0] == var_21_1 or not SurvivalHelper.instance:isHaveNode(var_21_0, var_21_3[iter_21_0]) then
-				table.remove(var_21_3, iter_21_0)
-			end
-		end
-
-		arg_21_0._allCanUsePoints = var_21_3
-
-		for iter_21_1, iter_21_2 in ipairs(var_21_3) do
-			SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(-1, iter_21_2.q, iter_21_2.r, 2)
-		end
+		arg_21_0:setRangeByWalkable(var_21_1, var_21_3, var_21_0)
 	elseif arg_21_1.co.subType == SurvivalEnum.ItemSubType.Quick_ClearFog then
-		local var_21_4 = (string.splitToNumber(arg_21_1.co.effect, "#") or {})[1] or 0
-		local var_21_5 = SurvivalHelper.instance:getAllPointsByDis(var_21_1, var_21_4)
+		local var_21_4 = (string.splitToNumber(var_21_2, "#") or {})[1] or 0
 
-		for iter_21_3 = #var_21_5, 1, -1 do
-			if var_21_5[iter_21_3] == var_21_1 or not SurvivalHelper.instance:isHaveNode(var_21_0, var_21_5[iter_21_3]) then
-				table.remove(var_21_5, iter_21_3)
-			end
-		end
+		arg_21_0:setRangeByWalkable(var_21_1, var_21_4, var_21_0)
+	elseif arg_21_1.co.subType == SurvivalEnum.ItemSubType.Quick_SwapPos then
+		local var_21_5 = GameUtil.splitString2(var_21_2, true, "#", ",")
+		local var_21_6 = var_21_5[1] or {}
+		local var_21_7 = var_21_5[2] and var_21_5[2][1] or 0
 
-		arg_21_0._allCanUsePoints = var_21_5
+		arg_21_0:setRangeBySubType(var_21_1, var_21_7, var_21_6)
+	elseif arg_21_1.co.subType == SurvivalEnum.ItemSubType.Quick_DelObstructNPCFight then
+		local var_21_8 = tonumber(var_21_2) or 0
 
-		for iter_21_4, iter_21_5 in ipairs(var_21_5) do
-			SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(-1, iter_21_5.q, iter_21_5.r, 2)
-		end
+		arg_21_0:setRangeByBlockNPCFight(var_21_1, var_21_8)
+	elseif arg_21_1.co.subType == SurvivalEnum.ItemSubType.Quick_TransferToEvent then
+		local var_21_9 = GameUtil.splitString2(var_21_2, true, "#", ",")
+		local var_21_10 = var_21_9[1] or {}
+		local var_21_11 = var_21_9[2] and var_21_9[2][1] or 0
+
+		arg_21_0:setRangeBySubType(var_21_1, var_21_11, var_21_10)
+	elseif arg_21_1.co.subType == SurvivalEnum.ItemSubType.Quick_TransferUnitOut then
+		local var_21_12 = GameUtil.splitString2(var_21_2, true, "#", ",")
+		local var_21_13 = var_21_12[1] and var_21_12[1][1] or 0
+		local var_21_14 = var_21_12[2] or {}
+
+		arg_21_0:setRangeBySubType(var_21_1, var_21_13, var_21_14)
 	else
 		SurvivalInteriorRpc.instance:sendSurvivalUseItemRequest(arg_21_1.uid, "")
 
@@ -394,54 +396,129 @@ function var_0_0._onUseQuickItem(arg_21_0, arg_21_1)
 
 	gohelper.setActive(arg_21_0._gotips, true)
 
-	for iter_21_6, iter_21_7 in ipairs(arg_21_0._allUIs) do
-		gohelper.setActive(iter_21_7, false)
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0._allUIs) do
+		gohelper.setActive(iter_21_1, false)
 	end
 
 	arg_21_0.viewContainer:setCloseFunc(arg_21_0.cancelUseItem, arg_21_0)
 end
 
-function var_0_0._onSceneClick(arg_22_0, arg_22_1, arg_22_2)
+function var_0_0.setRangeByWalkable(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	local var_22_0 = SurvivalHelper.instance:getAllPointsByDis(arg_22_1, arg_22_2)
+
+	for iter_22_0 = #var_22_0, 1, -1 do
+		if var_22_0[iter_22_0] == arg_22_1 or not SurvivalHelper.instance:getValueFromDict(arg_22_3, var_22_0[iter_22_0]) then
+			table.remove(var_22_0, iter_22_0)
+		end
+	end
+
+	arg_22_0:setCanUsePoints(var_22_0)
+end
+
+function var_0_0.setRangeByBlockNPCFight(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = SurvivalMapModel.instance:getSceneMo()
+	local var_23_1 = SurvivalHelper.instance:getAllPointsByDis(arg_23_1, arg_23_2)
+
+	for iter_23_0 = #var_23_1, 1, -1 do
+		local var_23_2 = var_23_0:getBlockTypeByPos(var_23_1[iter_23_0]) == SurvivalEnum.UnitSubType.Block
+		local var_23_3 = false
+
+		for iter_23_1, iter_23_2 in ipairs(var_23_0:getUnitByPos(var_23_1[iter_23_0], true, true)) do
+			if iter_23_2.unitType == SurvivalEnum.UnitType.NPC or iter_23_2.unitType == SurvivalEnum.UnitType.Battle then
+				var_23_3 = true
+
+				break
+			end
+		end
+
+		if var_23_1[iter_23_0] == arg_23_1 or not var_23_2 and not var_23_3 then
+			table.remove(var_23_1, iter_23_0)
+		end
+	end
+
+	arg_23_0:setCanUsePoints(var_23_1)
+end
+
+function var_0_0.setRangeBySubType(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	local var_24_0 = {}
+
+	for iter_24_0, iter_24_1 in ipairs(arg_24_3) do
+		var_24_0[iter_24_1] = true
+	end
+
+	local var_24_1 = SurvivalMapModel.instance:getSceneMo()
+	local var_24_2 = SurvivalHelper.instance:getAllPointsByDis(arg_24_1, arg_24_2)
+
+	for iter_24_2 = #var_24_2, 1, -1 do
+		local var_24_3 = var_24_1:getUnitByPos(var_24_2[iter_24_2], true, true)
+		local var_24_4 = false
+
+		for iter_24_3, iter_24_4 in ipairs(var_24_3) do
+			if iter_24_4.co and var_24_0[iter_24_4.co.subType] then
+				var_24_4 = true
+
+				break
+			end
+		end
+
+		if not var_24_4 then
+			table.remove(var_24_2, iter_24_2)
+		end
+	end
+
+	arg_24_0:setCanUsePoints(var_24_2)
+end
+
+function var_0_0.setCanUsePoints(arg_25_0, arg_25_1)
+	arg_25_0._allCanUsePoints = {}
+
+	for iter_25_0, iter_25_1 in ipairs(arg_25_1) do
+		table.insert(arg_25_0._allCanUsePoints, iter_25_1:clone())
+		SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(-1, iter_25_1.q, iter_25_1.r, 2)
+	end
+end
+
+function var_0_0._onSceneClick(arg_26_0, arg_26_1, arg_26_2)
 	if not SurvivalMapModel.instance.curUseItem then
 		return
 	end
 
-	arg_22_2.use = true
+	arg_26_2.use = true
 
-	if tabletool.indexOf(arg_22_0._allCanUsePoints, arg_22_1) then
-		SurvivalInteriorRpc.instance:sendSurvivalUseItemRequest(SurvivalMapModel.instance.curUseItem.uid, string.format("%d#%d", arg_22_1.q, arg_22_1.r))
+	if tabletool.indexOf(arg_26_0._allCanUsePoints, arg_26_1) then
+		SurvivalInteriorRpc.instance:sendSurvivalUseItemRequest(SurvivalMapModel.instance.curUseItem.uid, string.format("%d#%d", arg_26_1.q, arg_26_1.r))
 	end
 
-	arg_22_0:cancelUseItem()
+	arg_26_0:cancelUseItem()
 end
 
-function var_0_0.cancelUseItem(arg_23_0)
-	gohelper.setActive(arg_23_0._gotips, false)
+function var_0_0.cancelUseItem(arg_27_0)
+	gohelper.setActive(arg_27_0._gotips, false)
 	SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(-1)
 
 	SurvivalMapModel.instance.curUseItem = nil
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_0._allUIs) do
-		gohelper.setActive(iter_23_1, true)
+	for iter_27_0, iter_27_1 in ipairs(arg_27_0._allUIs) do
+		gohelper.setActive(iter_27_1, true)
 	end
 
-	arg_23_0.viewContainer:setCloseFunc()
+	arg_27_0.viewContainer:setCloseFunc()
 end
 
-function var_0_0._onClickTipsBtn(arg_24_0)
-	arg_24_0._infoPanel:updateMo()
+function var_0_0._onClickTipsBtn(arg_28_0)
+	arg_28_0._infoPanel:updateMo()
 end
 
-function var_0_0.onDestroyView(arg_25_0)
-	if arg_25_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_25_0._tweenId)
+function var_0_0.onDestroyView(arg_29_0)
+	if arg_29_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_29_0._tweenId)
 
-		arg_25_0._tweenId = nil
+		arg_29_0._tweenId = nil
 	end
 
 	SurvivalMapModel.instance.curUseItem = nil
 
-	TaskDispatcher.cancelTask(arg_25_0._checkScrollIsEnd, arg_25_0)
+	TaskDispatcher.cancelTask(arg_29_0._checkScrollIsEnd, arg_29_0)
 end
 
 return var_0_0

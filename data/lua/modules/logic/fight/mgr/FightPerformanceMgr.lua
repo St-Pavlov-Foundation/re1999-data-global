@@ -9,7 +9,7 @@ function var_0_0.onConstructor(arg_1_0)
 	arg_1_0:com_registMsg(FightMsgId.RestartGame, arg_1_0._onRestartGame)
 end
 
-function var_0_0.onAwake(arg_2_0)
+function var_0_0.onLogicEnter(arg_2_0)
 	arg_2_0:registFightMgr()
 	arg_2_0:registGamePlayMgr()
 end
@@ -19,11 +19,9 @@ function var_0_0.registFightMgr(arg_3_0)
 end
 
 function var_0_0.registGamePlayMgr(arg_4_0)
-	arg_4_0:registGamePlayClass(FightOperationMgr)
 	arg_4_0:registGamePlayClass(FightEntityEvolutionMgr)
 	arg_4_0:registGamePlayClass(FightBuffTypeId2EffectMgr)
 	arg_4_0:registGamePlayClass(FightEntrustedWorkMgr)
-	arg_4_0:registGamePlayClass(FightPlayMgr)
 
 	arg_4_0.asfdMgr = arg_4_0:registerUserDataClass(FightASFDMgr)
 end

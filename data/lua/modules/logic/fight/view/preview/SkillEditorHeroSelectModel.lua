@@ -71,6 +71,8 @@ function var_0_0._getCOList(arg_2_0)
 		arg_2_0:_cacheGroupNames()
 
 		return lua_monster_group.configList
+	elseif arg_2_0.selectType == SkillEditorMgr.SelectType.MonsterId then
+		return lua_monster.configList
 	end
 end
 

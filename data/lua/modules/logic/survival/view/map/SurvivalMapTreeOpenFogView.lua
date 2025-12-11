@@ -45,14 +45,15 @@ function var_0_0._onUseFog(arg_5_0, arg_5_1)
 	local var_5_2 = SurvivalHelper.instance:getAllPointsByDis(var_5_1, arg_5_1.openFogRange)
 
 	for iter_5_0 = #var_5_2, 1, -1 do
-		if var_5_2[iter_5_0] == var_5_1 or not SurvivalHelper.instance:isHaveNode(var_5_0, var_5_2[iter_5_0]) then
+		if var_5_2[iter_5_0] == var_5_1 or not SurvivalHelper.instance:getValueFromDict(var_5_0, var_5_2[iter_5_0]) then
 			table.remove(var_5_2, iter_5_0)
 		end
 	end
 
-	arg_5_0._allCanUsePoints = var_5_2
+	arg_5_0._allCanUsePoints = {}
 
 	for iter_5_1, iter_5_2 in ipairs(var_5_2) do
+		table.insert(arg_5_0._allCanUsePoints, iter_5_2:clone())
 		SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(-2, iter_5_2.q, iter_5_2.r, 2)
 	end
 

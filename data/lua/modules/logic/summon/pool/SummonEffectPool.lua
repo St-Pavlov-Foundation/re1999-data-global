@@ -5,13 +5,15 @@ local var_0_1 = 1
 local var_0_2 = {}
 local var_0_3 = {}
 local var_0_4 = {}
-local var_0_5
+local var_0_5 = {}
 local var_0_6
+local var_0_7
 
 function var_0_0.onEffectPreload(arg_1_0)
 	arg_1_0:Retain()
+	table.insert(var_0_2, arg_1_0)
 
-	var_0_2[arg_1_0.ResPath] = arg_1_0
+	var_0_3[arg_1_0.ResPath] = arg_1_0
 
 	var_0_0.returnEffect(var_0_0.getEffect(arg_1_0.ResPath))
 end
@@ -21,14 +23,14 @@ function var_0_0.dispose()
 		iter_2_1:Release()
 	end
 
-	for iter_2_2, iter_2_3 in pairs(var_0_3) do
+	for iter_2_2, iter_2_3 in pairs(var_0_4) do
 		for iter_2_4, iter_2_5 in ipairs(iter_2_3) do
 			iter_2_5:markCanDestroy()
 			gohelper.destroy(iter_2_5.containerGO)
 		end
 	end
 
-	for iter_2_6, iter_2_7 in pairs(var_0_4) do
+	for iter_2_6, iter_2_7 in pairs(var_0_5) do
 		iter_2_7:markCanDestroy()
 		gohelper.destroy(iter_2_7.containerGO)
 	end
@@ -36,21 +38,22 @@ function var_0_0.dispose()
 	var_0_2 = {}
 	var_0_3 = {}
 	var_0_4 = {}
+	var_0_5 = {}
 
-	gohelper.destroy(var_0_5)
+	gohelper.destroy(var_0_6)
 
-	var_0_5 = nil
 	var_0_6 = nil
+	var_0_7 = nil
 	var_0_1 = 1
 end
 
 function var_0_0.getEffect(arg_3_0, arg_3_1)
-	local var_3_0 = var_0_2[arg_3_0]
+	local var_3_0 = var_0_3[arg_3_0]
 	local var_3_1 = var_0_0.getPoolContainerGO()
 	local var_3_2
 
 	if var_3_0 then
-		local var_3_3 = var_0_3[arg_3_0]
+		local var_3_3 = var_0_4[arg_3_0]
 
 		if var_3_3 and #var_3_3 > 0 then
 			local var_3_4 = #var_3_3
@@ -77,7 +80,7 @@ function var_0_0.getEffect(arg_3_0, arg_3_1)
 		return nil
 	end
 
-	var_0_4[var_3_2.uniqueId] = var_3_2
+	var_0_5[var_3_2.uniqueId] = var_3_2
 
 	var_3_2:setActive(true)
 
@@ -93,13 +96,13 @@ function var_0_0.returnEffect(arg_4_0)
 	arg_4_0:unloadIcon()
 	arg_4_0:setActive(false)
 
-	var_0_4[arg_4_0.uniqueId] = nil
+	var_0_5[arg_4_0.uniqueId] = nil
 
-	local var_4_0 = var_0_3[arg_4_0.path]
+	local var_4_0 = var_0_4[arg_4_0.path]
 
 	if not var_4_0 then
 		var_4_0 = {}
-		var_0_3[arg_4_0.path] = var_4_0
+		var_0_4[arg_4_0.path] = var_4_0
 	end
 
 	table.insert(var_4_0, arg_4_0)
@@ -110,14 +113,14 @@ function var_0_0.returnEffectToPoolContainer(arg_5_0)
 end
 
 function var_0_0.getPoolContainerGO()
-	if not var_0_5 then
+	if not var_0_6 then
 		local var_6_0 = VirtualSummonScene.instance:getRootGO()
 
-		var_0_5 = gohelper.create3d(var_6_0, "EffectPool")
-		var_0_6 = var_0_5.transform
+		var_0_6 = gohelper.create3d(var_6_0, "EffectPool")
+		var_0_7 = var_0_6.transform
 	end
 
-	return var_0_5
+	return var_0_6
 end
 
 function var_0_0._instantiateEffectGO(arg_7_0, arg_7_1)

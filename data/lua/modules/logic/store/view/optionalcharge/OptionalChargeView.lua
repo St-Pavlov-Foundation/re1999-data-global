@@ -78,6 +78,7 @@ function var_0_0.onOpen(arg_8_0)
 	gohelper.setActive(arg_8_0._goGift1, arg_8_0.optionalGroups[1].rare == 0)
 	gohelper.setActive(arg_8_0._goGift1Special, arg_8_0.optionalGroups[1].rare == 1)
 	arg_8_0:refreshSelect()
+	StoreController.instance:statOpenChargeGoods(arg_8_0._mo.belongStoreId, arg_8_0.chargeGoodsCfg)
 end
 
 function var_0_0.onClose(arg_9_0)

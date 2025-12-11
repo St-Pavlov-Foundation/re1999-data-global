@@ -25,7 +25,7 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0.enemyInfoGo = gohelper.findChild(arg_4_0.viewGO, "root/topLeftContent/enemyinfo/")
 
 	local var_4_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightBack)
-	local var_4_1 = FightReplayModel.instance:isReplay()
+	local var_4_1 = FightDataHelper.stateMgr.isReplay
 
 	gohelper.setActive(arg_4_0.enemyInfoGo, var_4_0 and not var_4_1 and GMFightShowState.leftMonster)
 
@@ -46,17 +46,21 @@ end
 
 function var_0_0._checkHideUI(arg_7_0)
 	local var_7_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightBack)
-	local var_7_1 = FightReplayModel.instance:isReplay()
+	local var_7_1 = FightDataHelper.stateMgr.isReplay
 
 	gohelper.setActive(arg_7_0.enemyInfoGo, var_7_0 and not var_7_1 and GMFightShowState.leftMonster)
 end
 
 function var_0_0.enemyInfoBtnOnClick(arg_8_0)
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stateMgr.isReplay then
+		return
+	end
+
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -74,7 +78,7 @@ function var_0_0.enemyInfoBtnOnClick(arg_8_0)
 		return
 	end
 
-	if FightModel.instance:isAuto() then
+	if FightDataHelper.stateMgr:getIsAuto() then
 		return
 	end
 

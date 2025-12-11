@@ -1,62 +1,80 @@
 [
   {
     "id": 101,
-    "desc": "language_10085277",
-    "desc1": "language_10085278",
+    "desc": "language_10095811",
+    "desc1": "language_10095812",
     "icon": "survivalequip_icon_01",
     "name": "language_10017063",
     "icon2": "survivalequip_icon_01",
     "icon3": "77008111",
     "value": 1001,
     "icon4": "101",
-    "level": "5#10#15"
+    "level": "5#10#15",
+    "power": ""
   },
   {
     "id": 102,
-    "desc": "language_10085279",
-    "desc1": "language_10085280",
+    "desc": "language_10095813",
+    "desc1": "language_10095814",
     "icon": "survivalequip_icon_02",
     "name": "language_10063814",
     "icon2": "survivalequip_icon_02",
     "icon3": "77008114",
     "value": 1004,
     "icon4": "102",
-    "level": "6#9#12"
+    "level": "6#9#12",
+    "power": ""
   },
   {
     "id": 103,
-    "desc": "language_10085281",
-    "desc1": "language_10085282",
+    "desc": "language_10095815",
+    "desc1": "language_10095816",
     "icon": "survivalequip_icon_03",
     "name": "language_10074378",
     "icon2": "survivalequip_icon_03",
     "icon3": "77008113",
     "value": 1002,
     "icon4": "103",
-    "level": "10#15#20"
+    "level": "10#15#20",
+    "power": ""
   },
   {
     "id": 104,
-    "desc": "language_10085283",
-    "desc1": "language_10085284",
+    "desc": "language_10095817",
+    "desc1": "language_10095818",
     "icon": "survivalequip_icon_04",
     "name": "language_10018041",
     "icon2": "survivalequip_icon_04",
     "icon3": "77008112",
     "value": 1001,
     "icon4": "104",
-    "level": "7#10#13"
+    "level": "7#10#13",
+    "power": ""
   },
   {
     "id": 105,
-    "desc": "language_10085285",
-    "desc1": "language_10085286",
+    "desc": "language_10095819",
+    "desc1": "language_10095820",
     "icon": "survivalequip_icon_05",
     "name": "language_10042206",
     "icon2": "survivalequip_icon_05",
     "icon3": "77008115",
     "value": 1004,
     "icon4": "105",
-    "level": "6#9#12"
+    "level": "6#9#12",
+    "power": ""
+  },
+  {
+    "id": 106,
+    "desc": "language_10095821",
+    "desc1": "language_10095822",
+    "icon": "survivalequip_icon_06",
+    "name": "language_10017339",
+    "icon2": "survivalequip_icon_06",
+    "icon3": "77008116",
+    "value": 1004,
+    "icon4": "106",
+    "level": "6#8#11",
+    "power": "0#100"
   }
 ]

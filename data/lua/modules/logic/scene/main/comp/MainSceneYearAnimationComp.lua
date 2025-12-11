@@ -98,9 +98,15 @@ end
 
 function var_0_0.loadCallback(arg_7_0, arg_7_1)
 	if arg_7_1.IsLoadSuccess then
+		local var_7_0 = arg_7_0.assetItem
+
 		arg_7_0.assetItem = arg_7_1
 
 		arg_7_0.assetItem:Retain()
+
+		if var_7_0 then
+			var_7_0:Release()
+		end
 
 		arg_7_0.aniCurveConfig = arg_7_0.assetItem:GetResource(var_0_0.CurveAssetPath)
 	else

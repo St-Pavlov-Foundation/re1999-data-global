@@ -55,44 +55,68 @@ function var_0_0._refreshItem(arg_4_0)
 		end
 	end
 
+	arg_4_0:_refreshDeadline()
+	TaskDispatcher.runRepeat(arg_4_0._refreshDeadline, arg_4_0, 1)
 	arg_4_0._redDot:refreshDot()
 end
 
-function var_0_0.isShowRedDot(arg_5_0)
-	return arg_5_0._redDot.show
+function var_0_0._refreshDeadline(arg_5_0)
+	local var_5_0 = BpConfig.instance:getBpCO(BpModel.instance.id).promptDays or 0
+	local var_5_1 = BpModel.instance:getBpEndTime() - ServerTime.now()
+
+	if var_5_1 > var_5_0 * TimeUtil.OneDaySecond then
+		gohelper.setActive(arg_5_0._godeadline, false)
+
+		return
+	end
+
+	gohelper.setActive(arg_5_0._godeadline, true)
+
+	local var_5_2, var_5_3 = TimeUtil.secondToRoughTime(math.floor(var_5_1), true)
+
+	arg_5_0._txttime.text = var_5_2 .. var_5_3
 end
 
-function var_0_0._initReddotitem(arg_6_0)
-	local var_6_0 = arg_6_0.go
-	local var_6_1 = gohelper.findChild(var_6_0, "go_activityreddot")
+function var_0_0.isShowRedDot(arg_6_0)
+	return arg_6_0._redDot.show
+end
 
-	arg_6_0._redDot = RedDotController.instance:addRedDot(var_6_1, RedDotEnum.DotNode.BattlePass)
+function var_0_0._initReddotitem(arg_7_0)
+	local var_7_0 = arg_7_0.go
+	local var_7_1 = gohelper.findChild(var_7_0, "go_activityreddot")
+
+	arg_7_0._redDot = RedDotController.instance:addRedDot(var_7_1, RedDotEnum.DotNode.BattlePass)
 
 	do return end
 
-	local var_6_2 = gohelper.findChild(var_6_0, "go_activityreddot/#go_special_reds")
-	local var_6_3 = var_6_2.transform
-	local var_6_4 = var_6_3.childCount
+	local var_7_2 = gohelper.findChild(var_7_0, "go_activityreddot/#go_special_reds")
+	local var_7_3 = var_7_2.transform
+	local var_7_4 = var_7_3.childCount
 
-	for iter_6_0 = 1, var_6_4 do
-		local var_6_5 = var_6_3:GetChild(iter_6_0 - 1)
+	for iter_7_0 = 1, var_7_4 do
+		local var_7_5 = var_7_3:GetChild(iter_7_0 - 1)
 
-		gohelper.setActive(var_6_5.gameObject, false)
+		gohelper.setActive(var_7_5.gameObject, false)
 	end
 
-	local var_6_6 = gohelper.findChild(var_6_2, "#go_bp_red")
+	local var_7_6 = gohelper.findChild(var_7_2, "#go_bp_red")
 
-	arg_6_0._redDot = RedDotController.instance:addRedDotTag(var_6_6, RedDotEnum.DotNode.BattlePass, false, arg_6_0._onRefreshDot, arg_6_0)
-	arg_6_0._btnitem2 = gohelper.getClickWithAudio(var_6_6, AudioEnum2_6.BP.MainBtn)
+	arg_7_0._redDot = RedDotController.instance:addRedDotTag(var_7_6, RedDotEnum.DotNode.BattlePass, false, arg_7_0._onRefreshDot, arg_7_0)
+	arg_7_0._btnitem2 = gohelper.getClickWithAudio(var_7_6, AudioEnum2_6.BP.MainBtn)
 end
 
-function var_0_0._onRefreshDot(arg_7_0, arg_7_1)
-	local var_7_0 = RedDotModel.instance:isDotShow(arg_7_1.dotId, 0)
+function var_0_0._onRefreshDot(arg_8_0, arg_8_1)
+	local var_8_0 = RedDotModel.instance:isDotShow(arg_8_1.dotId, 0)
 
-	arg_7_1.show = var_7_0
+	arg_8_1.show = var_8_0
 
-	gohelper.setActive(arg_7_1.go, var_7_0)
-	gohelper.setActive(arg_7_0._imgGo, not var_7_0)
+	gohelper.setActive(arg_8_1.go, var_8_0)
+	gohelper.setActive(arg_8_0._imgGo, not var_8_0)
+end
+
+function var_0_0.onDestroyView(arg_9_0)
+	var_0_0.super.onDestroyView(arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0._refreshDeadline, arg_9_0)
 end
 
 return var_0_0

@@ -289,16 +289,45 @@ function var_0_0.getAct178OperHolePath(arg_19_0, arg_19_1)
 	return string.format("UIRoot/POPUP_TOP/PinballCityView/#go_buildingui/UI_%s%s", var_19_1, var_19_0)
 end
 
-function var_0_0.getBossTowerFirstBossPath(arg_20_0)
-	local var_20_0 = TowerModel.instance:getTowerListByStatus(TowerEnum.TowerType.Boss, TowerEnum.TowerStatus.Open)
-
-	if #var_20_0 > 1 then
-		table.sort(var_20_0, TowerAssistBossModel.sortBossList)
+function var_0_0.findSurvivalSpBlockPath(arg_20_0)
+	if not SurvivalMapModel.instance.guideSpBlockPos then
+		return ""
 	end
 
-	local var_20_1 = var_20_0[1] and var_20_0[1].id or 1
+	local var_20_0 = SurvivalMapModel.instance.guideSpBlockPos
+	local var_20_1 = Vector3.New(SurvivalHelper.instance:hexPointToWorldPoint(var_20_0.q, var_20_0.r))
 
-	return string.format("UIRoot/POPUP_TOP/TowerBossSelectView/root/#scroll_boss/Viewport/#go_bossContent/boss%s/towerbossselectitem(Clone)/click", var_20_1)
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, var_20_1, 0.3)
+
+	return string.format("cameraroot/SceneRoot/SurvivalScene/SPBlockRoot/%s", tostring(var_20_0))
+end
+
+function var_0_0.getBossTowerFirstBossPath(arg_21_0)
+	local var_21_0 = TowerModel.instance:getTowerListByStatus(TowerEnum.TowerType.Boss, TowerEnum.TowerStatus.Open)
+
+	if #var_21_0 > 1 then
+		table.sort(var_21_0, TowerAssistBossModel.sortBossList)
+	end
+
+	local var_21_1 = var_21_0[1] and var_21_0[1].id or 1
+
+	return string.format("UIRoot/POPUP_TOP/TowerBossSelectView/root/#scroll_boss/Viewport/#go_bossContent/boss%s/towerbossselectitem(Clone)/click", var_21_1)
+end
+
+function var_0_0.getNecrologistStoryLastItemPath(arg_22_0)
+	local var_22_0 = ViewMgr.instance:getContainer(ViewName.NecrologistStoryView)
+
+	if not var_22_0 then
+		return
+	end
+
+	local var_22_1 = var_22_0:getLastItem()
+
+	if not var_22_1 then
+		return
+	end
+
+	return SLFramework.GameObjectHelper.GetPath(var_22_1.viewGO)
 end
 
 return var_0_0

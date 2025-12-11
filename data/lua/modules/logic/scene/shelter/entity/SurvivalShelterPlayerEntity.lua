@@ -321,7 +321,7 @@ function var_0_0.isInPosList(arg_24_0, arg_24_1)
 
 	local var_24_0 = arg_24_0:getPos()
 
-	return SurvivalHelper.instance:isHaveNode(arg_24_1, var_24_0)
+	return SurvivalHelper.instance:getValueFromDict(arg_24_1, var_24_0)
 end
 
 function var_0_0.onUpdateEntity(arg_25_0)

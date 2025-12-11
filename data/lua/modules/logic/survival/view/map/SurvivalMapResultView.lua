@@ -1,6 +1,10 @@
 ﻿module("modules.logic.survival.view.map.SurvivalMapResultView", package.seeall)
 
 local var_0_0 = class("SurvivalMapResultView", BaseView)
+local var_0_1 = {
+	SurvivalEnum.CurrencyType.Gold,
+	SurvivalEnum.CurrencyType.Decoding
+}
 
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
@@ -21,26 +25,20 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goitemscroll = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_collection")
 	arg_1_0._txttag1 = gohelper.findChildTextMesh(arg_1_0._currencyroot, "tag1/#txt_tag1")
 	arg_1_0._txttag2 = gohelper.findChildTextMesh(arg_1_0._currencyroot, "tag2/#txt_tag2")
-	arg_1_0._txttag3 = gohelper.findChildTextMesh(arg_1_0._currencyroot, "tag3/#txt_tag3")
 	arg_1_0._btntag1 = gohelper.findChildButtonWithAudio(arg_1_0._currencyroot, "tag1")
 	arg_1_0._btntag2 = gohelper.findChildButtonWithAudio(arg_1_0._currencyroot, "tag2")
-	arg_1_0._btntag3 = gohelper.findChildButtonWithAudio(arg_1_0._currencyroot, "tag3")
 	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "")
 end
 
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnclose:AddClickListener(arg_2_0.onClickModalMask, arg_2_0)
 	arg_2_0._btntag1:AddClickListener(arg_2_0._openCurrencyTips, arg_2_0, {
-		id = 1,
+		id = var_0_1[1],
 		btn = arg_2_0._btntag1
 	})
 	arg_2_0._btntag2:AddClickListener(arg_2_0._openCurrencyTips, arg_2_0, {
-		id = 2,
+		id = var_0_1[2],
 		btn = arg_2_0._btntag2
-	})
-	arg_2_0._btntag3:AddClickListener(arg_2_0._openCurrencyTips, arg_2_0, {
-		id = 3,
-		btn = arg_2_0._btntag3
 	})
 end
 
@@ -48,7 +46,6 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btnclose:RemoveClickListener()
 	arg_3_0._btntag1:RemoveClickListener()
 	arg_3_0._btntag2:RemoveClickListener()
-	arg_3_0._btntag3:RemoveClickListener()
 end
 
 function var_0_0.onOpen(arg_4_0)
@@ -84,7 +81,7 @@ function var_0_0.refreshPlaceAndTime(arg_5_0, arg_5_1)
 	local var_5_0 = gohelper.findChildTextMesh(arg_5_1, "place/#txt_place")
 	local var_5_1 = gohelper.findChildTextMesh(arg_5_1, "time/#txt_time")
 
-	var_5_0.text = lua_survival_copy.configDict[arg_5_0._resultMo.copyId].name
+	var_5_0.text = lua_survival_map_group.configDict[arg_5_0._resultMo.copyId].name
 
 	local var_5_2 = arg_5_0._resultMo.totalGameTime
 	local var_5_3 = math.floor(var_5_2 / 60)
@@ -98,24 +95,22 @@ function var_0_0.refreshHeroAndNpc(arg_6_0)
 	local var_6_1 = {}
 	local var_6_2 = {}
 	local var_6_3 = {}
-	local var_6_4 = {}
 
 	for iter_6_0 = 1, 10 do
-		local var_6_5 = var_6_0:getHeroMo(var_6_0.heros[iter_6_0]) or true
+		local var_6_4 = var_6_0:getHeroMo(var_6_0.heros[iter_6_0]) or true
 
-		table.insert(iter_6_0 <= 5 and var_6_1 or var_6_2, var_6_5)
+		table.insert(iter_6_0 <= 5 and var_6_1 or var_6_2, var_6_4)
 	end
 
-	for iter_6_1 = 1, 10 do
-		local var_6_6 = var_6_0.npcId[iter_6_1] or 0
+	for iter_6_1 = 1, 4 do
+		local var_6_5 = var_6_0.npcId[iter_6_1] or 0
 
-		table.insert(iter_6_1 <= 5 and var_6_3 or var_6_4, var_6_6)
+		table.insert(var_6_3, var_6_5)
 	end
 
 	gohelper.CreateObjList(arg_6_0, arg_6_0._createHeroItem, var_6_1, arg_6_0._goheroline1, arg_6_0._goheroitem)
 	gohelper.CreateObjList(arg_6_0, arg_6_0._createHeroItem, var_6_2, arg_6_0._goheroline2, arg_6_0._goheroitem)
 	gohelper.CreateObjList(arg_6_0, arg_6_0._createNpcItem, var_6_3, arg_6_0._gonpcline1, arg_6_0._gonpcitem)
-	gohelper.CreateObjList(arg_6_0, arg_6_0._createNpcItem, var_6_4, arg_6_0._gonpcline2, arg_6_0._gonpcitem)
 end
 
 function var_0_0._createHeroItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
@@ -263,10 +258,10 @@ function var_0_0._onClickItem(arg_18_0, arg_18_1)
 end
 
 function var_0_0._createRightNpcItem(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = gohelper.findChildImage(arg_19_1, "#simage_chess")
+	local var_19_0 = gohelper.findChildSingleImage(arg_19_1, "#simage_chess")
 	local var_19_1 = gohelper.findChildButtonWithAudio(arg_19_1, "")
 
-	UISpriteSetMgr.instance:setV2a2ChessSprite(var_19_0, arg_19_2.npcCo.headIcon, false)
+	SurvivalUnitIconHelper.instance:setNpcIcon(var_19_0, arg_19_2.npcCo.headIcon)
 	arg_19_0:removeClickCb(var_19_1)
 	arg_19_0:addClickCb(var_19_1, arg_19_0._onClickNpc, arg_19_0, arg_19_2)
 end
@@ -287,9 +282,9 @@ function var_0_0.setCurrItem(arg_22_0, arg_22_1)
 	local var_22_0 = arg_22_0._resultMo.beforeCurrencyItems
 	local var_22_1 = arg_22_0._resultMo.afterCurrencyItems
 
-	for iter_22_0 = 1, 3 do
-		local var_22_2 = var_22_0[iter_22_0] or 0
-		local var_22_3 = var_22_1[iter_22_0] or 0
+	for iter_22_0 = 1, #var_0_1 do
+		local var_22_2 = var_22_0[var_0_1[iter_22_0]] or 0
+		local var_22_3 = var_22_1[var_0_1[iter_22_0]] or 0
 		local var_22_4 = math.floor(var_22_2 + (var_22_3 - var_22_2) * arg_22_1)
 
 		arg_22_0["_txttag" .. iter_22_0].text = var_22_4

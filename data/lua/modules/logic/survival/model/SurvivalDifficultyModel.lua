@@ -3,7 +3,6 @@
 local var_0_0 = class("SurvivalDifficultyModel", ListScrollModel)
 
 function var_0_0.refreshDifficulty(arg_1_0)
-	arg_1_0.difficultyIndex = 1
 	arg_1_0.customDifficulty = arg_1_0:loadCustomHard()
 	arg_1_0._customDifficultyDict = {}
 
@@ -14,6 +13,10 @@ function var_0_0.refreshDifficulty(arg_1_0)
 	arg_1_0.difficultyList = arg_1_0:getDifficultyList()
 	arg_1_0.customDifficultyList = arg_1_0:getCustomDifficultyList()
 	arg_1_0.customSelectIndex = 1
+
+	local var_1_0 = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.SurvivalHardSelect, 1)
+
+	arg_1_0.difficultyIndex = math.min(#arg_1_0.difficultyList, var_1_0)
 end
 
 function var_0_0.getDifficultyId(arg_2_0)
@@ -33,7 +36,7 @@ function var_0_0.hasSelectCustomDifficulty(arg_4_0)
 end
 
 function var_0_0.isCustomDifficulty(arg_5_0)
-	return arg_5_0:getDifficultyId() == SurvivalEnum.CustomDifficulty
+	return arg_5_0:getDifficultyId() == SurvivalConst.CustomDifficulty
 end
 
 function var_0_0.changeDifficultyIndex(arg_6_0, arg_6_1)
@@ -49,6 +52,8 @@ function var_0_0.changeDifficultyIndex(arg_6_0, arg_6_1)
 	if arg_6_0.difficultyIndex > #arg_6_0.difficultyList then
 		arg_6_0.difficultyIndex = 1
 	end
+
+	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.SurvivalHardSelect, arg_6_0.difficultyIndex)
 
 	local var_6_2 = arg_6_0:isCustomDifficulty()
 

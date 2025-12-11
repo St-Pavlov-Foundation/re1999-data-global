@@ -45,6 +45,9 @@ function var_0_0.refreshData(arg_6_0, arg_6_1)
 end
 
 function var_0_0.onOpen(arg_7_0)
+	transformhelper.setLocalScale(arg_7_0.viewGO.transform, 0.8, 0.8, 0.8)
+	recthelper.setAnchorX(arg_7_0.viewGO.transform, 15)
+
 	arg_7_0.maxValue = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191].minNeedHuntValue
 
 	local var_7_0 = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ACT191_HUNTING]

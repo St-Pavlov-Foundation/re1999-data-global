@@ -5,6 +5,7 @@ local var_0_0 = pureTable("AchievementListMO")
 function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0.id = arg_1_1
 	arg_1_0.taskCfgs = AchievementConfig.instance:getTasksByAchievementId(arg_1_1)
+	arg_1_0.achievementCfg = AchievementConfig.instance:getAchievement(arg_1_0.id)
 
 	arg_1_0:buildTaskStateMap()
 
@@ -96,6 +97,8 @@ end
 local var_0_1 = 46
 local var_0_2 = 74
 local var_0_3 = 206
+local var_0_4 = 500
+local var_0_5 = 250
 
 function var_0_0.getLineHeightFunction(arg_12_0, arg_12_1, arg_12_2)
 	local var_12_0 = 0
@@ -111,8 +114,18 @@ function var_0_0.getLineHeightFunction(arg_12_0, arg_12_1, arg_12_2)
 		local var_12_2 = arg_12_0:getTaskListBySearchFilterType(arg_12_1)
 		local var_12_3 = var_12_2 and #var_12_2 or 0
 		local var_12_4 = arg_12_0.isGroupTop and var_0_2 + var_0_1 or var_0_1
+		local var_12_5 = arg_12_0.achievementCfg.category == AchievementEnum.Type.NamePlate
+		local var_12_6 = var_12_5 and AchievementMainListModel.instance:checkNamePlateShowList()
 
-		var_12_0 = var_12_3 * var_0_3 + var_12_4
+		if var_12_5 then
+			if var_12_6 then
+				var_12_0 = var_0_4
+			else
+				var_12_0 = var_12_3 * var_0_5 + var_12_4
+			end
+		else
+			var_12_0 = var_12_3 * var_0_3 + var_12_4
+		end
 	end
 
 	return var_12_0
@@ -127,10 +140,6 @@ function var_0_0.clearOverrideLineHeight(arg_14_0)
 end
 
 function var_0_0.getLineHeight(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_0._cellHeight then
-		return arg_15_0._cellHeight
-	end
-
 	return (arg_15_0:getLineHeightFunction(arg_15_1, arg_15_2))
 end
 

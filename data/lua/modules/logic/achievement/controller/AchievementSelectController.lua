@@ -86,46 +86,60 @@ function var_0_0.changeSingleSelect(arg_10_0, arg_10_1)
 	arg_10_0:notifyUpdateView()
 end
 
-function var_0_0.handlePlayerInfoChanged(arg_11_0)
-	AchievementSelectListModel.instance:decodeShowAchievement()
+function var_0_0.changeNamePlateSelect(arg_11_0, arg_11_1)
+	local var_11_0 = AchievementSelectListModel.instance:isSingleSelected(arg_11_1)
+	local var_11_1 = AchievementSelectListModel.instance:getSingleSelectedCount()
+
+	if not var_11_0 and var_11_1 >= 1 then
+		GameFacade.showToast(ToastEnum.AchievementShowMaxSingleCount, 1)
+
+		return
+	end
+
+	AchievementSelectListModel.instance:setSingleSelect(arg_11_1, not var_11_0)
 	arg_11_0:notifyUpdateView()
 end
 
-function var_0_0.handleAchievementUpdated(arg_12_0)
-	AchievementSelectListModel.instance:refreshTabData()
+function var_0_0.handlePlayerInfoChanged(arg_12_0)
+	AchievementSelectListModel.instance:decodeShowAchievement()
 	arg_12_0:notifyUpdateView()
 end
 
-function var_0_0.checkSave(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	GameFacade.showMessageBox(MessageBoxIdDefine.AchievementSaveCheck, MsgBoxEnum.BoxType.Yes_No, arg_13_0.switchGroupAfterSave, arg_13_2, nil, arg_13_0, arg_13_3)
+function var_0_0.handleAchievementUpdated(arg_13_0)
+	AchievementSelectListModel.instance:refreshTabData()
+	arg_13_0:notifyUpdateView()
 end
 
-function var_0_0.sendSave(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0, var_14_1 = AchievementSelectListModel.instance:getSaveRequestParam()
-
-	AchievementRpc.instance:sendShowAchievementRequest(var_14_0, var_14_1, arg_14_1, arg_14_2)
+function var_0_0.checkSave(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	GameFacade.showMessageBox(MessageBoxIdDefine.AchievementSaveCheck, MsgBoxEnum.BoxType.Yes_No, arg_14_0.switchGroupAfterSave, arg_14_2, nil, arg_14_0, arg_14_3)
 end
 
-function var_0_0.notifyUpdateView(arg_15_0)
-	arg_15_0:dispatchEvent(AchievementEvent.SelectViewUpdated)
+function var_0_0.sendSave(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0, var_15_1 = AchievementSelectListModel.instance:getSaveRequestParam()
+
+	AchievementRpc.instance:sendShowAchievementRequest(var_15_0, var_15_1, arg_15_1, arg_15_2)
+end
+
+function var_0_0.notifyUpdateView(arg_16_0)
+	arg_16_0:dispatchEvent(AchievementEvent.SelectViewUpdated)
 	AchievementSelectListModel.instance:onModelUpdate()
 end
 
-function var_0_0.popUpMessageBoxIfNeedSave(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5, arg_16_6)
-	local var_16_0 = AchievementSelectListModel.instance.isGroup
+function var_0_0.popUpMessageBoxIfNeedSave(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, arg_17_5, arg_17_6)
+	local var_17_0 = AchievementSelectListModel.instance.isGroup
 
-	if AchievementSelectListModel.instance:checkDirty(var_16_0) then
-		GameFacade.showMessageBox(MessageBoxIdDefine.AchievementSaveCheck, MsgBoxEnum.BoxType.Yes_No, arg_16_1, arg_16_2, nil, arg_16_4, arg_16_5)
-	elseif arg_16_3 then
-		arg_16_3(arg_16_6)
+	if AchievementSelectListModel.instance:checkDirty(var_17_0) then
+		GameFacade.showMessageBox(MessageBoxIdDefine.AchievementSaveCheck, MsgBoxEnum.BoxType.Yes_No, arg_17_1, arg_17_2, nil, arg_17_4, arg_17_5)
+	elseif arg_17_3 then
+		arg_17_3(arg_17_6)
 	end
 end
 
-function var_0_0.isCurrentShowGroupInPlayerView(arg_17_0)
-	local var_17_0 = PlayerModel.instance:getShowAchievement()
-	local var_17_1, var_17_2 = AchievementUtils.decodeShowStr(var_17_0)
+function var_0_0.isCurrentShowGroupInPlayerView(arg_18_0)
+	local var_18_0 = PlayerModel.instance:getShowAchievement()
+	local var_18_1, var_18_2 = AchievementUtils.decodeShowStr(var_18_0)
 
-	if var_17_2 and tabletool.len(var_17_2) > 0 then
+	if var_18_2 and tabletool.len(var_18_2) > 0 then
 		return true
 	end
 end

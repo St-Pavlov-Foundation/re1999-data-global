@@ -37,7 +37,7 @@ function var_0_0._checkRed(arg_3_0)
 
 	local var_3_2 = false
 
-	for iter_3_2, iter_3_3 in ipairs(var_3_0.bag.items) do
+	for iter_3_2, iter_3_3 in ipairs(var_3_0:getBag(SurvivalEnum.ItemSource.Shelter).items) do
 		if iter_3_3.equipCo then
 			var_3_2 = true
 		end
@@ -46,7 +46,7 @@ function var_0_0._checkRed(arg_3_0)
 	local var_3_3 = SurvivalMapModel.instance:getSceneMo()
 
 	if var_3_0.inSurvival and var_3_3 then
-		for iter_3_4, iter_3_5 in ipairs(var_3_3.bag.items) do
+		for iter_3_4, iter_3_5 in ipairs(var_3_0:getBag(SurvivalEnum.ItemSource.Map).items) do
 			if iter_3_5.equipCo then
 				var_3_2 = true
 			end
@@ -71,7 +71,7 @@ function var_0_0._checkRed(arg_3_0)
 		end
 	end
 
-	for iter_3_8, iter_3_9 in ipairs(var_3_0.bag.items) do
+	for iter_3_8, iter_3_9 in ipairs(var_3_0:getBag(SurvivalEnum.ItemSource.Shelter).items) do
 		if iter_3_9.equipCo then
 			for iter_3_10, iter_3_11 in ipairs(var_3_4) do
 				if iter_3_11.equipCo.group == iter_3_9.equipCo.group and iter_3_11.equipCo.score < iter_3_9.equipCo.score then
@@ -84,7 +84,7 @@ function var_0_0._checkRed(arg_3_0)
 	end
 
 	if var_3_0.inSurvival and var_3_3 then
-		for iter_3_12, iter_3_13 in ipairs(var_3_3.bag.items) do
+		for iter_3_12, iter_3_13 in ipairs(var_3_0:getBag(SurvivalEnum.ItemSource.Map).items) do
 			if iter_3_13.equipCo then
 				for iter_3_14, iter_3_15 in ipairs(var_3_4) do
 					if iter_3_15.equipCo.group == iter_3_13.equipCo.group and iter_3_15.equipCo.score < iter_3_13.equipCo.score then

@@ -5,6 +5,7 @@ local var_0_1 = {
 	startTime = 8,
 	name = 5,
 	endTime = 9,
+	rule = 10,
 	groupId = 3,
 	uiPlayerParam = 6,
 	category = 2,

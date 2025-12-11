@@ -66,7 +66,7 @@ function var_0_0.onSelect(arg_4_0, arg_4_1)
 	gohelper.setActive(arg_4_0.selectframe, arg_4_1)
 
 	if arg_4_1 then
-		Activity191Controller.instance:dispatchEvent(Activity191Event.OnClickHeroEditItem, arg_4_0._mo)
+		Activity191Controller.instance:dispatchEvent(Activity191Event.ClickHeroEditItem, arg_4_0._mo)
 	end
 end
 
@@ -75,7 +75,7 @@ function var_0_0._onItemClick(arg_5_0)
 
 	if arg_5_0.isSelect then
 		arg_5_0._view:selectCell(arg_5_0._index, false)
-		Activity191Controller.instance:dispatchEvent(Activity191Event.OnClickHeroEditItem)
+		Activity191Controller.instance:dispatchEvent(Activity191Event.ClickHeroEditItem)
 	else
 		arg_5_0._view:selectCell(arg_5_0._index, true)
 	end

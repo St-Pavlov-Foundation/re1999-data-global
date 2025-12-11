@@ -192,6 +192,7 @@ function var_0_0.updateAct101Infos(arg_11_0, arg_11_1)
 	arg_11_0:_initRoleSign_kAct101RedList()
 	arg_11_0:_initSpecialSign_kAct101RedList()
 	arg_11_0:_initLinkageActivity_kAct101RedList()
+	arg_11_0:_initDoubleDan_kAct101RedList()
 
 	if not arg_11_1 then
 		for iter_11_0, iter_11_1 in ipairs(var_0_1) do
@@ -225,11 +226,11 @@ function var_0_0._initRoleSign_kAct101RedList(arg_13_0)
 
 	var_0_3 = true
 
-	local var_13_0 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part1", ActivityEnum.Activity.V2a6_Role_SignView_Part1)
-	local var_13_1 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part2", ActivityEnum.Activity.V2a6_Role_SignView_Part2)
+	local var_13_0 = ActivityType101Model.instance:getRoleSignActIdList()
 
-	table.insert(var_0_1, var_13_0)
-	table.insert(var_0_1, var_13_1)
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		table.insert(var_0_1, iter_13_1)
+	end
 end
 
 function var_0_0.onModuleViews(arg_14_0, arg_14_1, arg_14_2)
@@ -266,6 +267,38 @@ end
 
 function var_0_0.requestAct165Info(arg_17_0)
 	Activity165Model.instance:onInitInfo()
+end
+
+local var_0_6 = false
+
+function var_0_0._initVersionSummon_kAct101RedList(arg_18_0)
+	if var_0_6 then
+		return
+	end
+
+	var_0_6 = true
+
+	local var_18_0 = ActivityType101Config.instance:getVersionSummonActIdList()
+
+	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+		table.insert(var_0_1, iter_18_1)
+	end
+end
+
+local var_0_7 = false
+
+function var_0_0._initDoubleDan_kAct101RedList(arg_19_0)
+	if var_0_7 then
+		return
+	end
+
+	var_0_7 = true
+
+	local var_19_0 = GameBranchMgr.instance:Vxax_ActId("DoubleDan", ActivityType101Config.instance:getDoubleDanActId())
+
+	if var_19_0 then
+		table.insert(var_0_1, var_19_0)
+	end
 end
 
 var_0_0.instance = var_0_0.New()

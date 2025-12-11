@@ -25,5 +25,16 @@ var_0_0.ChangeTalentPlan = 10107
 var_0_0.RenameTalentPlan = 10108
 var_0_0.OnHandleInStoreView = 10109
 var_0_0.OnEnterStoreView = 10110
+var_0_0.OnSelectDeepLayer = 20000
+var_0_0.OnEnterDeepGuide = 20001
+var_0_0.OnLoadTeamSuccess = 20002
+var_0_0.OnSaveTeamSuccess = 20003
+var_0_0.OnTowerDeepReset = 20004
+var_0_0.TowerDeepRefreshTask = 20005
+var_0_0.OnDeepTaskRewardGetFinish = 20006
+var_0_0.OnEnterDeepSuccRewardGuide = 20007
+var_0_0.OnCloseEnterDeepGuideView = 20008
+var_0_0.OnShowAssistBossEmpty = 20009
+var_0_0.OnSuccRewardGetFinish = 20010
 
 return var_0_0

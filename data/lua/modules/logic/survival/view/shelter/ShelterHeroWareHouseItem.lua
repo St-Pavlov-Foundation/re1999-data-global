@@ -19,6 +19,8 @@ function var_0_0.init(arg_1_0, arg_1_1)
 end
 
 function var_0_0._initObj(arg_2_0, arg_2_1)
+	arg_2_0._heroItem:setStyle_CharacterBackpack()
+
 	arg_2_0._animator = arg_2_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
 end
 

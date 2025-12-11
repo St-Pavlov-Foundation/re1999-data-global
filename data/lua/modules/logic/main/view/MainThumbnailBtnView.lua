@@ -19,6 +19,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnachievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_achievement")
 	arg_1_0._goachievementreddot = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_achievement/#go_achievementreddot")
 	arg_1_0._btnrecordvideo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_recordvideo")
+	arg_1_0._btnteam = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_team")
 	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_left")
 	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_right")
 	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content")
@@ -43,6 +44,7 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnfeedback:AddClickListener(arg_2_0._btnfeedbackOnClick, arg_2_0)
 	arg_2_0._btnachievement:AddClickListener(arg_2_0._btnachievementOnClick, arg_2_0)
 	arg_2_0._btnrecordvideo:AddClickListener(arg_2_0._btnrecordvideoOnClick, arg_2_0)
+	arg_2_0._btnteam:AddClickListener(arg_2_0._btnteamOnClick, arg_2_0)
 	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
 	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
 	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterBook, arg_2_0._btnhandbookOnClick, arg_2_0)
@@ -69,6 +71,7 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btnfeedback:RemoveClickListener()
 	arg_3_0._btnachievement:RemoveClickListener()
 	arg_3_0._btnrecordvideo:RemoveClickListener()
+	arg_3_0._btnteam:RemoveClickListener()
 	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterBook, arg_3_0._btnhandbookOnClick, arg_3_0)
 	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterAchievement, arg_3_0._btnachievementOnClick, arg_3_0)
 	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterFriend, arg_3_0._btnsocialOnClick, arg_3_0)
@@ -174,66 +177,70 @@ function var_0_0._btnrecordvideoOnClick(arg_12_0)
 	end
 end
 
-function var_0_0._btnplayercardOnClick(arg_13_0)
+function var_0_0._btnteamOnClick(arg_13_0)
+	HeroGroupPresetController.instance:openHeroGroupPresetTeamView()
+end
+
+function var_0_0._btnplayercardOnClick(arg_14_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.PlayerCard) then
-		local var_13_0 = PlayerModel.instance:getPlayinfo()
+		local var_14_0 = PlayerModel.instance:getPlayinfo()
 
 		PlayerCardController.instance:openPlayerCardView({
-			userId = var_13_0.userId
+			userId = var_14_0.userId
 		})
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.PlayerCard))
 	end
 end
 
-function var_0_0._btnleftOnClick(arg_14_0)
-	arg_14_0:setTargetPageIndex(arg_14_0:getTargetPageIndex() - 1)
-	arg_14_0:_updatePage()
-end
-
-function var_0_0._btnrightOnClick(arg_15_0)
-	arg_15_0:setTargetPageIndex(arg_15_0:getTargetPageIndex() + 1)
+function var_0_0._btnleftOnClick(arg_15_0)
+	arg_15_0:setTargetPageIndex(arg_15_0:getTargetPageIndex() - 1)
 	arg_15_0:_updatePage()
 end
 
-function var_0_0.setTargetPageIndex(arg_16_0, arg_16_1)
-	arg_16_0._targetPageIndex = arg_16_1
+function var_0_0._btnrightOnClick(arg_16_0)
+	arg_16_0:setTargetPageIndex(arg_16_0:getTargetPageIndex() + 1)
+	arg_16_0:_updatePage()
 end
 
-function var_0_0.getTargetPageIndex(arg_17_0)
-	return arg_17_0._targetPageIndex
+function var_0_0.setTargetPageIndex(arg_17_0, arg_17_1)
+	arg_17_0._targetPageIndex = arg_17_1
 end
 
-function var_0_0._updatePage(arg_18_0)
-	arg_18_0:_updatePageBtns()
-
-	local var_18_0 = (1 - arg_18_0:getTargetPageIndex()) * arg_18_0._space
-
-	ZProj.TweenHelper.DOAnchorPosX(arg_18_0._gocontent.transform, var_18_0, 0.25)
+function var_0_0.getTargetPageIndex(arg_18_0)
+	return arg_18_0._targetPageIndex
 end
 
-function var_0_0._updatePageBtns(arg_19_0)
-	gohelper.setActive(arg_19_0._btnleft.gameObject, arg_19_0:getTargetPageIndex() > 1)
-	gohelper.setActive(arg_19_0._btnright.gameObject, arg_19_0:getTargetPageIndex() < arg_19_0._pageNum and arg_19_0._pageNum > 1)
+function var_0_0._updatePage(arg_19_0)
+	arg_19_0:_updatePageBtns()
+
+	local var_19_0 = (1 - arg_19_0:getTargetPageIndex()) * arg_19_0._space
+
+	ZProj.TweenHelper.DOAnchorPosX(arg_19_0._gocontent.transform, var_19_0, 0.25)
 end
 
-function var_0_0.onOpen(arg_20_0)
-	arg_20_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_20_0._checkOpen, arg_20_0)
-	arg_20_0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_20_0._checkOpen, arg_20_0)
-	arg_20_0:addEventCb(NoticeController.instance, NoticeEvent.OnRefreshRedDot, arg_20_0._onRefreshNoticeRedDot, arg_20_0)
-	arg_20_0:addEventCb(NoticeController.instance, NoticeEvent.OnGetNoticeInfo, arg_20_0._onRefreshNoticeRedDot, arg_20_0)
-	arg_20_0:addEventCb(GuideController.instance, GuideEvent.FinishGuide, arg_20_0._onRefreshNoticeRedDot, arg_20_0)
-	arg_20_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, arg_20_0._isShowPlayerCardRedDot, arg_20_0)
-	arg_20_0:addEventCb(HandbookController.instance, HandbookEvent.EnterHandbookSkin, arg_20_0._onRefreshHandbookRedDot, arg_20_0)
-	arg_20_0:addEventCb(HandbookController.instance, HandbookEvent.MarkHandbookSkinSuitRedDot, arg_20_0._onRefreshHandbookRedDot, arg_20_0)
+function var_0_0._updatePageBtns(arg_20_0)
+	gohelper.setActive(arg_20_0._btnleft.gameObject, arg_20_0:getTargetPageIndex() > 1)
+	gohelper.setActive(arg_20_0._btnright.gameObject, arg_20_0:getTargetPageIndex() < arg_20_0._pageNum and arg_20_0._pageNum > 1)
 end
 
-function var_0_0._checkOpen(arg_21_0)
-	arg_21_0:_checkZhouBianOpen()
+function var_0_0.onOpen(arg_21_0)
+	arg_21_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_21_0._checkOpen, arg_21_0)
+	arg_21_0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_21_0._checkOpen, arg_21_0)
+	arg_21_0:addEventCb(NoticeController.instance, NoticeEvent.OnRefreshRedDot, arg_21_0._onRefreshNoticeRedDot, arg_21_0)
+	arg_21_0:addEventCb(NoticeController.instance, NoticeEvent.OnGetNoticeInfo, arg_21_0._onRefreshNoticeRedDot, arg_21_0)
+	arg_21_0:addEventCb(GuideController.instance, GuideEvent.FinishGuide, arg_21_0._onRefreshNoticeRedDot, arg_21_0)
+	arg_21_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, arg_21_0._isShowPlayerCardRedDot, arg_21_0)
+	arg_21_0:addEventCb(HandbookController.instance, HandbookEvent.EnterHandbookSkin, arg_21_0._onRefreshHandbookRedDot, arg_21_0)
+	arg_21_0:addEventCb(HandbookController.instance, HandbookEvent.MarkHandbookSkinSuitRedDot, arg_21_0._onRefreshHandbookRedDot, arg_21_0)
 end
 
-function var_0_0._checkZhouBianOpen(arg_22_0)
-	if arg_22_0._isGamePad then
+function var_0_0._checkOpen(arg_22_0)
+	arg_22_0:_checkZhouBianOpen()
+end
+
+function var_0_0._checkZhouBianOpen(arg_23_0)
+	if arg_23_0._isGamePad then
 		return
 	end
 
@@ -245,9 +252,9 @@ function var_0_0._checkZhouBianOpen(arg_22_0)
 		return
 	end
 
-	local var_22_0 = arg_22_0._btnzhoubian.gameObject
+	local var_23_0 = arg_23_0._btnzhoubian.gameObject
 
-	if var_22_0.activeSelf then
+	if var_23_0.activeSelf then
 		return
 	end
 
@@ -259,183 +266,188 @@ function var_0_0._checkZhouBianOpen(arg_22_0)
 		return
 	end
 
-	arg_22_0._btnNum = arg_22_0._btnNum + 1
-	arg_22_0._pageNum = math.ceil(arg_22_0._btnNum / 8)
+	arg_23_0._btnNum = arg_23_0._btnNum + 1
+	arg_23_0._pageNum = math.ceil(arg_23_0._btnNum / 8)
 
-	gohelper.addChild(arg_22_0._gobtncontent2, var_22_0)
-	gohelper.setActive(var_22_0, true)
-	arg_22_0:_initDrag(var_22_0)
-	arg_22_0:_updatePageBtns()
+	gohelper.addChild(arg_23_0._gobtncontent2, var_23_0)
+	gohelper.setActive(var_23_0, true)
+	arg_23_0:_initDrag(var_23_0)
+	arg_23_0:_updatePageBtns()
 end
 
-function var_0_0._editableInitView(arg_23_0)
-	arg_23_0._scrollList = arg_23_0:getUserDataTb_()
-	arg_23_0._btnGoList = arg_23_0:getUserDataTb_()
+function var_0_0._editableInitView(arg_24_0)
+	arg_24_0._scrollList = arg_24_0:getUserDataTb_()
+	arg_24_0._btnGoList = arg_24_0:getUserDataTb_()
 
-	table.insert(arg_23_0._btnGoList, arg_23_0._btnhandbook.gameObject)
-	table.insert(arg_23_0._btnGoList, arg_23_0._btnachievement.gameObject)
-	table.insert(arg_23_0._btnGoList, arg_23_0._btnsocial.gameObject)
-	table.insert(arg_23_0._btnGoList, arg_23_0._btnplayercard.gameObject)
-	table.insert(arg_23_0._btnGoList, arg_23_0._btnbell.gameObject)
-	table.insert(arg_23_0._btnGoList, arg_23_0._btncalendar.gameObject)
-	table.insert(arg_23_0._btnGoList, arg_23_0._btnsetting.gameObject)
-	table.insert(arg_23_0._btnGoList, arg_23_0._btnfeedback.gameObject)
-	table.insert(arg_23_0._btnGoList, arg_23_0._btnrecordvideo.gameObject)
-	table.insert(arg_23_0._btnGoList, arg_23_0._btnzhoubian.gameObject)
+	table.insert(arg_24_0._btnGoList, arg_24_0._btnhandbook.gameObject)
+	table.insert(arg_24_0._btnGoList, arg_24_0._btnachievement.gameObject)
+	table.insert(arg_24_0._btnGoList, arg_24_0._btnsocial.gameObject)
+	table.insert(arg_24_0._btnGoList, arg_24_0._btnplayercard.gameObject)
+	table.insert(arg_24_0._btnGoList, arg_24_0._btnbell.gameObject)
+	table.insert(arg_24_0._btnGoList, arg_24_0._btncalendar.gameObject)
+	table.insert(arg_24_0._btnGoList, arg_24_0._btnsetting.gameObject)
 
-	arg_23_0._isGamePad = SDKNativeUtil.isGamePad()
+	if not VersionValidator.instance:isInReviewing() then
+		table.insert(arg_24_0._btnGoList, arg_24_0._btnteam.gameObject)
+	end
 
-	arg_23_0:_refreshBtns()
-	arg_23_0:_refreshRedDot()
-	arg_23_0:initBtnAudio()
-	arg_23_0:_initDrag(arg_23_0._goscroll)
-	gohelper.addUIClickAudio(arg_23_0._btnzhoubian.gameObject, AudioEnum.UI.play_ui_admission_open)
+	table.insert(arg_24_0._btnGoList, arg_24_0._btnfeedback.gameObject)
+	table.insert(arg_24_0._btnGoList, arg_24_0._btnrecordvideo.gameObject)
+	table.insert(arg_24_0._btnGoList, arg_24_0._btnzhoubian.gameObject)
+
+	arg_24_0._isGamePad = SDKNativeUtil.isGamePad()
+
+	arg_24_0:_refreshBtns()
+	arg_24_0:_refreshRedDot()
+	arg_24_0:initBtnAudio()
+	arg_24_0:_initDrag(arg_24_0._goscroll)
+	gohelper.addUIClickAudio(arg_24_0._btnzhoubian.gameObject, AudioEnum.UI.play_ui_admission_open)
 end
 
-function var_0_0._initDrag(arg_24_0, arg_24_1)
-	local var_24_0 = SLFramework.UGUI.UIDragListener.Get(arg_24_1)
+function var_0_0._initDrag(arg_25_0, arg_25_1)
+	local var_25_0 = SLFramework.UGUI.UIDragListener.Get(arg_25_1)
 
-	var_24_0:AddDragBeginListener(arg_24_0._onScrollDragBegin, arg_24_0)
-	var_24_0:AddDragEndListener(arg_24_0._onScrollDragEnd, arg_24_0)
+	var_25_0:AddDragBeginListener(arg_25_0._onScrollDragBegin, arg_25_0)
+	var_25_0:AddDragEndListener(arg_25_0._onScrollDragEnd, arg_25_0)
 
-	arg_24_0._scrollList[arg_24_1] = var_24_0
+	arg_25_0._scrollList[arg_25_1] = var_25_0
 end
 
-function var_0_0._onScrollDragBegin(arg_25_0, arg_25_1, arg_25_2)
-	arg_25_0._scrollStartPos = arg_25_2.position
+function var_0_0._onScrollDragBegin(arg_26_0, arg_26_1, arg_26_2)
+	arg_26_0._scrollStartPos = arg_26_2.position
 end
 
-function var_0_0._onScrollDragEnd(arg_26_0, arg_26_1, arg_26_2)
-	if not arg_26_0._scrollStartPos then
+function var_0_0._onScrollDragEnd(arg_27_0, arg_27_1, arg_27_2)
+	if not arg_27_0._scrollStartPos then
 		return
 	end
 
-	local var_26_0 = arg_26_2.position
-	local var_26_1 = var_26_0.x - arg_26_0._scrollStartPos.x
-	local var_26_2 = var_26_0.y - arg_26_0._scrollStartPos.y
+	local var_27_0 = arg_27_2.position
+	local var_27_1 = var_27_0.x - arg_27_0._scrollStartPos.x
+	local var_27_2 = var_27_0.y - arg_27_0._scrollStartPos.y
 
-	arg_26_0._scrollStartPos = nil
+	arg_27_0._scrollStartPos = nil
 
-	if math.abs(var_26_1) < math.abs(var_26_2) then
+	if math.abs(var_27_1) < math.abs(var_27_2) then
 		return
 	end
 
-	local var_26_3 = arg_26_0:getTargetPageIndex()
-	local var_26_4 = var_26_3 < arg_26_0._pageNum
-	local var_26_5 = var_26_3 > 1
+	local var_27_3 = arg_27_0:getTargetPageIndex()
+	local var_27_4 = var_27_3 < arg_27_0._pageNum
+	local var_27_5 = var_27_3 > 1
 
-	if var_26_1 > 100 and var_26_5 then
-		arg_26_0:setTargetPageIndex(var_26_3 - 1)
-		arg_26_0:_updatePage()
-	elseif var_26_1 < -100 and var_26_4 then
-		arg_26_0:setTargetPageIndex(var_26_3 + 1)
-		arg_26_0:_updatePage()
+	if var_27_1 > 100 and var_27_5 then
+		arg_27_0:setTargetPageIndex(var_27_3 - 1)
+		arg_27_0:_updatePage()
+	elseif var_27_1 < -100 and var_27_4 then
+		arg_27_0:setTargetPageIndex(var_27_3 + 1)
+		arg_27_0:_updatePage()
 	end
 end
 
-function var_0_0.initBtnAudio(arg_27_0)
-	local var_27_0 = AudioEnum.UI
+function var_0_0.initBtnAudio(arg_28_0)
+	local var_28_0 = AudioEnum.UI
 
-	gohelper.addUIClickAudio(arg_27_0._btnhandbook.gameObject, var_27_0.play_ui_screenplay_open)
-	gohelper.addUIClickAudio(arg_27_0._btncalendar.gameObject, var_27_0.Play_UI_Tipsopen)
-	gohelper.addUIClickAudio(arg_27_0._btnbell.gameObject, var_27_0.play_ui_notice_open)
-	gohelper.addUIClickAudio(arg_27_0._btnfeedback.gameObject, var_27_0.play_ui_feedback_open)
+	gohelper.addUIClickAudio(arg_28_0._btnhandbook.gameObject, var_28_0.play_ui_screenplay_open)
+	gohelper.addUIClickAudio(arg_28_0._btncalendar.gameObject, var_28_0.Play_UI_Tipsopen)
+	gohelper.addUIClickAudio(arg_28_0._btnbell.gameObject, var_28_0.play_ui_notice_open)
+	gohelper.addUIClickAudio(arg_28_0._btnfeedback.gameObject, var_28_0.play_ui_feedback_open)
 end
 
-function var_0_0._refreshRedDot(arg_28_0)
-	RedDotController.instance:addRedDot(arg_28_0._gosocialreddot, RedDotEnum.DotNode.FriendBtn)
-	RedDotController.instance:addRedDot(arg_28_0._gocalendarreddot, RedDotEnum.DotNode.SignInBtn, nil, arg_28_0._checkSignInRed, arg_28_0)
-	RedDotController.instance:addRedDot(arg_28_0._goachievementreddot, RedDotEnum.DotNode.AchievementEntry)
+function var_0_0._refreshRedDot(arg_29_0)
+	RedDotController.instance:addRedDot(arg_29_0._gosocialreddot, RedDotEnum.DotNode.FriendBtn)
+	RedDotController.instance:addRedDot(arg_29_0._gocalendarreddot, RedDotEnum.DotNode.SignInBtn, nil, arg_29_0._checkSignInRed, arg_29_0)
+	RedDotController.instance:addRedDot(arg_29_0._goachievementreddot, RedDotEnum.DotNode.AchievementEntry)
 
-	arg_28_0.noticeRedDot = RedDotController.instance:addNotEventRedDot(arg_28_0._gobelllreddot, NoticeModel.hasNotRedNotice, NoticeModel.instance)
-	arg_28_0.handbookskinRedDot = RedDotController.instance:addNotEventRedDot(arg_28_0._goreddotHandbook, HandbookController.hasAnyHandBookSkinGroupRedDot, HandbookController.instance)
+	arg_29_0.noticeRedDot = RedDotController.instance:addNotEventRedDot(arg_29_0._gobelllreddot, NoticeModel.hasNotRedNotice, NoticeModel.instance)
+	arg_29_0.handbookskinRedDot = RedDotController.instance:addNotEventRedDot(arg_29_0._goreddotHandbook, HandbookController.hasAnyHandBookSkinGroupRedDot, HandbookController.instance)
 end
 
-function var_0_0._checkSignInRed(arg_29_0, arg_29_1)
-	arg_29_1:defaultRefreshDot()
+function var_0_0._checkSignInRed(arg_30_0, arg_30_1)
+	arg_30_1:defaultRefreshDot()
 
-	if not arg_29_1.show then
-		arg_29_1.show = LifeCircleController.instance:isShowRed()
+	if not arg_30_1.show then
+		arg_30_1.show = LifeCircleController.instance:isShowRed()
 
-		arg_29_1:showRedDot(RedDotEnum.Style.Normal)
+		arg_30_1:showRedDot(RedDotEnum.Style.Normal)
 	end
 end
 
-function var_0_0._onRefreshNoticeRedDot(arg_30_0)
-	arg_30_0.noticeRedDot:refreshRedDot()
+function var_0_0._onRefreshNoticeRedDot(arg_31_0)
+	arg_31_0.noticeRedDot:refreshRedDot()
 end
 
-function var_0_0._onRefreshHandbookRedDot(arg_31_0)
-	arg_31_0.handbookskinRedDot:refreshRedDot()
+function var_0_0._onRefreshHandbookRedDot(arg_32_0)
+	arg_32_0.handbookskinRedDot:refreshRedDot()
 end
 
-function var_0_0._isShowPlayerCardRedDot(arg_32_0)
-	gohelper.setActive(arg_32_0._goreddotplayercard, PlayerCardModel.instance:getShowRed())
+function var_0_0._isShowPlayerCardRedDot(arg_33_0)
+	gohelper.setActive(arg_33_0._goreddotplayercard, PlayerCardModel.instance:getShowRed())
 
 	return PlayerCardModel.instance:getShowRed()
 end
 
 local var_0_1 = 8
 
-function var_0_0._refreshBtns(arg_33_0)
-	for iter_33_0, iter_33_1 in ipairs(arg_33_0._btnGoList) do
-		gohelper.setActive(iter_33_1, true)
+function var_0_0._refreshBtns(arg_34_0)
+	for iter_34_0, iter_34_1 in ipairs(arg_34_0._btnGoList) do
+		gohelper.setActive(iter_34_1, true)
 	end
 
-	local var_33_0 = not VersionValidator.instance:isInReviewing()
-	local var_33_1 = not GameFacade.isExternalTest()
-	local var_33_2 = not SDKMgr.getShowNotice or SDKMgr.instance:getShowNotice()
-	local var_33_3 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Notice)
+	local var_34_0 = not VersionValidator.instance:isInReviewing()
+	local var_34_1 = not GameFacade.isExternalTest()
+	local var_34_2 = not SDKMgr.getShowNotice or SDKMgr.instance:getShowNotice()
+	local var_34_3 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Notice)
 
-	gohelper.setActive(arg_33_0._btnbell.gameObject, var_33_0 and var_33_1 and var_33_2 and var_33_3)
-	gohelper.setActive(arg_33_0._btnsetting.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Setting))
-	gohelper.setActive(arg_33_0._btncalendar.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SignIn))
-	gohelper.setActive(arg_33_0._btnsocial.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Friend) and arg_33_0._isGamePad == false)
-	gohelper.setActive(arg_33_0._btnhandbook.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Handbook))
-	gohelper.setActive(arg_33_0._btnplayercard.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.PlayerCard))
-	gohelper.setActive(arg_33_0._btnachievement.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Achievement))
-	gohelper.setActive(arg_33_0._btnfeedback.gameObject, arg_33_0._isGamePad == false and var_33_1)
+	gohelper.setActive(arg_34_0._btnbell.gameObject, var_34_0 and var_34_1 and var_34_2 and var_34_3)
+	gohelper.setActive(arg_34_0._btnsetting.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Setting))
+	gohelper.setActive(arg_34_0._btncalendar.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SignIn))
+	gohelper.setActive(arg_34_0._btnsocial.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Friend) and arg_34_0._isGamePad == false)
+	gohelper.setActive(arg_34_0._btnhandbook.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Handbook))
+	gohelper.setActive(arg_34_0._btnplayercard.gameObject, var_34_0 and OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.PlayerCard))
+	gohelper.setActive(arg_34_0._btnachievement.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Achievement))
+	gohelper.setActive(arg_34_0._btnfeedback.gameObject, arg_34_0._isGamePad == false and var_34_1)
 
 	if VersionValidator.instance:isInReviewing() then
-		gohelper.setActive(arg_33_0._btnfeedback.gameObject, false)
+		gohelper.setActive(arg_34_0._btnfeedback.gameObject, false)
 	end
 
 	if GameChannelConfig.isEfun() then
-		gohelper.setActive(arg_33_0._btnfeedback.gameObject, false)
+		gohelper.setActive(arg_34_0._btnfeedback.gameObject, false)
 	end
 
-	gohelper.setActive(arg_33_0._btnrecordvideo, SettingsShowHelper.canShowRecordVideo())
-	gohelper.setActive(arg_33_0._btnzhoubian.gameObject, not arg_33_0._isGamePad and OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ZhouBian) and ActivityModel.instance:isActOnLine(10004))
+	gohelper.setActive(arg_34_0._btnrecordvideo, SettingsShowHelper.canShowRecordVideo())
+	gohelper.setActive(arg_34_0._btnzhoubian.gameObject, not arg_34_0._isGamePad and OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ZhouBian) and ActivityModel.instance:isActOnLine(10004))
 
-	local var_33_4 = 0
+	local var_34_4 = 0
 
-	for iter_33_2, iter_33_3 in ipairs(arg_33_0._btnGoList) do
-		if iter_33_3.activeSelf then
-			var_33_4 = var_33_4 + 1
+	for iter_34_2, iter_34_3 in ipairs(arg_34_0._btnGoList) do
+		if iter_34_3.activeSelf then
+			var_34_4 = var_34_4 + 1
 
-			if var_33_4 <= var_0_1 then
-				gohelper.addChild(arg_33_0._gobtncontent1, iter_33_3)
+			if var_34_4 <= var_0_1 then
+				gohelper.addChild(arg_34_0._gobtncontent1, iter_34_3)
 			else
-				gohelper.addChild(arg_33_0._gobtncontent2, iter_33_3)
+				gohelper.addChild(arg_34_0._gobtncontent2, iter_34_3)
 			end
 
-			arg_33_0:_initDrag(iter_33_3)
+			arg_34_0:_initDrag(iter_34_3)
 		end
 	end
 
-	arg_33_0._btnNum = var_33_4
-	arg_33_0._pageNum = math.ceil(arg_33_0._btnNum / var_0_1)
-	arg_33_0._space = recthelper.getWidth(arg_33_0._gobtncontent1.transform)
+	arg_34_0._btnNum = var_34_4
+	arg_34_0._pageNum = math.ceil(arg_34_0._btnNum / var_0_1)
+	arg_34_0._space = recthelper.getWidth(arg_34_0._gobtncontent1.transform)
 
-	arg_33_0:setTargetPageIndex(1)
-	arg_33_0:_updatePageBtns()
-	arg_33_0:_checkZhouBianOpen()
+	arg_34_0:setTargetPageIndex(1)
+	arg_34_0:_updatePageBtns()
+	arg_34_0:_checkZhouBianOpen()
 end
 
-function var_0_0.onDestroyView(arg_34_0)
-	for iter_34_0, iter_34_1 in pairs(arg_34_0._scrollList) do
-		iter_34_1:RemoveDragBeginListener()
-		iter_34_1:RemoveDragEndListener()
+function var_0_0.onDestroyView(arg_35_0)
+	for iter_35_0, iter_35_1 in pairs(arg_35_0._scrollList) do
+		iter_35_1:RemoveDragBeginListener()
+		iter_35_1:RemoveDragEndListener()
 	end
 end
 

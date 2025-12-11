@@ -1,14 +1,12 @@
 ﻿module("modules.logic.fight.view.work.FightAutoBindContractWork", package.seeall)
 
-local var_0_0 = class("FightAutoBindContractWork", BaseWork)
+local var_0_0 = class("FightAutoBindContractWork", FightWorkItem)
 
-function var_0_0.ctor(arg_1_0)
-	return
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.SAFETIME = 10
 end
 
 function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 10)
-
 	local var_2_0 = FightModel.instance.notifyEntityId
 
 	if string.nilorempty(var_2_0) then
@@ -50,26 +48,15 @@ function var_0_0.autoContract(arg_3_0, arg_3_1, arg_3_2)
 	end
 
 	FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, arg_3_0._onRespUseClothSkillFail, arg_3_0)
-	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_3_0._onClothSkillRoundSequenceFinish, arg_3_0)
 	FightRpc.instance:sendUseClothSkillRequest(0, arg_3_2, var_3_0, FightEnum.ClothSkillType.Contract)
 end
 
-function var_0_0._delayDone(arg_4_0)
+function var_0_0._onRespUseClothSkillFail(arg_4_0)
 	arg_4_0:onDone(false)
 end
 
-function var_0_0._onRespUseClothSkillFail(arg_5_0)
-	arg_5_0:onDone(false)
-end
-
-function var_0_0._onClothSkillRoundSequenceFinish(arg_6_0)
-	arg_6_0:onDone(true)
-end
-
-function var_0_0.clearWork(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._delayDone, arg_7_0)
-	FightController.instance:unregisterCallback(FightEvent.RespUseClothSkillFail, arg_7_0._onRespUseClothSkillFail, arg_7_0)
-	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_7_0._onClothSkillRoundSequenceFinish, arg_7_0)
+function var_0_0.clearWork(arg_5_0)
+	FightController.instance:unregisterCallback(FightEvent.RespUseClothSkillFail, arg_5_0._onRespUseClothSkillFail, arg_5_0)
 end
 
 return var_0_0

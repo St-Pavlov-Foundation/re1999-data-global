@@ -37,15 +37,11 @@ function var_0_0.refreshBtnStatus(arg_5_0)
 	return
 end
 
-function var_0_0._refreshDesc(arg_6_0)
-	HandbookSkinSuitDetailViewBase._refreshDesc(arg_6_0)
-end
-
-function var_0_0._refreshBg(arg_7_0)
+function var_0_0._refreshBg(arg_6_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function var_0_0.onDestroyView(arg_7_0)
 	return
 end
 

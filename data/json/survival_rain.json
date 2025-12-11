@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1001,
+    "type": 1,
+    "name": "language_10095864",
+    "rainDesc": "language_10095865"
+  },
+  {
+    "id": 1002,
+    "type": 3,
+    "name": "language_10095866",
+    "rainDesc": "language_10095867"
+  },
+  {
+    "id": 1003,
+    "type": 2,
+    "name": "language_10095868",
+    "rainDesc": "language_10095869"
+  }
+]

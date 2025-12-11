@@ -90,7 +90,7 @@ function var_0_0._onFrameEventCallback(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6
 		arg_6_0:_onFrameEventPauseCallback(arg_6_1, arg_6_2)
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		FightController.instance:dispatchEvent(FightEvent.ReplayTick)
 	end
 end
@@ -143,10 +143,6 @@ function var_0_0.skipSkill(arg_8_0)
 end
 
 function var_0_0._onTimelineEndCallback(arg_9_0)
-	if Time.time - arg_9_0._startTime < arg_9_0.binder:GetDuration() * 0.5 then
-		return
-	end
-
 	if arg_9_0.finishWork then
 		arg_9_0.finishWork:registFinishCallback(arg_9_0.onTimelineEnd, arg_9_0)
 		arg_9_0.finishWork:start()
@@ -230,14 +226,14 @@ function var_0_0.stopCurTimelineWaitPlaySameSkill(arg_15_0, arg_15_1, arg_15_2)
 end
 
 function var_0_0.stopSkill(arg_16_0)
-	arg_16_0:releaseSelf()
+	arg_16_0:onLogicExit()
 end
 
 function var_0_0.GetDuration(arg_17_0)
 	return arg_17_0.binder:GetDuration()
 end
 
-function var_0_0.releaseSelf(arg_18_0)
+function var_0_0.onLogicExit(arg_18_0)
 	arg_18_0.binder:RemoveFrameEventCallback()
 	arg_18_0.binder:RemoveEndCallback()
 	arg_18_0.binder:Stop(true)

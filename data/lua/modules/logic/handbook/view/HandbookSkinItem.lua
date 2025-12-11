@@ -13,6 +13,7 @@ local var_0_3 = {
 }
 local var_0_4 = ZProj.UIEffectsCollection
 local var_0_5 = SLFramework.UGUI.GuiHelper
+local var_0_6 = 0.63
 
 function var_0_1.init(arg_1_0, arg_1_1)
 	arg_1_0.viewGO = arg_1_1
@@ -24,6 +25,7 @@ function var_0_1.init(arg_1_0, arg_1_1)
 	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root")
 	arg_1_0._uiEffectComp = var_0_4.Get(arg_1_0.viewGO)
 	arg_1_0._roleImageGraphic = gohelper.findChildImage(arg_1_0.viewGO, "root/#image")
+	arg_1_0._goimageL2DRole = gohelper.findChildImage(arg_1_0.viewGO, "image_L2DRole")
 
 	arg_1_0:_addEvents()
 end
@@ -33,12 +35,59 @@ function var_0_1.setData(arg_2_0, arg_2_1)
 end
 
 function var_0_1.refreshItem(arg_3_0, arg_3_1)
+	arg_3_0._skinId = arg_3_1
 	arg_3_0.skinCfg = SkinConfig.instance:getSkinCo(arg_3_1)
+	arg_3_0._skinSuitCfg = HandbookConfig.instance:getSkinSuitCfg(arg_3_0._suitId)
 
-	if HandbookEnum.Live2DSkin[arg_3_1] ~= nil then
+	local var_3_0 = arg_3_0._skinSuitCfg.spineParams
+
+	if string.nilorempty(var_3_0) then
+		-- block empty
+	end
+
+	local var_3_1 = string.split(var_3_0, "#")
+	local var_3_2
+
+	if var_3_1 then
+		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+			local var_3_3 = string.split(iter_3_1, "|")
+
+			if tonumber(var_3_3[1]) == arg_3_1 then
+				var_3_2 = var_3_3
+			end
+		end
+	end
+
+	if var_3_2 ~= nil then
 		gohelper.setActive(arg_3_0._goUniqueSkinsImage, false)
 		gohelper.setActive(arg_3_0._goUniqueImageicon2, false)
 		gohelper.setActive(arg_3_0._roleImage.gameObject, false)
+		gohelper.setActive(arg_3_0._goimageL2DRole, false)
+
+		local var_3_4 = var_3_2[2]
+		local var_3_5 = #var_3_2 > 2 and string.splitToNumber(var_3_2[3], ",") or {
+			0,
+			0
+		}
+		local var_3_6 = #var_3_2 > 3 and tonumber(var_3_2[4]) or 1
+
+		if arg_3_0._skinSpine then
+			arg_3_0._skinSpine:setResPath(var_3_4, arg_3_0._onSkinSpineLoaded, arg_3_0, true)
+		else
+			gohelper.setActive(arg_3_0._goUniqueSkinsImage, true)
+
+			arg_3_0._skinSpineGO = arg_3_0._skinSpineGO or gohelper.create2d(arg_3_0._goUniqueSkinsImage, "uniqueSkinSpine")
+
+			local var_3_7 = arg_3_0._skinSpineGO.transform
+
+			recthelper.setWidth(var_3_7, var_0_3[1])
+			transformhelper.setLocalPos(var_3_7, var_3_5[1], var_3_5[2], 0)
+			transformhelper.setLocalScale(var_3_7, var_3_6, var_3_6, var_3_6)
+
+			arg_3_0._skinSpine = GuiSpine.Create(arg_3_0._skinSpineGO, false)
+
+			arg_3_0._skinSpine:setResPath(var_3_4, arg_3_0._onSkinSpineLoaded, arg_3_0, true)
+		end
 	else
 		gohelper.setActive(arg_3_0._goUniqueSkinsImage, false)
 		gohelper.setActive(arg_3_0._goUniqueImageicon2, false)
@@ -47,18 +96,18 @@ function var_0_1.refreshItem(arg_3_0, arg_3_1)
 		arg_3_0._width = arg_3_0._roleImage.transform.parent.sizeDelta.x
 	end
 
-	local var_3_0 = HeroModel.instance:checkHasSkin(arg_3_1)
+	local var_3_8 = HeroModel.instance:checkHasSkin(arg_3_1)
 
-	if arg_3_0._lastHasSkin ~= var_3_0 then
-		arg_3_0._lastHasSkin = var_3_0
+	if arg_3_0._lastHasSkin ~= var_3_8 then
+		arg_3_0._lastHasSkin = var_3_8
 
-		if var_3_0 then
+		if var_3_8 then
 			arg_3_0._uiEffectComp:SetGray(false)
 		else
 			arg_3_0._uiEffectComp:SetGray(true)
 		end
 
-		var_0_5.SetColor(arg_3_0._roleImageGraphic, var_3_0 and "#FFFFFF" or "#DCDCDC")
+		var_0_5.SetColor(arg_3_0._roleImageGraphic, var_3_8 and "#FFFFFF" or "#DCDCDC")
 	end
 end
 
@@ -89,6 +138,10 @@ function var_0_1.setSpineRaycastTarget(arg_7_0, arg_7_1)
 
 		if var_7_0 then
 			var_7_0.raycastTarget = arg_7_0._raycastTarget
+		end
+
+		if not HeroModel.instance:checkHasSkin(arg_7_0._skinId) then
+			var_7_0.runtimeMaterial:SetFloat(ShaderPropertyId.LumFactor, var_0_6)
 		end
 	end
 end
@@ -127,14 +180,10 @@ function var_0_1._removeEvents(arg_13_0)
 	return
 end
 
-function var_0_1.getWidth(arg_14_0)
-	return arg_14_0._width
-end
-
-function var_0_1.onDestroy(arg_15_0)
-	arg_15_0:resetRes()
-	arg_15_0:_removeEvents()
-	arg_15_0:removeEventListeners()
+function var_0_1.onDestroy(arg_14_0)
+	arg_14_0:resetRes()
+	arg_14_0:_removeEvents()
+	arg_14_0:removeEventListeners()
 end
 
 return var_0_1

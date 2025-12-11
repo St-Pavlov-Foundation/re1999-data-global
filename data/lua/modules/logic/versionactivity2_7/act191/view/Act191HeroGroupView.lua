@@ -8,8 +8,10 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._imageRank = gohelper.findChildImage(arg_1_0.viewGO, "container/#scroll_Info/infocontain/enemyrank/bg/txt_Name/#image_Rank")
 	arg_1_0._btnEnemy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#scroll_Info/infocontain/enemycontain/enemytitle/#btn_Enemy")
 	arg_1_0._goEnemyTeam = gohelper.findChild(arg_1_0.viewGO, "container/#scroll_Info/infocontain/enemycontain/enemyList/#go_EnemyTeam")
-	arg_1_0._goRewardList = gohelper.findChild(arg_1_0.viewGO, "container/#scroll_Info/infocontain/rewardpreview/#go_RewardList")
-	arg_1_0._goRewardItem = gohelper.findChild(arg_1_0.viewGO, "container/#scroll_Info/infocontain/rewardpreview/#go_RewardList/#go_RewardItem")
+	arg_1_0._goSelectedBg = gohelper.findChild(arg_1_0.viewGO, "container/#scroll_Info/infocontain/autofight/#go_SelectedBg")
+	arg_1_0._goUnSelectBg = gohelper.findChild(arg_1_0.viewGO, "container/#scroll_Info/infocontain/autofight/#go_UnSelectBg")
+	arg_1_0._goRewardList = gohelper.findChild(arg_1_0.viewGO, "container/#scroll_Info/infocontain/autofight/#go_RewardList")
+	arg_1_0._goRewardItem = gohelper.findChild(arg_1_0.viewGO, "container/#scroll_Info/infocontain/autofight/#go_RewardList/#go_RewardItem")
 	arg_1_0._toggleAutoFight = gohelper.findChildToggle(arg_1_0.viewGO, "container/#scroll_Info/infocontain/autofight/bg/#toggle_AutoFight")
 	arg_1_0._btnDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "herogroupcontain/subTitle/txt_TeamLvlS/#btn_Detail")
 	arg_1_0._goDetail = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/subTitle/txt_TeamLvlS/#go_Detail")
@@ -272,6 +274,9 @@ function var_0_0.refreshReward(arg_17_0)
 			var_17_5.item:showAutoEff(true)
 		end
 	end
+
+	gohelper.setActive(arg_17_0._goSelectedBg, arg_17_0._toggleAutoFight.isOn)
+	gohelper.setActive(arg_17_0._goUnSelectBg, not arg_17_0._toggleAutoFight.isOn)
 end
 
 function var_0_0.eventClose(arg_18_0)

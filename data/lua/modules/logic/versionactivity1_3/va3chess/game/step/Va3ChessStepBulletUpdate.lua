@@ -26,6 +26,10 @@ function var_0_0.onLoadArrowComplete(arg_2_0, arg_2_1)
 
 	arg_2_0._arrowAssetItem = arg_2_1
 
+	if arg_2_1 then
+		arg_2_1:Retain()
+	end
+
 	arg_2_0:beginBulletListTween(arg_2_0._arrowAssetItem, arg_2_0.originData.arrowSteps, Va3ChessEnum.Bullet.Arrow)
 end
 
@@ -50,8 +54,6 @@ function var_0_0.getBulletItem(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
 	end
 
 	if not var_3_0 and arg_3_1 and arg_3_1.IsLoadSuccess then
-		arg_3_1:Retain()
-
 		local var_3_3 = gohelper.clone(arg_3_1:GetResource(arg_3_2.path), arg_3_3)
 
 		if not gohelper.isNil(var_3_3) then

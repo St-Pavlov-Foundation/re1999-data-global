@@ -51,7 +51,7 @@ function var_0_0.onShelterBagUpdate(arg_9_0)
 	end
 
 	local var_9_0 = arg_9_0.param[1]
-	local var_9_1 = SurvivalShelterModel.instance:getWeekInfo().bag:getItemCountPlus(var_9_0)
+	local var_9_1 = SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Shelter):getItemCountPlus(var_9_0)
 
 	arg_9_0._txtNum.text = var_9_1
 end

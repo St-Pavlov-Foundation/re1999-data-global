@@ -188,6 +188,16 @@ function var_0_0._showSuccView(arg_4_0)
 			OdysseyController.instance:openFightSuccView()
 
 			return
+		elseif var_4_0.type == DungeonEnum.EpisodeType.TowerDeep then
+			local var_4_1, var_4_2 = TowerPermanentDeepModel.instance:checkCanShowResultView()
+
+			if var_4_1 and var_4_2 == TowerDeepEnum.FightResult.Succ then
+				ViewMgr.instance:openView(ViewName.TowerDeepResultView)
+			else
+				arg_4_0:_done()
+			end
+
+			return
 		end
 	end
 
@@ -225,6 +235,16 @@ function var_0_0.showFailView(arg_5_0)
 			return
 		elseif var_5_0.type == DungeonEnum.EpisodeType.Act191 then
 			Activity191Controller.instance:openResultPanel(false)
+
+			return
+		elseif var_5_0.type == DungeonEnum.EpisodeType.TowerDeep then
+			local var_5_1, var_5_2 = TowerPermanentDeepModel.instance:checkCanShowResultView()
+
+			if var_5_1 and var_5_2 == TowerDeepEnum.FightResult.Fail then
+				ViewMgr.instance:openView(ViewName.TowerDeepResultView)
+			else
+				arg_5_0:_done()
+			end
 
 			return
 		end

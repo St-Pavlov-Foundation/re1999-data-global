@@ -66,12 +66,16 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._gomooncardup = gohelper.findChild(arg_4_0.viewGO, "#go_mooncardup")
 	arg_4_0._gomaterialup = gohelper.findChild(arg_4_0.viewGO, "#go_materialup")
 	arg_4_0._gocobranded = gohelper.findChild(arg_4_0.viewGO, "#go_cobranded")
-	arg_4_0._gotxtv2a8_09 = gohelper.findChild(arg_4_0.viewGO, "txt_v2a8_09")
 	arg_4_0._golinkgift = gohelper.findChild(arg_4_0.viewGO, "#go_linkgift")
 	arg_4_0._gologoTab = gohelper.findChild(arg_4_0.viewGO, "#simage_logo")
+	arg_4_0._gotxtv2a8_09 = gohelper.findChild(arg_4_0.viewGO, "txt_v2a8_09")
 end
 
 function var_0_0._onClick(arg_5_0)
+	if arg_5_0._clickCallback then
+		arg_5_0._clickCallback(arg_5_0._clickCallbackObj, arg_5_0._mo)
+	end
+
 	StoreController.instance:forceReadTab(arg_5_0._mo.belongStoreId)
 
 	local var_5_0 = {
@@ -455,6 +459,11 @@ function var_0_0._onUpdateMO_linkPackage(arg_19_0, arg_19_1)
 
 		arg_19_0._linkGiftItemComp:onUpdateMO(arg_19_1)
 	end
+end
+
+function var_0_0.setClickCallback(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_0._clickCallback = arg_20_1
+	arg_20_0._clickCallbackObj = arg_20_2
 end
 
 return var_0_0

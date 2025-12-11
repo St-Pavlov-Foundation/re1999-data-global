@@ -280,7 +280,7 @@ function var_0_0._playShowHero(arg_18_0)
 	end
 
 	if not var_18_0 then
-		local var_18_5 = StoryController.instance._curStepId
+		local var_18_5 = StoryModel.instance:getCurStepId()
 
 		if StoryStepModel.instance:getStepListById(var_18_5).conversation.type ~= StoryEnum.ConversationType.IrregularShake then
 			StoryModel.instance:enableClick(true)

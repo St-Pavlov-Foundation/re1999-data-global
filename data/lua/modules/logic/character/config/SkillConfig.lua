@@ -512,52 +512,52 @@ function var_0_0.getExSkillDesc(arg_39_0, arg_39_1, arg_39_2)
 	return var_39_0, lua_skill.configDict[var_39_9].name, var_39_8
 end
 
-function var_0_0._matchChioceSkill(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
-	if arg_40_2 and arg_40_1 then
-		arg_40_1 = tonumber(arg_40_1)
-		arg_40_2 = tonumber(arg_40_2)
+function var_0_0._getHeroWeaponReplaceSkill(arg_40_0, arg_40_1)
+	local var_40_0 = HeroModel.instance:getByHeroId(arg_40_1)
 
-		local var_40_0
+	if var_40_0 and var_40_0.extraMo then
+		local var_40_1 = var_40_0.extraMo:getWeaponMo()
 
-		if arg_40_1 == 0 then
-			var_40_0 = arg_40_0:getpassiveskillsCO(arg_40_3)[1].skillPassive
+		if var_40_1 then
+			return var_40_1:getReplaceSkill()
+		end
+	end
+end
+
+function var_0_0._matchChioceSkill(arg_41_0, arg_41_1, arg_41_2, arg_41_3)
+	if arg_41_2 and arg_41_1 then
+		arg_41_1 = tonumber(arg_41_1)
+		arg_41_2 = tonumber(arg_41_2)
+
+		local var_41_0
+
+		if arg_41_1 == 0 then
+			var_41_0 = arg_41_0:getpassiveskillsCO(arg_41_3)[1].skillPassive
 		else
-			local var_40_1 = arg_40_0:getHeroBaseSkillIdDict(arg_40_3, true)
+			local var_41_1 = arg_41_0:getHeroBaseSkillIdDict(arg_41_3, true)
 
-			var_40_0 = var_40_1 and var_40_1[arg_40_1]
+			var_41_0 = var_41_1 and var_41_1[arg_41_1]
 		end
 
-		local var_40_2 = arg_40_0:getFightCardChoiceSkillIdByIndex(var_40_0, arg_40_2)
+		local var_41_2 = arg_41_0:getFightCardChoiceSkillIdByIndex(var_41_0, arg_41_2)
 
-		if var_40_2 then
-			local var_40_3 = lua_skill.configDict[var_40_2].name
+		if var_41_2 then
+			local var_41_3 = lua_skill.configDict[var_41_2].name
 
 			return {
-				skillId = var_40_0,
-				skillName = var_40_3,
-				skillIndex = arg_40_1,
-				choiceSkillIndex = arg_40_2
+				skillId = var_41_0,
+				skillName = var_41_3,
+				skillIndex = arg_41_1,
+				choiceSkillIndex = arg_41_2
 			}
 		end
 	end
 end
 
-function var_0_0._getHeroWeaponReplaceSkill(arg_41_0, arg_41_1)
-	local var_41_0 = HeroModel.instance:getByHeroId(arg_41_1)
-
-	if var_41_0 and var_41_0.extraMo then
-		local var_41_1 = var_41_0.extraMo:getWeaponMo()
-
-		if var_41_1 then
-			return var_41_1:getReplaceSkill()
-		end
-	end
-end
-
 function var_0_0.getHeroBaseSkillIdDict(arg_42_0, arg_42_1, arg_42_2)
-	local var_42_0, var_42_1 = arg_42_0:_getHeroSkillAndExSkill(arg_42_1, arg_42_2)
+	local var_42_0, var_42_1, var_42_2 = arg_42_0:_getHeroSkillAndExSkill(arg_42_1, arg_42_2)
 
-	return arg_42_0:getHeroBaseSkillIdDictByStr(var_42_0, var_42_1)
+	return arg_42_0:getHeroBaseSkillIdDictByStr(var_42_0, var_42_1), var_42_2
 end
 
 function var_0_0._getHeroSkillAndExSkill(arg_43_0, arg_43_1, arg_43_2)
@@ -582,7 +582,7 @@ function var_0_0._getHeroSkillAndExSkill(arg_43_0, arg_43_1, arg_43_2)
 		var_43_1 = var_43_4 or var_43_1
 		var_43_2 = var_43_5 or var_43_2
 
-		return var_43_1, var_43_2
+		return var_43_1, var_43_2, true
 	end
 
 	return var_43_1, var_43_2
@@ -608,9 +608,9 @@ function var_0_0.getHeroBaseSkillIdDictByStr(arg_44_0, arg_44_1, arg_44_2)
 end
 
 function var_0_0.getHeroAllSkillIdDict(arg_45_0, arg_45_1, arg_45_2)
-	local var_45_0, var_45_1 = arg_45_0:_getHeroSkillAndExSkill(arg_45_1, arg_45_2)
+	local var_45_0, var_45_1, var_45_2 = arg_45_0:_getHeroSkillAndExSkill(arg_45_1, arg_45_2)
 
-	return arg_45_0:getHeroAllSkillIdDictByStr(var_45_0, var_45_1)
+	return arg_45_0:getHeroAllSkillIdDictByStr(var_45_0, var_45_1), var_45_2
 end
 
 function var_0_0.getHeroAllSkillIdDictByStr(arg_46_0, arg_46_1, arg_46_2)
@@ -705,17 +705,17 @@ function var_0_0.getHeroExBaseSkillIdDict(arg_49_0, arg_49_1, arg_49_2, arg_49_3
 	return arg_49_3
 end
 
-function var_0_0._checkDestinyEffect(arg_50_0, arg_50_1, arg_50_2)
-	if arg_50_1 and arg_50_2 and arg_50_2.destinyStoneMo then
-		arg_50_1 = arg_50_2.destinyStoneMo:_replaceSkill(arg_50_1)
+function var_0_0._checkReplaceSkill(arg_50_0, arg_50_1, arg_50_2)
+	if arg_50_1 and arg_50_2 then
+		arg_50_1 = arg_50_2:checkReplaceSkill(arg_50_1)
 	end
 
 	return arg_50_1
 end
 
-function var_0_0._checkReplaceSkill(arg_51_0, arg_51_1, arg_51_2)
-	if arg_51_1 and arg_51_2 then
-		arg_51_1 = arg_51_2:checkReplaceSkill(arg_51_1)
+function var_0_0._checkDestinyEffect(arg_51_0, arg_51_1, arg_51_2)
+	if arg_51_1 and arg_51_2 and arg_51_2.destinyStoneMo then
+		arg_51_1 = arg_51_2.destinyStoneMo:_replaceSkill(arg_51_1)
 	end
 
 	return arg_51_1
@@ -727,7 +727,11 @@ function var_0_0.getHeroAllSkillIdDictByExSkillLevel(arg_52_0, arg_52_1, arg_52_
 	end
 
 	local var_52_0 = arg_52_5 or arg_52_3 and arg_52_3.rank > CharacterModel.instance:getReplaceSkillRank(arg_52_3) - 1
-	local var_52_1 = arg_52_0:getHeroAllSkillIdDict(arg_52_1, var_52_0)
+	local var_52_1, var_52_2 = arg_52_0:getHeroAllSkillIdDict(arg_52_1, var_52_0)
+
+	if var_52_2 then
+		return var_52_1
+	end
 
 	arg_52_3 = arg_52_3 or HeroModel.instance:getByHeroId(arg_52_1)
 
@@ -737,38 +741,38 @@ function var_0_0.getHeroAllSkillIdDictByExSkillLevel(arg_52_0, arg_52_1, arg_52_
 
 	arg_52_2 = arg_52_2 or CharacterEnum.showAttributeOption.ShowCurrent
 
-	local var_52_2 = 0
+	local var_52_3 = 0
 
 	if arg_52_2 == CharacterEnum.showAttributeOption.ShowMax then
-		var_52_2 = CharacterModel.instance:getMaxexskill(arg_52_1)
+		var_52_3 = CharacterModel.instance:getMaxexskill(arg_52_1)
 	elseif arg_52_2 == CharacterEnum.showAttributeOption.ShowMin then
-		var_52_2 = 0
+		var_52_3 = 0
 	elseif arg_52_4 then
-		var_52_2 = arg_52_4
+		var_52_3 = arg_52_4
 	elseif arg_52_3 then
-		var_52_2 = arg_52_3.exSkillLevel
+		var_52_3 = arg_52_3.exSkillLevel
 	end
 
-	if var_52_2 < 1 then
+	if var_52_3 < 1 then
 		return var_52_1
 	end
 
-	local var_52_3
+	local var_52_4
 
-	for iter_52_0 = 1, var_52_2 do
-		local var_52_4 = arg_52_0:getherolevelexskillCO(arg_52_1, iter_52_0)
+	for iter_52_0 = 1, var_52_3 do
+		local var_52_5 = arg_52_0:getherolevelexskillCO(arg_52_1, iter_52_0)
 
-		if not string.nilorempty(var_52_4.skillGroup1) then
-			var_52_1[1] = string.splitToNumber(var_52_4.skillGroup1, "|")
+		if not string.nilorempty(var_52_5.skillGroup1) then
+			var_52_1[1] = string.splitToNumber(var_52_5.skillGroup1, "|")
 		end
 
-		if not string.nilorempty(var_52_4.skillGroup2) then
-			var_52_1[2] = string.splitToNumber(var_52_4.skillGroup2, "|")
+		if not string.nilorempty(var_52_5.skillGroup2) then
+			var_52_1[2] = string.splitToNumber(var_52_5.skillGroup2, "|")
 		end
 
-		if var_52_4.skillEx ~= 0 then
+		if var_52_5.skillEx ~= 0 then
 			var_52_1[3] = {
-				var_52_4.skillEx
+				var_52_5.skillEx
 			}
 		end
 	end

@@ -600,22 +600,17 @@ function var_0_0._progressFinish(arg_26_0)
 end
 
 function var_0_0.onClose(arg_27_0)
-	local var_27_0 = SurvivalShelterChooseNpcListModel.instance:getShowList()
-	local var_27_1 = SurvivalShelterChooseEquipListModel.instance:getShowList()
+	local var_27_0 = GameSceneMgr.instance:getCurSceneType()
 
-	if #var_27_0 == 0 and #var_27_1 == 0 then
-		SurvivalWeekRpc.instance:sendSurvivalChooseBooty()
-
-		local var_27_2 = GameSceneMgr.instance:getCurSceneType()
-
-		if var_27_2 == SceneType.SurvivalShelter or var_27_2 == SceneType.Fight then
-			SurvivalController.instance:exitMap()
-		end
-
-		return
+	if var_27_0 == SceneType.SurvivalShelter or var_27_0 == SceneType.Fight then
+		SurvivalController.instance:exitMap()
 	end
 
-	ViewMgr.instance:openView(ViewName.SurvivalBootyChooseView)
+	local var_27_1 = SurvivalModel.instance:getOutSideInfo()
+
+	if var_27_1 then
+		var_27_1.inWeek = false
+	end
 end
 
 function var_0_0.onDestroyView(arg_28_0)

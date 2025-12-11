@@ -3,12 +3,14 @@
 local var_0_0 = class("VersionActivityFixedTaskViewContainer", BaseViewContainer)
 
 function var_0_0.buildViews(arg_1_0)
+	arg_1_0._bigVersion, arg_1_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+
 	local var_1_0 = ListScrollParam.New()
 
 	var_1_0.scrollGOPath = "#scroll_TaskList"
 	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
 	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = VersionActivityFixedHelper.getVersionActivityTaskItem()
+	var_1_0.cellClass = VersionActivityFixedHelper.getVersionActivityTaskItem(arg_1_0._bigVersion, arg_1_0._smallVersion)
 	var_1_0.scrollDir = ScrollEnum.ScrollDirV
 	var_1_0.lineCount = 1
 	var_1_0.cellWidth = 1160
@@ -26,7 +28,7 @@ function var_0_0.buildViews(arg_1_0)
 
 	return {
 		arg_1_0._taskScrollView,
-		VersionActivityFixedHelper.getVersionActivityTaskView().New(),
+		VersionActivityFixedHelper.getVersionActivityTaskView(arg_1_0._bigVersion, arg_1_0._smallVersion).New(),
 		TabViewGroup.New(1, "#go_lefttop")
 	}
 end

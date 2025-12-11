@@ -367,5 +367,50 @@
     "chooseDesc": "language_10084134",
     "chooseEvent": "tipDialog#28015|acceptTask#3#300007",
     "isMark": 0
+  },
+  {
+    "id": 131000001,
+    "condition": "unAcceptTask#3#310001",
+    "priority": 1,
+    "dialogueId": 207040100,
+    "chooseDesc": "language_10094717",
+    "chooseEvent": "behavior#131000002",
+    "isMark": 1
+  },
+  {
+    "id": 131000002,
+    "condition": "unAcceptTask#3#310001",
+    "priority": 1,
+    "dialogueId": 207040101,
+    "chooseDesc": "language_10094718",
+    "chooseEvent": "tipDialog#31037|behavior#131000003",
+    "isMark": 0
+  },
+  {
+    "id": 131000003,
+    "condition": "unAcceptTask#3#310001",
+    "priority": 1,
+    "dialogueId": 207040102,
+    "chooseDesc": "language_10094719",
+    "chooseEvent": "tipDialog#31038|behavior#131000004",
+    "isMark": 0
+  },
+  {
+    "id": 131000004,
+    "condition": "unAcceptTask#3#310001",
+    "priority": 1,
+    "dialogueId": 207040103,
+    "chooseDesc": "language_10085645",
+    "chooseEvent": "acceptTask#3#310001",
+    "isMark": 0
+  },
+  {
+    "id": 132000002,
+    "condition": "unAcceptTask#3#310006",
+    "priority": 1,
+    "dialogueId": 207040600,
+    "chooseDesc": "language_10094720",
+    "chooseEvent": "acceptTask#3#310006",
+    "isMark": 1
   }
 ]

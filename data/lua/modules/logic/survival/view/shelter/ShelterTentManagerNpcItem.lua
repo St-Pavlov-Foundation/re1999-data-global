@@ -4,7 +4,7 @@ local var_0_0 = class("ShelterTentManagerNpcItem", ListScrollCellExtend)
 
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0.imgQuality = gohelper.findChildImage(arg_1_0.viewGO, "#image_quality")
-	arg_1_0.imageNpc = gohelper.findChildImage(arg_1_0.viewGO, "#image_Chess")
+	arg_1_0.imageNpc = gohelper.findChildSingleImage(arg_1_0.viewGO, "#image_Chess")
 	arg_1_0.txtName = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_PartnerName")
 	arg_1_0.goSelected = gohelper.findChild(arg_1_0.viewGO, "#go_Selected")
 	arg_1_0.goTips = gohelper.findChild(arg_1_0.viewGO, "#go_Tips")
@@ -73,7 +73,7 @@ function var_0_0.refreshItem(arg_7_0, arg_7_1)
 
 	arg_7_0.txtName.text = arg_7_1.co.name
 
-	UISpriteSetMgr.instance:setV2a2ChessSprite(arg_7_0.imageNpc, arg_7_1.co.headIcon)
+	SurvivalUnitIconHelper.instance:setNpcIcon(arg_7_0.imageNpc, arg_7_1.co.headIcon)
 	UISpriteSetMgr.instance:setSurvivalSprite(arg_7_0.imgQuality, string.format("survival_bag_itemquality2_%s", arg_7_1.co.rare))
 end
 

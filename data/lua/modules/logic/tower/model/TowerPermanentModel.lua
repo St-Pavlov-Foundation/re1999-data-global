@@ -114,7 +114,7 @@ function var_0_0.InitData(arg_10_0)
 	local var_10_4 = TowerConfig.instance:getPermanentEpisodeStageCoList(var_10_3)
 	local var_10_5 = TowerConfig.instance:getTowerPermanentTimeCo(var_10_3)
 
-	if var_10_4 or var_10_5 then
+	if (var_10_4 or var_10_5) and var_10_3 < TowerDeepEnum.DeepLayerStage then
 		local var_10_6 = TowerPermanentMo.New()
 
 		arg_10_0.PermanentInfoMap[var_10_3] = var_10_6

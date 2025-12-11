@@ -22,7 +22,8 @@ function var_0_0.ctor(arg_1_0)
 		[MaterialEnum.MaterialType.V1a5AiZiLa] = var_0_0._getV1a5AiZiLaItem,
 		[MaterialEnum.MaterialType.Season123EquipCard] = var_0_0._getSeason123EquipCard,
 		[MaterialEnum.MaterialType.NewInsight] = var_0_0._getNewInsight,
-		[MaterialEnum.MaterialType.Critter] = var_0_0._getCritter
+		[MaterialEnum.MaterialType.Critter] = var_0_0._getCritter,
+		[MaterialEnum.MaterialType.UnlockVoucher] = var_0_0._getUnlockVoucher
 	}
 end
 
@@ -102,10 +103,14 @@ function var_0_0._getCritter(arg_20_0)
 	return CritterConfig.instance:getCritterCfg(arg_20_0)
 end
 
-function var_0_0.getItemConfigFunc(arg_21_0, arg_21_1)
-	arg_21_1 = tonumber(arg_21_1)
+function var_0_0._getUnlockVoucher(arg_21_0)
+	return UnlockVoucherConfig.instance:getUnlockVoucherCfg(arg_21_0, true)
+end
 
-	return arg_21_0._defineList[arg_21_1]
+function var_0_0.getItemConfigFunc(arg_22_0, arg_22_1)
+	arg_22_1 = tonumber(arg_22_1)
+
+	return arg_22_0._defineList[arg_22_1]
 end
 
 var_0_0.instance = var_0_0.New()

@@ -70,6 +70,7 @@ function var_0_0.buildViews(arg_1_0)
 
 	table.insert(var_1_2, FightViewBossHpMgr.New())
 	table.insert(var_1_2, FightViewMgr.New())
+	table.insert(var_1_2, FightViewBuffId2Behaviour.New())
 
 	return var_1_2
 end

@@ -45,7 +45,7 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_4_0.refreshUI, arg_4_0)
+	arg_4_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_4_0._onRefreshActivityState, arg_4_0)
 	arg_4_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_4_0.refreshCurrency, arg_4_0)
 end
 
@@ -246,6 +246,20 @@ function var_0_0.refreshStoreTime(arg_21_0)
 	else
 		arg_21_0._txtstoretime.text = var_21_1:getRemainTimeStr2ByEndTime(true)
 	end
+end
+
+function var_0_0._onRefreshActivityState(arg_22_0, arg_22_1)
+	if not arg_22_1 or arg_22_1 ~= arg_22_0.actId then
+		return
+	end
+
+	if not ActivityHelper.isOpen(arg_22_1) then
+		arg_22_0:closeThis()
+
+		return
+	end
+
+	arg_22_0:refreshUI()
 end
 
 return var_0_0

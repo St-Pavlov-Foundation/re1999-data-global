@@ -6,7 +6,11 @@
     "desc": "",
     "coin": 25,
     "hero": "10371#10461#10141",
-    "item": "20016#20024"
+    "item": "20016#20024",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "",
+    "rewardItem": ""
   },
   {
     "activityId": 12701,
@@ -15,7 +19,11 @@
     "desc": "",
     "coin": 25,
     "hero": "10441#10031#10331",
-    "item": "20022#20019"
+    "item": "20022#20019",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "",
+    "rewardItem": ""
   },
   {
     "activityId": 12701,
@@ -24,7 +32,11 @@
     "desc": "",
     "coin": 25,
     "hero": "10411#10801#10011",
-    "item": "20018#20018"
+    "item": "20018#20018",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "",
+    "rewardItem": ""
   },
   {
     "activityId": 12701,
@@ -33,7 +45,11 @@
     "desc": "",
     "coin": 25,
     "hero": "10611#10311#10011",
-    "item": "20017#20023"
+    "item": "20017#20023",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "",
+    "rewardItem": ""
   },
   {
     "activityId": 12701,
@@ -42,7 +58,11 @@
     "desc": "",
     "coin": 25,
     "hero": "10551#10071#10641",
-    "item": "20020#20016"
+    "item": "20020#20016",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "",
+    "rewardItem": ""
   },
   {
     "activityId": 12701,
@@ -51,7 +71,11 @@
     "desc": "",
     "coin": 25,
     "hero": "10391#10701#10401",
-    "item": "20021#20021"
+    "item": "20021#20021",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "",
+    "rewardItem": ""
   },
   {
     "activityId": 12701,
@@ -60,6 +84,140 @@
     "desc": "",
     "coin": 25,
     "hero": "10521#10731#10381",
-    "item": "20019#20019"
+    "item": "20019#20019",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "",
+    "rewardItem": ""
+  },
+  {
+    "activityId": 13105,
+    "style": 1,
+    "name": "language_10042206",
+    "desc": "",
+    "coin": 25,
+    "hero": "20541#20751#20481",
+    "item": "21013#21009#21021",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "20051",
+    "rewardItem": ""
+  },
+  {
+    "activityId": 13105,
+    "style": 2,
+    "name": "language_10063814",
+    "desc": "",
+    "coin": 25,
+    "hero": "20411#20231#20171",
+    "item": "21010#21012#21018",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "20321",
+    "rewardItem": ""
+  },
+  {
+    "activityId": 13105,
+    "style": 3,
+    "name": "language_10074378",
+    "desc": "",
+    "coin": 30,
+    "hero": "20421#20081#20401",
+    "item": "21012#21012#21016",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "20191",
+    "rewardItem": ""
+  },
+  {
+    "activityId": 13105,
+    "style": 4,
+    "name": "language_10017063",
+    "desc": "",
+    "coin": 25,
+    "hero": "20771#20161#20121",
+    "item": "21011#21013#21016",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "20131",
+    "rewardItem": ""
+  },
+  {
+    "activityId": 13105,
+    "style": 5,
+    "name": "language_10072832",
+    "desc": "",
+    "coin": 30,
+    "hero": "20651#20281#20311",
+    "item": "21010#21009#21018",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "20251",
+    "rewardItem": ""
+  },
+  {
+    "activityId": 13105,
+    "style": 6,
+    "name": "language_10090260",
+    "desc": "",
+    "coin": 25,
+    "hero": "20671#20551#20661",
+    "item": "21010#21009#21020",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "20041",
+    "rewardItem": ""
+  },
+  {
+    "activityId": 13105,
+    "style": 7,
+    "name": "language_10003456",
+    "desc": "",
+    "coin": 30,
+    "hero": "20341#20851#20261",
+    "item": "21011#21013#21016",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "20861",
+    "rewardItem": ""
+  },
+  {
+    "activityId": 13105,
+    "style": 8,
+    "name": "language_10017351",
+    "desc": "",
+    "coin": 25,
+    "hero": "20061#20221#20211",
+    "item": "21011#21011#21016",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "20021",
+    "rewardItem": ""
+  },
+  {
+    "activityId": 13105,
+    "style": 9,
+    "name": "language_10090300",
+    "desc": "",
+    "coin": 25,
+    "hero": "20091#20331#20151",
+    "item": "21010#21013#21016",
+    "randHero": "",
+    "randItem": "",
+    "rewardHero": "20141",
+    "rewardItem": ""
+  },
+  {
+    "activityId": 13105,
+    "style": 10,
+    "name": "language_10090433",
+    "desc": "",
+    "coin": 40,
+    "hero": "",
+    "item": "",
+    "randHero": "3#20291,20461,20491,20501,20521,20611",
+    "randItem": "3#21009,21010,21011,21012,21013",
+    "rewardHero": "20071#20241#20301#20671",
+    "rewardItem": ""
   }
 ]

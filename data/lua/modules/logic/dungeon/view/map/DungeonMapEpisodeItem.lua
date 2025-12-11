@@ -34,6 +34,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gonormaleye = gohelper.findChild(arg_1_0.viewGO, "#go_scale/#go_gray/#go_boss/#go_normaleye")
 	arg_1_0._gohardeye = gohelper.findChild(arg_1_0.viewGO, "#go_scale/#go_gray/#go_boss/#go_hardeye")
 	arg_1_0._imagedecorate = gohelper.findChildImage(arg_1_0.viewGO, "#go_scale/#go_gray/#image_decorate")
+	arg_1_0._gostorytrace = gohelper.findChild(arg_1_0.viewGO, "#go_trace")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -43,11 +44,13 @@ end
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0._onRefreshActivityState, arg_2_0)
+	arg_2_0:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_2_0._refreshTraced, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btnclick:RemoveClickListener()
 	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_3_0._onRefreshActivityState, arg_3_0)
+	arg_3_0:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_3_0._refreshTraced, arg_3_0)
 end
 
 function var_0_0._btnclickOnClick(arg_4_0)
@@ -169,6 +172,8 @@ function var_0_0.onUpdateParam(arg_11_0)
 	if not arg_11_0._maxWidth then
 		arg_11_0._maxWidth = recthelper.getAnchorX(arg_11_0._txtsectionname.transform) + arg_11_0._txtsectionname.preferredWidth + 30
 	end
+
+	arg_11_0:_refreshTraced()
 
 	local var_11_11 = recthelper.getWidth(arg_11_0._goraycast.transform)
 	local var_11_12 = recthelper.getWidth(arg_11_0._simagefall.transform)
@@ -944,21 +949,53 @@ function var_0_0._onRefreshActivityState(arg_56_0, arg_56_1)
 	arg_56_0:refreshV1a7Fall()
 end
 
-function var_0_0.onDestroyView(arg_57_0)
-	if arg_57_0._graphics then
-		for iter_57_0, iter_57_1 in ipairs(arg_57_0._graphics) do
-			ZProj.UGUIHelper.DisableGrayKey(iter_57_1)
+function var_0_0._refreshTraced(arg_57_0)
+	arg_57_0:_refreshTracedIcon()
+end
+
+function var_0_0._refreshTracedIcon(arg_58_0)
+	if not arg_58_0._config then
+		return
+	end
+
+	if arg_58_0:isLock() then
+		return
+	end
+
+	local var_58_0 = CharacterRecommedModel.instance:isTradeEpisode(arg_58_0:getEpisodeId())
+
+	if var_58_0 then
+		local var_58_1 = CharacterRecommedController.instance:getTradeIcon()
+
+		if not var_58_1 then
+			return
+		end
+
+		if not arg_58_0._tracedIcon then
+			arg_58_0._tracedIcon = gohelper.clone(var_58_1, arg_58_0._gostorytrace)
 		end
 	end
 
-	if arg_57_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_57_0._tweenId)
+	if arg_58_0._tracedIcon then
+		gohelper.setActive(arg_58_0._tracedIcon, var_58_0)
+	end
+end
 
-		arg_57_0._tweenId = nil
+function var_0_0.onDestroyView(arg_59_0)
+	if arg_59_0._graphics then
+		for iter_59_0, iter_59_1 in ipairs(arg_59_0._graphics) do
+			ZProj.UGUIHelper.DisableGrayKey(iter_59_1)
+		end
 	end
 
-	if arg_57_0.simageV1a7Icon then
-		arg_57_0.simageV1a7Icon:UnLoadImage()
+	if arg_59_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_59_0._tweenId)
+
+		arg_59_0._tweenId = nil
+	end
+
+	if arg_59_0.simageV1a7Icon then
+		arg_59_0.simageV1a7Icon:UnLoadImage()
 	end
 end
 

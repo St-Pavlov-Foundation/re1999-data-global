@@ -37,6 +37,7 @@ function var_0_0.onInitFinish(arg_1_0)
 	arg_1_0:_addTrigger(GuideTriggerStoryStep.New("StoryStep"))
 	arg_1_0:_addTrigger(GuideTriggerGuideEvent.New("GuideEvent"))
 	arg_1_0:_addTrigger(GuideTriggerOdysseyEpisodeFinish.New("OdysseyEpisodeFinish"))
+	arg_1_0:_addTrigger(GuideTriggerTowerDeepSuccReward.New("TowerDeepSuccReward"))
 end
 
 function var_0_0._addTrigger(arg_2_0, arg_2_1)

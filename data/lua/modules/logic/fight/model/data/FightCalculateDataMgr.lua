@@ -1986,11 +1986,19 @@ function var_0_0.playEffect322(arg_237_0, arg_237_1)
 	local var_237_1 = var_237_0:getOriginSubList(arg_237_1.teamType)
 
 	if var_237_1 then
-		for iter_237_0, iter_237_1 in ipairs(var_237_1) do
-			var_237_0.entityDataDic[iter_237_1.uid] = nil
-		end
+		local var_237_2 = string.split(arg_237_1.reserveStr, "#")
 
-		tabletool.clear(var_237_1)
+		for iter_237_0, iter_237_1 in ipairs(var_237_2) do
+			for iter_237_2 = #var_237_1, 1, -1 do
+				if var_237_1[iter_237_2].uid == iter_237_1 then
+					table.remove(var_237_1, iter_237_2)
+
+					var_237_0.entityDataDic[iter_237_1] = nil
+
+					break
+				end
+			end
+		end
 	end
 end
 
@@ -2052,11 +2060,6 @@ function var_0_0.playEffect338(arg_243_0, arg_243_1)
 	end
 
 	local var_243_0 = arg_243_0:getHandCard()
-
-	if string.nilorempty(arg_243_1.reserveStr) then
-		return
-	end
-
 	local var_243_1 = FightStrUtil.instance:getSplitString2Cache(arg_243_1.reserveStr, true)
 
 	for iter_243_0, iter_243_1 in ipairs(var_243_1) do
@@ -2151,103 +2154,107 @@ function var_0_0.playEffect1002(arg_246_0, arg_246_1)
 	end
 end
 
-function var_0_0.playUndefineEffect(arg_247_0)
+function var_0_0.playEffect355(arg_247_0, arg_247_1)
 	return
 end
 
-function var_0_0.dealExPointInfo(arg_248_0, arg_248_1)
-	for iter_248_0, iter_248_1 in ipairs(arg_248_1) do
-		local var_248_0 = arg_248_0.dataMgr:getEntityById(iter_248_1.uid)
+function var_0_0.playUndefineEffect(arg_248_0)
+	return
+end
 
-		if var_248_0 then
-			var_248_0:setHp(iter_248_1.currentHp)
+function var_0_0.dealExPointInfo(arg_249_0, arg_249_1)
+	for iter_249_0, iter_249_1 in ipairs(arg_249_1) do
+		local var_249_0 = arg_249_0.dataMgr:getEntityById(iter_249_1.uid)
+
+		if var_249_0 then
+			var_249_0:setHp(iter_249_1.currentHp)
 
 			if not isDebugBuild then
-				var_248_0:setExPoint(iter_248_1.exPoint)
-				var_248_0:setPowerInfos(iter_248_1.powerInfos)
+				var_249_0:setExPoint(iter_249_1.exPoint)
+				var_249_0:setPowerInfos(iter_249_1.powerInfos)
 			end
 		end
 	end
 end
 
-function var_0_0.playChangeWave(arg_249_0)
-	local var_249_0 = arg_249_0.dataMgr.cacheFightMgr:getAndRemove()
+function var_0_0.playChangeWave(arg_250_0)
+	local var_250_0 = arg_250_0.dataMgr.cacheFightMgr:getAndRemove()
 
-	if var_249_0 then
-		arg_249_0.dataMgr:updateFightData(var_249_0)
+	if var_250_0 then
+		arg_250_0.dataMgr:updateFightData(var_250_0)
 	end
 end
 
-function var_0_0.playChangeHero(arg_250_0, arg_250_1)
-	local var_250_0 = arg_250_0.dataMgr:getEntityById(arg_250_1.toId)
-	local var_250_1 = arg_250_0.dataMgr:getEntityById(arg_250_1.fromId)
+function var_0_0.playChangeHero(arg_251_0, arg_251_1)
+	local var_251_0 = arg_251_0.dataMgr:getEntityById(arg_251_1.toId)
+	local var_251_1 = arg_251_0.dataMgr:getEntityById(arg_251_1.fromId)
 
-	if not var_250_1 then
+	if not var_251_1 then
 		return
 	end
 
-	if var_250_0 and var_250_0.id ~= FightEntityScene.MySideId then
-		var_250_1.position = var_250_0.position
-		var_250_0.position = -1
+	if var_251_0 and var_251_0.id ~= FightEntityScene.MySideId then
+		var_251_1.position = var_251_0.position
+		var_251_0.position = -1
 	end
 
-	if arg_250_1.actEffect then
-		for iter_250_0, iter_250_1 in ipairs(arg_250_1.actEffect) do
-			if iter_250_1.effectType == FightEnum.EffectType.CHANGEHERO then
+	if arg_251_1.actEffect then
+		for iter_251_0, iter_251_1 in ipairs(arg_251_1.actEffect) do
+			if iter_251_1.effectType == FightEnum.EffectType.CHANGEHERO then
 				if FightModel.instance:getVersion() >= 1 then
-					if iter_250_1.entity then
-						local var_250_2 = FightEntityMO.New()
+					if iter_251_1.entity then
+						local var_251_2 = FightEntityMO.New()
 
-						var_250_2:init(iter_250_1.entity)
-						arg_250_0.dataMgr.entityMgr:replaceEntityMO(var_250_2)
+						var_251_2:init(iter_251_1.entity)
+						arg_251_0.dataMgr.entityMgr:replaceEntityMO(var_251_2)
 					end
-				elseif iter_250_1.entity then
-					local var_250_3 = FightEntityMO.New()
+				elseif iter_251_1.entity then
+					local var_251_3 = FightEntityMO.New()
 
-					var_250_3:init(iter_250_1.entity)
-					FightHelper.setEffectEntitySide(iter_250_1, var_250_3)
-					arg_250_0.dataMgr.entityMgr:replaceEntityMO(var_250_3)
+					var_251_3:init(iter_251_1.entity)
+					FightHelper.setEffectEntitySide(iter_251_1, var_251_3)
+					arg_251_0.dataMgr.entityMgr:replaceEntityMO(var_251_3)
 				end
 			end
 		end
 	end
 
-	local var_250_4 = var_250_1.side
-	local var_250_5 = arg_250_0.dataMgr.entityMgr:getOriginListById(arg_250_1.toId)
+	local var_251_4 = var_251_1.side
+	local var_251_5 = arg_251_0.dataMgr.entityMgr:getOriginListById(arg_251_1.toId)
 
-	for iter_250_2, iter_250_3 in ipairs(var_250_5) do
-		if iter_250_3.uid == arg_250_1.toId then
-			table.remove(var_250_5, iter_250_2)
-
-			break
-		end
-	end
-
-	local var_250_6 = arg_250_0.dataMgr.entityMgr:getOriginSubList(var_250_4)
-
-	for iter_250_4, iter_250_5 in ipairs(var_250_6) do
-		if iter_250_5.uid == arg_250_1.fromId then
-			table.remove(var_250_6, iter_250_4)
+	for iter_251_2, iter_251_3 in ipairs(var_251_5) do
+		if iter_251_3.uid == arg_251_1.toId then
+			table.remove(var_251_5, iter_251_2)
 
 			break
 		end
 	end
 
-	local var_250_7 = arg_250_0.dataMgr.entityMgr:getOriginNormalList(var_250_4)
+	local var_251_6 = arg_251_0.dataMgr.entityMgr:getOriginSubList(var_251_4)
 
-	table.insert(var_250_7, arg_250_0.dataMgr.entityMgr:getById(arg_250_1.fromId))
+	for iter_251_4, iter_251_5 in ipairs(var_251_6) do
+		if iter_251_5.uid == arg_251_1.fromId then
+			table.remove(var_251_6, iter_251_4)
+
+			break
+		end
+	end
+
+	local var_251_7 = arg_251_0.dataMgr.entityMgr:getOriginNormalList(var_251_4)
+
+	table.insert(var_251_7, arg_251_0.dataMgr.entityMgr:getById(arg_251_1.fromId))
 end
 
-function var_0_0.getTarEntityMO(arg_251_0, arg_251_1)
-	return arg_251_0.dataMgr:getEntityById(arg_251_1.targetId)
+function var_0_0.getTarEntityMO(arg_252_0, arg_252_1)
+	return arg_252_0.dataMgr:getEntityById(arg_252_1.targetId)
 end
 
-function var_0_0.getHandCard(arg_252_0)
-	return arg_252_0.dataMgr.handCardMgr:getHandCard()
+function var_0_0.getHandCard(arg_253_0)
+	return arg_253_0.dataMgr.handCardMgr:getHandCard()
 end
 
-function var_0_0.needLogError(arg_253_0)
-	if arg_253_0:isPerformanceData() then
+function var_0_0.needLogError(arg_254_0)
+	if arg_254_0:isPerformanceData() then
 		return
 	end
 
@@ -2258,76 +2265,91 @@ function var_0_0.needLogError(arg_253_0)
 	return true
 end
 
-function var_0_0.isLocalData(arg_254_0)
-	return arg_254_0.dataMgr.__cname == FightLocalDataMgr.__cname
+function var_0_0.isLocalData(arg_255_0)
+	return arg_255_0.dataMgr.__cname == FightLocalDataMgr.__cname
 end
 
-function var_0_0.isPerformanceData(arg_255_0)
-	return arg_255_0.dataMgr.__cname == FightDataMgr.__cname
+function var_0_0.isPerformanceData(arg_256_0)
+	return arg_256_0.dataMgr.__cname == FightDataMgr.__cname
 end
 
-function var_0_0.onConstructor(arg_256_0)
-	arg_256_0._type2FuncName = {}
+function var_0_0.onConstructor(arg_257_0)
+	arg_257_0._type2FuncName = {}
 end
 
-function var_0_0.playStepDataList(arg_257_0, arg_257_1)
-	for iter_257_0, iter_257_1 in ipairs(arg_257_1) do
-		arg_257_0:playStepData(iter_257_1)
+function var_0_0.playStepDataList(arg_258_0, arg_258_1)
+	for iter_258_0, iter_258_1 in ipairs(arg_258_1) do
+		arg_258_0:playStepData(iter_258_1)
 	end
 end
 
-function var_0_0.playStepData(arg_258_0, arg_258_1)
-	if arg_258_1.actType == FightEnum.ActType.SKILL or arg_258_1.actType == FightEnum.ActType.EFFECT then
-		for iter_258_0, iter_258_1 in ipairs(arg_258_1.actEffect) do
-			arg_258_0:playActEffectData(iter_258_1)
+function var_0_0.playStepData(arg_259_0, arg_259_1)
+	if arg_259_1.actType == FightEnum.ActType.SKILL or arg_259_1.actType == FightEnum.ActType.EFFECT then
+		for iter_259_0, iter_259_1 in ipairs(arg_259_1.actEffect) do
+			arg_259_0:playActEffectData(iter_259_1)
 		end
-	elseif arg_258_1.actType == FightEnum.ActType.CHANGEWAVE then
-		arg_258_0:playChangeWave()
-	elseif arg_258_1.actType == FightEnum.ActType.CHANGEHERO then
-		arg_258_0:playChangeHero(arg_258_1)
+	elseif arg_259_1.actType == FightEnum.ActType.CHANGEWAVE then
+		arg_259_0:playChangeWave()
+	elseif arg_259_1.actType == FightEnum.ActType.CHANGEHERO then
+		arg_259_0:playChangeHero(arg_259_1)
 	end
 end
 
-function var_0_0.playActEffectData(arg_259_0, arg_259_1)
-	local var_259_0 = arg_259_0._type2FuncName[arg_259_1.effectType]
+function var_0_0.playActEffectData(arg_260_0, arg_260_1)
+	local var_260_0 = arg_260_0._type2FuncName[arg_260_1.effectType]
 
-	if not var_259_0 then
-		var_259_0 = arg_259_0["playEffect" .. arg_259_1.effectType] or arg_259_0.playUndefineEffect
-		arg_259_0._type2FuncName[arg_259_1.effectType] = var_259_0
+	if not var_260_0 then
+		var_260_0 = arg_260_0["playEffect" .. arg_260_1.effectType] or arg_260_0.playUndefineEffect
+		arg_260_0._type2FuncName[arg_260_1.effectType] = var_260_0
 	end
 
-	if arg_259_0:isPerformanceData() then
-		arg_259_1:setDone()
-		xpcall(var_259_0, var_0_0.ingoreLogError, arg_259_0, arg_259_1)
+	if arg_260_0:isPerformanceData() then
+		arg_260_1:setDone()
+		xpcall(var_260_0, var_0_0.ingoreLogError, arg_260_0, arg_260_1)
 	else
-		xpcall(var_259_0, __G__TRACKBACK__, arg_259_0, arg_259_1)
+		xpcall(var_260_0, __G__TRACKBACK__, arg_260_0, arg_260_1)
 	end
 end
 
-function var_0_0.ingoreLogError(arg_260_0)
+function var_0_0.ingoreLogError(arg_261_0)
 	return
 end
 
-function var_0_0.playEffect345(arg_261_0, arg_261_1)
-	local var_261_0 = arg_261_0.dataMgr.fieldMgr.customData and arg_261_0.dataMgr.fieldMgr.customData[FightCustomData.CustomDataType.Survival]
+function var_0_0.playEffect345(arg_262_0, arg_262_1)
+	local var_262_0 = arg_262_0.dataMgr.fieldMgr.customData and arg_262_0.dataMgr.fieldMgr.customData[FightCustomData.CustomDataType.Survival]
 
-	if not var_261_0 then
+	if not var_262_0 then
 		return
 	end
 
-	if not var_261_0.hero2Health then
+	if not var_262_0.hero2Health then
 		return
 	end
 
-	local var_261_1 = arg_261_1.effectNum1
-	local var_261_2 = tostring(var_261_1)
-	local var_261_3 = var_261_0.hero2Health[var_261_2]
+	local var_262_1 = arg_262_1.effectNum1
+	local var_262_2 = tostring(var_262_1)
+	local var_262_3 = var_262_0.hero2Health[var_262_2]
 
-	if not var_261_3 then
+	if not var_262_3 then
 		return
 	end
 
-	var_261_0.hero2Health[var_261_2] = var_261_3 + arg_261_1.effectNum
+	var_262_0.hero2Health[var_262_2] = var_262_3 + arg_262_1.effectNum
+end
+
+function var_0_0.playEffect354(arg_263_0, arg_263_1)
+	local var_263_0 = FightEnum.IndicatorId.TowerDeep
+	local var_263_1 = arg_263_0.dataMgr.fieldMgr.indicatorDict[var_263_0]
+
+	if not var_263_1 then
+		var_263_1 = {
+			num = 0,
+			id = var_263_0
+		}
+		arg_263_0.dataMgr.fieldMgr.indicatorDict[var_263_0] = var_263_1
+	end
+
+	var_263_1.num = var_263_1.num + arg_263_1.effectNum
 end
 
 return var_0_0

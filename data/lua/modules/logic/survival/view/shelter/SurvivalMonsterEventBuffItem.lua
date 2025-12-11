@@ -11,6 +11,8 @@ function var_0_0.onInitView(arg_1_0)
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
 	end
+
+	arg_1_0.icon = gohelper.findChildImage(arg_1_0.viewGO, "#go_unfinish/icon")
 end
 
 function var_0_0.addEvents(arg_2_0)
@@ -33,7 +35,8 @@ function var_0_0._editableRemoveEvents(arg_6_0)
 	return
 end
 
-function var_0_0.initItem(arg_7_0, arg_7_1)
+function var_0_0.initItem(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0.survivalIntrudeSchemeMo = arg_7_2
 	arg_7_0._co = SurvivalConfig.instance:getShelterIntrudeSchemeConfig(arg_7_1)
 
 	if arg_7_0._co == nil then
@@ -42,6 +45,10 @@ function var_0_0.initItem(arg_7_0, arg_7_1)
 
 	arg_7_0._txtdec.text = arg_7_0._co and arg_7_0._co.desc or ""
 	arg_7_0._txtdecfinished.text = arg_7_0._co and arg_7_0._co.desc or ""
+
+	local var_7_0 = arg_7_0.survivalIntrudeSchemeMo:getDisplayIcon()
+
+	UISpriteSetMgr.instance:setSurvivalSprite(arg_7_0.icon, var_7_0)
 end
 
 function var_0_0.updateItem(arg_8_0, arg_8_1)

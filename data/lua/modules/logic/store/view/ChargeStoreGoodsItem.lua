@@ -53,6 +53,8 @@ function var_0_0._onClick(arg_7_0)
 		PayController.instance:startPay(arg_7_0._mo.id)
 
 		arg_7_0._lastStartPayTime = Time.time
+
+		StoreController.instance:statOpenChargeGoods(arg_7_0._mo.belongStoreId, arg_7_0._mo.config)
 	end
 end
 

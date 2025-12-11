@@ -361,7 +361,9 @@ function var_0_0._magicConFinished(arg_15_0)
 	arg_15_0._magicFireAnim.speed = 1
 	arg_15_0._reshapeMagicFireAnim.speed = 1
 
-	if arg_15_0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract or arg_15_0._stepCo.conversation.type == StoryEnum.ConversationType.None then
+	local var_15_3 = StoryModel.instance:isLimitNoInteractLock(arg_15_0._stepCo)
+
+	if arg_15_0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract or arg_15_0._stepCo.conversation.type == StoryEnum.ConversationType.None or var_15_3 then
 		return
 	end
 
@@ -988,8 +990,9 @@ function var_0_0._onTextFinished(arg_27_0)
 	arg_27_0._textShowFinished = true
 
 	local var_27_9 = StoryModel.instance:isStoryAuto()
+	local var_27_10 = StoryModel.instance:isLimitNoInteractLock(arg_27_0._stepCo)
 
-	if arg_27_0._stepCo.conversation.type ~= StoryEnum.ConversationType.NoInteract and arg_27_0._stepCo.conversation.type ~= StoryEnum.ConversationType.None then
+	if arg_27_0._stepCo.conversation.type ~= StoryEnum.ConversationType.NoInteract and arg_27_0._stepCo.conversation.type ~= StoryEnum.ConversationType.None and not var_27_10 then
 		var_27_9 = var_27_9 or arg_27_0._stepCo.conversation.isAuto
 	end
 
@@ -1162,8 +1165,12 @@ function var_0_0.conFinished(arg_32_0)
 		arg_32_0._dialogTextShowFinishedCallbackObj = nil
 	end
 
-	if arg_32_0._stepCo and (arg_32_0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract or arg_32_0._stepCo.conversation.type == StoryEnum.ConversationType.None) then
-		return
+	if arg_32_0._stepCo then
+		local var_32_0 = StoryModel.instance:isLimitNoInteractLock(arg_32_0._stepCo)
+
+		if arg_32_0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract or arg_32_0._stepCo.conversation.type == StoryEnum.ConversationType.None or var_32_0 then
+			return
+		end
 	end
 
 	if arg_32_0._magicConTweenId then
@@ -1185,25 +1192,25 @@ function var_0_0.conFinished(arg_32_0)
 	arg_32_0._conMat:SetFloat(arg_32_0._LineMinYId, 0)
 	arg_32_0._conMat:SetFloat(arg_32_0._LineMaxYId, 0)
 
-	local var_32_0, var_32_1, var_32_2 = transformhelper.getLocalPos(arg_32_0._txtcontentcn.transform)
+	local var_32_1, var_32_2, var_32_3 = transformhelper.getLocalPos(arg_32_0._txtcontentcn.transform)
 
-	transformhelper.setLocalPos(arg_32_0._txtcontentcn.transform, var_32_0, var_32_1, 0)
+	transformhelper.setLocalPos(arg_32_0._txtcontentcn.transform, var_32_1, var_32_2, 0)
 
-	local var_32_3, var_32_4, var_32_5 = transformhelper.getLocalPos(arg_32_0._txtcontentmagic.transform)
+	local var_32_4, var_32_5, var_32_6 = transformhelper.getLocalPos(arg_32_0._txtcontentmagic.transform)
 
-	transformhelper.setLocalPos(arg_32_0._txtcontentmagic.transform, var_32_3, var_32_4, 0)
+	transformhelper.setLocalPos(arg_32_0._txtcontentmagic.transform, var_32_4, var_32_5, 0)
 
 	arg_32_0._subMeshs = {}
 
-	local var_32_6 = arg_32_0._txtcontentcn.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
+	local var_32_7 = arg_32_0._txtcontentcn.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
 
-	if var_32_6 then
-		local var_32_7 = var_32_6:GetEnumerator()
+	if var_32_7 then
+		local var_32_8 = var_32_7:GetEnumerator()
 
-		while var_32_7:MoveNext() do
-			local var_32_8 = var_32_7.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
+		while var_32_8:MoveNext() do
+			local var_32_9 = var_32_8.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
 
-			table.insert(arg_32_0._subMeshs, var_32_8)
+			table.insert(arg_32_0._subMeshs, var_32_9)
 		end
 	end
 
@@ -1213,7 +1220,7 @@ function var_0_0.conFinished(arg_32_0)
 		end
 	end
 
-	transformhelper.setLocalPos(arg_32_0._txtcontentreshapemagic.transform, var_32_3, var_32_4, 0)
+	transformhelper.setLocalPos(arg_32_0._txtcontentreshapemagic.transform, var_32_4, var_32_5, 0)
 	arg_32_0._conMat:DisableKeyword("_GRADUAL_ON")
 
 	if arg_32_0._finishCallback then

@@ -98,6 +98,10 @@ function var_0_0.getAchievement(arg_12_0)
 	return arg_12_0._achievementId
 end
 
+function var_0_0.getCurrentSelectIndex(arg_13_0)
+	return arg_13_0._selectIndex
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

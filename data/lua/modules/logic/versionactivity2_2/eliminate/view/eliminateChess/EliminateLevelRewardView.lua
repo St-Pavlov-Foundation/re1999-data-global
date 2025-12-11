@@ -106,7 +106,7 @@ function var_0_0.refreshTipInfo(arg_12_0, arg_12_1, arg_12_2)
 	local var_12_0 = gohelper.clone(arg_12_0._goTipsItem, arg_12_0._goLayoutGroup)
 	local var_12_1 = gohelper.findChild(var_12_0, "#go_chessTip/Info/#go_HaveChess")
 	local var_12_2 = gohelper.findChildImage(var_12_0, "#go_chessTip/Info/#go_HaveChess/image_ChessBG")
-	local var_12_3 = gohelper.findChildImage(var_12_0, "#go_chessTip/Info/#go_HaveChess/#image_Chess")
+	local var_12_3 = gohelper.findChildSingleImage(var_12_0, "#go_chessTip/Info/#go_HaveChess/#image_Chess")
 	local var_12_4 = gohelper.findChild(var_12_0, "#go_chessTip/Info/#go_Add")
 	local var_12_5 = gohelper.findChild(var_12_0, "#go_chessTip/Info/#go_Role")
 	local var_12_6 = gohelper.findChildText(var_12_0, "#go_chessTip/Info/#go_Role/Role/image_RoleHPNumBG/#txt_RoleHP")
@@ -197,7 +197,7 @@ function var_0_0.refreshTipInfo(arg_12_0, arg_12_1, arg_12_2)
 		end
 
 		if var_12_26 and not string.nilorempty(var_12_26.resPic) then
-			UISpriteSetMgr.instance:setV2a2ChessSprite(var_12_3, var_12_26.resPic, false)
+			SurvivalUnitIconHelper.instance:setNpcIcon(var_12_3, var_12_26.resPic)
 		end
 
 		UISpriteSetMgr.instance:setV2a2EliminateSprite(var_12_2, "v2a2_eliminate_infochess_qualitybg_0" .. var_12_26.level, false)

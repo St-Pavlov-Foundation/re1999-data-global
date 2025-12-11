@@ -12,11 +12,11 @@ function var_0_0.onConstructor(arg_1_0, ...)
 	arg_1_0.IS_DISPOSED = nil
 end
 
-function var_0_0.onAwake(arg_2_0, ...)
+function var_0_0.onLogicEnter(arg_2_0, ...)
 	return
 end
 
-function var_0_0.releaseSelf(arg_3_0)
+function var_0_0.onLogicExit(arg_3_0)
 	return
 end
 
@@ -55,7 +55,7 @@ function var_0_0.newClass(arg_6_0, arg_6_1, ...)
 	local var_6_0 = setmetatable({}, arg_6_1)
 
 	var_6_0.class = arg_6_1
-	var_6_0.PARENT_ROOT_CLASS = arg_6_0
+	var_6_0.PARENT_ROOT_OBJECT = arg_6_0
 	arg_6_0.OBJ_COUNT = arg_6_0.OBJ_COUNT + 1
 	arg_6_0.INSTANTIATE_CLASS_LIST[arg_6_0.OBJ_COUNT] = var_6_0
 
@@ -77,7 +77,7 @@ function var_0_0.addComponent(arg_7_0, arg_7_1)
 	local var_7_0 = setmetatable({}, arg_7_1)
 
 	var_7_0.class = arg_7_1
-	var_7_0.PARENT_ROOT_CLASS = arg_7_0
+	var_7_0.PARENT_ROOT_OBJECT = arg_7_0
 	arg_7_0.COMP_COUNT = arg_7_0.COMP_COUNT + 1
 	arg_7_0.COMPONENT_LIST[arg_7_0.COMP_COUNT] = var_7_0
 
@@ -101,7 +101,7 @@ function var_0_0.disposeSelf(arg_9_0)
 
 	arg_9_0.IS_DISPOSED = true
 
-	local var_9_0 = arg_9_0.keyword_gameObject
+	local var_9_0 = arg_9_0.GAMEOBJECT
 
 	var_0_2(arg_9_0.disposeSelfInternal, var_0_1, arg_9_0)
 
@@ -113,7 +113,7 @@ end
 function var_0_0.ctor(arg_10_0, ...)
 	arg_10_0:initializationInternal(arg_10_0.class, arg_10_0, ...)
 
-	return arg_10_0:onAwake(...)
+	return arg_10_0:onLogicEnter(...)
 end
 
 function var_0_0.initializationInternal(arg_11_0, arg_11_1, arg_11_2, ...)
@@ -132,15 +132,15 @@ end
 
 function var_0_0.disposeSelfInternal(arg_12_0)
 	if not arg_12_0.IS_RELEASING then
-		if arg_12_0.PARENT_ROOT_CLASS then
-			arg_12_0.PARENT_ROOT_CLASS:clearDeadInstantiatedClass()
+		if arg_12_0.PARENT_ROOT_OBJECT then
+			arg_12_0.PARENT_ROOT_OBJECT:clearDeadInstantiatedClass()
 		end
 
 		arg_12_0:markReleasing()
 		arg_12_0:releaseChildRoot()
 	end
 
-	var_0_2(arg_12_0.releaseSelf, var_0_1, arg_12_0)
+	var_0_2(arg_12_0.onLogicExit, var_0_1, arg_12_0)
 	arg_12_0:destructorInternal(arg_12_0.class, arg_12_0)
 
 	return var_0_2(arg_12_0.onDestructorFinish, var_0_1, arg_12_0)
@@ -207,7 +207,7 @@ function var_0_0.markReleasing(arg_15_0)
 				return
 			end
 
-			var_15_0 = var_15_0.PARENT_ROOT_CLASS
+			var_15_0 = var_15_0.PARENT_ROOT_OBJECT
 		else
 			var_15_0.IS_RELEASING = var_15_2
 
@@ -240,7 +240,7 @@ function var_0_0.releaseChildRoot(arg_16_0)
 				var_16_0:disposeSelf()
 			end
 
-			var_16_0 = var_16_0.PARENT_ROOT_CLASS
+			var_16_0 = var_16_0.PARENT_ROOT_OBJECT
 		else
 			var_16_0.DISPOSEINDEX = var_16_2
 
@@ -262,16 +262,6 @@ function var_0_0.destructorInternal(arg_17_0, arg_17_1, arg_17_2)
 
 	if var_17_1 then
 		return arg_17_0:destructorInternal(var_17_1, arg_17_2)
-	end
-end
-
-function var_0_0.disposeObjectList(arg_18_0, arg_18_1)
-	for iter_18_0 = #arg_18_1, 1, -1 do
-		local var_18_0 = arg_18_1[iter_18_0]
-
-		if not var_18_0.IS_DISPOSED then
-			var_18_0:disposeSelf()
-		end
 	end
 end
 

@@ -152,10 +152,10 @@ function var_0_0.startBattle(arg_11_0)
 	if arg_11_0.isSpecialEpisode then
 		arg_11_0.lastEpisodeSelectModeDict[tostring(arg_11_0.specialEpisodeId)] = arg_11_0.mode
 
-		local var_11_0 = VersionActivityFixedHelper.getVersionActivityDungeonEnum().PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastSelectMode
+		local var_11_0 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_11_0._bigVersion, arg_11_0._smallVersion).PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastSelectMode
 		local var_11_1 = cjson.encode(arg_11_0.lastEpisodeSelectModeDict)
 
-		VersionActivityFixedHelper.getVersionActivityDungeonController().instance:savePlayerPrefs(var_11_0, var_11_1)
+		VersionActivityFixedHelper.getVersionActivityDungeonController(arg_11_0._bigVersion, arg_11_0._smallVersion).instance:savePlayerPrefs(var_11_0, var_11_1)
 	end
 
 	if DungeonModel.instance:hasPassLevelAndStory(arg_11_0.showEpisodeCo.id) then
@@ -280,6 +280,7 @@ end
 
 function var_0_0._editableInitView(arg_22_0)
 	arg_22_0.rewardItems = {}
+	arg_22_0._bigVersion, arg_22_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 
 	gohelper.setActive(arg_22_0._goactivityrewarditem, false)
 	gohelper.setActive(arg_22_0._gonormaleye, false)
@@ -297,13 +298,13 @@ function var_0_0._editableInitView(arg_22_0)
 end
 
 function var_0_0.initLocalEpisodeMode(arg_23_0)
-	local var_23_0 = VersionActivityFixedHelper.getVersionActivityDungeonEnum().PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastUnLockMode
-	local var_23_1 = VersionActivityFixedHelper.getVersionActivityDungeonController()
+	local var_23_0 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_23_0._bigVersion, arg_23_0._smallVersion).PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastUnLockMode
+	local var_23_1 = VersionActivityFixedHelper.getVersionActivityDungeonController(arg_23_0._bigVersion, arg_23_0._smallVersion)
 	local var_23_2 = var_23_1.instance:getPlayerPrefs(var_23_0, "")
 
 	arg_23_0.unlockedEpisodeModeDict = var_23_1.instance:loadDictFromStr(var_23_2)
 
-	local var_23_3 = VersionActivityFixedHelper.getVersionActivityDungeonEnum().PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastSelectMode
+	local var_23_3 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_23_0._bigVersion, arg_23_0._smallVersion).PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastSelectMode
 	local var_23_4 = var_23_1.instance:getPlayerPrefs(var_23_3, "")
 
 	arg_23_0.lastEpisodeSelectModeDict = var_23_1.instance:loadDictFromStr(var_23_4)
@@ -492,7 +493,7 @@ function var_0_0.refreshEpisodeTextInfo(arg_34_0)
 	local var_34_0 = DungeonConfig.instance:getChapterCO(arg_34_0.showEpisodeCo.chapterId)
 	local var_34_1
 
-	if var_34_0.id == VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonChapterId.Story then
+	if var_34_0.id == VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_34_0._bigVersion, arg_34_0._smallVersion).DungeonChapterId.Story then
 		var_34_1 = arg_34_0.showEpisodeCo
 	else
 		var_34_1 = VersionActivityFixedDungeonConfig.instance:getStoryEpisodeCo(arg_34_0.showEpisodeCo.id)
@@ -567,16 +568,16 @@ end
 
 function var_0_0.setStarImage(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
 	local var_38_0 = DungeonConfig.instance:getEpisodeCO(arg_38_3)
-	local var_38_1 = VersionActivityFixedHelper.getVersionActivityDungeonEnum().EpisodeStarType[var_38_0.chapterId]
+	local var_38_1 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_38_0._bigVersion, arg_38_0._smallVersion).EpisodeStarType[var_38_0.chapterId]
 
 	if arg_38_2 then
 		local var_38_2 = var_38_1.light
 
-		VersionActivityFixedHelper.setDungeonSprite(arg_38_1, var_38_2)
+		VersionActivityFixedHelper.setDungeonSprite(arg_38_1, var_38_2, true, arg_38_0._bigVersion, arg_38_0._smallVersion)
 	else
 		local var_38_3 = var_38_1.empty
 
-		VersionActivityFixedHelper.setDungeonSprite(arg_38_1, var_38_3)
+		VersionActivityFixedHelper.setDungeonSprite(arg_38_1, var_38_3, true, arg_38_0._bigVersion, arg_38_0._smallVersion)
 	end
 end
 
@@ -805,7 +806,7 @@ function var_0_0.refreshEye(arg_44_0)
 		return
 	end
 
-	local var_44_0 = arg_44_0.originEpisodeConfig.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum().DungeonChapterId.Hard
+	local var_44_0 = arg_44_0.originEpisodeConfig.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_44_0._bigVersion, arg_44_0._smallVersion).DungeonChapterId.Hard
 
 	gohelper.setActive(arg_44_0._gonormaleye, not var_44_0)
 	gohelper.setActive(arg_44_0._gohardeye, var_44_0)
@@ -819,7 +820,7 @@ function var_0_0.playModeUnlockAnimation(arg_45_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_level_difficulty)
 	arg_45_0:_playModeUnLockAnimation(UIAnimationName.Unlock)
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockMgr.instance:startBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum().BlockKey.MapLevelViewPlayUnlockAnim)
+	UIBlockMgr.instance:startBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_45_0._bigVersion, arg_45_0._smallVersion).BlockKey.MapLevelViewPlayUnlockAnim)
 	TaskDispatcher.runDelay(arg_45_0.onModeUnlockAnimationPlayDone, arg_45_0, var_0_2)
 end
 
@@ -835,7 +836,7 @@ function var_0_0.onModeUnlockAnimationPlayDone(arg_47_0)
 
 	arg_47_0.unlockedEpisodeModeDict[tostring(arg_47_0.specialEpisodeId)] = arg_47_0.mode
 
-	local var_47_0 = VersionActivityFixedHelper.getVersionActivityDungeonEnum().PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastUnLockMode
+	local var_47_0 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_47_0._bigVersion, arg_47_0._smallVersion).PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastUnLockMode
 	local var_47_1 = cjson.encode(arg_47_0.unlockedEpisodeModeDict)
 
 	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:savePlayerPrefs(var_47_0, var_47_1)
@@ -844,13 +845,13 @@ function var_0_0.onModeUnlockAnimationPlayDone(arg_47_0)
 
 	arg_47_0:refreshMode()
 	arg_47_0:refreshStartBtn()
-	UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum().BlockKey.MapLevelViewPlayUnlockAnim)
+	UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_47_0._bigVersion, arg_47_0._smallVersion).BlockKey.MapLevelViewPlayUnlockAnim)
 end
 
 function var_0_0.onClose(arg_48_0)
 	TaskDispatcher.cancelTask(arg_48_0.playModeUnlockAnimation, arg_48_0)
 	TaskDispatcher.cancelTask(arg_48_0.onModeUnlockAnimationPlayDone, arg_48_0)
-	UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum().BlockKey.MapLevelViewPlayUnlockAnim)
+	UIBlockMgr.instance:endBlock(VersionActivityFixedHelper.getVersionActivityDungeonEnum(arg_48_0._bigVersion, arg_48_0._smallVersion).BlockKey.MapLevelViewPlayUnlockAnim)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 

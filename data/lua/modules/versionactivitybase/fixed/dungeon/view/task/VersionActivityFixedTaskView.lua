@@ -17,6 +17,7 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._bigVersion, arg_4_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 	arg_4_0._txtremaintime = gohelper.findChildText(arg_4_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
 end
 
@@ -40,7 +41,7 @@ function var_0_0.refreshLeft(arg_7_0)
 end
 
 function var_0_0.refreshRemainTime(arg_8_0)
-	local var_8_0 = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon]:getRealEndTimeStamp() - ServerTime.now()
+	local var_8_0 = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum(arg_8_0._bigVersion, arg_8_0._smallVersion).ActivityId.Dungeon]:getRealEndTimeStamp() - ServerTime.now()
 
 	arg_8_0._txtremaintime.text = TimeUtil.SecondToActivityTimeFormat(var_8_0)
 end

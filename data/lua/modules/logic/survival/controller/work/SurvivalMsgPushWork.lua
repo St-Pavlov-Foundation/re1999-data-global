@@ -27,25 +27,24 @@ function var_0_0.onReceiveSurvivalHeroUpdatePush(arg_3_0, arg_3_1)
 end
 
 function var_0_0.onReceiveSurvivalBagUpdatePush(arg_4_0, arg_4_1)
+	local var_4_0 = SurvivalShelterModel.instance:getWeekInfo()
+
+	if not var_4_0 then
+		return
+	end
+
+	local var_4_1 = var_4_0:getBag(arg_4_1.type)
+
+	if not var_4_1 then
+		return
+	end
+
+	var_4_1:addOrUpdateItems(arg_4_1.updateItems)
+	var_4_1:removeItems(arg_4_1.delItemUids)
+
 	if arg_4_1.type == SurvivalEnum.ItemSource.Map then
-		local var_4_0 = SurvivalMapModel.instance:getSceneMo()
-
-		if not var_4_0 then
-			return
-		end
-
-		var_4_0.bag:addOrUpdateItems(arg_4_1.updateItems)
-		var_4_0.bag:removeItems(arg_4_1.delItemUids)
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapBagUpdate, arg_4_1)
 	elseif arg_4_1.type == SurvivalEnum.ItemSource.Shelter then
-		local var_4_1 = SurvivalShelterModel.instance:getWeekInfo()
-
-		if not var_4_1 then
-			return
-		end
-
-		var_4_1.bag:addOrUpdateItems(arg_4_1.updateItems)
-		var_4_1.bag:removeItems(arg_4_1.delItemUids)
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterBagUpdate, arg_4_1)
 	end
 

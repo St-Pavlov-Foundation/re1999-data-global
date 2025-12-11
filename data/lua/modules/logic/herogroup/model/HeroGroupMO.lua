@@ -618,7 +618,7 @@ function var_0_0.getAllHeroEquips(arg_21_0)
 	local var_21_2 = FightModel.instance:getFightParam()
 	local var_21_3 = {}
 
-	if var_21_2 and var_21_2.battleId > 0 then
+	if var_21_2 and var_21_2.battleId and var_21_2.battleId > 0 then
 		local var_21_4 = lua_battle.configDict[var_21_2.battleId]
 
 		if not string.nilorempty(var_21_4.trialEquips) then

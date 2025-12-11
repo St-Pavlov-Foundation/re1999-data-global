@@ -1,8 +1,8 @@
 ﻿module("modules.logic.story.controller.StoryGCController", package.seeall)
 
 local var_0_0 = class("StoryGCController", BaseController)
-local var_0_1 = 3
-local var_0_2 = 10
+local var_0_1 = 2
+local var_0_2 = 5
 local var_0_3 = 1
 local var_0_4 = 2
 local var_0_5 = 3

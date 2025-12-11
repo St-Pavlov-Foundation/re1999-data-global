@@ -35,17 +35,18 @@ var_0_0.ChargeRefreshTime = {
 }
 var_0_0.LittleMonthCardGoodsId = 811512
 var_0_0.StoreId = {
-	Charge = 410,
 	PubbleCharge = 411,
+	LimitStore = 112,
 	EventPackage = 615,
 	CritterStore = 173,
-	SummonExchange = 110,
+	RecommendPackage = 611,
 	OneTimePackage = 613,
 	OldRoomStore = 172,
 	WeekWalk = 160,
-	LimitStore = 112,
+	RoomFishingStore = 190,
+	SummonExchange = 110,
+	Charge = 410,
 	DecorateStore = 800,
-	RecommendPackage = 611,
 	MediciPackage = 616,
 	Summon = 130,
 	RoomStore = 170,
@@ -138,6 +139,9 @@ var_0_0.TowerStore = {
 }
 var_0_0.StoreTabId = {
 	Skin = 500
+}
+var_0_0.StoreId2TabId = {
+	[var_0_0.StoreId.Skin] = var_0_0.StoreTabId.Skin
 }
 
 return var_0_0

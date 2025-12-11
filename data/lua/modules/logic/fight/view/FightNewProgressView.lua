@@ -4,6 +4,11 @@ local var_0_0 = class("FightNewProgressView", FightBaseView)
 
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0.fightRoot = gohelper.findChild(arg_1_0.viewGO, "root")
+	arg_1_0.progressHandleDict = {
+		[FightEnum.ProgressId.Progress_5] = arg_1_0.showFightConquerBattleProgress,
+		[FightEnum.ProgressId.Progress_6] = arg_1_0.showFightConquerBattleProgress,
+		[FightEnum.ProgressId.Progress_500M] = arg_1_0.showProgress500M
+	}
 end
 
 function var_0_0.addEvents(arg_2_0)
@@ -37,12 +42,10 @@ function var_0_0.onOpen(arg_4_0)
 end
 
 function var_0_0.showProgress(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1.showId
+	local var_5_0 = arg_5_0.progressHandleDict[arg_5_1.showId]
 
-	if var_5_0 == 5 then
-		arg_5_0:showFightConquerBattleProgress()
-	elseif var_5_0 == 6 then
-		arg_5_0:showFightConquerBattleProgress()
+	if var_5_0 then
+		var_5_0(arg_5_0)
 	end
 end
 
@@ -67,6 +70,16 @@ function var_0_0.showFightConquerBattleProgress(arg_6_0)
 
 		arg_6_0.progress56View = arg_6_0:com_openSubView(FightProgressConquerBattleView, var_6_2, arg_6_0.fightRoot)
 	end
+end
+
+function var_0_0.showProgress500M(arg_7_0)
+	if arg_7_0.progress500MView then
+		return
+	end
+
+	local var_7_0 = gohelper.findChild(arg_7_0.viewGO, "root/topLeftContent")
+
+	arg_7_0.progress500MView = arg_7_0:com_openSubView(FightProgress500MView, "ui/viewres/fight/fighttower/fightprogressview.prefab", var_7_0)
 end
 
 return var_0_0

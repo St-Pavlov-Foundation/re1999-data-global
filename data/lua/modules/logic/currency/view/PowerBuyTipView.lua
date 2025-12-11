@@ -201,6 +201,22 @@ function var_0_0.refreshCenterTip(arg_14_0)
 		}
 
 		arg_14_0._txtbuytip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("powerbuy_tip"), var_14_7)
+	else
+		local var_14_8 = ItemPowerModel.instance:getPowerByType(arg_14_0.buyinfo.type)
+
+		if var_14_8 then
+			local var_14_9 = ItemConfig.instance:getPowerItemCo(var_14_8.id)
+
+			if var_14_9 then
+				local var_14_10 = {
+					"",
+					var_14_9.name,
+					var_14_9.effect
+				}
+
+				arg_14_0._txtbuytip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("powerbuy_tip"), var_14_10)
+			end
+		end
 	end
 end
 

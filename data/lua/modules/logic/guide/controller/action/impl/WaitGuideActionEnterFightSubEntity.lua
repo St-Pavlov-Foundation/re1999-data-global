@@ -8,18 +8,16 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 end
 
 function var_0_0._onRoundStart(arg_2_0)
-	local var_2_0 = FightModel.instance:getCurStage()
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DistributeCard) or FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
+		local var_2_0 = FightDataHelper.entityMgr:getMyNormalList()
 
-	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Distribute1Card) or var_2_0 == FightEnum.Stage.Distribute or var_2_0 == FightEnum.Stage.Card then
-		local var_2_1 = FightDataHelper.entityMgr:getMyNormalList()
-
-		if not var_2_1 or #var_2_1 < 3 then
+		if not var_2_0 or #var_2_0 < 3 then
 			return
 		end
 
-		local var_2_2 = FightDataHelper.entityMgr:getMySubList()
+		local var_2_1 = FightDataHelper.entityMgr:getMySubList()
 
-		if not var_2_2 or #var_2_2 == 0 then
+		if not var_2_1 or #var_2_1 == 0 then
 			return
 		end
 

@@ -25,7 +25,7 @@ function var_0_0.onStageChanged(arg_4_0, arg_4_1)
 
 	arg_4_0.imgProgress.fillAmount = arg_4_0.data.value / arg_4_0.data.max
 
-	if arg_4_1 == FightStageMgr.StageType.Normal then
+	if arg_4_1 == FightStageMgr.StageType.Operate then
 		arg_4_0.imgProgress.fillAmount = (arg_4_0.data.value - arg_4_0.preDecrease) / arg_4_0.data.max
 	elseif arg_4_1 == FightStageMgr.StageType.Play then
 		-- block empty

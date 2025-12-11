@@ -26,7 +26,7 @@ end
 function var_0_0.addCustomEvent(arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.PowerChange, arg_4_0.onPowerChange, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.TriggerStressBehaviour, arg_4_0.triggerStressBehaviour, arg_4_0)
-	arg_4_0:addEventCb(FightController.instance, FightEvent.OnStageChange, arg_4_0.onStageChange, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_4_0.onStageChange, arg_4_0)
 end
 
 function var_0_0.onStageChange(arg_5_0)

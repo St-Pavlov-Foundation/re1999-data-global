@@ -129,6 +129,14 @@ function var_0_0._getLangVersions(arg_7_0)
 	local var_7_2 = {}
 	local var_7_3 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
 
+	if not tabletool.indexOf(var_7_3, "jp") then
+		table.insert(var_7_3, "jp")
+	end
+
+	if not tabletool.indexOf(var_7_3, "kr") then
+		table.insert(var_7_3, "kr")
+	end
+
 	table.insert(var_7_3, "res-HD")
 
 	local var_7_4 = GameConfig:GetDefaultVoiceShortcut()

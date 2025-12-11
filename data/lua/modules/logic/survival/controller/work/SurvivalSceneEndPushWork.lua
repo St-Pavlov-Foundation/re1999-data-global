@@ -59,7 +59,7 @@ function var_0_0._tweenToPlayerAndDestoryUnit(arg_3_0)
 
 	local var_3_8 = SurvivalMapHelper.instance:getEntity(0)
 
-	if var_3_8 then
+	if var_3_8 and var_3_2:isDefaultModel() then
 		UIBlockHelper.instance:startBlock("SurvivalCheckMapEndWork", 1.9)
 		var_3_8:playAnim("die")
 		TaskDispatcher.runDelay(arg_3_0.openResultView, arg_3_0, 1.9)

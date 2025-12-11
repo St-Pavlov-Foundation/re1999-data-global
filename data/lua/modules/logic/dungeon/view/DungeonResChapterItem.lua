@@ -18,6 +18,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goTurnBackTip = gohelper.findChild(arg_1_0.viewGO, "anim/turnback_tipsbg")
 	arg_1_0._txtTurnBackTip = gohelper.findChildText(arg_1_0.viewGO, "anim/turnback_tipsbg/tips")
 	arg_1_0._goDoubleDropTip = gohelper.findChild(arg_1_0.viewGO, "anim/#go_doubledroptip")
+	arg_1_0._gotrace = gohelper.findChild(arg_1_0.viewGO, "anim/#go_trace")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -30,6 +31,7 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_2_0.onUpdateParam, arg_2_0)
 	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, arg_2_0.showDoubleDropTips, arg_2_0)
 	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.onUpdateParam, arg_2_0)
+	arg_2_0:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_2_0._refreshTraced, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
@@ -37,6 +39,7 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_3_0.onUpdateParam, arg_3_0)
 	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.onUpdateParam, arg_3_0)
 	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, arg_3_0.onUpdateParam, arg_3_0)
+	arg_3_0:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_3_0._refreshTraced, arg_3_0)
 end
 
 var_0_0.AudioConfig = {
@@ -182,6 +185,7 @@ function var_0_0.onUpdateParam(arg_9_0)
 
 	arg_9_0:_showGoldEffect()
 	arg_9_0:setItemEffect()
+	arg_9_0:_refreshTraced()
 end
 
 function var_0_0._showGoldEffect(arg_10_0)
@@ -286,7 +290,39 @@ function var_0_0.setLockState(arg_17_0, arg_17_1)
 	end
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function var_0_0._refreshTraced(arg_18_0)
+	arg_18_0:_refreshTracedIcon()
+end
+
+function var_0_0._refreshTracedIcon(arg_19_0)
+	if not arg_19_0._chapterCo then
+		return
+	end
+
+	if DungeonModel.instance:chapterIsLock(arg_19_0._chapterCo.id) then
+		return
+	end
+
+	local var_19_0 = CharacterRecommedModel.instance:isTradeChapter(arg_19_0._chapterCo.id)
+
+	if var_19_0 then
+		local var_19_1 = CharacterRecommedController.instance:getTradeIcon()
+
+		if not var_19_1 then
+			return
+		end
+
+		if not arg_19_0._tracedIcon then
+			arg_19_0._tracedIcon = gohelper.clone(var_19_1, arg_19_0._gotrace)
+		end
+	end
+
+	if arg_19_0._tracedIcon then
+		gohelper.setActive(arg_19_0._tracedIcon, var_19_0)
+	end
+end
+
+function var_0_0.onDestroyView(arg_20_0)
 	return
 end
 

@@ -5,10 +5,11 @@ local var_0_1 = {
 	[FightEnum.EntitySide.MySide] = 0.7,
 	[FightEnum.EntitySide.EnemySide] = 0.5
 }
-local var_0_2 = {
+local var_0_2 = 0.5
+local var_0_3 = {
 	{
 		0,
-		0.16,
+		var_0_2,
 		"_BloomFactor",
 		"float",
 		"0",
@@ -16,7 +17,6 @@ local var_0_2 = {
 		false
 	}
 }
-local var_0_3 = 0.16
 local var_0_4 = 0.1
 local var_0_5 = 1.5
 
@@ -142,7 +142,7 @@ function var_0_0._startFadeIn(arg_7_0)
 
 	arg_7_0._spineMat = arg_7_0._entity.spineRenderer:getReplaceMat()
 
-	for iter_7_0, iter_7_1 in ipairs(var_0_2) do
+	for iter_7_0, iter_7_1 in ipairs(var_0_3) do
 		local var_7_1 = iter_7_1[4]
 		local var_7_2 = iter_7_1[5]
 		local var_7_3 = iter_7_1[6]
@@ -159,7 +159,7 @@ function var_0_0._onFrameMaterialProperty(arg_8_0)
 	local var_8_1 = arg_8_0._entity.spineRenderer:getReplaceMat()
 	local var_8_2 = Time.time - arg_8_0._startTime
 
-	for iter_8_0, iter_8_1 in ipairs(var_0_2) do
+	for iter_8_0, iter_8_1 in ipairs(var_0_3) do
 		local var_8_3 = iter_8_1[1]
 		local var_8_4 = iter_8_1[2] / var_8_0
 
@@ -179,7 +179,7 @@ function var_0_0._onFrameMaterialProperty(arg_8_0)
 		end
 	end
 
-	if var_8_2 > var_0_3 / var_8_0 then
+	if var_8_2 > var_0_2 / var_8_0 then
 		TaskDispatcher.cancelTask(arg_8_0._onFrameMaterialProperty, arg_8_0)
 	end
 end

@@ -49,7 +49,7 @@ end
 
 function var_0_0.onContainerClose(arg_4_0)
 	if arg_4_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
-		ViewMgr.instance:openView(ViewName.MainView)
+		MainController.instance:dispatchEvent(MainEvent.ManuallyOpenMainView)
 	end
 end
 

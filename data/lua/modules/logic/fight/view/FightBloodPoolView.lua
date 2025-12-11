@@ -133,11 +133,15 @@ function var_0_0.onRespBeginRound(arg_10_0)
 end
 
 function var_0_0.onClickBlood(arg_11_0)
-	if FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard then
+	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stateMgr:getIsAuto() then
+		return
+	end
+
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -177,11 +181,15 @@ function var_0_0.onClickBlood(arg_11_0)
 end
 
 function var_0_0.onLongPressBlood(arg_12_0)
-	if FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard then
+	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stateMgr:getIsAuto() then
+		return
+	end
+
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -291,6 +299,9 @@ function var_0_0.directSetBloodValue(arg_21_0)
 	arg_21_0:setNumAndImage(var_21_1, var_21_2)
 end
 
+local var_0_1 = 0
+local var_0_2 = 1 - var_0_1
+
 function var_0_0.setNumAndImage(arg_22_0, arg_22_1, arg_22_2)
 	local var_22_0 = string.format("%s/%s", arg_22_1, arg_22_2)
 
@@ -301,7 +312,11 @@ function var_0_0.setNumAndImage(arg_22_0, arg_22_1, arg_22_2)
 	arg_22_0.leftEffMaxTxt.text = arg_22_2
 	arg_22_0.leftEffCurTxt.text = arg_22_1
 
-	local var_22_1 = arg_22_1 / arg_22_2
+	local var_22_1 = arg_22_1 / arg_22_2 * var_0_2
+
+	if var_22_1 > 0 then
+		var_22_1 = var_22_1 + var_0_1
+	end
 
 	arg_22_0.imageHeartMat:SetFloat(arg_22_0.heightPropertyId, var_22_1)
 	arg_22_0.imageHeartPreMat:SetFloat(arg_22_0.heightPropertyId, var_22_1)

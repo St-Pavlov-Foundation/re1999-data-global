@@ -7,6 +7,7 @@ local var_0_1 = {
 	achievementId = 2,
 	extraDesc = 4,
 	icon = 10,
+	image = 11,
 	desc = 3,
 	listenerParam = 6,
 	id = 1,

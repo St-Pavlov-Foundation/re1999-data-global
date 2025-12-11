@@ -856,6 +856,7 @@ end
 function var_0_0.onCoverPerformanceEntityData(arg_46_0, arg_46_1)
 	if arg_46_1 == arg_46_0.entityId then
 		arg_46_0:updateSelfExPoint()
+		arg_46_0:onExPointMaxAdd(arg_46_1)
 	end
 end
 

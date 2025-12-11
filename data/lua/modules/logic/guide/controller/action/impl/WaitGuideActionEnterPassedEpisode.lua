@@ -8,12 +8,10 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 end
 
 function var_0_0._onRoundStart(arg_2_0)
-	local var_2_0 = FightModel.instance:getCurStage()
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DistributeCard) or FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
+		local var_2_0 = FightModel.instance:getFightParam()
 
-	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Distribute1Card) or var_2_0 == FightEnum.Stage.Distribute or var_2_0 == FightEnum.Stage.Card then
-		local var_2_1 = FightModel.instance:getFightParam()
-
-		if not DungeonModel.instance:hasPassLevel(var_2_1.episodeId) then
+		if not DungeonModel.instance:hasPassLevel(var_2_0.episodeId) then
 			return
 		end
 

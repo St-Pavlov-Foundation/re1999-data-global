@@ -142,7 +142,7 @@ function var_0_0.setSpineEffect(arg_6_0, arg_6_1)
 			var_6_8
 		}
 
-		local var_6_12 = var_6_0.effect:addGlobalEffect(arg_6_0.effectUrl .. "effect")
+		local var_6_12 = var_6_0.effect:addGlobalEffect(arg_6_0.effectUrl .. "_effect")
 
 		var_6_12:setLocalPos(var_6_9 + var_6_6, 0, 0)
 		FightRenderOrderMgr.instance:onAddEffectWrap(var_6_1, var_6_12)

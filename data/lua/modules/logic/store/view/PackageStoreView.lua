@@ -10,6 +10,7 @@ function var_0_0.onInitView(arg_2_0)
 	arg_2_0._simagebg = gohelper.findChildSingleImage(arg_2_0.viewGO, "#simage_bg")
 	arg_2_0._gostorecategoryitem = gohelper.findChild(arg_2_0.viewGO, "left/scroll_category/viewport/categorycontent/#go_storecategoryitem")
 	arg_2_0._scrollprop = gohelper.findChildScrollRect(arg_2_0.viewGO, "#scroll_prop")
+	arg_2_0._gopropcontent = gohelper.findChild(arg_2_0.viewGO, "#scroll_prop/viewport/content")
 
 	if arg_2_0._editableInitView then
 		arg_2_0:_editableInitView()
@@ -283,6 +284,7 @@ function var_0_0.onOpen(arg_17_0)
 	arg_17_0:addEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, arg_17_0.onUpdatePackageGoodsList, arg_17_0)
 	arg_17_0:addEventCb(StoreController.instance, StoreEvent.CurPackageListEmpty, arg_17_0.onPackageGoodsListEmpty, arg_17_0)
 	arg_17_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_17_0._onFinishTask, arg_17_0)
+	transformhelper.setLocalPos(arg_17_0._gopropcontent.transform, 0, 0, 0)
 
 	if var_17_1 then
 		StoreController.instance:openPackageStoreGoodsView(StoreModel.instance:getGoodsMO(tonumber(var_17_1)))

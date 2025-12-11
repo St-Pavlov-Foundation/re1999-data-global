@@ -448,5 +448,55 @@
     "firstReward": "2#2#120|1#620103#4|1#620102#20|1#620101#250|1#110504#1",
     "spReward": "2#2#120",
     "index": 5
+  },
+  {
+    "layerId": 46,
+    "stageId": 6,
+    "preLayerId": 45,
+    "isElite": 0,
+    "episodeIds": "90004601",
+    "firstReward": "1#620102#15|1#620101#200|1#110703#2",
+    "spReward": "",
+    "index": 1
+  },
+  {
+    "layerId": 47,
+    "stageId": 6,
+    "preLayerId": 46,
+    "isElite": 0,
+    "episodeIds": "90004701",
+    "firstReward": "1#620102#15|1#620101#200|1#111012#2",
+    "spReward": "",
+    "index": 2
+  },
+  {
+    "layerId": 48,
+    "stageId": 6,
+    "preLayerId": 47,
+    "isElite": 0,
+    "episodeIds": "90004801",
+    "firstReward": "1#620102#15|1#620101#200|1#110803#2",
+    "spReward": "",
+    "index": 3
+  },
+  {
+    "layerId": 49,
+    "stageId": 6,
+    "preLayerId": 48,
+    "isElite": 0,
+    "episodeIds": "90004901",
+    "firstReward": "1#620102#15|1#620101#200|1#110103#2",
+    "spReward": "",
+    "index": 4
+  },
+  {
+    "layerId": 50,
+    "stageId": 6,
+    "preLayerId": 49,
+    "isElite": 1,
+    "episodeIds": "90005001|90005002|90005003|90005004",
+    "firstReward": "2#2#240|1#620103#8|1#620102#30|1#620101#400|1#111008#1",
+    "spReward": "2#2#240",
+    "index": 5
   }
 ]

@@ -75,7 +75,7 @@ function var_0_0.init(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
 			local var_3_8 = var_3_6[var_3_4 + 1]
 			local var_3_9 = SpineVoiceAddAudio.New()
 
-			var_3_9:init(var_3_7, var_3_8)
+			var_3_9:init(var_3_7, var_3_8 or 0)
 			table.insert(arg_3_0._addAudios, var_3_9)
 		end
 	end

@@ -7,7 +7,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goLocked = gohelper.findChild(arg_1_0.viewGO, "#go_Locked")
 	arg_1_0._goUnLocked = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked")
 	arg_1_0._imageChessQuality = gohelper.findChildImage(arg_1_0.viewGO, "#go_UnLocked/#image_ChessQuality")
-	arg_1_0._imageChess = gohelper.findChildImage(arg_1_0.viewGO, "#go_UnLocked/#image_Chess")
+	arg_1_0._imageChess = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_UnLocked/#image_Chess")
 	arg_1_0._goResource = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_Resource")
 	arg_1_0._goResourceItem = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_Resource/#go_ResourceItem")
 	arg_1_0._imageResourceQuality = gohelper.findChildImage(arg_1_0.viewGO, "#go_UnLocked/#go_Resource/#go_ResourceItem/#image_ResourceQuality")
@@ -86,7 +86,7 @@ function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
 	local var_9_0 = arg_9_0._mo.costList
 
 	gohelper.CreateObjList(arg_9_0, arg_9_0._onItemShow, var_9_0, arg_9_0._goResource, arg_9_0._goResourceItem)
-	UISpriteSetMgr.instance:setV2a2ChessSprite(arg_9_0._imageChess, arg_9_0._config.resPic, false)
+	SurvivalUnitIconHelper.instance:setNpcIcon(arg_9_0._imageChess, arg_9_0._config.resPic)
 	UISpriteSetMgr.instance:setV2a2EliminateSprite(arg_9_0._imageChessQuality, "v2a2_eliminate_chessqualitybg_0" .. arg_9_0._config.level, false)
 
 	if not EliminateMapController.hasOnceActionKey(EliminateMapEnum.PrefsKey.ChessUnlock, arg_9_0._config.id) then

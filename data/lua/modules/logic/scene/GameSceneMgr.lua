@@ -37,6 +37,7 @@ function var_0_0._addScenes(arg_3_0)
 	arg_3_0:_addSceneObj(SceneType.Rouge, RougeScene)
 	arg_3_0:_addSceneObj(SceneType.Survival, SurvivalScene)
 	arg_3_0:_addSceneObj(SceneType.SurvivalShelter, SurvivalShelterScene)
+	arg_3_0:_addSceneObj(SceneType.SurvivalSummaryAct, SurvivalSummaryAct)
 end
 
 function var_0_0._addSceneObj(arg_4_0, arg_4_1, arg_4_2)
@@ -153,7 +154,7 @@ function var_0_0.startScene(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4, ar
 	arg_18_0:showLoading(arg_18_1)
 	arg_18_0:closeScene(arg_18_1, arg_18_2, arg_18_3)
 
-	if arg_18_1 == SceneType.Main or arg_18_1 == SceneType.Room or arg_18_1 == SceneType.Explore or arg_18_1 == SceneType.SurvivalShelter or arg_18_1 == SceneType.Cachot then
+	if arg_18_1 == SceneType.Main or arg_18_1 == SceneType.Room or arg_18_1 == SceneType.Explore or arg_18_1 == SceneType.SurvivalShelter or arg_18_1 == SceneType.SurvivalSummaryAct or arg_18_1 == SceneType.Survival or arg_18_1 == SceneType.Cachot then
 		TaskDispatcher.runDelay(arg_18_0._onDelayStartScene, arg_18_0, 1.467)
 	else
 		arg_18_0._isStarting = true

@@ -49,11 +49,11 @@ function var_0_0.onRefreshActivity(arg_4_0, arg_4_1)
 end
 
 function var_0_0._btnstoreOnClick(arg_5_0)
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:openStoreView()
+	VersionActivityFixedHelper.getVersionActivityDungeonController(arg_5_0._bigVersion, arg_5_0._smallVersion).instance:openStoreView()
 end
 
 function var_0_0._btnenterOnClick(arg_6_0)
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:openVersionActivityDungeonMapView()
+	VersionActivityFixedHelper.getVersionActivityDungeonController(arg_6_0._bigVersion, arg_6_0._smallVersion).instance:openVersionActivityDungeonMapView()
 end
 
 function var_0_0._btnFinishedOnClick(arg_7_0)
@@ -66,17 +66,18 @@ end
 
 function var_0_0._editableInitView(arg_9_0)
 	arg_9_0._txtstorename = gohelper.findChildText(arg_9_0.viewGO, "entrance/#btn_store/normal/txt_shop")
-	arg_9_0.actId = VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon
+	arg_9_0._bigVersion, arg_9_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	arg_9_0.actId = VersionActivityFixedHelper.getVersionActivityEnum(arg_9_0._bigVersion, arg_9_0._smallVersion).ActivityId.Dungeon
 	arg_9_0.animComp = VersionActivityFixedHelper.getVersionActivitySubAnimatorComp().get(arg_9_0.viewGO, arg_9_0)
 	arg_9_0.goEnter = arg_9_0._btnenter.gameObject
 	arg_9_0.goFinish = arg_9_0._btnFinished.gameObject
 	arg_9_0.goStore = arg_9_0._btnstore.gameObject
 	arg_9_0.goLock = arg_9_0._btnLocked.gameObject
-	arg_9_0.actId = VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon
+	arg_9_0.actId = VersionActivityFixedHelper.getVersionActivityEnum(arg_9_0._bigVersion, arg_9_0._smallVersion).ActivityId.Dungeon
 	arg_9_0.actCo = ActivityConfig.instance:getActivityCo(arg_9_0.actId)
 
 	arg_9_0:_setDesc()
-	RedDotController.instance:addRedDot(arg_9_0._goreddot, VersionActivityFixedHelper.getVersionActivityDungeonEnterReddotId())
+	RedDotController.instance:addRedDot(arg_9_0._goreddot, VersionActivityFixedHelper.getVersionActivityDungeonEnterReddotId(arg_9_0._bigVersion, arg_9_0._smallVersion))
 end
 
 function var_0_0._setDesc(arg_10_0)
@@ -121,7 +122,7 @@ function var_0_0.refreshRemainTime(arg_15_0)
 		gohelper.setActive(arg_15_0._txttime, false)
 	end
 
-	local var_15_2 = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.DungeonStore]
+	local var_15_2 = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum(arg_15_0._bigVersion, arg_15_0._smallVersion).ActivityId.DungeonStore]
 
 	arg_15_0._txtstorename.text = var_15_2.config.name
 	arg_15_0._txtStoreTime.text = var_15_2:getRemainTimeStr2ByEndTime(true)
@@ -140,20 +141,20 @@ function var_0_0.refreshActivityState(arg_16_0)
 
 	gohelper.setActive(arg_16_0._gotime, not var_16_3)
 
-	local var_16_4 = ActivityHelper.getActivityStatusAndToast(VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.DungeonStore) == ActivityEnum.ActivityStatus.Normal
+	local var_16_4 = ActivityHelper.getActivityStatusAndToast(VersionActivityFixedHelper.getVersionActivityEnum(arg_16_0._bigVersion, arg_16_0._smallVersion).ActivityId.DungeonStore) == ActivityEnum.ActivityStatus.Normal
 
 	gohelper.setActive(arg_16_0.goStore, var_16_4)
 end
 
 function var_0_0.refreshStoreCurrency(arg_17_0)
-	local var_17_0 = CurrencyModel.instance:getCurrency(VersionActivityFixedHelper.getVersionActivityCurrencyType())
+	local var_17_0 = CurrencyModel.instance:getCurrency(VersionActivityFixedHelper.getVersionActivityCurrencyType(arg_17_0._bigVersion, arg_17_0._smallVersion))
 	local var_17_1 = var_17_0 and var_17_0.quantity or 0
 
 	arg_17_0._txtStoreNum.text = GameUtil.numberDisplay(var_17_1)
 end
 
 function var_0_0.refreshRedDot(arg_18_0)
-	local var_18_0 = VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon
+	local var_18_0 = VersionActivityFixedHelper.getVersionActivityEnum(arg_18_0._bigVersion, arg_18_0._smallVersion).ActivityId.Dungeon
 	local var_18_1 = VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(var_18_0)
 	local var_18_2 = ActivityHelper.getActivityStatus(var_18_0) == ActivityEnum.ActivityStatus.Normal
 

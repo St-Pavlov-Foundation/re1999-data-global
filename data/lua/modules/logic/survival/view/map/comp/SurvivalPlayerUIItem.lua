@@ -30,19 +30,26 @@ function var_0_0.refreshInfo(arg_4_0)
 end
 
 function var_0_0._showHeroTick(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0:setIconEnable(true)
 	gohelper.setActive(arg_5_0._imageprogressbg, true)
 	gohelper.setActive(arg_5_0._imageprogress, true)
 
 	arg_5_0._curVal = arg_5_1
 	arg_5_0._totalVal = arg_5_2
 	arg_5_0._imageprogress.fillAmount = (arg_5_1 - 1) / arg_5_2
-	arg_5_0._tweenId = ZProj.TweenHelper.DOFillAmount(arg_5_0._imageprogress, arg_5_1 / arg_5_2, SurvivalEnum.MoveSpeed, arg_5_0._onTweenEnd, arg_5_0, nil, EaseType.Linear)
+	arg_5_0._tweenId = ZProj.TweenHelper.DOFillAmount(arg_5_0._imageprogress, arg_5_1 / arg_5_2, SurvivalConst.PlayerMoveSpeed, arg_5_0._onTweenEnd, arg_5_0, nil, EaseType.Linear)
 end
 
 function var_0_0._onTweenEnd(arg_6_0)
 	if arg_6_0._curVal == arg_6_0._totalVal then
 		gohelper.setActive(arg_6_0._imageprogressbg, false)
 		gohelper.setActive(arg_6_0._imageprogress, false)
+
+		local var_6_0 = SurvivalMapHelper.instance:getEntity(0)
+
+		if var_6_0 then
+			arg_6_0:setIconEnable(not var_6_0.isShow)
+		end
 	end
 
 	arg_6_0._tweenId = nil

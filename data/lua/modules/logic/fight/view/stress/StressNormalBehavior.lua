@@ -37,7 +37,7 @@ function var_0_0.createStatusItem(arg_2_0, arg_2_1)
 end
 
 function var_0_0.onClickStress(arg_3_0)
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() ~= FightStageMgr.StageType.Operate then
 		return
 	end
 

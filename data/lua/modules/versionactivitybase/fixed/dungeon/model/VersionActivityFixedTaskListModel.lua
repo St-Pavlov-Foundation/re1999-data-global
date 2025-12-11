@@ -11,7 +11,9 @@ function var_0_0.reInit(arg_2_0)
 end
 
 function var_0_0.initTask(arg_3_0)
-	arg_3_0.taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon)
+	local var_3_0, var_3_1 = VersionActivityFixedDungeonController.instance:getEnterVerison()
+
+	arg_3_0.taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, VersionActivityFixedHelper.getVersionActivityEnum(var_3_0, var_3_1).ActivityId.Dungeon)
 end
 
 function var_0_0.sortTaskMoList(arg_4_0)

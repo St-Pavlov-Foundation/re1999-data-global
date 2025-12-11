@@ -4872,6 +4872,102 @@
     "switch": "Fightboos_Second"
   },
   {
+    "id": 3110119,
+    "battleId": 104312111,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 3110119,
+    "battleId": 104312111,
+    "monster": 104312164,
+    "invokeType": 8,
+    "param": "610412_change",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 3110119,
+    "battleId": 104311100,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 3110119,
+    "battleId": 104311100,
+    "monster": 104311104,
+    "invokeType": 8,
+    "param": "610412_change",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 3120119,
+    "battleId": 104312100,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 3120119,
+    "battleId": 104312100,
+    "monster": 104312104,
+    "invokeType": 8,
+    "param": "610412_change",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 3130119,
+    "battleId": 104313100,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 3130119,
+    "battleId": 104313100,
+    "monster": 104313104,
+    "invokeType": 8,
+    "param": "610412_change",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 3140119,
+    "battleId": 104314100,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 3140119,
+    "battleId": 104314100,
+    "monster": 104314104,
+    "invokeType": 8,
+    "param": "610412_change",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 90005090,
+    "battleId": 102311001,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 90005091,
+    "battleId": 102311002,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_First"
+  },
+  {
     "id": 2710118,
     "battleId": 5270110,
     "monster": 527011004,

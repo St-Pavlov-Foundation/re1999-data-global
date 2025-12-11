@@ -187,7 +187,6 @@ function var_0_0.updateDescItem(arg_8_0, arg_8_1, arg_8_2)
 	arg_8_1.txtDesc.text = SkillHelper.addLink(arg_8_2)
 
 	arg_8_1.fixTmpBreakLine:refreshTmpContent(arg_8_1.txtDesc)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_8_1.txtDesc, colorStr)
 	SkillHelper.addHyperLinkClick(arg_8_1.txtDesc)
 end
 

@@ -21,6 +21,7 @@ var_0_0.Type_Render = typeof(UnityEngine.Renderer)
 var_0_0.Type_LangTextDynamicSize = typeof(ZProj.LangTextDynamicSize)
 var_0_0.Type_Spine_SkeletonAnimation = typeof(Spine.Unity.SkeletonAnimation)
 var_0_0.Type_Spine_SkeletonGraphic = typeof(Spine.Unity.SkeletonGraphic)
+var_0_0.Type_UIFollower = typeof(ZProj.UIFollower)
 
 local var_0_1 = SLFramework.UGUI.ButtonWrap
 local var_0_2 = SLFramework.UGUI.UIClickListener

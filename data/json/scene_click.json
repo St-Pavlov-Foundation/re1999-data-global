@@ -1,0 +1,18 @@
+[
+  {
+    "id": 20001,
+    "defaultUnlock": 1,
+    "itemId": 350101,
+    "icon": "mainsceneswitch_clickbg_01",
+    "previewIcon": "mainsceneswitch_ui_01",
+    "effect": "common_click"
+  },
+  {
+    "id": 20002,
+    "defaultUnlock": 0,
+    "itemId": 350102,
+    "icon": "mainsceneswitch_clickbg_02",
+    "previewIcon": "mainsceneswitch_clickbg_pic02",
+    "effect": "laplace_click"
+  }
+]

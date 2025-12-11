@@ -1,9 +1,10 @@
 ﻿module("modules.logic.fight.view.work.FightWorkAutoPlayerFinisherSkill", package.seeall)
 
-local var_0_0 = class("FightWorkAutoPlayerFinisherSkill", BaseWork)
+local var_0_0 = class("FightWorkAutoPlayerFinisherSkill", FightWorkItem)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
+function var_0_0.onConstructor(arg_1_0, arg_1_1)
 	arg_1_0._beginRoundOp = arg_1_1
+	arg_1_0.SAFETIME = 5
 end
 
 function var_0_0.onStart(arg_2_0, arg_2_1)
@@ -12,7 +13,6 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.AutoToSelectSkillTarget, arg_2_0._beginRoundOp.toId)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 3)
 
 	local var_2_0 = FightDataHelper.operationDataMgr:newOperation()
 
@@ -22,14 +22,6 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, var_2_0)
 	FightController.instance:dispatchEvent(FightEvent.OnPlayCardFlowDone, var_2_0)
 	arg_2_0:onDone(true)
-end
-
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
-end
-
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
 end
 
 return var_0_0

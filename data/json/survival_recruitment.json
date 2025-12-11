@@ -58,5 +58,23 @@
     "desc": "language_10084144",
     "conditionType": 4,
     "param": "300"
+  },
+  {
+    "id": 10,
+    "desc": "language_10094721",
+    "conditionType": 1,
+    "param": "1:100"
+  },
+  {
+    "id": 11,
+    "desc": "language_10094722",
+    "conditionType": 1,
+    "param": "1:200"
+  },
+  {
+    "id": 12,
+    "desc": "language_10094723",
+    "conditionType": 4,
+    "param": "300"
   }
 ]

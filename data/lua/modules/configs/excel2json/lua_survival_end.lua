@@ -2,14 +2,15 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	endImg = 6,
-	endDesc = 4,
+	endImg = 7,
 	name = 2,
+	mainImg = 9,
 	type = 3,
+	group = 4,
+	unlock = 6,
+	endDesc = 5,
 	id = 1,
-	order = 7,
-	mainImg = 8,
-	unlock = 5
+	order = 8
 }
 local var_0_2 = {
 	"id"

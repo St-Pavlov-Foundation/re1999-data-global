@@ -14,7 +14,7 @@ function var_0_0.initUI(arg_1_0)
 end
 
 function var_0_0.onClickStress(arg_2_0)
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() ~= FightStageMgr.StageType.Operate then
 		return
 	end
 

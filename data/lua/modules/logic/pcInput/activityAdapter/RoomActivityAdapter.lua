@@ -4,31 +4,45 @@ local var_0_0 = class("RoomActivityAdapter", BaseActivityAdapter)
 
 var_0_0.keytoFunction = {
 	function()
+		local var_1_0 = RoomController.instance:isObMode()
+
+		if ViewMgr.instance:IsPopUpViewOpen() and not ViewMgr.instance:isOpen(ViewName.RoomCharacterPlaceView) or not var_1_0 then
+			return
+		end
+
 		HelpController.instance:showHelp(HelpEnum.HelpId.RoomOb, true)
 	end,
 	function()
-		if ViewMgr.instance:IsPopUpViewOpen() then
+		local var_2_0 = RoomController.instance:isObMode()
+
+		if ViewMgr.instance:IsPopUpViewOpen() or not var_2_0 then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyRoomMarket)
 	end,
 	function()
-		if ViewMgr.instance:IsPopUpViewOpen() then
+		local var_3_0 = RoomController.instance:isObMode()
+
+		if ViewMgr.instance:IsPopUpViewOpen() or not var_3_0 then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyRoomBellTower)
 	end,
 	function()
-		if ViewMgr.instance:IsPopUpViewOpen() then
+		local var_4_0 = RoomController.instance:isObMode()
+
+		if ViewMgr.instance:IsPopUpViewOpen() or not var_4_0 then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyRoomCharactorFaith)
 	end,
 	function()
-		if ViewMgr.instance:IsPopUpViewOpen() then
+		local var_5_0 = RoomController.instance:isObMode()
+
+		if ViewMgr.instance:IsPopUpViewOpen() or not var_5_0 then
 			return
 		end
 
@@ -49,28 +63,36 @@ var_0_0.keytoFunction = {
 		PCInputController.instance:dispatchEvent(PCInputEvent.Notifylocate)
 	end,
 	[9] = function()
-		if ViewMgr.instance:IsPopUpViewOpen() then
+		local var_8_0 = RoomController.instance:isObMode()
+
+		if ViewMgr.instance:IsPopUpViewOpen() or not var_8_0 then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBuy)
 	end,
 	[10] = function()
-		if ViewMgr.instance:IsPopUpViewOpen() then
+		local var_9_0 = RoomController.instance:isObMode()
+
+		if ViewMgr.instance:IsPopUpViewOpen() or not var_9_0 then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyLayout)
 	end,
 	[11] = function()
-		if ViewMgr.instance:IsPopUpViewOpen() then
+		local var_10_0 = RoomController.instance:isObMode()
+
+		if ViewMgr.instance:IsPopUpViewOpen() or not var_10_0 then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyPlace)
 	end,
 	[12] = function()
-		if ViewMgr.instance:IsPopUpViewOpen() then
+		local var_11_0 = RoomController.instance:isObMode()
+
+		if ViewMgr.instance:IsPopUpViewOpen() or not var_11_0 then
 			return
 		end
 

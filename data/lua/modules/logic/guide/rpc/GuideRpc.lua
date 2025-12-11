@@ -26,7 +26,7 @@ end
 
 function var_0_0.onReceiveFinishGuideReply(arg_4_0, arg_4_1, arg_4_2)
 	if arg_4_1 == 0 then
-		-- block empty
+		GuideController.instance:dispatchEvent(GuideEvent.onReceiveFinishGuideReply, arg_4_2)
 	else
 		GuideController.instance:dispatchEvent(GuideEvent.FinishGuideFail)
 	end

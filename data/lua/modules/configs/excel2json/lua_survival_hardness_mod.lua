@@ -2,13 +2,13 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	map = 6,
-	name = 2,
 	optional = 3,
+	name = 2,
+	extendScore = 5,
 	unlock = 7,
 	id = 1,
 	hardness = 4,
-	desc = 5
+	desc = 6
 }
 local var_0_2 = {
 	"id"

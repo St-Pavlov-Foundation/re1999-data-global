@@ -5,9 +5,7 @@ local var_0_1 = {
 	TeamHealth = 4,
 	HeroHealth = 5,
 	Item = 1,
-	TaskChange = 3,
-	GetTalent = 6,
-	Currency = 2
+	TaskChange = 3
 }
 
 function var_0_0.ctor(arg_1_0)
@@ -35,13 +33,7 @@ function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
 					arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_removenpc"), var_2_3.name)
 				end
 			elseif var_2_4 == SurvivalEnum.ItemType.Currency then
-				if var_2_3.id == SurvivalEnum.CurrencyType.Enthusiastic then
-					if var_2_1 > 0 then
-						arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_addheart"), var_2_1)
-					else
-						arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_removeheart"), -var_2_1)
-					end
-				elseif var_2_1 > 0 then
+				if var_2_1 > 0 then
 					arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_addcurrency"), var_2_3.name, var_2_1)
 				elseif var_2_2 == SurvivalEnum.ItemSource.Map then
 					arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_removecurrency"), var_2_3.name, -var_2_1)
@@ -51,7 +43,7 @@ function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
 			else
 				local var_2_5 = var_2_3.name
 
-				arg_2_2 = arg_2_2 or SurvivalEnum.ItemRareColor
+				arg_2_2 = arg_2_2 or SurvivalConst.ItemRareColor
 
 				if arg_2_2[var_2_3.rare] then
 					var_2_5 = string.format("<color=%s>%s</color>", arg_2_2[var_2_3.rare], var_2_5)
@@ -83,7 +75,6 @@ function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
 		if var_2_10 >= 0 then
 			arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_teamhealthadd"), var_2_10)
 		else
-			SurvivalMapModel.instance.isHealthSub = true
 			arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_teamhealthsub"), -var_2_10)
 		end
 	elseif var_2_0[1] == var_0_1.HeroHealth then
@@ -94,11 +85,8 @@ function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
 		if var_2_13 >= 0 then
 			arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_herohealthadd"), var_2_12, var_2_13)
 		else
-			SurvivalMapModel.instance.isHealthSub = true
 			arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_heaohealthsub"), var_2_12, -var_2_13)
 		end
-	elseif var_2_0[1] == var_0_1.GetTalent then
-		arg_2_0.logStr = luaLang("survival_log_gettalent")
 	end
 end
 

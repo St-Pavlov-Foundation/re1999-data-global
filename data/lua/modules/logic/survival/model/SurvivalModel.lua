@@ -8,6 +8,7 @@ function var_0_0.onInit(arg_1_0)
 	arg_1_0._survivalSettleInfo = nil
 	arg_1_0._lastIndex = nil
 	arg_1_0._isUseSimpleDesc = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SurvivalDescSimply, 1)
+	arg_1_0.summaryActPosOffset = 0
 end
 
 function var_0_0.reInit(arg_2_0)

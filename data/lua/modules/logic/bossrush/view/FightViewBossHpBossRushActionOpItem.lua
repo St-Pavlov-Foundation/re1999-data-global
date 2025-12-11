@@ -54,10 +54,16 @@ function var_0_0.refreshUI(arg_7_0, arg_7_1, arg_7_2)
 
 	var_7_4.text = arg_7_2.round or 0
 
-	MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, FightOpItem):updateCardInfoMO({
-		uid = arg_7_0.PARENT_VIEW._bossEntityMO.uid,
-		skillId = arg_7_2.skillId
-	})
+	if not arg_7_0.opItemView then
+		arg_7_0.opItemView = arg_7_0:com_openSubView(FightBossRushHpTrackAIUseCardsItem, var_7_1)
+	end
+
+	local var_7_6 = FightCardInfoData.New(FightDef_pb.CardInfo())
+
+	var_7_6.uid = arg_7_0.PARENT_VIEW._bossEntityMO.uid
+	var_7_6.skillId = var_7_2
+
+	arg_7_0.opItemView:onRefreshItemData(var_7_6)
 end
 
 function var_0_0.onClose(arg_8_0)

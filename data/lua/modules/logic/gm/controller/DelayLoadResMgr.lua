@@ -77,25 +77,39 @@ function var_0_0.doCallbackAddRecycle(arg_6_0)
 	DelayLoadResMgr.instance:recycleResObj(arg_6_0)
 end
 
-function var_0_0.reset(arg_7_0)
-	arg_7_0.stage = var_0_0.Stage.InPool
-	arg_7_0.resUrl = nil
-	arg_7_0.startLoadTime = nil
-	arg_7_0.startLoadFrame = nil
-	arg_7_0.realLoadedTime = nil
-	arg_7_0.delayTime = nil
+function var_0_0.setAssetItem(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_1
 
-	if arg_7_0.assetItem then
-		arg_7_0.assetItem:Release()
+	arg_7_0.assetItem = arg_7_1
+
+	if arg_7_1 then
+		arg_7_1:Retain()
 	end
 
-	arg_7_0.assetItem = nil
+	if var_7_0 then
+		var_7_0:Release()
+	end
+end
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.callbackList) do
-		DelayLoadResMgr.instance:recycleResCallbackObj(iter_7_1)
+function var_0_0.reset(arg_8_0)
+	arg_8_0.stage = var_0_0.Stage.InPool
+	arg_8_0.resUrl = nil
+	arg_8_0.startLoadTime = nil
+	arg_8_0.startLoadFrame = nil
+	arg_8_0.realLoadedTime = nil
+	arg_8_0.delayTime = nil
+
+	if arg_8_0.assetItem then
+		arg_8_0.assetItem:Release()
 	end
 
-	tabletool.clear(arg_7_0.callbackList)
+	arg_8_0.assetItem = nil
+
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.callbackList) do
+		DelayLoadResMgr.instance:recycleResCallbackObj(iter_8_1)
+	end
+
+	tabletool.clear(arg_8_0.callbackList)
 end
 
 local var_0_1 = class("DelayLoadResMgr")
@@ -109,190 +123,180 @@ var_0_1.DelayStrategyName = {
 	[var_0_1.DelayStrategyEnum.Fixed] = "延长固定时间"
 }
 
-function var_0_1.ctor(arg_8_0)
-	arg_8_0.srcLoadAbAsset = loadAbAsset
-	arg_8_0.srcLoadNonAbAsset = loadNonAbAsset
-	arg_8_0.srcLoadPersistentRes = loadPersistentRes
-	arg_8_0.srcRemoveAssetLoadCb = removeAssetLoadCb
-	arg_8_0.loadingResDict = {}
-	arg_8_0.loadedResDict = {}
-	arg_8_0.doingCallbackList = {}
-	arg_8_0.resPool = {}
-	arg_8_0.callbackObjPool = {}
-	arg_8_0.enablePatternList = {}
-	arg_8_0.disablePatternList = {
+function var_0_1.ctor(arg_9_0)
+	arg_9_0.srcLoadAbAsset = loadAbAsset
+	arg_9_0.srcLoadNonAbAsset = loadNonAbAsset
+	arg_9_0.srcLoadPersistentRes = loadPersistentRes
+	arg_9_0.srcRemoveAssetLoadCb = removeAssetLoadCb
+	arg_9_0.loadingResDict = {}
+	arg_9_0.loadedResDict = {}
+	arg_9_0.doingCallbackList = {}
+	arg_9_0.resPool = {}
+	arg_9_0.callbackObjPool = {}
+	arg_9_0.enablePatternList = {}
+	arg_9_0.disablePatternList = {
 		"ui/viewres/"
 	}
-	arg_8_0.strategy = var_0_1.DelayStrategyEnum.Multiple
-	arg_8_0.strategyValue = 2
-	arg_8_0.frameHandle = UpdateBeat:CreateListener(arg_8_0._onFrame, arg_8_0)
+	arg_9_0.strategy = var_0_1.DelayStrategyEnum.Multiple
+	arg_9_0.strategyValue = 2
+	arg_9_0.frameHandle = UpdateBeat:CreateListener(arg_9_0._onFrame, arg_9_0)
 end
 
-function var_0_1.setDelayStrategy(arg_9_0, arg_9_1)
-	arg_9_0.strategy = arg_9_1
+function var_0_1.setDelayStrategy(arg_10_0, arg_10_1)
+	arg_10_0.strategy = arg_10_1
 end
 
-function var_0_1.getDelayStrategy(arg_10_0)
-	return arg_10_0.strategy
+function var_0_1.getDelayStrategy(arg_11_0)
+	return arg_11_0.strategy
 end
 
-function var_0_1.setDelayStrategyValue(arg_11_0, arg_11_1)
-	arg_11_0.strategyValue = arg_11_1
+function var_0_1.setDelayStrategyValue(arg_12_0, arg_12_1)
+	arg_12_0.strategyValue = arg_12_1
 end
 
-function var_0_1.getDelayStrategyValue(arg_12_0)
-	return arg_12_0.strategyValue
+function var_0_1.getDelayStrategyValue(arg_13_0)
+	return arg_13_0.strategyValue
 end
 
-function var_0_1.setEnablePatternList(arg_13_0, arg_13_1)
-	tabletool.clear(arg_13_0.enablePatternList)
-
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		if not string.nilorempty(iter_13_1) then
-			arg_13_0.enablePatternList[#arg_13_0.enablePatternList + 1] = iter_13_1
-		end
-	end
-end
-
-function var_0_1.setDisablePatternList(arg_14_0, arg_14_1)
-	tabletool.clear(arg_14_0.disablePatternList)
+function var_0_1.setEnablePatternList(arg_14_0, arg_14_1)
+	tabletool.clear(arg_14_0.enablePatternList)
 
 	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
 		if not string.nilorempty(iter_14_1) then
-			arg_14_0.disablePatternList[#arg_14_0.disablePatternList + 1] = iter_14_1
+			arg_14_0.enablePatternList[#arg_14_0.enablePatternList + 1] = iter_14_1
 		end
 	end
 end
 
-function var_0_1.getEnablePatternList(arg_15_0)
-	return arg_15_0.enablePatternList
+function var_0_1.setDisablePatternList(arg_15_0, arg_15_1)
+	tabletool.clear(arg_15_0.disablePatternList)
+
+	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
+		if not string.nilorempty(iter_15_1) then
+			arg_15_0.disablePatternList[#arg_15_0.disablePatternList + 1] = iter_15_1
+		end
+	end
 end
 
-function var_0_1.getDisablePatternList(arg_16_0)
-	return arg_16_0.disablePatternList
+function var_0_1.getEnablePatternList(arg_16_0)
+	return arg_16_0.enablePatternList
 end
 
-function var_0_1.startDelayLoad(arg_17_0)
-	arg_17_0.start = true
+function var_0_1.getDisablePatternList(arg_17_0)
+	return arg_17_0.disablePatternList
+end
+
+function var_0_1.startDelayLoad(arg_18_0)
+	arg_18_0.start = true
 
 	setGlobal("loadAbAsset", var_0_1.LoadAbAssetWrap)
 	setGlobal("loadNonAbAsset", var_0_1.LoadNonAbAssetWrap)
 	setGlobal("loadPersistentRes", var_0_1.LoadPersistentResWrap)
 	setGlobal("removeAssetLoadCb", var_0_1.RemoveAssetLoadCbWrap)
-	UpdateBeat:AddListener(arg_17_0.frameHandle)
+	UpdateBeat:AddListener(arg_18_0.frameHandle)
 end
 
-function var_0_1.stopDelayLoad(arg_18_0)
-	for iter_18_0, iter_18_1 in pairs(arg_18_0.loadingResDict) do
-		arg_18_0:recycleResObj(iter_18_1)
+function var_0_1.stopDelayLoad(arg_19_0)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0.loadingResDict) do
+		arg_19_0:recycleResObj(iter_19_1)
 	end
 
-	for iter_18_2, iter_18_3 in pairs(arg_18_0.loadedResDict) do
-		arg_18_0:recycleResObj(iter_18_3)
+	for iter_19_2, iter_19_3 in pairs(arg_19_0.loadedResDict) do
+		arg_19_0:recycleResObj(iter_19_3)
 	end
 
-	for iter_18_4, iter_18_5 in ipairs(arg_18_0.doingCallbackList) do
-		arg_18_0:recycleResObj(iter_18_5)
+	for iter_19_4, iter_19_5 in ipairs(arg_19_0.doingCallbackList) do
+		arg_19_0:recycleResObj(iter_19_5)
 	end
 
-	tabletool.clear(arg_18_0.loadingResDict)
-	tabletool.clear(arg_18_0.loadedResDict)
-	tabletool.clear(arg_18_0.doingCallbackList)
+	tabletool.clear(arg_19_0.loadingResDict)
+	tabletool.clear(arg_19_0.loadedResDict)
+	tabletool.clear(arg_19_0.doingCallbackList)
 
-	arg_18_0.start = false
+	arg_19_0.start = false
 
-	setGlobal("loadAbAsset", arg_18_0.srcLoadAbAsset)
-	setGlobal("loadNonAbAsset", arg_18_0.srcLoadNonAbAsset)
-	setGlobal("loadPersistentRes", arg_18_0.srcLoadPersistentRes)
-	setGlobal("removeAssetLoadCb", arg_18_0.srcRemoveAssetLoadCb)
-	UpdateBeat:RemoveListener(arg_18_0.frameHandle)
+	setGlobal("loadAbAsset", arg_19_0.srcLoadAbAsset)
+	setGlobal("loadNonAbAsset", arg_19_0.srcLoadNonAbAsset)
+	setGlobal("loadPersistentRes", arg_19_0.srcLoadPersistentRes)
+	setGlobal("removeAssetLoadCb", arg_19_0.srcRemoveAssetLoadCb)
+	UpdateBeat:RemoveListener(arg_19_0.frameHandle)
 end
 
-function var_0_1.getResObj(arg_19_0)
-	if #arg_19_0.resPool > 0 then
-		return table.remove(arg_19_0.resPool)
+function var_0_1.getResObj(arg_20_0)
+	if #arg_20_0.resPool > 0 then
+		return table.remove(arg_20_0.resPool)
 	end
 
 	return var_0_0.New()
 end
 
-function var_0_1.recycleResObj(arg_20_0, arg_20_1)
-	arg_20_1:reset()
-	table.insert(arg_20_0.resPool, arg_20_1)
+function var_0_1.recycleResObj(arg_21_0, arg_21_1)
+	arg_21_1:reset()
+	table.insert(arg_21_0.resPool, arg_21_1)
 end
 
-function var_0_1.recycleResCallbackObj(arg_21_0, arg_21_1)
-	tabletool.clear(arg_21_1)
-	table.insert(arg_21_0.callbackObjPool, arg_21_1)
+function var_0_1.recycleResCallbackObj(arg_22_0, arg_22_1)
+	tabletool.clear(arg_22_1)
+	table.insert(arg_22_0.callbackObjPool, arg_22_1)
 end
 
-function var_0_1.getResCallbackObj(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0
+function var_0_1.getResCallbackObj(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0
 
-	if #arg_22_0.callbackObjPool > 0 then
-		var_22_0 = table.remove(arg_22_0.callbackObjPool)
+	if #arg_23_0.callbackObjPool > 0 then
+		var_23_0 = table.remove(arg_23_0.callbackObjPool)
 	else
-		var_22_0 = {}
+		var_23_0 = {}
 	end
 
-	var_22_0.callback = arg_22_1
-	var_22_0.callbackObj = arg_22_2
+	var_23_0.callback = arg_23_1
+	var_23_0.callbackObj = arg_23_2
 
-	return var_22_0
+	return var_23_0
 end
 
-function var_0_1.isStartDelayLoad(arg_23_0)
-	return arg_23_0.start
+function var_0_1.isStartDelayLoad(arg_24_0)
+	return arg_24_0.start
 end
 
-function var_0_1.getLoadingResObj(arg_24_0, arg_24_1)
-	return arg_24_0.loadingResDict[arg_24_1]
+function var_0_1.getLoadingResObj(arg_25_0, arg_25_1)
+	return arg_25_0.loadingResDict[arg_25_1]
 end
 
-function var_0_1.addLoadingResObj(arg_25_0, arg_25_1)
-	arg_25_0.loadingResDict[arg_25_1.resUrl] = arg_25_1
+function var_0_1.addLoadingResObj(arg_26_0, arg_26_1)
+	arg_26_0.loadingResDict[arg_26_1.resUrl] = arg_26_1
 end
 
-function var_0_1.removeLoadingResObj(arg_26_0, arg_26_1)
-	arg_26_0.loadingResDict[arg_26_1.resUrl] = nil
+function var_0_1.removeLoadingResObj(arg_27_0, arg_27_1)
+	arg_27_0.loadingResDict[arg_27_1.resUrl] = nil
 end
 
-function var_0_1.getLoadedResObj(arg_27_0, arg_27_1)
-	return arg_27_0.loadedResDict[arg_27_1]
+function var_0_1.getLoadedResObj(arg_28_0, arg_28_1)
+	return arg_28_0.loadedResDict[arg_28_1]
 end
 
-function var_0_1.addLoadedResObj(arg_28_0, arg_28_1)
-	arg_28_0.loadedResDict[arg_28_1.resUrl] = arg_28_1
+function var_0_1.addLoadedResObj(arg_29_0, arg_29_1)
+	arg_29_0.loadedResDict[arg_29_1.resUrl] = arg_29_1
 end
 
-function var_0_1.removeLoadedResObj(arg_29_0, arg_29_1)
-	arg_29_0.loadedResDict[arg_29_1.resUrl] = nil
+function var_0_1.removeLoadedResObj(arg_30_0, arg_30_1)
+	arg_30_0.loadedResDict[arg_30_1.resUrl] = nil
 end
 
-function var_0_1.checkNeedDelay(arg_30_0, arg_30_1)
-	if not arg_30_0.start then
+function var_0_1.checkNeedDelay(arg_31_0, arg_31_1)
+	if not arg_31_0.start then
 		return false
 	end
 
-	if arg_30_0:checkIsDisableFile(arg_30_1) then
+	if arg_31_0:checkIsDisableFile(arg_31_1) then
 		return false
 	end
 
-	if #arg_30_0.enablePatternList <= 0 then
+	if #arg_31_0.enablePatternList <= 0 then
 		return true
 	end
 
-	for iter_30_0, iter_30_1 in ipairs(arg_30_0.enablePatternList) do
-		if string.match(arg_30_1, iter_30_1) then
-			return true
-		end
-	end
-
-	return false
-end
-
-function var_0_1.checkIsDisableFile(arg_31_0, arg_31_1)
-	for iter_31_0, iter_31_1 in ipairs(arg_31_0.disablePatternList) do
+	for iter_31_0, iter_31_1 in ipairs(arg_31_0.enablePatternList) do
 		if string.match(arg_31_1, iter_31_1) then
 			return true
 		end
@@ -301,134 +305,142 @@ function var_0_1.checkIsDisableFile(arg_31_0, arg_31_1)
 	return false
 end
 
-function var_0_1.getDelayTime(arg_32_0, arg_32_1)
-	if not arg_32_0.start then
-		return 0
-	end
-
-	if arg_32_0.strategy == var_0_1.DelayStrategyEnum.Fixed then
-		return arg_32_0.strategyValue
-	else
-		return (arg_32_1.realLoadedTime - arg_32_1.startLoadTime) * arg_32_0.strategyValue
-	end
-end
-
-function var_0_1._onFrame(arg_33_0)
-	local var_33_0 = UnityEngine.Time.time
-
-	tabletool.clear(arg_33_0.doingCallbackList)
-
-	for iter_33_0, iter_33_1 in pairs(arg_33_0.loadedResDict) do
-		if iter_33_1.realLoadedTime and var_33_0 - iter_33_1.realLoadedTime >= iter_33_1.delayTime then
-			table.insert(arg_33_0.doingCallbackList, iter_33_1)
+function var_0_1.checkIsDisableFile(arg_32_0, arg_32_1)
+	for iter_32_0, iter_32_1 in ipairs(arg_32_0.disablePatternList) do
+		if string.match(arg_32_1, iter_32_1) then
+			return true
 		end
 	end
 
-	for iter_33_2, iter_33_3 in ipairs(arg_33_0.doingCallbackList) do
-		arg_33_0:removeLoadedResObj(iter_33_3)
-		iter_33_3:doCallbackAddRecycle()
+	return false
+end
+
+function var_0_1.getDelayTime(arg_33_0, arg_33_1)
+	if not arg_33_0.start then
+		return 0
+	end
+
+	if arg_33_0.strategy == var_0_1.DelayStrategyEnum.Fixed then
+		return arg_33_0.strategyValue
+	else
+		return (arg_33_1.realLoadedTime - arg_33_1.startLoadTime) * arg_33_0.strategyValue
 	end
 end
 
-function var_0_1.loadAssetBase(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-	var_0_1.log("load Asset Base : " .. arg_34_1)
+function var_0_1._onFrame(arg_34_0)
+	local var_34_0 = UnityEngine.Time.time
 
-	local var_34_0 = arg_34_0:getLoadingResObj(arg_34_1)
-	local var_34_1 = var_34_0 ~= nil
+	tabletool.clear(arg_34_0.doingCallbackList)
 
-	if not var_34_1 then
-		var_34_0 = arg_34_0:getResObj()
-
-		var_34_0:init(arg_34_1, UnityEngine.Time.time, UnityEngine.Time.frameCount)
-		arg_34_0:addLoadingResObj(var_34_0)
+	for iter_34_0, iter_34_1 in pairs(arg_34_0.loadedResDict) do
+		if iter_34_1.realLoadedTime and var_34_0 - iter_34_1.realLoadedTime >= iter_34_1.delayTime then
+			table.insert(arg_34_0.doingCallbackList, iter_34_1)
+		end
 	end
 
-	var_34_0:addCallback(arg_34_2, arg_34_3)
-
-	return var_34_1
-end
-
-function var_0_1.LoadAbAssetWrap(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	if not var_0_1.instance:loadAssetBase(arg_35_0, arg_35_2, arg_35_3) then
-		var_0_1.instance.srcLoadAbAsset(arg_35_0, arg_35_1, var_0_1.onLoadAssetDone)
+	for iter_34_2, iter_34_3 in ipairs(arg_34_0.doingCallbackList) do
+		arg_34_0:removeLoadedResObj(iter_34_3)
+		iter_34_3:doCallbackAddRecycle()
 	end
 end
 
-function var_0_1.LoadNonAbAssetWrap(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
+function var_0_1.loadAssetBase(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+	var_0_1.log("load Asset Base : " .. arg_35_1)
+
+	local var_35_0 = arg_35_0:getLoadingResObj(arg_35_1)
+	local var_35_1 = var_35_0 ~= nil
+
+	if not var_35_1 then
+		var_35_0 = arg_35_0:getResObj()
+
+		var_35_0:init(arg_35_1, UnityEngine.Time.time, UnityEngine.Time.frameCount)
+		arg_35_0:addLoadingResObj(var_35_0)
+	end
+
+	var_35_0:addCallback(arg_35_2, arg_35_3)
+
+	return var_35_1
+end
+
+function var_0_1.LoadAbAssetWrap(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
 	if not var_0_1.instance:loadAssetBase(arg_36_0, arg_36_2, arg_36_3) then
-		var_0_1.instance.srcLoadNonAbAsset(arg_36_0, arg_36_1, var_0_1.onLoadAssetDone)
+		var_0_1.instance.srcLoadAbAsset(arg_36_0, arg_36_1, var_0_1.onLoadAssetDone)
 	end
 end
 
-function var_0_1.LoadPersistentResWrap(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
+function var_0_1.LoadNonAbAssetWrap(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
 	if not var_0_1.instance:loadAssetBase(arg_37_0, arg_37_2, arg_37_3) then
-		var_0_1.instance.srcLoadPersistentRes(arg_37_0, arg_37_1, var_0_1.onLoadAssetDone)
+		var_0_1.instance.srcLoadNonAbAsset(arg_37_0, arg_37_1, var_0_1.onLoadAssetDone)
 	end
 end
 
-function var_0_1.RemoveAssetLoadCbWrap(arg_38_0, arg_38_1, arg_38_2)
-	local var_38_0 = var_0_1.instance:getLoadedResObj(arg_38_0)
-
-	if var_38_0 then
-		var_0_1.log("remove asset load : " .. arg_38_0)
-		var_38_0:removeCallback(arg_38_1, arg_38_2)
-		var_0_1.instance:tryRecycleResObj(var_38_0)
-	end
-
-	local var_38_1 = var_0_1.instance:getLoadingResObj(arg_38_0)
-
-	if var_38_1 then
-		var_0_1.log("remove asset load : " .. arg_38_0)
-		var_38_1:removeCallback(arg_38_1, arg_38_2)
-		var_0_1.instance:tryRecycleResObj(var_38_1)
+function var_0_1.LoadPersistentResWrap(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
+	if not var_0_1.instance:loadAssetBase(arg_38_0, arg_38_2, arg_38_3) then
+		var_0_1.instance.srcLoadPersistentRes(arg_38_0, arg_38_1, var_0_1.onLoadAssetDone)
 	end
 end
 
-function var_0_1.tryRecycleResObj(arg_39_0, arg_39_1)
-	if not arg_39_1:hadAnyOneCallback() then
-		var_0_1.instance:removeLoadingResObj(arg_39_1)
-		var_0_1.instance:recycleResObj(arg_39_1)
-		var_0_1.instance.srcRemoveAssetLoadCb(arg_39_1.resUrl, var_0_1.onLoadAssetDone)
+function var_0_1.RemoveAssetLoadCbWrap(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = var_0_1.instance:getLoadedResObj(arg_39_0)
+
+	if var_39_0 then
+		var_0_1.log("remove asset load : " .. arg_39_0)
+		var_39_0:removeCallback(arg_39_1, arg_39_2)
+		var_0_1.instance:tryRecycleResObj(var_39_0)
+	end
+
+	local var_39_1 = var_0_1.instance:getLoadingResObj(arg_39_0)
+
+	if var_39_1 then
+		var_0_1.log("remove asset load : " .. arg_39_0)
+		var_39_1:removeCallback(arg_39_1, arg_39_2)
+		var_0_1.instance:tryRecycleResObj(var_39_1)
 	end
 end
 
-function var_0_1.onLoadAssetDone(arg_40_0)
-	local var_40_0 = arg_40_0.ResPath
-	local var_40_1 = var_0_1.instance:getLoadingResObj(var_40_0)
+function var_0_1.tryRecycleResObj(arg_40_0, arg_40_1)
+	if not arg_40_1:hadAnyOneCallback() then
+		var_0_1.instance:removeLoadingResObj(arg_40_1)
+		var_0_1.instance:recycleResObj(arg_40_1)
+		var_0_1.instance.srcRemoveAssetLoadCb(arg_40_1.resUrl, var_0_1.onLoadAssetDone)
+	end
+end
 
-	if not var_40_1 then
+function var_0_1.onLoadAssetDone(arg_41_0)
+	local var_41_0 = arg_41_0.ResPath
+	local var_41_1 = var_0_1.instance:getLoadingResObj(var_41_0)
+
+	if not var_41_1 then
 		return
 	end
 
-	var_40_1.assetItem = arg_40_0
+	var_41_1:setAssetItem(arg_41_0)
+	var_0_1.instance:removeLoadingResObj(var_41_1)
 
-	arg_40_0:Retain()
-	var_0_1.instance:removeLoadingResObj(var_40_1)
-
-	if UnityEngine.Time.frameCount == var_40_1.startLoadFrame then
-		var_0_1.log(string.format("%s 在同一帧加载完", var_40_0))
-		var_40_1:doCallbackAddRecycle()
+	if UnityEngine.Time.frameCount == var_41_1.startLoadFrame then
+		var_0_1.log(string.format("%s 在同一帧加载完", var_41_0))
+		var_41_1:doCallbackAddRecycle()
 
 		return
 	end
 
-	if not var_0_1.instance:checkNeedDelay(var_40_0) then
-		var_0_1.log(string.format("%s 不需要延迟", var_40_0))
-		var_40_1:doCallbackAddRecycle()
+	if not var_0_1.instance:checkNeedDelay(var_41_0) then
+		var_0_1.log(string.format("%s 不需要延迟", var_41_0))
+		var_41_1:doCallbackAddRecycle()
 
 		return
 	end
 
-	var_0_1.instance:addLoadedResObj(var_40_1)
+	var_0_1.instance:addLoadedResObj(var_41_1)
 
-	var_40_1.realLoadedTime = UnityEngine.Time.time
-	var_40_1.delayTime = var_0_1.instance:getDelayTime(var_40_1)
+	var_41_1.realLoadedTime = UnityEngine.Time.time
+	var_41_1.delayTime = var_0_1.instance:getDelayTime(var_41_1)
 
-	var_0_1.log(string.format("%s 延迟了 %s 秒", var_40_0, var_40_1.delayTime))
+	var_0_1.log(string.format("%s 延迟了 %s 秒", var_41_0, var_41_1.delayTime))
 end
 
-function var_0_1.log(arg_41_0)
-	logNormal("[DelayLoadResMgr] " .. (arg_41_0 or "") .. "\n" .. debug.traceback())
+function var_0_1.log(arg_42_0)
+	logNormal("[DelayLoadResMgr] " .. (arg_42_0 or "") .. "\n" .. debug.traceback())
 end
 
 var_0_1.instance = var_0_1.New()

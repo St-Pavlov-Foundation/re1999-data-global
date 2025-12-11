@@ -2,18 +2,19 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	repairCost = 10,
+	destruction = 10,
 	name = 4,
-	ruins = 7,
+	ruins = 8,
 	type = 3,
-	effect = 11,
-	unlockCondition = 5,
-	sort = 12,
-	destruction = 9,
-	desc = 13,
+	repairCost = 11,
+	unlockCondition = 6,
+	effect = 12,
+	unName = 5,
+	sort = 13,
+	desc = 14,
 	id = 1,
-	icon = 8,
-	lvUpCost = 6,
+	icon = 9,
+	lvUpCost = 7,
 	level = 2
 }
 local var_0_2 = {

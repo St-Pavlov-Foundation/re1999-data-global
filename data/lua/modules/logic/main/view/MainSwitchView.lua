@@ -31,6 +31,7 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._tabCanvasGroup = arg_4_0._gotab:GetComponent(typeof(UnityEngine.CanvasGroup))
 	arg_4_0._btnsCanvasGroup = arg_4_0._gobtns:GetComponent(typeof(UnityEngine.CanvasGroup))
 	arg_4_0._gridLayout = gohelper.findChild(arg_4_0.viewGO, "Tab/#scroll_category/categorycontent"):GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
+	arg_4_0._goreddot2 = gohelper.findChild(arg_4_0._gocategoryitem2, "reddot")
 	arg_4_0._goreddot3 = gohelper.findChild(arg_4_0._gocategoryitem3, "reddot")
 end
 
@@ -62,13 +63,16 @@ function var_0_0.onOpen(arg_6_0)
 		arg_6_0._gridLayout.cellSize = Vector2(780, 90)
 	end
 
-	arg_6_0:checkFightUIReddot()
+	arg_6_0:refreshReddot()
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchCategoryClick, arg_6_0._itemClick, arg_6_0)
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SceneSwitchUIVisible, arg_6_0._onSceneSwitchUIVisible, arg_6_0)
 	arg_6_0:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, arg_6_0._onSceneSwitchUIVisible, arg_6_0)
+	arg_6_0:addEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.SwitchVisible, arg_6_0._onSceneSwitchUIVisible, arg_6_0)
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.BeforeStartSwitchScene, arg_6_0._onStartSwitchScene, arg_6_0)
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.CloseSwitchSceneLoading, arg_6_0._onCloseSwitchSceneLoading, arg_6_0)
 	arg_6_0:addEventCb(FightUISwitchController.instance, FightUISwitchEvent.cancelClassifyReddot, arg_6_0.checkFightUIReddot, arg_6_0)
+	arg_6_0:addEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.CancelReddot, arg_6_0.checkSceneUIReddot, arg_6_0)
+	arg_6_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_6_0.refreshReddot, arg_6_0)
 end
 
 function var_0_0._onStartSwitchScene(arg_7_0)
@@ -101,11 +105,26 @@ function var_0_0.checkFightUIReddot(arg_11_0)
 	gohelper.setActive(arg_11_0._goreddot3, var_11_0)
 end
 
-function var_0_0.onClose(arg_12_0)
+function var_0_0.checkSceneUIReddot(arg_12_0)
+	gohelper.setActive(arg_12_0._goreddot2, arg_12_0:_isShowSceneUIReddot())
+end
+
+function var_0_0._isShowSceneUIReddot(arg_13_0)
+	if ClickUISwitchModel.instance:hasReddot() then
+		return true
+	end
+end
+
+function var_0_0.refreshReddot(arg_14_0)
+	arg_14_0:checkFightUIReddot()
+	arg_14_0:checkSceneUIReddot()
+end
+
+function var_0_0.onClose(arg_15_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function var_0_0.onDestroyView(arg_16_0)
 	return
 end
 

@@ -11,9 +11,11 @@ var_0_0.ConversationType = {
 	Normal = 1,
 	NoInteract = 6,
 	IrregularShake = 8,
+	BgEffStack = 10,
 	NoRole = 3,
 	Aside = 2,
 	SlideDialog = 7,
+	LimitNoInteract = 9,
 	Player = 4,
 	None = 0
 }
@@ -36,8 +38,9 @@ var_0_0.HeroPos = {
 	Left = 0
 }
 var_0_0.HeroEffect = {
-	StyDissolve = "stydissolve",
+	SetSkin = "setSkin",
 	KeepAction = "keepAction",
+	StyDissolve = "stydissolve",
 	Gray = "gray"
 }
 var_0_0.BgType = {
@@ -89,9 +92,11 @@ var_0_0.BgEffectType = {
 	EagleEye = 13,
 	FullBlur = 4,
 	Sketch = 9,
+	Filter = 14,
 	MoveCurve = 7,
 	Shake = 3,
 	Interfere = 8,
+	Distress = 15,
 	RgbSplit = 12,
 	None = 0
 }
@@ -133,6 +138,12 @@ var_0_0.EffectInType = {
 var_0_0.EffectOutType = {
 	FadeOut = 1,
 	Hard = 0
+}
+var_0_0.EffDegree = {
+	High = 3,
+	Middle = 2,
+	Low = 1,
+	None = 0
 }
 var_0_0.PictureType = {
 	Transparency = 4,
@@ -203,6 +214,39 @@ var_0_0.BorderType = {
 var_0_0.IconResType = {
 	IconEff = 1,
 	Spine = 0
+}
+var_0_0.PicLayer = {
+	UpCon1 = 7,
+	BetweenHeroAndCon1 = 4,
+	BetweenBgAndHero3 = 3,
+	UpCon3 = 9,
+	Top = 10,
+	BetweenHeroAndCon2 = 5,
+	UpCon2 = 8,
+	BetweenBgAndHero2 = 2,
+	BetweenBgAndHero1 = 1,
+	BetweenHeroAndCon3 = 6
+}
+var_0_0.EffLayer = {
+	UpCon1 = 7,
+	BetweenHeroAndCon1 = 4,
+	BetweenBgAndHero3 = 3,
+	UpCon3 = 9,
+	Top = 10,
+	BetweenHeroAndCon2 = 5,
+	UpCon2 = 8,
+	BetweenBgAndHero2 = 2,
+	BetweenBgAndHero1 = 1,
+	BetweenHeroAndCon3 = 6
+}
+var_0_0.VideoLayer = {
+	BetweenBgAndHero3 = 3,
+	BetweenHeroAndCon1 = 4,
+	UpCon1 = 7,
+	BetweenBgAndHero2 = 2,
+	BetweenBgAndHero1 = 1,
+	BetweenHeroAndCon3 = 6,
+	BetweenHeroAndCon2 = 5
 }
 
 return var_0_0

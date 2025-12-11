@@ -422,30 +422,53 @@ function var_0_0.getSummonFullExSkillHero(arg_25_0, arg_25_1, arg_25_2)
 		end
 
 		local var_25_6 = SkillConfig.instance:getheroexskillco(var_25_3)
-		local var_25_7 = 0
-		local var_25_8
-		local var_25_9
 
-		for iter_25_1 = 1, #var_25_6 do
-			if var_25_4 < iter_25_1 then
-				local var_25_10 = var_25_6[iter_25_1]
+		if var_25_6 then
+			local var_25_7 = 0
+			local var_25_8
+			local var_25_9
 
-				if var_25_10 then
-					local var_25_11 = string.splitToNumber(var_25_10.consume, "#")
+			for iter_25_1 = 1, #var_25_6 do
+				if var_25_4 < iter_25_1 then
+					local var_25_10 = var_25_6[iter_25_1]
 
-					var_25_9 = var_25_11[1]
-					var_25_8 = var_25_11[2]
-					var_25_7 = var_25_11[3] + var_25_7
+					if var_25_10 then
+						local var_25_11 = string.splitToNumber(var_25_10.consume, "#")
+
+						var_25_9 = var_25_11[1]
+						var_25_8 = var_25_11[2]
+						var_25_7 = var_25_11[3] + var_25_7
+					end
 				end
 			end
-		end
 
-		if var_25_8 and var_25_9 and var_25_7 <= ItemModel.instance:getItemQuantity(var_25_9, var_25_8) then
-			return var_25_3
+			if var_25_8 and var_25_9 and var_25_7 <= ItemModel.instance:getItemQuantity(var_25_9, var_25_8) then
+				return var_25_3
+			end
 		end
 	end
 
 	return nil
+end
+
+function var_0_0.cacheReward(arg_26_0, arg_26_1)
+	if arg_26_0._cacheReward == nil then
+		arg_26_0._cacheReward = {}
+	end
+
+	if arg_26_1 ~= nil then
+		tabletool.addValues(arg_26_0._cacheReward, arg_26_1)
+	end
+end
+
+function var_0_0.getCacheReward(arg_27_0)
+	return arg_27_0._cacheReward
+end
+
+function var_0_0.clearCacheReward(arg_28_0)
+	if arg_28_0._cacheReward then
+		tabletool.clear(arg_28_0._cacheReward)
+	end
 end
 
 var_0_0.instance = var_0_0.New()

@@ -10,6 +10,26 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 	local var_2_0 = CameraMgr.instance:getCameraRootGO()
 
 	transformhelper.setLocalPos(var_2_0.transform, 0, 0, 0)
+
+	local var_2_1 = GameConfig:GetCurVoiceShortcut()
+
+	if LangSettings.instance:isOverseas() == false and (var_2_1 == LangSettings.shortcutTab[LangSettings.jp] or var_2_1 == LangSettings.shortcutTab[LangSettings.kr]) then
+		local var_2_2 = string.splitToNumber(CommonConfig.instance:getConstStr(ConstEnum.S01SpRole), "#")
+		local var_2_3 = false
+
+		for iter_2_0, iter_2_1 in ipairs(var_2_2) do
+			if HeroModel.instance:getByHeroId(iter_2_1) then
+				var_2_3 = true
+
+				break
+			end
+		end
+
+		if var_2_3 == false then
+			SettingsVoicePackageController.instance:switchVoiceType(LangSettings.en, "", true)
+		end
+	end
+
 	MainController.instance:enterMainScene()
 	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_2_0._enterSceneFinish, arg_2_0)
 	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 20)

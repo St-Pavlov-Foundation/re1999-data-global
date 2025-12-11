@@ -44,4 +44,26 @@ function var_0_0.isEqualStatus(arg_4_0, arg_4_1)
 	return arg_4_0:getShelterNpcStatus() == arg_4_1
 end
 
+function var_0_0.isRecommend(arg_5_0, arg_5_1)
+	local var_5_0 = lua_survival_map_group_mapping.configDict[arg_5_1].id
+	local var_5_1 = lua_survival_map_group.configDict[var_5_0].type
+	local var_5_2 = SurvivalConfig.instance:getNpcConfigTag(arg_5_0.co.id)
+
+	for iter_5_0, iter_5_1 in ipairs(var_5_2) do
+		local var_5_3 = SurvivalConfig:getTagCo(iter_5_1)
+
+		if not string.nilorempty(var_5_3.suggestMap) then
+			local var_5_4 = string.splitToNumber(var_5_3.suggestMap, "#")
+
+			for iter_5_2, iter_5_3 in ipairs(var_5_4) do
+				if iter_5_3 == var_5_1 then
+					return true
+				end
+			end
+		end
+	end
+
+	return false
+end
+
 return var_0_0

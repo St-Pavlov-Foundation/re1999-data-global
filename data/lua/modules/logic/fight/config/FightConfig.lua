@@ -118,7 +118,14 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"fight_skin_scale_by_z",
 		"fight_luxi_upgrade_effect",
 		"fight_kill",
-		"fight_common_buff_effect_2_skin"
+		"fight_common_buff_effect_2_skin",
+		"fight_buff2special_behaviour",
+		"fight_tower_500m_boss_behaviour",
+		"fight_gao_si_niao_buffeffect_electric_level",
+		"fight_sp_500m_model",
+		"fight_ignore_hide_front_effect",
+		"monster_skin_custom_click_box",
+		"fight_appear_timeline_extend"
 	}
 
 	if SLFramework.FrameworkSettings.IsEditor then

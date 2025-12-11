@@ -65,6 +65,12 @@ function var_0_0._delayCheckFuncUnlock(arg_5_0)
 	MailRpc.instance:sendGetAllMailsRequest()
 	ActivityRpc.instance:sendGetActivityInfosRequest(function()
 		ActivityController.instance:updateAct101Infos()
+
+		if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a9_Act208) then
+			local var_6_0 = Act208Helper.getCurPlatformType()
+
+			Act208Controller.instance:getActInfo(ActivityEnum.Activity.V2a9_Act208, var_6_0)
+		end
 	end)
 	HandbookRpc.instance:sendGetHandbookInfoRequest()
 	RedDotRpc.instance:sendGetRedDotInfosRequest()
@@ -76,6 +82,7 @@ function var_0_0._delayCheckFuncUnlock(arg_5_0)
 
 	TurnbackRpc.instance:sendGetTurnbackInfoRequest()
 	UserSettingRpc.instance:sendGetSettingInfosRequest()
+	ItemRpc.instance:sendGetPowerMakerInfoRequest(false, true)
 end
 
 function var_0_0._newFuncUnlock(arg_7_0, arg_7_1)

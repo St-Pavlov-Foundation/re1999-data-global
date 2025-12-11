@@ -390,5 +390,397 @@
     ],
     "addRange": 0.0,
     "id": "afternoon"
+  },
+  {
+    "lightRange": 3.87,
+    "lightOffset": 0.492,
+    "lightmin": 0.58,
+    "lightmax": 1.0,
+    "rimcol": [
+      1.0,
+      0.980392158,
+      0.921568632,
+      1.0
+    ],
+    "lightParams": [
+      0.0424671769,
+      1.0
+    ],
+    "bendingAmount": 0.0,
+    "ambientsize": 0.0,
+    "hflambert": 0.0,
+    "ambientcol": [
+      0.6226415,
+      0.6226415,
+      0.6226415,
+      1.0
+    ],
+    "outsideShadow": 3.0,
+    "insideShadow": 1.0,
+    "fogColor": [
+      0.129411772,
+      0.160784319,
+      0.160784319,
+      1.0
+    ],
+    "fogColor2": [
+      0.5764706,
+      0.5568628,
+      0.4862745,
+      1.0
+    ],
+    "fogParams": [
+      0.0,
+      0.6240366
+    ],
+    "fogHeight": -6.7,
+    "heightfogedge": 2.68,
+    "disfogstart": 2.0,
+    "disfogedge": 2.73,
+    "fogdensitymin": 0.05,
+    "fogdensitymax": 0.896,
+    "cameraDistanceValue": 0.0,
+    "lightRangeFar": 3.87,
+    "lightRangeNear": 3.87,
+    "lightOffsetFar": 0.492,
+    "lightOffsetNear": 0.492,
+    "dirLightColor": [
+      0.7924528,
+      0.7771004,
+      0.706479132,
+      1.0
+    ],
+    "dirLightIntensity": 0.9,
+    "lightDir": [
+      73.9839859,
+      126.199974,
+      6.188873e-05
+    ],
+    "shadowColor": [
+      0.05833927,
+      0.0682992563,
+      0.1792453,
+      0.0
+    ],
+    "fogMainCol": [
+      0.93011117,
+      0.93011117,
+      0.93011117,
+      1.0
+    ],
+    "fogOutSideCol": [
+      0.3967553,
+      0.462077051,
+      0.450785846,
+      1.0
+    ],
+    "fogPlaneMainCol": [
+      0.107999995,
+      0.12,
+      0.116,
+      1.0
+    ],
+    "fogPlaneOutSideCol": [
+      0.218399987,
+      0.3042,
+      0.39,
+      0.309803933
+    ],
+    "addRange": 0.0,
+    "id": "sur_day"
+  },
+  {
+    "lightRange": 3.87,
+    "lightOffset": 0.492,
+    "lightmin": 0.58,
+    "lightmax": 0.58,
+    "rimcol": [
+      1.0,
+      0.980392158,
+      0.921568632,
+      1.0
+    ],
+    "lightParams": [
+      0.0424671769,
+      1.0
+    ],
+    "bendingAmount": 0.0,
+    "ambientsize": 0.0,
+    "hflambert": 0.0,
+    "ambientcol": [
+      0.4181818,
+      0.432727218,
+      0.56,
+      1.0
+    ],
+    "outsideShadow": 3.0,
+    "insideShadow": 1.0,
+    "fogColor": [
+      0.129411772,
+      0.160784319,
+      0.160784319,
+      1.0
+    ],
+    "fogColor2": [
+      0.5764706,
+      0.5568628,
+      0.4862745,
+      1.0
+    ],
+    "fogParams": [
+      0.0,
+      0.6240366
+    ],
+    "fogHeight": -6.7,
+    "heightfogedge": 2.68,
+    "disfogstart": 2.0,
+    "disfogedge": 2.73,
+    "fogdensitymin": 0.05,
+    "fogdensitymax": 0.896,
+    "cameraDistanceValue": 0.0,
+    "lightRangeFar": 3.87,
+    "lightRangeNear": 3.87,
+    "lightOffsetFar": 0.492,
+    "lightOffsetNear": 0.492,
+    "dirLightColor": [
+      0.5238074,
+      0.568102539,
+      0.745283,
+      1.0
+    ],
+    "dirLightIntensity": 1.0,
+    "lightDir": [
+      50.0000877,
+      -33.0,
+      0.999997854
+    ],
+    "shadowColor": [
+      0.2546725,
+      0.304994345,
+      0.5566038,
+      0.0
+    ],
+    "fogMainCol": [
+      0.93011117,
+      0.93011117,
+      0.93011117,
+      1.0
+    ],
+    "fogOutSideCol": [
+      0.3967553,
+      0.462077051,
+      0.450785846,
+      1.0
+    ],
+    "fogPlaneMainCol": [
+      0.107999995,
+      0.12,
+      0.116,
+      1.0
+    ],
+    "fogPlaneOutSideCol": [
+      0.218399987,
+      0.3042,
+      0.39,
+      0.309803933
+    ],
+    "addRange": 0.67,
+    "id": "sur_night"
+  },
+  {
+    "lightRange": 3.87,
+    "lightOffset": 0.492,
+    "lightmin": 0.58,
+    "lightmax": 0.58,
+    "rimcol": [
+      1.0,
+      0.980392158,
+      0.921568632,
+      1.0
+    ],
+    "lightParams": [
+      0.0424671769,
+      1.0
+    ],
+    "bendingAmount": 0.0,
+    "ambientsize": 0.0,
+    "hflambert": 0.0,
+    "ambientcol": [
+      0.6509804,
+      0.5737505,
+      0.4752157,
+      1.0
+    ],
+    "outsideShadow": 3.0,
+    "insideShadow": 1.0,
+    "fogColor": [
+      0.129411772,
+      0.160784319,
+      0.160784319,
+      1.0
+    ],
+    "fogColor2": [
+      0.5764706,
+      0.5568628,
+      0.4862745,
+      1.0
+    ],
+    "fogParams": [
+      0.0,
+      0.6240366
+    ],
+    "fogHeight": -6.7,
+    "heightfogedge": 2.68,
+    "disfogstart": 2.0,
+    "disfogedge": 2.73,
+    "fogdensitymin": 0.05,
+    "fogdensitymax": 0.896,
+    "cameraDistanceValue": 0.0,
+    "lightRangeFar": 3.87,
+    "lightRangeNear": 3.87,
+    "lightOffsetFar": 0.492,
+    "lightOffsetNear": 0.492,
+    "dirLightColor": [
+      0.9056604,
+      0.47741425,
+      0.217871115,
+      1.0
+    ],
+    "dirLightIntensity": 1.2,
+    "lightDir": [
+      35.0000076,
+      52.5000267,
+      1.0
+    ],
+    "shadowColor": [
+      0.3301887,
+      0.3094151,
+      0.110582069,
+      0.0
+    ],
+    "fogMainCol": [
+      0.93011117,
+      0.93011117,
+      0.93011117,
+      1.0
+    ],
+    "fogOutSideCol": [
+      0.3967553,
+      0.462077051,
+      0.450785846,
+      1.0
+    ],
+    "fogPlaneMainCol": [
+      0.107999995,
+      0.12,
+      0.116,
+      1.0
+    ],
+    "fogPlaneOutSideCol": [
+      0.218399987,
+      0.3042,
+      0.39,
+      0.309803933
+    ],
+    "addRange": 0.359,
+    "id": "sur_day2"
+  },
+  {
+    "lightRange": 3.87,
+    "lightOffset": 0.492,
+    "lightmin": 0.58,
+    "lightmax": 1.0,
+    "rimcol": [
+      1.0,
+      0.980392158,
+      0.921568632,
+      1.0
+    ],
+    "lightParams": [
+      0.0424671769,
+      1.0
+    ],
+    "bendingAmount": 0.0,
+    "ambientsize": 0.0,
+    "hflambert": 0.0,
+    "ambientcol": [
+      0.5856628,
+      0.6117647,
+      0.5334588,
+      1.0
+    ],
+    "outsideShadow": 3.0,
+    "insideShadow": 1.0,
+    "fogColor": [
+      0.129411772,
+      0.160784319,
+      0.160784319,
+      1.0
+    ],
+    "fogColor2": [
+      0.5764706,
+      0.5568628,
+      0.4862745,
+      1.0
+    ],
+    "fogParams": [
+      0.0,
+      0.6240366
+    ],
+    "fogHeight": -6.7,
+    "heightfogedge": 2.68,
+    "disfogstart": 2.0,
+    "disfogedge": 2.73,
+    "fogdensitymin": 0.05,
+    "fogdensitymax": 0.896,
+    "cameraDistanceValue": 0.0,
+    "lightRangeFar": 3.87,
+    "lightRangeNear": 3.87,
+    "lightOffsetFar": 0.492,
+    "lightOffsetNear": 0.492,
+    "dirLightColor": [
+      0.687155247,
+      0.7607843,
+      0.6634039,
+      1.0
+    ],
+    "dirLightIntensity": 0.8,
+    "lightDir": [
+      50.0012054,
+      291.4,
+      1.00012589
+    ],
+    "shadowColor": [
+      0.118447758,
+      0.128,
+      0.110805973,
+      0.0
+    ],
+    "fogMainCol": [
+      0.93011117,
+      0.93011117,
+      0.93011117,
+      1.0
+    ],
+    "fogOutSideCol": [
+      0.3967553,
+      0.462077051,
+      0.450785846,
+      1.0
+    ],
+    "fogPlaneMainCol": [
+      0.107999995,
+      0.12,
+      0.116,
+      1.0
+    ],
+    "fogPlaneOutSideCol": [
+      0.218399987,
+      0.3042,
+      0.39,
+      0.309803933
+    ],
+    "addRange": 0.0,
+    "id": "sur_day3"
   }
 ]

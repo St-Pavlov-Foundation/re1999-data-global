@@ -33,15 +33,12 @@ function var_0_0.onUpdateParam(arg_5_0)
 end
 
 function var_0_0.refreshParam(arg_6_0)
-	arg_6_0.decreeInfo = arg_6_0.viewParam.decreeInfo
+	arg_6_0.decreesProp = arg_6_0.viewParam.panel.decreesProp
 end
 
 function var_0_0.refreshView(arg_7_0)
-	local var_7_0 = arg_7_0.decreeInfo and arg_7_0.decreeInfo.id or 0
-	local var_7_1 = arg_7_0.decreeInfo and arg_7_0.decreeInfo:getPolicGroupList() or {}
-
-	for iter_7_0 = 1, math.max(#var_7_1, #arg_7_0.itemList) do
-		arg_7_0:getItem(iter_7_0):updateItem(var_7_0, iter_7_0, var_7_1[iter_7_0])
+	for iter_7_0 = 1, #arg_7_0.decreesProp.decreesId do
+		arg_7_0:getItem(iter_7_0):updateItem(iter_7_0, arg_7_0.decreesProp.decreesId[iter_7_0])
 	end
 end
 
@@ -59,11 +56,6 @@ function var_0_0.getItem(arg_8_0, arg_8_1)
 end
 
 function var_0_0.playOpenAnim(arg_9_0)
-	ZProj.UGUIHelper.RebuildLayout(arg_9_0.goLayout.transform)
-
-	arg_9_0.layout.enabled = false
-	arg_9_0.sizeFitter.enabled = false
-
 	for iter_9_0, iter_9_1 in ipairs(arg_9_0.itemList) do
 		gohelper.setActive(iter_9_1.viewGO, false)
 	end

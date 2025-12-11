@@ -6,10 +6,10 @@ function var_0_0.handle(arg_1_0, arg_1_1)
 	arg_1_1 = tonumber(arg_1_1)
 
 	logNormal("触发剧情：" .. arg_1_1)
-	StoryController.instance:playStory(arg_1_1, nil, arg_1_0.playStoryEnd, arg_1_0, true)
+	StoryController.instance:playStory(arg_1_1, nil, arg_1_0.playStoryEnd, arg_1_0)
 end
 
-function var_0_0.playStoryEnd(arg_2_0, arg_2_1)
+function var_0_0.playStoryEnd(arg_2_0)
 	arg_2_0:onDone(true)
 end
 

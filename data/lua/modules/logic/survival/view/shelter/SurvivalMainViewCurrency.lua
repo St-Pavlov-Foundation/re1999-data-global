@@ -106,7 +106,7 @@ end
 
 function var_0_0.refreshCurrencyItem(arg_14_0, arg_14_1, arg_14_2)
 	local var_14_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_14_1 = var_14_0.bag:getItemCountPlus(arg_14_2)
+	local var_14_1 = var_14_0:getBag(SurvivalEnum.ItemSource.Shelter):getItemCountPlus(arg_14_2)
 
 	if arg_14_2 == SurvivalEnum.CurrencyType.Food then
 		if var_14_1 >= var_14_0:getNpcCost() then

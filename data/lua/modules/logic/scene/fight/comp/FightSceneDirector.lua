@@ -141,11 +141,10 @@ function var_0_0._checkPrepared(arg_11_0)
 				return
 			end
 
-			if var_11_0.isReplay or FightReplayModel.instance:isReconnectReplay() then
+			if var_11_0.isReplay or FightDataHelper.stateMgr.isReplay then
 				FightReplayController.instance:reqReplay(function()
 					arg_11_0._scene:onPrepared()
 				end)
-				FightReplayModel.instance:setReconnectReplay(false)
 			else
 				arg_11_0._scene:onPrepared()
 			end

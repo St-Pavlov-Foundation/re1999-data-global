@@ -6,6 +6,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._imageQuality = gohelper.findChildImage(arg_1_0.viewGO, "#image_Quality")
 	arg_1_0._goLocked = gohelper.findChild(arg_1_0.viewGO, "#go_Locked")
 	arg_1_0._goSelected = gohelper.findChild(arg_1_0.viewGO, "#go_Selected")
+	arg_1_0._simageChess = gohelper.findChildSingleImage(arg_1_0.viewGO, "ChessMask/#image_Chess")
 	arg_1_0._imageChess = gohelper.findChildImage(arg_1_0.viewGO, "ChessMask/#image_Chess")
 	arg_1_0._txtFireNum = gohelper.findChildText(arg_1_0.viewGO, "image_Fire/#txt_FireNum")
 	arg_1_0._goResources = gohelper.findChild(arg_1_0.viewGO, "#go_Resources")
@@ -89,47 +90,55 @@ function var_0_0.initInfo(arg_11_0)
 	arg_11_0._txtFireNum.text = var_11_0.defaultPower
 
 	if var_11_0 and not string.nilorempty(var_11_0.resPic) then
-		UISpriteSetMgr.instance:setV2a2ChessSprite(arg_11_0._imageChess, var_11_0.resPic, false)
+		SurvivalUnitIconHelper.instance:setNpcIcon(arg_11_0._simageChess, var_11_0.resPic, arg_11_0._onChessLoaded, arg_11_0)
 	end
 
 	UISpriteSetMgr.instance:setV2a2EliminateSprite(arg_11_0._imageQuality, EliminateConfig.instance:getSoldierChessQualityImageName(var_11_0.level), false)
 end
 
-function var_0_0.initResource(arg_12_0)
-	arg_12_0._cost = EliminateConfig.instance:getSoldierChessConfigConst(arg_12_0._soliderId)
-
-	if not arg_12_0._cost then
+function var_0_0._onChessLoaded(arg_12_0)
+	if not arg_12_0.cacheColor then
 		return
 	end
 
-	arg_12_0._resourceItem = arg_12_0:getUserDataTb_()
+	arg_12_0._imageChess.color = arg_12_0.cacheColor
+end
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._cost) do
-		local var_12_0 = iter_12_1[1]
-		local var_12_1 = iter_12_1[2]
-		local var_12_2 = gohelper.clone(arg_12_0._goResource, arg_12_0._goResources, var_12_0)
-		local var_12_3 = gohelper.findChildImage(var_12_2, "#image_Quality")
-		local var_12_4 = gohelper.findChildText(var_12_2, "#image_Quality/#txt_ResourceNum")
+function var_0_0.initResource(arg_13_0)
+	arg_13_0._cost = EliminateConfig.instance:getSoldierChessConfigConst(arg_13_0._soliderId)
 
-		UISpriteSetMgr.instance:setV2a2EliminateSprite(var_12_3, EliminateTeamChessEnum.ResourceTypeToImagePath[var_12_0], false)
+	if not arg_13_0._cost then
+		return
+	end
 
-		var_12_4.text = var_12_1
+	arg_13_0._resourceItem = arg_13_0:getUserDataTb_()
 
-		gohelper.setActive(var_12_2, true)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._cost) do
+		local var_13_0 = iter_13_1[1]
+		local var_13_1 = iter_13_1[2]
+		local var_13_2 = gohelper.clone(arg_13_0._goResource, arg_13_0._goResources, var_13_0)
+		local var_13_3 = gohelper.findChildImage(var_13_2, "#image_Quality")
+		local var_13_4 = gohelper.findChildText(var_13_2, "#image_Quality/#txt_ResourceNum")
 
-		arg_12_0._resourceItem[var_12_0] = {
-			item = var_12_2,
-			resourceImage = var_12_3,
-			resourceNumberText = var_12_4
+		UISpriteSetMgr.instance:setV2a2EliminateSprite(var_13_3, EliminateTeamChessEnum.ResourceTypeToImagePath[var_13_0], false)
+
+		var_13_4.text = var_13_1
+
+		gohelper.setActive(var_13_2, true)
+
+		arg_13_0._resourceItem[var_13_0] = {
+			item = var_13_2,
+			resourceImage = var_13_3,
+			resourceNumberText = var_13_4
 		}
 	end
 end
 
-function var_0_0.updateInfo(arg_13_0)
+function var_0_0.updateInfo(arg_14_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function var_0_0.onDestroyView(arg_15_0)
 	return
 end
 

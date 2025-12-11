@@ -37,7 +37,10 @@ function var_0_0.onStart(arg_1_0)
 end
 
 function var_0_0.getFloatType(arg_2_0)
-	if FightHelper.isRestrain(arg_2_0.fightStepData.fromId, arg_2_0.actEffectData.targetId) then
+	local var_2_0 = FightHelper.isRestrain(arg_2_0.fightStepData.fromId, arg_2_0.actEffectData.targetId)
+	local var_2_1 = FightHelper.isOppositeByEntityId(arg_2_0.fightStepData.fromId, arg_2_0.actEffectData.targetId)
+
+	if var_2_0 and var_2_1 then
 		if arg_2_0.actEffectData.effectType == FightEnum.EffectType.DAMAGE then
 			return FightEnum.FloatType.restrain
 		elseif arg_2_0.actEffectData.effectType == FightEnum.EffectType.CRIT then

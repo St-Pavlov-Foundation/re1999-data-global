@@ -20,48 +20,48 @@ function var_0_0.getStoryBackgroundView(arg_3_0)
 	return var_3_0.viewGO
 end
 
-function var_0_0.getStoryFrontBgGo(arg_4_0)
+function var_0_0.getStoryBlitEff(arg_4_0)
 	local var_4_0 = arg_4_0:getStoryBackgroundView()
 
 	if not var_4_0 then
-		return nil
+		return
 	end
 
-	return (gohelper.findChild(var_4_0, "#go_upbg"))
+	return (gohelper.findChild(var_4_0, "#go_blitbg"):GetComponent(typeof(UrpCustom.UIBlitEffect)))
 end
 
-function var_0_0.getStoryHeroView(arg_5_0)
-	local var_5_0 = ViewMgr.instance:getContainer(ViewName.StoryHeroView)
+function var_0_0.getStoryBlitEffSecond(arg_5_0)
+	local var_5_0 = arg_5_0:getStoryBackgroundView()
 
 	if not var_5_0 then
-		return nil
+		return
 	end
 
-	return var_5_0.viewGO
+	return (gohelper.findChild(var_5_0, "#go_blitbgsecond"):GetComponent(typeof(UrpCustom.UIBlitEffect)))
 end
 
-function var_0_0.getStoryView(arg_6_0)
-	local var_6_0 = ViewMgr.instance:getContainer(ViewName.StoryView)
+function var_0_0.getStoryFrontBgGo(arg_6_0)
+	local var_6_0 = arg_6_0:getStoryBackgroundView()
 
 	if not var_6_0 then
 		return nil
 	end
 
-	return var_6_0.viewGO
+	return (gohelper.findChild(var_6_0, "#go_upbg"))
 end
 
-function var_0_0.setStoryViewLayer(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getStoryView()
+function var_0_0.getStoryHeroView(arg_7_0)
+	local var_7_0 = ViewMgr.instance:getContainer(ViewName.StoryHeroView)
 
 	if not var_7_0 then
-		return
+		return nil
 	end
 
-	gohelper.setLayer(var_7_0, arg_7_1, true)
+	return var_7_0.viewGO
 end
 
-function var_0_0.getStoryLeadRoleSpineView(arg_8_0)
-	local var_8_0 = ViewMgr.instance:getContainer(ViewName.StoryLeadRoleSpineView)
+function var_0_0.getStoryView(arg_8_0)
+	local var_8_0 = ViewMgr.instance:getContainer(ViewName.StoryView)
 
 	if not var_8_0 then
 		return nil
@@ -70,26 +70,46 @@ function var_0_0.getStoryLeadRoleSpineView(arg_8_0)
 	return var_8_0.viewGO
 end
 
-function var_0_0.setStoryLeadRoleSpineViewLayer(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getStoryLeadRoleSpineView()
+function var_0_0.setStoryViewLayer(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getStoryView()
 
 	if not var_9_0 then
 		return
 	end
 
-	local var_9_1 = gohelper.findChild(var_9_0, "#go_spineroot")
-
-	gohelper.setLayer(var_9_1, arg_9_1, true)
+	gohelper.setLayer(var_9_0, arg_9_1, true)
 end
 
-function var_0_0.getStoryFrontView(arg_10_0)
-	local var_10_0 = ViewMgr.instance:getContainer(ViewName.StoryFrontView)
+function var_0_0.getStoryLeadRoleSpineView(arg_10_0)
+	local var_10_0 = ViewMgr.instance:getContainer(ViewName.StoryLeadRoleSpineView)
 
 	if not var_10_0 then
 		return nil
 	end
 
 	return var_10_0.viewGO
+end
+
+function var_0_0.setStoryLeadRoleSpineViewLayer(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getStoryLeadRoleSpineView()
+
+	if not var_11_0 then
+		return
+	end
+
+	local var_11_1 = gohelper.findChild(var_11_0, "#go_spineroot")
+
+	gohelper.setLayer(var_11_1, arg_11_1, true)
+end
+
+function var_0_0.getStoryFrontView(arg_12_0)
+	local var_12_0 = ViewMgr.instance:getContainer(ViewName.StoryFrontView)
+
+	if not var_12_0 then
+		return nil
+	end
+
+	return var_12_0.viewGO
 end
 
 var_0_0.instance = var_0_0.New()

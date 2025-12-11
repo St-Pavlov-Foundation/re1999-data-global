@@ -22,13 +22,12 @@ function var_0_0._delayDistribute(arg_3_0)
 		return
 	end
 
-	FightController.instance:setCurStage(FightEnum.Stage.FillCard)
-
 	if arg_3_0.actEffectData.effectType == FightEnum.EffectType.DEALCARD2 then
 		local var_3_0 = FightDataHelper.handCardMgr.beforeCards2
 		local var_3_1 = FightDataHelper.handCardMgr.teamACards2
 
 		if #var_3_0 > 0 or #var_3_1 > 0 then
+			FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.DistributeCard)
 			FightController.instance:registerCallback(FightEvent.OnDistributeCards, arg_3_0._distributeDone, arg_3_0)
 			FightViewPartVisible.set(false, true, false, false, false)
 			FightController.instance:dispatchEvent(FightEvent.DistributeCards, var_3_0, var_3_1)
@@ -41,7 +40,6 @@ function var_0_0._delayDistribute(arg_3_0)
 end
 
 function var_0_0._distributeDone(arg_4_0)
-	FightController.instance:setCurStage(FightEnum.Stage.Play)
 	FightController.instance:unregisterCallback(FightEvent.OnDistributeCards, arg_4_0._distributeDone, arg_4_0)
 
 	local var_4_0 = FightViewHandCard.handCardContainer
@@ -94,6 +92,8 @@ function var_0_0.getHandCardScaleTime()
 end
 
 function var_0_0.clearWork(arg_8_0)
+	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.DistributeCard)
+
 	if arg_8_0.tweenId then
 		ZProj.TweenHelper.KillById(arg_8_0.tweenId)
 

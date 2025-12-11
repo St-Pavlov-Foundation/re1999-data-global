@@ -1,20 +1,44 @@
 [
   {
     "resName": "buff/asfd_alf_fx_1",
+    "skinId": 0,
     "residualRes": "buff/asfd_alf_jp1",
     "pullOutRes": "buff/asfd_alf_jp1_hit",
     "audioId": 410000128
   },
   {
     "resName": "buff/asfd_alf_fx_2",
+    "skinId": 0,
     "residualRes": "buff/asfd_alf_jp2",
     "pullOutRes": "buff/asfd_alf_jp2_hit",
     "audioId": 410000128
   },
   {
     "resName": "buff/asfd_alf_fx_3",
+    "skinId": 0,
     "residualRes": "buff/asfd_alf_jp3",
     "pullOutRes": "buff/asfd_alf_jp3_hit",
     "audioId": 410000128
+  },
+  {
+    "resName": "buff/v3a1_asfd_alf_fx_1",
+    "skinId": 311303,
+    "residualRes": "buff/v3a1_asfd_alf_jp1",
+    "pullOutRes": "buff/v3a1_asfd_alf_jp1_hit",
+    "audioId": 411000014
+  },
+  {
+    "resName": "buff/v3a1_asfd_alf_fx_2",
+    "skinId": 311303,
+    "residualRes": "buff/v3a1_asfd_alf_jp2",
+    "pullOutRes": "buff/v3a1_asfd_alf_jp2_hit",
+    "audioId": 411000014
+  },
+  {
+    "resName": "buff/v3a1_asfd_alf_fx_3",
+    "skinId": 311303,
+    "residualRes": "buff/v3a1_asfd_alf_jp3",
+    "pullOutRes": "buff/v3a1_asfd_alf_jp3_hit",
+    "audioId": 411000014
   }
 ]

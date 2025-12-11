@@ -128,8 +128,8 @@ function var_0_0._btnsaveOffsetOnClick(arg_9_0)
 	local var_9_1 = string.format(arg_9_0:_getYPrecision(), arg_9_0._slideroffsety:GetValue())
 	local var_9_2 = string.format(arg_9_0:_getSPrecision(), arg_9_0._slideroffsetscale:GetValue())
 
-	if arg_9_0._curOffsetKey == "decorateskinOffset" or arg_9_0._curOffsetKey == "decorateskinl2dOffset" or arg_9_0._curOffsetKey == "decorateskinl2dBgOffset" then
-		logError(string.format("%s#%s#%s", var_9_0, var_9_1, var_9_2))
+	if arg_9_0._curOffsetKey == "decorateskinOffset" or arg_9_0._curOffsetKey == "decorateskinl2dOffset" or arg_9_0._curOffsetKey == "decorateskinl2dBgOffset" or arg_9_0._curOffsetKey == "skin2dParams" then
+		logError(string.format("%s,%s#%s", var_9_0, var_9_1, var_9_2))
 
 		return
 	end
@@ -398,6 +398,7 @@ function var_0_0._initViewList(arg_33_0)
 	arg_33_0:_addView("语音界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, arg_33_0._onCharacterDataViewOpen, arg_33_0._onCharacterDataVoiceViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatavoiceview(Clone)/content/#simage_characterbg/charactercontainer/#go_spine", "characterDataVoiceViewOffset", "characterViewOffset")
 	arg_33_0:_addView("个人名片 -> 复用角色界面, 可以特殊设置", ViewName.PlayerCardView, arg_33_0._onPlayerCardViewOpen, arg_33_0._onPlayerCardViewUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewLive2dOffset", "characterViewOffset")
 	arg_33_0:_addView("装饰商店", ViewName.StoreView, arg_33_0._onDecorateStoreViewOpen, arg_33_0._onDecorateStoreViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinl2dOffset")
+	arg_33_0:_addView("皮肤商店", ViewName.StoreView, arg_33_0._onClothesStoreViewOpen, arg_33_0._onClothesStoreViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/storeskinview2(Clone)/#go_has/character/bg/characterSpine/#go_skincontainer", "skin2dParams")
 	table.insert(arg_33_0._viewNameList, "0#静态立绘")
 	arg_33_0:_addView("角色封面界面静态立绘偏移", ViewName.CharacterDataView, arg_33_0._onCharacterDataViewOpenFromHandbook, arg_33_0._onCharacterStaticSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/#simage_characterstaticskin", "characterTitleViewStaticOffset", nil, nil, nil, true)
 	arg_33_0:_addView("皮肤界面静态立绘", ViewName.CharacterSkinView, arg_33_0._onCharacterSkinSwitchViewOpen, arg_33_0._onCharacterSkinStaticDrawingViewUpdate1, "UIRoot/POPUP_TOP/CharacterSkinView/characterSpine/#go_skincontainer/#simage_skin", "skinViewImgOffset", nil, nil, nil, true)
@@ -407,7 +408,6 @@ function var_0_0._initViewList(arg_33_0)
 	arg_33_0:_addView("个人名片", ViewName.PlayerCardView, arg_33_0._onPlayerCardViewOpen, arg_33_0._onPlayerCardViewStaticDrawingUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewImgOffset", "characterViewImgOffset", nil, nil, true)
 	arg_33_0:_addView("装饰商店静态立绘", ViewName.StoreView, arg_33_0._onDecorateStoreStaticViewOpen, arg_33_0._onDecorateStoreStaticViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinOffset", nil, nil, nil, true)
 	arg_33_0:_addView("6选3Up", ViewName.SummonThreeCustomPickView, arg_33_0._onSummonCustomThreePickOpen, arg_33_0._onSummonCustomThreePickDataUpdate, "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s", "summonPickUpImgOffset", nil, nil, nil, true)
-	arg_33_0:_addHandBookSkinViewOption()
 	table.insert(arg_33_0._viewNameList, "0#spine小人")
 	arg_33_0:_addView("皮肤界面小人Spine", ViewName.CharacterSkinView, arg_33_0._onCharacterSkinSwitchViewOpen, arg_33_0._onCharacterSkinSwitchViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinView/smalldynamiccontainer/#go_smallspine", "skinSpineOffset")
 	table.insert(arg_33_0._viewNameList, "0#皮肤放大缩小界面")
@@ -594,21 +594,37 @@ function var_0_0.setOffset(arg_43_0, arg_43_1, arg_43_2, arg_43_3, arg_43_4, arg
 		arg_43_0._precisionDefine = arg_43_6
 
 		arg_43_0:initSliderValue(var_43_3, var_43_4, var_43_5)
-	else
-		local var_43_6, var_43_7, var_43_8, var_43_9 = SkinOffsetAdjustModel.instance:getOffset(arg_43_0._curSkinInfo, arg_43_2, arg_43_5, var_43_0)
+	elseif arg_43_2 == "skin2dParams" then
+		local var_43_6 = string.split(arg_43_0._curSkinInfo[arg_43_2], "#")
+		local var_43_7 = var_43_6[2] and string.splitToNumber(var_43_6[2], ",") or {
+			0,
+			0
+		}
+		local var_43_8 = var_43_6[3] and tonumber(var_43_6[3]) or 1
+		local var_43_9 = var_43_7[1]
+		local var_43_10 = var_43_7[2]
 
-		if var_43_9 and arg_43_4 then
-			var_43_6 = arg_43_4[1]
-			var_43_7 = arg_43_4[2]
-			var_43_8 = arg_43_4[3]
-		end
-
-		arg_43_3(var_43_6, var_43_7, var_43_8)
+		arg_43_3(var_43_9, var_43_10, var_43_8)
 
 		arg_43_0._changeOffsetCallback = arg_43_3
 		arg_43_0._precisionDefine = arg_43_6
 
-		arg_43_0:initSliderValue(var_43_6, var_43_7, var_43_8)
+		arg_43_0:initSliderValue(var_43_9, var_43_10, var_43_8)
+	else
+		local var_43_11, var_43_12, var_43_13, var_43_14 = SkinOffsetAdjustModel.instance:getOffset(arg_43_0._curSkinInfo, arg_43_2, arg_43_5, var_43_0)
+
+		if var_43_14 and arg_43_4 then
+			var_43_11 = arg_43_4[1]
+			var_43_12 = arg_43_4[2]
+			var_43_13 = arg_43_4[3]
+		end
+
+		arg_43_3(var_43_11, var_43_12, var_43_13)
+
+		arg_43_0._changeOffsetCallback = arg_43_3
+		arg_43_0._precisionDefine = arg_43_6
+
+		arg_43_0:initSliderValue(var_43_11, var_43_12, var_43_13)
 	end
 end
 
@@ -1151,83 +1167,97 @@ function var_0_0._onDecorateStoreViewUpdate(arg_94_0)
 	end, nil, 0.5)
 end
 
-function var_0_0._onCharacterViewOpen(arg_99_0)
-	arg_99_0:_onCommonCharacterViewOpen()
-	gohelper.setActive(arg_99_0._btnswitchOffset.gameObject, true)
+function var_0_0._onClothesStoreViewUpdate(arg_99_0)
+	if not arg_99_0._curViewInfo or not arg_99_0._curSkinInfo then
+		return
+	end
+
+	local var_99_0 = {}
+	local var_99_1 = string.split(arg_99_0._curSkinInfo.skin2dParams, "#")
+
+	var_99_0.spinePath = var_99_1[1]
+	var_99_0.spinePos = var_99_1[2] and string.splitToNumber(var_99_1[2], ",") or {
+		0,
+		0
+	}
+	var_99_0.spineScale = var_99_1[3] and tonumber(var_99_1[3]) or 1
+
+	local var_99_2 = arg_99_0._curViewInfo[5]
+	local var_99_3 = gohelper.find(var_99_2)
+	local var_99_4 = gohelper.findChild(var_99_3, "#go_2d/#go_spinecontainer/#go_spine")
+	local var_99_5 = gohelper.findChildSingleImage(var_99_3, "#go_2d/#simage_skin")
+
+	local function var_99_6()
+		ZProj.UGUIHelper.SetImageSize(var_99_5.gameObject)
+
+		local var_100_0 = arg_99_0._curSkinInfo.skinViewImgOffset
+
+		if not string.nilorempty(var_100_0) then
+			local var_100_1 = string.splitToNumber(var_100_0, "#")
+
+			recthelper.setAnchor(var_99_5.transform, tonumber(var_100_1[1]), tonumber(var_100_1[2]))
+			transformhelper.setLocalScale(var_99_5.transform, tonumber(var_100_1[3]), tonumber(var_100_1[3]), tonumber(var_100_1[3]))
+		else
+			recthelper.setAnchor(var_99_5.transform, -150, -150)
+			transformhelper.setLocalScale(var_99_5.transform, 0.6, 0.6, 0.6)
+		end
+	end
+
+	var_99_5:LoadImage(ResUrl.getHeadIconImg(arg_99_0._curSkinInfo.id), var_99_6)
+	gohelper.setActive(var_99_4, true)
+
+	local var_99_7 = arg_99_0._curViewInfo[6]
+
+	arg_99_0._uiSpine = GuiSpine.Create(var_99_4, false)
+
+	local var_99_8 = var_99_4.transform
+
+	transformhelper.setLocalPos(var_99_8, var_99_0.spinePos[1], var_99_0.spinePos[2], 0)
+	transformhelper.setLocalScale(var_99_8, var_99_0.spineScale, var_99_0.spineScale, var_99_0.spineScale)
+
+	local function var_99_9()
+		arg_99_0:setOffset(arg_99_0._curSkinInfo, var_99_7, function(arg_102_0, arg_102_1, arg_102_2)
+			local var_102_0 = var_99_8
+
+			recthelper.setAnchor(var_102_0, arg_102_0, arg_102_1)
+
+			var_102_0.localScale = Vector3.one * arg_102_2
+		end, {
+			0,
+			0,
+			1
+		})
+	end
+
+	TaskDispatcher.runDelay(function()
+		arg_99_0._uiSpine:setResPath(var_99_0.spinePath, var_99_9)
+	end, nil, 0.5)
 end
 
-function var_0_0._onCharacterViewChangeStaticDrawingOpen(arg_100_0)
+function var_0_0._onCharacterViewOpen(arg_104_0)
+	arg_104_0:_onCommonCharacterViewOpen()
+	gohelper.setActive(arg_104_0._btnswitchOffset.gameObject, true)
+end
+
+function var_0_0._onCharacterViewChangeStaticDrawingOpen(arg_105_0)
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
 
-	local var_100_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
+	local var_105_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
 
-	CharacterDataModel.instance:setCurHeroId(var_100_0.heroId)
+	CharacterDataModel.instance:setCurHeroId(var_105_0.heroId)
 
-	var_100_0.isSettingSkinOffset = true
+	var_105_0.isSettingSkinOffset = true
 
-	local var_100_1 = arg_100_0._curViewInfo[2]
+	local var_105_1 = arg_105_0._curViewInfo[2]
 
-	ViewMgr.instance:openView(var_100_1, var_100_0)
+	ViewMgr.instance:openView(var_105_1, var_105_0)
 end
 
-function var_0_0._onCommonCharacterViewOpen(arg_101_0)
+function var_0_0._onCommonCharacterViewOpen(arg_106_0)
 	FightResultModel.instance.episodeId = 10101
 	DungeonModel.instance.curSendEpisodeId = 10101
 	DungeonModel.instance.curSendChapterId = 101
 
-	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
-
-	local var_101_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
-
-	CharacterDataModel.instance:setCurHeroId(var_101_0.heroId)
-
-	local var_101_1 = arg_101_0._curViewInfo[2]
-
-	ViewMgr.instance:openView(var_101_1, var_101_0)
-end
-
-function var_0_0._onCharacterSkinSwitchViewOpen(arg_102_0)
-	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
-
-	local var_102_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
-
-	CharacterDataModel.instance:setCurHeroId(var_102_0.heroId)
-
-	local var_102_1 = arg_102_0._curViewInfo[2]
-
-	if var_102_1 == ViewName.CharacterSkinView then
-		local var_102_2 = CharacterSkinLeftView._editableInitView
-
-		function CharacterSkinLeftView._editableInitView(arg_103_0)
-			var_102_2(arg_103_0)
-
-			arg_103_0.showDynamicVertical = false
-		end
-	end
-
-	ViewMgr.instance:openView(var_102_1, var_102_0)
-end
-
-function var_0_0._onCharacterSkinGainViewOpen(arg_104_0)
-	local var_104_0 = arg_104_0._curViewInfo[2]
-
-	ViewMgr.instance:openView(var_104_0, {
-		skinId = 302503
-	})
-end
-
-function var_0_0._onCharacterGetViewOpen(arg_105_0)
-	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
-
-	local var_105_0 = arg_105_0._curViewInfo[2]
-	local var_105_1 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
-
-	ViewMgr.instance:openView(var_105_0, {
-		heroId = var_105_1.heroId
-	})
-end
-
-function var_0_0._onCharacterDataViewOpen(arg_106_0)
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
 
 	local var_106_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
@@ -1236,73 +1266,142 @@ function var_0_0._onCharacterDataViewOpen(arg_106_0)
 
 	local var_106_1 = arg_106_0._curViewInfo[2]
 
+	ViewMgr.instance:openView(var_106_1, var_106_0)
+end
+
+function var_0_0._onCharacterSkinSwitchViewOpen(arg_107_0)
+	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
+
+	local var_107_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
+
+	CharacterDataModel.instance:setCurHeroId(var_107_0.heroId)
+
+	local var_107_1 = arg_107_0._curViewInfo[2]
+
+	if var_107_1 == ViewName.CharacterSkinView then
+		local var_107_2 = CharacterSkinLeftView._editableInitView
+
+		function CharacterSkinLeftView._editableInitView(arg_108_0)
+			var_107_2(arg_108_0)
+
+			arg_108_0.showDynamicVertical = false
+		end
+	end
+
+	ViewMgr.instance:openView(var_107_1, var_107_0)
+end
+
+function var_0_0._onCharacterSkinGainViewOpen(arg_109_0)
+	local var_109_0 = arg_109_0._curViewInfo[2]
+
+	ViewMgr.instance:openView(var_109_0, {
+		skinId = 302503
+	})
+end
+
+function var_0_0._onCharacterGetViewOpen(arg_110_0)
+	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
+
+	local var_110_0 = arg_110_0._curViewInfo[2]
+	local var_110_1 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
+
+	ViewMgr.instance:openView(var_110_0, {
+		heroId = var_110_1.heroId
+	})
+end
+
+function var_0_0._onCharacterDataViewOpen(arg_111_0)
+	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
+
+	local var_111_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
+
+	CharacterDataModel.instance:setCurHeroId(var_111_0.heroId)
+
+	local var_111_1 = arg_111_0._curViewInfo[2]
+
 	TaskDispatcher.runDelay(function()
-		ViewMgr.instance:openView(var_106_1, var_106_0.heroId)
+		ViewMgr.instance:openView(var_111_1, var_111_0.heroId)
 	end, nil, 0.5)
 end
 
-function var_0_0._onPlayerCardViewOpen(arg_108_0)
+function var_0_0._onPlayerCardViewOpen(arg_113_0)
 	PlayerCardController.instance:openPlayerCardView()
 end
 
-function var_0_0._onDecorateStoreViewOpen(arg_109_0)
+function var_0_0._onDecorateStoreViewOpen(arg_114_0)
 	DecorateStoreModel.instance:setCurGood(700005)
 
-	if arg_109_0._curViewInfo[2] == ViewName.StoreView then
-		local var_109_0 = DecorateStoreView._editableInitView
+	if arg_114_0._curViewInfo[2] == ViewName.StoreView then
+		local var_114_0 = DecorateStoreView._editableInitView
 
-		function DecorateStoreView._editableInitView(arg_110_0)
-			var_109_0(arg_110_0)
+		function DecorateStoreView._editableInitView(arg_115_0)
+			var_114_0(arg_115_0)
 
-			arg_110_0._showLive2d = true
-			arg_110_0._adjust = true
+			arg_115_0._showLive2d = true
+			arg_115_0._adjust = true
 		end
 	end
 
 	GameFacade.jump(JumpEnum.JumpId.DecorateStorePay)
 end
 
-function var_0_0._onDecorateStoreStaticViewOpen(arg_111_0)
+function var_0_0._onDecorateStoreStaticViewOpen(arg_116_0)
 	DecorateStoreModel.instance:setCurGood(700005)
 
-	if arg_111_0._curViewInfo[2] == ViewName.StoreView then
-		local var_111_0 = DecorateStoreView._editableInitView
+	if arg_116_0._curViewInfo[2] == ViewName.StoreView then
+		local var_116_0 = DecorateStoreView._editableInitView
 
-		function DecorateStoreView._editableInitView(arg_112_0)
-			var_111_0(arg_112_0)
+		function DecorateStoreView._editableInitView(arg_117_0)
+			var_116_0(arg_117_0)
 
-			arg_112_0._showLive2d = false
-			arg_112_0._adjust = true
+			arg_117_0._showLive2d = false
+			arg_117_0._adjust = true
 		end
 	end
 
 	GameFacade.jump(JumpEnum.JumpId.DecorateStorePay)
 end
 
-function var_0_0._onSummonCustomThreePickOpen(arg_113_0)
-	local var_113_0 = arg_113_0._curViewInfo[2]
-	local var_113_1 = 22161
+function var_0_0._onClothesStoreViewOpen(arg_118_0)
+	SkinOffsetSkinListModel.instance:onInit()
 
-	SummonMainModel.instance:trySetSelectPoolId(var_113_1)
-	ViewMgr.instance:openView(var_113_0)
+	if arg_118_0._curViewInfo[2] == ViewName.StoreView then
+		local var_118_0 = ClothesStoreView._editableInitView
+
+		function ClothesStoreView._editableInitView(arg_119_0)
+			var_118_0(arg_119_0)
+
+			arg_119_0._adjust = true
+		end
+	end
+
+	GameFacade.jump(10173)
+end
+
+function var_0_0._onSummonCustomThreePickOpen(arg_120_0)
+	local var_120_0 = arg_120_0._curViewInfo[2]
+	local var_120_1 = 22161
+
+	SummonMainModel.instance:trySetSelectPoolId(var_120_1)
+	ViewMgr.instance:openView(var_120_0)
 	TaskDispatcher.runDelay(function()
-		SummonCustomPickChoiceListModel.instance:initDatas(var_113_1)
+		SummonCustomPickChoiceListModel.instance:initDatas(var_120_1)
 		SummonCustomPickChoiceController.instance:setSelect(3071)
 		SummonCustomPickChoiceController.instance:setSelect(3072)
 		SummonCustomPickChoiceController.instance:setSelect(3073)
 
-		local var_114_0 = SummonCustomPickChoiceListModel.instance:getSelectIds()
-		local var_114_1 = SummonMainModel.instance:getCurPool()
-		local var_114_2 = SummonMainModel.instance:getPoolServerMO(var_114_1.id)
+		local var_121_0 = SummonCustomPickChoiceListModel.instance:getSelectIds()
+		local var_121_1 = SummonMainModel.instance:getCurPool()
+		local var_121_2 = SummonMainModel.instance:getPoolServerMO(var_121_1.id)
 
-		if var_114_2 and var_114_2.customPickMO then
-			local var_114_3 = {}
+		if var_121_2 and var_121_2.customPickMO then
+			local var_121_3 = {}
 
-			for iter_114_0, iter_114_1 in ipairs(var_114_0) do
-				table.insert(var_114_3, iter_114_1)
+			for iter_121_0, iter_121_1 in ipairs(var_121_0) do
+				table.insert(var_121_3, iter_121_1)
 			end
 
-			var_114_2.customPickMO.pickHeroIds = var_114_3
+			var_121_2.customPickMO.pickHeroIds = var_121_3
 		end
 
 		SummonController.instance:dispatchEvent(SummonEvent.onCustomPicked)
@@ -1310,431 +1409,391 @@ function var_0_0._onSummonCustomThreePickOpen(arg_113_0)
 	end, nil, 0.1)
 end
 
-function var_0_0._onSummonCustomThreePickDataUpdate(arg_115_0)
-	if not arg_115_0._curViewInfo or not arg_115_0._curSkinInfo then
-		return
-	end
-
-	local var_115_0 = arg_115_0._curViewInfo[5]
-	local var_115_1 = "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s_outline"
-	local var_115_2 = arg_115_0._curViewInfo[6]
-	local var_115_3 = SummonCustomPickChoiceListModel.instance:getMaxSelectCount()
-	local var_115_4 = {}
-	local var_115_5 = {}
-
-	for iter_115_0 = 1, var_115_3 do
-		local var_115_6 = tostring(iter_115_0)
-		local var_115_7 = string.format(var_115_0, var_115_6, var_115_6)
-		local var_115_8 = gohelper.find(var_115_7)
-		local var_115_9 = gohelper.getSingleImage(var_115_8)
-
-		var_115_9:LoadImage(ResUrl.getHeadIconImg(arg_115_0._curSkinInfo.id), function()
-			ZProj.UGUIHelper.SetImageSize(var_115_9.gameObject)
-		end, nil)
-
-		local var_115_10 = string.format(var_115_1, var_115_6, var_115_6)
-		local var_115_11 = gohelper.find(var_115_10)
-		local var_115_12 = gohelper.getSingleImage(var_115_11)
-
-		var_115_12:LoadImage(ResUrl.getHeadIconImg(arg_115_0._curSkinInfo.id), function()
-			ZProj.UGUIHelper.SetImageSize(var_115_12.gameObject)
-		end, nil)
-		table.insert(var_115_4, var_115_9)
-		table.insert(var_115_5, var_115_12)
-	end
-
-	arg_115_0:setOffset(arg_115_0._curSkinInfo, var_115_2, function(arg_118_0, arg_118_1, arg_118_2)
-		local var_118_0 = #var_115_4
-
-		for iter_118_0 = 1, var_118_0 do
-			local var_118_1 = var_115_4[iter_118_0].transform
-			local var_118_2 = var_115_5[iter_118_0].transform
-
-			recthelper.setAnchor(var_118_1, arg_118_0, arg_118_1)
-
-			var_118_1.localScale = Vector3.one * arg_118_2
-
-			recthelper.setAnchor(var_118_2, arg_118_0 - 5, arg_118_1 + 2)
-
-			var_118_2.localScale = Vector3.one * arg_118_2
-		end
-	end)
-end
-
-function var_0_0._onCharacterDataViewOpenFromHandbook(arg_119_0)
-	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
-
-	local var_119_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
-
-	CharacterDataModel.instance:setCurHeroId(var_119_0.heroId)
-
-	local var_119_1 = arg_119_0._curViewInfo[2]
-
-	TaskDispatcher.runDelay(function()
-		ViewMgr.instance:openView(var_119_1, {
-			adjustStaticOffset = true,
-			fromHandbookView = true,
-			heroId = var_119_0.heroId
-		})
-	end, nil, 0.5)
-end
-
-function var_0_0.onMainThumbnailViewOpen(arg_121_0)
-	MainController.instance:openMainThumbnailView()
-end
-
-function var_0_0.onMainThumbnailViewUpdate(arg_122_0)
+function var_0_0._onSummonCustomThreePickDataUpdate(arg_122_0)
 	if not arg_122_0._curViewInfo or not arg_122_0._curSkinInfo then
 		return
 	end
 
-	local var_122_0 = UnityEngine.GameObject.Find("UIRoot/HUD/MainView/#go_spine_scale/lightspine")
-	local var_122_1 = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP/MainThumbnailView/#go_spine_scale/lightspine")
+	local var_122_0 = arg_122_0._curViewInfo[5]
+	local var_122_1 = "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s_outline"
 	local var_122_2 = arg_122_0._curViewInfo[6]
-	local var_122_3 = arg_122_0._curViewInfo[5]
-	local var_122_4 = arg_122_0._curViewInfo[7]
-	local var_122_5 = gohelper.find(var_122_3)
+	local var_122_3 = SummonCustomPickChoiceListModel.instance:getMaxSelectCount()
+	local var_122_4 = {}
+	local var_122_5 = {}
 
-	var_122_5.transform:SetParent(var_122_0.transform, false)
-	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, arg_122_0._curSkinInfo, true, false)
-	var_122_5.transform:SetParent(var_122_1.transform, false)
-	arg_122_0:setOffset(arg_122_0._curSkinInfo, var_122_2, function(arg_123_0, arg_123_1, arg_123_2)
-		local var_123_0 = var_122_5.transform
+	for iter_122_0 = 1, var_122_3 do
+		local var_122_6 = tostring(iter_122_0)
+		local var_122_7 = string.format(var_122_0, var_122_6, var_122_6)
+		local var_122_8 = gohelper.find(var_122_7)
+		local var_122_9 = gohelper.getSingleImage(var_122_8)
 
-		recthelper.setAnchor(var_123_0, arg_123_0, arg_123_1)
+		var_122_9:LoadImage(ResUrl.getHeadIconImg(arg_122_0._curSkinInfo.id), function()
+			ZProj.UGUIHelper.SetImageSize(var_122_9.gameObject)
+		end, nil)
+
+		local var_122_10 = string.format(var_122_1, var_122_6, var_122_6)
+		local var_122_11 = gohelper.find(var_122_10)
+		local var_122_12 = gohelper.getSingleImage(var_122_11)
+
+		var_122_12:LoadImage(ResUrl.getHeadIconImg(arg_122_0._curSkinInfo.id), function()
+			ZProj.UGUIHelper.SetImageSize(var_122_12.gameObject)
+		end, nil)
+		table.insert(var_122_4, var_122_9)
+		table.insert(var_122_5, var_122_12)
+	end
+
+	arg_122_0:setOffset(arg_122_0._curSkinInfo, var_122_2, function(arg_125_0, arg_125_1, arg_125_2)
+		local var_125_0 = #var_122_4
+
+		for iter_125_0 = 1, var_125_0 do
+			local var_125_1 = var_122_4[iter_125_0].transform
+			local var_125_2 = var_122_5[iter_125_0].transform
+
+			recthelper.setAnchor(var_125_1, arg_125_0, arg_125_1)
+
+			var_125_1.localScale = Vector3.one * arg_125_2
+
+			recthelper.setAnchor(var_125_2, arg_125_0 - 5, arg_125_1 + 2)
+
+			var_125_2.localScale = Vector3.one * arg_125_2
+		end
+	end)
+end
+
+function var_0_0._onCharacterDataViewOpenFromHandbook(arg_126_0)
+	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
+
+	local var_126_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
+
+	CharacterDataModel.instance:setCurHeroId(var_126_0.heroId)
+
+	local var_126_1 = arg_126_0._curViewInfo[2]
+
+	TaskDispatcher.runDelay(function()
+		ViewMgr.instance:openView(var_126_1, {
+			adjustStaticOffset = true,
+			fromHandbookView = true,
+			heroId = var_126_0.heroId
+		})
+	end, nil, 0.5)
+end
+
+function var_0_0.onMainThumbnailViewOpen(arg_128_0)
+	MainController.instance:openMainThumbnailView()
+end
+
+function var_0_0.onMainThumbnailViewUpdate(arg_129_0)
+	if not arg_129_0._curViewInfo or not arg_129_0._curSkinInfo then
+		return
+	end
+
+	local var_129_0 = UnityEngine.GameObject.Find("UIRoot/HUD/MainView/#go_spine_scale/lightspine")
+	local var_129_1 = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP/MainThumbnailView/#go_spine_scale/lightspine")
+	local var_129_2 = arg_129_0._curViewInfo[6]
+	local var_129_3 = arg_129_0._curViewInfo[5]
+	local var_129_4 = arg_129_0._curViewInfo[7]
+	local var_129_5 = gohelper.find(var_129_3)
+
+	var_129_5.transform:SetParent(var_129_0.transform, false)
+	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, arg_129_0._curSkinInfo, true, false)
+	var_129_5.transform:SetParent(var_129_1.transform, false)
+	arg_129_0:setOffset(arg_129_0._curSkinInfo, var_129_2, function(arg_130_0, arg_130_1, arg_130_2)
+		local var_130_0 = var_129_5.transform
+
+		recthelper.setAnchor(var_130_0, arg_130_0, arg_130_1)
 	end, {
 		0,
 		0,
 		1
-	}, var_122_4)
+	}, var_129_4)
 end
 
-function var_0_0._onViewValueClick(arg_124_0, arg_124_1)
-	if arg_124_1.index == arg_124_0.selectIndex then
+function var_0_0._onViewValueClick(arg_131_0, arg_131_1)
+	if arg_131_1.index == arg_131_0.selectIndex then
 		return
 	end
 
-	if arg_124_0.selectIndex then
-		local var_124_0 = arg_124_0._viewList[arg_124_0.selectIndex] and arg_124_0._viewList[arg_124_0.selectIndex].beforeCloseView
+	if arg_131_0.selectIndex then
+		local var_131_0 = arg_131_0._viewList[arg_131_0.selectIndex] and arg_131_0._viewList[arg_131_0.selectIndex].beforeCloseView
 
-		if var_124_0 then
-			var_124_0(arg_124_0)
+		if var_131_0 then
+			var_131_0(arg_131_0)
 		end
 	end
 
-	arg_124_0.selectIndex = arg_124_1.index
+	arg_131_0.selectIndex = arg_131_1.index
 
-	gohelper.setActive(arg_124_0._btnswitchOffset.gameObject, false)
-	gohelper.setActive(arg_124_0._gotrigger, false)
+	gohelper.setActive(arg_131_0._btnswitchOffset.gameObject, false)
+	gohelper.setActive(arg_131_0._gotrigger, false)
 
-	arg_124_0._changeOffsetCallback = nil
+	arg_131_0._changeOffsetCallback = nil
 
-	local var_124_1 = arg_124_0._viewList[arg_124_1.index]
-	local var_124_2 = var_124_1.viewInfo
-	local var_124_3 = var_124_2[3]
+	local var_131_1 = arg_131_0._viewList[arg_131_1.index]
+	local var_131_2 = var_131_1.viewInfo
+	local var_131_3 = var_131_2[3]
 
-	arg_124_0._curViewInfo = var_124_2
+	arg_131_0._curViewInfo = var_131_2
 
-	if arg_124_0.lastSelectViewItem then
-		gohelper.setActive(arg_124_0.lastSelectViewItem.goSelect, false)
+	if arg_131_0.lastSelectViewItem then
+		gohelper.setActive(arg_131_0.lastSelectViewItem.goSelect, false)
 	end
 
-	gohelper.setActive(arg_124_1.goSelect, true)
+	gohelper.setActive(arg_131_1.goSelect, true)
 
-	arg_124_0.lastSelectViewItem = arg_124_1
-	arg_124_0._txtviewlabel.text = arg_124_1.viewName
+	arg_131_0.lastSelectViewItem = arg_131_1
+	arg_131_0._txtviewlabel.text = arg_131_1.viewName
 
-	arg_124_0:_btnblockOnClick()
-	arg_124_0:backToHome()
+	arg_131_0:_btnblockOnClick()
+	arg_131_0:backToHome()
 
-	local var_124_4 = var_124_1.beforeOpenView
+	local var_131_4 = var_131_1.beforeOpenView
 
-	if var_124_4 then
-		var_124_4(arg_124_0)
+	if var_131_4 then
+		var_131_4(arg_131_0)
 	end
 
-	if var_124_3 then
-		var_124_3(arg_124_0)
+	if var_131_3 then
+		var_131_3(arg_131_0)
 	end
 end
 
-function var_0_0.backToHome(arg_125_0)
+function var_0_0.backToHome(arg_132_0)
 	ViewMgr.instance:closeAllPopupViews()
 	MainController.instance:enterMainScene()
 end
 
-function var_0_0.refreshSkin(arg_126_0, arg_126_1)
-	arg_126_0.selectMo = arg_126_1
+function var_0_0.refreshSkin(arg_133_0, arg_133_1)
+	arg_133_0.selectMo = arg_133_1
 
-	arg_126_0._inputSkinLabel:SetText(arg_126_1.skinId .. "#" .. arg_126_1.skinName)
-	arg_126_0:_btnblockOnClick()
+	arg_133_0._inputSkinLabel:SetText(arg_133_1.skinId .. "#" .. arg_133_1.skinName)
+	arg_133_0:_btnblockOnClick()
 
-	arg_126_0._curSkinInfo = SkinConfig.instance:getSkinCo(arg_126_1.skinId)
+	arg_133_0._curSkinInfo = SkinConfig.instance:getSkinCo(arg_133_1.skinId)
 
-	arg_126_0:updateSkin()
+	arg_133_0:updateSkin()
 end
 
-function var_0_0.updateSkin(arg_127_0)
-	if not arg_127_0._curViewInfo then
+function var_0_0.updateSkin(arg_134_0)
+	if not arg_134_0._curViewInfo then
 		return
 	end
 
-	local var_127_0 = arg_127_0._curViewInfo[4]
+	local var_134_0 = arg_134_0._curViewInfo[4]
 
-	if var_127_0 then
-		var_127_0(arg_127_0, true)
+	if var_134_0 then
+		var_134_0(arg_134_0, true)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_128_0)
+function var_0_0.onUpdateParam(arg_135_0)
 	return
 end
 
-function var_0_0.onOpen(arg_129_0)
-	arg_129_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_129_0._onOpenView, arg_129_0)
+function var_0_0.onOpen(arg_136_0)
+	arg_136_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_136_0._onOpenView, arg_136_0)
 
 	module_views.FightSuccView.viewType = ViewType.Full
 	module_views.CharacterGetView.viewType = ViewType.Full
 end
 
-function var_0_0._onOpenView(arg_130_0, arg_130_1)
-	if not arg_130_0._curViewInfo then
+function var_0_0._onOpenView(arg_137_0, arg_137_1)
+	if not arg_137_0._curViewInfo then
 		return
 	end
 
-	if arg_130_1 == arg_130_0._curViewInfo[2] then
-		local var_130_0 = arg_130_0._curViewInfo[4]
+	if arg_137_1 == arg_137_0._curViewInfo[2] then
+		local var_137_0 = arg_137_0._curViewInfo[4]
 
-		if var_130_0 then
-			var_130_0(arg_130_0, true)
+		if var_137_0 then
+			var_137_0(arg_137_0, true)
 		end
 	end
 end
 
-function var_0_0.onClickSearch(arg_131_0)
-	local var_131_0 = arg_131_0._inputSkinLabel:GetText()
+function var_0_0.onClickSearch(arg_138_0)
+	local var_138_0 = arg_138_0._inputSkinLabel:GetText()
 
-	if string.nilorempty(var_131_0) then
+	if string.nilorempty(var_138_0) then
 		SkinOffsetSkinListModel.instance:initSkinList()
-	elseif string.match(var_131_0, "^%d+") then
-		SkinOffsetSkinListModel.instance:filterById(var_131_0)
+	elseif string.match(var_138_0, "^%d+") then
+		SkinOffsetSkinListModel.instance:filterById(var_138_0)
 	else
-		SkinOffsetSkinListModel.instance:filterByName(var_131_0)
+		SkinOffsetSkinListModel.instance:filterByName(var_138_0)
 	end
 end
 
-function var_0_0.onSkinInputValueChanged(arg_132_0, arg_132_1)
+function var_0_0.onSkinInputValueChanged(arg_139_0, arg_139_1)
 	return
 end
 
-function var_0_0.beforeOpenSkinFullView(arg_133_0)
-	arg_133_0.isOpenSkinFullView = true
-	arg_133_0.skinViewOldFunc = CharacterSkinFullScreenView.setLocalScale
+function var_0_0.beforeOpenSkinFullView(arg_140_0)
+	arg_140_0.isOpenSkinFullView = true
+	arg_140_0.skinViewOldFunc = CharacterSkinFullScreenView.setLocalScale
 
-	function CharacterSkinFullScreenView.setLocalScale(arg_134_0)
-		arg_133_0.skinViewOldFunc(arg_134_0)
+	function CharacterSkinFullScreenView.setLocalScale(arg_141_0)
+		arg_140_0.skinViewOldFunc(arg_141_0)
 
-		arg_133_0._txtScale.text = "Scale : " .. arg_134_0.curScaleX
+		arg_140_0._txtScale.text = "Scale : " .. arg_141_0.curScaleX
 	end
 
-	gohelper.setActive(arg_133_0.goFullSkinContainer, true)
-	SkinOffsetSkinListModel.instance:setInitFilterFunc(arg_133_0.filterLive2dFunc)
+	gohelper.setActive(arg_140_0.goFullSkinContainer, true)
+	SkinOffsetSkinListModel.instance:setInitFilterFunc(arg_140_0.filterLive2dFunc)
 	SkinOffsetSkinListModel.instance:initSkinList()
 end
 
-function var_0_0.beforeCloseSkinFullView(arg_135_0)
-	arg_135_0.isOpenSkinFullView = false
-	arg_135_0.live2dCamera = nil
-	CharacterSkinFullScreenView.setLocalScale = arg_135_0.skinViewOldFunc
+function var_0_0.beforeCloseSkinFullView(arg_142_0)
+	arg_142_0.isOpenSkinFullView = false
+	arg_142_0.live2dCamera = nil
+	CharacterSkinFullScreenView.setLocalScale = arg_142_0.skinViewOldFunc
 
-	gohelper.setActive(arg_135_0.goFullSkinContainer, false)
+	gohelper.setActive(arg_142_0.goFullSkinContainer, false)
 	SkinOffsetSkinListModel.instance:setInitFilterFunc(nil)
 end
 
-function var_0_0._onCharacterSkinFullViewOpen(arg_136_0)
+function var_0_0._onCharacterSkinFullViewOpen(arg_143_0)
 	SkinOffsetSkinListModel.instance:initSkinList()
 
-	local var_136_0 = SkinOffsetSkinListModel.instance:getFirst()
-	local var_136_1 = SkinConfig.instance:getSkinCo(var_136_0.skinId)
-	local var_136_2 = {
-		skinCo = var_136_1,
+	local var_143_0 = SkinOffsetSkinListModel.instance:getFirst()
+	local var_143_1 = SkinConfig.instance:getSkinCo(var_143_0.skinId)
+	local var_143_2 = {
+		skinCo = var_143_1,
 		showEnum = CharacterEnum.ShowSkinEnum.Dynamic
 	}
 
-	arg_136_0._curSkinInfo = var_136_1
+	arg_143_0._curSkinInfo = var_143_1
 
-	ViewMgr.instance:openView(ViewName.CharacterSkinFullScreenView, var_136_2)
+	ViewMgr.instance:openView(ViewName.CharacterSkinFullScreenView, var_143_2)
 end
 
-function var_0_0._onCharacterSkinFullViewUpdate(arg_137_0)
-	if not arg_137_0._curViewInfo or not arg_137_0._curSkinInfo then
+function var_0_0._onCharacterSkinFullViewUpdate(arg_144_0)
+	if not arg_144_0._curViewInfo or not arg_144_0._curSkinInfo then
 		return
 	end
 
-	local var_137_0 = SkinOffsetAdjustModel.instance:getCameraSize(arg_137_0._curSkinInfo.id)
+	local var_144_0 = SkinOffsetAdjustModel.instance:getCameraSize(arg_144_0._curSkinInfo.id)
 
-	if not var_137_0 then
-		var_137_0 = arg_137_0._curSkinInfo.fullScreenCameraSize
+	if not var_144_0 then
+		var_144_0 = arg_144_0._curSkinInfo.fullScreenCameraSize
 
-		if var_137_0 <= 0 then
-			var_137_0 = CharacterSkinFullScreenView.DefaultLive2dCameraSize
+		if var_144_0 <= 0 then
+			var_144_0 = CharacterSkinFullScreenView.DefaultLive2dCameraSize
 		end
 	end
 
-	arg_137_0._inputCameraSize:SetText(var_137_0)
+	arg_144_0._inputCameraSize:SetText(var_144_0)
 
-	local var_137_1 = arg_137_0._curViewInfo[6]
-	local var_137_2 = arg_137_0._curViewInfo[5]
-	local var_137_3 = gohelper.find(var_137_2)
+	local var_144_1 = arg_144_0._curViewInfo[6]
+	local var_144_2 = arg_144_0._curViewInfo[5]
+	local var_144_3 = gohelper.find(var_144_2)
 
-	arg_137_0._uiSpine = GuiModelAgent.Create(var_137_3, true)
+	arg_144_0._uiSpine = GuiModelAgent.Create(var_144_3, true)
 
-	arg_137_0._uiSpine:setLive2dCameraLoadedCallback(arg_137_0.onLive2dCameraLoadedCallback, arg_137_0)
-	arg_137_0._uiSpine:setResPath(arg_137_0._curSkinInfo, nil, nil, var_137_0)
+	arg_144_0._uiSpine:setLive2dCameraLoadedCallback(arg_144_0.onLive2dCameraLoadedCallback, arg_144_0)
+	arg_144_0._uiSpine:setResPath(arg_144_0._curSkinInfo, nil, nil, var_144_0)
 
-	local var_137_4 = arg_137_0._curViewInfo[7]
+	local var_144_4 = arg_144_0._curViewInfo[7]
 
-	arg_137_0:setOffset(arg_137_0._curSkinInfo, var_137_1, function(arg_138_0, arg_138_1, arg_138_2)
-		local var_138_0 = var_137_3.transform
+	arg_144_0:setOffset(arg_144_0._curSkinInfo, var_144_1, function(arg_145_0, arg_145_1, arg_145_2)
+		local var_145_0 = var_144_3.transform
 
-		recthelper.setAnchor(var_138_0, arg_138_0, arg_138_1)
+		recthelper.setAnchor(var_145_0, arg_145_0, arg_145_1)
 
-		var_138_0.localScale = Vector3.one * arg_138_2
+		var_145_0.localScale = Vector3.one * arg_145_2
 	end, {
 		0,
 		0,
 		1
-	}, var_137_4)
+	}, var_144_4)
 end
 
-function var_0_0.onLive2dCameraLoadedCallback(arg_139_0, arg_139_1)
-	local var_139_0 = gohelper.find("UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer")
+function var_0_0.onLive2dCameraLoadedCallback(arg_146_0, arg_146_1)
+	local var_146_0 = gohelper.find("UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer")
 
-	gohelper.addChild(var_139_0, arg_139_1._rawImageGo)
+	gohelper.addChild(var_146_0, arg_146_1._rawImageGo)
 
-	local var_139_1 = gohelper.find("UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer/#go_spinecontainer")
-	local var_139_2 = arg_139_1._rawImageGo:GetComponent(gohelper.Type_RawImage)
+	local var_146_1 = gohelper.find("UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer/#go_spinecontainer")
+	local var_146_2 = arg_146_1._rawImageGo:GetComponent(gohelper.Type_RawImage)
 
-	arg_139_0.live2dCamera = arg_139_1._camera
-	arg_139_0.live2dRwaImageTexture = var_139_2.texture
+	arg_146_0.live2dCamera = arg_146_1._camera
+	arg_146_0.live2dRwaImageTexture = var_146_2.texture
 
-	recthelper.setAnchor(arg_139_1._rawImageGo.transform, 0, CharacterSkinFullScreenView.DefaultLive2dOffsetY)
-	recthelper.setAnchor(var_139_1.transform, 0, CharacterSkinFullScreenView.DefaultLive2dOffsetY)
+	recthelper.setAnchor(arg_146_1._rawImageGo.transform, 0, CharacterSkinFullScreenView.DefaultLive2dOffsetY)
+	recthelper.setAnchor(var_146_1.transform, 0, CharacterSkinFullScreenView.DefaultLive2dOffsetY)
 
-	arg_139_0:getPreviewImage().texture = var_139_2.texture
+	arg_146_0:getPreviewImage().texture = var_146_2.texture
 end
 
-function var_0_0._addHandBookSkinViewOption(arg_140_0)
-	arg_140_0:_addView("皮肤图鉴", ViewName.HandbookSkinSuitDetailView, arg_140_0._onHandBookSkinViewOpen, arg_140_0._onHandBookSkinViewDrawingUpdate, "UIRoot/POPUP_TOP/HandbookSkinSuitDetailView", "playercardViewImgOffset", "characterViewImgOffset", nil, nil, true)
-end
+function var_0_0.getPreviewImage(arg_147_0)
+	if not arg_147_0.previewImage then
+		local var_147_0 = gohelper.create2d(arg_147_0.goFullSkinContainer, "previewImageBg")
+		local var_147_1 = var_147_0.transform
 
-function var_0_0._onHandBookSkinViewOpen(arg_141_0)
-	HandbookController.instance:openHandbookSkinView()
-end
+		var_147_1.anchorMin = RectTransformDefine.Anchor.RightMiddle
+		var_147_1.anchorMax = RectTransformDefine.Anchor.RightMiddle
 
-function var_0_0._onHandBookSkinViewDrawingUpdate(arg_142_0)
-	if not arg_142_0._curViewInfo or not arg_142_0._curSkinInfo then
-		return
+		recthelper.setSize(var_147_1, 200, 200)
+		recthelper.setAnchor(var_147_1, -100, -150)
+		gohelper.onceAddComponent(var_147_0, gohelper.Type_RawImage)
+
+		local var_147_2 = gohelper.create2d(arg_147_0.goFullSkinContainer, "previewImage")
+		local var_147_3 = var_147_2.transform
+
+		var_147_3.anchorMin = RectTransformDefine.Anchor.RightMiddle
+		var_147_3.anchorMax = RectTransformDefine.Anchor.RightMiddle
+
+		recthelper.setSize(var_147_3, 200, 200)
+		recthelper.setAnchor(var_147_3, -100, -150)
+
+		arg_147_0.previewImage = gohelper.onceAddComponent(var_147_2, gohelper.Type_RawImage)
 	end
 
-	local var_142_0 = arg_142_0._curViewInfo[5]
-	local var_142_1 = gohelper.find(var_142_0).gameObject
-	local var_142_2 = gohelper.findChild(var_142_1, "#go_scroll/#go_storyStages/photo1/#image")
-	local var_142_3 = arg_142_0._curViewInfo[6]
-	local var_142_4 = arg_142_0._curViewInfo[7]
-	local var_142_5 = var_142_2
-	local var_142_6 = gohelper.getSingleImage(var_142_5)
-
-	var_142_6:LoadImage(ResUrl.getHeadIconImg(arg_142_0._curSkinInfo.id), function()
-		ZProj.UGUIHelper.SetImageSize(var_142_6.gameObject)
-	end, nil)
-
-	arg_142_0.playCardViewStaticDrawingDefaultOffset = arg_142_0.playCardViewStaticDrawingDefaultOffset or {
-		-150,
-		-150,
-		0.6
-	}
-
-	arg_142_0:setOffset(arg_142_0._curSkinInfo, var_142_3, function(arg_144_0, arg_144_1, arg_144_2)
-		local var_144_0 = var_142_6.transform
-
-		recthelper.setAnchor(var_144_0, arg_144_0, arg_144_1)
-
-		var_144_0.localScale = Vector3.one * arg_144_2
-	end, arg_142_0.playCardViewStaticDrawingDefaultOffset, var_142_4)
+	return arg_147_0.previewImage
 end
 
-function var_0_0.getPreviewImage(arg_145_0)
-	if not arg_145_0.previewImage then
-		local var_145_0 = gohelper.create2d(arg_145_0.goFullSkinContainer, "previewImageBg")
-		local var_145_1 = var_145_0.transform
+function var_0_0.onCameraSizeInput(arg_148_0, arg_148_1)
+	arg_148_1 = tonumber(arg_148_1)
 
-		var_145_1.anchorMin = RectTransformDefine.Anchor.RightMiddle
-		var_145_1.anchorMax = RectTransformDefine.Anchor.RightMiddle
-
-		recthelper.setSize(var_145_1, 200, 200)
-		recthelper.setAnchor(var_145_1, -100, -150)
-		gohelper.onceAddComponent(var_145_0, gohelper.Type_RawImage)
-
-		local var_145_2 = gohelper.create2d(arg_145_0.goFullSkinContainer, "previewImage")
-		local var_145_3 = var_145_2.transform
-
-		var_145_3.anchorMin = RectTransformDefine.Anchor.RightMiddle
-		var_145_3.anchorMax = RectTransformDefine.Anchor.RightMiddle
-
-		recthelper.setSize(var_145_3, 200, 200)
-		recthelper.setAnchor(var_145_3, -100, -150)
-
-		arg_145_0.previewImage = gohelper.onceAddComponent(var_145_2, gohelper.Type_RawImage)
+	if not arg_148_1 or arg_148_1 <= 0 then
+		arg_148_1 = 14
 	end
 
-	return arg_145_0.previewImage
-end
+	if arg_148_0.live2dCamera then
+		arg_148_0.live2dCamera.orthographicSize = arg_148_1
 
-function var_0_0.onCameraSizeInput(arg_146_0, arg_146_1)
-	arg_146_1 = tonumber(arg_146_1)
-
-	if not arg_146_1 or arg_146_1 <= 0 then
-		arg_146_1 = 14
-	end
-
-	if arg_146_0.live2dCamera then
-		arg_146_0.live2dCamera.orthographicSize = arg_146_1
-
-		SkinOffsetAdjustModel.instance:saveCameraSize(arg_146_0._curSkinInfo, arg_146_1)
+		SkinOffsetAdjustModel.instance:saveCameraSize(arg_148_0._curSkinInfo, arg_148_1)
 	end
 end
 
-function var_0_0.filterLive2dFunc(arg_147_0)
-	return arg_147_0 and not string.nilorempty(arg_147_0.live2d)
+function var_0_0.filterLive2dFunc(arg_149_0)
+	return arg_149_0 and not string.nilorempty(arg_149_0.live2d)
 end
 
-function var_0_0.onClose(arg_148_0)
-	arg_148_0._slideroffsetx:RemoveOnValueChanged()
-	arg_148_0._slideroffsety:RemoveOnValueChanged()
-	arg_148_0._slideroffsetscale:RemoveOnValueChanged()
-	arg_148_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_148_0._slideroffsetx.gameObject))
-	arg_148_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_148_0._slideroffsety.gameObject))
-	arg_148_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_148_0._slideroffsetscale.gameObject))
+function var_0_0.onClose(arg_150_0)
+	arg_150_0._slideroffsetx:RemoveOnValueChanged()
+	arg_150_0._slideroffsety:RemoveOnValueChanged()
+	arg_150_0._slideroffsetscale:RemoveOnValueChanged()
+	arg_150_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_150_0._slideroffsetx.gameObject))
+	arg_150_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_150_0._slideroffsety.gameObject))
+	arg_150_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_150_0._slideroffsetscale.gameObject))
 
-	for iter_148_0, iter_148_1 in ipairs(arg_148_0._btnList) do
-		iter_148_1:RemoveClickListener()
+	for iter_150_0, iter_150_1 in ipairs(arg_150_0._btnList) do
+		iter_150_1:RemoveClickListener()
 	end
 
-	arg_148_0._btnSearch:RemoveClickListener()
-	arg_148_0._goviewcontainerclick:RemoveClickListener()
-	arg_148_0._inputSkinLabel:RemoveOnValueChanged()
-	arg_148_0._inputCameraSize:RemoveOnValueChanged()
+	arg_150_0._btnSearch:RemoveClickListener()
+	arg_150_0._goviewcontainerclick:RemoveClickListener()
+	arg_150_0._inputSkinLabel:RemoveOnValueChanged()
+	arg_150_0._inputCameraSize:RemoveOnValueChanged()
 
-	for iter_148_2, iter_148_3 in ipairs(arg_148_0.viewItemList) do
-		if iter_148_3.click then
-			iter_148_3.click:RemoveClickListener()
+	for iter_150_2, iter_150_3 in ipairs(arg_150_0.viewItemList) do
+		if iter_150_3.click then
+			iter_150_3.click:RemoveClickListener()
 		end
 	end
 
-	arg_148_0.drag:RemoveDragBeginListener()
-	arg_148_0.drag:RemoveDragEndListener()
-	arg_148_0._goskincontainerclick:RemoveClickListener()
+	arg_150_0.drag:RemoveDragBeginListener()
+	arg_150_0.drag:RemoveDragEndListener()
+	arg_150_0._goskincontainerclick:RemoveClickListener()
 
 	module_views.FightSuccView.viewType = ViewType.Modal
 	module_views.CharacterGetView.viewType = ViewType.Normal
@@ -1742,15 +1801,15 @@ function var_0_0.onClose(arg_148_0)
 	logError("偏移编辑器修改了部分界面的参数，关闭偏移编辑器后应重开游戏再体验！！！")
 end
 
-function var_0_0.removeDragListener(arg_149_0, arg_149_1)
-	arg_149_1:RemoveDragBeginListener()
-	arg_149_1:RemoveDragListener()
-	arg_149_1:RemoveDragEndListener()
+function var_0_0.removeDragListener(arg_151_0, arg_151_1)
+	arg_151_1:RemoveDragBeginListener()
+	arg_151_1:RemoveDragListener()
+	arg_151_1:RemoveDragEndListener()
 end
 
-function var_0_0.onDestroyView(arg_150_0)
-	for iter_150_0, iter_150_1 in pairs(arg_150_0._simageList) do
-		iter_150_0:UnLoadImage()
+function var_0_0.onDestroyView(arg_152_0)
+	for iter_152_0, iter_152_1 in pairs(arg_152_0._simageList) do
+		iter_152_0:UnLoadImage()
 	end
 end
 

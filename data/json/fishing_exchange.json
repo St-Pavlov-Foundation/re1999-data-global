@@ -1,0 +1,57 @@
+[
+  {
+    "times": 1,
+    "needCurrencyId": 2202,
+    "num": 5000
+  },
+  {
+    "times": 2,
+    "needCurrencyId": 2202,
+    "num": 10000
+  },
+  {
+    "times": 3,
+    "needCurrencyId": 2202,
+    "num": 20000
+  },
+  {
+    "times": 4,
+    "needCurrencyId": 2202,
+    "num": 30000
+  },
+  {
+    "times": 5,
+    "needCurrencyId": 2202,
+    "num": 40000
+  },
+  {
+    "times": 6,
+    "needCurrencyId": 2202,
+    "num": 50000
+  },
+  {
+    "times": 7,
+    "needCurrencyId": 2202,
+    "num": 60000
+  },
+  {
+    "times": 8,
+    "needCurrencyId": 2202,
+    "num": 70000
+  },
+  {
+    "times": 9,
+    "needCurrencyId": 2202,
+    "num": 80000
+  },
+  {
+    "times": 10,
+    "needCurrencyId": 2202,
+    "num": 90000
+  },
+  {
+    "times": 11,
+    "needCurrencyId": 2202,
+    "num": 100000
+  }
+]

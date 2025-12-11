@@ -188,13 +188,20 @@ function var_0_0.getSkinChargeGoodsId(arg_8_0, arg_8_1)
 end
 
 function var_0_0.getTabConfig(arg_9_0, arg_9_1)
-	return arg_9_0._storeEntranceConfig.configDict[arg_9_1]
+	local var_9_0 = arg_9_0._storeEntranceConfig.configDict[arg_9_1]
+
+	if not var_9_0 then
+		arg_9_1 = StoreEnum.StoreId2TabId[arg_9_1]
+		var_9_0 = arg_9_0._storeEntranceConfig.configDict[arg_9_1]
+	end
+
+	return var_9_0
 end
 
-function var_0_0.getGoodsConfig(arg_10_0, arg_10_1)
+function var_0_0.getGoodsConfig(arg_10_0, arg_10_1, arg_10_2)
 	local var_10_0 = arg_10_0._storeGoodsConfig.configDict[arg_10_1]
 
-	if not var_10_0 then
+	if not var_10_0 and not arg_10_2 then
 		logError("找不到商品: " .. tostring(arg_10_1))
 	end
 

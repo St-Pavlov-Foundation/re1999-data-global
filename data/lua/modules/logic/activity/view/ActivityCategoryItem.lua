@@ -154,24 +154,24 @@ function var_0_0._refreshItem(arg_6_0)
 			end
 
 			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4 ~= 0 and var_6_4 or RedDotEnum.DotNode.Activity125Task, nil, arg_6_0._checkIsV2a4WarmupRed, arg_6_0)
+		elseif var_6_2 == ActivityEnum.Activity.V2a9_FreeMonthCard then
+			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_8, arg_6_0._mo.id)
+
+			local var_6_14 = V2a9FreeMonthCardModel.instance:isCurDayCouldGet()
+
+			gohelper.setActive(arg_6_0._goreddot, var_6_14)
 		elseif var_6_5 == ActivityEnum.ActivityTypeID.Act125 then
 			if arg_6_0._selected then
 				Activity125Controller.instance:saveEnterActDateInfo(var_6_2)
 
-				local var_6_14 = RedDotConfig.instance:getRedDotCO(var_6_8).parent
+				local var_6_15 = RedDotConfig.instance:getRedDotCO(var_6_8).parent
 
 				RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
-					[tonumber(var_6_14)] = true
+					[tonumber(var_6_15)] = true
 				})
 			end
 
 			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkIsV1A9WarmupRed, arg_6_0)
-		elseif var_6_2 == ActivityEnum.Activity.V2a9_FreeMonthCard then
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_8, arg_6_0._mo.id)
-
-			local var_6_15 = V2a9FreeMonthCardModel.instance:isCurDayCouldGet()
-
-			gohelper.setActive(arg_6_0._goreddot, var_6_15)
 		elseif var_6_5 == ActivityEnum.ActivityTypeID.Act189 then
 			local var_6_16 = {
 				{
@@ -189,7 +189,7 @@ function var_0_0._refreshItem(arg_6_0)
 			}
 
 			RedDotController.instance:addMultiRedDot(arg_6_0._goreddot, var_6_16)
-		elseif var_6_5 == ActivityEnum.ActivityTypeID.Act201 then
+		elseif var_6_5 == ActivityEnum.ActivityTypeID.Act201 or var_6_5 == ActivityEnum.ActivityTypeID.Act209 or var_6_5 == ActivityEnum.ActivityTypeID.Act212 or var_6_5 == ActivityEnum.ActivityTypeID.Act214 or var_6_5 == ActivityEnum.ActivityTypeID.Act100 then
 			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkActivityShowFirstEnter, arg_6_0)
 		else
 			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_8, arg_6_0._mo.id)

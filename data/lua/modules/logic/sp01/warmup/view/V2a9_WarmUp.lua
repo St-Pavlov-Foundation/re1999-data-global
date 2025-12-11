@@ -312,10 +312,10 @@ function var_0_0.openDesc(arg_26_0, arg_26_1, arg_26_2)
 
 	gohelper.setActive(arg_26_0._goWrongChannel, false)
 	gohelper.setActive(arg_26_0._scroll_TaskDescGo, true)
-	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_loop)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_feichi_yure_caption_20200114)
 
 	local function var_26_4()
-		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_stop)
+		AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_feichi_yure_caption_20200115)
 
 		if arg_26_1 then
 			arg_26_1(arg_26_2)

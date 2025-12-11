@@ -19,12 +19,20 @@ end
 function var_0_0._onFuncOpen(arg_4_0, arg_4_1)
 	if tabletool.indexOf(arg_4_1, OpenEnum.UnlockFunc.RoleStory) then
 		HeroStoryRpc.instance:sendGetHeroStoryRequest()
+		TaskRpc.instance:sendGetTaskInfoRequest({
+			TaskEnum.TaskType.NecrologistStory
+		})
 	end
 end
 
 function var_0_0._onGetInfoFinish(arg_5_0)
+	NecrologistStoryRpc.instance:sendGetNecrologistStoryRequest(NecrologistStoryEnum.RoleStoryId.V3A1)
+
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.RoleStory) then
 		HeroStoryRpc.instance:sendGetHeroStoryRequest()
+		TaskRpc.instance:sendGetTaskInfoRequest({
+			TaskEnum.TaskType.NecrologistStory
+		})
 	end
 end
 

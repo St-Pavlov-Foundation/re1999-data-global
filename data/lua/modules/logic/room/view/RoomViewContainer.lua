@@ -10,6 +10,7 @@ function var_0_0.buildViews(arg_1_0)
 	table.insert(var_1_0, RoomViewTouch.New())
 	table.insert(var_1_0, RoomViewBlur.New())
 	table.insert(var_1_0, RoomViewCameraState.New())
+	table.insert(var_1_0, RoomViewTips.New())
 
 	if RoomController.instance:isEditMode() then
 		table.insert(var_1_0, TabViewGroup.New(2, "blockop_tab"))
@@ -109,6 +110,35 @@ function var_0_0.buildViews(arg_1_0)
 				classDefine = RoomViewTopRightBlockItem
 			}
 		}))
+	elseif FishingModel.instance:isInFishing() then
+		local var_1_1 = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.OneFishCost, true, "#")
+		local var_1_2 = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.ExchangeCostCurrency, true)
+
+		table.insert(var_1_0, TabViewGroup.New(5, "go_normalroot/go_confirm"))
+		table.insert(var_1_0, RoomViewTopRight.New("go_normalroot/go_topright", arg_1_0._viewSetting.otherRes[3], {
+			{
+				classDefine = RoomViewTopRightMaterialItem,
+				type = MaterialEnum.MaterialType.Currency,
+				id = var_1_2,
+				listeningItems = {
+					{
+						type = MaterialEnum.MaterialType.Currency,
+						id = var_1_2
+					}
+				}
+			},
+			{
+				classDefine = RoomViewTopRightFishingItem,
+				type = MaterialEnum.MaterialType.Currency,
+				id = var_1_1[1],
+				listeningItems = {
+					{
+						type = MaterialEnum.MaterialType.Currency,
+						id = var_1_1[1]
+					}
+				}
+			}
+		}))
 	end
 
 	table.insert(var_1_0, RoomViewUI.New())
@@ -136,6 +166,12 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 				true,
 				true
 			}, HelpEnum.HelpId.RoomOb)
+		elseif RoomController.instance:isFishingMode() then
+			arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+				true,
+				true,
+				true
+			}, HelpEnum.HelpId.RoomFishing)
 		else
 			arg_2_0._navigateButtonsView = NavigateButtonsView.New({
 				true,
@@ -168,13 +204,23 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		return {
 			RoomLayoutVisitPlan.New()
 		}
+	elseif arg_2_1 == 5 then
+		local var_2_2 = arg_2_0:buildRoomFishingFriendScrollViews()
+		local var_2_3 = MultiView.New({
+			RoomFishingView.New(),
+			var_2_2
+		})
+
+		return {
+			var_2_3
+		}
 	end
 end
 
 function var_0_0.buildRoomWaterReformScrollViews(arg_3_0)
 	local var_3_0 = ListScrollParam.New()
 
-	var_3_0.scrollGOPath = "#go_bottom/#go_blockContent/scroll_block"
+	var_3_0.scrollGOPath = "#go_bottom/#go_blockContent/layout/scroll_block"
 	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromView
 	var_3_0.prefabUrl = "#go_bottom/#go_blockContent/#go_item"
 	var_3_0.cellClass = RoomWaterReformItem
@@ -189,46 +235,66 @@ function var_0_0.buildRoomWaterReformScrollViews(arg_3_0)
 	return (LuaListScrollView.New(RoomWaterReformListModel.instance, var_3_0))
 end
 
-function var_0_0.onContainerOpenFinish(arg_4_0)
-	arg_4_0._navigateButtonsView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
-	arg_4_0._navigateButtonsView:resetHomeBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
+function var_0_0.buildRoomFishingFriendScrollViews(arg_4_0)
+	local var_4_0 = ListScrollParam.New()
+
+	var_4_0.scrollGOPath = "Root/Left/FriendList/#go_Expand/ScrollView"
+	var_4_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_4_0.prefabUrl = "Root/Left/FriendList/#go_Expand/ScrollView/Viewport/Content/#go_Item"
+	var_4_0.cellClass = RoomFishingFriendItem
+	var_4_0.scrollDir = ScrollEnum.ScrollDirV
+	var_4_0.lineCount = 1
+	var_4_0.cellWidth = 530
+	var_4_0.cellHeight = 120
+	var_4_0.cellSpaceV = -4
+	var_4_0.startSpace = 5
+	var_4_0.emptyScrollParam = EmptyScrollParam.New()
+
+	var_4_0.emptyScrollParam:setFromView("Root/Left/FriendList/#go_Expand/#go_empty")
+
+	return (LuaListScrollView.New(FishingFriendListModel.instance, var_4_0))
+end
+
+function var_0_0.onContainerOpenFinish(arg_5_0)
+	arg_5_0._navigateButtonsView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
+	arg_5_0._navigateButtonsView:resetHomeBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
 
 	if RoomController.instance:isEditMode() then
-		local var_4_0
+		local var_5_0
 
 		if ManufactureModel.instance:getIsJump2ManufactureBuildingList() then
-			var_4_0 = RoomBuildingEnum.BuildingListViewResTabType.Produce
+			var_5_0 = RoomBuildingEnum.BuildingListViewResTabType.Produce
 		end
 
-		local var_4_1 = RoomTransportPathModel.instance:getisJumpTransportSite()
+		local var_5_1 = RoomTransportPathModel.instance:getisJumpTransportSite()
 
 		RoomTransportPathModel.instance:setIsJumpTransportSite()
 		ManufactureModel.instance:setIsJump2ManufactureBuildingList()
 		ViewMgr.instance:openView(ViewName.RoomInventorySelectView, {
-			defaultBuildingResType = var_4_0,
-			isJumpTransportSite = var_4_1
+			defaultBuildingResType = var_5_0,
+			isJumpTransportSite = var_5_1
 		})
 	end
 
 	if RoomController.instance:isObMode() or RoomController.instance:isVisitMode() then
-		arg_4_0._navigateButtonsView:setHelpId(HelpEnum.HelpId.RoomOb)
+		arg_5_0._navigateButtonsView:setHelpId(HelpEnum.HelpId.RoomOb)
 	end
 
 	if RoomController.instance:isEditMode() then
-		arg_4_0._navigateButtonsView:setHelpId(HelpEnum.HelpId.RoomManufacture)
+		arg_5_0._navigateButtonsView:setHelpId(HelpEnum.HelpId.RoomManufacture)
 	end
 end
 
-function var_0_0._overrideCloseFunc(arg_5_0)
+function var_0_0._overrideCloseFunc(arg_6_0)
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.RoomForbidBtn) then
 		GameFacade.showToast(RoomEnum.GuideForbidEscapeToast)
 
 		return
 	end
 
-	local var_5_0 = GameSceneMgr.instance:getCurScene()
+	local var_6_0 = GameSceneMgr.instance:getCurScene()
 
-	if var_5_0.camera:isTweening() then
+	if var_6_0.camera:isTweening() then
 		return
 	end
 
@@ -238,12 +304,18 @@ function var_0_0._overrideCloseFunc(arg_5_0)
 		return
 	end
 
-	if arg_5_0:shouldShowUI() then
+	if arg_6_0:shouldShowUI() then
 		return
 	end
 
-	if var_5_0.camera:getCameraState() ~= RoomEnum.CameraState.Overlook then
-		var_5_0.camera:switchCameraState(RoomEnum.CameraState.Overlook, {})
+	local var_6_1 = RoomEnum.CameraState.Overlook
+
+	if FishingModel.instance:isInFishing() then
+		var_6_1 = RoomEnum.CameraState.OverlookAll
+	end
+
+	if var_6_0.camera:getCameraState() ~= var_6_1 then
+		var_6_0.camera:switchCameraState(var_6_1, {})
 
 		return
 	end
@@ -251,15 +323,15 @@ function var_0_0._overrideCloseFunc(arg_5_0)
 	RoomController.instance:exitRoom()
 end
 
-function var_0_0._overrideHelpFunc(arg_6_0)
+function var_0_0._overrideHelpFunc(arg_7_0)
 	ViewMgr.instance:openView(ViewName.HelpPageTabView)
 end
 
-function var_0_0._onEscape(arg_7_0)
+function var_0_0._onEscape(arg_8_0)
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.RoomForbidBtn) then
 		GameFacade.showToast(RoomEnum.GuideForbidEscapeToast)
 	else
-		if arg_7_0:shouldShowUI() then
+		if arg_8_0:shouldShowUI() then
 			return
 		end
 
@@ -277,7 +349,7 @@ function var_0_0._onEscape(arg_7_0)
 	end
 end
 
-function var_0_0.shouldShowUI(arg_8_0)
+function var_0_0.shouldShowUI(arg_9_0)
 	if RoomMapController.instance:isUIHide() then
 		RoomMapController.instance:setUIHide(false)
 
@@ -287,38 +359,45 @@ function var_0_0.shouldShowUI(arg_8_0)
 	return false
 end
 
-function var_0_0.setNavigateButtonShow(arg_9_0, arg_9_1)
-	if arg_9_1 then
+function var_0_0.setNavigateButtonShow(arg_10_0, arg_10_1)
+	if arg_10_1 then
 		NavigateMgr.instance:removeEscape(ViewName.RoomView)
 
 		if RoomController.instance:isObMode() then
-			arg_9_0._navigateButtonsView:setParam({
+			arg_10_0._navigateButtonsView:setParam({
 				true,
 				true,
 				true
 			}, HelpEnum.HelpId.RoomOb)
 		elseif RoomController.instance:isEditMode() then
-			arg_9_0._navigateButtonsView:setParam({
+			arg_10_0._navigateButtonsView:setParam({
 				true,
 				true,
 				true
 			}, HelpEnum.HelpId.RoomManufacture)
 		elseif RoomController.instance:isVisitMode() then
-			arg_9_0._navigateButtonsView:setParam({
+			arg_10_0._navigateButtonsView:setParam({
 				true,
 				true,
 				true
 			}, HelpEnum.HelpId.RoomOb)
+		elseif FishingModel.instance:isInFishing() then
+			arg_10_0._navigateButtonsView:setParam({
+				true,
+				true,
+				true
+			})
+			arg_10_0._navigateButtonsView:setHelpId(HelpEnum.HelpId.RoomFishing)
 		else
-			arg_9_0._navigateButtonsView:setParam({
+			arg_10_0._navigateButtonsView:setParam({
 				true,
 				false,
 				false
 			})
 		end
 	else
-		NavigateMgr.instance:addEscape(ViewName.RoomView, arg_9_0._onEscape, arg_9_0)
-		arg_9_0._navigateButtonsView:setParam({
+		NavigateMgr.instance:addEscape(ViewName.RoomView, arg_10_0._onEscape, arg_10_0)
+		arg_10_0._navigateButtonsView:setParam({
 			false,
 			false,
 			false
@@ -326,12 +405,12 @@ function var_0_0.setNavigateButtonShow(arg_9_0, arg_9_1)
 	end
 end
 
-function var_0_0.selectBlockOpTab(arg_10_0, arg_10_1)
-	if not arg_10_1 then
+function var_0_0.selectBlockOpTab(arg_11_0, arg_11_1)
+	if not arg_11_1 then
 		return
 	end
 
-	arg_10_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_10_1)
+	arg_11_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_11_1)
 end
 
 return var_0_0

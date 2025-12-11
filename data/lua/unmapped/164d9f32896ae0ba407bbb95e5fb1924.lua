@@ -140,5 +140,19 @@ var_0_0.GM_ActivityWelfareView = {
 	layer = "TOP",
 	viewType = ViewType.Modal
 }
+var_0_0.GM_V3a1_GaoSiNiao_LevelView = {
+	destroy = 0,
+	container = "GM_V3a1_GaoSiNiao_LevelViewContainer",
+	mainRes = "ui/viewres/gm/gm_v3a1_gaosiniao_levelview.prefab",
+	layer = "TOP",
+	viewType = ViewType.Modal
+}
+var_0_0.GM_V3a1_GaoSiNiao_GameView = {
+	destroy = 0,
+	container = "GM_V3a1_GaoSiNiao_GameViewContainer",
+	mainRes = "ui/viewres/gm/gm_v3a1_gaosiniao_gameview.prefab",
+	layer = "TOP",
+	viewType = ViewType.Modal
+}
 
 return var_0_0

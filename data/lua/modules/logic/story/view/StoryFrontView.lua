@@ -179,7 +179,9 @@ function var_0_0._btnautoOnClick(arg_13_0)
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_plot_common)
 
-	if arg_13_0._stepCo.conversation.type ~= StoryEnum.ConversationType.None and arg_13_0._stepCo.conversation.type ~= StoryEnum.ConversationType.NoInteract and arg_13_0._stepCo.conversation.type ~= StoryEnum.ConversationType.ScreenDialog and arg_13_0._stepCo.conversation.type ~= StoryEnum.ConversationType.IrregularShake then
+	local var_13_0 = StoryModel.instance:isLimitNoInteractLock(arg_13_0._stepCo)
+
+	if arg_13_0._stepCo.conversation.type ~= StoryEnum.ConversationType.None and arg_13_0._stepCo.conversation.type ~= StoryEnum.ConversationType.NoInteract and arg_13_0._stepCo.conversation.type ~= StoryEnum.ConversationType.ScreenDialog and arg_13_0._stepCo.conversation.type ~= StoryEnum.ConversationType.IrregularShake and not var_13_0 then
 		StoryModel.instance:enableClick(true)
 	end
 
@@ -187,9 +189,9 @@ function var_0_0._btnautoOnClick(arg_13_0)
 		return
 	end
 
-	local var_13_0 = not StoryModel.instance:isStoryAuto()
+	local var_13_1 = not StoryModel.instance:isStoryAuto()
 
-	StoryModel.instance:setStoryAuto(var_13_0)
+	StoryModel.instance:setStoryAuto(var_13_1)
 	StoryController.instance:dispatchEvent(StoryEvent.Auto)
 end
 
@@ -216,8 +218,8 @@ function var_0_0._btnskipOnClick(arg_15_0)
 	end
 
 	if not StoryModel.instance:isReplay() then
-		local var_15_0 = StoryController.instance._curStoryId
-		local var_15_1 = StoryController.instance._curStepId
+		local var_15_0 = StoryModel.instance:getCurStoryId()
+		local var_15_1 = StoryModel.instance:getCurStepId()
 		local var_15_2, var_15_3 = StoryModel.instance:isPrologueSkipAndGetTxt(var_15_0, var_15_1)
 
 		if var_15_2 then
@@ -245,7 +247,7 @@ end
 function var_0_0._onPrologueSkip(arg_18_0)
 	gohelper.setActive(arg_18_0._gobtns, true)
 
-	local var_18_0 = StoryController.instance._curStoryId
+	local var_18_0 = StoryModel.instance:getCurStoryId()
 
 	StoryModel.instance:setPrologueSkipId(var_18_0)
 	arg_18_0:_onSkipConfirm()
@@ -367,6 +369,7 @@ function var_0_0.onOpen(arg_23_0)
 	arg_23_0:addEventCb(StoryController.instance, StoryEvent.PlayIrregularShakeText, arg_23_0._onPlayIrregularShakeText, arg_23_0)
 	arg_23_0:addEventCb(StoryController.instance, StoryEvent.PlayFullTextOut, arg_23_0._onPlayFullTextOut, arg_23_0)
 	arg_23_0:addEventCb(StoryController.instance, StoryEvent.PlayFullBlurIn, arg_23_0._onPlayFullBlurIn, arg_23_0)
+	arg_23_0:addEventCb(StoryController.instance, StoryEvent.PlayFullBlurOut, arg_23_0._onPlayFullBlurOut, arg_23_0)
 	arg_23_0:addEventCb(StoryController.instance, StoryEvent.PlayFullTextLineShow, arg_23_0._onPlayLineShow, arg_23_0)
 	arg_23_0:addEventCb(StoryController.instance, StoryEvent.RefreshNavigate, arg_23_0._refreshNavigate, arg_23_0)
 	arg_23_0:addEventCb(StoryController.instance, StoryEvent.OnSkipClick, arg_23_0._onPrologueSkip, arg_23_0)
@@ -390,7 +393,7 @@ function var_0_0.onOpen(arg_23_0)
 		gohelper.setActive(arg_23_0._btnauto, true)
 
 		local var_23_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.StorySkip) or StoryModel.instance:isReplay()
-		local var_23_1 = StoryModel.instance:isDirectSkipStory(StoryController.instance._curStoryId)
+		local var_23_1 = StoryModel.instance:isDirectSkipStory(StoryModel.instance:getCurStoryId())
 
 		var_23_0 = var_23_0 or isDebugBuild or var_23_1
 
@@ -420,6 +423,7 @@ function var_0_0.onClose(arg_24_0)
 	arg_24_0:removeEventCb(StoryController.instance, StoryEvent.PlayIrregularShakeText, arg_24_0._onPlayIrregularShakeText, arg_24_0)
 	arg_24_0:removeEventCb(StoryController.instance, StoryEvent.PlayFullTextOut, arg_24_0._onPlayFullTextOut, arg_24_0)
 	arg_24_0:removeEventCb(StoryController.instance, StoryEvent.PlayFullBlurIn, arg_24_0._onPlayFullBlurIn, arg_24_0)
+	arg_24_0:removeEventCb(StoryController.instance, StoryEvent.PlayFullBlurOut, arg_24_0._onPlayFullBlurOut, arg_24_0)
 	arg_24_0:removeEventCb(StoryController.instance, StoryEvent.PlayFullTextLineShow, arg_24_0._onPlayLineShow, arg_24_0)
 	arg_24_0:removeEventCb(StoryController.instance, StoryEvent.RefreshNavigate, arg_24_0._refreshNavigate, arg_24_0)
 	arg_24_0:removeEventCb(StoryController.instance, StoryEvent.OnSkipClick, arg_24_0._onPrologueSkip, arg_24_0)
@@ -463,8 +467,8 @@ function var_0_0._onPlayFullText(arg_29_0, arg_29_1)
 	elseif arg_29_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.WordByWord then
 		arg_29_0._frontItem:wordByWord(arg_29_0._stepCo, arg_29_0._onFullTextShowFinished, arg_29_0)
 	elseif arg_29_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Glitch then
+		arg_29_0._frontItem:playTextFadeIn(arg_29_0._stepCo, arg_29_0._onFullTextShowFinished, arg_29_0)
 		arg_29_0._frontItem:playGlitch()
-		arg_29_0:_onFullTextShowFinished()
 	end
 end
 
@@ -495,64 +499,103 @@ function var_0_0._onPlayFullBlurIn(arg_32_0, arg_32_1, arg_32_2)
 		1
 	}
 
+	PostProcessingMgr.instance:setUIBlurActive(3)
+	PostProcessingMgr.instance:setFreezeVisble(true)
 	PostProcessingMgr.instance:setDesamplingRate(1)
+	arg_32_0:_killBlurId()
 
 	arg_32_0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(0, var_32_0[arg_32_1], arg_32_2, arg_32_0._fadeUpdate, nil, arg_32_0, nil, EaseType.Linear)
 end
 
-function var_0_0._fadeUpdate(arg_33_0, arg_33_1)
-	PostProcessingMgr.instance:setBlurWeight(arg_33_1)
+function var_0_0._killBlurId(arg_33_0)
+	if arg_33_0._blurTweenId then
+		ZProj.TweenHelper.KillById(arg_33_0._blurTweenId)
+
+		arg_33_0._blurTweenId = nil
+	end
 end
 
-function var_0_0._onPlayLineShow(arg_34_0, arg_34_1, arg_34_2)
-	arg_34_0._stepCo = arg_34_2
+function var_0_0._onPlayFullBlurOut(arg_34_0, arg_34_1)
+	arg_34_0:_killBlurId()
 
-	arg_34_0._frontItem:lineShow(arg_34_1, arg_34_0._stepCo, arg_34_0._onFullTextShowFinished, arg_34_0)
+	local var_34_0 = PostProcessingMgr.instance:getCaptureView()
+
+	if not var_34_0 or not var_34_0.activeSelf then
+		return
+	end
+
+	local var_34_1 = var_34_0:GetComponent(typeof(UrpCustom.UIGaussianEffect))
+	local var_34_2 = var_34_1 and var_34_1.blurWeight or 0
+
+	if var_34_2 <= 0 then
+		return
+	end
+
+	if arg_34_1 < 0.1 then
+		arg_34_0:_fadeBlurOutFinished()
+
+		return
+	end
+
+	arg_34_0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(var_34_2, 0, arg_34_1, arg_34_0._fadeUpdate, arg_34_0._fadeBlurOutFinished, arg_34_0, nil, EaseType.Linear)
 end
 
-function var_0_0._onFullTextShowFinished(arg_35_0)
+function var_0_0._fadeUpdate(arg_35_0, arg_35_1)
+	PostProcessingMgr.instance:setBlurWeight(arg_35_1)
+end
+
+function var_0_0._fadeBlurOutFinished(arg_36_0)
+	PostProcessingMgr.instance:setUIBlurActive(0)
+	PostProcessingMgr.instance:setFreezeVisble(false)
+	arg_36_0:_killBlurId()
+	arg_36_0:_fadeUpdate(0)
+end
+
+function var_0_0._onPlayLineShow(arg_37_0, arg_37_1, arg_37_2)
+	arg_37_0._stepCo = arg_37_2
+
+	arg_37_0._frontItem:lineShow(arg_37_1, arg_37_0._stepCo, arg_37_0._onFullTextShowFinished, arg_37_0)
+end
+
+function var_0_0._onFullTextShowFinished(arg_38_0)
 	StoryController.instance:dispatchEvent(StoryEvent.FullTextLineShowFinished)
 end
 
-function var_0_0._onUpdateUI(arg_36_0, arg_36_1)
-	if arg_36_0._blurTweenId then
-		ZProj.TweenHelper.KillById(arg_36_0._blurTweenId)
+function var_0_0._onUpdateUI(arg_39_0, arg_39_1)
+	arg_39_0:_killBlurId()
 
-		arg_36_0._blurTweenId = nil
-	end
+	local var_39_0 = arg_39_1.stepType == StoryEnum.StepType.Normal
+	local var_39_1 = var_39_0 and "#FFFFFF" or "#292218"
+	local var_39_2 = var_39_0 and "#FFFFFF" or "#333333"
 
-	local var_36_0 = arg_36_1.stepType == StoryEnum.StepType.Normal
-	local var_36_1 = var_36_0 and "#FFFFFF" or "#292218"
-	local var_36_2 = var_36_0 and "#FFFFFF" or "#333333"
+	SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._txtskip, var_39_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._imageskip, var_39_2)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._txtauto, var_39_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._imageautooff, var_39_2)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._imageautoon, var_39_2)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._imageskiptxt, var_39_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._imageautotxt, var_39_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._txtexit, var_39_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._imageexittxt, var_39_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._imageexit, var_39_2)
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_36_0._txtskip, var_36_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_36_0._imageskip, var_36_2)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_36_0._txtauto, var_36_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_36_0._imageautooff, var_36_2)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_36_0._imageautoon, var_36_2)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_36_0._imageskiptxt, var_36_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_36_0._imageautotxt, var_36_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_36_0._txtexit, var_36_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_36_0._imageexittxt, var_36_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_36_0._imageexit, var_36_2)
+	arg_39_0._stepCo = StoryStepModel.instance:getStepListById(arg_39_1.stepId)
 
-	arg_36_0._stepCo = StoryStepModel.instance:getStepListById(arg_36_1.stepId)
-
-	if arg_36_0:_isCgStep() or StoryModel.instance:getHideBtns() then
-		arg_36_0:setBtnVisible(false)
+	if arg_39_0:_isCgStep() or StoryModel.instance:getHideBtns() then
+		arg_39_0:setBtnVisible(false)
 	else
-		arg_36_0:setBtnVisible(true)
+		arg_39_0:setBtnVisible(true)
 	end
 
-	if not (arg_36_0._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog) then
-		arg_36_0._frontItem:showFullScreenText(false, "")
+	if not (arg_39_0._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog) then
+		arg_39_0._frontItem:showFullScreenText(false, "")
 	end
 
-	arg_36_0:refreshExitBtn()
+	arg_39_0:refreshExitBtn()
 end
 
-function var_0_0._isCgStep(arg_37_0)
-	if StoryController.instance._curStoryId ~= 100001 then
+function var_0_0._isCgStep(arg_40_0)
+	if StoryModel.instance:getCurStoryId() ~= 100001 then
 		return false
 	end
 
@@ -564,9 +607,9 @@ function var_0_0._isCgStep(arg_37_0)
 		return false
 	end
 
-	if arg_37_0._stepCo then
-		for iter_37_0, iter_37_1 in pairs(arg_37_0._stepCo.videoList) do
-			if iter_37_1.orderType ~= StoryEnum.VideoOrderType.Destroy then
+	if arg_40_0._stepCo then
+		for iter_40_0, iter_40_1 in pairs(arg_40_0._stepCo.videoList) do
+			if iter_40_1.orderType ~= StoryEnum.VideoOrderType.Destroy then
 				return true
 			end
 		end
@@ -575,251 +618,247 @@ function var_0_0._isCgStep(arg_37_0)
 	return false
 end
 
-function var_0_0._enterStory(arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._startStory, arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._viewFadeIn, arg_38_0)
-	arg_38_0._frontItem:cancelViewFadeOut()
-	gohelper.setActive(arg_38_0._goblock, false)
-	arg_38_0:_screenFadeIn()
+function var_0_0._enterStory(arg_41_0)
+	TaskDispatcher.cancelTask(arg_41_0._startStory, arg_41_0)
+	TaskDispatcher.cancelTask(arg_41_0._viewFadeIn, arg_41_0)
+	arg_41_0._frontItem:cancelViewFadeOut()
+	gohelper.setActive(arg_41_0._goblock, false)
+	arg_41_0:_screenFadeIn()
 end
 
-function var_0_0._screenFadeIn(arg_39_0)
+function var_0_0._screenFadeIn(arg_42_0)
 	if GuideModel.instance:isDoingFirstGuide() and not GuideController.instance:isForbidGuides() and GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
 		StoryController.instance:startStory()
 
 		return
 	end
 
-	local var_39_0 = StoryModel.instance:isTypeSkip(StoryEnum.SkipType.InDarkFade, StoryController.instance._curStoryId)
+	local var_42_0 = StoryModel.instance:isTypeSkip(StoryEnum.SkipType.InDarkFade, StoryModel.instance:getCurStoryId())
 
-	StoryModel.instance.skipFade = var_39_0
+	StoryModel.instance.skipFade = var_42_0
 
-	arg_39_0._frontItem:setFullTopShow()
-	gohelper.setActive(arg_39_0.viewGO, true)
+	arg_42_0._frontItem:setFullTopShow()
+	gohelper.setActive(arg_42_0.viewGO, true)
 
-	if arg_39_0._reOpen and var_39_0 then
-		arg_39_0:_startStory()
+	if arg_42_0._reOpen and var_42_0 then
+		arg_42_0:_startStory()
 	else
-		TaskDispatcher.runDelay(arg_39_0._startStory, arg_39_0, 0.5)
+		TaskDispatcher.runDelay(arg_42_0._startStory, arg_42_0, 0.5)
 	end
 end
 
-function var_0_0._startStory(arg_40_0)
+function var_0_0._startStory(arg_43_0)
 	StoryController.instance:startStory()
-	TaskDispatcher.runDelay(arg_40_0._viewFadeIn, arg_40_0, 0.05)
+	TaskDispatcher.runDelay(arg_43_0._viewFadeIn, arg_43_0, 0.05)
 end
 
-function var_0_0._viewFadeIn(arg_41_0)
+function var_0_0._viewFadeIn(arg_44_0)
 	if StoryController.instance._showBlur then
-		arg_41_0._dofFactor = PostProcessingMgr.instance:getUnitPPValue("DofFactor")
-		arg_41_0._unitCameraActive = CameraMgr.instance:getUnitCamera().gameObject.activeSelf
+		arg_44_0._dofFactor = PostProcessingMgr.instance:getUnitPPValue("DofFactor")
+		arg_44_0._unitCameraActive = CameraMgr.instance:getUnitCamera().gameObject.activeSelf
 
 		gohelper.setActive(PostProcessingMgr.instance._unitPPVolume.gameObject, true)
 		gohelper.setActive(CameraMgr.instance:getUnitCamera(), true)
+		arg_44_0:_killBlurId()
 
-		arg_41_0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.5, arg_41_0._blurUpdate, arg_41_0._blurInFinished, arg_41_0, EaseType.Linear)
+		arg_44_0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.5, arg_44_0._blurUpdate, arg_44_0._blurInFinished, arg_44_0, EaseType.Linear)
 
 		return
 	end
 
-	arg_41_0._frontItem:playStoryViewIn()
+	arg_44_0._frontItem:playStoryViewIn()
 end
 
-function var_0_0._blurUpdate(arg_42_0, arg_42_1)
-	PostProcessingMgr.instance:setUnitPPValue("dofFactor", arg_42_1)
-	PostProcessingMgr.instance:setUnitPPValue("DofFactor", arg_42_1)
+function var_0_0._blurUpdate(arg_45_0, arg_45_1)
+	PostProcessingMgr.instance:setUnitPPValue("dofFactor", arg_45_1)
+	PostProcessingMgr.instance:setUnitPPValue("DofFactor", arg_45_1)
 end
 
-function var_0_0._blurInFinished(arg_43_0)
-	arg_43_0:_blurUpdate(1)
-
-	arg_43_0._blurTweenId = nil
+function var_0_0._blurInFinished(arg_46_0)
+	arg_46_0:_blurUpdate(1)
+	arg_46_0:_killBlurId()
 end
 
-function var_0_0._screenFadeOut(arg_44_0, arg_44_1)
+function var_0_0._screenFadeOut(arg_47_0, arg_47_1)
 	StoryModel.instance:enableClick(false)
-	gohelper.setActive(arg_44_0._goblock, true)
-	gohelper.setActive(arg_44_0._goepisode, false)
-	gohelper.setActive(arg_44_0._gochapteropen, false)
-	arg_44_0:setBtnVisible(false)
+	gohelper.setActive(arg_47_0._goblock, true)
+	gohelper.setActive(arg_47_0._goepisode, false)
+	gohelper.setActive(arg_47_0._gochapteropen, false)
+	arg_47_0:setBtnVisible(false)
 
-	if arg_44_0._exitBtn then
-		arg_44_0._exitBtn:setActive(false)
+	if arg_47_0._exitBtn then
+		arg_47_0._exitBtn:setActive(false)
 	end
 
 	if StoryController.instance._showBlur then
-		arg_44_0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 1.5, arg_44_0._blurUpdate, arg_44_0._blurOutFinished, arg_44_0, EaseType.Linear)
+		arg_47_0:_killBlurId()
+
+		arg_47_0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 1.5, arg_47_0._blurUpdate, arg_47_0._blurOutFinished, arg_47_0, EaseType.Linear)
 
 		return
 	end
 
-	arg_44_0._frontItem:playStoryViewOut(arg_44_0._onScreenFadeOut, arg_44_0, arg_44_1)
+	arg_47_0._frontItem:playStoryViewOut(arg_47_0._onScreenFadeOut, arg_47_0, arg_47_1)
 end
 
-function var_0_0._blurOutFinished(arg_45_0)
-	arg_45_0:_blurUpdate(0)
-	PostProcessingMgr.instance:setUnitPPValue("dofFactor", arg_45_0._dofFactor or 0)
-	PostProcessingMgr.instance:setUnitPPValue("DofFactor", arg_45_0._dofFactor or 0)
-	gohelper.setActive(CameraMgr.instance:getUnitCamera().gameObject, arg_45_0._unitCameraActive)
+function var_0_0._blurOutFinished(arg_48_0)
+	arg_48_0:_blurUpdate(0)
+	PostProcessingMgr.instance:setUnitPPValue("dofFactor", arg_48_0._dofFactor or 0)
+	PostProcessingMgr.instance:setUnitPPValue("DofFactor", arg_48_0._dofFactor or 0)
+	gohelper.setActive(CameraMgr.instance:getUnitCamera().gameObject, arg_48_0._unitCameraActive)
 	StoryController.instance:finished()
-	arg_45_0._frontItem:enterStoryFinish()
-	arg_45_0:_onScreenFadeOut()
+	arg_48_0._frontItem:enterStoryFinish()
+	arg_48_0:_onScreenFadeOut()
 end
 
-function var_0_0._onScreenFadeOut(arg_46_0)
-	if arg_46_0._navigateItem then
-		arg_46_0._navigateItem:clear()
+function var_0_0._onScreenFadeOut(arg_49_0)
+	if arg_49_0._navigateItem then
+		arg_49_0._navigateItem:clear()
 	end
 end
 
-function var_0_0._refreshNavigate(arg_47_0, arg_47_1)
-	local var_47_0 = false
-	local var_47_1 = {}
+function var_0_0._refreshNavigate(arg_50_0, arg_50_1)
+	local var_50_0 = false
+	local var_50_1 = {}
 
-	for iter_47_0, iter_47_1 in pairs(arg_47_1) do
-		if iter_47_1.navigateType == StoryEnum.NavigateType.HideBtns then
-			var_47_0 = true
+	for iter_50_0, iter_50_1 in pairs(arg_50_1) do
+		if iter_50_1.navigateType == StoryEnum.NavigateType.HideBtns then
+			var_50_0 = true
 		else
-			table.insert(var_47_1, iter_47_1)
+			table.insert(var_50_1, iter_50_1)
 		end
 	end
 
-	arg_47_0:setBtnVisible(not var_47_0)
-	arg_47_0:refreshExitBtn()
-	StoryModel.instance:setHideBtns(var_47_0)
+	arg_50_0:setBtnVisible(not var_50_0)
+	arg_50_0:refreshExitBtn()
+	StoryModel.instance:setHideBtns(var_50_0)
 
-	if #var_47_1 > 0 then
-		if not arg_47_0._navigateItem then
-			arg_47_0._navigateItem = StoryNavigateItem.New()
+	if #var_50_1 > 0 then
+		if not arg_50_0._navigateItem then
+			arg_50_0._navigateItem = StoryNavigateItem.New()
 
-			arg_47_0._navigateItem:init(arg_47_0._gonavigate)
-			arg_47_0._navigateItem:show(var_47_1)
+			arg_50_0._navigateItem:init(arg_50_0._gonavigate)
+			arg_50_0._navigateItem:show(var_50_1)
 		else
-			arg_47_0._navigateItem:show(var_47_1)
+			arg_50_0._navigateItem:show(var_50_1)
 		end
-	elseif arg_47_0._navigateItem then
-		arg_47_0._navigateItem:clear()
+	elseif arg_50_0._navigateItem then
+		arg_50_0._navigateItem:clear()
 	end
 end
 
-function var_0_0.setBtnVisible(arg_48_0, arg_48_1)
+function var_0_0.setBtnVisible(arg_51_0, arg_51_1)
 	if StoryModel.instance:getHideBtns() then
-		gohelper.setActive(arg_48_0._gobtns, false)
+		gohelper.setActive(arg_51_0._gobtns, false)
 
 		return
 	end
 
-	if arg_48_0.btnVisible == arg_48_1 then
+	if arg_51_0.btnVisible == arg_51_1 then
 		return
 	end
 
-	arg_48_0.btnVisible = arg_48_1
+	arg_51_0.btnVisible = arg_51_1
 
-	gohelper.setActive(arg_48_0._gobtns, arg_48_1)
+	gohelper.setActive(arg_51_0._gobtns, arg_51_1)
 end
 
-function var_0_0._setBtnsVisible(arg_49_0, arg_49_1)
+function var_0_0._setBtnsVisible(arg_52_0, arg_52_1)
 	if StoryController.instance._showBlur then
 		StoryModel.instance:setUIActive(true)
 	else
-		local var_49_0 = StoryModel.instance:getUIActive()
+		local var_52_0 = StoryModel.instance:getUIActive()
 
-		StoryModel.instance:setUIActive(var_49_0)
+		StoryModel.instance:setUIActive(var_52_0)
 	end
 
-	if arg_49_1 == ViewName.StoryLogView then
-		local var_49_1 = arg_49_0._gobtnleft.activeInHierarchy
+	if arg_52_1 == ViewName.StoryLogView then
+		local var_52_1 = arg_52_0._gobtnleft.activeInHierarchy
 
-		gohelper.setActive(arg_49_0._gobtnleft, not var_49_1)
-	end
-end
-
-function var_0_0._onHideBtns(arg_50_0, arg_50_1)
-	StoryModel.instance:setHideBtns(arg_50_1)
-	arg_50_0:setBtnVisible(not arg_50_1)
-
-	if arg_50_1 and arg_50_0._exitBtn then
-		arg_50_0._exitBtn:setActive(false)
+		gohelper.setActive(arg_52_0._gobtnleft, not var_52_1)
 	end
 end
 
-function var_0_0.startHideSkipTask(arg_51_0)
-	arg_51_0:closeHideSkipTask()
-	TaskDispatcher.runDelay(arg_51_0._hideSkipBtn, arg_51_0, 3)
-end
+function var_0_0._onHideBtns(arg_53_0, arg_53_1)
+	StoryModel.instance:setHideBtns(arg_53_1)
+	arg_53_0:setBtnVisible(not arg_53_1)
 
-function var_0_0._hideSkipBtn(arg_52_0)
-	gohelper.setActive(arg_52_0._objskip, false)
-end
-
-function var_0_0.closeHideSkipTask(arg_53_0)
-	TaskDispatcher.cancelTask(arg_53_0._hideSkipBtn, arg_53_0)
-end
-
-function var_0_0.refreshExitBtn(arg_54_0)
-	if arg_54_0._exitBtn then
-		arg_54_0._exitBtn:refresh(arg_54_0.btnVisible)
+	if arg_53_1 and arg_53_0._exitBtn then
+		arg_53_0._exitBtn:setActive(false)
 	end
 end
 
-function var_0_0.resetRightBtnPos(arg_55_0)
-	if arg_55_0._exitBtn and arg_55_0._exitBtn.isActive then
-		recthelper.setAnchorX(arg_55_0._gobtnright.transform, -260)
-		gohelper.setActive(arg_55_0._goshadow, arg_55_0._exitBtn.isInVideo and true or false)
+function var_0_0.startHideSkipTask(arg_54_0)
+	arg_54_0:closeHideSkipTask()
+	TaskDispatcher.runDelay(arg_54_0._hideSkipBtn, arg_54_0, 3)
+end
+
+function var_0_0._hideSkipBtn(arg_55_0)
+	gohelper.setActive(arg_55_0._objskip, false)
+end
+
+function var_0_0.closeHideSkipTask(arg_56_0)
+	TaskDispatcher.cancelTask(arg_56_0._hideSkipBtn, arg_56_0)
+end
+
+function var_0_0.refreshExitBtn(arg_57_0)
+	if arg_57_0._exitBtn then
+		arg_57_0._exitBtn:refresh(arg_57_0.btnVisible)
+	end
+end
+
+function var_0_0.resetRightBtnPos(arg_58_0)
+	if arg_58_0._exitBtn and arg_58_0._exitBtn.isActive then
+		recthelper.setAnchorX(arg_58_0._gobtnright.transform, -260)
+		gohelper.setActive(arg_58_0._goshadow, arg_58_0._exitBtn.isInVideo and true or false)
 	else
-		recthelper.setAnchorX(arg_55_0._gobtnright.transform, -62)
-		gohelper.setActive(arg_55_0._goshadow, false)
+		recthelper.setAnchorX(arg_58_0._gobtnright.transform, -62)
+		gohelper.setActive(arg_58_0._goshadow, false)
 	end
 end
 
-function var_0_0.onDestroyView(arg_56_0)
+function var_0_0.onDestroyView(arg_59_0)
 	StoryModel.instance:setStoryPvPause(false)
-	TaskDispatcher.cancelTask(arg_56_0._realPause, arg_56_0)
-	TaskDispatcher.cancelTask(arg_56_0._playFinished, arg_56_0)
+	TaskDispatcher.cancelTask(arg_59_0._realPause, arg_59_0)
+	TaskDispatcher.cancelTask(arg_59_0._playFinished, arg_59_0)
 	UIBlockMgr.instance:endBlock("waitPause")
 	UIBlockMgr.instance:endBlock("PlayPv")
 
 	if StoryController.instance._showBlur then
-		PostProcessingMgr.instance:setUnitPPValue("dofFactor", arg_56_0._dofFactor or 0)
-		PostProcessingMgr.instance:setUnitPPValue("DofFactor", arg_56_0._dofFactor or 0)
+		PostProcessingMgr.instance:setUnitPPValue("dofFactor", arg_59_0._dofFactor or 0)
+		PostProcessingMgr.instance:setUnitPPValue("DofFactor", arg_59_0._dofFactor or 0)
 
 		StoryController.instance._showBlur = false
 	end
 
 	StoryController.instance:dispatchEvent(StoryEvent.StoryFrontViewDestroy)
-	TaskDispatcher.cancelTask(arg_56_0._startStory, arg_56_0)
-	TaskDispatcher.cancelTask(arg_56_0._viewFadeIn, arg_56_0)
+	TaskDispatcher.cancelTask(arg_59_0._startStory, arg_59_0)
+	TaskDispatcher.cancelTask(arg_59_0._viewFadeIn, arg_59_0)
+	arg_59_0:_killBlurId()
+	arg_59_0:closeHideSkipTask()
 
-	if arg_56_0._blurTweenId then
-		ZProj.TweenHelper.KillById(arg_56_0._blurTweenId)
+	if arg_59_0._frontItem then
+		arg_59_0._frontItem:destroy()
 
-		arg_56_0._blurTweenId = nil
+		arg_59_0._frontItem = nil
 	end
 
-	arg_56_0:closeHideSkipTask()
+	if arg_59_0._navigateItem then
+		arg_59_0._navigateItem:destroy()
 
-	if arg_56_0._frontItem then
-		arg_56_0._frontItem:destroy()
-
-		arg_56_0._frontItem = nil
+		arg_59_0._navigateItem = nil
 	end
 
-	if arg_56_0._navigateItem then
-		arg_56_0._navigateItem:destroy()
+	if arg_59_0._exitBtn then
+		arg_59_0._exitBtn:destroy()
 
-		arg_56_0._navigateItem = nil
+		arg_59_0._exitBtn = nil
 	end
 
-	if arg_56_0._exitBtn then
-		arg_56_0._exitBtn:destroy()
+	if arg_59_0._gmView then
+		arg_59_0._gmView:destroy()
 
-		arg_56_0._exitBtn = nil
-	end
-
-	if arg_56_0._gmView then
-		arg_56_0._gmView:destroy()
-
-		arg_56_0._gmView = nil
+		arg_59_0._gmView = nil
 	end
 end
 

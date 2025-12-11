@@ -24122,5 +24122,353 @@
   {
     "id": 1014002,
     "type": "AssassinGridType"
+  },
+  {
+    "id": 518040,
+    "type": "PerHasBuffTypeLayer"
+  },
+  {
+    "id": 50301,
+    "type": "LostLifePerTimes"
+  },
+  {
+    "id": 1041,
+    "type": "NONE"
+  },
+  {
+    "id": 744,
+    "type": "PerHp"
+  },
+  {
+    "id": 744203,
+    "type": "PerHp"
+  },
+  {
+    "id": 745,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745002,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745004,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745100,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745101,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745102,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745103,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745104,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745105,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745106,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745201,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745202,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745203,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745204,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745205,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745206,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745207,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745208,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745209,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745210,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745211,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745212,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745213,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745301,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745302,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745303,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745304,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745305,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745306,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745307,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745401,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 745402,
+    "type": "ExPointMax"
+  },
+  {
+    "id": 1010100,
+    "type": "ProgressValue"
+  },
+  {
+    "id": 57214,
+    "type": "NoBuffId"
+  },
+  {
+    "id": 56005,
+    "type": "NoBuff"
+  },
+  {
+    "id": 746,
+    "type": "Act191PerCostCoin"
+  },
+  {
+    "id": 746002,
+    "type": "Act191PerCostCoin"
+  },
+  {
+    "id": 45012,
+    "type": "HeroRoundInterval"
+  },
+  {
+    "id": 747,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747002,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747004,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747100,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747101,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747102,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747103,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747104,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747105,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747106,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747201,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747202,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747203,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747204,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747205,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747206,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747207,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747208,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747209,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747210,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747211,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747212,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747213,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747301,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747302,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747303,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747304,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747305,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747306,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747307,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747401,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 747402,
+    "type": "TargetRoleModelId"
+  },
+  {
+    "id": 24302,
+    "type": "TeammateAlive"
+  },
+  {
+    "id": 503204,
+    "type": "PerBuffTypeCountGroupByTypeIdLimit"
+  },
+  {
+    "id": 61401,
+    "type": "PerBuffIdCount"
+  },
+  {
+    "id": 550012,
+    "type": "AllInBuffByTypeId"
+  },
+  {
+    "id": 58202,
+    "type": "PerExPoint"
+  },
+  {
+    "id": 513103,
+    "type": "SelfTeamHasBuffTypeLayerMoreThan"
+  },
+  {
+    "id": 180103,
+    "type": "PowerCompare"
+  },
+  {
+    "id": 57103,
+    "type": "NoBuffId"
+  },
+  {
+    "id": 53209,
+    "type": "HurtNumType"
+  },
+  {
+    "id": 5362081,
+    "type": "TypeIdBuffCountLessThan"
+  },
+  {
+    "id": 1010102,
+    "type": "ProgressValue"
+  },
+  {
+    "id": 25211,
+    "type": "UseExSkill"
   }
 ]

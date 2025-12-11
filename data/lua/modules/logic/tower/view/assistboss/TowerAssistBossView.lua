@@ -83,26 +83,27 @@ function var_0_0.refreshView(arg_10_0)
 		if not var_10_4 then
 			local var_10_5 = arg_10_0.viewContainer:getSetting().otherRes.itemRes
 			local var_10_6 = arg_10_0.viewContainer:getResInst(var_10_5, arg_10_0.content, tostring(iter_10_0))
+			local var_10_7 = arg_10_0.viewParam.otherParam and arg_10_0.viewParam.otherParam.towerAssistBossItemCls or TowerAssistBossItem
 
-			var_10_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_6, TowerAssistBossItem)
+			var_10_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_6, var_10_7)
 			arg_10_0.items[iter_10_0] = var_10_4
 		end
 
-		local var_10_7 = var_10_0[iter_10_0]
+		local var_10_8 = var_10_0[iter_10_0]
 
-		gohelper.setActive(var_10_4.viewGO, var_10_7 ~= nil)
+		gohelper.setActive(var_10_4.viewGO, var_10_8 ~= nil)
 
-		if var_10_7 then
-			var_10_4:onUpdateMO(var_10_7)
+		if var_10_8 then
+			var_10_4:onUpdateMO(var_10_8, arg_10_0.viewParam)
 		end
 	end
 
-	local var_10_8 = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
-	local var_10_9 = TowerModel.instance:getCurTowerType()
+	local var_10_9 = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
+	local var_10_10 = TowerModel.instance:getCurTowerType()
 
-	gohelper.setActive(arg_10_0.gotips, var_10_9 == TowerEnum.TowerType.Limited)
+	gohelper.setActive(arg_10_0.gotips, var_10_10 == TowerEnum.TowerType.Limited)
 
-	arg_10_0.txttips.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("towerassistbossviewtips"), var_10_8)
+	arg_10_0.txttips.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("towerassistbossviewtips"), var_10_9)
 end
 
 function var_0_0.addHeroGroupEvent(arg_11_0)

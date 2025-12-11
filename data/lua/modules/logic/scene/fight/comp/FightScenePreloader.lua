@@ -49,6 +49,8 @@ function var_0_0.startPreload(arg_2_0, arg_2_1)
 	else
 		FightPreloadController.instance:preloadFirst(var_2_2, var_2_3, var_2_4, var_2_5, var_2_6, var_2_7)
 	end
+
+	FightRoundPreloadController.instance:registStageEvent()
 end
 
 function var_0_0._onPreloadFinish(arg_3_0)

@@ -14,7 +14,7 @@ function var_0_0.onStart(arg_2_0)
 	end
 
 	arg_2_0:cancelFightWorkSafeTimer()
-	FightController.instance:setCurStage(FightEnum.Stage.Distribute)
+	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.DistributeCard)
 	FightController.instance:GuideFlowPauseAndContinue("OnGuideDistributePause", FightEvent.OnGuideDistributePause, FightEvent.OnGuideDistributeContinue, arg_2_0._distrubute, arg_2_0)
 end
 
@@ -34,6 +34,7 @@ function var_0_0._done(arg_4_0)
 end
 
 function var_0_0.clearWork(arg_5_0)
+	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.DistributeCard)
 	FightController.instance:unregisterCallback(FightEvent.OnDistributeCards, arg_5_0._done, arg_5_0)
 end
 

@@ -44,7 +44,7 @@ function var_0_0._destroyViewFinish(arg_8_0, arg_8_1)
 end
 
 function var_0_0.onClose(arg_9_0)
-	ViewMgr.instance:openView(ViewName.SurvivalMonsterEventView, {
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SurvivalMonsterEventView, {
 		showType = SurvivalEnum.SurvivalMonsterEventViewShowType.Watch
 	})
 end

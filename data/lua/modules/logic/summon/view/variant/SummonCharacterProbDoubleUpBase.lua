@@ -9,7 +9,10 @@ function var_0_0._editableInitView(arg_1_0)
 	arg_1_0._gotag = gohelper.findChild(arg_1_0._gobefore30, "#go_tag")
 	arg_1_0._txtnum = gohelper.findChildText(arg_1_0._gotag, "#txt_num")
 	arg_1_0._textEN = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/summonbtns/summon10/textEN")
-	arg_1_0._freetag = gohelper.findChild(arg_1_0.viewGO, "#go_ui/current/tip/tip/freetag")
+	arg_1_0._tip = gohelper.findChild(arg_1_0.viewGO, "#go_ui/current/tip/tip")
+	arg_1_0._freetag = gohelper.findChild(arg_1_0._tip, "freetag")
+	arg_1_0._arrow = gohelper.findChild(arg_1_0._tip, "arrow")
+	arg_1_0._tipHLayoutGroup = arg_1_0._tip:GetComponent(gohelper.Type_HorizontalLayoutGroup)
 	arg_1_0._txtcurrency102.text = ""
 	arg_1_0._txtcurrency101.text = ""
 
@@ -188,6 +191,22 @@ function var_0_0._refreshCost10(arg_7_0)
 		arg_7_0._txtnum.text = "-" .. var_7_5 * 100 .. "%"
 		arg_7_0._txtcurrency_before.text = var_7_6
 		arg_7_0._txtcurrency_current.text = luaLang("multiple") .. var_7_2
+	end
+
+	if LangSettings.instance:isEn() then
+		gohelper.setActive(arg_7_0._arrow, true)
+	else
+		gohelper.setActive(arg_7_0._arrow, not var_7_7)
+
+		local var_7_9 = arg_7_0._tipHLayoutGroup.padding
+
+		if var_7_7 then
+			arg_7_0._tipHLayoutGroup.spacing = -60
+			var_7_9.left = -300
+		else
+			var_7_9.left = 110
+			arg_7_0._tipHLayoutGroup.spacing = 20
+		end
 	end
 end
 

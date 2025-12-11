@@ -75,13 +75,22 @@ function var_0_0.openAchievementLevelView(arg_9_0, arg_9_1)
 		return
 	end
 
-	local var_9_0 = AchievementMainTileModel.instance:getCurrentAchievementIds()
-	local var_9_1 = {
-		achievementId = arg_9_1,
-		achievementIds = var_9_0
-	}
+	if AchievementMainCommonModel.instance:checkIsNamePlate() then
+		local var_9_0 = {
+			achievementId = arg_9_1,
+			achievementIds = AchievementMainListModel.instance:getCurrentAchievementIds()
+		}
 
-	ViewMgr.instance:openView(ViewName.AchievementLevelView, var_9_1)
+		ViewMgr.instance:openView(ViewName.AchievementNamePlateLevelView, var_9_0)
+	else
+		local var_9_1 = AchievementMainTileModel.instance:getCurrentAchievementIds()
+		local var_9_2 = {
+			achievementId = arg_9_1,
+			achievementIds = var_9_1
+		}
+
+		ViewMgr.instance:openView(ViewName.AchievementLevelView, var_9_2)
+	end
 end
 
 function var_0_0.openAchievementGroupPreView(arg_10_0, arg_10_1, arg_10_2)

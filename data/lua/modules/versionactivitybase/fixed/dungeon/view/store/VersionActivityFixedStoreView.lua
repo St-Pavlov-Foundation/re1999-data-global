@@ -40,7 +40,8 @@ end
 function var_0_0._editableInitView(arg_5_0)
 	gohelper.setActive(arg_5_0._gostoreItem, false)
 
-	arg_5_0.actId = VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.DungeonStore
+	arg_5_0._bigVersion, arg_5_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	arg_5_0.actId = VersionActivityFixedHelper.getVersionActivityEnum(arg_5_0._bigVersion, arg_5_0._smallVersion).ActivityId.DungeonStore
 	arg_5_0.storeItemList = arg_5_0:getUserDataTb_()
 	arg_5_0.rectTrContent = arg_5_0._goContent:GetComponent(gohelper.Type_RectTransform)
 end
@@ -55,7 +56,7 @@ function var_0_0.onOpen(arg_6_0)
 end
 
 function var_0_0.refreshTime(arg_7_0)
-	local var_7_0 = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.DungeonStore]:getRemainTimeStr3(false, false)
+	local var_7_0 = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum(arg_7_0._bigVersion, arg_7_0._smallVersion).ActivityId.DungeonStore]:getRemainTimeStr3(false, false)
 
 	arg_7_0._txttime.text = var_7_0
 end
@@ -75,7 +76,7 @@ function var_0_0.refreshStoreContent(arg_8_0)
 		if not var_8_2 then
 			local var_8_3 = gohelper.cloneInPlace(arg_8_0._gostoreItem)
 
-			var_8_2 = VersionActivityFixedHelper.getVersionActivityStoreItem().New()
+			var_8_2 = VersionActivityFixedHelper.getVersionActivityStoreItem(arg_8_0._bigVersion, arg_8_0._smallVersion).New()
 
 			var_8_2:onInitView(var_8_3)
 			table.insert(arg_8_0.storeItemList, var_8_2)

@@ -41,7 +41,7 @@ function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
 end
 
 function var_0_0._refreshRedDot(arg_6_0)
-	if CharacterModel.instance:isHeroCouldExskillUp(arg_6_0._mo.heroId) or CharacterModel.instance:hasCultureRewardGet(arg_6_0._mo.heroId) or CharacterModel.instance:hasItemRewardGet(arg_6_0._mo.heroId) or arg_6_0:_isShowDestinyReddot() or arg_6_0:_isShowNuodikaReddot() or arg_6_0._mo.extraMo:showReddot() then
+	if CharacterModel.instance:isHeroCouldExskillUp(arg_6_0._mo.heroId) or CharacterModel.instance:hasCultureRewardGet(arg_6_0._mo.heroId) or CharacterModel.instance:hasItemRewardGet(arg_6_0._mo.heroId) or arg_6_0:_isShowDestinyReddot() or arg_6_0._mo.extraMo:showReddot() or arg_6_0:_isShowNuodikaReddot() then
 		arg_6_0._heroItem:setRedDotShow(true)
 	else
 		arg_6_0._heroItem:setRedDotShow(false)

@@ -16,6 +16,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "anim/#txt_name")
 	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "anim/#txt_name_en")
 	arg_1_0._btncommandstation = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/#btn_commandstation")
+	arg_1_0._gostorytrace = gohelper.findChild(arg_1_0.viewGO, "anim/#go_trace")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -26,12 +27,14 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btntip:AddClickListener(arg_2_0._btntipOnClick, arg_2_0)
 	arg_2_0._btnplay:AddClickListener(arg_2_0._btnplayOnClick, arg_2_0)
 	arg_2_0._btncommandstation:AddClickListener(arg_2_0._btncommandstationOnClick, arg_2_0)
+	arg_2_0:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_2_0._refreshTraced, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btntip:RemoveClickListener()
 	arg_3_0._btnplay:RemoveClickListener()
 	arg_3_0._btncommandstation:RemoveClickListener()
+	arg_3_0:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_3_0._refreshTraced, arg_3_0)
 end
 
 function var_0_0._btncommandstationOnClick(arg_4_0)
@@ -187,6 +190,7 @@ function var_0_0.onUpdateMO(arg_20_0, arg_20_1)
 	end
 
 	arg_20_0:_initLight()
+	arg_20_0:_refreshTraced()
 end
 
 function var_0_0._initLight(arg_21_0)
@@ -340,6 +344,34 @@ end
 function var_0_0.onDestroyView(arg_39_0)
 	arg_39_0:_clearTween()
 	TaskDispatcher.cancelTask(arg_39_0._delayShowTip, arg_39_0)
+end
+
+function var_0_0._refreshTraced(arg_40_0)
+	arg_40_0:_refreshTracedIcon()
+end
+
+function var_0_0._refreshTracedIcon(arg_41_0)
+	if not arg_41_0._mo then
+		return
+	end
+
+	local var_41_0 = CharacterRecommedModel.instance:isTradeSection(arg_41_0._mo.sectionId)
+
+	if var_41_0 then
+		local var_41_1 = CharacterRecommedController.instance:getTradeIcon()
+
+		if not var_41_1 then
+			return
+		end
+
+		if not arg_41_0._tracedIcon then
+			arg_41_0._tracedIcon = gohelper.clone(var_41_1, arg_41_0._gostorytrace)
+		end
+	end
+
+	if arg_41_0._tracedIcon then
+		gohelper.setActive(arg_41_0._tracedIcon, var_41_0)
+	end
 end
 
 return var_0_0

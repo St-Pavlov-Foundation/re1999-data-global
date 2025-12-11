@@ -36,10 +36,10 @@ function var_0_0._closeCallback(arg_3_0)
 	DungeonModel.instance:resetSendChapterEpisodeId()
 	MainController.instance:enterMainScene(true)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_7EnterView)
-		VersionActivityFixedEnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.Act191MainView)
+		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(function()
 			Activity191Controller.instance:openMainView()
-		end, nil, VersionActivity2_7Enum.ActivityId.Act191, true)
+		end, nil, VersionActivity3_1Enum.ActivityId.DouQuQu3)
 	end)
 end
 

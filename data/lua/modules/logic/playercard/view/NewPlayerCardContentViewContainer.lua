@@ -21,11 +21,11 @@ function var_0_0.buildThemeScrollView(arg_2_0, arg_2_1)
 	var_2_0.cellClass = PlayerCardThemeItem
 	var_2_0.scrollDir = ScrollEnum.ScrollDirH
 	var_2_0.lineCount = 1
-	var_2_0.cellWidth = 392
-	var_2_0.cellHeight = 162
+	var_2_0.cellWidth = 404
+	var_2_0.cellHeight = 172
 	var_2_0.cellSpaceH = -26
 	var_2_0.cellSpaceV = 0
-	var_2_0.startSpace = 50
+	var_2_0.startSpace = 49
 	var_2_0.endSpace = 0
 	arg_2_0.scrollView = LuaListScrollView.New(PlayerCardThemeListModel.instance, var_2_0)
 

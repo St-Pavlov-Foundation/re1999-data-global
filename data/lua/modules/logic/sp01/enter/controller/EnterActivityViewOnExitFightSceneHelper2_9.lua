@@ -128,12 +128,6 @@ local function var_0_2(arg_7_0, arg_7_1)
 			ViewMgr.instance:openView(ViewName.V2a3_ReactivityEnterview)
 		end
 	}))
-	var_7_3:addWork(OpenViewWork.New({
-		openFunction = function()
-			VersionActivity2_3DungeonController.instance:openVersionActivityDungeonMapView(nil, var_7_0)
-		end,
-		waitOpenViewName = ViewName.V2a3_ReactivityEnterview
-	}))
 	var_7_3:registerDoneListener(function()
 		if var_7_2 then
 			VersionActivity2_3DungeonController.instance:openVersionActivityDungeonMapView(nil, var_7_0, function()
@@ -150,14 +144,14 @@ local function var_0_2(arg_7_0, arg_7_1)
 	var_0_0.sequence = var_7_3
 end
 
-function var_0_0.enterActivity130502(arg_12_0, arg_12_1)
-	var_0_0.enterVersionActivityDungeonCommon(var_0_0._enterActivity130502, arg_12_0, arg_12_1)
+function var_0_0.enterActivity130502(arg_11_0, arg_11_1)
+	var_0_0.enterVersionActivityDungeonCommon(var_0_0._enterActivity130502, arg_11_0, arg_11_1)
 end
 
-function var_0_0._enterActivity130502(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1.episodeId
+function var_0_0._enterActivity130502(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1.episodeId
 
-	if not arg_13_1.episodeCo then
+	if not arg_12_1.episodeCo then
 		return
 	end
 
@@ -167,54 +161,54 @@ function var_0_0._enterActivity130502(arg_13_0, arg_13_1)
 		var_0_0.sequence = nil
 	end
 
-	local var_13_1 = false
-	local var_13_2 = ViewName.VersionActivity2_9DungeonMapLevelView
-	local var_13_3 = ViewName.VersionActivity2_9DungeonMapView
-	local var_13_4 = ViewName.VersionActivity2_9EnterView
+	local var_12_1 = false
+	local var_12_2 = ViewName.VersionActivity2_9DungeonMapLevelView
+	local var_12_3 = ViewName.VersionActivity2_9DungeonMapView
+	local var_12_4 = ViewName.VersionActivity2_9EnterView
 
 	if DungeonModel.instance.curSendEpisodePass then
-		var_13_1 = false
+		var_12_1 = false
 
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, var_13_3)
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, var_12_3)
 	else
-		var_13_1 = true
+		var_12_1 = true
 
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, var_13_2)
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, var_12_2)
 	end
 
-	local var_13_5 = FlowSequence.New()
+	local var_12_5 = FlowSequence.New()
 
-	var_13_5:addWork(OpenViewWork.New({
+	var_12_5:addWork(OpenViewWork.New({
 		openFunction = VersionActivity2_9EnterController.directOpenVersionActivityEnterView,
 		openFunctionObj = VersionActivity2_9EnterController.instance,
-		waitOpenViewName = var_13_4
+		waitOpenViewName = var_12_4
 	}))
-	var_13_5:registerDoneListener(function()
-		if var_13_1 then
-			VersionActivity2_9DungeonController.instance:openVersionActivityDungeonMapView(nil, var_13_0, function()
-				ViewMgr.instance:openView(var_13_2, {
-					episodeId = var_13_0
+	var_12_5:registerDoneListener(function()
+		if var_12_1 then
+			VersionActivity2_9DungeonController.instance:openVersionActivityDungeonMapView(nil, var_12_0, function()
+				ViewMgr.instance:openView(var_12_2, {
+					episodeId = var_12_0
 				})
 			end, nil)
 		else
-			VersionActivity2_9DungeonController.instance:openVersionActivityDungeonMapView(nil, var_13_0)
+			VersionActivity2_9DungeonController.instance:openVersionActivityDungeonMapView(nil, var_12_0)
 		end
 	end)
-	var_13_5:start()
+	var_12_5:start()
 
-	var_0_0.sequence = var_13_5
+	var_0_0.sequence = var_12_5
 end
 
-function var_0_0.enterActivity12302(arg_16_0, arg_16_1)
-	var_0_0.enterVersionActivityDungeonCommon(var_0_2, arg_16_0, arg_16_1)
+function var_0_0.enterActivity12302(arg_15_0, arg_15_1)
+	var_0_0.enterVersionActivityDungeonCommon(var_0_2, arg_15_0, arg_15_1)
 end
 
-function var_0_0.enterActivity130504(arg_17_0, arg_17_1)
-	var_0_0.enterVersionActivityDungeonCommon(var_0_0._enterActivity130504, arg_17_0, arg_17_1)
+function var_0_0.enterActivity130504(arg_16_0, arg_16_1)
+	var_0_0.enterVersionActivityDungeonCommon(var_0_0._enterActivity130504, arg_16_0, arg_16_1)
 end
 
-function var_0_0._enterActivity130504(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_1.episodeCo.type == DungeonEnum.EpisodeType.Assassin2Stealth
+function var_0_0._enterActivity130504(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_1.episodeCo.type == DungeonEnum.EpisodeType.Assassin2Stealth
 
 	if var_0_0.sequence then
 		var_0_0.sequence:destroy()
@@ -222,69 +216,69 @@ function var_0_0._enterActivity130504(arg_18_0, arg_18_1)
 		var_0_0.sequence = nil
 	end
 
-	local var_18_1 = AssassinOutsideModel.instance:isAct195Open(true)
-	local var_18_2 = {}
+	local var_17_1 = AssassinOutsideModel.instance:isAct195Open(true)
+	local var_17_2 = {}
 
-	if var_18_1 then
-		local var_18_3 = ViewName.AssassinMapView
+	if var_17_1 then
+		local var_17_3 = ViewName.AssassinMapView
 
-		if var_18_0 then
-			var_18_2.fightReturnStealthGame = true
-			var_18_3 = ViewName.AssassinStealthGameView
+		if var_17_0 then
+			var_17_2.fightReturnStealthGame = true
+			var_17_3 = ViewName.AssassinStealthGameView
 		else
-			local var_18_4 = AssassinOutsideModel.instance:getEnterFightQuest()
-			local var_18_5 = AssassinConfig.instance:getQuestMapId(var_18_4)
+			local var_17_4 = AssassinOutsideModel.instance:getEnterFightQuest()
+			local var_17_5 = AssassinConfig.instance:getQuestMapId(var_17_4)
 
-			if var_18_5 then
-				var_18_3 = ViewName.AssassinQuestMapView
+			if var_17_5 then
+				var_17_3 = ViewName.AssassinQuestMapView
 			end
 
-			var_18_2.questMapId = var_18_5
+			var_17_2.questMapId = var_17_5
 		end
 
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, var_18_3)
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, var_17_3)
 	end
 
-	local var_18_6 = ViewName.VersionActivity2_9EnterView
-	local var_18_7 = FlowSequence.New()
+	local var_17_6 = ViewName.VersionActivity2_9EnterView
+	local var_17_7 = FlowSequence.New()
 
-	var_18_7:addWork(OpenViewWork.New({
+	var_17_7:addWork(OpenViewWork.New({
 		openFunction = VersionActivity2_9EnterController.directOpenVersionActivityEnterView,
 		openFunctionObj = VersionActivity2_9EnterController.instance,
-		waitOpenViewName = var_18_6
+		waitOpenViewName = var_17_6
 	}))
-	var_18_7:registerDoneListener(function()
-		AssassinController.instance:openAssassinMapView(var_18_2)
+	var_17_7:registerDoneListener(function()
+		AssassinController.instance:openAssassinMapView(var_17_2)
 	end)
-	var_18_7:start()
+	var_17_7:start()
 
-	var_0_0.sequence = var_18_7
+	var_0_0.sequence = var_17_7
 end
 
-function var_0_0.enterActivity130505(arg_20_0, arg_20_1)
-	local var_20_0 = DungeonModel.instance.curSendEpisodeId
-	local var_20_1, var_20_2 = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(var_20_0)
+function var_0_0.enterActivity130505(arg_19_0, arg_19_1)
+	local var_19_0 = DungeonModel.instance.curSendEpisodeId
+	local var_19_1, var_19_2 = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(var_19_0)
 
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	MainController.instance:enterMainScene(arg_20_0)
+	MainController.instance:enterMainScene(arg_19_0)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.V1a4_BossRushMainView)
 		VersionActivity2_9EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 			BossRushController.instance:openMainView({
 				isOpenLevelDetail = true,
-				stage = var_20_1,
-				layer = var_20_2
+				stage = var_19_1,
+				layer = var_19_2
 			})
 		end, nil, BossRushConfig.instance:getActivityId(), true, true)
 	end)
 end
 
-function var_0_0.enterActivity130507(arg_23_0, arg_23_1)
-	var_0_0.enterVersionActivityDungeonCommon(var_0_0.enterActivityDungeonAterFight130507, arg_23_0, arg_23_1)
+function var_0_0.enterActivity130507(arg_22_0, arg_22_1)
+	var_0_0.enterVersionActivityDungeonCommon(var_0_0.enterActivityDungeonAterFight130507, arg_22_0, arg_22_1)
 end
 
-function var_0_0.enterActivityDungeonAterFight130507(arg_24_0, arg_24_1)
+function var_0_0.enterActivityDungeonAterFight130507(arg_23_0, arg_23_1)
 	if var_0_0.sequence then
 		var_0_0.sequence:destroy()
 
@@ -293,20 +287,20 @@ function var_0_0.enterActivityDungeonAterFight130507(arg_24_0, arg_24_1)
 
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.OdysseyDungeonView)
 
-	local var_24_0 = ViewName.VersionActivity2_9EnterView
-	local var_24_1 = FlowSequence.New()
+	local var_23_0 = ViewName.VersionActivity2_9EnterView
+	local var_23_1 = FlowSequence.New()
 
-	var_24_1:addWork(OpenViewWork.New({
+	var_23_1:addWork(OpenViewWork.New({
 		openFunction = VersionActivity2_9EnterController.directOpenVersionActivityEnterView,
 		openFunctionObj = VersionActivity2_9EnterController.instance,
-		waitOpenViewName = var_24_0
+		waitOpenViewName = var_23_0
 	}))
-	var_24_1:registerDoneListener(function()
+	var_23_1:registerDoneListener(function()
 		OdysseyDungeonController.instance:openDungeonView()
 	end)
-	var_24_1:start()
+	var_23_1:start()
 
-	var_0_0.sequence = var_24_1
+	var_0_0.sequence = var_23_1
 end
 
 return var_0_0

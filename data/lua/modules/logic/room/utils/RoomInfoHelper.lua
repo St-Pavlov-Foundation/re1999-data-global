@@ -3,19 +3,27 @@
 local var_0_0 = {
 	serverInfoToBlockInfo = function(arg_1_0)
 		local var_1_0 = {}
-		local var_1_1 = RoomConfig.instance:getBlock(arg_1_0.blockId)
+		local var_1_1
 
-		if not var_1_1 and not RoomController.instance:isDebugMode() then
-			logError(string.format("can not find blockCfg [blockId:%s]", arg_1_0.blockId))
+		if arg_1_0.fishingBlockId then
+			var_1_0.fishingBlockId = arg_1_0.fishingBlockId
+		else
+			var_1_1 = RoomConfig.instance:getBlock(arg_1_0.blockId)
+
+			if not var_1_1 and not RoomController.instance:isDebugMode() then
+				logError(string.format("can not find blockCfg [blockId:%s]", arg_1_0.blockId))
+			end
+
+			var_1_0.blockId = arg_1_0.blockId
 		end
 
-		var_1_0.blockId = arg_1_0.blockId
 		var_1_0.defineId = arg_1_0.defineId or var_1_1 and var_1_1.defineId or RoomBlockEnum.EmptyDefineId
 		var_1_0.mainRes = arg_1_0.mainRes or var_1_1 and var_1_1.mainRes or -1
 		var_1_0.packageId = arg_1_0.packageId or var_1_1 and var_1_1.packageId or 0
 		var_1_0.packageOrder = arg_1_0.packageOrder or var_1_1 and var_1_1.packageOrder or 0
 		var_1_0.rotate = arg_1_0.rotate or 0
 		var_1_0.waterType = arg_1_0.waterType
+		var_1_0.blockColor = arg_1_0.blockColor
 
 		if arg_1_0.use ~= false then
 			var_1_0.blockState = RoomBlockEnum.BlockState.Map
@@ -34,7 +42,8 @@ local var_0_0 = {
 			mainRes = arg_2_0.mainRes,
 			packageId = arg_2_0.packageId,
 			rotate = arg_2_0.rotate,
-			blockState = arg_2_0.blockState
+			blockState = arg_2_0.blockState,
+			blockColor = arg_2_0.blockColor
 		}
 
 		if arg_2_0:isInMap() then
@@ -89,6 +98,7 @@ local var_0_0 = {
 		var_5_0.resAreaDirection = arg_5_0.resAreaDirection
 		var_5_0.use = arg_5_0.use
 		var_5_0.level = arg_5_0.level
+		var_5_0.belongUserId = arg_5_0.belongUserId
 
 		return var_5_0
 	end,

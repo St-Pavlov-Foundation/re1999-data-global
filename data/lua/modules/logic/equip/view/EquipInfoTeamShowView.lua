@@ -130,7 +130,7 @@ function var_0_0._btnconfirmOnClick(arg_8_0)
 	arg_8_0.handleFuncDict[var_8_0](arg_8_0)
 end
 
-function var_0_0._onClickConfirmBtnFromCachotHeroGroupFightView(arg_9_0)
+function var_0_0._onClickConfirmBtnFromPresetPreviewView(arg_9_0)
 	local var_9_0 = arg_9_0.viewContainer.listModel:getGroupCurrentPosEquip()[1]
 	local var_9_1 = false
 
@@ -148,12 +148,12 @@ function var_0_0._onClickConfirmBtnFromCachotHeroGroupFightView(arg_9_0)
 		}
 	}
 
-	V1a6_CachotHeroGroupModel.instance:replaceEquips(var_9_4, var_9_3)
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.ChangeEquip, arg_9_0.posIndex)
-	V1a6_CachotHeroGroupModel.instance:cachotSaveCurGroup(arg_9_0.closeThis, arg_9_0)
+	var_9_3:updatePosEquips(var_9_4)
+	HeroGroupPresetController.instance:dispatchEvent(HeroGroupPresetEvent.ChangeEquip, arg_9_0.viewParam.presetGroupId, arg_9_0.viewParam.presetSubId)
+	HeroGroupPresetModel.instance:externalSaveCurGroupData(arg_9_0.closeThis, arg_9_0, var_9_3, arg_9_0.viewParam.presetGroupId, arg_9_0.viewParam.presetSubId)
 end
 
-function var_0_0._onClickConfirmBtnFromRougeHeroGroupFightView(arg_10_0)
+function var_0_0._onClickConfirmBtnFromCachotHeroGroupFightView(arg_10_0)
 	local var_10_0 = arg_10_0.viewContainer.listModel:getGroupCurrentPosEquip()[1]
 	local var_10_1 = false
 
@@ -171,12 +171,12 @@ function var_0_0._onClickConfirmBtnFromRougeHeroGroupFightView(arg_10_0)
 		}
 	}
 
-	RougeHeroGroupModel.instance:replaceEquips(var_10_4, var_10_3)
+	V1a6_CachotHeroGroupModel.instance:replaceEquips(var_10_4, var_10_3)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.ChangeEquip, arg_10_0.posIndex)
-	RougeHeroGroupModel.instance:rougeSaveCurGroup(arg_10_0.closeThis, arg_10_0, var_10_3)
+	V1a6_CachotHeroGroupModel.instance:cachotSaveCurGroup(arg_10_0.closeThis, arg_10_0)
 end
 
-function var_0_0._onClickConfirmBtnFromCachotHeroGroupView(arg_11_0)
+function var_0_0._onClickConfirmBtnFromRougeHeroGroupFightView(arg_11_0)
 	local var_11_0 = arg_11_0.viewContainer.listModel:getGroupCurrentPosEquip()[1]
 	local var_11_1 = false
 
@@ -194,12 +194,12 @@ function var_0_0._onClickConfirmBtnFromCachotHeroGroupView(arg_11_0)
 		}
 	}
 
-	V1a6_CachotHeroGroupModel.instance:replaceEquips(var_11_4, var_11_3)
+	RougeHeroGroupModel.instance:replaceEquips(var_11_4, var_11_3)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.ChangeEquip, arg_11_0.posIndex)
-	arg_11_0:closeThis()
+	RougeHeroGroupModel.instance:rougeSaveCurGroup(arg_11_0.closeThis, arg_11_0, var_11_3)
 end
 
-function var_0_0._onClickConfirmBtnFromHeroGroupFightView(arg_12_0)
+function var_0_0._onClickConfirmBtnFromCachotHeroGroupView(arg_12_0)
 	local var_12_0 = arg_12_0.viewContainer.listModel:getGroupCurrentPosEquip()[1]
 	local var_12_1 = false
 
@@ -217,12 +217,12 @@ function var_0_0._onClickConfirmBtnFromHeroGroupFightView(arg_12_0)
 		}
 	}
 
-	HeroGroupModel.instance:replaceEquips(var_12_4, var_12_3)
+	V1a6_CachotHeroGroupModel.instance:replaceEquips(var_12_4, var_12_3)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.ChangeEquip, arg_12_0.posIndex)
-	HeroGroupModel.instance:saveCurGroupData(arg_12_0.closeThis, arg_12_0, var_12_3)
+	arg_12_0:closeThis()
 end
 
-function var_0_0._onClickConfirmBtnFromSeason166HeroGroupFightView(arg_13_0)
+function var_0_0._onClickConfirmBtnFromHeroGroupFightView(arg_13_0)
 	local var_13_0 = arg_13_0.viewContainer.listModel:getGroupCurrentPosEquip()[1]
 	local var_13_1 = false
 
@@ -240,21 +240,44 @@ function var_0_0._onClickConfirmBtnFromSeason166HeroGroupFightView(arg_13_0)
 		}
 	}
 
-	Season166HeroGroupModel.instance:replaceEquips(var_13_4, var_13_3)
+	HeroGroupModel.instance:replaceEquips(var_13_4, var_13_3)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.ChangeEquip, arg_13_0.posIndex)
-	Season166HeroGroupModel.instance:saveCurGroupData(arg_13_0.closeThis, arg_13_0, var_13_3)
+	HeroGroupModel.instance:saveCurGroupData(arg_13_0.closeThis, arg_13_0, var_13_3)
 end
 
-function var_0_0._onClickConfirmBtnFromCharacterView(arg_14_0)
-	HeroRpc.instance:setHeroDefaultEquipRequest(arg_14_0.heroMo.heroId, arg_14_0.selectedEquipMo and arg_14_0.selectedEquipMo.uid or "0")
+function var_0_0._onClickConfirmBtnFromSeason166HeroGroupFightView(arg_14_0)
+	local var_14_0 = arg_14_0.viewContainer.listModel:getGroupCurrentPosEquip()[1]
+	local var_14_1 = false
+
+	if var_14_0 and (EquipModel.instance:getEquip(var_14_0) or HeroGroupTrialModel.instance:getEquipMo(var_14_0)) then
+		local var_14_2 = true
+	end
+
+	EquipChooseListModel.instance:clearTeamInfo()
+
+	local var_14_3 = arg_14_0.viewContainer.listModel.curGroupMO
+	local var_14_4 = {
+		index = arg_14_0.posIndex,
+		equipUid = {
+			arg_14_0.selectedEquipMo and arg_14_0.selectedEquipMo.uid or "0"
+		}
+	}
+
+	Season166HeroGroupModel.instance:replaceEquips(var_14_4, var_14_3)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.ChangeEquip, arg_14_0.posIndex)
+	Season166HeroGroupModel.instance:saveCurGroupData(arg_14_0.closeThis, arg_14_0, var_14_3)
 end
 
-function var_0_0._btnjumpOnClick(arg_15_0)
-	if arg_15_0.selectedEquipMo then
-		arg_15_0._anim:Play(UIAnimationName.Close)
+function var_0_0._onClickConfirmBtnFromCharacterView(arg_15_0)
+	HeroRpc.instance:setHeroDefaultEquipRequest(arg_15_0.heroMo.heroId, arg_15_0.selectedEquipMo and arg_15_0.selectedEquipMo.uid or "0")
+end
+
+function var_0_0._btnjumpOnClick(arg_16_0)
+	if arg_16_0.selectedEquipMo then
+		arg_16_0._anim:Play(UIAnimationName.Close)
 		TaskDispatcher.runDelay(function()
 			ViewMgr.instance:openView(ViewName.EquipView, {
-				equipMO = arg_15_0.selectedEquipMo,
+				equipMO = arg_16_0.selectedEquipMo,
 				defaultTabIds = {
 					[2] = 2
 				}
@@ -263,699 +286,702 @@ function var_0_0._btnjumpOnClick(arg_15_0)
 	end
 end
 
-function var_0_0._btnequiplvOnClick(arg_17_0)
-	arg_17_0.listModel:changeSortByLevel()
-	arg_17_0:refreshBtnStatus()
-end
-
-function var_0_0._btnequiprareOnClick(arg_18_0)
-	arg_18_0.listModel:changeSortByRare()
+function var_0_0._btnequiplvOnClick(arg_18_0)
+	arg_18_0.listModel:changeSortByLevel()
 	arg_18_0:refreshBtnStatus()
 end
 
-function var_0_0.onEquipTypeHasChange(arg_19_0, arg_19_1)
-	if arg_19_1 ~= arg_19_0.viewName then
+function var_0_0._btnequiprareOnClick(arg_19_0)
+	arg_19_0.listModel:changeSortByRare()
+	arg_19_0:refreshBtnStatus()
+end
+
+function var_0_0.onEquipTypeHasChange(arg_20_0, arg_20_1)
+	if arg_20_1 ~= arg_20_0.viewName then
 		return
 	end
 
-	arg_19_0._scrollequip.verticalNormalizedPosition = 1
+	arg_20_0._scrollequip.verticalNormalizedPosition = 1
 
-	local var_19_0 = arg_19_0.heroMo and arg_19_0.heroMo:getTrialEquipMo()
+	local var_20_0 = arg_20_0.heroMo and arg_20_0.heroMo:getTrialEquipMo()
 
-	if var_19_0 then
-		if arg_19_0.filterMo:checkIsIncludeTag(var_19_0.config) then
-			arg_19_0.listModel.equipMoList = {
-				var_19_0
+	if var_20_0 then
+		if arg_20_0.filterMo:checkIsIncludeTag(var_20_0.config) then
+			arg_20_0.listModel.equipMoList = {
+				var_20_0
 			}
 		else
-			arg_19_0.listModel.equipMoList = {}
+			arg_20_0.listModel.equipMoList = {}
 		end
 	else
-		arg_19_0.listModel:initEquipList(arg_19_0.filterMo)
+		arg_20_0.listModel:initEquipList(arg_20_0.filterMo)
 	end
 
-	arg_19_0.listModel:refreshEquipList()
-	arg_19_0:refreshFilterBtnStatus()
+	arg_20_0.listModel:refreshEquipList()
+	arg_20_0:refreshFilterBtnStatus()
 end
 
-function var_0_0._editableInitView(arg_20_0)
-	arg_20_0.goNotFilter = gohelper.findChild(arg_20_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_filter/#go_notfilter")
-	arg_20_0.goFilter = gohelper.findChild(arg_20_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_filter/#go_filter")
-	arg_20_0.goRareBtnNoSelect = gohelper.findChild(arg_20_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiprare/btn1")
-	arg_20_0.goRareBtnSelect = gohelper.findChild(arg_20_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiprare/btn2")
-	arg_20_0.goLvBtnNoSelect = gohelper.findChild(arg_20_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiplv/btn1")
-	arg_20_0.goLvBtnSelect = gohelper.findChild(arg_20_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiplv/btn2")
-	arg_20_0.goRareBtnSelectArrow = gohelper.findChild(arg_20_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiprare/btn2/txt/arrow")
-	arg_20_0.goLvBtnSelectArrow = gohelper.findChild(arg_20_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiplv/btn2/txt/arrow")
-	arg_20_0.goBaseSkillCanvasGroup = arg_20_0._gobaseskill:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_20_0.imageBreakIcon = gohelper.findChildImage(arg_20_0._gobreakeffect, "image_icon")
-	arg_20_0.txtBreakAttrName = gohelper.findChildText(arg_20_0._gobreakeffect, "txt_name")
-	arg_20_0.txtBreakValue = gohelper.findChildText(arg_20_0._gobreakeffect, "txt_value")
+function var_0_0._editableInitView(arg_21_0)
+	arg_21_0.goNotFilter = gohelper.findChild(arg_21_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_filter/#go_notfilter")
+	arg_21_0.goFilter = gohelper.findChild(arg_21_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_filter/#go_filter")
+	arg_21_0.goRareBtnNoSelect = gohelper.findChild(arg_21_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiprare/btn1")
+	arg_21_0.goRareBtnSelect = gohelper.findChild(arg_21_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiprare/btn2")
+	arg_21_0.goLvBtnNoSelect = gohelper.findChild(arg_21_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiplv/btn1")
+	arg_21_0.goLvBtnSelect = gohelper.findChild(arg_21_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiplv/btn2")
+	arg_21_0.goRareBtnSelectArrow = gohelper.findChild(arg_21_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiprare/btn2/txt/arrow")
+	arg_21_0.goLvBtnSelectArrow = gohelper.findChild(arg_21_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiplv/btn2/txt/arrow")
+	arg_21_0.goBaseSkillCanvasGroup = arg_21_0._gobaseskill:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_21_0.imageBreakIcon = gohelper.findChildImage(arg_21_0._gobreakeffect, "image_icon")
+	arg_21_0.txtBreakAttrName = gohelper.findChildText(arg_21_0._gobreakeffect, "txt_name")
+	arg_21_0.txtBreakValue = gohelper.findChildText(arg_21_0._gobreakeffect, "txt_value")
 
-	gohelper.setActive(arg_20_0._goleftempty, true)
-	gohelper.setActive(arg_20_0._gocontainer1, false)
-	gohelper.setActive(arg_20_0._gostrengthenattr, false)
-	gohelper.setActive(arg_20_0._txtsuiteffect2.gameObject, false)
-	gohelper.addUIClickAudio(arg_20_0._btnjump.gameObject, AudioEnum.HeroGroupUI.Play_UI_Inking_Open)
-	gohelper.addUIClickAudio(arg_20_0._btncompare.gameObject, AudioEnum.HeroGroupUI.Play_UI_General_OK)
-	gohelper.addUIClickAudio(arg_20_0._btnfold.gameObject, AudioEnum.HeroGroupUI.Play_UI_General_OK)
+	gohelper.setActive(arg_21_0._goleftempty, true)
+	gohelper.setActive(arg_21_0._gocontainer1, false)
+	gohelper.setActive(arg_21_0._gostrengthenattr, false)
+	gohelper.setActive(arg_21_0._txtsuiteffect2.gameObject, false)
+	gohelper.addUIClickAudio(arg_21_0._btnjump.gameObject, AudioEnum.HeroGroupUI.Play_UI_Inking_Open)
+	gohelper.addUIClickAudio(arg_21_0._btncompare.gameObject, AudioEnum.HeroGroupUI.Play_UI_General_OK)
+	gohelper.addUIClickAudio(arg_21_0._btnfold.gameObject, AudioEnum.HeroGroupUI.Play_UI_General_OK)
 
-	arg_20_0.strengthenAttrItems = arg_20_0:getUserDataTb_()
-	arg_20_0.skillAttributeItems = arg_20_0:getUserDataTb_()
-	arg_20_0.skillDescItems = arg_20_0:getUserDataTb_()
-	arg_20_0.container1_strengthenAttrItems = arg_20_0:getUserDataTb_()
-	arg_20_0.container1_skillAttributeItems = arg_20_0:getUserDataTb_()
-	arg_20_0.container1_skillDescItems = arg_20_0:getUserDataTb_()
+	arg_21_0.strengthenAttrItems = arg_21_0:getUserDataTb_()
+	arg_21_0.skillAttributeItems = arg_21_0:getUserDataTb_()
+	arg_21_0.skillDescItems = arg_21_0:getUserDataTb_()
+	arg_21_0.container1_strengthenAttrItems = arg_21_0:getUserDataTb_()
+	arg_21_0.container1_skillAttributeItems = arg_21_0:getUserDataTb_()
+	arg_21_0.container1_skillDescItems = arg_21_0:getUserDataTb_()
 
-	arg_20_0:addEventCb(EquipController.instance, EquipEvent.ChangeSelectedEquip, arg_20_0.onSelectEquipChange, arg_20_0)
-	arg_20_0:addEventCb(EquipController.instance, EquipEvent.onBreakSuccess, arg_20_0.onEquipChange, arg_20_0)
-	arg_20_0:addEventCb(EquipController.instance, EquipEvent.onEquipStrengthenReply, arg_20_0.onEquipChange, arg_20_0)
-	arg_20_0:addEventCb(EquipController.instance, EquipEvent.onEquipRefineReply, arg_20_0.onEquipChange, arg_20_0)
-	arg_20_0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, arg_20_0.onEquipChange, arg_20_0)
-	arg_20_0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, arg_20_0.onDeleteEquip, arg_20_0)
-	arg_20_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_20_0._onCloseFullView, arg_20_0, LuaEventSystem.Low)
-	arg_20_0:addEventCb(CharacterController.instance, CharacterEvent.successSetDefaultEquip, arg_20_0.onSuccessSetDefaultEquip, arg_20_0)
-	arg_20_0:addEventCb(EquipController.instance, EquipEvent.OnEquipTypeHasChange, arg_20_0.onEquipTypeHasChange, arg_20_0)
+	arg_21_0:addEventCb(EquipController.instance, EquipEvent.ChangeSelectedEquip, arg_21_0.onSelectEquipChange, arg_21_0)
+	arg_21_0:addEventCb(EquipController.instance, EquipEvent.onBreakSuccess, arg_21_0.onEquipChange, arg_21_0)
+	arg_21_0:addEventCb(EquipController.instance, EquipEvent.onEquipStrengthenReply, arg_21_0.onEquipChange, arg_21_0)
+	arg_21_0:addEventCb(EquipController.instance, EquipEvent.onEquipRefineReply, arg_21_0.onEquipChange, arg_21_0)
+	arg_21_0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, arg_21_0.onEquipChange, arg_21_0)
+	arg_21_0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, arg_21_0.onDeleteEquip, arg_21_0)
+	arg_21_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_21_0._onCloseFullView, arg_21_0, LuaEventSystem.Low)
+	arg_21_0:addEventCb(CharacterController.instance, CharacterEvent.successSetDefaultEquip, arg_21_0.onSuccessSetDefaultEquip, arg_21_0)
+	arg_21_0:addEventCb(EquipController.instance, EquipEvent.OnEquipTypeHasChange, arg_21_0.onEquipTypeHasChange, arg_21_0)
 
-	arg_20_0.txtConfirm = gohelper.findChildText(arg_20_0._btnconfirm.gameObject, "txt")
-	arg_20_0.comparing = false
-	arg_20_0.handleFuncDict = {
-		[EquipEnum.FromViewEnum.FromHeroGroupFightView] = arg_20_0._onClickConfirmBtnFromHeroGroupFightView,
-		[EquipEnum.FromViewEnum.FromCachotHeroGroupFightView] = arg_20_0._onClickConfirmBtnFromCachotHeroGroupFightView,
-		[EquipEnum.FromViewEnum.FromCachotHeroGroupView] = arg_20_0._onClickConfirmBtnFromCachotHeroGroupView,
-		[EquipEnum.FromViewEnum.FromRougeHeroGroupFightView] = arg_20_0._onClickConfirmBtnFromRougeHeroGroupFightView,
-		[EquipEnum.FromViewEnum.FromCharacterView] = arg_20_0._onClickConfirmBtnFromCharacterView,
-		[EquipEnum.FromViewEnum.FromSeasonFightView] = arg_20_0._onClickConfirmBtnFromHeroGroupFightView,
-		[EquipEnum.FromViewEnum.FromSeason123HeroGroupFightView] = arg_20_0._onClickConfirmBtnFromHeroGroupFightView,
-		[EquipEnum.FromViewEnum.FromSeason166HeroGroupFightView] = arg_20_0._onClickConfirmBtnFromSeason166HeroGroupFightView,
-		[EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView] = arg_20_0._onClickConfirmBtnFromHeroGroupFightView
+	arg_21_0.txtConfirm = gohelper.findChildText(arg_21_0._btnconfirm.gameObject, "txt")
+	arg_21_0.comparing = false
+	arg_21_0.handleFuncDict = {
+		[EquipEnum.FromViewEnum.FromHeroGroupFightView] = arg_21_0._onClickConfirmBtnFromHeroGroupFightView,
+		[EquipEnum.FromViewEnum.FromCachotHeroGroupFightView] = arg_21_0._onClickConfirmBtnFromCachotHeroGroupFightView,
+		[EquipEnum.FromViewEnum.FromCachotHeroGroupView] = arg_21_0._onClickConfirmBtnFromCachotHeroGroupView,
+		[EquipEnum.FromViewEnum.FromRougeHeroGroupFightView] = arg_21_0._onClickConfirmBtnFromRougeHeroGroupFightView,
+		[EquipEnum.FromViewEnum.FromCharacterView] = arg_21_0._onClickConfirmBtnFromCharacterView,
+		[EquipEnum.FromViewEnum.FromSeasonFightView] = arg_21_0._onClickConfirmBtnFromHeroGroupFightView,
+		[EquipEnum.FromViewEnum.FromSeason123HeroGroupFightView] = arg_21_0._onClickConfirmBtnFromHeroGroupFightView,
+		[EquipEnum.FromViewEnum.FromSeason166HeroGroupFightView] = arg_21_0._onClickConfirmBtnFromSeason166HeroGroupFightView,
+		[EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView] = arg_21_0._onClickConfirmBtnFromHeroGroupFightView,
+		[EquipEnum.FromViewEnum.FromPresetPreviewView] = arg_21_0._onClickConfirmBtnFromPresetPreviewView
 	}
 end
 
-function var_0_0.onUpdateParam(arg_21_0)
+function var_0_0.onUpdateParam(arg_22_0)
 	return
 end
 
-function var_0_0.onOpenFinish(arg_22_0)
-	arg_22_0._anim.enabled = true
+function var_0_0.onOpenFinish(arg_23_0)
+	arg_23_0._anim.enabled = true
 
-	if arg_22_0.viewParam and arg_22_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCharacterView then
+	if arg_23_0.viewParam and arg_23_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCharacterView then
 		HelpController.instance:tryShowFirstHelp(HelpEnum.HelpId.EquipInfo)
 	end
 end
 
-function var_0_0._onCloseFullView(arg_23_0)
-	if arg_23_0._anim then
-		arg_23_0._anim:Play(UIAnimationName.Open, 0, 0)
+function var_0_0._onCloseFullView(arg_24_0)
+	if arg_24_0._anim then
+		arg_24_0._anim:Play(UIAnimationName.Open, 0, 0)
 	end
 end
 
-function var_0_0.onOpen(arg_24_0)
-	arg_24_0.filterMo = EquipFilterModel.instance:generateFilterMo(arg_24_0.viewName)
-	arg_24_0.heroMo = arg_24_0.viewParam.heroMo
-	arg_24_0.posIndex = arg_24_0.viewParam.posIndex
-	arg_24_0._isBalance = arg_24_0.viewParam.isBalance
+function var_0_0.onOpen(arg_25_0)
+	arg_25_0.filterMo = EquipFilterModel.instance:generateFilterMo(arg_25_0.viewName)
+	arg_25_0.heroMo = arg_25_0.viewParam.heroMo
+	arg_25_0.posIndex = arg_25_0.viewParam.posIndex
+	arg_25_0._isBalance = arg_25_0.viewParam.isBalance
 
-	arg_24_0:initOriginEquipMo()
+	arg_25_0:initOriginEquipMo()
 
-	arg_24_0.listModel = arg_24_0.viewContainer:getListModel()
+	arg_25_0.listModel = arg_25_0.viewContainer:getListModel()
 
-	arg_24_0.listModel:onOpen(arg_24_0.viewParam, arg_24_0.filterMo)
+	arg_25_0.listModel:onOpen(arg_25_0.viewParam, arg_25_0.filterMo)
 
-	arg_24_0.selectedEquipMo = arg_24_0.listModel:getCurrentSelectEquipMo()
+	arg_25_0.selectedEquipMo = arg_25_0.listModel:getCurrentSelectEquipMo()
 
-	arg_24_0._simagebg:LoadImage(ResUrl.getEquipBg("bg_beijingjianbian.png"))
-	arg_24_0._simagecompare:LoadImage(ResUrl.getEquipBg("full/bg_black_mask.png"))
-	arg_24_0:refreshCompareContainerUI()
-	arg_24_0:refreshUI()
+	arg_25_0._simagebg:LoadImage(ResUrl.getEquipBg("bg_beijingjianbian.png"))
+	arg_25_0._simagecompare:LoadImage(ResUrl.getEquipBg("full/bg_black_mask.png"))
+	arg_25_0:refreshCompareContainerUI()
+	arg_25_0:refreshUI()
 
-	arg_24_0.txtConfirm.text = luaLang("confirm_text")
+	arg_25_0.txtConfirm.text = luaLang("confirm_text")
 end
 
-function var_0_0.initOriginEquipMo(arg_25_0)
-	arg_25_0.originEquipMo = nil
+function var_0_0.initOriginEquipMo(arg_26_0)
+	arg_26_0.originEquipMo = nil
 
-	if arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromHeroGroupFightView then
-		arg_25_0.originEquipMo = arg_25_0.viewParam.equipMo
-	elseif arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCharacterView then
-		arg_25_0.originEquipMo = EquipModel.instance:getEquip(arg_25_0.viewParam.heroMo.defaultEquipUid)
-	elseif arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromSeasonFightView then
-		arg_25_0.originEquipMo = arg_25_0.viewParam.equipMo
-	elseif arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCachotHeroGroupView then
-		arg_25_0.originEquipMo = arg_25_0.viewParam.equipMo
-	elseif arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCachotHeroGroupFightView then
-		arg_25_0.originEquipMo = arg_25_0.viewParam.equipMo
-	elseif arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromSeason123HeroGroupFightView or arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromSeason166HeroGroupFightView then
-		arg_25_0.originEquipMo = arg_25_0.viewParam.equipMo
-	elseif arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView then
-		arg_25_0.originEquipMo = arg_25_0.viewParam.equipMo
-	elseif arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromAssassinHeroView then
-		arg_25_0.originEquipMo = arg_25_0.viewParam.equipMo
+	if arg_26_0.viewParam.fromView == EquipEnum.FromViewEnum.FromHeroGroupFightView then
+		arg_26_0.originEquipMo = arg_26_0.viewParam.equipMo
+	elseif arg_26_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCharacterView then
+		arg_26_0.originEquipMo = EquipModel.instance:getEquip(arg_26_0.viewParam.heroMo.defaultEquipUid)
+	elseif arg_26_0.viewParam.fromView == EquipEnum.FromViewEnum.FromSeasonFightView then
+		arg_26_0.originEquipMo = arg_26_0.viewParam.equipMo
+	elseif arg_26_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCachotHeroGroupView then
+		arg_26_0.originEquipMo = arg_26_0.viewParam.equipMo
+	elseif arg_26_0.viewParam.fromView == EquipEnum.FromViewEnum.FromPresetPreviewView then
+		arg_26_0.originEquipMo = arg_26_0.viewParam.equipMo
+	elseif arg_26_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCachotHeroGroupFightView then
+		arg_26_0.originEquipMo = arg_26_0.viewParam.equipMo
+	elseif arg_26_0.viewParam.fromView == EquipEnum.FromViewEnum.FromSeason123HeroGroupFightView or arg_26_0.viewParam.fromView == EquipEnum.FromViewEnum.FromSeason166HeroGroupFightView then
+		arg_26_0.originEquipMo = arg_26_0.viewParam.equipMo
+	elseif arg_26_0.viewParam.fromView == EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView then
+		arg_26_0.originEquipMo = arg_26_0.viewParam.equipMo
+	elseif arg_26_0.viewParam.fromView == EquipEnum.FromViewEnum.FromAssassinHeroView then
+		arg_26_0.originEquipMo = arg_26_0.viewParam.equipMo
 	else
 		logError("not found from view ...")
 
-		arg_25_0.originEquipMo = arg_25_0.viewParam.equipMo
+		arg_26_0.originEquipMo = arg_26_0.viewParam.equipMo
 	end
 end
 
-function var_0_0.refreshCompareContainerUI(arg_26_0)
-	local var_26_0 = arg_26_0.originEquipMo
+function var_0_0.refreshCompareContainerUI(arg_27_0)
+	local var_27_0 = arg_27_0.originEquipMo
 
-	if not var_26_0 then
-		gohelper.setActive(arg_26_0._gocontainer1, false)
-		gohelper.setActive(arg_26_0._simagecompare.gameObject, false)
+	if not var_27_0 then
+		gohelper.setActive(arg_27_0._gocontainer1, false)
+		gohelper.setActive(arg_27_0._simagecompare.gameObject, false)
 
 		return
 	end
 
-	local var_26_1 = tonumber(var_26_0.uid) > 0 and arg_26_0.viewParam.fromView == EquipEnum.FromViewEnum.FromHeroGroupFightView and HeroGroupBalanceHelper.getIsBalanceMode()
+	local var_27_1 = tonumber(var_27_0.uid) > 0 and arg_27_0.viewParam.fromView == EquipEnum.FromViewEnum.FromHeroGroupFightView and HeroGroupBalanceHelper.getIsBalanceMode()
 
-	var_26_1 = var_26_1 or arg_26_0._isBalance
+	var_27_1 = var_27_1 or arg_27_0._isBalance
 
-	if var_26_1 then
-		local var_26_2 = arg_26_0.viewContainer:getBalanceEquipLv()
+	if var_27_1 then
+		local var_27_2 = arg_27_0.viewContainer:getBalanceEquipLv()
 
-		if var_26_2 > var_26_0.level then
-			local var_26_3 = EquipMO.New()
+		if var_27_2 > var_27_0.level then
+			local var_27_3 = EquipMO.New()
 
-			var_26_3:initByConfig(nil, var_26_0.equipId, var_26_2, var_26_0.refineLv)
+			var_27_3:initByConfig(nil, var_27_0.equipId, var_27_2, var_27_0.refineLv)
 
-			var_26_0 = var_26_3
+			var_27_0 = var_27_3
 		else
-			var_26_1 = nil
+			var_27_1 = nil
 		end
 	end
 
-	if not arg_26_0.container1_txtname then
-		arg_26_0.container1_txtname = gohelper.findChildText(arg_26_0._gocontainer1, "#go_equipinfo/#txt_name")
+	if not arg_27_0.container1_txtname then
+		arg_27_0.container1_txtname = gohelper.findChildText(arg_27_0._gocontainer1, "#go_equipinfo/#txt_name")
 	end
 
-	arg_26_0.container1_txtname.text = var_26_0.config.name
+	arg_27_0.container1_txtname.text = var_27_0.config.name
 
-	if not arg_26_0.container1_txtlevel then
-		arg_26_0.container1_txtlevel = gohelper.findChildText(arg_26_0._gocontainer1, "#go_equipinfo/#go_attr/#txt_level")
+	if not arg_27_0.container1_txtlevel then
+		arg_27_0.container1_txtlevel = gohelper.findChildText(arg_27_0._gocontainer1, "#go_equipinfo/#go_attr/#txt_level")
 	end
 
-	if not arg_26_0.container1_gobalance then
-		arg_26_0.container1_gobalance = gohelper.findChild(arg_26_0._gocontainer1, "#go_equipinfo/#go_isBalance")
+	if not arg_27_0.container1_gobalance then
+		arg_27_0.container1_gobalance = gohelper.findChild(arg_27_0._gocontainer1, "#go_equipinfo/#go_isBalance")
 	end
 
-	gohelper.setActive(arg_26_0.container1_gobalance, var_26_1)
+	gohelper.setActive(arg_27_0.container1_gobalance, var_27_1)
 
-	if not arg_26_0.container1_goattr then
-		arg_26_0.container1_goattr = gohelper.findChild(arg_26_0._gocontainer1, "#go_equipinfo/#go_attr").transform
+	if not arg_27_0.container1_goattr then
+		arg_27_0.container1_goattr = gohelper.findChild(arg_27_0._gocontainer1, "#go_equipinfo/#go_attr").transform
 	end
 
-	local var_26_4, var_26_5 = transformhelper.getLocalPos(arg_26_0.container1_goattr)
+	local var_27_4, var_27_5 = transformhelper.getLocalPos(arg_27_0.container1_goattr)
 
-	transformhelper.setLocalPosXY(arg_26_0.container1_goattr, var_26_4, var_26_1 and -28 or 17.3)
+	transformhelper.setLocalPosXY(arg_27_0.container1_goattr, var_27_4, var_27_1 and -28 or 17.3)
 
-	local var_26_6 = var_26_0.level
-	local var_26_7 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(var_26_0)
+	local var_27_6 = var_27_0.level
+	local var_27_7 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(var_27_0)
 
-	if var_26_1 then
-		arg_26_0.container1_txtlevel.text = string.format("Lv.<color=#8fb1cc>%d</color>/<color=#8fb1cc>%d</color>", var_26_6, var_26_7)
+	if var_27_1 then
+		arg_27_0.container1_txtlevel.text = string.format("Lv.<color=#8fb1cc>%d</color>/<color=#8fb1cc>%d</color>", var_27_6, var_27_7)
 	else
-		arg_26_0.container1_txtlevel.text = string.format("Lv.<color=#d9a06f>%d</color>/<color=#777676>%d</color>", var_26_6, var_26_7)
+		arg_27_0.container1_txtlevel.text = string.format("Lv.<color=#d9a06f>%d</color>/<color=#777676>%d</color>", var_27_6, var_27_7)
 	end
 
-	if not arg_26_0.container1_goStarList then
-		arg_26_0.container1_goStarList = arg_26_0:getUserDataTb_()
+	if not arg_27_0.container1_goStarList then
+		arg_27_0.container1_goStarList = arg_27_0:getUserDataTb_()
 
-		for iter_26_0 = 1, 6 do
-			table.insert(arg_26_0.container1_goStarList, gohelper.findChild(arg_26_0._gocontainer1, "#go_equipinfo/go_insigt/#image_" .. iter_26_0))
+		for iter_27_0 = 1, 6 do
+			table.insert(arg_27_0.container1_goStarList, gohelper.findChild(arg_27_0._gocontainer1, "#go_equipinfo/go_insigt/#image_" .. iter_27_0))
 		end
 	end
 
-	local var_26_8 = var_26_0.config.rare
+	local var_27_8 = var_27_0.config.rare
 
-	for iter_26_1 = 1, 6 do
-		gohelper.setActive(arg_26_0.container1_goStarList[iter_26_1], iter_26_1 <= var_26_8 + 1)
+	for iter_27_1 = 1, 6 do
+		gohelper.setActive(arg_27_0.container1_goStarList[iter_27_1], iter_27_1 <= var_27_8 + 1)
 	end
 
-	if not arg_26_0.container1_gostrengthenattr then
-		arg_26_0.container1_gostrengthenattr = gohelper.findChild(arg_26_0._gocontainer1, "#go_equipinfo/#go_attr/layout/attribute/container/#go_strengthenattr")
+	if not arg_27_0.container1_gostrengthenattr then
+		arg_27_0.container1_gostrengthenattr = gohelper.findChild(arg_27_0._gocontainer1, "#go_equipinfo/#go_attr/layout/attribute/container/#go_strengthenattr")
 	end
 
-	gohelper.setActive(arg_26_0.container1_gostrengthenattr, false)
+	gohelper.setActive(arg_27_0.container1_gostrengthenattr, false)
 
-	local var_26_9, var_26_10 = EquipConfig.instance:getEquipNormalAttr(var_26_0.config.id, var_26_0.level, HeroConfig.sortAttrForEquipView)
-	local var_26_11
-	local var_26_12
+	local var_27_9, var_27_10 = EquipConfig.instance:getEquipNormalAttr(var_27_0.config.id, var_27_0.level, HeroConfig.sortAttrForEquipView)
+	local var_27_11
+	local var_27_12
 
-	for iter_26_2, iter_26_3 in ipairs(var_26_10) do
-		local var_26_13 = arg_26_0.container1_strengthenAttrItems[iter_26_2]
+	for iter_27_2, iter_27_3 in ipairs(var_27_10) do
+		local var_27_13 = arg_27_0.container1_strengthenAttrItems[iter_27_2]
 
-		if not var_26_13 then
-			var_26_13 = arg_26_0:getUserDataTb_()
-			var_26_13.go = gohelper.cloneInPlace(arg_26_0.container1_gostrengthenattr, "item" .. iter_26_2)
-			var_26_13.icon = gohelper.findChildImage(var_26_13.go, "image_icon")
-			var_26_13.name = gohelper.findChildText(var_26_13.go, "txt_name")
-			var_26_13.attr_value = gohelper.findChildText(var_26_13.go, "txt_value")
-			var_26_13.bg = gohelper.findChild(var_26_13.go, "bg")
+		if not var_27_13 then
+			var_27_13 = arg_27_0:getUserDataTb_()
+			var_27_13.go = gohelper.cloneInPlace(arg_27_0.container1_gostrengthenattr, "item" .. iter_27_2)
+			var_27_13.icon = gohelper.findChildImage(var_27_13.go, "image_icon")
+			var_27_13.name = gohelper.findChildText(var_27_13.go, "txt_name")
+			var_27_13.attr_value = gohelper.findChildText(var_27_13.go, "txt_value")
+			var_27_13.bg = gohelper.findChild(var_27_13.go, "bg")
 
-			table.insert(arg_26_0.container1_strengthenAttrItems, var_26_13)
+			table.insert(arg_27_0.container1_strengthenAttrItems, var_27_13)
 		end
 
-		local var_26_14 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(iter_26_3.attrType))
+		local var_27_14 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(iter_27_3.attrType))
 
-		UISpriteSetMgr.instance:setCommonSprite(var_26_13.icon, "icon_att_" .. var_26_14.id)
+		UISpriteSetMgr.instance:setCommonSprite(var_27_13.icon, "icon_att_" .. var_27_14.id)
 
-		var_26_13.name.text = var_26_14.name
-		var_26_13.attr_value.text = iter_26_3.value
+		var_27_13.name.text = var_27_14.name
+		var_27_13.attr_value.text = iter_27_3.value
 
-		gohelper.setActive(var_26_13.bg, iter_26_2 % 2 == 0)
-		gohelper.setActive(var_26_13.go, true)
+		gohelper.setActive(var_27_13.bg, iter_27_2 % 2 == 0)
+		gohelper.setActive(var_27_13.go, true)
 	end
 
-	for iter_26_4 = #var_26_10 + 1, #arg_26_0.container1_strengthenAttrItems do
-		gohelper.setActive(arg_26_0.container1_strengthenAttrItems[iter_26_4].go, false)
+	for iter_27_4 = #var_27_10 + 1, #arg_27_0.container1_strengthenAttrItems do
+		gohelper.setActive(arg_27_0.container1_strengthenAttrItems[iter_27_4].go, false)
 	end
 
-	if not arg_26_0.container1_gobreakeffect then
-		arg_26_0.container1_gobreakeffect = gohelper.findChild(arg_26_0._gocontainer1, "#go_equipinfo/#go_attr/layout/attribute/container/#go_breakeffect")
-		arg_26_0.container1_imageBreakIcon = gohelper.findChildImage(arg_26_0.container1_gobreakeffect, "image_icon")
-		arg_26_0.container1_txtBreakAttrName = gohelper.findChildText(arg_26_0.container1_gobreakeffect, "txt_name")
-		arg_26_0.container1_txtBreakValue = gohelper.findChildText(arg_26_0.container1_gobreakeffect, "txt_value")
+	if not arg_27_0.container1_gobreakeffect then
+		arg_27_0.container1_gobreakeffect = gohelper.findChild(arg_27_0._gocontainer1, "#go_equipinfo/#go_attr/layout/attribute/container/#go_breakeffect")
+		arg_27_0.container1_imageBreakIcon = gohelper.findChildImage(arg_27_0.container1_gobreakeffect, "image_icon")
+		arg_27_0.container1_txtBreakAttrName = gohelper.findChildText(arg_27_0.container1_gobreakeffect, "txt_name")
+		arg_27_0.container1_txtBreakValue = gohelper.findChildText(arg_27_0.container1_gobreakeffect, "txt_value")
 	end
 
-	local var_26_15, var_26_16 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(var_26_0.config, var_26_0.breakLv)
+	local var_27_15, var_27_16 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(var_27_0.config, var_27_0.breakLv)
 
-	if var_26_15 then
-		gohelper.setActive(arg_26_0.container1_gobreakeffect, true)
-		UISpriteSetMgr.instance:setCommonSprite(arg_26_0.container1_imageBreakIcon, "icon_att_" .. var_26_15)
+	if var_27_15 then
+		gohelper.setActive(arg_27_0.container1_gobreakeffect, true)
+		UISpriteSetMgr.instance:setCommonSprite(arg_27_0.container1_imageBreakIcon, "icon_att_" .. var_27_15)
 
-		arg_26_0.container1_txtBreakAttrName.text = EquipHelper.getAttrBreakText(var_26_15)
-		arg_26_0.container1_txtBreakValue.text = EquipHelper.getAttrPercentValueStr(var_26_16)
+		arg_27_0.container1_txtBreakAttrName.text = EquipHelper.getAttrBreakText(var_27_15)
+		arg_27_0.container1_txtBreakValue.text = EquipHelper.getAttrPercentValueStr(var_27_16)
 
-		gohelper.setAsLastSibling(arg_26_0.container1_gobreakeffect)
+		gohelper.setAsLastSibling(arg_27_0.container1_gobreakeffect)
 	else
-		gohelper.setActive(arg_26_0.container1_gobreakeffect, false)
+		gohelper.setActive(arg_27_0.container1_gobreakeffect, false)
 	end
 
-	if not arg_26_0.container1_gosuitattribute then
-		arg_26_0.container1_gosuitattribute = gohelper.findChild(arg_26_0._gocontainer1, "#go_equipinfo/#go_attr/layout/#go_suitattribute")
+	if not arg_27_0.container1_gosuitattribute then
+		arg_27_0.container1_gosuitattribute = gohelper.findChild(arg_27_0._gocontainer1, "#go_equipinfo/#go_attr/layout/#go_suitattribute")
 	end
 
-	if var_26_0.config.rare <= EquipConfig.instance:getNotShowRefineRare() then
-		gohelper.setActive(arg_26_0.container1_gosuitattribute, false)
+	if var_27_0.config.rare <= EquipConfig.instance:getNotShowRefineRare() then
+		gohelper.setActive(arg_27_0.container1_gosuitattribute, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_26_0.container1_gosuitattribute, true)
+	gohelper.setActive(arg_27_0.container1_gosuitattribute, true)
 
-	if not arg_26_0.container1_txtattributelv then
-		arg_26_0.container1_txtattributelv = gohelper.findChildText(arg_26_0._gocontainer1, "#go_equipinfo/#go_attr/layout/#go_suitattribute/attributename/#txt_attributelv")
+	if not arg_27_0.container1_txtattributelv then
+		arg_27_0.container1_txtattributelv = gohelper.findChildText(arg_27_0._gocontainer1, "#go_equipinfo/#go_attr/layout/#go_suitattribute/attributename/#txt_attributelv")
 	end
 
-	if not arg_26_0.container1_goadvanceskill then
-		arg_26_0.container1_goadvanceskill = gohelper.findChild(arg_26_0._gocontainer1, "#go_equipinfo/#go_attr/layout/#go_suitattribute/#scroll_desccontainer/Viewport/#go_suiteffect/#go_advanceskill")
+	if not arg_27_0.container1_goadvanceskill then
+		arg_27_0.container1_goadvanceskill = gohelper.findChild(arg_27_0._gocontainer1, "#go_equipinfo/#go_attr/layout/#go_suitattribute/#scroll_desccontainer/Viewport/#go_suiteffect/#go_advanceskill")
 	end
 
-	if not arg_26_0.container1_gobaseskill then
-		arg_26_0.container1_gobaseskill = gohelper.findChild(arg_26_0._gocontainer1, "#go_equipinfo/#go_attr/layout/#go_suitattribute/#scroll_desccontainer/Viewport/#go_suiteffect/#go_baseskill")
-		arg_26_0.container1_goBaseSkillCanvasGroup = arg_26_0.container1_gobaseskill:GetComponent(typeof(UnityEngine.CanvasGroup))
+	if not arg_27_0.container1_gobaseskill then
+		arg_27_0.container1_gobaseskill = gohelper.findChild(arg_27_0._gocontainer1, "#go_equipinfo/#go_attr/layout/#go_suitattribute/#scroll_desccontainer/Viewport/#go_suiteffect/#go_baseskill")
+		arg_27_0.container1_goBaseSkillCanvasGroup = arg_27_0.container1_gobaseskill:GetComponent(typeof(UnityEngine.CanvasGroup))
 	end
 
-	if not arg_26_0.container1_txtsuiteffect2 then
-		arg_26_0.container1_txtsuiteffect2 = gohelper.findChildText(arg_26_0._gocontainer1, "#go_equipinfo/#go_attr/layout/#go_suitattribute/#scroll_desccontainer/Viewport/#go_suiteffect/#go_baseskill/#txt_suiteffect2")
+	if not arg_27_0.container1_txtsuiteffect2 then
+		arg_27_0.container1_txtsuiteffect2 = gohelper.findChildText(arg_27_0._gocontainer1, "#go_equipinfo/#go_attr/layout/#go_suitattribute/#scroll_desccontainer/Viewport/#go_suiteffect/#go_baseskill/#txt_suiteffect2")
 	end
 
-	gohelper.setActive(arg_26_0.container1_txtsuiteffect2.gameObject, false)
+	gohelper.setActive(arg_27_0.container1_txtsuiteffect2.gameObject, false)
 
-	local var_26_17 = EquipHelper.getEquipSkillBaseDes(var_26_0.config.id, var_26_0.refineLv, "#D9A06F")
+	local var_27_17 = EquipHelper.getEquipSkillBaseDes(var_27_0.config.id, var_27_0.refineLv, "#D9A06F")
 
-	if #var_26_17 == 0 then
-		gohelper.setActive(arg_26_0.container1_gobaseskill, false)
+	if #var_27_17 == 0 then
+		gohelper.setActive(arg_27_0.container1_gobaseskill, false)
 	else
-		arg_26_0.container1_txtattributelv.text = var_26_0.refineLv
+		arg_27_0.container1_txtattributelv.text = var_27_0.refineLv
 
-		gohelper.setActive(arg_26_0.container1_gobaseskill, true)
+		gohelper.setActive(arg_27_0.container1_gobaseskill, true)
 
-		local var_26_18
+		local var_27_18
 
-		for iter_26_5, iter_26_6 in ipairs(var_26_17) do
-			local var_26_19 = arg_26_0.container1_skillDescItems[iter_26_5]
+		for iter_27_5, iter_27_6 in ipairs(var_27_17) do
+			local var_27_19 = arg_27_0.container1_skillDescItems[iter_27_5]
 
-			if not var_26_19 then
-				var_26_19 = arg_26_0:getUserDataTb_()
-				var_26_19.itemGo = gohelper.cloneInPlace(arg_26_0.container1_txtsuiteffect2.gameObject, "item_" .. iter_26_5)
-				var_26_19.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_26_19.itemGo, FixTmpBreakLine)
-				var_26_19.imagepoint = gohelper.findChildImage(var_26_19.itemGo, "#image_point")
-				var_26_19.txt = var_26_19.itemGo:GetComponent(gohelper.Type_TextMesh)
+			if not var_27_19 then
+				var_27_19 = arg_27_0:getUserDataTb_()
+				var_27_19.itemGo = gohelper.cloneInPlace(arg_27_0.container1_txtsuiteffect2.gameObject, "item_" .. iter_27_5)
+				var_27_19.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_27_19.itemGo, FixTmpBreakLine)
+				var_27_19.imagepoint = gohelper.findChildImage(var_27_19.itemGo, "#image_point")
+				var_27_19.txt = var_27_19.itemGo:GetComponent(gohelper.Type_TextMesh)
 
-				SkillHelper.addHyperLinkClick(var_26_19.txt)
-				table.insert(arg_26_0.container1_skillDescItems, var_26_19)
+				SkillHelper.addHyperLinkClick(var_27_19.txt)
+				table.insert(arg_27_0.container1_skillDescItems, var_27_19)
 			end
 
-			var_26_19.txt.text = EquipHelper.getEquipSkillDesc(iter_26_6)
+			var_27_19.txt.text = EquipHelper.getEquipSkillDesc(iter_27_6)
 
-			var_26_19.fixTmpBreakLine:refreshTmpContent(var_26_19.txt)
-			gohelper.setActive(var_26_19.itemGo, true)
+			var_27_19.fixTmpBreakLine:refreshTmpContent(var_27_19.txt)
+			gohelper.setActive(var_27_19.itemGo, true)
 		end
 
-		arg_26_0.container1_goBaseSkillCanvasGroup.alpha = var_26_0 and arg_26_0.heroMo and EquipHelper.detectEquipSkillSuited(arg_26_0.heroMo.heroId, var_26_0.config.id, var_26_0.refineLv) and 1 or 0.4
+		arg_27_0.container1_goBaseSkillCanvasGroup.alpha = var_27_0 and arg_27_0.heroMo and EquipHelper.detectEquipSkillSuited(arg_27_0.heroMo.heroId, var_27_0.config.id, var_27_0.refineLv) and 1 or 0.4
 
-		for iter_26_7 = #var_26_17 + 1, #arg_26_0.container1_skillDescItems do
-			gohelper.setActive(arg_26_0.container1_skillDescItems[iter_26_7].itemGo, false)
+		for iter_27_7 = #var_27_17 + 1, #arg_27_0.container1_skillDescItems do
+			gohelper.setActive(arg_27_0.container1_skillDescItems[iter_27_7].itemGo, false)
 		end
 	end
 end
 
-function var_0_0.refreshUI(arg_27_0)
-	arg_27_0:refreshBtnStatus()
-	arg_27_0:refreshHeroInfo()
-	arg_27_0:refreshLeftUI()
-	arg_27_0:refreshCenterUI()
-	arg_27_0:refreshRightUI()
+function var_0_0.refreshUI(arg_28_0)
+	arg_28_0:refreshBtnStatus()
+	arg_28_0:refreshHeroInfo()
+	arg_28_0:refreshLeftUI()
+	arg_28_0:refreshCenterUI()
+	arg_28_0:refreshRightUI()
 end
 
-function var_0_0.refreshBtnStatus(arg_28_0)
-	gohelper.setActive(arg_28_0.goRareBtnNoSelect, not arg_28_0.listModel:isSortByRare())
-	gohelper.setActive(arg_28_0.goRareBtnSelect, arg_28_0.listModel:isSortByRare())
-	gohelper.setActive(arg_28_0.goLvBtnNoSelect, not arg_28_0.listModel:isSortByLevel())
-	gohelper.setActive(arg_28_0.goLvBtnSelect, arg_28_0.listModel:isSortByLevel())
+function var_0_0.refreshBtnStatus(arg_29_0)
+	gohelper.setActive(arg_29_0.goRareBtnNoSelect, not arg_29_0.listModel:isSortByRare())
+	gohelper.setActive(arg_29_0.goRareBtnSelect, arg_29_0.listModel:isSortByRare())
+	gohelper.setActive(arg_29_0.goLvBtnNoSelect, not arg_29_0.listModel:isSortByLevel())
+	gohelper.setActive(arg_29_0.goLvBtnSelect, arg_29_0.listModel:isSortByLevel())
 
-	local var_28_0, var_28_1 = arg_28_0.listModel:getSortState()
+	local var_29_0, var_29_1 = arg_29_0.listModel:getSortState()
 
-	transformhelper.setLocalScale(arg_28_0.goRareBtnSelectArrow.transform, 1, var_28_1, 1)
-	transformhelper.setLocalScale(arg_28_0.goLvBtnSelectArrow.transform, 1, var_28_0, 1)
-	arg_28_0:refreshFilterBtnStatus()
+	transformhelper.setLocalScale(arg_29_0.goRareBtnSelectArrow.transform, 1, var_29_1, 1)
+	transformhelper.setLocalScale(arg_29_0.goLvBtnSelectArrow.transform, 1, var_29_0, 1)
+	arg_29_0:refreshFilterBtnStatus()
 end
 
-function var_0_0.refreshFilterBtnStatus(arg_29_0)
-	local var_29_0 = arg_29_0.filterMo:isFiltering()
+function var_0_0.refreshFilterBtnStatus(arg_30_0)
+	local var_30_0 = arg_30_0.filterMo:isFiltering()
 
-	gohelper.setActive(arg_29_0.goNotFilter, not var_29_0)
-	gohelper.setActive(arg_29_0.goFilter, var_29_0)
+	gohelper.setActive(arg_30_0.goNotFilter, not var_30_0)
+	gohelper.setActive(arg_30_0.goFilter, var_30_0)
 end
 
-function var_0_0.refreshHeroInfo(arg_30_0)
-	gohelper.setActive(arg_30_0._goherocontainer, arg_30_0.heroMo)
-	gohelper.setActive(arg_30_0._goheroempty, not arg_30_0.heroMo)
+function var_0_0.refreshHeroInfo(arg_31_0)
+	gohelper.setActive(arg_31_0._goherocontainer, arg_31_0.heroMo)
+	gohelper.setActive(arg_31_0._goheroempty, not arg_31_0.heroMo)
 
-	if not arg_30_0.heroMo then
+	if not arg_31_0.heroMo then
 		return
 	end
 
-	arg_30_0._simageheroicon:LoadImage(ResUrl.getHandbookheroIcon(arg_30_0.heroMo.config.skinId))
+	arg_31_0._simageheroicon:LoadImage(ResUrl.getHandbookheroIcon(arg_31_0.heroMo.config.skinId))
 
-	arg_30_0._txtheroname.text = arg_30_0.heroMo:getHeroName()
+	arg_31_0._txtheroname.text = arg_31_0.heroMo:getHeroName()
 
-	UISpriteSetMgr.instance:setHandBookCareerSprite(arg_30_0._imageherocareer, "sx_icon_" .. tostring(arg_30_0.heroMo.config.career))
+	UISpriteSetMgr.instance:setHandBookCareerSprite(arg_31_0._imageherocareer, "sx_icon_" .. tostring(arg_31_0.heroMo.config.career))
 end
 
-function var_0_0.refreshLeftUI(arg_31_0)
-	local var_31_0 = arg_31_0.heroMo and arg_31_0.heroMo.trialEquipMo and true or false
-	local var_31_1 = arg_31_0.selectedEquipMo and not var_31_0 and tonumber(arg_31_0.selectedEquipMo.uid) > 0 and arg_31_0.viewParam.fromView == EquipEnum.FromViewEnum.FromHeroGroupFightView and HeroGroupBalanceHelper.getIsBalanceMode()
+function var_0_0.refreshLeftUI(arg_32_0)
+	local var_32_0 = arg_32_0.heroMo and arg_32_0.heroMo.trialEquipMo and true or false
+	local var_32_1 = arg_32_0.selectedEquipMo and not var_32_0 and tonumber(arg_32_0.selectedEquipMo.uid) > 0 and arg_32_0.viewParam.fromView == EquipEnum.FromViewEnum.FromHeroGroupFightView and HeroGroupBalanceHelper.getIsBalanceMode()
 
-	var_31_1 = var_31_1 or arg_31_0._isBalance
-	arg_31_0._balanceEquipMo = nil
+	var_32_1 = var_32_1 or arg_32_0._isBalance
+	arg_32_0._balanceEquipMo = nil
 
-	if var_31_1 and arg_31_0.selectedEquipMo then
-		local var_31_2 = arg_31_0.viewContainer:getBalanceEquipLv()
+	if var_32_1 and arg_32_0.selectedEquipMo then
+		local var_32_2 = arg_32_0.viewContainer:getBalanceEquipLv()
 
-		if var_31_2 <= arg_31_0.selectedEquipMo.level then
-			var_31_1 = nil
+		if var_32_2 <= arg_32_0.selectedEquipMo.level then
+			var_32_1 = nil
 		else
-			local var_31_3 = EquipMO.New()
+			local var_32_3 = EquipMO.New()
 
-			var_31_3:initByConfig(nil, arg_31_0.selectedEquipMo.equipId, var_31_2, arg_31_0.selectedEquipMo.refineLv)
+			var_32_3:initByConfig(nil, arg_32_0.selectedEquipMo.equipId, var_32_2, arg_32_0.selectedEquipMo.refineLv)
 
-			arg_31_0._balanceEquipMo = var_31_3
+			arg_32_0._balanceEquipMo = var_32_3
 		end
 	end
 
-	gohelper.setActive(arg_31_0._gotrialtip, var_31_0)
-	gohelper.setActive(arg_31_0._goequipinfo, arg_31_0.selectedEquipMo)
-	gohelper.setActive(arg_31_0._goequipinfoempty, not arg_31_0.selectedEquipMo)
-	gohelper.setActive(arg_31_0._gobalance, var_31_1)
+	gohelper.setActive(arg_32_0._gotrialtip, var_32_0)
+	gohelper.setActive(arg_32_0._goequipinfo, arg_32_0.selectedEquipMo)
+	gohelper.setActive(arg_32_0._goequipinfoempty, not arg_32_0.selectedEquipMo)
+	gohelper.setActive(arg_32_0._gobalance, var_32_1)
 
-	local var_31_4, var_31_5 = transformhelper.getLocalPos(arg_31_0._goAttr.transform)
+	local var_32_4, var_32_5 = transformhelper.getLocalPos(arg_32_0._goAttr.transform)
 
-	transformhelper.setLocalPosXY(arg_31_0._goAttr.transform, var_31_4, var_31_1 and -172.2 or -127)
+	transformhelper.setLocalPosXY(arg_32_0._goAttr.transform, var_32_4, var_32_1 and -172.2 or -127)
 
-	arg_31_0.layoutElement.minHeight = var_31_1 and 142 or 187
+	arg_32_0.layoutElement.minHeight = var_32_1 and 142 or 187
 
-	if arg_31_0.selectedEquipMo then
-		arg_31_0._txtname.text = arg_31_0.selectedEquipMo.config.name
-
-		arg_31_0:refreshEquipStar()
-		arg_31_0:refreshSelectStatus()
-		arg_31_0:refreshEquipLevel()
-		arg_31_0:refreshEquipNormalAttr()
-
-		if arg_31_0.selectedEquipMo.config.rare > EquipConfig.instance:getNotShowRefineRare() then
-			arg_31_0:refreshEquipSkillDesc()
-			gohelper.setActive(arg_31_0._gosuitattribute, true)
-		else
-			gohelper.setActive(arg_31_0._gosuitattribute, false)
-		end
-
-		arg_31_0:refreshInTeam()
-	end
-
-	local var_31_6 = arg_31_0.selectedEquipMo ~= nil and tonumber(arg_31_0.selectedEquipMo.uid) > 0
-
-	gohelper.setActive(arg_31_0._btnjump.gameObject, var_31_6)
-	gohelper.setActive(arg_31_0._gobuttom, not var_31_0)
-end
-
-function var_0_0.refreshCenterUI(arg_32_0)
 	if arg_32_0.selectedEquipMo then
-		arg_32_0._simageequip:LoadImage(ResUrl.getEquipSuit(arg_32_0.selectedEquipMo.config.icon))
-		gohelper.setActive(arg_32_0._gocenter, true)
-	else
-		gohelper.setActive(arg_32_0._gocenter, false)
-	end
-end
+		arg_32_0._txtname.text = arg_32_0.selectedEquipMo.config.name
 
-function var_0_0.refreshRightUI(arg_33_0)
-	local var_33_0 = arg_33_0.listModel:isEmpty()
+		arg_32_0:refreshEquipStar()
+		arg_32_0:refreshSelectStatus()
+		arg_32_0:refreshEquipLevel()
+		arg_32_0:refreshEquipNormalAttr()
 
-	gohelper.setActive(arg_33_0._scrollequip.gameObject, not var_33_0)
-	gohelper.setActive(arg_33_0._goequipempty, var_33_0)
-
-	if not var_33_0 then
-		arg_33_0.listModel:refreshEquipList()
-	end
-end
-
-function var_0_0.refreshEquipStar(arg_34_0)
-	local var_34_0 = arg_34_0.selectedEquipMo.config.rare
-
-	for iter_34_0 = 1, 6 do
-		gohelper.setActive(arg_34_0["_image" .. iter_34_0].gameObject, iter_34_0 <= var_34_0 + 1)
-	end
-end
-
-function var_0_0.refreshSelectStatus(arg_35_0)
-	if not arg_35_0.originEquipMo then
-		gohelper.setActive(arg_35_0._btncompare.gameObject, false)
-		gohelper.setActive(arg_35_0._btninteam.gameObject, false)
-		gohelper.setActive(arg_35_0._btnfold.gameObject, false)
-
-		return
-	end
-
-	if arg_35_0.comparing then
-		gohelper.setActive(arg_35_0._btncompare.gameObject, false)
-		gohelper.setActive(arg_35_0._btninteam.gameObject, false)
-		gohelper.setActive(arg_35_0._btnfold.gameObject, true)
-
-		return
-	end
-
-	if arg_35_0.originEquipMo.uid == arg_35_0.selectedEquipMo.uid then
-		gohelper.setActive(arg_35_0._btncompare.gameObject, false)
-		gohelper.setActive(arg_35_0._btninteam.gameObject, true)
-		gohelper.setActive(arg_35_0._btnfold.gameObject, false)
-
-		return
-	end
-
-	gohelper.setActive(arg_35_0._btncompare.gameObject, true)
-	gohelper.setActive(arg_35_0._btninteam.gameObject, false)
-	gohelper.setActive(arg_35_0._btnfold.gameObject, false)
-end
-
-function var_0_0.refreshEquipLevel(arg_36_0)
-	if arg_36_0._balanceEquipMo then
-		local var_36_0 = arg_36_0._balanceEquipMo.level
-		local var_36_1 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_36_0._balanceEquipMo)
-
-		arg_36_0._txtlevel.text = string.format("Lv.<color=" .. HeroGroupBalanceHelper.BalanceColor .. ">%d</color>/<color=" .. HeroGroupBalanceHelper.BalanceColor .. ">%d</color>", var_36_0, var_36_1)
-	else
-		local var_36_2 = arg_36_0.selectedEquipMo.level
-		local var_36_3 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_36_0.selectedEquipMo)
-
-		arg_36_0._txtlevel.text = string.format("Lv.<color=#d9a06f>%d</color>/<color=#777676>%d</color>", var_36_2, var_36_3)
-	end
-end
-
-function var_0_0.refreshEquipNormalAttr(arg_37_0)
-	local var_37_0 = arg_37_0._balanceEquipMo or arg_37_0.selectedEquipMo
-	local var_37_1, var_37_2 = EquipConfig.instance:getEquipNormalAttr(var_37_0.config.id, var_37_0.level, HeroConfig.sortAttrForEquipView)
-	local var_37_3
-	local var_37_4
-
-	for iter_37_0, iter_37_1 in ipairs(var_37_2) do
-		local var_37_5 = arg_37_0.strengthenAttrItems[iter_37_0]
-
-		if not var_37_5 then
-			var_37_5 = {
-				go = gohelper.cloneInPlace(arg_37_0._gostrengthenattr, "item" .. iter_37_0)
-			}
-			var_37_5.icon = gohelper.findChildImage(var_37_5.go, "image_icon")
-			var_37_5.name = gohelper.findChildText(var_37_5.go, "txt_name")
-			var_37_5.attr_value = gohelper.findChildText(var_37_5.go, "txt_value")
-			var_37_5.bg = gohelper.findChild(var_37_5.go, "bg")
-
-			table.insert(arg_37_0.strengthenAttrItems, var_37_5)
+		if arg_32_0.selectedEquipMo.config.rare > EquipConfig.instance:getNotShowRefineRare() then
+			arg_32_0:refreshEquipSkillDesc()
+			gohelper.setActive(arg_32_0._gosuitattribute, true)
+		else
+			gohelper.setActive(arg_32_0._gosuitattribute, false)
 		end
 
-		local var_37_6 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(iter_37_1.attrType))
-
-		UISpriteSetMgr.instance:setCommonSprite(var_37_5.icon, "icon_att_" .. var_37_6.id)
-
-		var_37_5.name.text = var_37_6.name
-		var_37_5.attr_value.text = iter_37_1.value
-
-		gohelper.setActive(var_37_5.bg, iter_37_0 % 2 == 0)
-		gohelper.setActive(var_37_5.go, true)
+		arg_32_0:refreshInTeam()
 	end
 
-	for iter_37_2 = #var_37_2 + 1, #arg_37_0.strengthenAttrItems do
-		gohelper.setActive(arg_37_0.strengthenAttrItems[iter_37_2].go, false)
-	end
+	local var_32_6 = arg_32_0.selectedEquipMo ~= nil and tonumber(arg_32_0.selectedEquipMo.uid) > 0
 
-	local var_37_7, var_37_8 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(var_37_0.config, var_37_0.breakLv)
+	gohelper.setActive(arg_32_0._btnjump.gameObject, var_32_6)
+	gohelper.setActive(arg_32_0._gobuttom, not var_32_0)
+end
 
-	if var_37_7 then
-		gohelper.setActive(arg_37_0._gobreakeffect, true)
-		UISpriteSetMgr.instance:setCommonSprite(arg_37_0.imageBreakIcon, "icon_att_" .. var_37_7)
-
-		arg_37_0.txtBreakAttrName.text = EquipHelper.getAttrBreakText(var_37_7)
-		arg_37_0.txtBreakValue.text = EquipHelper.getAttrPercentValueStr(var_37_8)
-
-		gohelper.setAsLastSibling(arg_37_0._gobreakeffect)
+function var_0_0.refreshCenterUI(arg_33_0)
+	if arg_33_0.selectedEquipMo then
+		arg_33_0._simageequip:LoadImage(ResUrl.getEquipSuit(arg_33_0.selectedEquipMo.config.icon))
+		gohelper.setActive(arg_33_0._gocenter, true)
 	else
-		gohelper.setActive(arg_37_0._gobreakeffect, false)
+		gohelper.setActive(arg_33_0._gocenter, false)
 	end
 end
 
-function var_0_0.refreshEquipSkillDesc(arg_38_0)
-	local var_38_0 = EquipHelper.getEquipSkillBaseDes(arg_38_0.selectedEquipMo.config.id, arg_38_0.selectedEquipMo.refineLv, "#D9A06F")
+function var_0_0.refreshRightUI(arg_34_0)
+	local var_34_0 = arg_34_0.listModel:isEmpty()
 
-	if #var_38_0 == 0 then
-		gohelper.setActive(arg_38_0._gobaseskill.gameObject, false)
+	gohelper.setActive(arg_34_0._scrollequip.gameObject, not var_34_0)
+	gohelper.setActive(arg_34_0._goequipempty, var_34_0)
+
+	if not var_34_0 then
+		arg_34_0.listModel:refreshEquipList()
+	end
+end
+
+function var_0_0.refreshEquipStar(arg_35_0)
+	local var_35_0 = arg_35_0.selectedEquipMo.config.rare
+
+	for iter_35_0 = 1, 6 do
+		gohelper.setActive(arg_35_0["_image" .. iter_35_0].gameObject, iter_35_0 <= var_35_0 + 1)
+	end
+end
+
+function var_0_0.refreshSelectStatus(arg_36_0)
+	if not arg_36_0.originEquipMo then
+		gohelper.setActive(arg_36_0._btncompare.gameObject, false)
+		gohelper.setActive(arg_36_0._btninteam.gameObject, false)
+		gohelper.setActive(arg_36_0._btnfold.gameObject, false)
+
+		return
+	end
+
+	if arg_36_0.comparing then
+		gohelper.setActive(arg_36_0._btncompare.gameObject, false)
+		gohelper.setActive(arg_36_0._btninteam.gameObject, false)
+		gohelper.setActive(arg_36_0._btnfold.gameObject, true)
+
+		return
+	end
+
+	if arg_36_0.originEquipMo.uid == arg_36_0.selectedEquipMo.uid then
+		gohelper.setActive(arg_36_0._btncompare.gameObject, false)
+		gohelper.setActive(arg_36_0._btninteam.gameObject, true)
+		gohelper.setActive(arg_36_0._btnfold.gameObject, false)
+
+		return
+	end
+
+	gohelper.setActive(arg_36_0._btncompare.gameObject, true)
+	gohelper.setActive(arg_36_0._btninteam.gameObject, false)
+	gohelper.setActive(arg_36_0._btnfold.gameObject, false)
+end
+
+function var_0_0.refreshEquipLevel(arg_37_0)
+	if arg_37_0._balanceEquipMo then
+		local var_37_0 = arg_37_0._balanceEquipMo.level
+		local var_37_1 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_37_0._balanceEquipMo)
+
+		arg_37_0._txtlevel.text = string.format("Lv.<color=" .. HeroGroupBalanceHelper.BalanceColor .. ">%d</color>/<color=" .. HeroGroupBalanceHelper.BalanceColor .. ">%d</color>", var_37_0, var_37_1)
 	else
-		arg_38_0._txtattributelv.text = arg_38_0.selectedEquipMo.refineLv
+		local var_37_2 = arg_37_0.selectedEquipMo.level
+		local var_37_3 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_37_0.selectedEquipMo)
 
-		gohelper.setActive(arg_38_0._gobaseskill.gameObject, true)
+		arg_37_0._txtlevel.text = string.format("Lv.<color=#d9a06f>%d</color>/<color=#777676>%d</color>", var_37_2, var_37_3)
+	end
+end
 
-		local var_38_1
-		local var_38_2
-		local var_38_3
+function var_0_0.refreshEquipNormalAttr(arg_38_0)
+	local var_38_0 = arg_38_0._balanceEquipMo or arg_38_0.selectedEquipMo
+	local var_38_1, var_38_2 = EquipConfig.instance:getEquipNormalAttr(var_38_0.config.id, var_38_0.level, HeroConfig.sortAttrForEquipView)
+	local var_38_3
+	local var_38_4
 
-		for iter_38_0, iter_38_1 in ipairs(var_38_0) do
-			local var_38_4 = arg_38_0.skillDescItems[iter_38_0]
+	for iter_38_0, iter_38_1 in ipairs(var_38_2) do
+		local var_38_5 = arg_38_0.strengthenAttrItems[iter_38_0]
 
-			if not var_38_4 then
-				local var_38_5 = arg_38_0:getUserDataTb_()
-				local var_38_6 = gohelper.cloneInPlace(arg_38_0._txtsuiteffect2.gameObject, "item_" .. iter_38_0)
+		if not var_38_5 then
+			var_38_5 = {
+				go = gohelper.cloneInPlace(arg_38_0._gostrengthenattr, "item" .. iter_38_0)
+			}
+			var_38_5.icon = gohelper.findChildImage(var_38_5.go, "image_icon")
+			var_38_5.name = gohelper.findChildText(var_38_5.go, "txt_name")
+			var_38_5.attr_value = gohelper.findChildText(var_38_5.go, "txt_value")
+			var_38_5.bg = gohelper.findChild(var_38_5.go, "bg")
 
-				var_38_5.itemGo = var_38_6
-				var_38_5.imagepoint = gohelper.findChildImage(var_38_6, "#image_point")
-				var_38_5.txt = var_38_6:GetComponent(gohelper.Type_TextMesh)
+			table.insert(arg_38_0.strengthenAttrItems, var_38_5)
+		end
 
-				SkillHelper.addHyperLinkClick(var_38_5.txt)
+		local var_38_6 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(iter_38_1.attrType))
 
-				var_38_4 = var_38_5
+		UISpriteSetMgr.instance:setCommonSprite(var_38_5.icon, "icon_att_" .. var_38_6.id)
 
-				table.insert(arg_38_0.skillDescItems, var_38_4)
+		var_38_5.name.text = var_38_6.name
+		var_38_5.attr_value.text = iter_38_1.value
+
+		gohelper.setActive(var_38_5.bg, iter_38_0 % 2 == 0)
+		gohelper.setActive(var_38_5.go, true)
+	end
+
+	for iter_38_2 = #var_38_2 + 1, #arg_38_0.strengthenAttrItems do
+		gohelper.setActive(arg_38_0.strengthenAttrItems[iter_38_2].go, false)
+	end
+
+	local var_38_7, var_38_8 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(var_38_0.config, var_38_0.breakLv)
+
+	if var_38_7 then
+		gohelper.setActive(arg_38_0._gobreakeffect, true)
+		UISpriteSetMgr.instance:setCommonSprite(arg_38_0.imageBreakIcon, "icon_att_" .. var_38_7)
+
+		arg_38_0.txtBreakAttrName.text = EquipHelper.getAttrBreakText(var_38_7)
+		arg_38_0.txtBreakValue.text = EquipHelper.getAttrPercentValueStr(var_38_8)
+
+		gohelper.setAsLastSibling(arg_38_0._gobreakeffect)
+	else
+		gohelper.setActive(arg_38_0._gobreakeffect, false)
+	end
+end
+
+function var_0_0.refreshEquipSkillDesc(arg_39_0)
+	local var_39_0 = EquipHelper.getEquipSkillBaseDes(arg_39_0.selectedEquipMo.config.id, arg_39_0.selectedEquipMo.refineLv, "#D9A06F")
+
+	if #var_39_0 == 0 then
+		gohelper.setActive(arg_39_0._gobaseskill.gameObject, false)
+	else
+		arg_39_0._txtattributelv.text = arg_39_0.selectedEquipMo.refineLv
+
+		gohelper.setActive(arg_39_0._gobaseskill.gameObject, true)
+
+		local var_39_1
+		local var_39_2
+		local var_39_3
+
+		for iter_39_0, iter_39_1 in ipairs(var_39_0) do
+			local var_39_4 = arg_39_0.skillDescItems[iter_39_0]
+
+			if not var_39_4 then
+				local var_39_5 = arg_39_0:getUserDataTb_()
+				local var_39_6 = gohelper.cloneInPlace(arg_39_0._txtsuiteffect2.gameObject, "item_" .. iter_39_0)
+
+				var_39_5.itemGo = var_39_6
+				var_39_5.imagepoint = gohelper.findChildImage(var_39_6, "#image_point")
+				var_39_5.txt = var_39_6:GetComponent(gohelper.Type_TextMesh)
+
+				SkillHelper.addHyperLinkClick(var_39_5.txt)
+
+				var_39_4 = var_39_5
+
+				table.insert(arg_39_0.skillDescItems, var_39_4)
 			end
 
-			var_38_4.txt.text = EquipHelper.getEquipSkillDesc(iter_38_1)
+			var_39_4.txt.text = EquipHelper.getEquipSkillDesc(iter_39_1)
 
-			gohelper.setActive(var_38_4.itemGo, true)
+			gohelper.setActive(var_39_4.itemGo, true)
 		end
 
-		for iter_38_2 = #var_38_0 + 1, #arg_38_0.skillDescItems do
-			gohelper.setActive(arg_38_0.skillDescItems[iter_38_2].itemGo, false)
+		for iter_39_2 = #var_39_0 + 1, #arg_39_0.skillDescItems do
+			gohelper.setActive(arg_39_0.skillDescItems[iter_39_2].itemGo, false)
 		end
 
 		EquipController.instance:dispatchEvent(EquipEvent.equipHasRefine)
 	end
 end
 
-function var_0_0.refreshInTeam(arg_39_0)
-	if arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromHeroGroupFightView and arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromSeasonFightView and arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromCachotHeroGroupView and arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromCachotHeroGroupFightView and arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView then
-		gohelper.setActive(arg_39_0._gointeam, false)
+function var_0_0.refreshInTeam(arg_40_0)
+	if arg_40_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromHeroGroupFightView and arg_40_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromSeasonFightView and arg_40_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromCachotHeroGroupView and arg_40_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromCachotHeroGroupFightView and arg_40_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView then
+		gohelper.setActive(arg_40_0._gointeam, false)
 
 		return
 	end
 
-	local var_39_0 = arg_39_0.viewContainer.listModel:getHeroMoByEquipUid(arg_39_0.selectedEquipMo.uid)
+	local var_40_0 = arg_40_0.viewContainer.listModel:getHeroMoByEquipUid(arg_40_0.selectedEquipMo.uid)
 
-	if arg_39_0.heroMo and var_39_0 and arg_39_0.selectedEquipMo.equipType == EquipEnum.ClientEquipType.TrialHero then
-		var_39_0 = arg_39_0.heroMo
+	if arg_40_0.heroMo and var_40_0 and arg_40_0.selectedEquipMo.equipType == EquipEnum.ClientEquipType.TrialHero then
+		var_40_0 = arg_40_0.heroMo
 	end
 
-	if var_39_0 then
-		gohelper.setActive(arg_39_0._gointeam, true)
+	if var_40_0 then
+		gohelper.setActive(arg_40_0._gointeam, true)
 
-		local var_39_1 = lua_skin.configDict[var_39_0.skin]
+		local var_40_1 = lua_skin.configDict[var_40_0.skin]
 
-		arg_39_0._gointeamheroicon:LoadImage(ResUrl.getHeadIconSmall(var_39_1.headIcon))
+		arg_40_0._gointeamheroicon:LoadImage(ResUrl.getHeadIconSmall(var_40_1.headIcon))
 
-		arg_39_0._gointeamheroname.text = string.format(luaLang("hero_inteam"), var_39_0.config.name)
+		arg_40_0._gointeamheroname.text = string.format(luaLang("hero_inteam"), var_40_0.config.name)
 	else
-		gohelper.setActive(arg_39_0._gointeam, false)
+		gohelper.setActive(arg_40_0._gointeam, false)
 	end
 end
 
-function var_0_0.onSelectEquipChange(arg_40_0)
-	arg_40_0.selectedEquipMo = arg_40_0.listModel:getCurrentSelectEquipMo()
+function var_0_0.onSelectEquipChange(arg_41_0)
+	arg_41_0.selectedEquipMo = arg_41_0.listModel:getCurrentSelectEquipMo()
 
-	arg_40_0:refreshLeftUI()
-	arg_40_0:refreshCenterUI()
-end
-
-function var_0_0.onEquipChange(arg_41_0)
-	arg_41_0.listModel:initEquipList(arg_41_0.filterMo)
 	arg_41_0:refreshLeftUI()
-	arg_41_0:refreshRightUI()
-	arg_41_0:refreshCompareContainerUI()
+	arg_41_0:refreshCenterUI()
 end
 
-function var_0_0.onDeleteEquip(arg_42_0, arg_42_1)
-	for iter_42_0, iter_42_1 in ipairs(arg_42_1) do
-		if arg_42_0.selectedEquipMo.uid == iter_42_1 then
-			arg_42_0.listModel:setCurrentSelectEquipMo(nil)
-			arg_42_0:onSelectEquipChange()
+function var_0_0.onEquipChange(arg_42_0)
+	arg_42_0.listModel:initEquipList(arg_42_0.filterMo)
+	arg_42_0:refreshLeftUI()
+	arg_42_0:refreshRightUI()
+	arg_42_0:refreshCompareContainerUI()
+end
+
+function var_0_0.onDeleteEquip(arg_43_0, arg_43_1)
+	for iter_43_0, iter_43_1 in ipairs(arg_43_1) do
+		if arg_43_0.selectedEquipMo.uid == iter_43_1 then
+			arg_43_0.listModel:setCurrentSelectEquipMo(nil)
+			arg_43_0:onSelectEquipChange()
 
 			break
 		end
 	end
 end
 
-function var_0_0.onSuccessSetDefaultEquip(arg_43_0, arg_43_1)
-	arg_43_0:closeThis()
+function var_0_0.onSuccessSetDefaultEquip(arg_44_0, arg_44_1)
+	arg_44_0:closeThis()
 end
 
-function var_0_0.onClose(arg_44_0)
-	arg_44_0._simageheroicon:UnLoadImage()
-	arg_44_0._simageequip:UnLoadImage()
-	arg_44_0._simagebg:UnLoadImage()
-	arg_44_0._simagecompare:UnLoadImage()
-	arg_44_0.listModel:clearRecommend()
-	arg_44_0.listModel:clear()
-	EquipFilterModel.instance:clear(arg_44_0.viewName)
+function var_0_0.onClose(arg_45_0)
+	arg_45_0._simageheroicon:UnLoadImage()
+	arg_45_0._simageequip:UnLoadImage()
+	arg_45_0._simagebg:UnLoadImage()
+	arg_45_0._simagecompare:UnLoadImage()
+	arg_45_0.listModel:clearRecommend()
+	arg_45_0.listModel:clear()
+	EquipFilterModel.instance:clear(arg_45_0.viewName)
 end
 
-function var_0_0.onDestroyView(arg_45_0)
+function var_0_0.onDestroyView(arg_46_0)
 	return
 end
 

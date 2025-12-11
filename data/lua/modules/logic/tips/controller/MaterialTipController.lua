@@ -229,6 +229,19 @@ function var_0_0._onReceiveHeroGainPush_LifeCirclePickChoice(arg_11_0, arg_11_1,
 	LifeCircleController.instance:onReceiveHeroGainPush(arg_11_2)
 end
 
+function var_0_0.openExchangeTipView(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5, arg_12_6, arg_12_7, arg_12_8)
+	ViewMgr.instance:openView(ViewName.CommonExchangeView, {
+		costMatData = arg_12_1,
+		targetMatData = arg_12_2,
+		exchangeFunc = arg_12_3,
+		exchangeFuncObj = arg_12_4,
+		getMaxTimeFunc = arg_12_5,
+		getMaxTimeFuncObj = arg_12_6,
+		getExchangeNumFunc = arg_12_7,
+		getExchangeNumFuncObj = arg_12_8
+	})
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

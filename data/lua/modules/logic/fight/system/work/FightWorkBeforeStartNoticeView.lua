@@ -7,7 +7,7 @@ function var_0_0.ctor(arg_1_0)
 end
 
 function var_0_0.onStart(arg_2_0)
-	if not FightReplayModel.instance:isReplay() and ViewMgr.instance:isOpen(ViewName.FightQuitTipView) then
+	if not FightDataHelper.stateMgr.isReplay and ViewMgr.instance:isOpen(ViewName.FightQuitTipView) then
 		FightController.instance:registerCallback(FightEvent.OnFightQuitTipViewClose, arg_2_0.bootLogic, arg_2_0)
 	else
 		arg_2_0:bootLogic()
@@ -17,7 +17,7 @@ end
 function var_0_0.bootLogic(arg_3_0)
 	FightController.instance:unregisterCallback(FightEvent.OnFightQuitTipViewClose, arg_3_0.bootLogic, arg_3_0)
 
-	if var_0_0.canShowTips() and not FightModel.instance:isAuto() then
+	if var_0_0.canShowTips() and not FightDataHelper.stateMgr:getIsAuto() then
 		FightController.instance:dispatchEvent(FightEvent.SetPlayCardPartOutScreen)
 		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
 		FightController.instance:openFightSpecialTipView(true)
@@ -100,7 +100,7 @@ function var_0_0.canShowTips()
 
 	local var_5_15 = GuideModel.instance:isDoingFirstGuide()
 	local var_5_16 = GuideController.instance:isForbidGuides()
-	local var_5_17 = FightReplayModel.instance:isReplay()
+	local var_5_17 = FightDataHelper.stateMgr.isReplay
 
 	if var_5_1 and (not var_5_15 or var_5_16) and not var_5_17 then
 		return true

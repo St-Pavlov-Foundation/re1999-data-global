@@ -1,6 +1,7 @@
 [
   {
     "id": 210001,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 101,
     "title": "language_10072680",
@@ -13,6 +14,7 @@
   },
   {
     "id": 210002,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 101,
     "title": "language_10072680",
@@ -25,6 +27,7 @@
   },
   {
     "id": 210003,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 101,
     "title": "language_10072680",
@@ -37,6 +40,7 @@
   },
   {
     "id": 210004,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 101,
     "title": "language_10072680",
@@ -49,6 +53,7 @@
   },
   {
     "id": 210005,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072680",
@@ -61,6 +66,7 @@
   },
   {
     "id": 210006,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072680",
@@ -73,6 +79,7 @@
   },
   {
     "id": 210007,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072680",
@@ -85,6 +92,7 @@
   },
   {
     "id": 210008,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072680",
@@ -97,6 +105,7 @@
   },
   {
     "id": 210009,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072680",
@@ -109,6 +118,7 @@
   },
   {
     "id": 210010,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072692",
@@ -121,6 +131,7 @@
   },
   {
     "id": 210011,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072692",
@@ -133,6 +144,7 @@
   },
   {
     "id": 210012,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072692",
@@ -145,6 +157,7 @@
   },
   {
     "id": 210013,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072692",
@@ -157,6 +170,7 @@
   },
   {
     "id": 210014,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072692",
@@ -169,6 +183,7 @@
   },
   {
     "id": 210015,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072692",
@@ -181,6 +196,7 @@
   },
   {
     "id": 210016,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072692",
@@ -193,6 +209,7 @@
   },
   {
     "id": 210017,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 102,
     "title": "language_10072692",
@@ -205,6 +222,7 @@
   },
   {
     "id": 210018,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 103,
     "title": "language_10072680",
@@ -217,6 +235,7 @@
   },
   {
     "id": 210019,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 103,
     "title": "language_10072680",
@@ -229,6 +248,7 @@
   },
   {
     "id": 210020,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 103,
     "title": "language_10072680",
@@ -241,6 +261,7 @@
   },
   {
     "id": 210021,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 103,
     "title": "language_10072706",
@@ -253,6 +274,7 @@
   },
   {
     "id": 210022,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 103,
     "title": "language_10072706",
@@ -265,6 +287,7 @@
   },
   {
     "id": 210023,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 103,
     "title": "language_10072706",
@@ -277,6 +300,7 @@
   },
   {
     "id": 210024,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 103,
     "title": "language_10072706",
@@ -289,6 +313,7 @@
   },
   {
     "id": 210025,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 103,
     "title": "language_10072706",
@@ -301,6 +326,7 @@
   },
   {
     "id": 210026,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 103,
     "title": "language_10072706",
@@ -313,6 +339,7 @@
   },
   {
     "id": 210027,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 103,
     "title": "language_10072706",
@@ -325,6 +352,7 @@
   },
   {
     "id": 210028,
+    "activityId": 12701,
     "type": "rewardEvent",
     "stage": 103,
     "title": "language_10072706",
@@ -337,6 +365,7 @@
   },
   {
     "id": 210029,
+    "activityId": 12701,
     "type": "battleEvent",
     "stage": 101,
     "title": "language_10072717",
@@ -349,6 +378,7 @@
   },
   {
     "id": 210030,
+    "activityId": 12701,
     "type": "battleEvent",
     "stage": 101,
     "title": "language_10072717",
@@ -361,6 +391,7 @@
   },
   {
     "id": 210031,
+    "activityId": 12701,
     "type": "battleEvent",
     "stage": 101,
     "title": "language_10072717",
@@ -373,6 +404,7 @@
   },
   {
     "id": 210032,
+    "activityId": 12701,
     "type": "battleEvent",
     "stage": 102,
     "title": "language_10072717",
@@ -385,6 +417,7 @@
   },
   {
     "id": 210033,
+    "activityId": 12701,
     "type": "battleEvent",
     "stage": 102,
     "title": "language_10072717",
@@ -397,6 +430,7 @@
   },
   {
     "id": 210034,
+    "activityId": 12701,
     "type": "battleEvent",
     "stage": 102,
     "title": "language_10072717",
@@ -409,6 +443,7 @@
   },
   {
     "id": 210035,
+    "activityId": 12701,
     "type": "battleEvent",
     "stage": 103,
     "title": "language_10072717",
@@ -421,6 +456,7 @@
   },
   {
     "id": 210036,
+    "activityId": 12701,
     "type": "battleEvent",
     "stage": 103,
     "title": "language_10072717",
@@ -433,6 +469,7 @@
   },
   {
     "id": 210037,
+    "activityId": 12701,
     "type": "battleEvent",
     "stage": 103,
     "title": "language_10072717",
@@ -440,6 +477,357 @@
     "desc": "language_10072719",
     "task": "language_10072728",
     "rewardView": "1001#60",
+    "skinId": 305201,
+    "offset": "-42#200#0.4"
+  },
+  {
+    "id": 220001,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 101,
+    "title": "language_10072680",
+    "outDesc": "language_10072681",
+    "desc": "language_10072682",
+    "task": "language_10072683",
+    "rewardView": "1101#15",
+    "skinId": 302701,
+    "offset": "-28#387"
+  },
+  {
+    "id": 220002,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 101,
+    "title": "language_10072680",
+    "outDesc": "language_10072681",
+    "desc": "language_10072682",
+    "task": "language_10072684",
+    "rewardView": "1102#3",
+    "skinId": 302701,
+    "offset": "-28#387"
+  },
+  {
+    "id": 220003,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 101,
+    "title": "language_10072680",
+    "outDesc": "language_10072681",
+    "desc": "language_10072682",
+    "task": "language_10072685",
+    "rewardView": "1103#2",
+    "skinId": 302701,
+    "offset": "-28#387"
+  },
+  {
+    "id": 220004,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 101,
+    "title": "language_10072680",
+    "outDesc": "language_10072681",
+    "desc": "language_10072682",
+    "task": "language_10072690",
+    "rewardView": "1106#2",
+    "skinId": 302701,
+    "offset": "-28#387"
+  },
+  {
+    "id": 220005,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 102,
+    "title": "language_10072680",
+    "outDesc": "language_10072681",
+    "desc": "language_10072682",
+    "task": "language_10072687",
+    "rewardView": "1101#25",
+    "skinId": 302701,
+    "offset": "-28#387"
+  },
+  {
+    "id": 220006,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 102,
+    "title": "language_10072680",
+    "outDesc": "language_10072681",
+    "desc": "language_10072682",
+    "task": "language_10072688",
+    "rewardView": "1103#4",
+    "skinId": 302701,
+    "offset": "-28#387"
+  },
+  {
+    "id": 220007,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 102,
+    "title": "language_10072680",
+    "outDesc": "language_10072681",
+    "desc": "language_10072682",
+    "task": "language_10072689",
+    "rewardView": "1103#1",
+    "skinId": 302701,
+    "offset": "-28#387"
+  },
+  {
+    "id": 220008,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 102,
+    "title": "language_10072680",
+    "outDesc": "language_10072681",
+    "desc": "language_10072682",
+    "task": "language_10072705",
+    "rewardView": "1107#2",
+    "skinId": 302701,
+    "offset": "-28#387"
+  },
+  {
+    "id": 220009,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 103,
+    "title": "language_10072680",
+    "outDesc": "language_10072681",
+    "desc": "language_10072682",
+    "task": "language_10072703",
+    "rewardView": "1101#35",
+    "skinId": 302701,
+    "offset": "-28#387"
+  },
+  {
+    "id": 220010,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 103,
+    "title": "language_10072680",
+    "outDesc": "language_10072681",
+    "desc": "language_10072682",
+    "task": "language_10090162",
+    "rewardView": "1104#3",
+    "skinId": 302701,
+    "offset": "-28#387"
+  },
+  {
+    "id": 220011,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 103,
+    "title": "language_10072680",
+    "outDesc": "language_10072681",
+    "desc": "language_10072682",
+    "task": "language_10090163",
+    "rewardView": "1107#3",
+    "skinId": 302701,
+    "offset": "-28#387"
+  },
+  {
+    "id": 220012,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 103,
+    "title": "language_10072706",
+    "outDesc": "language_10072707",
+    "desc": "language_10072708",
+    "task": "language_10072710",
+    "rewardView": "1116#1",
+    "skinId": 303301,
+    "offset": "0#-50"
+  },
+  {
+    "id": 220013,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 103,
+    "title": "language_10072706",
+    "outDesc": "language_10072707",
+    "desc": "language_10072708",
+    "task": "language_10090164",
+    "rewardView": "1117#1",
+    "skinId": 303301,
+    "offset": "0#-50"
+  },
+  {
+    "id": 220014,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 103,
+    "title": "language_10072706",
+    "outDesc": "language_10072707",
+    "desc": "language_10072708",
+    "task": "language_10090165",
+    "rewardView": "1118#1",
+    "skinId": 303301,
+    "offset": "0#-50"
+  },
+  {
+    "id": 220015,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 103,
+    "title": "language_10072706",
+    "outDesc": "language_10072707",
+    "desc": "language_10072708",
+    "task": "language_10090166",
+    "rewardView": "1119#1",
+    "skinId": 303301,
+    "offset": "0#-50"
+  },
+  {
+    "id": 220016,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 103,
+    "title": "language_10072706",
+    "outDesc": "language_10072707",
+    "desc": "language_10072708",
+    "task": "language_10090167",
+    "rewardView": "1120#1",
+    "skinId": 303301,
+    "offset": "0#-50"
+  },
+  {
+    "id": 220017,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 103,
+    "title": "language_10072706",
+    "outDesc": "language_10072707",
+    "desc": "language_10072708",
+    "task": "language_10090168",
+    "rewardView": "1121#1",
+    "skinId": 303301,
+    "offset": "0#-50"
+  },
+  {
+    "id": 220018,
+    "activityId": 13105,
+    "type": "rewardEvent",
+    "stage": 103,
+    "title": "language_10072706",
+    "outDesc": "language_10072707",
+    "desc": "language_10072708",
+    "task": "language_10090169",
+    "rewardView": "1122#1",
+    "skinId": 303301,
+    "offset": "0#-50"
+  },
+  {
+    "id": 220019,
+    "activityId": 13105,
+    "type": "battleEvent",
+    "stage": 101,
+    "title": "language_10072717",
+    "outDesc": "language_10072718",
+    "desc": "language_10072719",
+    "task": "language_10072720",
+    "rewardView": "1101#12",
+    "skinId": 305201,
+    "offset": "-42#200#0.4"
+  },
+  {
+    "id": 220020,
+    "activityId": 13105,
+    "type": "battleEvent",
+    "stage": 101,
+    "title": "language_10072717",
+    "outDesc": "language_10072718",
+    "desc": "language_10072719",
+    "task": "language_10072721",
+    "rewardView": "1101#12",
+    "skinId": 305201,
+    "offset": "-42#200#0.4"
+  },
+  {
+    "id": 220021,
+    "activityId": 13105,
+    "type": "battleEvent",
+    "stage": 101,
+    "title": "language_10072717",
+    "outDesc": "language_10072718",
+    "desc": "language_10072719",
+    "task": "language_10072722",
+    "rewardView": "1101#12",
+    "skinId": 305201,
+    "offset": "-42#200#0.4"
+  },
+  {
+    "id": 220022,
+    "activityId": 13105,
+    "type": "battleEvent",
+    "stage": 102,
+    "title": "language_10072717",
+    "outDesc": "language_10072718",
+    "desc": "language_10072719",
+    "task": "language_10072723",
+    "rewardView": "1101#36",
+    "skinId": 305201,
+    "offset": "-42#200#0.4"
+  },
+  {
+    "id": 220023,
+    "activityId": 13105,
+    "type": "battleEvent",
+    "stage": 102,
+    "title": "language_10072717",
+    "outDesc": "language_10072718",
+    "desc": "language_10072719",
+    "task": "language_10072724",
+    "rewardView": "1101#36",
+    "skinId": 305201,
+    "offset": "-42#200#0.4"
+  },
+  {
+    "id": 220024,
+    "activityId": 13105,
+    "type": "battleEvent",
+    "stage": 102,
+    "title": "language_10072717",
+    "outDesc": "language_10072718",
+    "desc": "language_10072719",
+    "task": "language_10072725",
+    "rewardView": "1101#36",
+    "skinId": 305201,
+    "offset": "-42#200#0.4"
+  },
+  {
+    "id": 220025,
+    "activityId": 13105,
+    "type": "battleEvent",
+    "stage": 103,
+    "title": "language_10072717",
+    "outDesc": "language_10072718",
+    "desc": "language_10072719",
+    "task": "language_10072726",
+    "rewardView": "1101#60",
+    "skinId": 305201,
+    "offset": "-42#200#0.4"
+  },
+  {
+    "id": 220026,
+    "activityId": 13105,
+    "type": "battleEvent",
+    "stage": 103,
+    "title": "language_10072717",
+    "outDesc": "language_10072718",
+    "desc": "language_10072719",
+    "task": "language_10072727",
+    "rewardView": "1101#60",
+    "skinId": 305201,
+    "offset": "-42#200#0.4"
+  },
+  {
+    "id": 220027,
+    "activityId": 13105,
+    "type": "battleEvent",
+    "stage": 103,
+    "title": "language_10072717",
+    "outDesc": "language_10072718",
+    "desc": "language_10072719",
+    "task": "language_10072728",
+    "rewardView": "1101#60",
     "skinId": 305201,
     "offset": "-42#200#0.4"
   }

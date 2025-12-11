@@ -29,7 +29,7 @@ function var_0_0._onPreloadFinish(arg_2_0)
 end
 
 function var_0_0.isClickBlock(arg_3_0, arg_3_1)
-	return SurvivalHelper.instance:isHaveNode(arg_3_0.blockDict, arg_3_1)
+	return SurvivalHelper.instance:getValueFromDict(arg_3_0.blockDict, arg_3_1)
 end
 
 function var_0_0.onSceneClose(arg_4_0)

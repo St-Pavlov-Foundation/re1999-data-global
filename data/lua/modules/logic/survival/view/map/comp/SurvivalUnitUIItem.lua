@@ -5,24 +5,6 @@ local var_0_0 = class("SurvivalUnitUIItem", LuaCompBase)
 function var_0_0.ctor(arg_1_0, arg_1_1)
 	arg_1_0._unitMo = arg_1_1
 	arg_1_0._isShowStar = false
-
-	if arg_1_1.unitType == SurvivalEnum.UnitType.NPC then
-		local var_1_0 = SurvivalMapModel.instance:getSceneMo()
-
-		if next(var_1_0.needNpcTags) then
-			local var_1_1 = string.splitToNumber(arg_1_1.co.tag, "#")
-
-			if var_1_1 then
-				for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-					if var_1_0.needNpcTags[iter_1_1] then
-						arg_1_0._isShowStar = true
-
-						break
-					end
-				end
-			end
-		end
-	end
 end
 
 function var_0_0.init(arg_2_0, arg_2_1)
@@ -144,8 +126,9 @@ function var_0_0.getIsFollow(arg_9_0)
 	end
 
 	local var_9_1 = SurvivalMapModel.instance:getSceneMo().followTask
+	local var_9_2 = SurvivalMapModel.instance:getSceneMo().mainTask
 
-	return arg_9_0._unitMo.unitType == SurvivalEnum.UnitType.Exit or arg_9_0._unitMo.id == var_9_1.followUnitUid or arg_9_0._unitMo.id == 0
+	return arg_9_0._unitMo.unitType == SurvivalEnum.UnitType.Exit or arg_9_0._unitMo.id == var_9_1.followUnitUid or arg_9_0._unitMo.id == var_9_2.followUnitUid or arg_9_0._unitMo.id == 0
 end
 
 function var_0_0.refreshInfo(arg_10_0)
@@ -197,7 +180,7 @@ end
 
 function var_0_0.checkEnabled(arg_16_0)
 	local var_16_0 = SurvivalMapModel.instance:getSceneMo().player.pos == arg_16_0._unitMo.pos
-	local var_16_1 = SurvivalMapModel.instance:getSceneMo():getUnitListByPos(arg_16_0._unitMo.pos)
+	local var_16_1 = SurvivalMapModel.instance:getSceneMo():getUnitIconListByPos(arg_16_0._unitMo.pos)
 	local var_16_2 = var_16_1[1] == arg_16_0._unitMo and not var_16_0
 
 	arg_16_0._uiFollower:SetEnable(var_16_2)

@@ -36,6 +36,9 @@ local var_0_2 = {
 	FogDensityData = var_0_1.PropertyToID("_FogDensityData"),
 	ADD_RANGE = var_0_1.PropertyToID("_AddRange")
 }
+
+var_0_0.ShaderIDMap = var_0_2
+
 local var_0_3 = {
 	vector3 = 3,
 	vector4 = 4,

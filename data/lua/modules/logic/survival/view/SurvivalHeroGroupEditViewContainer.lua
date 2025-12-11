@@ -42,7 +42,7 @@ function var_0_0.getQuickEditScroll(arg_2_0)
 	var_2_0.scrollDir = ScrollEnum.ScrollDirV
 	var_2_0.lineCount = 5
 	var_2_0.cellWidth = 200
-	var_2_0.cellHeight = 440
+	var_2_0.cellHeight = 450
 	var_2_0.cellSpaceH = 12
 	var_2_0.cellSpaceV = 10
 	var_2_0.startSpace = 37

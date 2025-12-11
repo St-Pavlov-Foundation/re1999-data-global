@@ -13,6 +13,7 @@ var_0_0.MaxOrder = 20 * FightEnum.OrderRegion
 var_0_0.MinOrder = var_0_2()
 var_0_0.LYEffect = var_0_2()
 var_0_0.AssistBossOrder = var_0_2()
+var_0_0.Act191Boss = var_0_2()
 var_0_0.NuoDiKa = var_0_2()
 var_0_0.MinSpecialOrder = var_0_1
 
@@ -224,8 +225,14 @@ function var_0_0.sortOrder(arg_16_0, arg_16_1, arg_16_2)
 	end
 
 	for iter_16_8, iter_16_9 in pairs(var_16_0) do
+		local var_16_14 = FightDataHelper.entityMgr:getById(iter_16_8)
+
 		if FightDataHelper.entityMgr:isAssistBoss(iter_16_8) then
 			var_16_0[iter_16_8] = var_0_0.AssistBossOrder
+		end
+
+		if var_16_14.entityType == FightEnum.EntityType.Act191Boss then
+			var_16_0[iter_16_8] = var_0_0.Act191Boss
 		end
 	end
 

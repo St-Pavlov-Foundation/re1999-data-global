@@ -11,7 +11,7 @@ function var_0_0.addEventListeners(arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRevertCard, arg_2_0._onRevertCard, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.OnResetCard, arg_2_0._onResetCard, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.BeforePlaySkill, arg_2_0._beforePlaySkill, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnStageChange, arg_2_0._onStageChange, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_2_0._onStageChange, arg_2_0)
 end
 
 function var_0_0.removeEventListeners(arg_3_0)
@@ -19,7 +19,7 @@ function var_0_0.removeEventListeners(arg_3_0)
 	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnRevertCard, arg_3_0._onRevertCard, arg_3_0)
 	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnResetCard, arg_3_0._onResetCard, arg_3_0)
 	arg_3_0:removeEventCb(FightController.instance, FightEvent.BeforePlaySkill, arg_3_0._beforePlaySkill, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnStageChange, arg_3_0._onStageChange, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.StageChanged, arg_3_0._onStageChange, arg_3_0)
 end
 
 function var_0_0.onDestroy(arg_4_0)

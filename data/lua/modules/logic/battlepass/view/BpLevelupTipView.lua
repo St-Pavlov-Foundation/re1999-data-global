@@ -44,6 +44,8 @@ function var_0_0.onLevelUp(arg_6_0)
 	local var_6_0 = BpConfig.instance:getLevelScore(BpModel.instance.id)
 	local var_6_1 = math.floor(BpModel.instance.score / var_6_0)
 
+	BpController.instance:dispatchEvent(BpEvent.OnLevelUp, var_6_1)
+
 	arg_6_0._txtlv.text = var_6_1
 
 	if not BpModel.instance.preStatus then

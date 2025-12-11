@@ -138,21 +138,33 @@ function var_0_0.getMapBlockEntityDict(arg_10_0)
 	return arg_10_0._tagUnitDict[SceneTag.RoomMapBlock]
 end
 
-function var_0_0.getPropertyBlock(arg_11_0)
-	if not arg_11_0._propertyBlock then
-		arg_11_0._propertyBlock = UnityEngine.MaterialPropertyBlock.New()
-	end
+function var_0_0.refreshAllBlockEntity(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getTagUnitDict(arg_11_1)
 
-	return arg_11_0._propertyBlock
+	if var_11_0 then
+		for iter_11_0, iter_11_1 in pairs(var_11_0) do
+			local var_11_1 = iter_11_1:getMO()
+
+			arg_11_0:_refreshBlockEntiy(iter_11_1, var_11_1)
+		end
+	end
 end
 
-function var_0_0.onSceneClose(arg_12_0)
-	var_0_0.super.onSceneClose(arg_12_0)
+function var_0_0.getPropertyBlock(arg_12_0)
+	if not arg_12_0._propertyBlock then
+		arg_12_0._propertyBlock = UnityEngine.MaterialPropertyBlock.New()
+	end
 
-	if arg_12_0._propertyBlock then
-		arg_12_0._propertyBlock:Clear()
+	return arg_12_0._propertyBlock
+end
 
-		arg_12_0._propertyBlock = nil
+function var_0_0.onSceneClose(arg_13_0)
+	var_0_0.super.onSceneClose(arg_13_0)
+
+	if arg_13_0._propertyBlock then
+		arg_13_0._propertyBlock:Clear()
+
+		arg_13_0._propertyBlock = nil
 	end
 end
 

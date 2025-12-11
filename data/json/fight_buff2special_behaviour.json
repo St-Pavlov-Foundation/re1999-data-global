@@ -1,0 +1,27 @@
+[
+  {
+    "buffId": 102310001,
+    "behaviour": 1,
+    "param": ""
+  },
+  {
+    "buffId": 102310002,
+    "behaviour": 2,
+    "param": "fight_tower_skillcardlock_1#fight_tower_skillcardlock_2"
+  },
+  {
+    "buffId": 102310004,
+    "behaviour": 3,
+    "param": "ui/viewres/fight/fighttower/fightcardremoveview.prefab"
+  },
+  {
+    "buffId": 102310005,
+    "behaviour": 4,
+    "param": ""
+  },
+  {
+    "buffId": 102310007,
+    "behaviour": 5,
+    "param": ""
+  }
+]

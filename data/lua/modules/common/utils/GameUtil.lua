@@ -1126,118 +1126,126 @@ function var_0_0.setDefaultValue(arg_72_0, arg_72_1)
 	})
 end
 
-function var_0_0.rpcInfosToList(arg_74_0, arg_74_1)
-	local var_74_0 = {}
+function var_0_0.rpcInfoToMo(arg_74_0, arg_74_1, arg_74_2)
+	local var_74_0 = arg_74_2 or arg_74_1.New()
 
-	for iter_74_0, iter_74_1 in ipairs(arg_74_0) do
-		local var_74_1 = arg_74_1.New()
-
-		var_74_1:init(iter_74_1)
-		table.insert(var_74_0, var_74_1)
-	end
+	var_74_0:init(arg_74_0)
 
 	return var_74_0
 end
 
-function var_0_0.rpcInfosToMap(arg_75_0, arg_75_1, arg_75_2)
+function var_0_0.rpcInfosToList(arg_75_0, arg_75_1)
 	local var_75_0 = {}
 
-	arg_75_2 = arg_75_2 or "id"
-
 	for iter_75_0, iter_75_1 in ipairs(arg_75_0) do
-		local var_75_1 = arg_75_1.New()
+		local var_75_1 = var_0_0.rpcInfoToMo(iter_75_1, arg_75_1)
 
-		var_75_1:init(iter_75_1)
-
-		var_75_0[var_75_1[arg_75_2]] = var_75_1
+		table.insert(var_75_0, var_75_1)
 	end
 
 	return var_75_0
 end
 
-function var_0_0.rpcInfosToListAndMap(arg_76_0, arg_76_1, arg_76_2)
+function var_0_0.rpcInfosToMap(arg_76_0, arg_76_1, arg_76_2)
 	local var_76_0 = {}
 
 	arg_76_2 = arg_76_2 or "id"
 
-	local var_76_1 = {}
-
 	for iter_76_0, iter_76_1 in ipairs(arg_76_0) do
-		local var_76_2 = arg_76_1.New()
+		local var_76_1 = var_0_0.rpcInfoToMo(iter_76_1, arg_76_1)
 
-		var_76_2:init(iter_76_1)
-		table.insert(var_76_1, var_76_2)
-
-		var_76_0[var_76_2[arg_76_2]] = var_76_2
+		var_76_0[var_76_1[arg_76_2]] = var_76_1
 	end
 
-	return var_76_1, var_76_0
+	return var_76_0
 end
 
-function var_0_0.setActiveUIBlock(arg_77_0, arg_77_1, arg_77_2)
-	arg_77_2 = arg_77_2 ~= false and true or false
+function var_0_0.rpcInfosToListAndMap(arg_77_0, arg_77_1, arg_77_2)
+	local var_77_0 = {}
 
-	UIBlockMgrExtend.setNeedCircleMv(arg_77_2)
+	arg_77_2 = arg_77_2 or "id"
 
-	if arg_77_1 then
-		UIBlockMgr.instance:startBlock(arg_77_0)
+	local var_77_1 = {}
+
+	for iter_77_0, iter_77_1 in ipairs(arg_77_0) do
+		local var_77_2 = var_0_0.rpcInfoToMo(iter_77_1, arg_77_1)
+
+		table.insert(var_77_1, var_77_2)
+
+		var_77_0[var_77_2[arg_77_2]] = var_77_2
+	end
+
+	return var_77_1, var_77_0
+end
+
+function var_0_0.setActiveUIBlock(arg_78_0, arg_78_1, arg_78_2)
+	if type(arg_78_0) ~= "string" then
+		logError("blockKey can't be " .. type(arg_78_0))
+	end
+
+	arg_78_2 = arg_78_2 ~= false and true or false
+
+	UIBlockMgrExtend.setNeedCircleMv(arg_78_2)
+
+	if arg_78_1 then
+		UIBlockMgr.instance:startBlock(arg_78_0)
 	else
-		UIBlockMgr.instance:endBlock(arg_77_0)
+		UIBlockMgr.instance:endBlock(arg_78_0)
 	end
 end
 
-function var_0_0.loadSImage(arg_78_0, arg_78_1, arg_78_2, arg_78_3)
-	if string.nilorempty(arg_78_1) then
-		arg_78_0:UnLoadImage()
+function var_0_0.loadSImage(arg_79_0, arg_79_1, arg_79_2, arg_79_3)
+	if string.nilorempty(arg_79_1) then
+		arg_79_0:UnLoadImage()
 	else
-		arg_78_0:LoadImage(arg_78_1, arg_78_2, arg_78_3)
+		arg_79_0:LoadImage(arg_79_1, arg_79_2, arg_79_3)
 	end
 end
 
-function var_0_0.logTab(arg_79_0, arg_79_1)
-	if not arg_79_0 or type(arg_79_0) ~= "table" then
-		return tostring(arg_79_0)
+function var_0_0.logTab(arg_80_0, arg_80_1)
+	if not arg_80_0 or type(arg_80_0) ~= "table" then
+		return tostring(arg_80_0)
 	end
 
-	arg_79_1 = arg_79_1 or 0
+	arg_80_1 = arg_80_1 or 0
 
-	if arg_79_1 > 100 then
+	if arg_80_1 > 100 then
 		logError("stack overflow ...")
 
-		return tostring(arg_79_0)
+		return tostring(arg_80_0)
 	end
 
-	local var_79_0 = {}
-	local var_79_1 = string.rep("\t", arg_79_1)
+	local var_80_0 = {}
+	local var_80_1 = string.rep("\t", arg_80_1)
 
-	table.insert(var_79_0, string.format(" {"))
+	table.insert(var_80_0, string.format(" {"))
 
-	local var_79_2 = string.rep("\t", arg_79_1 + 1)
+	local var_80_2 = string.rep("\t", arg_80_1 + 1)
 
-	for iter_79_0, iter_79_1 in pairs(arg_79_0) do
-		if type(iter_79_1) == "table" then
-			table.insert(var_79_0, string.format("%s %s = %s,", var_79_2, iter_79_0, var_0_0.logTab(iter_79_1, arg_79_1 + 1)))
+	for iter_80_0, iter_80_1 in pairs(arg_80_0) do
+		if type(iter_80_1) == "table" then
+			table.insert(var_80_0, string.format("%s %s = %s,", var_80_2, iter_80_0, var_0_0.logTab(iter_80_1, arg_80_1 + 1)))
 		else
-			table.insert(var_79_0, string.format("%s %s = %s,", var_79_2, iter_79_0, iter_79_1))
+			table.insert(var_80_0, string.format("%s %s = %s,", var_80_2, iter_80_0, iter_80_1))
 		end
 	end
 
-	table.insert(var_79_0, string.format("%s }", var_79_1))
+	table.insert(var_80_0, string.format("%s }", var_80_1))
 
-	return table.concat(var_79_0, "\n")
+	return table.concat(var_80_0, "\n")
 end
 
 function var_0_0.getViewSize()
-	local var_80_0 = ViewMgr.instance:getUILayer("HUD").transform
+	local var_81_0 = ViewMgr.instance:getUILayer("HUD").transform
 
-	return recthelper.getWidth(var_80_0), recthelper.getHeight(var_80_0)
+	return recthelper.getWidth(var_81_0), recthelper.getHeight(var_81_0)
 end
 
-function var_0_0.checkClickPositionInRight(arg_81_0)
-	local var_81_0 = ViewMgr.instance:getUILayer("HUD"):GetComponent(gohelper.Type_RectTransform)
-	local var_81_1, var_81_2 = recthelper.screenPosToAnchorPos2(arg_81_0, var_81_0)
+function var_0_0.checkClickPositionInRight(arg_82_0)
+	local var_82_0 = ViewMgr.instance:getUILayer("HUD"):GetComponent(gohelper.Type_RectTransform)
+	local var_82_1, var_82_2 = recthelper.screenPosToAnchorPos2(arg_82_0, var_82_0)
 
-	return var_81_1 >= 0
+	return var_82_1 >= 0
 end
 
 function var_0_0.needLogInFightSceneUseStringFunc()
@@ -1272,114 +1280,126 @@ function var_0_0.getMsgId()
 	return var_0_0.msgId
 end
 
-function var_0_0.endsWith(arg_87_0, arg_87_1)
-	if string.nilorempty(arg_87_0) or string.nilorempty(arg_87_1) then
+function var_0_0.endsWith(arg_88_0, arg_88_1)
+	if string.nilorempty(arg_88_0) or string.nilorempty(arg_88_1) then
 		return false
 	end
 
-	return string.sub(arg_87_0, -string.len(arg_87_1)) == arg_87_1
+	return string.sub(arg_88_0, -string.len(arg_88_1)) == arg_88_1
 end
 
-function var_0_0.isBaseOf(arg_88_0, arg_88_1)
-	if type(arg_88_0) ~= type(arg_88_1) then
+function var_0_0.isBaseOf(arg_89_0, arg_89_1)
+	if type(arg_89_0) ~= type(arg_89_1) then
 		return false
 	end
 
-	if type(arg_88_0) ~= "table" or type(arg_88_1) ~= "table" then
+	if type(arg_89_0) ~= "table" or type(arg_89_1) ~= "table" then
 		return false
 	end
 
-	local var_88_0 = arg_88_1
+	local var_89_0 = arg_89_1
 
-	while var_88_0 ~= nil do
-		if var_88_0 == arg_88_0 then
+	while var_89_0 ~= nil do
+		if var_89_0 == arg_89_0 then
 			return true
 		end
 
-		var_88_0 = var_88_0.super
+		var_89_0 = var_89_0.super
 	end
 
 	return false
 end
 
-function var_0_0.getRandomPosInCircle(arg_89_0, arg_89_1, arg_89_2)
-	local var_89_0 = arg_89_2 * arg_89_2
-	local var_89_1 = math.random(1, 1000) / 1000
-	local var_89_2 = math.sqrt(LuaTween.linear(var_89_1, 0, var_89_0, 1))
-	local var_89_3 = math.random(1, 1000) / 1000
-	local var_89_4 = LuaTween.linear(var_89_3, 0, 2 * math.pi, 1)
-	local var_89_5 = var_89_2 * math.cos(var_89_4)
-	local var_89_6 = var_89_2 * math.sin(var_89_4)
+function var_0_0.getRandomPosInCircle(arg_90_0, arg_90_1, arg_90_2)
+	local var_90_0 = arg_90_2 * arg_90_2
+	local var_90_1 = math.random(1, 1000) / 1000
+	local var_90_2 = math.sqrt(LuaTween.linear(var_90_1, 0, var_90_0, 1))
+	local var_90_3 = math.random(1, 1000) / 1000
+	local var_90_4 = LuaTween.linear(var_90_3, 0, 2 * math.pi, 1)
+	local var_90_5 = var_90_2 * math.cos(var_90_4)
+	local var_90_6 = var_90_2 * math.sin(var_90_4)
 
-	return var_89_5 + arg_89_0, var_89_6 + arg_89_1
+	return var_90_5 + arg_90_0, var_90_6 + arg_90_1
 end
 
-function var_0_0.doClearMember(arg_90_0, arg_90_1)
-	if arg_90_0[arg_90_1] then
-		arg_90_0[arg_90_1]:doClear()
+function var_0_0.doClearMember(arg_91_0, arg_91_1)
+	if arg_91_0[arg_91_1] then
+		arg_91_0[arg_91_1]:doClear()
 
-		arg_90_0[arg_90_1] = nil
+		arg_91_0[arg_91_1] = nil
 	end
 end
 
 local var_0_8 = require("protobuf.descriptor").FieldDescriptor
 
-function var_0_0.copyPbData(arg_91_0, arg_91_1)
-	if not arg_91_0 then
+function var_0_0.copyPbData(arg_92_0, arg_92_1)
+	if not arg_92_0 then
 		return
 	end
 
-	local var_91_0 = arg_91_0._fields
+	local var_92_0 = arg_92_0._fields
 
-	if next(var_91_0) then
-		local var_91_1 = {}
+	if next(var_92_0) then
+		local var_92_1 = {}
 
-		for iter_91_0, iter_91_1 in pairs(var_91_0) do
-			local var_91_2 = iter_91_0.name
+		for iter_92_0, iter_92_1 in pairs(var_92_0) do
+			local var_92_2 = iter_92_0.name
 
-			if iter_91_0.label == var_0_8.LABEL_REPEATED then
-				if #iter_91_1 ~= 0 then
-					local var_91_3 = {}
+			if iter_92_0.label == var_0_8.LABEL_REPEATED then
+				if #iter_92_1 ~= 0 then
+					local var_92_3 = {}
 
-					for iter_91_2, iter_91_3 in ipairs(iter_91_1) do
-						if iter_91_0.cpp_type == var_0_8.CPPTYPE_MESSAGE and arg_91_1 then
-							var_91_3[#var_91_3 + 1] = var_0_0.copyPbData(iter_91_3, arg_91_1)
-						elseif iter_91_0.cpp_type == var_0_8.CPPTYPE_INT64 or iter_91_0.cpp_type == var_0_8.CPPTYPE_UINT64 then
-							var_91_3[#var_91_3 + 1] = tonumber(iter_91_3)
+					for iter_92_2, iter_92_3 in ipairs(iter_92_1) do
+						if iter_92_0.cpp_type == var_0_8.CPPTYPE_MESSAGE and arg_92_1 then
+							var_92_3[#var_92_3 + 1] = var_0_0.copyPbData(iter_92_3, arg_92_1)
+						elseif iter_92_0.cpp_type == var_0_8.CPPTYPE_INT64 or iter_92_0.cpp_type == var_0_8.CPPTYPE_UINT64 then
+							var_92_3[#var_92_3 + 1] = tonumber(iter_92_3)
 						else
-							var_91_3[#var_91_3 + 1] = iter_91_3
+							var_92_3[#var_92_3 + 1] = iter_92_3
 						end
 					end
 
-					var_91_1[var_91_2] = var_91_3
+					var_92_1[var_92_2] = var_92_3
 				end
-			elseif iter_91_0.cpp_type == var_0_8.CPPTYPE_MESSAGE and arg_91_1 then
-				var_91_1[var_91_2] = var_0_0.copyPbData(iter_91_1, true)
-			elseif iter_91_0.cpp_type == var_0_8.CPPTYPE_INT64 or iter_91_0.cpp_type == var_0_8.CPPTYPE_UINT64 then
-				var_91_1[var_91_2] = tonumber(iter_91_1)
+			elseif iter_92_0.cpp_type == var_0_8.CPPTYPE_MESSAGE and arg_92_1 then
+				var_92_1[var_92_2] = var_0_0.copyPbData(iter_92_1, true)
+			elseif iter_92_0.cpp_type == var_0_8.CPPTYPE_INT64 or iter_92_0.cpp_type == var_0_8.CPPTYPE_UINT64 then
+				var_92_1[var_92_2] = tonumber(iter_92_1)
 			else
-				var_91_1[var_91_2] = iter_91_1
+				var_92_1[var_92_2] = iter_92_1
 			end
 		end
 
-		return var_91_1
+		return var_92_1
 	end
 end
 
-function var_0_0.convertToPercentStr(arg_92_0)
-	arg_92_0 = arg_92_0 or 0
-
-	return tostring(math.floor(arg_92_0 / 10)) .. "%"
-end
-
-function var_0_0.calcByDeltaRate1000(arg_93_0, arg_93_1)
+function var_0_0.convertToPercentStr(arg_93_0)
 	arg_93_0 = arg_93_0 or 0
 
-	return arg_93_0 * (1000 + (arg_93_1 or 0)) / 1000
+	return tostring(math.floor(arg_93_0 / 10)) .. "%"
 end
 
-function var_0_0.calcByDeltaRate1000AsInt(arg_94_0, arg_94_1)
-	return math.floor(var_0_0.calcByDeltaRate1000(arg_94_0, arg_94_1))
+function var_0_0.calcByDeltaRate1000(arg_94_0, arg_94_1)
+	arg_94_0 = arg_94_0 or 0
+
+	return arg_94_0 * (1000 + (arg_94_1 or 0)) / 1000
+end
+
+function var_0_0.calcByDeltaRate1000AsInt(arg_95_0, arg_95_1)
+	return math.floor(var_0_0.calcByDeltaRate1000(arg_95_0, arg_95_1))
+end
+
+function var_0_0.getTextRenderSize(arg_96_0)
+	if not arg_96_0 then
+		return 0, 0
+	end
+
+	arg_96_0:ForceMeshUpdate(true, true)
+
+	local var_96_0 = arg_96_0:GetRenderedValues()
+
+	return var_96_0.x, var_96_0.y
 end
 
 return var_0_0

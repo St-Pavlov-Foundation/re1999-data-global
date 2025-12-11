@@ -203,7 +203,7 @@ function var_0_0._onClickDown(arg_22_0)
 end
 
 function var_0_0.onClick(arg_23_0)
-	VersionActivityFixedHelper.getVersionActivityDungeonController().instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnClickElement, arg_23_0)
+	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.OnClickElement, arg_23_0)
 end
 
 function var_0_0.isValid(arg_24_0)

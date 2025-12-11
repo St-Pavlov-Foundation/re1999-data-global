@@ -19,7 +19,8 @@ local var_0_2 = {
 }
 local var_0_3 = {
 	[31080132] = FightBuffAddBKLESpBuff,
-	[31080134] = FightBuffAddBKLESpBuff
+	[31080134] = FightBuffAddBKLESpBuff,
+	[106315001] = FightBuffAddScaleOffset
 }
 local var_0_4 = {
 	[FightEnum.BuffTypeId_CoverPerson] = FightBuffCoverPerson,
@@ -45,6 +46,8 @@ function var_0_0.ctor(arg_1_0, arg_1_1)
 	arg_1_0.skinBuffEffectMgr = FightEntitySkinBuffEffectMgr.New()
 
 	arg_1_0:registSkinBuffEffect()
+
+	arg_1_0.buffMgr = FightEntityBuffMgr.New()
 end
 
 function var_0_0.init(arg_2_0, arg_2_1)
@@ -263,6 +266,7 @@ function var_0_0.addBuff(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
 
 	GameSceneMgr.instance:getCurScene().specialEffectMgr:addBuff(arg_8_0._entity, arg_8_1)
 	FightController.instance:dispatchEvent(FightEvent.AddEntityBuff, arg_8_0._entity.id, arg_8_1)
+	arg_8_0.buffMgr:addBuff(arg_8_1)
 end
 
 function var_0_0.addLoopBuff(arg_9_0, arg_9_1)
@@ -362,7 +366,28 @@ function var_0_0.updateBuff(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
 	if not FightSkillBuffMgr.instance:hasPlayBuff(arg_13_3) and (arg_13_1.duration > arg_13_2.duration or arg_13_1.count > arg_13_2.count or arg_13_1.layer > arg_13_2.layer) then
 		arg_13_0:_showBuffFloat(arg_13_1)
 	end
+
+	arg_13_0.buffMgr:updateBuff(arg_13_1)
 end
+
+var_0_0.InVisibleColorDict = {
+	["1"] = {
+		Color.New(0.55, 0.69, 0.71, 0),
+		Color.New(2.7, 6, 14.25, 0)
+	},
+	["2"] = {
+		Color.New(0.71, 0.59, 0.55, 0),
+		Color.New(13.5, 9, 9, 0)
+	},
+	["3"] = {
+		Color.New(0.7, 0.7, 0.7, 0),
+		Color.New(4.5, 4.5, 4.5, 0)
+	},
+	["4"] = {
+		Color.New(0.68, 0.68, 0.68, 0),
+		Color.New(0, 0, 0, 1)
+	}
+}
 
 function var_0_0._udpateBuffVariant(arg_14_0)
 	local var_14_0
@@ -377,35 +402,31 @@ function var_0_0._udpateBuffVariant(arg_14_0)
 	for iter_14_0, iter_14_1 in pairs(var_14_2) do
 		local var_14_3 = lua_skill_buff.configDict[iter_14_1.buffId]
 
-		if var_14_3 and string.sub(var_14_3.bloommat, 1, #var_14_3.bloommat - 1) == FightSceneBloomComp.Bloom_invisible then
-			var_14_0 = string.sub(var_14_3.bloommat, #var_14_3.bloommat)
+		if var_14_3 then
+			local var_14_4 = var_14_3.bloommat
+
+			if string.sub(var_14_4, 1, #var_14_4 - 1) == FightSceneBloomComp.Bloom_invisible then
+				var_14_0 = string.sub(var_14_4, #var_14_4)
+			end
 		end
 	end
 
 	if var_14_0 then
-		local var_14_4
 		local var_14_5
-		local var_14_6 = arg_14_0._entity:isMySide() and -1 or 1
+		local var_14_6
+		local var_14_7 = arg_14_0._entity:isMySide() and -1 or 1
+		local var_14_8 = var_0_0.InVisibleColorDict[var_14_0]
 
-		if var_14_0 == "1" then
-			var_14_4 = Color.New(0.55, 0.69, 0.71, var_14_6)
-			var_14_5 = Color.New(2.7, 6, 14.25, 0)
+		if var_14_8 then
+			var_14_5 = var_14_8[1]
+			var_14_6 = var_14_8[2]
+			var_14_5.a = var_14_7
 		end
 
-		if var_14_0 == "2" then
-			var_14_4 = Color.New(0.71, 0.59, 0.55, var_14_6)
-			var_14_5 = Color.New(13.5, 9, 9, 0)
-		end
-
-		if var_14_0 == "3" then
-			var_14_4 = Color.New(0.7, 0.7, 0.7, var_14_6)
-			var_14_5 = Color.New(4.5, 4.5, 4.5, 0)
-		end
-
-		if var_14_4 then
+		if var_14_5 then
 			GameSceneMgr.instance:getCurScene().bloom:setSingleEntityPass(FightSceneBloomComp.Bloom_invisible, true, arg_14_0._entity, "buff_bloom")
-			var_14_1:SetColor(UnityEngine.Shader.PropertyToID("_InvisibleColor"), var_14_4)
-			var_14_1:SetColor(UnityEngine.Shader.PropertyToID("_InvisibleColor1"), var_14_5)
+			var_14_1:SetColor(UnityEngine.Shader.PropertyToID("_InvisibleColor"), var_14_5)
+			var_14_1:SetColor(UnityEngine.Shader.PropertyToID("_InvisibleColor1"), var_14_6)
 		end
 	else
 		GameSceneMgr.instance:getCurScene().bloom:setSingleEntityPass(FightSceneBloomComp.Bloom_invisible, false, arg_14_0._entity, "buff_bloom")
@@ -558,6 +579,12 @@ function var_0_0._onCoverPerformanceEntityData(arg_21_0, arg_21_1)
 					arg_21_0:delBuff(iter_21_0)
 				end
 			end
+
+			for iter_21_2, iter_21_3 in pairs(var_21_0.buffDic) do
+				if not arg_21_0._buffDic[iter_21_2] then
+					arg_21_0:addBuff(iter_21_3, true)
+				end
+			end
 		end
 	end
 end
@@ -633,7 +660,7 @@ function var_0_0.delBuff(arg_22_0, arg_22_1, arg_22_2)
 			FightAudioMgr.instance:playAudio(var_22_11)
 		end
 
-		if var_22_6 and var_22_10 ~= "0" and not string.nilorempty(var_22_10) then
+		if var_22_6 and var_22_10 ~= "0" and not string.nilorempty(var_22_10) and var_22_6 == arg_22_0._entity then
 			local var_22_12 = true
 
 			if arg_22_2 and var_0_5[var_22_2.id] then
@@ -692,6 +719,7 @@ function var_0_0.delBuff(arg_22_0, arg_22_1, arg_22_2)
 
 	GameSceneMgr.instance:getCurScene().specialEffectMgr:delBuff(arg_22_0._entity, var_22_0)
 	FightController.instance:dispatchEvent(FightEvent.RemoveEntityBuff, arg_22_0._entity.id, var_22_0)
+	arg_22_0.buffMgr:removeBuff(var_22_0.uid)
 end
 
 function var_0_0.getBuffAnim(arg_24_0)
@@ -738,6 +766,7 @@ end
 
 function var_0_0.beforeDestroy(arg_29_0)
 	arg_29_0.skinBuffEffectMgr:disposeSelf()
+	arg_29_0.buffMgr:disposeSelf()
 
 	local var_29_0 = arg_29_0._entity:getMO()
 

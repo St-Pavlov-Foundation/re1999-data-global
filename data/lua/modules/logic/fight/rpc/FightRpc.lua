@@ -155,7 +155,7 @@ function var_0_0.onReceiveBeginRoundReply(arg_11_0, arg_11_1, arg_11_2)
 			arg_11_0._beginRoundOps = nil
 
 			FightModel.instance:updateFightRound(arg_11_2.round)
-			FightSystem.instance:startRound()
+			FightGameMgr.playMgr:playShow()
 			FightController.instance:dispatchEvent(FightEvent.RespBeginRound)
 		else
 			var_0_0.instance:sendEndFightRequest(false)
@@ -192,7 +192,7 @@ function var_0_0.onReceiveChangeSubHeroReply(arg_14_0, arg_14_1, arg_14_2)
 
 	if arg_14_1 == 0 and arg_14_2:HasField("round") then
 		FightModel.instance:updateFightRound(arg_14_2.round)
-		FightSystem.instance:startRound()
+		FightGameMgr.playMgr:playShow()
 		FightController.instance:dispatchEvent(FightEvent.RespBeginRound)
 	end
 end
@@ -213,7 +213,7 @@ function var_0_0.onReceiveChangeSubHeroExSkillReply(arg_16_0, arg_16_1, arg_16_2
 
 	if arg_16_1 == 0 and arg_16_2:HasField("round") then
 		FightModel.instance:updateFightRound(arg_16_2.round)
-		FightSystem.instance:startRound()
+		FightGameMgr.playMgr:playShow()
 		FightController.instance:dispatchEvent(FightEvent.RespBeginRound)
 	end
 end
@@ -230,6 +230,10 @@ function var_0_0.onReceiveReconnectFightReply(arg_18_0, arg_18_1, arg_18_2)
 
 		if FightModel.instance.needFightReconnect then
 			local var_18_0 = FightData.New(arg_18_2.fight)
+
+			if var_18_0.version < 1 and arg_18_2.fightReason.type == FightEnum.FightReason.DungeonRecord then
+				var_18_0.isRecord = true
+			end
 
 			FightMgr.instance:startFight(var_18_0)
 			FightModel.instance:updateFight(var_18_0)
@@ -308,9 +312,6 @@ function var_0_0.onReceiveEndFightPush(arg_24_0, arg_24_1, arg_24_2)
 	end
 
 	FightDataHelper.lastFightResult = arg_24_2.record.fightResult
-
-	FightMgr.instance:enterStage(FightStageMgr.StageType.End)
-
 	FightModel.instance.needFightReconnect = false
 
 	FightModel.instance:updateRecord(arg_24_2.record)
@@ -357,7 +358,7 @@ end
 function var_0_0.onReceiveUseClothSkillReply(arg_27_0, arg_27_1, arg_27_2)
 	if arg_27_1 == 0 then
 		FightModel.instance:updateClothSkillRound(arg_27_2.round)
-		FightSystem.instance:startClothSkillRound()
+		FightGameMgr.playMgr:playCloth()
 	else
 		FightController.instance:dispatchEvent(FightEvent.RespUseClothSkillFail)
 	end
@@ -378,8 +379,9 @@ end
 
 function var_0_0.onReceiveAutoRoundReply(arg_29_0, arg_29_1, arg_29_2)
 	if arg_29_1 == 0 then
-		FightModel.instance:onAutoRound(arg_29_2.opers)
-		FightController.instance:dispatchEvent(FightEvent.AutoPlayCard)
+		FightMsgMgr.sendMsg(FightMsgId.AutoRoundReply, arg_29_2)
+	else
+		FightMsgMgr.sendMsg(FightMsgId.AutoRoundReplyFail)
 	end
 end
 

@@ -3,15 +3,16 @@
 local var_0_0 = class("VersionActivityFixedDungeonMapViewContainer", BaseViewContainer)
 
 function var_0_0.buildViews(arg_1_0)
-	arg_1_0.mapScene = VersionActivityFixedHelper.getVersionActivityDungeonMapScene().New()
-	arg_1_0.mapSceneElements = VersionActivityFixedHelper.getVersionActivityDungeonMapSceneElements().New()
-	arg_1_0.mapView = VersionActivityFixedHelper.getVersionActivityDungeonMapView().New()
-	arg_1_0.mapEpisodeView = VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeView().New()
-	arg_1_0.interactView = VersionActivityFixedHelper.getVersionActivityDungeonMapInteractView().New()
+	arg_1_0._bigVersion, arg_1_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	arg_1_0.mapScene = VersionActivityFixedHelper.getVersionActivityDungeonMapScene(arg_1_0._bigVersion, arg_1_0._smallVersion).New()
+	arg_1_0.mapSceneElements = VersionActivityFixedHelper.getVersionActivityDungeonMapSceneElements(arg_1_0._bigVersion, arg_1_0._smallVersion).New()
+	arg_1_0.mapView = VersionActivityFixedHelper.getVersionActivityDungeonMapView(arg_1_0._bigVersion, arg_1_0._smallVersion).New()
+	arg_1_0.mapEpisodeView = VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeView(arg_1_0._bigVersion, arg_1_0._smallVersion).New()
+	arg_1_0.interactView = VersionActivityFixedHelper.getVersionActivityDungeonMapInteractView(arg_1_0._bigVersion, arg_1_0._smallVersion).New()
 	arg_1_0.mapElementReward = DungeonMapElementReward.New()
 
 	return {
-		VersionActivityFixedHelper.getVersionActivityDungeonMapHoleView().New(),
+		VersionActivityFixedHelper.getVersionActivityDungeonMapHoleView(arg_1_0._bigVersion, arg_1_0._smallVersion).New(),
 		arg_1_0.mapScene,
 		arg_1_0.mapSceneElements,
 		arg_1_0.mapView,
@@ -56,9 +57,9 @@ end
 function var_0_0.onContainerInit(arg_5_0)
 	arg_5_0.versionActivityDungeonBaseMo = VersionActivityFixedDungeonMo.New()
 
-	arg_5_0.versionActivityDungeonBaseMo:init(VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon, arg_5_0.viewParam.chapterId, arg_5_0.viewParam.episodeId)
-	arg_5_0.versionActivityDungeonBaseMo:setLayoutClass(VersionActivityFixedHelper.getVersionActivityDungeonMapChapterLayout())
-	arg_5_0.versionActivityDungeonBaseMo:setMapEpisodeItemClass(VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeItem())
+	arg_5_0.versionActivityDungeonBaseMo:init(VersionActivityFixedHelper.getVersionActivityEnum(arg_5_0._bigVersion, arg_5_0._smallVersion).ActivityId.Dungeon, arg_5_0.viewParam.chapterId, arg_5_0.viewParam.episodeId)
+	arg_5_0.versionActivityDungeonBaseMo:setLayoutClass(VersionActivityFixedHelper.getVersionActivityDungeonMapChapterLayout(arg_5_0._bigVersion, arg_5_0._smallVersion))
+	arg_5_0.versionActivityDungeonBaseMo:setMapEpisodeItemClass(VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeItem(arg_5_0._bigVersion, arg_5_0._smallVersion))
 
 	for iter_5_0, iter_5_1 in ipairs(arg_5_0._views) do
 		iter_5_1.activityDungeonMo = arg_5_0.versionActivityDungeonBaseMo

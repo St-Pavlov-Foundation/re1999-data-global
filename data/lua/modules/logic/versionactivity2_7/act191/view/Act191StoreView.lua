@@ -25,7 +25,7 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.actId = VersionActivity2_7Enum.ActivityId.Act191Store
+	arg_4_0.actId = VersionActivity3_1Enum.ActivityId.DouQuQu3Store
 
 	gohelper.setActive(arg_4_0._gostoreItem, false)
 
@@ -44,7 +44,7 @@ function var_0_0.onOpen(arg_5_0)
 end
 
 function var_0_0.refreshCurrency(arg_6_0)
-	local var_6_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act191)
+	local var_6_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V3a1DouQuQu)
 
 	arg_6_0._txtCoin.text = var_6_0.quantity
 end

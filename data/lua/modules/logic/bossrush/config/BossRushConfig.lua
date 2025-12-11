@@ -323,6 +323,6 @@ function var_0_0.getAssassinStyleZongmaoCo(arg_32_0, arg_32_1)
 	return lua_assassin_style_zongmao.configDict[arg_32_1]
 end
 
-var_0_0.instance = var_0_0.New(VersionActivity3_0Enum.ActivityId.BossRush)
+var_0_0.instance = var_0_0.New(VersionActivity3_1Enum.ActivityId.BossRush)
 
 return var_0_0

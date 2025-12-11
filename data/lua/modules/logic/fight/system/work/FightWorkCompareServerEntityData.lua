@@ -21,7 +21,7 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		return
 	end
 
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		arg_1_0:onDone(true)
 
 		return

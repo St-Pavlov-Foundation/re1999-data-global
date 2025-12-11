@@ -563,6 +563,10 @@ function var_0_0.setGroupChangeToast(arg_35_0, arg_35_1)
 end
 
 function var_0_0._groupDropValueChanged(arg_36_0, arg_36_1)
+	if HeroGroupModel.instance:getPresetHeroGroupType() then
+		return
+	end
+
 	local var_36_0
 
 	if HeroGroupModel.instance:getGroupTypeName() then
@@ -586,6 +590,18 @@ end
 
 function var_0_0._initFightGroupDrop(arg_37_0)
 	if not arg_37_0:_noAidHero() then
+		return
+	end
+
+	if HeroGroupModel.instance:getPresetHeroGroupType() then
+		arg_37_0._dropherogroup.dropDown.enabled = false
+
+		return
+	end
+
+	if arg_37_0._chapterConfig.id == DungeonEnum.ChapterId.BossStory then
+		arg_37_0._dropherogroup.dropDown.enabled = false
+
 		return
 	end
 

@@ -31,8 +31,6 @@ function var_0_0.onContainerClose(arg_3_0)
 	if not ViewMgr.instance:getContainer(ViewName.DungeonView) then
 		return
 	end
-
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnShowStoryView)
 end
 
 return var_0_0

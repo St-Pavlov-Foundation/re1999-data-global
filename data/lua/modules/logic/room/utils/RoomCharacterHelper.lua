@@ -658,21 +658,40 @@ function var_0_0.getAllBlockCharacterGOList()
 	return var_33_1
 end
 
+local var_0_1 = {
+	z = 0,
+	x = 0,
+	y = 0
+}
+local var_0_2 = {
+	z = 0,
+	x = 0,
+	y = 0
+}
+
 function var_0_0.isBlockCharacter(arg_34_0, arg_34_1, arg_34_2)
 	if arg_34_0 and #arg_34_0 > 0 then
 		local var_34_0 = arg_34_2.bounds
-		local var_34_1 = var_34_0.extents
-		local var_34_2 = var_34_0.center
+		local var_34_1 = arg_34_2.extents
+		local var_34_2 = arg_34_2.center
 
 		if var_34_2.y + var_34_1.y < 0.2 then
 			return false
 		end
 
-		local var_34_3 = RoomBendingHelper.worldToBendingSimple(var_34_2)
-		local var_34_4 = Bounds(var_34_3, var_34_0:GetSize() + Vector3(0, 0.2, 0))
+		local var_34_3 = var_0_1
+		local var_34_4 = var_0_2
+		local var_34_5, var_34_6, var_34_7 = RoomBendingHelper.worldToBendingXYZ(var_34_2, true)
+
+		var_34_3.x = var_34_5 - var_34_1.x
+		var_34_3.y = var_34_6 - var_34_1.y - 0.2
+		var_34_3.z = var_34_7 - var_34_1.z
+		var_34_4.x = var_34_5 + var_34_1.x
+		var_34_4.y = var_34_6 + var_34_1.y + 0.2
+		var_34_4.z = var_34_7 + var_34_1.z
 
 		for iter_34_0 = 1, #arg_34_0 do
-			if var_0_0.testAABB(arg_34_0[iter_34_0], arg_34_1[iter_34_0], var_34_4) then
+			if var_0_0.testAABB(arg_34_0[iter_34_0], arg_34_1[iter_34_0], var_34_3, var_34_4) then
 				return true
 			end
 		end
@@ -681,42 +700,42 @@ function var_0_0.isBlockCharacter(arg_34_0, arg_34_1, arg_34_2)
 	return false
 end
 
-local var_0_1 = {
+local var_0_3 = {
 	"x",
 	"y",
 	"z"
 }
 
-function var_0_0.testAABB(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = arg_35_2:GetMin()
-	local var_35_1 = arg_35_2:GetMax()
-	local var_35_2 = 0
-	local var_35_3 = arg_35_1
-	local var_35_4 = var_0_1
+function var_0_0.testAABB(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+	local var_35_0 = 0
+	local var_35_1 = arg_35_1
+	local var_35_2 = var_0_3
+	local var_35_3 = arg_35_0.direction
+	local var_35_4 = arg_35_0.origin
 
-	for iter_35_0, iter_35_1 in ipairs(var_35_4) do
-		if math.abs(arg_35_0.direction[iter_35_1]) < 0.01 then
-			if arg_35_0.origin[iter_35_1] < arg_35_2.min[iter_35_1] or arg_35_0.origin[iter_35_1] > arg_35_2.max[iter_35_1] then
+	for iter_35_0, iter_35_1 in ipairs(var_35_2) do
+		if math.abs(var_35_3[iter_35_1]) < 0.01 then
+			if var_35_4[iter_35_1] < arg_35_2[iter_35_1] or var_35_4[iter_35_1] > arg_35_3[iter_35_1] then
 				return false
 			end
 		else
-			local var_35_5 = 1 / arg_35_0.direction[iter_35_1]
-			local var_35_6 = (var_35_0[iter_35_1] - arg_35_0.origin[iter_35_1]) * var_35_5
-			local var_35_7 = (var_35_1[iter_35_1] - arg_35_0.origin[iter_35_1]) * var_35_5
+			local var_35_5 = 1 / var_35_3[iter_35_1]
+			local var_35_6 = (arg_35_2[iter_35_1] - var_35_4[iter_35_1]) * var_35_5
+			local var_35_7 = (arg_35_3[iter_35_1] - var_35_4[iter_35_1]) * var_35_5
 
 			if var_35_7 < var_35_6 then
 				var_35_6, var_35_7 = var_35_7, var_35_6
 			end
 
-			if var_35_2 < var_35_6 then
-				var_35_2 = var_35_6
+			if var_35_0 < var_35_6 then
+				var_35_0 = var_35_6
 			end
 
-			if var_35_7 < var_35_3 then
-				var_35_3 = var_35_7
+			if var_35_7 < var_35_1 then
+				var_35_1 = var_35_7
 			end
 
-			if var_35_3 < var_35_2 then
+			if var_35_1 < var_35_0 then
 				return false
 			end
 		end

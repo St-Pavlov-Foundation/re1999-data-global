@@ -8,6 +8,8 @@ function var_0_0.reInit(arg_1_0)
 
 		arg_1_0._settleFlow = nil
 	end
+
+	TaskDispatcher.cancelTask(arg_1_0.onDelayPopupFinishEvent, arg_1_0)
 end
 
 function var_0_0.addConstEvents(arg_2_0)
@@ -38,13 +40,13 @@ function var_0_0._newFuncUnlock(arg_4_0, arg_4_1)
 end
 
 function var_0_0._checkActivityInfo(arg_5_0, arg_5_1)
-	if not arg_5_1 or arg_5_1 == VersionActivity2_8Enum.ActivityId.Survival then
+	if not arg_5_1 or arg_5_1 == VersionActivity3_1Enum.ActivityId.Survival then
 		arg_5_0:_getInfo()
 	end
 end
 
 function var_0_0._getInfo(arg_6_0)
-	if not ActivityHelper.isOpen(VersionActivity2_8Enum.ActivityId.Survival) then
+	if not ActivityHelper.isOpen(VersionActivity3_1Enum.ActivityId.Survival) then
 		return
 	end
 
@@ -55,16 +57,28 @@ function var_0_0._getInfo(arg_6_0)
 	SurvivalOutSideRpc.instance:sendSurvivalOutSideGetInfo()
 end
 
-function var_0_0.enterSurvivalMap(arg_7_0, arg_7_1)
-	SurvivalInteriorRpc.instance:sendEnterSurvival(arg_7_1, arg_7_0._onEnterSurvival, arg_7_0)
+function var_0_0.openSurvivalView(arg_7_0, arg_7_1)
+	if arg_7_1 then
+		SurvivalOutSideRpc.instance:sendSurvivalOutSideGetInfo(arg_7_0._openSurvivalView, arg_7_0)
+	else
+		arg_7_0:_openSurvivalView()
+	end
 end
 
-function var_0_0._onRecvGMMsg(arg_8_0)
+function var_0_0._openSurvivalView(arg_8_0)
+	ViewMgr.instance:openView(ViewName.SurvivalView)
+end
+
+function var_0_0.enterSurvivalMap(arg_9_0, arg_9_1)
+	SurvivalInteriorRpc.instance:sendEnterSurvival(arg_9_1, arg_9_0._onEnterSurvival, arg_9_0)
+end
+
+function var_0_0._onRecvGMMsg(arg_10_0)
 	SurvivalMapHelper.instance:tryStartFlow("")
 end
 
-function var_0_0._onEnterSurvival(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_2 == 0 then
+function var_0_0._onEnterSurvival(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	if arg_11_2 == 0 then
 		if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Survival then
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.SurvivalLoadingView)
 			GameSceneMgr.instance:startScene(SceneType.Survival, 280001, 280001, true, true)
@@ -72,45 +86,53 @@ function var_0_0._onEnterSurvival(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
 			logError("重复进入探索场景")
 		end
 	elseif GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		arg_9_0:exitMap()
+		arg_11_0:exitMap()
 	end
 end
 
-function var_0_0.enterShelterMap(arg_10_0, arg_10_1)
-	arg_10_0._isExitFight = arg_10_1
+function var_0_0.enterShelterMap(arg_12_0, arg_12_1)
+	arg_12_0._isExitFight = arg_12_1
 
-	if SurvivalModel.instance:getSurvivalSettleInfo() ~= nil then
-		arg_10_0:enterSurvivalShelterScene()
+	if SurvivalModel.instance:getSurvivalSettleInfo() ~= nil and arg_12_0._isExitFight then
+		arg_12_0:enterSurvivalShelterScene()
 
 		return
 	end
 
-	SurvivalWeekRpc.instance:sendSurvivalGetWeekInfo(arg_10_0._onEnterShelter, arg_10_0)
+	SurvivalWeekRpc.instance:sendSurvivalGetWeekInfo(arg_12_0._onEnterShelter, arg_12_0)
 end
 
-function var_0_0._onEnterShelter(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_2 == 0 then
+function var_0_0._onEnterShelter(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if arg_13_2 == 0 then
 		if SurvivalShelterModel.instance:getWeekInfo().inSurvival then
-			arg_11_0:enterSurvivalMap()
+			arg_13_0:enterSurvivalMap()
 		else
-			arg_11_0:enterSurvivalShelterScene()
+			arg_13_0:enterSurvivalShelterScene()
 		end
 	end
 end
 
-function var_0_0.enterSurvivalShelterScene(arg_12_0)
-	local var_12_0 = SurvivalShelterModel.instance:getWeekInfo().intrudeBox.fight
+function var_0_0.enterSurvivalShelterScene(arg_14_0)
+	local var_14_0 = SurvivalShelterModel.instance:getWeekInfo().intrudeBox.fight
+	local var_14_1 = SurvivalModel.instance:getSurvivalSettleInfo()
 
-	if arg_12_0._isExitFight and var_12_0 and var_12_0:isFighting() then
-		SurvivalModel.instance:setBossFightLastIndex(var_12_0.currRound - 1)
+	if arg_14_0._isExitFight and var_14_0 and var_14_0:isFighting() and not var_14_1 then
+		SurvivalModel.instance:setBossFightLastIndex(var_14_0.currRound - 1)
 
-		local var_12_1 = GameSceneMgr.instance:getPreSceneType()
-		local var_12_2 = GameSceneMgr.instance:getPreSceneId()
-		local var_12_3 = GameSceneMgr.instance:getPreLevelId()
+		local var_14_2 = GameSceneMgr.instance:getPreSceneType()
+		local var_14_3 = GameSceneMgr.instance:getPreSceneId()
+		local var_14_4 = GameSceneMgr.instance:getPreLevelId()
 
 		GameSceneMgr.instance:closeScene(nil, nil, nil, true)
-		GameSceneMgr.instance:setPrevScene(var_12_1, var_12_2, var_12_3)
-		arg_12_0:tryEnterShelterFight()
+		GameSceneMgr.instance:setPrevScene(var_14_2, var_14_3, var_14_4)
+		arg_14_0:tryEnterShelterFight()
+	elseif var_0_0.instance:isPlaySummaryAct() then
+		if GameSceneMgr.instance:getCurSceneType() ~= SceneType.SurvivalSummaryAct then
+			GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.SurvivalLoadingView)
+			GameSceneMgr.instance:startScene(SceneType.SurvivalSummaryAct, 280001, 280001, true, true)
+		else
+			logError("重复加载SurvivalSummaryAct场景")
+		end
 	elseif GameSceneMgr.instance:getCurSceneType() ~= SceneType.SurvivalShelter then
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.SurvivalLoadingView)
 		GameSceneMgr.instance:startScene(SceneType.SurvivalShelter, 280001, 280001, true, true)
@@ -119,279 +141,306 @@ function var_0_0.enterSurvivalShelterScene(arg_12_0)
 	end
 end
 
-function var_0_0.showToast(arg_13_0, arg_13_1)
+function var_0_0.showToast(arg_15_0, arg_15_1)
 	if not ViewMgr.instance:isOpen(ViewName.SurvivalToastView) then
-		table.insert(SurvivalMapModel.instance.showToastList, arg_13_1)
+		table.insert(SurvivalMapModel.instance.showToastList, arg_15_1)
 		ViewMgr.instance:openView(ViewName.SurvivalToastView)
 	elseif ViewMgr.instance:isOpening(ViewName.SurvivalToastView) then
-		table.insert(SurvivalMapModel.instance.showToastList, arg_13_1)
+		table.insert(SurvivalMapModel.instance.showToastList, arg_15_1)
 	else
-		arg_13_0:dispatchEvent(SurvivalEvent.ShowToast, arg_13_1)
+		arg_15_0:dispatchEvent(SurvivalEvent.ShowToast, arg_15_1)
 	end
 end
 
-function var_0_0.exitMap(arg_14_0)
-	local var_14_0 = SurvivalModel.instance:getOutSideInfo()
-	local var_14_1 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_14_2 = var_14_1 and var_14_1.inSurvival
-	local var_14_3 = GameSceneMgr.instance:getCurSceneType()
+function var_0_0.exitMap(arg_16_0)
+	local var_16_0 = GameSceneMgr.instance:getCurSceneType()
+
+	if var_16_0 == SceneType.SurvivalSummaryAct then
+		arg_16_0:enterSurvivalShelterScene()
+
+		return
+	end
+
+	local var_16_1 = SurvivalModel.instance:getOutSideInfo()
+	local var_16_2 = SurvivalShelterModel.instance:getWeekInfo()
+	local var_16_3 = var_16_2 and var_16_2.inSurvival
 
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	if var_14_3 == SceneType.Survival and var_14_0.inWeek and not var_14_2 then
-		arg_14_0:enterShelterMap()
+	if var_16_0 == SceneType.Survival and var_16_1.inWeek and not var_16_3 then
+		arg_16_0:enterShelterMap()
 
 		return
 	end
 
 	MainController.instance:enterMainScene()
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_8EnterView)
-		VersionActivity2_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_8Enum.ActivityId.Survival, true)
-		ViewMgr.instance:openView(ViewName.SurvivalView)
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.SurvivalView)
+		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity3_1Enum.ActivityId.Survival, true)
+		var_0_0.instance:openSurvivalView(true)
 	end)
 end
 
-function var_0_0.openEquipView(arg_16_0)
-	SurvivalWeekRpc.instance:sendSurvivalGetEquipInfo(arg_16_0.onRecvEquipInfo, arg_16_0)
+function var_0_0.openEquipView(arg_18_0)
+	SurvivalWeekRpc.instance:sendSurvivalGetEquipInfo(arg_18_0.onRecvEquipInfo, arg_18_0)
 end
 
-function var_0_0.onRecvEquipInfo(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+function var_0_0.onRecvEquipInfo(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
 	ViewMgr.instance:openView(ViewName.SurvivalEquipView)
 end
 
-function var_0_0.tryEnterSurvivalFight(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0._callback = arg_18_1
-	arg_18_0._callobj = arg_18_2
+function var_0_0.tryEnterSurvivalFight(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_0._callback = arg_20_1
+	arg_20_0._callobj = arg_20_2
 
-	local var_18_0 = SurvivalModel.instance:getOutSideInfo()
+	local var_20_0 = SurvivalModel.instance:getOutSideInfo()
 
-	if not var_18_0 or not var_18_0.inWeek then
+	if not var_20_0 or not var_20_0.inWeek then
 		logError("不在避难所中，重连不了战斗！！！！")
-		arg_18_0:callBackReconnectFight()
+		arg_20_0:callBackReconnectFight()
 
 		return
 	end
 
-	SurvivalWeekRpc.instance:sendSurvivalGetWeekInfo(arg_18_0._onRecvWeekInfo, arg_18_0)
+	SurvivalWeekRpc.instance:sendSurvivalGetWeekInfo(arg_20_0._onRecvWeekInfo, arg_20_0)
 end
 
-function var_0_0._onRecvWeekInfo(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	if arg_19_2 == 0 then
-		local var_19_0 = SurvivalShelterModel.instance:getWeekInfo()
+function var_0_0._onRecvWeekInfo(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	if arg_21_2 == 0 then
+		local var_21_0 = SurvivalShelterModel.instance:getWeekInfo()
 
-		if var_19_0.inSurvival then
-			SurvivalInteriorRpc.instance:sendEnterSurvival(nil, arg_19_0._onRecvMapInfo, arg_19_0)
+		if var_21_0.inSurvival then
+			SurvivalInteriorRpc.instance:sendEnterSurvival(nil, arg_21_0._onRecvMapInfo, arg_21_0)
 		else
-			local var_19_1 = var_19_0.intrudeBox.fight.fightCo
-			local var_19_2 = var_19_1 and var_19_1.battleId or 0
+			local var_21_1 = var_21_0.intrudeBox.fight.fightCo
+			local var_21_2 = var_21_1 and var_21_1.battleId or 0
 
-			FightController.instance:setFightParamByEpisodeBattleId(SurvivalEnum.Shelter_EpisodeId, var_19_2)
-			arg_19_0:callBackReconnectFight()
+			FightController.instance:setFightParamByEpisodeBattleId(SurvivalConst.Shelter_EpisodeId, var_21_2)
+			arg_21_0:callBackReconnectFight()
 		end
 	else
-		arg_19_0:callBackReconnectFight()
+		arg_21_0:callBackReconnectFight()
 	end
 end
 
-function var_0_0._onRecvMapInfo(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	if arg_20_2 == 0 then
-		local var_20_0 = SurvivalMapModel.instance:getSceneMo().battleInfo.battleId
+function var_0_0._onRecvMapInfo(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	if arg_22_2 == 0 then
+		local var_22_0 = SurvivalMapModel.instance:getSceneMo().battleInfo.battleId
 
-		if var_20_0 == 0 then
+		if var_22_0 == 0 then
 			logError("没有battleId，为什么会有战斗！！！！")
 		else
-			FightController.instance:setFightParamByEpisodeBattleId(SurvivalEnum.Survival_EpisodeId, var_20_0)
+			FightController.instance:setFightParamByEpisodeBattleId(SurvivalConst.Survival_EpisodeId, var_22_0)
 		end
 
-		arg_20_0:callBackReconnectFight()
+		arg_22_0:callBackReconnectFight()
 	else
-		arg_20_0:callBackReconnectFight()
+		arg_22_0:callBackReconnectFight()
 	end
 end
 
-function var_0_0.callBackReconnectFight(arg_21_0)
-	if arg_21_0._callback then
-		arg_21_0._callback(arg_21_0._callobj)
+function var_0_0.callBackReconnectFight(arg_23_0)
+	if arg_23_0._callback then
+		arg_23_0._callback(arg_23_0._callobj)
 	end
 
-	arg_21_0._callback = nil
-	arg_21_0._callobj = nil
+	arg_23_0._callback = nil
+	arg_23_0._callobj = nil
 end
 
-function var_0_0.openDecreeSelectView(arg_22_0)
-	local var_22_0 = SurvivalShelterModel.instance:getWeekInfo():getDecreeBox()
-	local var_22_1
+function var_0_0.openDecreeSelectView(arg_24_0)
+	local var_24_0 = SurvivalShelterModel.instance:getWeekInfo():getDecreeBox()
+	local var_24_1
 
-	for iter_22_0 = 1, 3 do
-		local var_22_2 = var_22_0:getDecreeInfo(iter_22_0)
+	for iter_24_0 = 1, 3 do
+		local var_24_2 = var_24_0:getDecreeInfo(iter_24_0)
 
-		if not var_22_2 or var_22_2:isCurPolicyEmpty() then
-			var_22_1 = iter_22_0
+		if not var_24_2 or var_24_2:isCurPolicyEmpty() then
+			var_24_1 = iter_24_0
 
 			break
 		end
 	end
 
-	if not var_22_1 then
+	if not var_24_1 then
 		return
 	end
 
-	local var_22_3 = var_22_0:getDecreeInfo(var_22_1)
+	local var_24_3 = var_24_0:getDecreeInfo(var_24_1)
 
-	if var_22_3 and var_22_3:hasOptions() then
+	if var_24_3 and var_24_3:hasOptions() then
 		ViewMgr.instance:openView(ViewName.SurvivalDecreeSelectView, {
-			decreeInfo = var_22_3
+			decreeInfo = var_24_3
 		})
 	else
-		SurvivalWeekRpc.instance:sendSurvivalDecreePromulgateRequest(var_22_1, arg_22_0._openDecreeSelectView, arg_22_0)
+		SurvivalWeekRpc.instance:sendSurvivalDecreePromulgateRequest(var_24_1, arg_24_0._openDecreeSelectView, arg_24_0)
 	end
 end
 
-function var_0_0._openDecreeSelectView(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	if arg_23_2 == 0 then
-		local var_23_0 = SurvivalShelterModel.instance:getWeekInfo():getDecreeBox():getDecreeInfo(arg_23_3.decree.no)
+function var_0_0._openDecreeSelectView(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	if arg_25_2 == 0 then
+		local var_25_0 = SurvivalShelterModel.instance:getWeekInfo():getDecreeBox():getDecreeInfo(arg_25_3.decree.no)
 
 		ViewMgr.instance:openView(ViewName.SurvivalDecreeSelectView, {
-			decreeInfo = var_23_0
+			decreeInfo = var_25_0
 		})
 	end
 end
 
-function var_0_0.startDecreeVote(arg_24_0, arg_24_1)
+function var_0_0.startDecreeVote(arg_26_0, arg_26_1)
 	ViewMgr.instance:closeAllModalViews()
 	ViewMgr.instance:closeAllPopupViews()
 	PopupController.instance:setPause(ViewName.SurvivalDecreeVoteView, true)
 
-	if not arg_24_1 then
-		local var_24_0 = SurvivalShelterModel.instance:getWeekInfo():getDecreeBox()
-		local var_24_1, var_24_2 = var_24_0:isCurAllPolicyNotFinish()
+	if not arg_26_1 then
+		local var_26_0 = SurvivalShelterModel.instance:getWeekInfo():getDecreeBox()
+		local var_26_1, var_26_2 = var_26_0:isCurAllPolicyNotFinish()
 
-		arg_24_1 = var_24_0:getDecreeInfo(var_24_2)
+		arg_26_1 = var_26_0:getDecreeInfo(var_26_2)
 	end
 
 	ViewMgr.instance:openView(ViewName.SurvivalDecreeVoteView, {
-		decreeInfo = arg_24_1
+		decreeInfo = arg_26_1
 	})
 end
 
-function var_0_0.enterSurvival(arg_25_0)
-	local var_25_0 = SurvivalShelterModel.instance:getWeekInfo()
-
-	if var_25_0:isInFight() then
-		GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalHaveBossFightSure, MsgBoxEnum.BoxType.Yes_No, arg_25_0._sendAbandon, nil, nil, arg_25_0, nil, nil)
+function var_0_0.enterSurvival(arg_27_0)
+	if SurvivalShelterModel.instance:getWeekInfo():isInFight() then
+		GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalHaveBossFightSure, MsgBoxEnum.BoxType.Yes_No, arg_27_0._sendAbandon, nil, nil, arg_27_0, nil, nil)
 
 		return
 	end
 
-	if var_25_0:isNpcWillLeave() then
-		GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalNpcTips, MsgBoxEnum.BoxType.Yes_No, arg_25_0.openSurvivalInitTeamView, nil, nil, arg_25_0, nil, nil)
-
-		return
-	end
-
-	arg_25_0:openSurvivalInitTeamView()
+	arg_27_0:openSurvivalInitTeamView()
 end
 
-function var_0_0.openSurvivalInitTeamView(arg_26_0)
+function var_0_0.openSurvivalInitTeamView(arg_28_0)
 	SurvivalMapModel.instance:getInitGroup():init()
 	ViewMgr.instance:openView(ViewName.SurvivalInitTeamView)
 end
 
-function var_0_0._sendAbandon(arg_27_0)
+function var_0_0._sendAbandon(arg_29_0)
 	UIBlockHelper.instance:startBlock(SurvivalEnum.SurvivalIntrudeAbandonBlock)
 	SurvivalWeekRpc.instance:sendSurvivalIntrudeAbandonExterminateRequest()
 end
 
-function var_0_0.startNewWeek(arg_28_0)
-	local var_28_0 = SurvivalModel.instance:getOutSideInfo()
+function var_0_0.startNewWeek(arg_30_0)
+	local var_30_0 = SurvivalModel.instance:getOutSideInfo()
 
-	if var_28_0 then
-		var_28_0.inWeek = true
+	if var_30_0 then
+		var_30_0.inWeek = true
 	end
 end
 
-function var_0_0.enterSurvivalSettle(arg_29_0)
-	local var_29_0 = SurvivalModel.instance:getSurvivalSettleInfo()
+function var_0_0.enterSurvivalSettle(arg_31_0)
+	local var_31_0 = SurvivalModel.instance:getSurvivalSettleInfo()
 
-	if var_29_0 ~= nil then
+	if var_31_0 ~= nil then
 		ViewMgr.instance:openView(ViewName.SurvivalCeremonyClosingView, {
-			isWin = var_29_0.win,
-			score = var_29_0.score,
-			report = var_29_0.report
+			isWin = var_31_0.win,
+			score = var_31_0.score,
+			report = var_31_0.report
 		})
 		SurvivalModel.instance:setSurvivalSettleInfo(nil)
 	end
 end
 
-function var_0_0.tryEnterShelterFight(arg_30_0, arg_30_1, arg_30_2)
-	arg_30_0._shelterCallBack = arg_30_1
-	arg_30_0._shelterCallObj = arg_30_2
+function var_0_0.tryEnterShelterFight(arg_32_0, arg_32_1, arg_32_2)
+	arg_32_0._shelterCallBack = arg_32_1
+	arg_32_0._shelterCallObj = arg_32_2
 
-	HeroGroupRpc.instance:sendGetHeroGroupSnapshotListRequest(ModuleEnum.HeroGroupSnapshotType.Shelter, arg_30_0._onRecvMsg, arg_30_0)
+	HeroGroupRpc.instance:sendGetHeroGroupSnapshotListRequest(ModuleEnum.HeroGroupSnapshotType.Shelter, arg_32_0._onRecvMsg, arg_32_0)
 end
 
-function var_0_0._onRecvMsg(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	if arg_31_2 == 0 then
-		local var_31_0 = SurvivalShelterModel.instance:getWeekInfo().intrudeBox.fight
-		local var_31_1 = var_31_0.fightCo
-		local var_31_2 = SurvivalEnum.Shelter_EpisodeId
-		local var_31_3 = DungeonConfig.instance:getEpisodeCO(var_31_2)
-		local var_31_4 = SurvivalModel.instance:getBossFightLastIndex()
-		local var_31_5 = var_31_4 == nil and var_31_0.currRound or var_31_4
+function var_0_0._onRecvMsg(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
+	if arg_33_2 == 0 then
+		local var_33_0 = SurvivalShelterModel.instance:getWeekInfo().intrudeBox.fight
+		local var_33_1 = var_33_0.fightCo
+		local var_33_2 = SurvivalConst.Shelter_EpisodeId
+		local var_33_3 = DungeonConfig.instance:getEpisodeCO(var_33_2)
+		local var_33_4 = SurvivalModel.instance:getBossFightLastIndex()
+		local var_33_5 = var_33_4 == nil and var_33_0.currRound or var_33_4
 
-		HeroGroupSnapshotModel.instance:setSelectIndex(ModuleEnum.HeroGroupSnapshotType.Shelter, var_31_5)
+		HeroGroupSnapshotModel.instance:setSelectIndex(ModuleEnum.HeroGroupSnapshotType.Shelter, var_33_5)
 
-		local var_31_6 = HeroGroupSnapshotModel.instance:getHeroGroupInfo(ModuleEnum.HeroGroupSnapshotType.Shelter, var_31_0.currRound)
+		local var_33_6 = HeroGroupSnapshotModel.instance:getHeroGroupInfo(ModuleEnum.HeroGroupSnapshotType.Shelter, var_33_0.currRound)
 
-		if var_31_6 then
-			for iter_31_0 = 1, #var_31_6.heroList do
-				local var_31_7 = var_31_0:getUseRoundByHeroUid(var_31_6.heroList[iter_31_0])
+		if var_33_6 then
+			for iter_33_0 = 1, #var_33_6.heroList do
+				local var_33_7 = var_33_0:getUseRoundByHeroUid(var_33_6.heroList[iter_33_0])
 
-				if var_31_7 and var_31_7 ~= var_31_0.currRound then
-					var_31_6.heroList[iter_31_0] = "0"
+				if var_33_7 and var_33_7 ~= var_33_0.currRound then
+					var_33_6.heroList[iter_33_0] = "0"
 				end
 			end
 		end
 
-		DungeonFightController.instance:enterFightByBattleId(var_31_3.chapterId, var_31_2, var_31_1.battleId)
-		arg_31_0:callShelterBackFight()
+		DungeonFightController.instance:enterFightByBattleId(var_33_3.chapterId, var_33_2, var_33_1.battleId)
+		arg_33_0:callShelterBackFight()
 	else
-		arg_31_0:callShelterBackFight()
+		arg_33_0:callShelterBackFight()
 	end
 end
 
-function var_0_0.callShelterBackFight(arg_32_0)
-	if arg_32_0._shelterCallBack then
-		arg_32_0._shelterCallBack(arg_32_0._shelterCallObj)
+function var_0_0.callShelterBackFight(arg_34_0)
+	if arg_34_0._shelterCallBack then
+		arg_34_0._shelterCallBack(arg_34_0._shelterCallObj)
 	end
 
-	arg_32_0._shelterCallBack = nil
-	arg_32_0._shelterCallObj = nil
+	arg_34_0._shelterCallBack = nil
+	arg_34_0._shelterCallObj = nil
 end
 
-function var_0_0.playSettleWork(arg_33_0, arg_33_1)
-	if arg_33_0._settleFlow then
-		arg_33_0._settleFlow:destroy()
+function var_0_0.playSettleWork(arg_35_0, arg_35_1)
+	if arg_35_0._settleFlow then
+		arg_35_0._settleFlow:destroy()
 
-		arg_33_0._settleFlow = nil
+		arg_35_0._settleFlow = nil
 	end
 
-	arg_33_0._settleFlow = FlowSequence.New()
+	arg_35_0._settleFlow = FlowSequence.New()
 
-	arg_33_0._settleFlow:addWork(SurvivalSettleWeekPushWork.New(arg_33_1))
-	arg_33_0._settleFlow:start()
+	arg_35_0._settleFlow:addWork(SurvivalSettleWeekPushWork.New(arg_35_1))
+	arg_35_0._settleFlow:start()
 end
 
-function var_0_0.tryShowTaskEventPanel(arg_34_0, arg_34_1, arg_34_2)
-	if arg_34_1 ~= SurvivalEnum.TaskModule.StoryTask then
+function var_0_0.tryShowTaskEventPanel(arg_36_0, arg_36_1, arg_36_2)
+	if arg_36_1 ~= SurvivalEnum.TaskModule.StoryTask then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.SurvivalEventPanelView, {
-		moduleId = arg_34_1,
-		taskId = arg_34_2
+		moduleId = arg_36_1,
+		taskId = arg_36_2
 	})
+end
+
+function var_0_0.sendOpenSurvivalRewardInheritView(arg_37_0, arg_37_1, arg_37_2)
+	arg_37_0.inheritViewParam = arg_37_2 or {}
+	arg_37_0.inheritViewParam.handbookType = arg_37_1
+
+	SurvivalOutSideRpc.instance:sendSurvivalOutSideGetInfo(arg_37_0._openSurvivalRewardInheritView, arg_37_0)
+end
+
+function var_0_0._openSurvivalRewardInheritView(arg_38_0)
+	ViewMgr.instance:openView(ViewName.SurvivalRewardInheritView, arg_38_0.inheritViewParam)
+end
+
+function var_0_0.isPlaySummaryAct(arg_39_0)
+	return GameSceneMgr.instance:getCurSceneType() == SceneType.Survival and #SurvivalMapModel.instance.resultData.afterNpcs > 0
+end
+
+function var_0_0.playSummaryAct(arg_40_0)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SurvivalSummaryActView)
+end
+
+function var_0_0.onScenePopupFinish(arg_41_0)
+	TaskDispatcher.runDelay(arg_41_0.onDelayPopupFinishEvent, arg_41_0, 0.767)
+end
+
+function var_0_0.onDelayPopupFinishEvent(arg_42_0)
+	arg_42_0:dispatchEvent(SurvivalEvent.OnDelayPopupFinishEvent)
+	SurvivalShelterModel.instance:getWeekInfo().clientData:saveDataToServer()
 end
 
 var_0_0.instance = var_0_0.New()

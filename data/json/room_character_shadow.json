@@ -303,5 +303,45 @@
     "skinId": 312402,
     "animName": "interact",
     "shadow": 1
+  },
+  {
+    "skinId": 313201,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 313202,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 312501,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 312502,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 307704,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 311303,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 300731,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 309504,
+    "animName": "interact",
+    "shadow": 1
   }
 ]

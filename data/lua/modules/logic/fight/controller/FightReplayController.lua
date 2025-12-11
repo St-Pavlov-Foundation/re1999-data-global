@@ -49,7 +49,9 @@ end
 
 function var_0_0._onGetOperReplay(arg_6_0)
 	FightController.instance:dispatchEvent(FightEvent.StartReplay)
-	FightReplayModel.instance:setReplay(true)
+
+	FightDataHelper.stateMgr.isReplay = true
+
 	arg_6_0:_reqReplayCallback()
 end
 
@@ -109,7 +111,9 @@ end
 
 function var_0_0._stopReplay(arg_12_0)
 	arg_12_0:_setQuality(false)
-	FightReplayModel.instance:setReplay(false)
+
+	FightDataHelper.stateMgr.isReplay = false
+
 	arg_12_0:_stopReplayFlow()
 end
 

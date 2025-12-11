@@ -28,5 +28,17 @@
     "time": "2025-10-30",
     "name": "language_10089146",
     "nameEn": "Hadal Zone"
+  },
+  {
+    "stageId": 6,
+    "time": "2025-12-11",
+    "name": "language_10093847",
+    "nameEn": "Hadal Zone"
+  },
+  {
+    "stageId": 7,
+    "time": "2025-12-11",
+    "name": "language_10090453",
+    "nameEn": "Wailing Whirl"
   }
 ]

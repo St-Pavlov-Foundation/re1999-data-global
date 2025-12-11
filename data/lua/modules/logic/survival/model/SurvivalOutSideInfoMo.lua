@@ -11,10 +11,6 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0:refreshDifficulty(arg_1_1.unlockDifficulty)
 	arg_1_0:refreshDifficultyMod(arg_1_1.passHardnessMod)
 
-	arg_1_0.talentBox = SurvivalTalentGroupBoxMo.New()
-
-	arg_1_0.talentBox:init(arg_1_1.talentBox)
-
 	arg_1_0.score = arg_1_1.score
 	arg_1_0.gain = {}
 
@@ -45,6 +41,10 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0.clientData = arg_1_0.clientData or SurvivalOutSideClientDataMo.New()
 
 	arg_1_0.clientData:init(arg_1_1.clientData)
+
+	local var_1_0 = arg_1_1.handbookBox
+
+	SurvivalHandbookModel.instance:setSurvivalHandbookBox(var_1_0)
 end
 
 function var_0_0.refreshDifficulty(arg_2_0, arg_2_1)
@@ -84,11 +84,11 @@ function var_0_0.isUnlockDifficultyMod(arg_4_0, arg_4_1)
 
 	local var_4_1 = string.split(var_4_0.unlock, "#")
 
-	if var_4_1[1] == "overDif" then
+	if var_4_1[1] == SurvivalEnum.HardUnlockCondition.overDif then
 		local var_4_2 = tonumber(var_4_1[2])
 
 		return arg_4_0:isPassDifficultyMod(var_4_2)
-	elseif var_4_1[1] == "hotfix2" then
+	elseif var_4_1[1] == SurvivalEnum.HardUnlockCondition.overDifMult then
 		local var_4_3 = string.splitToNumber(var_4_1[2], ",")
 
 		for iter_4_0, iter_4_1 in ipairs(var_4_3) do
@@ -112,7 +112,7 @@ function var_0_0.isUnlockDifficulty(arg_6_0, arg_6_1)
 end
 
 function var_0_0.isFirstPlay(arg_7_0)
-	return not arg_7_0:isPassDifficultyMod(SurvivalEnum.FirstPlayDifficulty)
+	return not arg_7_0:isPassDifficultyMod(SurvivalConst.FirstPlayDifficulty)
 end
 
 function var_0_0.isGainReward(arg_8_0, arg_8_1)

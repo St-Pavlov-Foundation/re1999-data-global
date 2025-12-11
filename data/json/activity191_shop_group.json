@@ -110,5 +110,33 @@
     "num": 1,
     "type": "tagShop",
     "groupType": "collection"
+  },
+  {
+    "id": 11401,
+    "coin": 10,
+    "num": 1,
+    "type": "tagShop",
+    "groupType": "role"
+  },
+  {
+    "id": 11402,
+    "coin": 15,
+    "num": 1,
+    "type": "tagShop",
+    "groupType": "role"
+  },
+  {
+    "id": 11403,
+    "coin": 24,
+    "num": 1,
+    "type": "tagShop",
+    "groupType": "role"
+  },
+  {
+    "id": 11404,
+    "coin": 24,
+    "num": 1,
+    "type": "tagShop",
+    "groupType": "collection"
   }
 ]

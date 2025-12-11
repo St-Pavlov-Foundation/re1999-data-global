@@ -176,6 +176,12 @@ function var_0_0.refreshScrollEnemy(arg_12_0)
 	arg_12_0:recycleAllEnemyGroupList()
 	arg_12_0:recycleAllEnemyItemList()
 
+	if arg_12_0.viewParam.tabEnum == EnemyInfoEnum.TabEnum.TowerDeep then
+		arg_12_0:addTowerDeepGroupItem()
+
+		return
+	end
+
 	local var_12_1 = string.splitToNumber(var_12_0, "#")
 
 	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
@@ -400,20 +406,34 @@ function var_0_0.onClickEnemyItem(arg_24_0, arg_24_1)
 	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.SelectMonsterChange, arg_24_0.eventData)
 end
 
-function var_0_0.onClose(arg_25_0)
+function var_0_0.addTowerDeepGroupItem(arg_25_0)
+	local var_25_0 = arg_25_0:getEnemyGroupItem()
+
+	var_25_0.tr:SetParent(arg_25_0.trScrollContent)
+
+	var_25_0.txtTitleNum.text = 1
+
+	local var_25_1 = TowerPermanentDeepModel.instance:getCurDeepMonsterId()
+
+	arg_25_0:addMonsterItem(var_25_1, var_25_0.trContent, {
+		var_25_1
+	})
+end
+
+function var_0_0.onClose(arg_26_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	arg_26_0.ruleClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_27_0)
+	arg_27_0.ruleClick:RemoveClickListener()
 
-	for iter_26_0, iter_26_1 in ipairs(arg_26_0.enemyItemList) do
-		iter_26_1.btn:RemoveClickListener()
+	for iter_27_0, iter_27_1 in ipairs(arg_27_0.enemyItemList) do
+		iter_27_1.btn:RemoveClickListener()
 	end
 
-	for iter_26_2, iter_26_3 in pairs(arg_26_0.enemyItemPool) do
-		for iter_26_4, iter_26_5 in ipairs(iter_26_3) do
-			iter_26_5.btn:RemoveClickListener()
+	for iter_27_2, iter_27_3 in pairs(arg_27_0.enemyItemPool) do
+		for iter_27_4, iter_27_5 in ipairs(iter_27_3) do
+			iter_27_5.btn:RemoveClickListener()
 		end
 	end
 end

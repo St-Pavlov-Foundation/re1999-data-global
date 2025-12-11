@@ -11,7 +11,7 @@ function var_0_0.openSubView(arg_2_0, arg_2_1, arg_2_2, arg_2_3, ...)
 		return arg_2_0:openSubViewForBaseView(arg_2_1, arg_2_2, arg_2_3, ...)
 	end
 
-	local var_2_0 = arg_2_0.PARENT_ROOT_CLASS
+	local var_2_0 = arg_2_0.PARENT_ROOT_OBJECT
 	local var_2_1 = arg_2_0:newClass(arg_2_1, ...)
 
 	var_2_1.viewName = var_2_0.viewName
@@ -27,7 +27,7 @@ function var_0_0.openSubView(arg_2_0, arg_2_1, arg_2_2, arg_2_3, ...)
 		})
 	else
 		var_2_1.viewGO = arg_2_2
-		var_2_1.keyword_gameObject = arg_2_2
+		var_2_1.GAMEOBJECT = arg_2_2
 
 		var_2_1:inner_startView()
 	end
@@ -47,7 +47,7 @@ function var_0_0._onViewGOLoadFinish(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 	local var_3_2 = arg_3_3.handle
 
 	var_3_2.viewGO = var_3_1
-	var_3_2.keyword_gameObject = var_3_1
+	var_3_2.GAMEOBJECT = var_3_1
 
 	var_3_2:inner_startView()
 end

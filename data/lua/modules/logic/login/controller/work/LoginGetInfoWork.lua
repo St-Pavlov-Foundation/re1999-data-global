@@ -35,6 +35,12 @@ function var_0_0._initInfo(arg_1_0)
 			false
 		},
 		{
+			HeroGroupRpc.sendGetAllHeroGroupSnapshotListRequest,
+			HeroGroupRpc.instance,
+			"sendGetAllHeroGroupSnapshotListRequest",
+			false
+		},
+		{
 			ItemRpc.sendGetItemListRequest,
 			ItemRpc.instance,
 			"sendGetItemListRequest",
@@ -122,6 +128,12 @@ function var_0_0._initInfo(arg_1_0)
 			AntiqueRpc.sendGetAntiqueInfoRequest,
 			AntiqueRpc.instance,
 			"sendGetAntiqueInfoRequest",
+			false
+		},
+		{
+			UnlockVoucherRpc.sendGetUnlockVoucherInfoRequest,
+			UnlockVoucherRpc.instance,
+			"sendGetUnlockVoucherInfoRequest",
 			false
 		}
 	}

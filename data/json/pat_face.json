@@ -532,11 +532,32 @@
     "patFaceOrder": 20906
   },
   {
-    "id": 20206,
-    "patFaceActivityId": 12244,
-    "patFaceViewName": "V2a2_SpringFestival_PanelView",
+    "id": 30100,
+    "patFaceActivityId": 0,
+    "patFaceViewName": "",
     "patFaceStoryId": 0,
-    "patFaceOrder": 20299
+    "patFaceOrder": 30100
+  },
+  {
+    "id": 30101,
+    "patFaceActivityId": 13111,
+    "patFaceViewName": "SurvivalOperActPanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 13111
+  },
+  {
+    "id": 30102,
+    "patFaceActivityId": 13112,
+    "patFaceViewName": "TowerDeepOperActPanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 13112
+  },
+  {
+    "id": 30103,
+    "patFaceActivityId": 13116,
+    "patFaceViewName": "VersionActivity2_3NewCultivationGiftFullView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2089
   },
   {
     "id": 30104,
@@ -544,5 +565,26 @@
     "patFaceViewName": "V3a1_AutumnSign_PanelView",
     "patFaceStoryId": 0,
     "patFaceOrder": 30104
+  },
+  {
+    "id": 30110,
+    "patFaceActivityId": 0,
+    "patFaceViewName": "PowerMakerPatFaceView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 999999
+  },
+  {
+    "id": 30300,
+    "patFaceActivityId": 0,
+    "patFaceViewName": "",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 30300
+  },
+  {
+    "id": 20206,
+    "patFaceActivityId": 12244,
+    "patFaceViewName": "V2a2_SpringFestival_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20299
   }
 ]

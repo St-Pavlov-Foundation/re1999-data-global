@@ -48,7 +48,7 @@ function var_0_0._quickLogin(arg_2_0)
 end
 
 function var_0_0._onUpdate(arg_3_0)
-	if var_0_1.GetKey(var_0_2.LeftControl) and var_0_1.GetKeyDown(var_0_2.Return) then
+	if (var_0_1.GetKey(var_0_2.LeftControl) or var_0_1.GetKey(var_0_2.RightControl)) and var_0_1.GetKeyDown(var_0_2.Return) then
 		arg_3_0:_setLoginAccountInput(var_0_4())
 		arg_3_0:_quickLogin()
 

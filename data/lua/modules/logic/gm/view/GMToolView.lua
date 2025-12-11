@@ -550,6 +550,7 @@ function var_0_0._onClickBtnOK2(arg_21_0)
 end
 
 function var_0_0._onClickBtnOK4(arg_22_0)
+	GMRpc.instance:sendGMRequest("logout")
 	LoginController.instance:logout()
 end
 
@@ -694,7 +695,24 @@ function var_0_0._onClickTestFight(arg_40_0)
 			PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, var_40_0)
 			HeroGroupModel.instance:setParam(nil, nil, nil)
 
-			local var_40_2 = HeroGroupModel.instance:getCurGroupMO()
+			local var_40_2
+			local var_40_3 = HeroGroupPresetHeroGroupChangeController.instance:getHeroGroupList(HeroGroupPresetEnum.HeroGroupType.Common)
+
+			for iter_40_0, iter_40_1 in ipairs(var_40_3) do
+				local var_40_4 = 0
+
+				for iter_40_2, iter_40_3 in ipairs(iter_40_1.heroList) do
+					if iter_40_3 ~= "0" then
+						var_40_4 = var_40_4 + 1
+					end
+				end
+
+				if var_40_4 > 0 then
+					var_40_2 = iter_40_1
+
+					break
+				end
+			end
 
 			if not var_40_2 then
 				logError("current HeroGroupMO is nil")
@@ -703,21 +721,21 @@ function var_0_0._onClickTestFight(arg_40_0)
 				return
 			end
 
-			local var_40_3, var_40_4 = var_40_2:getMainList()
-			local var_40_5, var_40_6 = var_40_2:getSubList()
-			local var_40_7 = var_40_2:getAllHeroEquips()
+			local var_40_5, var_40_6 = var_40_2:getMainList()
+			local var_40_7, var_40_8 = var_40_2:getSubList()
+			local var_40_9 = var_40_2:getAllHeroEquips()
 
 			arg_40_0:closeThis()
 
-			local var_40_8 = FightParam.New()
+			local var_40_10 = FightParam.New()
 
-			var_40_8.monsterGroupIds = var_40_1
-			var_40_8.isTestFight = true
+			var_40_10.monsterGroupIds = var_40_1
+			var_40_10.isTestFight = true
 
-			var_40_8:setSceneLevel(10601)
-			var_40_8:setMySide(var_40_2.clothId, var_40_3, var_40_5, var_40_7)
-			FightModel.instance:setFightParam(var_40_8)
-			FightController.instance:sendTestFight(var_40_8)
+			var_40_10:setSceneLevel(10601)
+			var_40_10:setMySide(var_40_2.clothId, var_40_5, var_40_7, var_40_9)
+			FightModel.instance:setFightParam(var_40_10)
+			FightController.instance:sendTestFight(var_40_10)
 
 			return
 		end
@@ -735,7 +753,24 @@ function var_0_0._onClickTestFightId(arg_41_0)
 
 		HeroGroupModel.instance:setParam(var_41_1, nil, nil)
 
-		local var_41_3 = HeroGroupModel.instance:getCurGroupMO()
+		local var_41_3
+		local var_41_4 = HeroGroupPresetHeroGroupChangeController.instance:getHeroGroupList(HeroGroupPresetEnum.HeroGroupType.Common)
+
+		for iter_41_0, iter_41_1 in ipairs(var_41_4) do
+			local var_41_5 = 0
+
+			for iter_41_2, iter_41_3 in ipairs(iter_41_1.heroList) do
+				if iter_41_3 ~= "0" then
+					var_41_5 = var_41_5 + 1
+				end
+			end
+
+			if var_41_5 > 0 then
+				var_41_3 = iter_41_1
+
+				break
+			end
+		end
 
 		if not var_41_3 then
 			logError("current HeroGroupMO is nil")
@@ -744,19 +779,19 @@ function var_0_0._onClickTestFightId(arg_41_0)
 			return
 		end
 
-		local var_41_4, var_41_5 = var_41_3:getMainList()
-		local var_41_6, var_41_7 = var_41_3:getSubList()
-		local var_41_8 = var_41_3:getAllHeroEquips()
+		local var_41_6, var_41_7 = var_41_3:getMainList()
+		local var_41_8, var_41_9 = var_41_3:getSubList()
+		local var_41_10 = var_41_3:getAllHeroEquips()
 
 		PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, var_41_0)
 		arg_41_0:closeThis()
 
-		for iter_41_0, iter_41_1 in ipairs(lua_episode.configList) do
-			if iter_41_1.battleId == var_41_1 then
-				var_41_2.episodeId = iter_41_1.id
-				FightResultModel.instance.episodeId = iter_41_1.id
+		for iter_41_4, iter_41_5 in ipairs(lua_episode.configList) do
+			if iter_41_5.battleId == var_41_1 then
+				var_41_2.episodeId = iter_41_5.id
+				FightResultModel.instance.episodeId = iter_41_5.id
 
-				DungeonModel.instance:SetSendChapterEpisodeId(iter_41_1.chapterId, iter_41_1.id)
+				DungeonModel.instance:SetSendChapterEpisodeId(iter_41_5.chapterId, iter_41_5.id)
 
 				break
 			end
@@ -766,7 +801,7 @@ function var_0_0._onClickTestFightId(arg_41_0)
 			var_41_2.episodeId = 10101
 		end
 
-		var_41_2:setMySide(var_41_3.clothId, var_41_4, var_41_6, var_41_8)
+		var_41_2:setMySide(var_41_3.clothId, var_41_6, var_41_8, var_41_10)
 		FightController.instance:sendTestFightId(var_41_2)
 	end
 end

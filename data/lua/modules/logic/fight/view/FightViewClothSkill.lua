@@ -75,7 +75,7 @@ function var_0_0.onInitView(arg_1_0)
 end
 
 function var_0_0.addEvents(arg_2_0)
-	if not FightReplayModel.instance:isReplay() then
+	if not FightDataHelper.stateMgr.isReplay then
 		arg_2_0._click:AddClickListener(arg_2_0._onClick, arg_2_0)
 
 		for iter_2_0, iter_2_1 in ipairs(arg_2_0._detailClick) do
@@ -183,7 +183,7 @@ function var_0_0._checkAnyKey(arg_6_0)
 end
 
 function var_0_0._onSkillKeyClick(arg_7_0)
-	if not FightReplayModel.instance:isReplay() then
+	if not FightDataHelper.stateMgr.isReplay then
 		if arg_7_0._state == var_0_1.Detail then
 			arg_7_0:_onTouch()
 		elseif arg_7_0._state == var_0_1.Simple then
@@ -193,7 +193,7 @@ function var_0_0._onSkillKeyClick(arg_7_0)
 end
 
 function var_0_0._onSkillSelect(arg_8_0, arg_8_1)
-	if not FightReplayModel.instance:isReplay() then
+	if not FightDataHelper.stateMgr.isReplay then
 		local var_8_0 = arg_8_0._detailClick[arg_8_1]
 
 		if var_8_0 and var_8_0.gameObject.activeInHierarchy then
@@ -272,7 +272,7 @@ function var_0_0._onUpdateSpeed(arg_15_0)
 end
 
 function var_0_0._checkStartReplay(arg_16_0)
-	if FightReplayModel.instance:isReplay() then
+	if FightDataHelper.stateMgr.isReplay then
 		arg_16_0._click:RemoveClickListener()
 
 		for iter_16_0, iter_16_1 in ipairs(arg_16_0._detailClick) do
@@ -306,10 +306,6 @@ function var_0_0._getClothLevelCO(arg_17_0)
 end
 
 function var_0_0._onPlayHandCard(arg_18_0, arg_18_1)
-	if not arg_18_1.playCanAddExpoint then
-		return
-	end
-
 	local var_18_0 = arg_18_0:_getClothLevelCO()
 
 	if var_18_0 then
@@ -321,11 +317,11 @@ function var_0_0._onPlayHandCard(arg_18_0, arg_18_1)
 end
 
 function var_0_0._onMoveHandCard(arg_19_0, arg_19_1, arg_19_2)
-	if not arg_19_1.moveCanAddExpoint then
+	if FightEnum.UniversalCard[arg_19_2.skillId] then
 		return
 	end
 
-	if FightEnum.UniversalCard[arg_19_2.skillId] then
+	if arg_19_1.isUnlimitMoveOrExtraMove then
 		return
 	end
 
@@ -514,7 +510,11 @@ function var_0_0._checkPlayPowerMaxAudio(arg_30_0, arg_30_1)
 	arg_30_0._prevPower = var_30_4
 end
 
-function var_0_0._onClickSkillIcon(arg_31_0, arg_31_1)
+function var_0_0._onClickSkillIcon(arg_31_0, arg_31_1, arg_31_2)
+	if FightDataHelper.lockOperateMgr:isLock() and not arg_31_2 then
+		return
+	end
+
 	local var_31_0 = arg_31_0._clothSkillOp
 
 	arg_31_0._clothSkillOp = nil
@@ -524,11 +524,11 @@ function var_0_0._onClickSkillIcon(arg_31_0, arg_31_1)
 		return
 	end
 
-	if FightViewHandCard.blockOperate or FightModel.instance:isAuto() then
+	if FightViewHandCard.blockOperate or FightDataHelper.stateMgr:getIsAuto() then
 		return
 	end
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
@@ -735,7 +735,7 @@ function var_0_0._simulateClickClothSkillIcon(arg_47_0, arg_47_1)
 			if iter_47_1.skillId == var_47_0 then
 				arg_47_0._clothSkillOp = arg_47_1
 
-				arg_47_0:_onClickSkillIcon(iter_47_0)
+				arg_47_0:_onClickSkillIcon(iter_47_0, true)
 
 				return
 			end

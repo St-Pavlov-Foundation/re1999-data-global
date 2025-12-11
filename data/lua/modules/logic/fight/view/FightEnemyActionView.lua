@@ -580,21 +580,18 @@ function var_0_0.getCardScreenPos(arg_33_0, arg_33_1)
 		return
 	end
 
-	local var_33_1 = var_33_0.nameUI
-	local var_33_2 = var_33_1 and var_33_1:getOpCtrl()
+	local var_33_1 = FightMsgMgr.sendMsg(FightMsgId.GetEnemyAiUseCardItemList, var_33_0.id)
 
-	if not var_33_2 then
+	if not var_33_1 then
 		return
 	end
 
-	local var_33_3 = var_33_2:getOpItemList()
-
-	for iter_33_0, iter_33_1 in ipairs(var_33_3) do
+	for iter_33_0, iter_33_1 in ipairs(var_33_1) do
 		if FightHelper.isSameCardMo(iter_33_1.cardInfoMO, arg_33_1) then
-			local var_33_4 = iter_33_1.topPosRectTr
-			local var_33_5, var_33_6 = recthelper.uiPosToScreenPos2(var_33_4)
+			local var_33_2 = iter_33_1.topPosRectTr
+			local var_33_3, var_33_4 = recthelper.uiPosToScreenPos2(var_33_2)
 
-			arg_33_0.startVector3:Set(var_33_5, var_33_6)
+			arg_33_0.startVector3:Set(var_33_3, var_33_4)
 
 			return arg_33_0.startVector3
 		end

@@ -16,7 +16,7 @@ function var_0_0.retracePath(arg_1_0, arg_1_1, arg_1_2)
 end
 
 function var_0_0.findPath(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if arg_2_1 == arg_2_2 or not SurvivalHelper.instance:isHaveNode(arg_2_3, arg_2_1) then
+	if arg_2_1 == arg_2_2 or not SurvivalHelper.instance:getValueFromDict(arg_2_3, arg_2_1) then
 		return nil
 	end
 
@@ -25,7 +25,7 @@ function var_0_0.findPath(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
 	local var_2_2 = arg_2_1
 	local var_2_3 = SurvivalHelper.instance:getDistance(arg_2_1, arg_2_2)
 
-	if SurvivalHelper.instance:isHaveNode(arg_2_3, arg_2_2) then
+	if SurvivalHelper.instance:getValueFromDict(arg_2_3, arg_2_2) then
 		var_2_2 = arg_2_2
 		var_2_3 = 0
 	end
@@ -70,11 +70,11 @@ function var_0_0.findPath(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
 		for iter_2_4, iter_2_5 in pairs(SurvivalEnum.DirToPos) do
 			local var_2_6 = var_2_4 + iter_2_5
 
-			if SurvivalHelper.instance:isHaveNode(arg_2_3, var_2_6) then
+			if SurvivalHelper.instance:getValueFromDict(arg_2_3, var_2_6) then
 				local var_2_7 = var_2_4.gCost + 1
-				local var_2_8 = SurvivalHelper.instance:isHaveNode(var_2_0, var_2_6)
+				local var_2_8 = SurvivalHelper.instance:getValueFromDict(var_2_0, var_2_6)
 				local var_2_9 = not var_2_8
-				local var_2_10 = not SurvivalHelper.instance:isHaveNode(var_2_1, var_2_6)
+				local var_2_10 = not SurvivalHelper.instance:getValueFromDict(var_2_1, var_2_6)
 
 				if var_2_8 and var_2_7 < var_2_8.gCost or var_2_9 and var_2_10 then
 					var_2_6.gCost = var_2_7

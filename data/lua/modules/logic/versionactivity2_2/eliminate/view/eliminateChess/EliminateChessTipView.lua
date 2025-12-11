@@ -5,7 +5,7 @@ local var_0_0 = class("EliminateChessTipView", ListScrollCellExtend)
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gochessTip = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip")
 	arg_1_0._imageChessQualityBG = gohelper.findChildImage(arg_1_0.viewGO, "#go_chessTip/Info/#image_ChessQualityBG")
-	arg_1_0._imageChess = gohelper.findChildImage(arg_1_0.viewGO, "#go_chessTip/Info/#image_Chess")
+	arg_1_0._imageChess = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_chessTip/Info/#image_Chess")
 	arg_1_0._goResource = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip/Info/#go_Resource")
 	arg_1_0._goResourceItem = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip/Info/#go_Resource/#go_ResourceItem")
 	arg_1_0._imageResourceQuality = gohelper.findChildImage(arg_1_0.viewGO, "#go_chessTip/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality")
@@ -122,7 +122,7 @@ function var_0_0.setSoliderIdAndShowType(arg_13_0, arg_13_1, arg_13_2)
 	arg_13_0._cost, arg_13_0._costNumber = EliminateConfig.instance:getSoldierChessConfigConst(arg_13_0._soliderId)
 
 	if arg_13_0._config then
-		UISpriteSetMgr.instance:setV2a2ChessSprite(arg_13_0._imageChess, arg_13_0._config.resPic, false)
+		SurvivalUnitIconHelper.instance:setNpcIcon(arg_13_0._imageChess, arg_13_0._config.resPic)
 		UISpriteSetMgr.instance:setV2a2EliminateSprite(arg_13_0._imageChessQualityBG, "v2a2_eliminate_infochess_qualitybg_0" .. arg_13_0._config.level, false)
 	end
 

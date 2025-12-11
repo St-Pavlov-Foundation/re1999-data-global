@@ -13,6 +13,7 @@ SceneType.Cachot = 13
 SceneType.Rouge = 14
 SceneType.Survival = 15
 SceneType.SurvivalShelter = 16
+SceneType.SurvivalSummaryAct = 17
 SceneType.NameDict = {}
 
 for iter_0_0, iter_0_1 in pairs(SceneType) do

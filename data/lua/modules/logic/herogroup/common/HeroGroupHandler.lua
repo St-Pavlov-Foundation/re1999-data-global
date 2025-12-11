@@ -7,6 +7,7 @@ var_0_0.EpisodeTypeDict = {
 	[DungeonEnum.EpisodeType.TowerBoss] = 1,
 	[DungeonEnum.EpisodeType.TowerLimited] = 1,
 	[DungeonEnum.EpisodeType.TowerBossTeach] = 1,
+	[DungeonEnum.EpisodeType.TowerDeep] = 1,
 	[DungeonEnum.EpisodeType.Act183] = 1,
 	[DungeonEnum.EpisodeType.Survival] = 1,
 	[DungeonEnum.EpisodeType.Shelter] = 1
@@ -31,7 +32,7 @@ function var_0_0.checkIsTowerEpisodeByEpisodeId(arg_3_0)
 
 	local var_3_1 = var_3_0.type
 
-	return var_3_1 == DungeonEnum.EpisodeType.TowerPermanent or var_3_1 == DungeonEnum.EpisodeType.TowerBoss or var_3_1 == DungeonEnum.EpisodeType.TowerLimited
+	return var_3_1 == DungeonEnum.EpisodeType.TowerPermanent or var_3_1 == DungeonEnum.EpisodeType.TowerBoss or var_3_1 == DungeonEnum.EpisodeType.TowerLimited or var_3_1 == DungeonEnum.EpisodeType.TowerDeep
 end
 
 function var_0_0.getTowerBossSnapShot(arg_4_0)
@@ -92,6 +93,7 @@ var_0_0.getSnapShotHandleFunc = {
 	[DungeonEnum.EpisodeType.TowerPermanent] = var_0_0.getTowerPermanentSnapShot,
 	[DungeonEnum.EpisodeType.TowerBoss] = var_0_0.getTowerBossSnapShot,
 	[DungeonEnum.EpisodeType.TowerLimited] = var_0_0.getTowerPermanentSnapShot,
+	[DungeonEnum.EpisodeType.TowerDeep] = var_0_0.getTowerPermanentSnapShot,
 	[DungeonEnum.EpisodeType.Act183] = var_0_0.getAct183SnapShot,
 	[DungeonEnum.EpisodeType.Shelter] = var_0_0.getShelterSnapShot,
 	[DungeonEnum.EpisodeType.Survival] = var_0_0.getSurvivalSnapShot
@@ -120,7 +122,8 @@ end
 var_0_0.getTrialHerosHandleFunc = {
 	[DungeonEnum.EpisodeType.TowerPermanent] = var_0_0.getTowerTrialHeros,
 	[DungeonEnum.EpisodeType.TowerBoss] = var_0_0.getTowerTrialHeros,
-	[DungeonEnum.EpisodeType.TowerLimited] = var_0_0.getTowerTrialHeros
+	[DungeonEnum.EpisodeType.TowerLimited] = var_0_0.getTowerTrialHeros,
+	[DungeonEnum.EpisodeType.TowerDeep] = var_0_0.getTowerTrialHeros
 }
 
 function var_0_0.getTrialHeros(arg_12_0)
@@ -142,38 +145,38 @@ function var_0_0.getTrialHeros(arg_12_0)
 	end
 end
 
-function var_0_0.setTowerHeroListData(arg_13_0)
-	local var_13_0 = HeroGroupSnapshotModel.instance:getCurGroup()
+function var_0_0.setTowerHeroListData(arg_13_0, arg_13_1)
+	arg_13_1 = arg_13_1 or HeroGroupSnapshotModel.instance:getCurGroup()
 
-	if var_13_0 then
-		for iter_13_0, iter_13_1 in ipairs(var_13_0.heroList) do
+	if arg_13_1 then
+		for iter_13_0, iter_13_1 in ipairs(arg_13_1.heroList) do
 			if tonumber(iter_13_1) < 0 then
-				local var_13_1 = -tonumber(iter_13_1)
-				local var_13_2 = HeroGroupTrialModel.instance:getById(iter_13_1)
+				local var_13_0 = -tonumber(iter_13_1)
+				local var_13_1 = HeroGroupTrialModel.instance:getById(iter_13_1)
 
-				if var_13_2 then
-					var_13_1 = var_13_2.trialCo.id
+				if var_13_1 then
+					var_13_0 = var_13_1.trialCo.id
 				end
 
-				local var_13_3 = TowerModel.instance:getTrialHeroSeason() > 0
-				local var_13_4 = TowerConfig.instance:getHeroTrialConfig(TowerModel.instance:getTrialHeroSeason())
-				local var_13_5 = var_13_3 and string.splitToNumber(var_13_4.heroIds, "|") or {}
-				local var_13_6 = var_13_3 and tabletool.indexOf(var_13_5, var_13_1) and tonumber(var_13_1) > 0
-				local var_13_7 = var_13_6 and lua_hero_trial.configDict[var_13_1][0] or {}
-				local var_13_8 = var_13_6 and tostring(tonumber(var_13_7.id .. "." .. var_13_7.trialTemplate) - 1099511627776) or "0"
+				local var_13_2 = TowerModel.instance:getTrialHeroSeason() > 0
+				local var_13_3 = TowerConfig.instance:getHeroTrialConfig(TowerModel.instance:getTrialHeroSeason())
+				local var_13_4 = var_13_2 and string.splitToNumber(var_13_3.heroIds, "|") or {}
+				local var_13_5 = var_13_2 and tabletool.indexOf(var_13_4, var_13_0) and tonumber(var_13_0) > 0
+				local var_13_6 = var_13_5 and lua_hero_trial.configDict[var_13_0][0] or {}
+				local var_13_7 = var_13_5 and tostring(tonumber(var_13_6.id .. "." .. var_13_6.trialTemplate) - 1099511627776) or "0"
 
-				var_13_0.heroList[iter_13_0] = var_13_8
+				arg_13_1.heroList[iter_13_0] = var_13_7
 
-				if var_13_6 then
-					if not var_13_0.trialDict then
-						var_13_0.trialDict = {}
+				if var_13_5 then
+					if not arg_13_1.trialDict then
+						arg_13_1.trialDict = {}
 					end
 
-					if not var_13_0.trialDict[iter_13_0] then
-						var_13_0.trialDict[iter_13_0] = {}
+					if not arg_13_1.trialDict[iter_13_0] then
+						arg_13_1.trialDict[iter_13_0] = {}
 					end
 
-					var_13_0.trialDict[iter_13_0][1] = var_13_7.id
+					arg_13_1.trialDict[iter_13_0][1] = var_13_6.id
 				end
 			end
 		end
@@ -183,7 +186,8 @@ end
 var_0_0.getHeroListDataHandlerFunc = {
 	[DungeonEnum.EpisodeType.TowerPermanent] = var_0_0.setTowerHeroListData,
 	[DungeonEnum.EpisodeType.TowerBoss] = var_0_0.setTowerHeroListData,
-	[DungeonEnum.EpisodeType.TowerLimited] = var_0_0.setTowerHeroListData
+	[DungeonEnum.EpisodeType.TowerLimited] = var_0_0.setTowerHeroListData,
+	[DungeonEnum.EpisodeType.TowerDeep] = var_0_0.setTowerHeroListData
 }
 
 function var_0_0.hanldeHeroListData(arg_14_0)

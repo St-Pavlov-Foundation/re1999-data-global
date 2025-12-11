@@ -9,7 +9,6 @@ function var_0_0.buildViews(arg_1_0)
 	table.insert(var_1_0, CharacterSkinLeftView.New())
 	table.insert(var_1_0, TabViewGroup.New(1, "#go_btntopleft"))
 	table.insert(var_1_0, StoreSkinPreviewSpineGCView.New())
-	table.insert(var_1_0, StoreSkinPreviewVideoView.New())
 
 	return var_1_0
 end

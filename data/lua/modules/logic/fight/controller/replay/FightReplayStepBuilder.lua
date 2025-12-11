@@ -16,8 +16,6 @@ function var_0_0.buildReplaySequence()
 		var_1_0:addWork(WorkWaitSeconds.New(0.1 / FightModel.instance:getSpeed()))
 		var_1_0:addWork(FunctionWork.New(function()
 			FightDataHelper.tempMgr.replayAiJiAoQtePreTimeline = nil
-
-			FightController.instance:setCurStage(FightEnum.Stage.Card)
 		end))
 
 		for iter_1_4, iter_1_5 in ipairs(iter_1_1.opers) do
@@ -34,7 +32,7 @@ function var_0_0.buildReplaySequence()
 			end
 		end
 
-		if #iter_1_1.opers == 0 then
+		if #iter_1_1.opers == 0 and #iter_1_1.clothSkillOpers == 0 then
 			var_1_0:addWork(FunctionWork.New(function()
 				FightRpc.instance:sendBeginRoundRequest(FightDataHelper.operationDataMgr:getOpList())
 			end))

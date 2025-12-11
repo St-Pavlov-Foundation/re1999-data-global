@@ -148,6 +148,10 @@ end
 function var_0_0.setTab(arg_9_0, arg_9_1)
 	arg_9_0._curCategory = arg_9_1
 
+	if arg_9_0:checkIsNamePlate() then
+		arg_9_0.isGroup = false
+	end
+
 	arg_9_0:refreshTabData()
 end
 
@@ -168,6 +172,10 @@ function var_0_0.refreshTabData(arg_11_0)
 	if not var_11_1 then
 		if arg_11_0.isGroup then
 			var_11_1 = arg_11_0:buildGroupMOList(arg_11_0._curCategory)
+		elseif arg_11_0._curCategory == AchievementEnum.Type.NamePlate then
+			arg_11_0:clearAllSelect()
+
+			var_11_1 = arg_11_0:buildNamePlateMOList(arg_11_0._curCategory)
 		else
 			var_11_1 = arg_11_0:buildSingleMOList(arg_11_0._curCategory)
 		end
@@ -178,7 +186,7 @@ function var_0_0.refreshTabData(arg_11_0)
 	arg_11_0:setList(var_11_1)
 end
 
-function var_0_0.buildSingleMOList(arg_12_0, arg_12_1)
+function var_0_0.buildNamePlateMOList(arg_12_0, arg_12_1)
 	local var_12_0 = {}
 	local var_12_1 = {}
 	local var_12_2 = arg_12_0.infoDict[arg_12_1]
@@ -190,14 +198,19 @@ function var_0_0.buildSingleMOList(arg_12_0, arg_12_1)
 	table.sort(var_12_2, arg_12_0.sortAchievement)
 
 	for iter_12_0, iter_12_1 in ipairs(var_12_2) do
-		if AchievementModel.instance:getAchievementLevel(iter_12_1.id) > 0 then
-			if #var_12_1 >= AchievementEnum.MainListLineCount then
-				arg_12_0:buildMO(var_12_0, var_12_1, 0)
+		local var_12_3 = AchievementModel.instance:getAchievementLevel(iter_12_1.id)
+		local var_12_4 = AchievementConfig.instance:getTaskByAchievementLevel(iter_12_1.id, var_12_3)
 
-				var_12_1 = {}
-			end
+		if var_12_3 > 0 then
+			local var_12_5 = {
+				achievementId = iter_12_1.id,
+				taskCo = var_12_4,
+				maxLevel = var_12_3,
+				taskId = var_12_4.id,
+				co = iter_12_1
+			}
 
-			table.insert(var_12_1, iter_12_1)
+			table.insert(var_12_1, var_12_5)
 		end
 	end
 
@@ -208,7 +221,7 @@ function var_0_0.buildSingleMOList(arg_12_0, arg_12_1)
 	return var_12_0
 end
 
-function var_0_0.buildGroupMOList(arg_13_0, arg_13_1)
+function var_0_0.buildSingleMOList(arg_13_0, arg_13_1)
 	local var_13_0 = {}
 	local var_13_1 = {}
 	local var_13_2 = arg_13_0.infoDict[arg_13_1]
@@ -219,19 +232,12 @@ function var_0_0.buildGroupMOList(arg_13_0, arg_13_1)
 
 	table.sort(var_13_2, arg_13_0.sortAchievement)
 
-	local var_13_3 = 0
-
 	for iter_13_0, iter_13_1 in ipairs(var_13_2) do
-		if AchievementUtils.isActivityGroup(iter_13_1.id) then
-			if var_13_3 ~= iter_13_1.groupId then
-				if var_13_3 == 0 then
-					var_13_3 = iter_13_1.groupId
-				else
-					arg_13_0:buildMO(var_13_0, var_13_1, var_13_3)
+		if AchievementModel.instance:getAchievementLevel(iter_13_1.id) > 0 then
+			if #var_13_1 >= AchievementEnum.MainListLineCount then
+				arg_13_0:buildMO(var_13_0, var_13_1, 0)
 
-					var_13_1 = {}
-					var_13_3 = iter_13_1.groupId
-				end
+				var_13_1 = {}
 			end
 
 			table.insert(var_13_1, iter_13_1)
@@ -239,83 +245,120 @@ function var_0_0.buildGroupMOList(arg_13_0, arg_13_1)
 	end
 
 	if #var_13_1 > 0 then
-		arg_13_0:buildMO(var_13_0, var_13_1, var_13_3)
+		arg_13_0:buildMO(var_13_0, var_13_1, 0)
 	end
 
 	return var_13_0
 end
 
-function var_0_0.buildMO(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if arg_14_3 ~= 0 then
-		local var_14_0 = false
+function var_0_0.buildGroupMOList(arg_14_0, arg_14_1)
+	local var_14_0 = {}
+	local var_14_1 = {}
+	local var_14_2 = arg_14_0.infoDict[arg_14_1]
 
-		for iter_14_0, iter_14_1 in ipairs(arg_14_2) do
-			if AchievementModel.instance:getAchievementLevel(iter_14_1.id) > 0 then
-				var_14_0 = true
+	if not var_14_2 then
+		return var_14_0
+	end
+
+	table.sort(var_14_2, arg_14_0.sortAchievement)
+
+	local var_14_3 = 0
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_2) do
+		if AchievementUtils.isActivityGroup(iter_14_1.id) then
+			if var_14_3 ~= iter_14_1.groupId then
+				if var_14_3 == 0 then
+					var_14_3 = iter_14_1.groupId
+				else
+					arg_14_0:buildMO(var_14_0, var_14_1, var_14_3)
+
+					var_14_1 = {}
+					var_14_3 = iter_14_1.groupId
+				end
+			end
+
+			table.insert(var_14_1, iter_14_1)
+		end
+	end
+
+	if #var_14_1 > 0 then
+		arg_14_0:buildMO(var_14_0, var_14_1, var_14_3)
+	end
+
+	return var_14_0
+end
+
+function var_0_0.buildMO(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	if arg_15_3 ~= 0 then
+		local var_15_0 = false
+
+		for iter_15_0, iter_15_1 in ipairs(arg_15_2) do
+			if AchievementModel.instance:getAchievementLevel(iter_15_1.id) > 0 then
+				var_15_0 = true
 
 				break
 			end
 		end
 
-		if not var_14_0 then
+		if not var_15_0 then
 			return
 		end
 	end
 
-	local var_14_1 = AchievementTileMO.New()
+	local var_15_1 = AchievementTileMO.New()
 
-	var_14_1:init(arg_14_2, arg_14_3)
-	table.insert(arg_14_1, var_14_1)
+	var_15_1:init(arg_15_2, arg_15_3)
+	table.insert(arg_15_1, var_15_1)
 end
 
-function var_0_0.sortAchievement(arg_15_0, arg_15_1)
-	local var_15_0 = var_0_0.instance:checkIsSelected(arg_15_0)
-	local var_15_1 = var_0_0.instance:checkIsSelected(arg_15_1)
+function var_0_0.sortAchievement(arg_16_0, arg_16_1)
+	local var_16_0 = var_0_0.instance:checkIsSelected(arg_16_0)
+	local var_16_1 = var_0_0.instance:checkIsSelected(arg_16_1)
 
-	if var_15_0 ~= var_15_1 then
-		return var_15_0
-	elseif var_15_0 and var_15_1 then
-		local var_15_2 = var_0_0.instance.isGroup
-		local var_15_3 = var_15_2 and var_0_0.instance.groupSelectList or var_0_0.instance.singleSelectList
+	if var_16_0 ~= var_16_1 then
+		return var_16_0
+	elseif var_16_0 and var_16_1 then
+		local var_16_2 = var_0_0.instance.isGroup
+		local var_16_3 = var_16_2 and var_0_0.instance.groupSelectList or var_0_0.instance.singleSelectList
 
-		return (tabletool.indexOf(var_15_3, var_15_2 and arg_15_0.groupId or arg_15_0.id) or 0) < (tabletool.indexOf(var_15_3, var_15_2 and arg_15_1.groupId or arg_15_1.id) or 0)
+		return (tabletool.indexOf(var_16_3, var_16_2 and arg_16_0.groupId or arg_16_0.id) or 0) < (tabletool.indexOf(var_16_3, var_16_2 and arg_16_1.groupId or arg_16_1.id) or 0)
 	end
 
-	local var_15_4 = arg_15_0.groupId ~= 0
+	local var_16_4 = arg_16_0.groupId ~= 0
 
-	if var_15_4 ~= (arg_15_1.groupId ~= 0) then
-		return not var_15_4
+	if var_16_4 ~= (arg_16_1.groupId ~= 0) then
+		return not var_16_4
 	end
 
-	if var_15_4 then
-		if arg_15_0.groupId ~= arg_15_1.groupId then
-			local var_15_5 = AchievementConfig.instance:getGroup(arg_15_0.groupId)
-			local var_15_6 = AchievementConfig.instance:getGroup(arg_15_1.groupId)
+	if var_16_4 then
+		if arg_16_0.groupId ~= arg_16_1.groupId then
+			local var_16_5 = AchievementConfig.instance:getGroup(arg_16_0.groupId)
+			local var_16_6 = AchievementConfig.instance:getGroup(arg_16_1.groupId)
 
-			if var_15_5 and var_15_6 and var_15_5.order ~= var_15_6.order then
-				return var_15_5.order < var_15_6.order
+			if var_16_5 and var_16_6 and var_16_5.order ~= var_16_6.order then
+				return var_16_5.order < var_16_6.order
 			end
 
-			return arg_15_0.groupId < arg_15_1.groupId
+			return arg_16_0.groupId < arg_16_1.groupId
 		end
 
-		if arg_15_0.order ~= arg_15_1.order then
-			return arg_15_0.order < arg_15_1.order
+		if arg_16_0.order ~= arg_16_1.order then
+			return arg_16_0.order < arg_16_1.order
 		end
 	end
 
-	return arg_15_0.id < arg_15_1.id
+	return arg_16_0.id < arg_16_1.id
 end
 
-function var_0_0.checkIsSelected(arg_16_0, arg_16_1)
-	if arg_16_0.isGroup and arg_16_1.groupId ~= 0 then
-		return arg_16_0:isGroupSelected(arg_16_1.groupId)
+function var_0_0.checkIsSelected(arg_17_0, arg_17_1)
+	if arg_17_0.isGroup and arg_17_1.groupId ~= 0 then
+		return arg_17_0:isGroupSelected(arg_17_1.groupId)
 	else
-		local var_16_0 = AchievementConfig.instance:getTasksByAchievementId(arg_16_1.id)
+		local var_17_0 = AchievementConfig.instance:getTasksByAchievementId(arg_17_1.id)
 
-		if var_16_0 then
-			for iter_16_0, iter_16_1 in pairs(var_16_0) do
-				if arg_16_0:isSingleSelected(iter_16_1.id) then
+		if var_17_0 then
+			for iter_17_0, iter_17_1 in pairs(var_17_0) do
+				if arg_17_0:isSingleSelected(iter_17_1.id) then
 					return true
 				end
 			end
@@ -325,140 +368,144 @@ function var_0_0.checkIsSelected(arg_16_0, arg_16_1)
 	end
 end
 
-function var_0_0.getInfoList(arg_17_0, arg_17_1)
-	local var_17_0 = {}
-	local var_17_1 = arg_17_0:getList()
+function var_0_0.getInfoList(arg_18_0, arg_18_1)
+	local var_18_0 = {}
+	local var_18_1 = arg_18_0:getList()
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
-		local var_17_2 = SLFramework.UGUI.MixCellInfo.New(iter_17_0, iter_17_1:getLineHeight(), iter_17_0)
+	for iter_18_0, iter_18_1 in ipairs(var_18_1) do
+		local var_18_2 = SLFramework.UGUI.MixCellInfo.New(iter_18_0, iter_18_1:getLineHeight(), iter_18_0)
 
-		table.insert(var_17_0, var_17_2)
+		table.insert(var_18_0, var_18_2)
 	end
 
-	return var_17_0
+	return var_18_0
 end
 
-function var_0_0.isSingleSelected(arg_18_0, arg_18_1)
-	local var_18_0 = AchievementConfig.instance:getTask(arg_18_1)
+function var_0_0.isSingleSelected(arg_19_0, arg_19_1)
+	local var_19_0 = AchievementConfig.instance:getTask(arg_19_1)
 
-	if var_18_0 then
-		return arg_18_0.singleSet[var_18_0.achievementId]
+	if var_19_0 then
+		return arg_19_0.singleSet[var_19_0.achievementId]
 	end
 
 	return false
 end
 
-function var_0_0.getSelectOrderIndex(arg_19_0, arg_19_1)
-	local var_19_0 = AchievementConfig.instance:getTask(arg_19_1)
+function var_0_0.getSelectOrderIndex(arg_20_0, arg_20_1)
+	local var_20_0 = AchievementConfig.instance:getTask(arg_20_1)
 
-	if var_19_0 then
-		return tabletool.indexOf(arg_19_0.singleSelectList, var_19_0.achievementId)
+	if var_20_0 then
+		return tabletool.indexOf(arg_20_0.singleSelectList, var_20_0.achievementId)
 	end
 end
 
-function var_0_0.isGroupSelected(arg_20_0, arg_20_1)
-	return arg_20_0.groupSet[arg_20_1]
+function var_0_0.isGroupSelected(arg_21_0, arg_21_1)
+	return arg_21_0.groupSet[arg_21_1]
 end
 
-function var_0_0.getSingleSelectedCount(arg_21_0)
-	return tabletool.len(arg_21_0.singleSet)
+function var_0_0.getSingleSelectedCount(arg_22_0)
+	return tabletool.len(arg_22_0.singleSet)
 end
 
-function var_0_0.getGroupSelectedCount(arg_22_0)
-	return tabletool.len(arg_22_0.groupSet)
+function var_0_0.getGroupSelectedCount(arg_23_0)
+	return tabletool.len(arg_23_0.groupSet)
 end
 
-function var_0_0.setSingleSelect(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = AchievementConfig.instance:getTask(arg_23_1)
+function var_0_0.setSingleSelect(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = AchievementConfig.instance:getTask(arg_24_1)
 
-	if not var_23_0 then
+	if not var_24_0 then
 		return
 	end
 
-	tabletool.removeValue(arg_23_0.singleSelectList, var_23_0.achievementId)
-
-	if arg_23_2 then
-		arg_23_0.singleSet[var_23_0.achievementId] = true
-
-		table.insert(arg_23_0.singleSelectList, var_23_0.achievementId)
-	else
-		arg_23_0.singleSet[var_23_0.achievementId] = nil
-	end
-
-	arg_23_0:updateSingleSelectCategoryMap(var_23_0.achievementId, arg_23_2)
-end
-
-function var_0_0.setGroupSelect(arg_24_0, arg_24_1, arg_24_2)
-	tabletool.removeValue(arg_24_0.groupSelectList, arg_24_1)
+	tabletool.removeValue(arg_24_0.singleSelectList, var_24_0.achievementId)
 
 	if arg_24_2 then
-		arg_24_0.groupSet[arg_24_1] = true
+		arg_24_0.singleSet[var_24_0.achievementId] = true
 
-		table.insert(arg_24_0.groupSelectList, arg_24_1)
+		table.insert(arg_24_0.singleSelectList, var_24_0.achievementId)
 	else
-		arg_24_0.groupSet[arg_24_1] = nil
+		arg_24_0.singleSet[var_24_0.achievementId] = nil
 	end
 
-	arg_24_0:updateGroupSelectCategoryMap(arg_24_1, arg_24_2)
+	arg_24_0:updateSingleSelectCategoryMap(var_24_0.achievementId, arg_24_2)
 end
 
-function var_0_0.getSaveRequestParam(arg_25_0)
-	local var_25_0 = {}
-	local var_25_1 = 0
+function var_0_0.setGroupSelect(arg_25_0, arg_25_1, arg_25_2)
+	tabletool.removeValue(arg_25_0.groupSelectList, arg_25_1)
 
-	if arg_25_0.isGroup then
-		for iter_25_0, iter_25_1 in ipairs(arg_25_0.groupSelectList) do
-			arg_25_0:fillGroupTaskIds(var_25_0, iter_25_1)
+	if arg_25_2 then
+		arg_25_0.groupSet[arg_25_1] = true
 
-			var_25_1 = iter_25_1
+		table.insert(arg_25_0.groupSelectList, arg_25_1)
+	else
+		arg_25_0.groupSet[arg_25_1] = nil
+	end
+
+	arg_25_0:updateGroupSelectCategoryMap(arg_25_1, arg_25_2)
+end
+
+function var_0_0.getSaveRequestParam(arg_26_0)
+	local var_26_0 = {}
+	local var_26_1 = 0
+
+	if arg_26_0.isGroup then
+		for iter_26_0, iter_26_1 in ipairs(arg_26_0.groupSelectList) do
+			arg_26_0:fillGroupTaskIds(var_26_0, iter_26_1)
+
+			var_26_1 = iter_26_1
 		end
 	else
-		for iter_25_2, iter_25_3 in ipairs(arg_25_0.singleSelectList) do
-			arg_25_0:fillSingleTaskId(var_25_0, iter_25_3)
+		for iter_26_2, iter_26_3 in ipairs(arg_26_0.singleSelectList) do
+			arg_26_0:fillSingleTaskId(var_26_0, iter_26_3)
 		end
 	end
 
-	return var_25_0, var_25_1
+	return var_26_0, var_26_1
 end
 
-function var_0_0.getCurrentCategory(arg_26_0)
-	return arg_26_0._curCategory
+function var_0_0.getCurrentCategory(arg_27_0)
+	return arg_27_0._curCategory
 end
 
-function var_0_0.fillGroupTaskIds(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_27_2)
+function var_0_0.checkIsNamePlate(arg_28_0)
+	return arg_28_0._curCategory == AchievementEnum.Type.NamePlate
+end
 
-	for iter_27_0, iter_27_1 in ipairs(var_27_0) do
-		arg_27_0:fillSingleTaskId(arg_27_1, iter_27_1.id)
+function var_0_0.fillGroupTaskIds(arg_29_0, arg_29_1, arg_29_2)
+	local var_29_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_29_2)
+
+	for iter_29_0, iter_29_1 in ipairs(var_29_0) do
+		arg_29_0:fillSingleTaskId(arg_29_1, iter_29_1.id)
 	end
 end
 
-function var_0_0.fillSingleTaskId(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = AchievementModel.instance:getAchievementLevel(arg_28_2)
+function var_0_0.fillSingleTaskId(arg_30_0, arg_30_1, arg_30_2)
+	local var_30_0 = AchievementModel.instance:getAchievementLevel(arg_30_2)
 
-	if var_28_0 > 0 then
-		local var_28_1 = AchievementConfig.instance:getTaskByAchievementLevel(arg_28_2, var_28_0)
+	if var_30_0 > 0 then
+		local var_30_1 = AchievementConfig.instance:getTaskByAchievementLevel(arg_30_2, var_30_0)
 
-		if var_28_1 ~= nil then
-			table.insert(arg_28_1, var_28_1.id)
+		if var_30_1 ~= nil then
+			table.insert(arg_30_1, var_30_1.id)
 		end
 	end
 end
 
-function var_0_0.checkDirty(arg_29_0, arg_29_1)
-	if arg_29_1 then
-		if tabletool.len(arg_29_0.groupSet) == tabletool.len(arg_29_0.originGroupSet) then
-			for iter_29_0, iter_29_1 in pairs(arg_29_0.groupSet) do
-				if iter_29_1 ~= arg_29_0.originGroupSet[iter_29_0] then
+function var_0_0.checkDirty(arg_31_0, arg_31_1)
+	if arg_31_1 then
+		if tabletool.len(arg_31_0.groupSet) == tabletool.len(arg_31_0.originGroupSet) then
+			for iter_31_0, iter_31_1 in pairs(arg_31_0.groupSet) do
+				if iter_31_1 ~= arg_31_0.originGroupSet[iter_31_0] then
 					return true
 				end
 			end
 		else
 			return true
 		end
-	elseif #arg_29_0.singleSelectList == #arg_29_0.originSingleSelectList then
-		for iter_29_2, iter_29_3 in ipairs(arg_29_0.singleSelectList) do
-			if iter_29_3 ~= arg_29_0.originSingleSelectList[iter_29_2] then
+	elseif #arg_31_0.singleSelectList == #arg_31_0.originSingleSelectList then
+		for iter_31_2, iter_31_3 in ipairs(arg_31_0.singleSelectList) do
+			if iter_31_3 ~= arg_31_0.originSingleSelectList[iter_31_2] then
 				return true
 			end
 		end
@@ -469,36 +516,36 @@ function var_0_0.checkDirty(arg_29_0, arg_29_1)
 	return false
 end
 
-function var_0_0.clearAllSelect(arg_30_0)
-	arg_30_0.singleSet = {}
-	arg_30_0.singleSelectList = {}
-	arg_30_0.groupSet = {}
-	arg_30_0.groupSelectList = {}
-	arg_30_0.selectSingleCategoryMap = {}
-	arg_30_0.selectGroupCategoryMap = {}
+function var_0_0.clearAllSelect(arg_32_0)
+	arg_32_0.singleSet = {}
+	arg_32_0.singleSelectList = {}
+	arg_32_0.groupSet = {}
+	arg_32_0.groupSelectList = {}
+	arg_32_0.selectSingleCategoryMap = {}
+	arg_32_0.selectGroupCategoryMap = {}
 end
 
-function var_0_0.getSelectCount(arg_31_0)
-	if arg_31_0.isGroup then
-		return arg_31_0.groupSet and tabletool.len(arg_31_0.groupSet) or 0
+function var_0_0.getSelectCount(arg_33_0)
+	if arg_33_0.isGroup then
+		return arg_33_0.groupSet and tabletool.len(arg_33_0.groupSet) or 0
 	else
-		return arg_31_0.singleSet and tabletool.len(arg_31_0.singleSet) or 0
+		return arg_33_0.singleSet and tabletool.len(arg_33_0.singleSet) or 0
 	end
 end
 
-function var_0_0.getSelectCountByCategory(arg_32_0, arg_32_1)
-	local var_32_0 = arg_32_0.isGroup and arg_32_0.selectGroupCategoryMap or arg_32_0.selectSingleCategoryMap
-	local var_32_1 = var_32_0 and var_32_0[arg_32_1]
+function var_0_0.getSelectCountByCategory(arg_34_0, arg_34_1)
+	local var_34_0 = arg_34_0.isGroup and arg_34_0.selectGroupCategoryMap or arg_34_0.selectSingleCategoryMap
+	local var_34_1 = var_34_0 and var_34_0[arg_34_1]
 
-	return var_32_1 and tabletool.len(var_32_1) or 0
+	return var_34_1 and tabletool.len(var_34_1) or 0
 end
 
-function var_0_0.getItemAniHasShownIndex(arg_33_0)
-	return arg_33_0._itemAniHasShownIndex
+function var_0_0.getItemAniHasShownIndex(arg_35_0)
+	return arg_35_0._itemAniHasShownIndex
 end
 
-function var_0_0.setItemAniHasShownIndex(arg_34_0, arg_34_1)
-	arg_34_0._itemAniHasShownIndex = arg_34_1 or 0
+function var_0_0.setItemAniHasShownIndex(arg_36_0, arg_36_1)
+	arg_36_0._itemAniHasShownIndex = arg_36_1 or 0
 end
 
 var_0_0.instance = var_0_0.New()

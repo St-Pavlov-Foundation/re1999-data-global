@@ -121,6 +121,8 @@ function var_0_0._onLoginFinish(arg_12_0)
 			SettingsModel.instance:setVideoCompatible(var_12_2 == 1)
 		end
 	end
+
+	SettingsVoicePackageModel.instance:updateVoiceList(false)
 end
 
 function var_0_0.checkSwitchRecordVideo(arg_13_0)

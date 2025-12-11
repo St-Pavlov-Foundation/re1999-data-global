@@ -3,7 +3,7 @@
 local var_0_0 = class("Act191StoreItem", UserDataDispose)
 
 local function var_0_1(arg_1_0, arg_1_1)
-	local var_1_0 = VersionActivity2_7Enum.ActivityId.Act191Store
+	local var_1_0 = VersionActivity3_1Enum.ActivityId.DouQuQu3Store
 	local var_1_1 = arg_1_0.maxBuyCount ~= 0 and arg_1_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(var_1_0, arg_1_0.id) <= 0
 	local var_1_2 = arg_1_1.maxBuyCount ~= 0 and arg_1_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(var_1_0, arg_1_1.id) <= 0
 

@@ -21,7 +21,7 @@ local var_0_2 = {
 	[FightEnum.ExPointType.Adrenaline] = "ui/viewres/fight/fight_expoint_adrenalineview.prefab"
 }
 
-function var_0_0.onAwake(arg_2_0)
+function var_0_0.onLogicEnter(arg_2_0)
 	arg_2_0.entityData = FightDataHelper.entityMgr:getById(arg_2_0.entityId)
 
 	if not arg_2_0.entityData then

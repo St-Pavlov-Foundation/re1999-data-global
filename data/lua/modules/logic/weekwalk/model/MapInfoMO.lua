@@ -79,7 +79,7 @@ function var_0_0.getBattleInfoByIndex(arg_2_0, arg_2_1)
 end
 
 function var_0_0.getLayer(arg_3_0)
-	return arg_3_0._mapConfig.layer
+	return arg_3_0._mapConfig and arg_3_0._mapConfig.layer
 end
 
 function var_0_0.getMapConfig(arg_4_0)

@@ -6,35 +6,6 @@ function var_0_0.init(arg_1_0)
 	var_0_0.initMapDefine(arg_1_0)
 	var_0_0.initShelterDefine(arg_1_0)
 
-	arg_1_0.SurvivalTalentView = {
-		bgBlur = 1,
-		container = "SurvivalTalentViewContainer",
-		destroy = 0,
-		mainRes = "ui/viewres/survival/map/survivaltalentview.prefab",
-		layer = "POPUP_TOP",
-		viewType = ViewType.Modal,
-		anim = ViewAnim.Default,
-		tabRes = {
-			{
-				{
-					NavigateButtonsView.prefabPath
-				}
-			}
-		},
-		otherRes = {
-			itemRes = "ui/viewres/survival/map/survivalmapbagitem.prefab",
-			infoView = "ui/viewres/survival/map/survivaltalentinfoview.prefab"
-		}
-	}
-	arg_1_0.SurvivalTalentOverView = {
-		destroy = 0,
-		container = "SurvivalTalentOverViewContainer",
-		bgBlur = 4,
-		mainRes = "ui/viewres/survival/map/survivaltalentoverview.prefab",
-		layer = "POPUP_TOP",
-		viewType = ViewType.Modal,
-		anim = ViewAnim.Default
-	}
 	arg_1_0.SurvivalView = {
 		destroy = 0,
 		container = "SurvivalViewContainer",
@@ -85,6 +56,115 @@ function var_0_0.init(arg_1_0)
 		destroy = 0,
 		container = "SurvivalCurrencyTipViewContainer",
 		mainRes = "ui/viewres/survival/map/survivalcurrencytipview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Default
+	}
+	arg_1_0.SurvivalHandbookView = {
+		destroy = 0,
+		container = "SurvivalHandbookViewContainer",
+		mainRes = "ui/viewres/survival/handbook/survivalhandbookview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Full,
+		anim = ViewAnim.Default,
+		otherRes = {
+			survivalhandbookeventitem = "ui/viewres/survival/handbook/survivalhandbookeventitem.prefab",
+			survivalrewardinheritnpcitem = "ui/viewres/survival/rewardinherit/survivalrewardinheritnpcitem.prefab",
+			survivalmapbagitem = "ui/viewres/survival/map/survivalmapbagitem.prefab",
+			survivalpartnermanageinfoview = "ui/viewres/survival/map/survivalpartnermanageinfoview.prefab",
+			survivalhandbooknpcitem = "ui/viewres/survival/handbook/survivalhandbooknpcitem.prefab",
+			survivalcamera = "survival/common/survivalcamera.prefab"
+		},
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	}
+	arg_1_0.SurvivalHandbookInfoView = {
+		destroy = 0,
+		container = "SurvivalHandbookInfoViewContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/survival/handbook/survivalhandbookinfoview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal,
+		anim = ViewAnim.Default,
+		otherRes = {
+			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
+		}
+	}
+	arg_1_0.SurvivalRewardInheritView = {
+		destroy = 0,
+		container = "SurvivalRewardInheritViewContainer",
+		maskAlpha = 0,
+		mainRes = "ui/viewres/survival/rewardinherit/survivalrewardinheritview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal,
+		anim = ViewAnim.Default,
+		otherRes = {
+			survivalhandbooknpcitem = "ui/viewres/survival/handbook/survivalhandbooknpcitem.prefab",
+			survivalrewardinheritnpcitem = "ui/viewres/survival/rewardinherit/survivalrewardinheritnpcitem.prefab",
+			survivalmapbagitem = "ui/viewres/survival/map/survivalmapbagitem.prefab",
+			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab",
+			survivalnpcheaditem = "ui/viewres/survival/shelter/survivalnpcheaditem.prefab"
+		}
+	}
+	arg_1_0.SurvivalRewardSelectView = {
+		bgBlur = 1,
+		container = "SurvivalRewardSelectViewContainer",
+		maskAlpha = 0,
+		destroy = 0,
+		mainRes = "ui/viewres/survival/rewardinherit/survivalrewardselectview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal,
+		anim = ViewAnim.Default,
+		otherRes = {
+			survivalhandbooknpcitem = "ui/viewres/survival/handbook/survivalhandbooknpcitem.prefab",
+			survivalrewardinheritnpcitem = "ui/viewres/survival/rewardinherit/survivalrewardinheritnpcitem.prefab",
+			survivalmapbagitem = "ui/viewres/survival/map/survivalmapbagitem.prefab",
+			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab",
+			survivalnpcheaditem = "ui/viewres/survival/shelter/survivalnpcheaditem.prefab"
+		}
+	}
+	arg_1_0.SurvivalReputationSelectView = {
+		destroy = 0,
+		container = "SurvivalReputationSelectViewContainer",
+		mainRes = "ui/viewres/survival/reputation/survivalreputationselectview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal,
+		anim = ViewAnim.Default,
+		otherRes = {
+			survivalmapbagitem = "ui/viewres/survival/map/survivalmapbagitem.prefab",
+			survivalreputationselectbagitem = "ui/viewres/survival/reputation/survivalreputationselectbagitem.prefab",
+			survivalreputationbuilditem = "ui/viewres/survival/reputation/survivalreputationbuilditem.prefab"
+		}
+	}
+	arg_1_0.SurvivalReputationShopView = {
+		destroy = 0,
+		container = "SurvivalReputationShopViewContainer",
+		mainRes = "ui/viewres/survival/reputation/survivalreputationshopview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal,
+		anim = ViewAnim.Default,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		},
+		otherRes = {
+			survivalmapbagitem = "ui/viewres/survival/map/survivalmapbagitem.prefab",
+			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
+		}
+	}
+	arg_1_0.SurvivalCommonTipsView = {
+		destroy = 10,
+		container = "SurvivalCommonTipsViewContainer",
+		bgBlur = 0,
+		mainRes = "ui/viewres/commonbufftipview/commonbufftipview.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
@@ -191,9 +271,10 @@ function var_0_0.initMapDefine(arg_2_0)
 		},
 		otherRes = {
 			initNpcItemSmall = "ui/viewres/survival/map/survivalinitnpcsmallitem.prefab",
+			initNpcItem = "ui/viewres/survival/map/survivalinitnpcitem.prefab",
+			survivalbossinvasionview = "ui/viewres/survival/shelter/survivalbossinvasionview.prefab",
 			initHeroItem = "ui/viewres/survival/map/survivalinitheroitem.prefab",
-			initHeroItemSmall = "ui/viewres/survival/map/survivalinitherosmallitem.prefab",
-			initNpcItem = "ui/viewres/survival/map/survivalinitnpcitem.prefab"
+			initHeroItemSmall = "ui/viewres/survival/map/survivalinitherosmallitem.prefab"
 		}
 	}
 	arg_2_0.SurvivalMapTeamView = {
@@ -277,14 +358,6 @@ function var_0_0.initMapDefine(arg_2_0)
 			[1] = "singlebg/survival_singlebg/loading/survival_loading_fullbg.png"
 		}
 	}
-	arg_2_0.SurvivalSmallMapView = {
-		destroy = 0,
-		container = "SurvivalSmallMapViewContainer",
-		bgBlur = 4,
-		mainRes = "ui/viewres/survival/map/survivalsmallmapview.prefab",
-		layer = "POPUP_TOP",
-		viewType = ViewType.Modal
-	}
 	arg_2_0.SurvivalToastView = {
 		destroy = 0,
 		container = "SurvivalToastViewContainer",
@@ -359,14 +432,6 @@ function var_0_0.initMapDefine(arg_2_0)
 			"bg"
 		}
 	}
-	arg_2_0.SurvivalTalentGetView = {
-		destroy = 0,
-		container = "SurvivalTalentGetViewContainer",
-		maskAlpha = 0,
-		mainRes = "ui/viewres/survival/map/survivaltalentrewardview.prefab",
-		layer = "POPUP_TOP",
-		viewType = ViewType.Modal
-	}
 	arg_2_0.SurvivalDropSelectView = {
 		destroy = 0,
 		container = "SurvivalDropSelectViewContainer",
@@ -420,7 +485,8 @@ function var_0_0.initShelterDefine(arg_3_0)
 			}
 		},
 		otherRes = {
-			unititem = "ui/viewres/survival/shelter/survivalshelterunititem.prefab"
+			unititem = "ui/viewres/survival/shelter/survivalshelterunititem.prefab",
+			survivalbossinvasionview = "ui/viewres/survival/shelter/survivalbossinvasionview.prefab"
 		}
 	}
 	arg_3_0.SurvivalHardView = {
@@ -439,9 +505,9 @@ function var_0_0.initShelterDefine(arg_3_0)
 		}
 	}
 	arg_3_0.SurvivalSelectTalentTreeView = {
-		destroy = 0,
-		container = "SurvivalSelectTalentTreeViewContainer",
 		bgBlur = 1,
+		container = "SurvivalSelectTalentTreeViewContainer",
+		destroy = 0,
 		mainRes = "ui/viewres/survival/shelter/survivalceremonyopeningview.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Normal,
@@ -452,6 +518,9 @@ function var_0_0.initShelterDefine(arg_3_0)
 					NavigateButtonsView.prefabPath
 				}
 			}
+		},
+		otherRes = {
+			survivalmapbagitem = "ui/viewres/survival/map/survivalmapbagitem.prefab"
 		}
 	}
 	arg_3_0.SurvivalEquipView = {
@@ -678,15 +747,8 @@ function var_0_0.initShelterDefine(arg_3_0)
 		container = "SurvivalDecreeSelectViewContainer",
 		mainRes = "ui/viewres/survival/map/survivaldecreeselectview.prefab",
 		layer = "POPUP_TOP",
-		viewType = ViewType.Normal,
-		anim = ViewAnim.Default,
-		tabRes = {
-			{
-				{
-					NavigateButtonsView.prefabPath
-				}
-			}
-		}
+		viewType = ViewType.Modal,
+		anim = ViewAnim.Default
 	}
 	arg_3_0.SurvivalDecreeVoteView = {
 		destroy = 0,
@@ -836,6 +898,14 @@ function var_0_0.initShelterDefine(arg_3_0)
 		mainRes = "ui/viewres/survival/shelter/survivalshelterresultpanelview.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Modal,
+		anim = ViewAnim.Default
+	}
+	arg_3_0.SurvivalSummaryActView = {
+		destroy = 0,
+		container = "SurvivalSummaryActViewContainer",
+		mainRes = "ui/viewres/survival/shelter/survivalsummaryactview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
 	}
 end

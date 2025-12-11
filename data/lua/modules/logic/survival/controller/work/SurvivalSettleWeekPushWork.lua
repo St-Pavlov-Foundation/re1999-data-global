@@ -47,7 +47,7 @@ function var_0_0._onEnterOneSceneFinish(arg_3_0, arg_3_1)
 		return
 	end
 
-	GameUtil.setActiveUIBlock(arg_3_0._msg, true, false)
+	GameUtil.setActiveUIBlock("SurvivalSettleWeekPushWork", true, false)
 
 	local var_3_0, var_3_1 = SurvivalShelterModel.instance:getNeedShowFightSuccess()
 
@@ -104,41 +104,71 @@ end
 function var_0_0.onPlayerAnimFinish(arg_7_0)
 	local var_7_0 = GameSceneMgr.instance:getCurScene()
 	local var_7_1 = var_7_0 and var_7_0.unit and var_7_0.unit:getPlayer()
+	local var_7_2 = SurvivalModel.instance:getSurvivalSettleInfo()
 
-	if var_7_1 then
-		local var_7_2 = SurvivalModel.instance:getSurvivalSettleInfo()
+	if var_7_1 and (var_7_2 and var_7_2.win or false) then
+		var_7_1:playAnim("idle")
+	end
 
-		if var_7_2 and var_7_2.win or false then
-			var_7_1:playAnim("idle")
+	if arg_7_0:isHideEnding() then
+		local var_7_3 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.StoryHiddenEnding)
+		local var_7_4
+
+		var_7_4 = tonumber(var_7_3) or 0
+
+		if var_7_4 > 0 and not StoryModel.instance:isStoryFinished(var_7_4) then
+			GameUtil.setActiveUIBlock("SurvivalSettleWeekPushWork", false, true)
+			StoryController.instance:playStory(var_7_4, nil, arg_7_0._onStoryEnd, arg_7_0)
+		else
+			arg_7_0:showResultPanel(true)
 		end
+
+		return
 	end
 
 	arg_7_0:showResultPanel(true)
 end
 
-function var_0_0.showSettle(arg_8_0, arg_8_1)
-	GameUtil.setActiveUIBlock(arg_8_0._msg, false, true)
-	SurvivalController.instance:enterSurvivalSettle()
-	arg_8_0:onDone(arg_8_1)
+function var_0_0._onStoryEnd(arg_8_0)
+	arg_8_0:showResultPanel(true)
 end
 
-function var_0_0.showResultPanel(arg_9_0, arg_9_1)
-	GameUtil.setActiveUIBlock(arg_9_0._msg, false, true)
+function var_0_0.isHideEnding(arg_9_0)
+	local var_9_0 = arg_9_0._msg.report
 
-	local var_9_0 = SurvivalModel.instance:getSurvivalSettleInfo()
-	local var_9_1 = var_9_0 and var_9_0.win
+	if string.nilorempty(var_9_0) then
+		return false
+	end
+
+	local var_9_1 = cjson.decode(var_9_0).endId
+	local var_9_2 = lua_survival_end.configDict[var_9_1]
+
+	return var_9_2 and var_9_2.type == 3
+end
+
+function var_0_0.showSettle(arg_10_0, arg_10_1)
+	GameUtil.setActiveUIBlock("SurvivalSettleWeekPushWork", false, true)
+	SurvivalController.instance:enterSurvivalSettle()
+	arg_10_0:onDone(arg_10_1)
+end
+
+function var_0_0.showResultPanel(arg_11_0, arg_11_1)
+	GameUtil.setActiveUIBlock("SurvivalSettleWeekPushWork", false, true)
+
+	local var_11_0 = SurvivalModel.instance:getSurvivalSettleInfo()
+	local var_11_1 = var_11_0 and var_11_0.win
 
 	ViewMgr.instance:openView(ViewName.SurvivalShelterResultPanelView, {
-		isWin = var_9_1
+		isWin = var_11_1
 	})
-	arg_9_0:onDone(arg_9_1)
+	arg_11_0:onDone(arg_11_1)
 end
 
-function var_0_0.clearWork(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._tweenToPlayerPos, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.onPlayerAnimFinish, arg_10_0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_10_0._onEnterOneSceneFinish, arg_10_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.BossPerformFinish, arg_10_0._bossPerformFinish, arg_10_0)
+function var_0_0.clearWork(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._tweenToPlayerPos, arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0.onPlayerAnimFinish, arg_12_0)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_12_0._onEnterOneSceneFinish, arg_12_0)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.BossPerformFinish, arg_12_0._bossPerformFinish, arg_12_0)
 	SurvivalShelterModel.instance:setNeedShowFightSuccess(nil, nil)
 end
 

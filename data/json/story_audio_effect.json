@@ -8145,6 +8145,1376 @@
     "bankName": "activitystory_lushang3_0_karong_sfx"
   },
   {
+    "id": 29500001,
+    "eventName": "play_activitysfx_cikexia_athensnoise1_loop",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500002,
+    "eventName": "play_activitysfx_cikexia_lyre1",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500003,
+    "eventName": "play_activitysfx_cikexia_lyre2",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500004,
+    "eventName": "play_activitysfx_cikexia_lyre3",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500005,
+    "eventName": "play_activitysfx_cikexia_femalecough",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500006,
+    "eventName": "play_activitysfx_cikexia_coin",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500007,
+    "eventName": "play_activitysfx_cikexia_femalestep_loop",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500008,
+    "eventName": "play_activitysfx_cikexia_shortspearstab",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500009,
+    "eventName": "play_activitysfx_cikexia_eaglewhoosh",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500010,
+    "eventName": "play_activitysfx_cikexia_athensnoise2_loop",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500011,
+    "eventName": "play_activitysfx_cikexia_raspdrop",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500012,
+    "eventName": "play_activitysfx_cikexia_earthendrop1",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500013,
+    "eventName": "play_activitysfx_cikexia_earthendrop2",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500014,
+    "eventName": "play_activitysfx_cikexia_earthendrop3",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500015,
+    "eventName": "play_activitysfx_cikexia_earthendrops",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500016,
+    "eventName": "play_activitysfx_cikexia_leaves",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500017,
+    "eventName": "play_activitysfx_cikexia_applepick",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500018,
+    "eventName": "play_activitysfx_cikexia_athensnoise3_loop",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500019,
+    "eventName": "play_activitysfx_cikexia_cheer",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500020,
+    "eventName": "play_activitysfx_cikexia_tiledestroy",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500021,
+    "eventName": "play_activitysfx_cikexia_tilestep",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500022,
+    "eventName": "play_activitysfx_cikexia_swordshing",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500023,
+    "eventName": "play_activitysfx_cikexia_eaglehoot",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500024,
+    "eventName": "play_activitysfx_cikexia_fighting",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500025,
+    "eventName": "play_activitysfx_cikexia_swordwhoosh",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500026,
+    "eventName": "play_activitysfx_cikexia_crowdfled_loop",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500027,
+    "eventName": "play_activitysfx_cikexia_malestep",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500028,
+    "eventName": "play_activitysfx_cikexia_weaponcollide1",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500029,
+    "eventName": "play_activitysfx_cikexia_weaponcollide2",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500030,
+    "eventName": "play_activitysfx_cikexia_drawspear",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500031,
+    "eventName": "play_activitysfx_cikeshang_dao1",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500032,
+    "eventName": "play_activitysfx_cikeshang_fstp1",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500033,
+    "eventName": "play_activitysfx_cikeshang_ke",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500034,
+    "eventName": "play_activitysfx_cikeshang_dao2",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500035,
+    "eventName": "play_activitysfx_cikeshang_luodi",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500036,
+    "eventName": "play_activitysfx_cikeshang_dao3",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500037,
+    "eventName": "play_activitysfx_cikeshang_run",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500038,
+    "eventName": "play_activitysfx_cikeshang_overwall",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500039,
+    "eventName": "play_activitysfx_cikeshang_paoku",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500040,
+    "eventName": "play_activitysfx_cikeshang_jump1",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500041,
+    "eventName": "play_activitysfx_cikeshang_jump2",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500042,
+    "eventName": "play_activitysfx_cikeshang_grass",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500043,
+    "eventName": "play_activitysfx_cikeshang_fall",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500044,
+    "eventName": "play_activitysfx_cikeshang_sing",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500045,
+    "eventName": "play_activitysfx_cikeshang_stretch",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500046,
+    "eventName": "play_activitysfx_cikeshang_fstp2",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500047,
+    "eventName": "play_activitysfx_cikeshang_bird",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500048,
+    "eventName": "play_activitysfx_cikeshang_kada",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500049,
+    "eventName": "play_activitysfx_cikeshang_fstp3",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500050,
+    "eventName": "play_activitysfx_cikeshang_fstp4",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500051,
+    "eventName": "play_activitysfx_cikeshang_moca",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500052,
+    "eventName": "play_activitysfx_cikeshang_louti",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500053,
+    "eventName": "play_activitysfx_cikeshang_liba",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500054,
+    "eventName": "play_activitysfx_cikeshang_dao4",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500055,
+    "eventName": "play_activitysfx_cikeshang_xu",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500056,
+    "eventName": "play_activitysfx_cikeshang_lorentz_amb",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500057,
+    "eventName": "play_activitysfx_cikeshang_keyboard",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500058,
+    "eventName": "play_activitysfx_cikeshang_font_scrolling_01",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500059,
+    "eventName": "play_activitysfx_cikeshang_font_scrolling_02",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500060,
+    "eventName": "play_activitysfx_cikeshang_computer_beeps",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500061,
+    "eventName": "play_activitysfx_cikeshang_rain_transition",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500062,
+    "eventName": "play_activitysfx_cikeshang_candlelight",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500063,
+    "eventName": "play_activitysfx_cikeshang_little_person",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500064,
+    "eventName": "play_activitysfx_cikeshang_knife_cross",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500065,
+    "eventName": "play_activitysfx_cikeshang_knife_across",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500066,
+    "eventName": "play_activitysfx_cikexia_paint",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500067,
+    "eventName": "play_activitysfx_cikeshang_s01_heartbeat_fast",
+    "bankName": "activitysfx_cikeshang_s01_sfx_fuyong"
+  },
+  {
+    "id": 29500068,
+    "eventName": "play_activitysfx_cikeshang_s01_whisper_loop",
+    "bankName": "activitysfx_cikeshang_s01_sfx_fuyong"
+  },
+  {
+    "id": 31500001,
+    "eventName": "play_activitysfx_mingdi_pen_spinning",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500002,
+    "eventName": "play_activitysfx_mingdi_prosthesis",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500003,
+    "eventName": "play_activitysfx_mingdi_platform_amb",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500004,
+    "eventName": "play_activitysfx_mingdi_pendule",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500005,
+    "eventName": "play_activitysfx_mingdi_crowded",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500006,
+    "eventName": "play_activitysfx_mingdi_crowd_panic",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500007,
+    "eventName": "play_activitysfx_mingdi_whistle",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500008,
+    "eventName": "play_activitysfx_mingdi_breathe_fare",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500009,
+    "eventName": "play_activitysfx_mingdi_muzzle",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500010,
+    "eventName": "play_activitysfx_mingdi_muzzle_press",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500011,
+    "eventName": "play_activitysfx_mingdi_garrison_come",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500012,
+    "eventName": "play_activitysfx_mingdi_fall_rail",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500013,
+    "eventName": "play_activitysfx_mingdi_steam_train",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500014,
+    "eventName": "play_activitysfx_mingdi_staggering",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500015,
+    "eventName": "play_activitysfx_mingdi_train_rapid",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500016,
+    "eventName": "play_activitysfx_mingdi_train_collision",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500017,
+    "eventName": "play_activitysfx_mingdi_train_stopped",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500018,
+    "eventName": "play_activitysfx_mingdi_train_opens",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500019,
+    "eventName": "play_activitysfx_mingdi_train_departs",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500020,
+    "eventName": "play_activitysfx_mingdi_train_departs_fliter",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500021,
+    "eventName": "play_activitysfx_mingdi_train_land",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500022,
+    "eventName": "play_activitysfx_mingdi_boots_near",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500023,
+    "eventName": "play_activitysfx_mingdi_boots_far",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500024,
+    "eventName": "play_activitysfx_mingdi_high_heels_go_near",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500025,
+    "eventName": "play_activitysfx_mingdi_high_heels_go_far",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500026,
+    "eventName": "play_activitysfx_mingdi_high_heels_go_far_fliter",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500027,
+    "eventName": "play_activitysfx_mingdi_walkdown",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500028,
+    "eventName": "play_activitysfx_mingdi_walkdown_fliter",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500029,
+    "eventName": "play_activitysfx_mingdi_kid_playing",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500030,
+    "eventName": "play_activitysfx_mingdi_night_snowfield",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500031,
+    "eventName": "play_activitysfx_mingdi_step_forward",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500032,
+    "eventName": "play_activitysfx_mingdi_puton_scarf",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500033,
+    "eventName": "play_activitysfx_mingdi_throat",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500034,
+    "eventName": "play_activitysfx_mingdi_pickup",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500035,
+    "eventName": "play_activitysfx_mingdi_struggle",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500036,
+    "eventName": "play_activitysfx_mingdi_open_pocket",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500037,
+    "eventName": "play_activitysfx_mingdi_get_on",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500038,
+    "eventName": "play_activitysfx_mingdi_chitchat",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500039,
+    "eventName": "play_activitysfx_mingdi_eat_drink",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500040,
+    "eventName": "play_activitysfx_mingdi_fork_table",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500041,
+    "eventName": "play_activitysfx_mingdi_eating_voraciously",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500042,
+    "eventName": "play_activitysfx_mingdi_sprinkle_sand",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500043,
+    "eventName": "play_activitysfx_mingdi_knitting",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500044,
+    "eventName": "play_activitysfx_mingdi_knitting_loop",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500045,
+    "eventName": "play_activitysfx_mingdi_putdown_wool",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500046,
+    "eventName": "play_activitysfx_mingdi_bite",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500047,
+    "eventName": "play_activitysfx_mingdi_close_wooden_door",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500048,
+    "eventName": "play_activitysfx_mingdi_change_clothes",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500049,
+    "eventName": "play_activitysfx_mingdi_alarm_clock",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500050,
+    "eventName": "play_activitysfx_mingdi_attached_carriage",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500051,
+    "eventName": "play_activitysfx_mingdi_pushing",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500052,
+    "eventName": "play_activitysfx_mingdi_running_panting",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500053,
+    "eventName": "play_activitysfx_mingdi_wooddoor_creaking",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500054,
+    "eventName": "play_activitysfx_mingdi_carriages_jolted",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500055,
+    "eventName": "play_activitysfx_mingdi_blow_open_door",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500056,
+    "eventName": "play_activitysfx_mingdi_artillery_fire",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500057,
+    "eventName": "play_activitysfx_mingdi_next_room_foot",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500058,
+    "eventName": "play_activitysfx_mingdi_careful_open_wooddoor",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500059,
+    "eventName": "play_activitysfx_mingdi_open_wooddoor",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500060,
+    "eventName": "play_activitysfx_mingdi_mess_boots",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500061,
+    "eventName": "play_activitysfx_mingdi_refugees_noise",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500062,
+    "eventName": "play_activitysfx_mingdi_sob",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500063,
+    "eventName": "play_activitysfx_mingdi_gunshot_tinnitus",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500064,
+    "eventName": "play_activitysfx_mingdi_body_carry",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500065,
+    "eventName": "play_activitysfx_mingdi_fall_hole",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500066,
+    "eventName": "play_activitysfx_mingdi_skin_cut",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500067,
+    "eventName": "play_activitysfx_mingdi_head_hit_glass",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500068,
+    "eventName": "play_activitysfx_mingdi_arresting_struggling",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500069,
+    "eventName": "play_activitysfx_mingdi_flesh_blood",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500070,
+    "eventName": "play_activitysfx_mingdi_two_gunshots",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500071,
+    "eventName": "play_activitysfx_mingdi_pull_rifle",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500072,
+    "eventName": "play_activitysfx_mingdi_put_down_rifle",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500073,
+    "eventName": "play_activitysfx_mingdi_take_away_rifle",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500074,
+    "eventName": "play_activitysfx_mingdi_pounce_down",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500075,
+    "eventName": "play_activitysfx_mingdi_yelling_loudly",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500076,
+    "eventName": "play_activitysfx_mingdi_howl",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500077,
+    "eventName": "play_activitysfx_mingdi_frequent_strikes",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500078,
+    "eventName": "play_activitysfx_mingdi_crowd_chaos",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500079,
+    "eventName": "play_activitysfx_mingdi_shotgun",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500080,
+    "eventName": "play_activitysfx_mingdi_shotgun_boom",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500081,
+    "eventName": "play_activitysfx_mingdi_pounce",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500082,
+    "eventName": "play_activitysfx_mingdi_explode",
+    "bankName": "activity_mingdi3_1_part02"
+  },
+  {
+    "id": 31500083,
+    "eventName": "play_activitysfx_mingdi_alarm_siren",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500084,
+    "eventName": "play_activitysfx_mingdi_suddenly_braked",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500085,
+    "eventName": "play_activitysfx_mingdi_train_moving",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500086,
+    "eventName": "play_activitysfx_mingdi_lie_down_coffin",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500087,
+    "eventName": "play_activitysfx_mingdi_unlocking",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500088,
+    "eventName": "play_activitysfx_mingdi_carefully_iron_open",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500089,
+    "eventName": "play_activitysfx_mingdi_iron_open",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500090,
+    "eventName": "play_activitysfx_mingdi_raise_face",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500091,
+    "eventName": "play_activitysfx_mingdi_haematemesis",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500092,
+    "eventName": "play_activitysfx_mingdi_child_closer",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500093,
+    "eventName": "play_activitysfx_mingdi_child_closer_cement",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500094,
+    "eventName": "play_activitysfx_mingdi_drag",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500095,
+    "eventName": "play_activitysfx_mingdi_tear_clothes",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500096,
+    "eventName": "play_activitysfx_mingdi_run_away_gun",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500097,
+    "eventName": "play_activitysfx_mingdi_pull_cabinet",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500098,
+    "eventName": "play_activitysfx_mingdi_unsling_sack",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500099,
+    "eventName": "play_activitysfx_mingdi_remove_stake",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500100,
+    "eventName": "play_activitysfx_mingdi_open_wings",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500101,
+    "eventName": "play_activitysfx_mingdi_high_heels_removed",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500102,
+    "eventName": "play_activitysfx_mingdi_torch_ignite",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500103,
+    "eventName": "play_activitysfx_mingdi_crowd_got_off",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500104,
+    "eventName": "play_activitysfx_mingdi_girls_chuckle",
+    "bankName": "activity_mingdi3_1_part03"
+  },
+  {
+    "id": 31500105,
+    "eventName": "play_activitystorysfx_mingdi_glass_impact",
+    "bankName": "activitystory_mingdi3_1_yishi_fugaoren_sfx"
+  },
+  {
+    "id": 31500106,
+    "eventName": "play_activitystorysfx_mingdi_glass_breaks",
+    "bankName": "activitystory_mingdi3_1_yishi_fugaoren_sfx"
+  },
+  {
+    "id": 31500107,
+    "eventName": "play_activitystorysfx_mingdi_woolball",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500108,
+    "eventName": "play_activitystorysfx_mingdi_wind_yarn",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500109,
+    "eventName": "play_activitystorysfx_mingdi_shadow_move",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500110,
+    "eventName": "play_activitystorysfx_mingdi_shadow_change",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500111,
+    "eventName": "play_activitystorysfx_mingdi_shadow_many",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500112,
+    "eventName": "play_activitystorysfx_mingdi_spoon_scoops",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500113,
+    "eventName": "play_activitystorysfx_mingdi_eat_stewed",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500114,
+    "eventName": "play_activitystorysfx_mingdi_boot_wood",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500115,
+    "eventName": "play_activitystorysfx_mingdi_boot_wood_fast",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500116,
+    "eventName": "play_activitystorysfx_mingdi_grass_run",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500117,
+    "eventName": "play_activitystorysfx_mingdi_shoulder",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500118,
+    "eventName": "play_activitystorysfx_mingdi_dig_hole",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500119,
+    "eventName": "play_activitystorysfx_mingdi_cover_leaves",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500120,
+    "eventName": "play_activitystorysfx_mingdi_flute_hesitate",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500121,
+    "eventName": "play_activitystorysfx_mingdi_flute_lively",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500122,
+    "eventName": "play_activitystorysfx_mingdi_stone",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500123,
+    "eventName": "play_activitystorysfx_mingdi_climb",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500124,
+    "eventName": "play_activitystorysfx_mingdi_eat_meat",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx"
+  },
+  {
+    "id": 31500125,
+    "eventName": "play_activitysfx_mingdi_d",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500126,
+    "eventName": "play_activitysfx_mingdi_d_plus",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500127,
+    "eventName": "play_activitysfx_mingdi_e",
+    "bankName": "activity_mingdi3_1_part01"
+  },
+  {
+    "id": 31500128,
+    "eventName": "play_activitysfx_mingdi_coffin_blood",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500129,
+    "eventName": "play_activitysfx_mingdi_grimace",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500130,
+    "eventName": "play_activitysfx_mingdi_bleeding_slowly",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500131,
+    "eventName": "play_activitysfx_mingdi_dock_steam",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500132,
+    "eventName": "play_activitysfx_mingdi_blood_flowed",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500133,
+    "eventName": "play_activitysfx_mingdi_dizziness_01",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500134,
+    "eventName": "play_activitysfx_mingdi_recall",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500135,
+    "eventName": "play_activitysfx_mingdi_dark_shadow",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500136,
+    "eventName": "play_activitysfx_mingdi_fingerprint",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500137,
+    "eventName": "play_activitysfx_mingdi_face_01",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500138,
+    "eventName": "play_activitysfx_mingdi_face_02",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500139,
+    "eventName": "play_activitysfx_mingdi_face_03",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500140,
+    "eventName": "play_activitysfx_mingdi_glazed_window",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500141,
+    "eventName": "play_activitysfx_mingdi_song_network",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500142,
+    "eventName": "play_activitysfx_mingdi_steam",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500143,
+    "eventName": "play_activitysfx_mingdi_eye",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500144,
+    "eventName": "play_activitysfx_mingdi_note",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500145,
+    "eventName": "play_activitysfx_mingdi_ticket",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500146,
+    "eventName": "play_activitysfx_mingdi_great_snow",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500147,
+    "eventName": "play_activitysfx_mingdi_bats_alarm",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500148,
+    "eventName": "play_activitysfx_mingdi_bats_screen",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500149,
+    "eventName": "play_activitysfx_mingdi_suture",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500150,
+    "eventName": "play_activitysfx_mingdi_suture_current",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500151,
+    "eventName": "play_activitysfx_mingdi_dizziness_02",
+    "bankName": "activity_mingdi3_1_part04"
+  },
+  {
+    "id": 31500152,
+    "eventName": "play_activitysfx_mingdi_ke",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500153,
+    "eventName": "play_activitysfx_mingdi_children_laugh",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500154,
+    "eventName": "play_activitysfx_mingdi_flap",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500155,
+    "eventName": "play_activitysfx_mingdi_against_door",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500156,
+    "eventName": "play_activitysfx_mingdi_pistol1",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500157,
+    "eventName": "play_activitysfx_mingdi_fight",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500158,
+    "eventName": "play_activitysfx_mingdi_heartbeating",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500159,
+    "eventName": "play_activitysfx_mingdi_close_door",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500160,
+    "eventName": "play_activitysfx_mingdi_unlock_door",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500161,
+    "eventName": "play_activitysfx_mingdi_flashlight_shines",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500162,
+    "eventName": "play_activitysfx_mingdi_crow_lp",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500163,
+    "eventName": "play_activitysfx_mingdi_musket_trigger",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500164,
+    "eventName": "play_activitysfx_mingdi_musket_drew",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500165,
+    "eventName": "play_activitysfx_mingdi_wry",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500166,
+    "eventName": "play_activitysfx_mingdi_pa",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500167,
+    "eventName": "play_activitysfx_mingdi_louti",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500168,
+    "eventName": "play_activitysfx_mingdi_run",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500169,
+    "eventName": "play_activitysfx_mingdi_applepick",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500170,
+    "eventName": "play_activitysfx_mingdi_hat_depress",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500171,
+    "eventName": "play_activitysfx_mingdi_pen_underlined",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500172,
+    "eventName": "play_activitysfx_mingdi_boots_approach",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500173,
+    "eventName": "play_activitysfx_mingdi_boots_leave",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500174,
+    "eventName": "play_activitysfx_mingdi_mud_tripped",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500175,
+    "eventName": "play_activitysfx_mingdi_bullet2",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500176,
+    "eventName": "play_activitysfx_mingdi_pistol3",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500177,
+    "eventName": "play_activitysfx_mingdi_snow_walk_loop",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500178,
+    "eventName": "play_activitysfx_mingdi_xueshan_loop",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500179,
+    "eventName": "play_activitysfx_mingdi_footsteps1",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500180,
+    "eventName": "play_activitysfx_mingdi_footsteps2",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500181,
+    "eventName": "play_activitysfx_mingdi_footsteps3",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500182,
+    "eventName": "play_activitysfx_mingdi_bell",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500183,
+    "eventName": "play_activitysfx_mingdi_rise",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500184,
+    "eventName": "play_activitysfx_mingdi_walk_lp",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500185,
+    "eventName": "play_activitysfx_mingdi_patted",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500186,
+    "eventName": "play_activitysfx_mingdi_sitdown",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500187,
+    "eventName": "play_activitysfx_mingdi_bite",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500188,
+    "eventName": "play_activitysfx_mingdi_clockwise",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500189,
+    "eventName": "play_activitysfx_mingdi_footstep1",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500190,
+    "eventName": "play_activitysfx_mingdi_smoke",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500191,
+    "eventName": "play_activitysfx_mingdi_cloth",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500192,
+    "eventName": "play_activitysfx_mingdi_sleep_loop",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500193,
+    "eventName": "play_activitysfx_mingdi_string",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500194,
+    "eventName": "play_activitysfx_mingdi_knock_hazy",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500195,
+    "eventName": "play_activitysfx_mingdi_candle_burn_loop",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500196,
+    "eventName": "play_activitysfx_mingdi_holding",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500197,
+    "eventName": "play_activitysfx_mingdi_jizou_crash",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500198,
+    "eventName": "play_activitysfx_mingdi_whooshwhite",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500199,
+    "eventName": "play_activitysfx_mingdi_snow2",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500200,
+    "eventName": "play_activitysfx_mingdi_clothes",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500201,
+    "eventName": "play_activitysfx_mingdi_boxian2",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500202,
+    "eventName": "play_activitysfx_mingdi_cough2",
+    "bankName": "activity_mingdi3_1_sfx_fuyong"
+  },
+  {
+    "id": 31500203,
+    "eventName": "play_activitystorysfx_mingdi_gun_neat",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx_fuyong"
+  },
+  {
+    "id": 31500204,
+    "eventName": "play_activitystorysfx_mingdi_town3_lp",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx_fuyong"
+  },
+  {
+    "id": 31500205,
+    "eventName": "play_activitystorysfx_mingdi_heartbeat_fast",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx_fuyong"
+  },
+  {
+    "id": 31500206,
+    "eventName": "play_activitystorysfx_mingdi_wuya",
+    "bankName": "activitystory_mingdi3_1_arbutus_sfx_fuyong"
+  },
+  {
     "id": 530053,
     "eventName": "play_activitymusic_thememusic_full_2_0",
     "bankName": "activity2_0_music"
@@ -8388,6 +9758,61 @@
     "id": 30530004,
     "eventName": "play_activitymusic_seasonmain_3_0",
     "bankName": "activity3_0_music"
+  },
+  {
+    "id": 29530001,
+    "eventName": "play_activitymusic_theme_s01_cikeshang",
+    "bankName": "firsthalf_cikeshang_music"
+  },
+  {
+    "id": 29530002,
+    "eventName": "play_activitymusic_plot_s01_cikeshang",
+    "bankName": "firsthalf_cikeshang_music"
+  },
+  {
+    "id": 29530003,
+    "eventName": "play_activitymusic_theme_s01_cikexia",
+    "bankName": "secondhalf_cikexia_music"
+  },
+  {
+    "id": 29530004,
+    "eventName": "play_activitymusic_plot_s01_cikexia",
+    "bankName": "secondhalf_cikexia_music"
+  },
+  {
+    "id": 29530005,
+    "eventName": "play_activitymusic_celebration_s01_cikexia",
+    "bankName": "secondhalf_cikexia_music"
+  },
+  {
+    "id": 29530006,
+    "eventName": "play_activitymusic_ac2_s01_cikeshang",
+    "bankName": "firsthalf_cikeshang_music"
+  },
+  {
+    "id": 31530001,
+    "eventName": "play_activitymusic_theme_3_1",
+    "bankName": "activity3_1_music"
+  },
+  {
+    "id": 31530002,
+    "eventName": "play_activitymusic_huixie_3_1",
+    "bankName": "activity3_1_music"
+  },
+  {
+    "id": 31530003,
+    "eventName": "play_activitymusic_rubuska_ep1blow_3_1",
+    "bankName": "activity3_1_music"
+  },
+  {
+    "id": 31530004,
+    "eventName": "play_activitymusic_rubuska_ep2fantasy_3_1",
+    "bankName": "activity3_1_music"
+  },
+  {
+    "id": 31530005,
+    "eventName": "play_activitymusic_rubuska_ep3memory_3_1",
+    "bankName": "activity3_1_music"
   },
   {
     "id": 520105,
@@ -8795,6 +10220,101 @@
     "bankName": "prologuechapter_11_cutscene"
   },
   {
+    "id": 29520000,
+    "eventName": "play_cike_s01_pv_sfx_vo_music",
+    "bankName": "cikeshangs01_cutscene_sfx_vo"
+  },
+  {
+    "id": 29520001,
+    "eventName": "play_cikeshangs01_cutscene_florence_spring_sfx",
+    "bankName": "cikeshangs01_cutscene_sfx_vo"
+  },
+  {
+    "id": 29520002,
+    "eventName": "play_cikexias01_cutscene_jinpingguo_sfx_vo",
+    "bankName": "cikexias01_cutscene_sfx_vo"
+  },
+  {
+    "id": 29520003,
+    "eventName": "play_cikeshangs01_cutscene_ezio_broke_sfx",
+    "bankName": "cikeshangs01_cutscene_sfx_vo"
+  },
+  {
+    "id": 29520004,
+    "eventName": "play_cikexias01_cutscene_sibsfight_sfx_vo",
+    "bankName": "cikexias01_cutscene_sfx_vo"
+  },
+  {
+    "id": 29520005,
+    "eventName": "play_activitysfx_cikeshang_chapter_open",
+    "bankName": "activitysfx_cikeshang_s01_sfx"
+  },
+  {
+    "id": 29520006,
+    "eventName": "play_activitysfx_cikeshang_subsection_open",
+    "bankName": "activitysfx_cikeshang_s01_sfx"
+  },
+  {
+    "id": 29520007,
+    "eventName": "play_activitysfx_cikeshang_chapter_continue",
+    "bankName": "activitysfx_cikeshang_s01_sfx"
+  },
+  {
+    "id": 29520008,
+    "eventName": "play_activitysfx_cikexia_chapter_open",
+    "bankName": "activitysfx_cikexia_s01_sfx"
+  },
+  {
+    "id": 29520009,
+    "eventName": "play_activitysfx_cikexia_subsection_open",
+    "bankName": "activitysfx_cikexia_s01_sfx"
+  },
+  {
+    "id": 29520010,
+    "eventName": "play_activitysfx_cikexia_chapter_continue",
+    "bankName": "activitysfx_cikexia_s01_sfx"
+  },
+  {
+    "id": 31520001,
+    "eventName": "play_activitysfx_mingdi_plot_open",
+    "bankName": "activity_mingdi3_1_sfx"
+  },
+  {
+    "id": 31520002,
+    "eventName": "play_activitysfx_mingdi_section_open",
+    "bankName": "activity_mingdi3_1_sfx"
+  },
+  {
+    "id": 31520003,
+    "eventName": "play_activitysfx_mingdi_continue",
+    "bankName": "activity_mingdi3_1_sfx"
+  },
+  {
+    "id": 31520004,
+    "eventName": "play_mingdi3_1_cutscene_vampire_story_sfx",
+    "bankName": "mingdi3_1_cutscene_sfx_vo"
+  },
+  {
+    "id": 31520005,
+    "eventName": "play_mingdi3_1_cutscene_yeshumei_refuse_bitten",
+    "bankName": "mingdi3_1_cutscene_sfx_vo"
+  },
+  {
+    "id": 31520006,
+    "eventName": "play_mingdi3_1_cutscene_gaosiniao_kills_boris",
+    "bankName": "mingdi3_1_cutscene_sfx_vo"
+  },
+  {
+    "id": 31520007,
+    "eventName": "play_mingdi3_1_cutscene_yeshumei_flute",
+    "bankName": "mingdi3_1_cutscene_sfx_vo"
+  },
+  {
+    "id": 31520008,
+    "eventName": "play_mingdi3_1_pv_sfx_vo_music",
+    "bankName": "mingdi3_1_cutscene_sfx_vo"
+  },
+  {
     "id": 20530011,
     "eventName": "play_battle_leimi_1_1_normalfight",
     "bankName": "activtiy_leimi_combataudio"
@@ -8848,5 +10368,10 @@
     "id": 20530030,
     "eventName": "play_battle_lushang_3_0_normalfight",
     "bankName": "activtiy_lushang_combataudio"
+  },
+  {
+    "id": 20530031,
+    "eventName": "play_battle_mingdi_3_1_normalfight",
+    "bankName": "activity_mingdi_combataudio"
   }
 ]

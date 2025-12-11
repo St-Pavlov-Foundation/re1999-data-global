@@ -45,5 +45,39 @@ return {
 			desampleRate = PostProcessingMgr.DesamplingRate.x8,
 			reduceRate = PostProcessingMgr.DesamplingRate.x8
 		}
+		arg_1_0.CharacterRecommedView = {
+			destroy = 0,
+			container = "CharacterRecommedViewContainer",
+			mainRes = "ui/viewres/character/recommed/characterrecommendview.prefab",
+			layer = "POPUP_TOP",
+			viewType = ViewType.Full,
+			anim = ViewAnim.Default,
+			otherRes = {
+				"ui/viewres/character/recommed/recommedgroupitem.prefab",
+				"ui/viewres/character/recommed/goalsitem.prefab",
+				"ui/viewres/character/recommed/heroitem.prefab",
+				"ui/viewres/character/recommed/equipicon.prefab"
+			},
+			tabRes = {
+				{
+					{
+						NavigateButtonsView.prefabPath
+					}
+				},
+				{
+					{
+						[1] = "ui/viewres/character/recommed/recommedgroupview.prefab"
+					},
+					{
+						[1] = "ui/viewres/character/recommed/goalsview.prefab"
+					}
+				},
+				{
+					{
+						[1] = "ui/viewres/character/recommed/changeheroview.prefab"
+					}
+				}
+			}
+		}
 	end
 }

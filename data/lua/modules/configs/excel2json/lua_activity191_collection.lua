@@ -2,15 +2,17 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	label = 6,
-	tag = 5,
-	replaceDesc = 8,
-	weight = 10,
-	title = 4,
+	label = 8,
+	tag2 = 7,
+	replaceDesc = 10,
+	desc = 9,
+	tag = 6,
+	title = 5,
 	rare = 3,
-	desc = 7,
+	unique = 4,
+	weight = 12,
 	id = 1,
-	icon = 9,
+	icon = 11,
 	activityId = 2
 }
 local var_0_2 = {

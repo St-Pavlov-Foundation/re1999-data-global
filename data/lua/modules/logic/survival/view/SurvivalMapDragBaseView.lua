@@ -43,7 +43,7 @@ function var_0_0.onOpen(arg_4_0)
 end
 
 function var_0_0._onDrag(arg_5_0, arg_5_1, arg_5_2)
-	if UnityEngine.Input.touchCount > 1 then
+	if UnityEngine.Input.touchCount > 1 or UIBlockMgr.instance:isBlock() then
 		return
 	end
 
