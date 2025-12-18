@@ -67,18 +67,27 @@ function var_0_0._onHelpImgLoaded(arg_6_0)
 
 	gohelper.setActive(arg_6_0._imgPrefGo, true)
 
-	if arg_6_0._config.iconText == "50110" then
-		local var_6_0 = gohelper.findChildTextMesh(arg_6_0._imgPrefGo, "#text_rule")
-		local var_6_1 = luaLang("p_helpcontentitem_50110_7")
+	arg_6_0._imgPrefTrans = arg_6_0._imgPrefGo.transform
 
-		var_6_0.text = string.gsub(var_6_1, "UTC%+8", ServerTime.GetUTCOffsetStr())
+	if arg_6_0._config.icon == "v3a1_power_help_1" then
+		local var_6_0 = arg_6_0._imgPrefTrans:GetChild(0):GetComponent(gohelper.Type_TextMesh)
+		local var_6_1 = luaLang("p_v3a1_power_help_1_txt_1")
+
+		var_6_0.text = ServerTime.ReplaceUTCStr(var_6_1)
+	end
+
+	if arg_6_0._config.iconText == "50110" then
+		local var_6_2 = gohelper.findChildTextMesh(arg_6_0._imgPrefGo, "#text_rule")
+		local var_6_3 = luaLang("p_helpcontentitem_50110_7")
+
+		var_6_2.text = string.gsub(var_6_3, "UTC%+8", ServerTime.GetUTCOffsetStr())
 	end
 
 	if arg_6_0._config.icon == "va_1_1_season_3" then
-		local var_6_2 = gohelper.findChildTextMesh(arg_6_0._imgPrefGo, "Text1/Text2")
-		local var_6_3 = luaLang("p_vahelpcontentitem_season3_7")
+		local var_6_4 = gohelper.findChildTextMesh(arg_6_0._imgPrefGo, "Text1/Text2")
+		local var_6_5 = luaLang("p_vahelpcontentitem_season3_7")
 
-		var_6_2.text = ServerTime.ReplaceUTCStr(var_6_3)
+		var_6_4.text = ServerTime.ReplaceUTCStr(var_6_5)
 	end
 end
 

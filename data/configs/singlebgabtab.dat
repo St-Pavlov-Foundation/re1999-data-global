@@ -41062,6 +41062,9 @@
   "singlebg_lang/txt_assassin2_singlebg/assassin2_task_title.png.dat": [
     "Assets/ZResourcesLib/singlebg_lang/txt_assassin2_singlebg/assassin2_task_title.png"
   ],
+  "singlebg_lang/txt_battlepass/battlepass_festival_logo.png.dat": [
+    "Assets/ZResourcesLib/singlebg_lang/txt_battlepass/battlepass_festival_logo.png"
+  ],
   "singlebg_lang/txt_battlepass/battlepass_logo_1.png.dat": [
     "Assets/ZResourcesLib/singlebg_lang/txt_battlepass/battlepass_logo_1.png"
   ],
@@ -41346,6 +41349,9 @@
   ],
   "singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_1.png.dat": [
     "Assets/ZResourcesLib/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_1.png"
+  ],
+  "singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_3.png.dat": [
+    "Assets/ZResourcesLib/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_3.png"
   ],
   "singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_taluo.png.dat": [
     "Assets/ZResourcesLib/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_taluo.png"
@@ -44560,6 +44566,9 @@
   "lang/en/singlebg_lang/txt_balance_singlebg/balance_title2.png.dat": [
     "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_balance_singlebg/balance_title2.png"
   ],
+  "lang/en/singlebg_lang/txt_battlepass/battlepass_festival_logo.png.dat": [
+    "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_battlepass/battlepass_festival_logo.png"
+  ],
   "lang/en/singlebg_lang/txt_battlepass/battlepass_logo_1.png.dat": [
     "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_battlepass/battlepass_logo_1.png"
   ],
@@ -45156,6 +45165,9 @@
   ],
   "lang/en/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_1.png.dat": [
     "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_1.png"
+  ],
+  "lang/en/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_3.png.dat": [
+    "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_3.png"
   ],
   "lang/en/singlebg_lang/txt_sp01_storyactivityopenclose/chapter_1_1.png.dat": [
     "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_sp01_storyactivityopenclose/chapter_1_1.png"
@@ -49558,6 +49570,9 @@
   "lang/jp/singlebg_lang/txt_balance_singlebg/balance_title2.png.dat": [
     "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_balance_singlebg/balance_title2.png"
   ],
+  "lang/jp/singlebg_lang/txt_battlepass/battlepass_festival_logo.png.dat": [
+    "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_battlepass/battlepass_festival_logo.png"
+  ],
   "lang/jp/singlebg_lang/txt_battlepass/battlepass_logo_1.png.dat": [
     "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_battlepass/battlepass_logo_1.png"
   ],
@@ -50130,6 +50145,9 @@
   ],
   "lang/jp/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_1.png.dat": [
     "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_1.png"
+  ],
+  "lang/jp/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_3.png.dat": [
+    "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_3.png"
   ],
   "lang/jp/singlebg_lang/txt_sp01_storyactivityopenclose/chapter_1_1.png.dat": [
     "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_sp01_storyactivityopenclose/chapter_1_1.png"
@@ -54682,6 +54700,9 @@
   "lang/kr/singlebg_lang/txt_balance_singlebg/balance_title2.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_balance_singlebg/balance_title2.png"
   ],
+  "lang/kr/singlebg_lang/txt_battlepass/battlepass_festival_logo.png.dat": [
+    "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_battlepass/battlepass_festival_logo.png"
+  ],
   "lang/kr/singlebg_lang/txt_battlepass/battlepass_logo_1.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_battlepass/battlepass_logo_1.png"
   ],
@@ -55251,6 +55272,9 @@
   ],
   "lang/kr/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_1.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_1.png"
+  ],
+  "lang/kr/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_3.png.dat": [
+    "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_3.png"
   ],
   "lang/kr/singlebg_lang/txt_sp01_storyactivityopenclose/chapter_1_1.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_sp01_storyactivityopenclose/chapter_1_1.png"
@@ -59821,6 +59845,9 @@
   "lang/tw/singlebg_lang/txt_balance_singlebg/balance_title2.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_balance_singlebg/balance_title2.png"
   ],
+  "lang/tw/singlebg_lang/txt_battlepass/battlepass_festival_logo.png.dat": [
+    "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_battlepass/battlepass_festival_logo.png"
+  ],
   "lang/tw/singlebg_lang/txt_battlepass/battlepass_logo_1.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_battlepass/battlepass_logo_1.png"
   ],
@@ -60402,6 +60429,9 @@
   ],
   "lang/tw/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_1.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_1.png"
+  ],
+  "lang/tw/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_3.png.dat": [
+    "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_skinhandbook_singlebg/skinsuitdetailview_title_3_3.png"
   ],
   "lang/tw/singlebg_lang/txt_sp01_storyactivityopenclose/chapter_1_1.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_sp01_storyactivityopenclose/chapter_1_1.png"

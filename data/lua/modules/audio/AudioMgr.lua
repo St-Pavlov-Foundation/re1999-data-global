@@ -34,7 +34,7 @@ function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
 end
 
 function var_0_0._setAutoSwitchDefault(arg_3_0, arg_3_1)
-	arg_3_0.csharpInst.autoSwitchToDefault = arg_3_1 == LangSettings.shortcutTab[LangSettings.jp] or arg_3_1 == LangSettings.shortcutTab[LangSettings.kr]
+	return
 end
 
 function var_0_0._onInitCS(arg_4_0, arg_4_1)

@@ -30,6 +30,12 @@ local var_0_4 = {
 
 setmetatable(var_0_4, {
 	__index = function(arg_3_0, arg_3_1)
+		arg_3_1 = string.lower(arg_3_1)
+
+		if rawget(arg_3_0, arg_3_1) then
+			return rawget(arg_3_0, arg_3_1)
+		end
+
 		local var_3_0 = 0
 		local var_3_1
 
@@ -74,7 +80,7 @@ end
 function var_0_0._passExpressionStr(arg_5_0)
 	arg_5_0 = string.sub(arg_5_0, 2, #arg_5_0 - 1)
 
-	local var_5_0 = loadstring(string.format("return %s, hasAttrVal", string.lower(arg_5_0)))
+	local var_5_0 = loadstring(string.format("return %s, hasAttrVal", arg_5_0))
 
 	if not var_5_0 then
 		logError("解析表达式失败" .. arg_5_0)

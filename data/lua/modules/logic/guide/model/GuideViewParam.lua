@@ -38,7 +38,7 @@ function var_0_0.setStep(arg_2_0, arg_2_1, arg_2_2)
 	arg_2_0.tipsPos = string.splitToNumber(var_2_0.tipsPos, "#")
 	arg_2_0.tipsHead = var_2_0.tipsHead
 	arg_2_0.tipsTalker = var_2_0.tipsTalker
-	arg_2_0.tipsContent = var_2_0.tipsContent
+	arg_2_0.tipsContent = ServerTime.ReplaceUTCStr(var_2_0.tipsContent)
 	arg_2_0.tipsDir = var_2_0.tipsDir
 
 	if not string.nilorempty(arg_2_0.tipsContent) then
