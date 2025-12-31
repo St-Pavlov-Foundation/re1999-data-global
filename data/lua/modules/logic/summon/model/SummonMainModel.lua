@@ -154,6 +154,20 @@ function var_0_0.validContinueTenPool(arg_12_0)
 
 				if var_0_0.getADPageTabIndex(iter_12_1) == SummonEnum.TabContentIndex.CharNewbie and not var_0_0.instance:getNewbiePoolExist() then
 					var_12_1 = false
+
+					break
+				end
+
+				if SummonConfig.poolIsLuckyBag(arg_12_0) then
+					local var_12_3 = var_0_0.instance:getPoolServerMO(arg_12_0)
+
+					if var_12_3 and var_12_3.luckyBagMO then
+						local var_12_4 = SummonLuckyBagModel.instance:getGachaRemainTimes(arg_12_0)
+
+						if not var_12_4 or var_12_4 < 10 then
+							var_12_1 = false
+						end
+					end
 				end
 			end
 
@@ -593,21 +607,16 @@ end
 function var_0_0.getDiscountCost10(arg_50_0, arg_50_1, arg_50_2)
 	local var_50_0 = arg_50_0:getDiscountTime10(arg_50_1)
 	local var_50_1 = arg_50_0:getDiscountTime10Server(arg_50_1)
-	local var_50_2 = arg_50_2 or var_50_0 - var_50_1 + 1
 
-	if var_50_2 <= var_50_0 then
-		local var_50_3 = SummonConfig.instance:getSummonPool(arg_50_1)
+	if var_50_0 >= (arg_50_2 or var_50_0 - var_50_1 + 1) then
+		local var_50_2 = SummonConfig.instance:getSummonPool(arg_50_1)
 
-		if var_50_3 then
-			local var_50_4 = var_50_3.discountCost10
-			local var_50_5 = string.split(var_50_4, "|")
+		if var_50_2 then
+			local var_50_3 = var_50_2.discountCost10
+			local var_50_4 = string.splitToNumber(var_50_3, "#")
 
-			for iter_50_0, iter_50_1 in ipairs(var_50_5) do
-				local var_50_6 = string.splitToNumber(iter_50_1, "#")
-
-				if var_50_6 and var_50_6[1] == var_50_2 then
-					return var_50_6[3]
-				end
+			if var_50_4 then
+				return var_50_4[3]
 			end
 		end
 	end

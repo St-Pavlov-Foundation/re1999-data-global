@@ -7436,6 +7436,18 @@
     "lang": "language_10097142"
   },
   {
+    "id": "SettingsGraphicsView_videoMode0",
+    "lang": "language_10047747"
+  },
+  {
+    "id": "SettingsGraphicsView_videoMode1",
+    "lang": "language_10097064"
+  },
+  {
+    "id": "SettingsGraphicsView_videoMode2",
+    "lang": "language_10097065"
+  },
+  {
     "id": "Season3_0FightRuleView_txtEffectDesc",
     "lang": "language_10090095"
   },

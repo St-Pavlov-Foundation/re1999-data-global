@@ -68,14 +68,21 @@ function var_0_0._editableInitView(arg_5_0)
 	arg_5_0._cantClose = true
 	arg_5_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.9, nil, arg_5_0._tweenFinish, arg_5_0, nil, EaseType.Linear)
 	arg_5_0._goBtn = gohelper.findChild(arg_5_0.viewGO, "summonbtns")
-	arg_5_0._goSummon1 = gohelper.findChild(arg_5_0.viewGO, "summonbtns/summon1")
-	arg_5_0._goSummon10 = gohelper.findChild(arg_5_0.viewGO, "summonbtns/summon10")
-	arg_5_0._btnSummon10 = gohelper.findChildButtonWithAudio(arg_5_0.viewGO, "summonbtns/summon10/#btn_summon10")
-	arg_5_0._simagecurrency10 = gohelper.findChildSingleImage(arg_5_0.viewGO, "summonbtns/summon10/currency/#simage_currency10")
-	arg_5_0._txtcurrency101 = gohelper.findChildText(arg_5_0.viewGO, "summonbtns/summon10/currency/#txt_currency10_1")
-	arg_5_0._txtcurrency102 = gohelper.findChildText(arg_5_0.viewGO, "summonbtns/summon10/currency/#txt_currency10_2")
+	arg_5_0._gosummon10 = gohelper.findChild(arg_5_0.viewGO, "summonbtns/#go_summon10")
+	arg_5_0._btnsummon10 = gohelper.findChildButtonWithAudio(arg_5_0.viewGO, "summonbtns/#go_summon10/#btn_summon10")
+	arg_5_0._simagecurrency10 = gohelper.findChildSingleImage(arg_5_0.viewGO, "summonbtns/#go_summon10/currency/#simage_currency10")
+	arg_5_0._txtcurrency101 = gohelper.findChildText(arg_5_0.viewGO, "summonbtns/#go_summon10/currency/#txt_currency10_1")
+	arg_5_0._txtcurrency102 = gohelper.findChildText(arg_5_0.viewGO, "summonbtns/#go_summon10/currency/#txt_currency10_2")
+	arg_5_0._gocount = gohelper.findChild(arg_5_0.viewGO, "summonbtns/#go_summon10/#go_count")
+	arg_5_0._txtcount = gohelper.findChildText(arg_5_0.viewGO, "summonbtns/#go_summon10/#go_count/#txt_count")
+	arg_5_0._gosummon10normal = gohelper.findChild(arg_5_0.viewGO, "summonbtns/#go_summon10_normal")
+	arg_5_0._btnsummon10normal = gohelper.findChildButtonWithAudio(arg_5_0.viewGO, "summonbtns/#go_summon10_normal/#btn_summon10_normal")
+	arg_5_0._simagecurrency10normal = gohelper.findChildSingleImage(arg_5_0.viewGO, "summonbtns/#go_summon10_normal/currency/#simage_currency10_normal")
+	arg_5_0._txtcurrency101normal = gohelper.findChildText(arg_5_0.viewGO, "summonbtns/#go_summon10_normal/currency/#txt_currency10_1_normal")
+	arg_5_0._txtcurrency102normal = gohelper.findChildText(arg_5_0.viewGO, "summonbtns/#go_summon10_normal/currency/#txt_currency10_2_normal")
 
-	arg_5_0._btnSummon10:AddClickListener(arg_5_0._btnsummon10OnClick, arg_5_0)
+	arg_5_0._btnsummon10:AddClickListener(arg_5_0._btnsummon10OnClick, arg_5_0)
+	arg_5_0._btnsummon10normal:AddClickListener(arg_5_0._btnsummon10OnClick, arg_5_0)
 
 	arg_5_0._isReSummon = false
 	arg_5_0._canSummon = true
@@ -108,7 +115,8 @@ function var_0_0.onDestroyView(arg_6_0)
 		ZProj.TweenHelper.KillById(arg_6_0._tweenId)
 	end
 
-	arg_6_0._btnSummon10:RemoveClickListener()
+	arg_6_0._btnsummon10:RemoveClickListener()
+	arg_6_0._btnsummon10normal:RemoveClickListener()
 end
 
 function var_0_0.onOpen(arg_7_0)
@@ -353,16 +361,22 @@ end
 
 function var_0_0._setSummonBtnActive(arg_22_0, arg_22_1)
 	gohelper.setActive(arg_22_0._goBtn, arg_22_1)
-	gohelper.setActive(arg_22_0._goSummon1, false)
 
 	local var_22_0 = arg_22_0:getCurPool()
 	local var_22_1 = SummonMainModel.instance:getPoolServerMO(var_22_0.id)
 
 	if SummonMainModel.validContinueTenPool(var_22_0.id) then
-		gohelper.setActive(arg_22_0._goSummon10, true)
+		gohelper.setActive(arg_22_0._gosummon10, true)
+		gohelper.setActive(arg_22_0._gosummon10normal, true)
 		arg_22_0:_summonTrack("summon10_auto_show")
+
+		local var_22_2 = SummonMainModel.instance:getDiscountTime10Server(var_22_0.id) > 0
+
+		gohelper.setActive(arg_22_0._gosummon10, var_22_2)
+		gohelper.setActive(arg_22_0._gosummon10normal, not var_22_2)
 	else
-		gohelper.setActive(arg_22_0._goSummon10, false)
+		gohelper.setActive(arg_22_0._gosummon10, false)
+		gohelper.setActive(arg_22_0._gosummon10normal, false)
 	end
 end
 
@@ -398,7 +412,13 @@ function var_0_0._btnsummon10OnClick_2(arg_24_0)
 	end
 
 	local var_24_1, var_24_2, var_24_3 = SummonMainModel.getCostByConfig(var_24_0.cost10)
-	local var_24_4 = {
+	local var_24_4 = SummonMainModel.instance:getDiscountCost10(var_24_0.id)
+
+	if SummonMainModel.instance:getDiscountCostId(var_24_0.id) == var_24_2 then
+		var_24_3 = var_24_4 < 0 and var_24_3 or var_24_4
+	end
+
+	local var_24_5 = {
 		type = var_24_1,
 		id = var_24_2,
 		quantity = var_24_3,
@@ -408,34 +428,34 @@ function var_0_0._btnsummon10OnClick_2(arg_24_0)
 		noCallbackObj = arg_24_0
 	}
 
-	var_24_4.notEnough = false
+	var_24_5.notEnough = false
 
-	local var_24_5 = ItemModel.instance:getItemQuantity(var_24_1, var_24_2)
-	local var_24_6 = var_24_3 <= var_24_5
-	local var_24_7 = SummonMainModel.instance.everyCostCount
-	local var_24_8 = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local var_24_9 = 10 - var_24_5
-	local var_24_10 = var_24_7 * var_24_9
+	local var_24_6 = ItemModel.instance:getItemQuantity(var_24_1, var_24_2)
+	local var_24_7 = var_24_3 <= var_24_6
+	local var_24_8 = SummonMainModel.instance.everyCostCount
+	local var_24_9 = SummonMainModel.instance:getOwnCostCurrencyNum()
+	local var_24_10 = var_24_3 - var_24_6
+	local var_24_11 = var_24_8 * var_24_10
 
-	if not var_24_6 and var_24_8 < var_24_10 then
-		var_24_4.notEnough = true
+	if not var_24_7 and var_24_9 < var_24_11 then
+		var_24_5.notEnough = true
 	end
 
-	if var_24_6 then
-		var_24_4.needTransform = false
+	if var_24_7 then
+		var_24_5.needTransform = false
 
 		arg_24_0:_summon10Confirm()
 
 		return
 	else
-		var_24_4.needTransform = true
-		var_24_4.cost_type = SummonMainModel.instance.costCurrencyType
-		var_24_4.cost_id = SummonMainModel.instance.costCurrencyId
-		var_24_4.cost_quantity = var_24_10
-		var_24_4.miss_quantity = var_24_9
+		var_24_5.needTransform = true
+		var_24_5.cost_type = SummonMainModel.instance.costCurrencyType
+		var_24_5.cost_id = SummonMainModel.instance.costCurrencyId
+		var_24_5.cost_quantity = var_24_11
+		var_24_5.miss_quantity = var_24_10
 	end
 
-	SummonMainController.instance:openSummonConfirmView(var_24_4)
+	SummonMainController.instance:openSummonConfirmView(var_24_5)
 	PopupController.instance:endPopupView()
 end
 
@@ -455,21 +475,54 @@ function var_0_0._refreshCost(arg_26_0)
 	local var_26_0 = arg_26_0:getCurPool()
 
 	if var_26_0 then
-		arg_26_0:_refreshSingleCost(var_26_0.cost10, arg_26_0._simagecurrency10, "_txtcurrency10")
+		arg_26_0:refreshCost10(var_26_0.cost10)
 	end
 end
 
-function var_0_0._refreshSingleCost(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	local var_27_0, var_27_1, var_27_2 = SummonMainModel.getCostByConfig(arg_27_1)
-	local var_27_3 = SummonMainModel.getSummonItemIcon(var_27_0, var_27_1)
+function var_0_0.refreshCost10(arg_27_0, arg_27_1)
+	local var_27_0, var_27_1, var_27_2 = SummonMainModel.instance.getCostByConfig(arg_27_1)
+	local var_27_3 = SummonMainModel.instance.getSummonItemIcon(var_27_0, var_27_1)
 
-	arg_27_2:LoadImage(var_27_3)
+	arg_27_0._simagecurrency10:LoadImage(var_27_3)
+	arg_27_0._simagecurrency10normal:LoadImage(var_27_3)
 
-	local var_27_4
+	local var_27_4 = SummonMainModel.instance:getCurId()
+	local var_27_5 = SummonMainModel.instance:getDiscountCostId(var_27_4)
+	local var_27_6 = SummonMainModel.instance:getDiscountTime10Server(var_27_4)
+	local var_27_7 = var_27_6 > 0
 
-	var_27_4 = var_27_2 <= ItemModel.instance:getItemQuantity(var_27_0, var_27_1)
-	arg_27_0[arg_27_3 .. "1"].text = luaLang("multiple") .. var_27_2
-	arg_27_0[arg_27_3 .. "2"].text = ""
+	gohelper.setActive(arg_27_0._gotip2bg, var_27_7)
+	gohelper.setActive(arg_27_0._gosummon10, var_27_7)
+	gohelper.setActive(arg_27_0._gosummon10normal, not var_27_7)
+
+	local var_27_8 = ""
+	local var_27_9 = ""
+
+	if var_27_1 == var_27_5 then
+		gohelper.setActive(arg_27_0._gocount, var_27_6 > 0)
+
+		if var_27_6 > 0 then
+			local var_27_10 = SummonMainModel.instance:getDiscountCost10(var_27_4)
+
+			var_27_8 = string.format("<color=%s>%s</color>", "#FFE095", luaLang("multiple") .. var_27_10)
+			var_27_9 = var_27_2
+
+			local var_27_11 = (var_27_2 - var_27_10) / var_27_2 * 100
+
+			arg_27_0._txtcount.text = string.format(luaLang("summonpickchoice_discount"), var_27_11)
+		else
+			var_27_8 = string.format("<color=%s>%s</color>", "#000000", luaLang("multiple") .. var_27_2)
+		end
+	else
+		var_27_8 = string.format("<color=%s>%s</color>", "#000000", luaLang("multiple") .. var_27_2)
+
+		gohelper.setActive(arg_27_0._gocount, false)
+	end
+
+	arg_27_0._txtcurrency101.text = var_27_8
+	arg_27_0._txtcurrency101normal.text = var_27_8
+	arg_27_0._txtcurrency102.text = var_27_9
+	arg_27_0._txtcurrency102normal.text = var_27_9
 end
 
 function var_0_0.onSummonReply(arg_28_0)

@@ -132,6 +132,10 @@ function var_0_0.getNationalGiftStoreId(arg_16_0, arg_16_1)
 	return NationalGiftConfig.instance:getBonusCo(1, arg_16_1).packsId
 end
 
+function var_0_0.getCurVersionActId(arg_17_0)
+	return ActivityConfig.instance:getConstAsNum(9, VersionActivity3_1Enum.ActivityId.NationalGift)
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

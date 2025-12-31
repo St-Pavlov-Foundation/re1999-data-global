@@ -96,7 +96,9 @@ function var_0_0._onCloseViewCall(arg_13_0, arg_13_1)
 end
 
 function var_0_0._onYesCallback(arg_14_0)
-	local var_14_0 = string.format("%s#%s", JumpEnum.JumpView.ActivityView, VersionActivity3_1Enum.ActivityId.NationalGift)
+	ViewMgr.instance:closeView(ViewName.StoreView)
+
+	local var_14_0 = string.format("%s#%s", JumpEnum.JumpView.ActivityView, NationalGiftModel.instance:getCurVersionActId())
 
 	JumpController.instance:jumpByParam(var_14_0)
 	arg_14_0:closeThis()

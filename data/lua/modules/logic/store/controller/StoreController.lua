@@ -121,17 +121,23 @@ end
 
 function var_0_0.openPackageStoreGoodsView(arg_15_0, arg_15_1)
 	local var_15_0 = arg_15_1.config.type
+	local var_15_1 = arg_15_1.belongStoreId
 
 	if var_15_0 == StoreEnum.StoreChargeType.Optional then
 		ViewMgr.instance:openView(ViewName.OptionalChargeView, arg_15_1)
 	elseif var_15_0 == StoreEnum.StoreChargeType.LinkGiftGoods then
 		ViewMgr.instance:openView(ViewName.StoreLinkGiftGoodsView, arg_15_1)
 	elseif var_15_0 == StoreEnum.StoreChargeType.NationalGift then
-		local var_15_1 = {
+		local var_15_2 = {
 			goodMo = arg_15_1
 		}
 
-		NationalGiftController.instance:openNationalGiftBuyTipView(var_15_1)
+		NationalGiftController.instance:openNationalGiftBuyTipView(var_15_2)
+	elseif var_15_1 == StoreEnum.StoreId.Skin then
+		ViewMgr.instance:openView(ViewName.StoreSkinGoodsView2, {
+			index = 1,
+			goodsMO = arg_15_1
+		})
 	else
 		ViewMgr.instance:openView(ViewName.PackageStoreGoodsView, arg_15_1)
 	end
