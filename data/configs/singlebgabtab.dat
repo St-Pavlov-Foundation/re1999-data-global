@@ -43726,6 +43726,9 @@
   "lang/en/singlebg_lang/txt_activity/activity_gift_txt_title.png.dat": [
     "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_activity/activity_gift_txt_title.png"
   ],
+  "lang/en/singlebg_lang/txt_activity/activity_h5_banner.png.dat": [
+    "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_activity/activity_h5_banner.png"
+  ],
   "lang/en/singlebg_lang/txt_activity/activity_turnback_txt_title.png.dat": [
     "Assets/ZResourcesLib/lang/en/singlebg_lang/txt_activity/activity_turnback_txt_title.png"
   ],
@@ -48696,6 +48699,9 @@
   ],
   "lang/jp/singlebg_lang/txt_activity/activity_gift_txt_title.png.dat": [
     "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_activity/activity_gift_txt_title.png"
+  ],
+  "lang/jp/singlebg_lang/txt_activity/activity_h5_banner.png.dat": [
+    "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_activity/activity_h5_banner.png"
   ],
   "lang/jp/singlebg_lang/txt_activity/activity_turnback_txt_title.png.dat": [
     "Assets/ZResourcesLib/lang/jp/singlebg_lang/txt_activity/activity_turnback_txt_title.png"
@@ -53845,6 +53851,9 @@
   "lang/kr/singlebg_lang/txt_activity/activity_gift_txt_title.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_activity/activity_gift_txt_title.png"
   ],
+  "lang/kr/singlebg_lang/txt_activity/activity_h5_banner.png.dat": [
+    "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_activity/activity_h5_banner.png"
+  ],
   "lang/kr/singlebg_lang/txt_activity/activity_turnback_txt_title.png.dat": [
     "Assets/ZResourcesLib/lang/kr/singlebg_lang/txt_activity/activity_turnback_txt_title.png"
   ],
@@ -58990,6 +58999,9 @@
   "lang/tw/singlebg_lang/txt_activity/activity_gift_txt_title.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_activity/activity_gift_txt_title.png"
   ],
+  "lang/tw/singlebg_lang/txt_activity/activity_h5_banner.png.dat": [
+    "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_activity/activity_h5_banner.png"
+  ],
   "lang/tw/singlebg_lang/txt_activity/activity_turnback_txt_title.png.dat": [
     "Assets/ZResourcesLib/lang/tw/singlebg_lang/txt_activity/activity_turnback_txt_title.png"
   ],
@@ -64014,6 +64026,9 @@
   ],
   "lang/zh/singlebg_lang/txt_act174_singlebg/act174_img_01.png.dat": [
     "Assets/ZResourcesLib/lang/zh/singlebg_lang/txt_act174_singlebg/act174_img_01.png"
+  ],
+  "lang/zh/singlebg_lang/txt_activity/activity_h5_banner.png.dat": [
+    "Assets/ZResourcesLib/lang/zh/singlebg_lang/txt_activity/activity_h5_banner.png"
   ],
   "lang/zh/singlebg_lang/txt_activity/img_gift1.png.dat": [
     "Assets/ZResourcesLib/lang/zh/singlebg_lang/txt_activity/img_gift1.png"
